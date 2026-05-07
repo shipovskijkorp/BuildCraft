@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.InvalidInputDataException;
 import ct.buildcraft.api.schematics.ISchematicBlock;
 import ct.buildcraft.api.schematics.SchematicBlockContext;
@@ -152,7 +153,8 @@ public class SchematicBlockPipe implements ISchematicBlock {
     public boolean isBuilt(Level world, BlockPos blockPos) {
     	CompoundTag copy = tileNbt.copy();
     	CompoundTag tileTag = null;
-    	if(world.getBlockEntity(blockPos) instanceof TilePipeHolder tile) {
+    	BlockEntity worldTile = world.getBlockEntity(blockPos);
+		if(worldTile instanceof TilePipeHolder tile) {
 	    	copy.putInt("x", blockPos.getX());
 	    	copy.putInt("y", blockPos.getY());
 	    	copy.putInt("z", blockPos.getZ());
@@ -162,7 +164,10 @@ public class SchematicBlockPipe implements ISchematicBlock {
 	    	tileTag = tile.serializeNBT();
 	    	tile.rotate(tileRotation);
     	}
-		return tileTag != null && copy.equals(tileTag);
+//		if(worldTile == null)
+			
+		boolean flag2 = tileTag != null && copy.toString().equals(copy.toString());
+		return flag2;
     }
 
     @Override

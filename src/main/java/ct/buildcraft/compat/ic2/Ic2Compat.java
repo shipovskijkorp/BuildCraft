@@ -100,7 +100,7 @@ public class Ic2Compat {
 			registerDefaultHandle(TileEntityReactorFluidPort.class);
 			registerDefaultHandle(TileEntityReactorChamberElectric.class);
 			registerDefaultHandle(TileEntityNuclearReactorElectric.class);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			BCLog.logger.error("Cannot make compat with ic2exp");
 			isFailed = true;
 		}
@@ -132,7 +132,7 @@ public class Ic2Compat {
 			addHeatGenerator(BCEnergyFluids.fuelMixedLight, 768);
 			addHeatGenerator(BCEnergyFluids.fuelMixedHeavy, 768);
 			addHeatGenerator(BCEnergyFluids.fuelLight, 768);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			BCLog.logger.error("Cannot make compat with ic2exp");
 			isFailed = true;
 		}
