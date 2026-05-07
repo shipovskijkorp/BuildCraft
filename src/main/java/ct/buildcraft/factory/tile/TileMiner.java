@@ -58,7 +58,7 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
     public TileMiner(BlockEntityType<?> bet, BlockPos pos, BlockState state) {
     	super(bet, pos, state);
         caps.addProvider(new MjCapabilityHelper(createMjReceiver()));
-        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, () -> !isComplete, EnumPipePart.VALUES);
+        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, () -> !this.isComplete(), EnumPipePart.VALUES);
     }
 
     protected abstract void mine();

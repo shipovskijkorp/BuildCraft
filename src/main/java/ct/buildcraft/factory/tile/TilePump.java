@@ -160,8 +160,7 @@ public class TilePump extends TileMiner {
         Direction[] directions = queueFluid.getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
         boolean isWater
             = !BCCoreConfig.pumpsConsumeWater && FluidUtilBC.areFluidsEqual(queueFluid, Fluids.WATER);
-        final int maxDistance = BCCoreConfig.pumpMaxDistance;//Math.min(BCCoreConfig.pumpMaxDistance, 48);
-        final int maxLengthSquared = maxDistance * maxDistance;
+        final int maxLengthSquared = BCCoreConfig.pumpMaxDistance * BCCoreConfig.pumpMaxDistance;
         List<BlockPos> nextPosesToCheckCopy = new ArrayList<>();
         outer: while (!nextPosesToCheck.isEmpty()) {
         	nextPosesToCheckCopy.clear();
@@ -176,22 +175,23 @@ public class TilePump extends TileMiner {
                     }
                     boolean isNew = checked.add(offsetPos);
                     if (isNew) {
-                        FluidState fluidsAt = level.getFluidState(offsetPos);
-                        boolean eq = FluidUtilBC.areFluidsEqual(fluidsAt.getType(), queueFluid);
+                    	FluidState fluidsAt = level.getFluidState(offsetPos);
+                        boolean eq = fluidsAt.getFluidType() == queueFluid.getFluidType();
                         if (eq) {
                             FluidPath oldPath = paths.get(posToCheck);
                             FluidPath path = new FluidPath(offsetPos, oldPath);
                             paths.put(offsetPos, path);
                             if (fluidsAt.isSource()) {
                                 queue.add(offsetPos);
+                                count++;
                             }
                             nextPosesToCheck.add(offsetPos);
-                            count++;
+                            
                         }
-                    } else {
-                        // We've already tested this block: it must be a valid fluid neighbour.
+                    }/* else {
+                        // We've already tested this block: it *must* be a valid water source
                         count++;
-                    }
+                    }*/
                 }
                 if (isWater) {
                     if (count >= 2) {

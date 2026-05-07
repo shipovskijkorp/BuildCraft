@@ -183,7 +183,7 @@ public class LocaleUtil {
         // if (BCLibConfig.useLongLocalizedName) {
         // return localize("buildcraft.heat.long", heat);
         // } else {
-        return Component.translatable("%.2f \u00B0C", heat);
+        return Component.literal(String.format("%.2f \u00B0C", heat));
         // }
     }
 }

@@ -90,7 +90,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
 
     private IDistillationRecipe currentRecipe;
     private long distillPower = 0;
-    private boolean isActive = false;
+    private boolean hasWork, isActive = false;
     private final AverageLong powerAvg = new AverageLong(100);
     private final SafeTimeTracker updateTracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 2);
     private boolean changedSinceNetUpdate = true;
@@ -114,7 +114,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
         caps.addCapabilityInstance(CapUtil.CAP_FLUIDS, tankIn, EnumPipePart.HORIZONTALS);
         caps.addCapabilityInstance(CapUtil.CAP_FLUIDS, tankGasOut, EnumPipePart.UP);
         caps.addCapabilityInstance(CapUtil.CAP_FLUIDS, tankLiquidOut, EnumPipePart.DOWN);
-        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, () -> !tankIn.isEmpty(), EnumPipePart.VALUES);
+        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, () -> hasWork, EnumPipePart.VALUES);
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(mjBattery)));
     }
 
@@ -250,6 +250,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
             mjBattery.addPowerChecking(distillPower, FluidAction.EXECUTE);
             distillPower = 0;
             isActive = false;
+            hasWork = false;
         } else {
             FluidStack reqIn = currentRecipe.in();
             FluidStack outLiquid = currentRecipe.outLiquid();
@@ -262,6 +263,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
             boolean canFillGas = tankGasOut.fillInternal(outGas, FluidAction.SIMULATE) == outGas.getAmount();
 
             if (canExtract && canFillLiquid && canFillGas) {
+                hasWork = true;
                 long max = MAX_MJ_PER_TICK;
                 max *= mjBattery.getStored() + max;
                 max /= mjBattery.getCapacity() / 2;
@@ -279,6 +281,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
                     tankLiquidOut.fillInternal(outLiquid, FluidAction.EXECUTE);
                 }
             } else {
+                hasWork = false;
                 mjBattery.addPowerChecking(distillPower, FluidAction.EXECUTE);
                 distillPower = 0;
                 isActive = false;

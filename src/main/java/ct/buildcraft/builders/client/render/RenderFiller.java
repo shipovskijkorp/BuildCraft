@@ -33,29 +33,21 @@ public class RenderFiller implements BlockEntityRenderer<TileFiller> {
 
     @Override
     public void render(TileFiller tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
-//        Minecraft.getInstance().getProfiler().push("bc");
-//        Minecraft.getInstance().getProfiler().push("filler");
-    	matrix.pushPose();
-    	VertexConsumer bb = buffer.getBuffer(RenderType.cutout());
-       	Matrix4f pose = matrix.last().pose();
-    	Matrix3f normal = matrix.last().normal();
-//        Minecraft.getInstance().getProfiler().push("main");
         if (tile.getBuilder() != null) {
+            matrix.pushPose();
             RenderSnapshotBuilder.render(tile.getBuilder(), tile.getLevel(), tile.getBlockPos(), partialTicks, matrix, buffer, itemRenderer);
+            matrix.popPose();
         }
-//        Minecraft.getInstance().getProfiler().pop();
 
-//        Minecraft.getInstance().getProfiler().push("box");
         if (tile.markerBox) {
- //           bb.setTranslation(x - tile.getBlockPos().getX(), y - tile.getBlockPos().getY(), z - tile.getBlockPos().getZ());
-            LaserBoxRenderer.renderLaserBoxDynamic(tile.box, BuildCraftLaserManager.STRIPES_WRITE, pose, normal, bb, true);
- //           bb.setTranslation(0, 0, 0);
+            VertexConsumer bb = buffer.getBuffer(RenderType.cutout());
+            matrix.pushPose();
+            matrix.translate(-tile.getBlockPos().getX(), -tile.getBlockPos().getY(), -tile.getBlockPos().getZ());
+            Matrix4f boxPose = matrix.last().pose();
+            Matrix3f boxNormal = matrix.last().normal();
+            LaserBoxRenderer.renderLaserBoxDynamic(tile.box, BuildCraftLaserManager.STRIPES_WRITE, boxPose, boxNormal, bb, true);
+            matrix.popPose();
         }
-        matrix.popPose();
-//        Minecraft.getInstance().getProfiler().pop();
-
-//        Minecraft.getInstance().getProfiler().pop();
-//        Minecraft.getInstance().getProfiler().pop();
     }
 
     @Override
