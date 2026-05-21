@@ -17,6 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -29,7 +30,7 @@ public class RequiredExtractorConstant extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
         return Collections.unmodifiableList(
             itemRefs.stream()
                 .map(ref -> ref.get(tileNbt))
@@ -39,7 +40,7 @@ public class RequiredExtractorConstant extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
         return Collections.unmodifiableList(
             fluidRefs.stream()
                 .map(ref -> ref.get(tileNbt))
@@ -49,7 +50,7 @@ public class RequiredExtractorConstant extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
         return Collections.unmodifiableList(
             itemRefs.stream()
                 .map(ref -> ref.get(entityNbt))
@@ -59,7 +60,7 @@ public class RequiredExtractorConstant extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
         return Collections.unmodifiableList(
             fluidRefs.stream()
                 .map(ref -> ref.get(entityNbt))

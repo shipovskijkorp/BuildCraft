@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -22,7 +23,7 @@ public class RequiredExtractorTank extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
         return Optional.ofNullable(path.get(tileNbt))
             .map(CompoundTag.class::cast)
             .map(nbt -> !nbt.contains("Empty") ? FluidStack.loadFluidStackFromNBT(nbt) : null)
@@ -32,7 +33,7 @@ public class RequiredExtractorTank extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
         return Optional.ofNullable(path.get(entityNbt))
             .map(CompoundTag.class::cast)
             .map(nbt -> !nbt.contains("Empty") ? FluidStack.loadFluidStackFromNBT(nbt) : null)

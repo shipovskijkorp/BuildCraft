@@ -11,8 +11,11 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.IFluidFilter;
 import ct.buildcraft.api.core.IFluidHandlerAdv;
+import ct.buildcraft.core.BCCoreItems;
+import ct.buildcraft.core.item.ItemFragileFluidContainer;
 import ct.buildcraft.lib.fluid.Tank;
 
 import net.minecraft.core.BlockPos;
@@ -197,5 +200,13 @@ public class FluidUtilBC {
 //            player.inventoryContainer.detectAndSendChanges();
         }
         return changed;
+    }
+    
+    public static ItemStack getFragileFluid(FluidStack fluid) {
+    //	if(fluid.isEmpty())
+ //   		return ItemStack.EMPTY;
+    	ItemStack item = new ItemStack(BCCoreItems.FRAGILE_FLUID_SHARD.get());
+    	ItemFragileFluidContainer.setFluid(item, fluid);
+    	return item;
     }
 }

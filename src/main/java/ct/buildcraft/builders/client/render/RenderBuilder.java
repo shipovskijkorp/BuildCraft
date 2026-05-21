@@ -101,4 +101,11 @@ public class RenderBuilder implements BlockEntityRenderer<TileBuilder> {
     public boolean shouldRenderOffScreen(TileBuilder te) {
         return true;
     }
+
+	@Override
+	public int getViewDistance() {
+		return 256;
+	}
+    
+    
 }

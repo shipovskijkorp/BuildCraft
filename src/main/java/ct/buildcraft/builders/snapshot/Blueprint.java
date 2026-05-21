@@ -28,8 +28,12 @@ import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class Blueprint extends Snapshot {
     public final List<ISchematicBlock> palette = new ArrayList<>();
@@ -131,9 +135,12 @@ public class Blueprint extends Snapshot {
         public final Set<ISchematicEntity> entities;
         public final Map<ISchematicEntity, List<ItemStack>> entitiesRequiredItems;
         public final Map<ISchematicEntity, List<FluidStack>> entitiesRequiredFluids;
+        
+        public final Level level;
 
-        public BuildingInfo(BlockPos basePos, Rotation rotation) {
+        public BuildingInfo(BlockPos basePos, Rotation rotation, Level level) {
             super(basePos, rotation);
+            this.level = level;
             // noinspection unchecked
             toPlaceRequiredItems = (List<ItemStack>[]) new List<?>[getDataSize()];
             // noinspection unchecked
@@ -148,8 +155,16 @@ public class Blueprint extends Snapshot {
                     for (int x = 0; x < getSnapshot().size.getX(); x++) {
                         ISchematicBlock schematicBlock = rotatedPalette.get(data[posToIndex(x, y, z)]);
                         if (!schematicBlock.isAir()) {
-                            toPlaceRequiredItems[posToIndex(x, y, z)] = schematicBlock.computeRequiredItems();
-                            toPlaceRequiredFluids[posToIndex(x, y, z)] = schematicBlock.computeRequiredFluids();
+                            List<ItemStack> requiredItems = schematicBlock.computeRequiredItems(level);
+							toPlaceRequiredItems[posToIndex(x, y, z)] = requiredItems;
+							
+/*                        	List<FluidStack> requiredFluids = new ArrayList<FluidStack>();
+                        	requiredItems.stream().map(FluidUtil::getFluidHandler)
+                        		.map(opt -> opt.lazyMap(fluidHandler -> fluidHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE)))
+                        		.filter(LazyOptional::isPresent).map(opt -> opt.orElse(FluidStack.EMPTY)).forEach(requiredFluids::add);
+                        	requiredFluids.addAll(schematicBlock.computeRequiredFluids(level));
+                            toPlaceRequiredFluids[posToIndex(x, y, z)] = requiredFluids;*/
+							toPlaceRequiredFluids[posToIndex(x, y, z)] = schematicBlock.computeRequiredFluids(level);
                         }
                     }
                 }
@@ -162,8 +177,8 @@ public class Blueprint extends Snapshot {
             for (ISchematicEntity schematicEntity : getSnapshot().entities) {
                 ISchematicEntity rotatedSchematicEntity = schematicEntity.getRotated(rotation);
                 entitiesBuilder.add(rotatedSchematicEntity);
-                entitiesRequiredItemsBuilder.put(rotatedSchematicEntity, schematicEntity.computeRequiredItems());
-                entitiesRequiredFluidsBuilder.put(rotatedSchematicEntity, schematicEntity.computeRequiredFluids());
+                entitiesRequiredItemsBuilder.put(rotatedSchematicEntity, schematicEntity.computeRequiredItems(level));
+                entitiesRequiredFluidsBuilder.put(rotatedSchematicEntity, schematicEntity.computeRequiredFluids(level));
             }
             entities = entitiesBuilder.build();
             entitiesRequiredItems = entitiesRequiredItemsBuilder.build();

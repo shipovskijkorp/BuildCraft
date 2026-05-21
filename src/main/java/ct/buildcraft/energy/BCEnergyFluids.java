@@ -162,7 +162,7 @@ public class BCEnergyFluids {
         
         RegistryObject<BCFluidType> TYPE = FLUID_TYPES.register(fullName, () -> 
         	new BCFluidType(FluidType.Properties.create().canSwim(false).density(boilAdjustedDensity).viscosity(tempAdjustedViscosity).temperature(300 + 50*heat).rarity(Rarity.UNCOMMON)
-        			, new ResourceLocation(fluidTexture + "_still"), new ResourceLocation(fluidTexture + "_flow"), (texLight + texDark)/2));
+        			, new ResourceLocation(fluidTexture + "_still"), new ResourceLocation(fluidTexture + "_flow"), /*(texLight + texDark)/2)*/0xFFFFFFFF));
         RegistryObject<BCFluid> SOURCE = RegistryObject.create(new ResourceLocation(BCEnergy.MODID, fullName), ForgeRegistries.Keys.FLUIDS, BCEnergy.MODID);
         RegistryObject<BCFluid> FLOWING = RegistryObject.create(new ResourceLocation(BCEnergy.MODID, fullName+"_flowing"), ForgeRegistries.Keys.FLUIDS, BCEnergy.MODID);
         RegistryObject<BucketItem> BUCKET = BCEnergy.ITEMS.register(name+"/"+HEAT_NAMES[heat]+"_bucket", () -> new BucketItem(SOURCE,new Item.Properties().stacksTo(1).tab(BCCore.tabFluids).craftRemainder(Items.BUCKET)));

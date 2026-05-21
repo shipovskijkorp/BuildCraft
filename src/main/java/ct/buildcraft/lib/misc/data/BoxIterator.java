@@ -62,7 +62,7 @@ public class BoxIterator implements Iterator<BlockPos> {
     public CompoundTag writeToNbt() {
         CompoundTag nbt = new CompoundTag();
         nbt.putLong("min", min.asLong());
-        nbt.putLong("max", min.asLong());
+        nbt.putLong("max", max.asLong());
         nbt.putBoolean("invert", invert);
         // repeat
         nbt.put("order", order.writeNBT());

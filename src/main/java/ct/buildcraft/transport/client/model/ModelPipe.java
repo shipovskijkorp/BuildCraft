@@ -161,13 +161,13 @@ public enum ModelPipe implements IDynamicBakedModel {
 	 * @see BlockPipeHolder#addDestroyEffects(BlockState, Level, BlockPos, ParticleEngine)
 	 * */
 	@Override
-	public TextureAtlasSprite getParticleIcon(ModelData data) {//TODO
+	public TextureAtlasSprite getParticleIcon(ModelData data) {
 		if(data == ModelData.EMPTY)
 			return SpriteUtil.missingSprite();
-		ResourceLocation identifier = data.get(PipeTypeModelKey).getPipe().definition.identifier;
+		ResourceLocation identifier = data.get(PipeTypeModelKey).getPipe().definition.textures[0];//TODO find correct tex
 //		return particleIcon.computeIfAbsent(new ResourceLocation(identifier.getNamespace(), "pipes/"+identifier.getPath()),
 //				Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS)::apply);
-		return particleIcon.computeIfAbsent(new ResourceLocation(identifier.getNamespace(), "pipes/"+identifier.getPath()),
+		return particleIcon.computeIfAbsent(identifier,
 				(a) -> {
 					TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(a);
 					if(sprite == SpriteUtil.missingSprite())

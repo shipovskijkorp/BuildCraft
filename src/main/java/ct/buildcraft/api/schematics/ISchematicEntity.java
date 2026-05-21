@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
@@ -21,12 +22,12 @@ public interface ISchematicEntity {
     Vec3 getPos();
 
     @Nonnull
-    default List<ItemStack> computeRequiredItems() {
+    default List<ItemStack> computeRequiredItems(Level level) {
         return Collections.emptyList();
     }
 
     @Nonnull
-    default List<FluidStack> computeRequiredFluids() {
+    default List<FluidStack> computeRequiredFluids(Level level) {
         return Collections.emptyList();
     }
 

@@ -216,7 +216,7 @@ public class FluidRenderer {
 	        Vec3 max, VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender) {
         if (fluidType == null || amount <= 0 ) 
             return;
-        renderFluidInteral(type,FluidStack.EMPTY, fluidType, cap, cap, max, max, fluidBuffer, matrix, sideRender);
+        renderFluidInteral(type, FluidStack.EMPTY, fluidType, amount, cap, min, max, fluidBuffer, matrix, sideRender);
     }
     
     private static void renderFluidInteral(FluidSpriteType type, FluidStack texParam, Fluid fluidType, double amount, double cap, Vec3 min,
@@ -407,7 +407,7 @@ public class FluidRenderer {
 
         // draw all the full sprites
         RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-   //     RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(((color>>16)&0xFF)/255f, ((color>>8)&0xFF)/255f, ((color)&0xFF)/255f, ((color>>24)&0xFF)/255f);//rgba
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);

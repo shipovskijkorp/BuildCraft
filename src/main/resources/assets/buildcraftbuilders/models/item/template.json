@@ -6,15 +6,15 @@
 		"overrides": [
 		        {
 		            "predicate": {
-		                "used": 1
+		                "buildcraftbuilder:used": 0
 		            },
-		            "model": "buildcraftbuilders:item/snapshot/template_used"
+		            "model": "buildcraftbuilders:item/snapshot/template_clean"
 		        },
 		        {
 		            "predicate": {
-		                "used": 0
+		                "buildcraftbuilder:used": 1
 		            },
-		            "model": "buildcraftbuilders:item/snapshot/template_clean"
+		            "model": "buildcraftbuilders:item/snapshot/template_used"
 		        }
 		    ]
 }

@@ -39,6 +39,7 @@ import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
@@ -83,7 +84,7 @@ public class SchematicEntityDefault implements ISchematicEntity {
 
     @Nonnull
     @Override
-    public List<ItemStack> computeRequiredItems() {
+    public List<ItemStack> computeRequiredItems(Level level) {
         Set<JsonRule> rules = RulesLoader.getRules(
             new ResourceLocation(entityNbt.getString("id")),
             entityNbt
@@ -95,14 +96,14 @@ public class SchematicEntityDefault implements ISchematicEntity {
             .map(rule -> rule.requiredExtractors)
             .filter(Objects::nonNull)
             .flatMap(Collection::stream)
-            .flatMap(requiredExtractor -> requiredExtractor.extractItemsFromEntity(entityNbt).stream())
+            .flatMap(requiredExtractor -> requiredExtractor.extractItemsFromEntity(entityNbt, level).stream())
             .filter(((Predicate<ItemStack>) ItemStack::isEmpty).negate())
             .collect(Collectors.toList());
     }
 
     @Nonnull
     @Override
-    public List<FluidStack> computeRequiredFluids() {
+    public List<FluidStack> computeRequiredFluids(Level level) {
         Set<JsonRule> rules = RulesLoader.getRules(
             new ResourceLocation(entityNbt.getString("id")),
             entityNbt
@@ -111,7 +112,7 @@ public class SchematicEntityDefault implements ISchematicEntity {
             .map(rule -> rule.requiredExtractors)
             .filter(Objects::nonNull)
             .flatMap(Collection::stream)
-            .flatMap(requiredExtractor -> requiredExtractor.extractFluidsFromEntity(entityNbt).stream())
+            .flatMap(requiredExtractor -> requiredExtractor.extractFluidsFromEntity(entityNbt, level).stream())
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }

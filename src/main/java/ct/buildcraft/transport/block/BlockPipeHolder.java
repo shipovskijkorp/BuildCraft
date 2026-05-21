@@ -81,6 +81,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -479,9 +480,6 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		for(int i =1 ;i<7;i++) {
 				centerShape = allShape[i] != null ? Shapes.or(centerShape, allShape[i]) : centerShape;
 		}
-		if(pos.getX() == -114&&pos.getZ() == -50) {
-			BCLog.d(false);
-		}
 		BCBlockHitResult trace = rayTrace(world, pos, carmpos, vec32, centerShape);
 		VoxelShape hitShape = trace != null ? allShape[trace.subHit] : null;
 		return hitShape == null ? Shapes.empty() : hitShape;//Shapes.create(hitShape.bounds().inflate(1 / 32.0));
@@ -789,14 +787,6 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	@Override
 	public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest,
 			FluidState fluid) {
-		if (world.isClientSide()) {
-			// return super.onDestroyedByPlayer(state, world, pos, player, willHarvest,
-			// fluid);
-			this.spawnDestroyParticles(world, player, pos, state);
-			world.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(player, state));
-			return false;
-		}
-
 		TilePipeHolder tile = getPipe(world, pos, false);
 		if (tile == null) {
 			return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
@@ -806,6 +796,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		BCBlockHitResult t = rayTrace(world, pos, player);
 		int subHit = t.subHit;
 		BlockHitResult trace = t.result;
+		
 		Direction side = null;
 		EnumWirePart part = null;
 		EnumWireBetween between = null;
@@ -815,13 +806,23 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 			part = getWirePartHit(subHit);
 			between = getWireBetweenHit(subHit);
 		}
+		
+		if (world.isClientSide()) {
+//			return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
+			this.spawnDestroyParticles(world, player, pos, state);
+			if(side == null && part == null && between ==null ) {
+				
+				world.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(player, state));
+				return true;
+			}
+			return false;
+		}
 
 		if (side != null) {
 			removePluggable(side, tile, toDrop);
 			if (!player.isCreative()) {
 				InventoryUtil.dropAll(world, pos, toDrop);
 			}
-			return false;
 		} else if (part != null) {
 			ItemStack stack = new ItemStack(BCTransportItems.wires.get(tile.wireManager.getColorOfPart(part)), 1);
 			toDrop.add(stack);
@@ -830,7 +831,6 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 				InventoryUtil.dropAll(world, pos, toDrop);
 			}
 			tile.scheduleNetworkUpdate(IPipeHolder.PipeMessageReceiver.WIRES);
-			return false;
 		} else if (between != null) {
 			ItemStack stack = new ItemStack(BCTransportItems.wires.get(tile.wireManager.getColorOfPart(between.parts[0])), between.to == null ? 2 : 1);
 			toDrop.add(stack);
@@ -843,45 +843,44 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 				InventoryUtil.dropAll(world, pos, toDrop);
 			}
 			tile.scheduleNetworkUpdate(IPipeHolder.PipeMessageReceiver.WIRES);
-			return false;
 		} else {
 //  		toDrop.addAll(getDrops(state, (ServerLevel) world, pos, null));
-            for (Direction face : Direction.values()) {
-                removePluggable(face, tile, toDrop);
-            }
+			return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
 		}
 		if (!player.isCreative()) {
 			InventoryUtil.dropAll(world, pos, toDrop);
 		}
+		return false;
 //	        LogUtils.getLogger().debug("destorybyp "+world.isClientSide);
-		return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
+		//return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
 	}
 
 	@Override
-	public List<ItemStack> getDrops(BlockState p_60537_, Builder builder) {
+	public List<ItemStack> getDrops(BlockState p_60537_, Builder builder) {//TODO move to TilePipeHolder
 		NonNullList<ItemStack> toDrop = NonNullList.create();
-		TilePipeHolder tile = getPipe(builder.getLevel(),
-				new BlockPos(builder.getOptionalParameter(LootContextParams.ORIGIN)), false);
-		if (tile == null) {
+		BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+		if (blockEntity != null && blockEntity instanceof TilePipeHolder tile) {
+			for (Direction face : Direction.values()) {
+				PipePluggable pluggable = tile.getPluggable(face);
+				if (pluggable != null) {
+					pluggable.addDrops(toDrop, 1);// 1 is meaningless
+				}
+			}
+			for (DyeColor color : tile.wireManager.parts.values()) {
+				ItemStack stack = new ItemStack(BCTransportItems.wires.get(color), 1);
+				toDrop.add(stack);
+			}
+			Pipe pipe = tile.getPipe();
+			if (pipe != Pipe.EMPTY) {
+				pipe.addDrops(toDrop, 1);// 1 is meaningless
+			}
+			return toDrop;
+		}
+		else {
 			BCLog.logger.debug(getDescriptionId() + ": the BlockEntity in "
 					+ builder.getOptionalParameter(LootContextParams.ORIGIN) + " can not be null!");
 			return toDrop;
 		}
-		for (Direction face : Direction.values()) {
-			PipePluggable pluggable = tile.getPluggable(face);
-			if (pluggable != null) {
-				pluggable.addDrops(toDrop, 1);// 1 is meaningless
-			}
-		}
-		for (DyeColor color : tile.wireManager.parts.values()) {
-			ItemStack stack = new ItemStack(BCTransportItems.wires.get(color), 1);
-			toDrop.add(stack);
-		}
-		Pipe pipe = tile.getPipe();
-		if (pipe != Pipe.EMPTY) {
-			pipe.addDrops(toDrop, 1);// 1 is meaningless
-		}
-		return toDrop;
 	}
 
 	@Override
@@ -921,8 +920,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	@Override
 	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity be,
 			ItemStack stack) {
-		player.awardStat(Stats.BLOCK_MINED.get(this));
-		player.causeFoodExhaustion(0.005F);
+		super.playerDestroy(world, player, pos, state, be, stack);
 	}
 
 	public boolean canBeConnectedTo(BlockGetter world, BlockPos pos, Direction facing) {
@@ -979,9 +977,14 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	
     private static HitSpriteInfo getHitSpriteInfo(BlockHitResult target, TilePipeHolder pipeHolder) {
     	BlockPos pos = pipeHolder.getBlockPos();
-        int p = computSubhit(pipeHolder, target.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ()), computHitOctant(target.getLocation()));
+    	
+        Vec3 location = target.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+        Vec3 dvec = location.subtract(0.5f, 0.5f, 0.5f).scale(-0.00125);//FIXME Temp use
+        location = location.add(dvec);
+		int p = computSubhit(pipeHolder, location, computHitOctant(location));
         VoxelShape aabb = null;
         TextureAtlasSprite sprite = SpriteUtil.missingSprite();
+        BCLog.d("" + p);
         if (0 <= p && p <= 6) {
             aabb = p == 0 ? BOX_CENTER : BOX_FACES[p - 1];
             PipeDefinition def = pipeHolder.getPipe().definition;
@@ -1250,4 +1253,11 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
     	return shape;
     	
     }
+
+	@Override
+	public Object getRenderPropertiesInternal() {
+		return this;
+	}
+    
+    
 }

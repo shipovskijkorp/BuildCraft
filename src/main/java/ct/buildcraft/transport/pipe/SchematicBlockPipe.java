@@ -6,32 +6,41 @@
 
 package ct.buildcraft.transport.pipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.ImmutableList;
-
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.InvalidInputDataException;
 import ct.buildcraft.api.schematics.ISchematicBlock;
 import ct.buildcraft.api.schematics.SchematicBlockContext;
-import ct.buildcraft.api.transport.pipe.PipeApi;
-import ct.buildcraft.api.transport.pipe.PipeDefinition;
 import ct.buildcraft.lib.misc.NBTUtilBC;
 import ct.buildcraft.transport.BCTransportBlocks;
+import ct.buildcraft.transport.block.BlockPipeHolder;
 import ct.buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class SchematicBlockPipe implements ISchematicBlock {
     private CompoundTag tileNbt;
     private Rotation tileRotation = Rotation.NONE;
+    
+    private List<ItemStack> requiredItems = null;
+    private List<FluidStack> requFluidStacks = null;
 
     public static boolean predicate(SchematicBlockContext context) {
         return context.world.getBlockState(context.pos).getBlock() == BCTransportBlocks.pipeHolder.get();
@@ -48,31 +57,51 @@ public class SchematicBlockPipe implements ISchematicBlock {
 
     @Nonnull
     @Override
-    public List<ItemStack> computeRequiredItems() {
-        try {
-            ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
-            PipeDefinition definition = PipeRegistry.INSTANCE.loadDefinition(
-                tileNbt.getCompound("pipe").getString("def")
-            );
-            DyeColor color = NBTUtilBC.readEnum(
-                tileNbt.getCompound("pipe").get("col"),
-                DyeColor.class
-            );
-            Item item = (Item) PipeApi.pipeRegistry.getItemForPipe(definition);
-            ItemStack stack = new ItemStack(item, 1);
-            if (item != null&&color != null) {
-            	CompoundTag tag = new CompoundTag();
-            	tag.putInt("color", color.getId() + 1);
-    			stack.setTag(tag);
-            }
-            builder.add(stack);
-            return builder.build();
-        } catch (InvalidInputDataException e) {
-            throw new RuntimeException(e);
-        }
+    public List<ItemStack> computeRequiredItems(Level level) {
+    	if(requiredItems == null)
+    		buildRequireCache(level);
+    	return requiredItems;
     }
+    
+    
 
     @Override
+	public List<FluidStack> computeRequiredFluids(Level level) {
+		if(requFluidStacks == null)
+			buildRequireCache(level);
+		return requFluidStacks;
+	}
+    
+    private void buildRequireCache(Level level) {
+    	if(level instanceof ServerLevel serverLevel) {
+			BlockPipeHolder pipeBlock = BCTransportBlocks.pipeHolder.get();
+			BlockState defaultBlockState = pipeBlock.defaultBlockState();
+			BlockEntity tile = BlockEntity.loadStatic(BlockPos.ZERO, defaultBlockState, tileNbt);
+			tile.setLevel(serverLevel);
+	    	List<ItemStack> require = pipeBlock.getDrops(defaultBlockState, new Builder(serverLevel)
+	    			.withOptionalParameter(LootContextParams.ORIGIN, Vec3.ZERO)
+	    			.withOptionalParameter(LootContextParams.BLOCK_ENTITY, tile));
+	    	tile.setRemoved();
+	    	
+	    	List<ItemStack> notFluidItem = require.stream().filter((item) -> !(FluidUtil.getFluidHandler(item).isPresent())).toList();
+	    	List<ItemStack> fluidItem = new ArrayList<>();
+	    	
+	    	requFluidStacks = require.stream().map(FluidUtil::getFluidHandler)
+	    		.map(opt -> opt.lazyMap(fluidHandler -> {
+	    			FluidStack fluid = fluidHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE);
+					ItemStack container = fluidHandler.getContainer();
+					if(!container.isEmpty())
+						fluidItem.add(container);
+	    			return fluid;
+	    		}))
+	    		.filter(LazyOptional::isPresent).map(opt -> opt.orElse(FluidStack.EMPTY)).toList();
+	    	
+	    	fluidItem.addAll(notFluidItem);
+	    	requiredItems = fluidItem;
+    	}
+    }
+
+	@Override
     public SchematicBlockPipe getRotated(Rotation rotation) {
         SchematicBlockPipe schematicBlock = new SchematicBlockPipe();
         schematicBlock.tileNbt = tileNbt;
@@ -124,7 +153,8 @@ public class SchematicBlockPipe implements ISchematicBlock {
     public boolean isBuilt(Level world, BlockPos blockPos) {
     	CompoundTag copy = tileNbt.copy();
     	CompoundTag tileTag = null;
-    	if(world.getBlockEntity(blockPos) instanceof TilePipeHolder tile) {
+    	BlockEntity worldTile = world.getBlockEntity(blockPos);
+		if(worldTile instanceof TilePipeHolder tile) {
 	    	copy.putInt("x", blockPos.getX());
 	    	copy.putInt("y", blockPos.getY());
 	    	copy.putInt("z", blockPos.getZ());
@@ -134,7 +164,10 @@ public class SchematicBlockPipe implements ISchematicBlock {
 	    	tileTag = tile.serializeNBT();
 	    	tile.rotate(tileRotation);
     	}
-		return tileTag != null && copy.equals(tileTag);
+//		if(worldTile == null)
+			
+		boolean flag2 = tileTag != null && copy.toString().equals(copy.toString());
+		return flag2;
     }
 
     @Override

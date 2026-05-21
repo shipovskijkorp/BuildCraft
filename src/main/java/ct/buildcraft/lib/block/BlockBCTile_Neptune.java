@@ -4,11 +4,15 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package ct.buildcraft.lib.block;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+
 import ct.buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,6 +30,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 
 public abstract class BlockBCTile_Neptune extends BlockBCBase_Neptune implements EntityBlock {
@@ -83,8 +89,14 @@ public abstract class BlockBCTile_Neptune extends BlockBCBase_Neptune implements
 	}
     
 	@Override
-	public List<ItemStack> getDrops(BlockState p_60537_, Builder p_60538_) {
-		return Collections.singletonList(new ItemStack(p_60537_.getBlock()));
+	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+		BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+		NonNullList<ItemStack> drops = NonNullList.create();
+		if(blockEntity instanceof TileBC_Neptune tile) {
+			tile.addDrops(drops, UPDATE_ALL);
+		}
+		drops.add(state.getCloneItemStack(null, null, null, null));//TODOs
+		return drops;
 	}
 
 	@Override

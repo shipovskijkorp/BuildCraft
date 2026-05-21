@@ -56,6 +56,7 @@ public enum PipeBaseModelGenStandard implements IPipeBaseModelGen {
                 ResourceLocation name = def.textures[i];
                 TextureAtlasSprite sprite = sprites.get(name);
                 event.addSprite(name);
+                BCLog.d("Loading text : " + def.identifier + " " + name);
 /*                    sprite = map.getSprite(name);
                     if (sprite == null) {
 //                        sprite = AtlasSpriteVariants.createForConfig(name);

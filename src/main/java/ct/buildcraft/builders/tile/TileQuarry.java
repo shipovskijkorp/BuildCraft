@@ -34,6 +34,8 @@ import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.api.mj.MjBattery;
 import ct.buildcraft.api.mj.MjCapabilityHelper;
 import ct.buildcraft.api.tiles.IDebuggable;
+import ct.buildcraft.api.tiles.IHasWork;
+import ct.buildcraft.api.tiles.TilesAPI;
 import ct.buildcraft.builders.BCBuildersBlocks;
 import ct.buildcraft.builders.BCBuildersConfig;
 import ct.buildcraft.core.BCCoreConfig;
@@ -91,7 +93,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 
 
-public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoadingTile {
+public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoadingTile, IHasWork {
     public static final boolean DEBUG_QUARRY = BCDebugging.shouldDebugLog("builders.quarry");
     private static final long MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
     private static final ResourceLocation ADVANCEMENT_COMPLETE
@@ -176,6 +178,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
     public TileQuarry(BlockPos pos, BlockState state) {
     	super(BCBuildersBlocks.QUARRY_TILE_BC8.get(), pos, state);
+        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, this, EnumPipePart.VALUES);
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery)));
         caps.addCapabilityInstance(
             CapUtil.CAP_ITEM_TRANSACTOR, AutomaticProvidingTransactor.INSTANCE, EnumPipePart.VALUES
@@ -437,6 +440,13 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
     private boolean canIgnoreInFrameBox(BlockPos blockPos) {
         return !level.isEmptyBlock(blockPos) && BlockUtil.getFluidWithFlowing(level, blockPos) == Fluids.EMPTY;
+    }
+
+    public boolean hasWork() {
+        if (!frameBox.isInitialized() || !miningBox.isInitialized()) return false;
+        if (!firstChecked || currentTask != null) return true;
+        if (!frameBreakBlockPoses.isEmpty() || !framePlaceFramePoses.isEmpty()) return true;
+        return boxIterator == null || boxIterator.hasNext();
     }
 
     private void check(BlockPos blockPos) {

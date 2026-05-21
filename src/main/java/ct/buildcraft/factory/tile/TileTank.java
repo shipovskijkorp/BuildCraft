@@ -424,7 +424,6 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
 
 	@Override
 	public void addDrops(NonNullList<ItemStack> toDrop, int fortune) {
-		FluidItemDrops.addFluidDrops(toDrop, tank);
 		super.addDrops(toDrop, fortune);
 	}
 

@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.schematics.ISchematicBlock;
 import ct.buildcraft.api.schematics.ISchematicEntity;
 import ct.buildcraft.api.schematics.SchematicEntityContext;
@@ -98,7 +99,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         return Stream.concat(
             requiredItems == null ? Stream.empty() : requiredItems.stream(),
             requiredFluids == null ? Stream.empty() : requiredFluids.stream()
-                .map(FluidUtil::getFilledBucket)
+                .map(FluidUtilBC::getFragileFluid)
         );
     }
 
@@ -239,14 +240,14 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         if (level.isClientSide) {
             return super.tick();
         }
-//        tile.getWorldBC().profiler.startSection("entitiesWithinBox");
-        List<Entity> entitiesWithinBox = tile.getWorldBC().getEntitiesOfClass(
+        level.getProfiler().push("entitiesWithinBox");
+        List<Entity> entitiesWithinBox = level.getEntitiesOfClass(
             Entity.class,
             getBuildingInfo().box.getBoundingBox(),
             Objects::nonNull
         );
-//        tile.getWorldBC().profiler.endSection();
-//        tile.getWorldBC().profiler.startSection("toSpawn");
+        level.getProfiler().pop();
+        level.getProfiler().push("toSpawn");
         List<ISchematicEntity> toSpawn = getBuildingInfo().entities.stream()
             .filter(schematicEntity ->
                 entitiesWithinBox.stream()
@@ -258,9 +259,9 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                     .noneMatch(distance -> distance < MAX_ENTITY_DISTANCE)*/
             )
             .collect(Collectors.toList());
-//        tile.getWorldBC().profiler.endSection();
+        level.getProfiler().pop();
         // Compute needed stacks
-//        tile.getWorldBC().profiler.startSection("remainingDisplayRequired");
+        level.getProfiler().push("remainingDisplayRequired");
         remainingDisplayRequired.clear();
         remainingDisplayRequired.addAll(StackUtil.mergeSameItems(
             Stream.concat(
@@ -274,9 +275,9 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                     )
             ).collect(Collectors.toList())
         ));
-//        tile.getWorldBC().profiler.endSection();
+        level.getProfiler().pop();
         // Kill not needed entities
-//        tile.getWorldBC().profiler.startSection("toKill");
+        level.getProfiler().push("toKill");
         List<Entity> toKill = entitiesWithinBox.stream()
             .filter(entity ->
                 entity != null &&
@@ -289,9 +290,9 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
 /*                        .map(ISchematicEntity::getPos)
                         .map(Vec3.atLowerCornerOf(getBuildingInfo().offsetPos)::add)
                         .map(entity::distanceToSqr)
- //                       .noneMatch(distance -> distance < MAX_ENTITY_DISTANCE)&&*/
+/                       .noneMatch(distance -> distance < MAX_ENTITY_DISTANCE)&&*/
                     SchematicEntityManager.getSchematicEntity(new SchematicEntityContext(
-                        tile.getWorldBC(),
+                        level,
                         BlockPos.ZERO,
                         entity
                     )) != null
@@ -301,12 +302,12 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
             if (!tile.getBattery().isFull()) {
                 return false;
             } else {
-//                tile.getWorldBC().profiler.startSection("kill");
+                level.getProfiler().push("kill");
                 toKill.forEach(Entity::kill);
-//                tile.getWorldBC().profiler.endSection();
+                level.getProfiler().pop();
             }
         }
-//        tile.getWorldBC().profiler.endSection();
+        level.getProfiler().pop();
         // Call superclass method
         if (super.tick()) {
             // Spawn needed entities
@@ -314,7 +315,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 if (!tile.getBattery().isFull()) {
                     return false;
                 } else {
-//                    tile.getWorldBC().profiler.startSection("spawn");
+                    level.getProfiler().push("spawn");
                     toSpawn.stream()
                         .filter(schematicEntity ->
                             tryExtractRequired(
@@ -324,7 +325,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                             ).isPresent()
                         )
                         .filter(schematicEntity ->
-                            schematicEntity.build(tile.getWorldBC(), getBuildingInfo().offsetPos) != null
+                            schematicEntity.build(level, getBuildingInfo().offsetPos) != null
                         )
                         .forEach(schematicEntity ->
                             tryExtractRequired(
@@ -333,7 +334,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                                 false
                             )
                         );
-//                    tile.getWorldBC().profiler.endSection();
+                    level.getProfiler().pop();
                 }
             }
             return true;
