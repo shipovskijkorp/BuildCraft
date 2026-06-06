@@ -3,15 +3,9 @@
   "overrides": [
     {
       "predicate": {
-        "buildcraftrobotics:board": 0.4
+        "buildcraftrobotics:board": 0.1
       },
-      "model": "buildcraftrobotics:item/board/yellow"
-    },
-    {
-      "predicate": {
-        "buildcraftrobotics:board": 0.3
-      },
-      "model": "buildcraftrobotics:item/board/red"
+      "model": "buildcraftrobotics:item/board/green"
     },
     {
       "predicate": {
@@ -21,9 +15,15 @@
     },
     {
       "predicate": {
-        "buildcraftrobotics:board": 0.1
+        "buildcraftrobotics:board": 0.3
       },
-      "model": "buildcraftrobotics:item/board/green"
+      "model": "buildcraftrobotics:item/board/red"
+    },
+    {
+      "predicate": {
+        "buildcraftrobotics:board": 0.4
+      },
+      "model": "buildcraftrobotics:item/board/yellow"
     }
   ]
 }

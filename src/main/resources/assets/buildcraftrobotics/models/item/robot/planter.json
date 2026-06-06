@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
+  "parent": "buildcraftrobotics:robot",
   "textures": {
-    "layer0": "buildcraftrobotics:entities/robot_planter"
+    "all": "buildcraftrobotics:entities/robot_planter"
   }
 }
