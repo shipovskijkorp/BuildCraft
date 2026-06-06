@@ -277,3 +277,51 @@ Lets you craft dirt into diamonds. This is a traditional mod that has existed fo
     ordering="NONE"
     side="BOTH"
     
+#robotics
+[[mods]]
+    modId="buildcraftrobotics"
+    version="8.0.0.0"
+    displayName="BuildCraft Robotics"
+    displayURL="buildcraft.com"
+    logoFile="buildcraft.png"
+    credits="BuildCraft Team"
+    authors="BuildCraft Team"
+    description='''
+Robotics module base port: robot items, docking station and redstone boards.
+    '''
+    displayTest="MATCH_VERSION"
+
+[[dependencies.buildcraftrobotics]]
+    modId="forge"
+    mandatory=true
+    versionRange="[41,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,1.20)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftlib"
+    mandatory=true
+    versionRange="[8.0.0.0]"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftcore"
+    mandatory=true
+    versionRange="[8.0.0.0]"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftsilicon"
+    mandatory=true
+    versionRange="[8.0.0.0]"
+    ordering="AFTER"
+    side="BOTH"
