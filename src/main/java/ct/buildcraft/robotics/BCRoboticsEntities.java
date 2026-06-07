@@ -13,7 +13,7 @@ public final class BCRoboticsEntities {
 
     public static final RegistryObject<EntityType<EntityRobot>> ROBOT = ENTITIES.register("robot", () ->
             EntityType.Builder.<EntityRobot>of(EntityRobot::new, MobCategory.MISC)
-                    .sized(0.6F, 0.6F)
+                    .sized(0.5F, 0.5F)
                     .clientTrackingRange(8)
                     .updateInterval(3)
                     .build(BCRobotics.MODID + ":robot"));

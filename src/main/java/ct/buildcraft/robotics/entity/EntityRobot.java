@@ -1,64 +1,117 @@
 package ct.buildcraft.robotics.entity;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.Multimap;
+
 import ct.buildcraft.api.boards.RedstoneBoardRobot;
+import ct.buildcraft.api.core.BlockIndex;
 import ct.buildcraft.api.core.IZone;
+import ct.buildcraft.api.events.RobotEvent;
 import ct.buildcraft.api.mj.MjBattery;
+import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.robots.IRobotRegistry;
 import ct.buildcraft.api.robots.RobotManager;
+import ct.buildcraft.api.tools.IToolWrench;
+import ct.buildcraft.lib.misc.FakePlayerProvider;
 import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import ct.buildcraft.robotics.BCRoboticsEntities;
+import ct.buildcraft.robotics.ai.AIRobotMain;
 import ct.buildcraft.robotics.item.ItemRobot;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 
 public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpawnData {
-    private static final ResourceLocation BASE_TEXTURE = new ResourceLocation("buildcraftrobotics", "textures/entities/robot_base.png");
+    private static final Set<Item> BLACKLISTED_ITEMS_FOR_UPDATE = new HashSet<>();
+    private static final double ROBOT_HALF_SIZE = 0.25D;
+    /**
+     * The 1.7.10 robot position is the centre of the 0.5x0.5x0.5 cube. Modern LivingEntity positions are normally
+     * feet-based, so the port keeps the old centre-based position and forces a centred bounding box after every snap
+     * or direct movement. This prevents one-tick sinking and keeps docked robots aligned to the station.
+     */
 
-    private final net.minecraft.core.NonNullList<ItemStack> inventory = net.minecraft.core.NonNullList.withSize(4, ItemStack.EMPTY);
+    public static final int MAX_WEARABLES = 8;
+    public static final int TRANSFER_INV_SLOTS = 4;
+    public static final int MAX_FLUID = 4_000;
+
+    private final net.minecraft.core.NonNullList<ItemStack> inventory = net.minecraft.core.NonNullList.withSize(TRANSFER_INV_SLOTS, ItemStack.EMPTY);
+    private final List<ItemStack> wearables = new ArrayList<>();
+    private final WeakHashMap<Entity, Long> unreachableEntities = new WeakHashMap<>();
     private final MjBattery battery = new MjBattery(MAX_ENERGY);
+
     private BoardEntry boardEntry = BCRoboticsBoards.EMPTY;
     private RedstoneBoardRobot board;
+    private AIRobotMain mainAI;
     private long robotId = NULL_ROBOT_ID;
+
     private DockingStation linkedStation;
+    private BlockIndex linkedStationIndex;
+    private Direction linkedStationSide;
+
     private DockingStation dockingStation;
-    private DockingStation mainStation;
+    private BlockIndex dockingStationIndex;
+    private Direction dockingStationSide;
+
     private ItemStack itemInUse = ItemStack.EMPTY;
     private boolean itemActive;
     private float aimYaw;
     private float aimPitch;
+    private FluidStack tank = FluidStack.EMPTY;
+    private boolean firstUpdateDone;
+    private boolean convertingToItems;
 
     public EntityRobot(EntityType<? extends EntityRobot> type, Level level) {
         super(type, level);
         setNoGravity(true);
+        noPhysics = true;
     }
 
     public EntityRobot(Level level, BoardEntry boardEntry) {
@@ -76,14 +129,18 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void setBoard(BoardEntry entry) {
         this.boardEntry = entry == null ? BCRoboticsBoards.EMPTY : entry;
         this.board = this.boardEntry.nbt().create(this);
+        if (!level.isClientSide && mainAI == null) {
+            mainAI = new AIRobotMain(this);
+            mainAI.start();
+        }
     }
 
     public BoardEntry getBoardEntry() {
         return boardEntry;
     }
 
-    public ResourceLocation getTexture() {
-        return boardEntry == null ? BASE_TEXTURE : boardEntry.robotTextureLocation();
+    public net.minecraft.resources.ResourceLocation getTexture() {
+        return boardEntry == null ? BCRoboticsBoards.EMPTY.robotTextureLocation() : boardEntry.robotTextureLocation();
     }
 
     public void setEnergy(int energy) {
@@ -105,17 +162,118 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public void tick() {
+        if (!firstUpdateDone) {
+            firstUpdate();
+            firstUpdateDone = true;
+        }
+
+        setNoGravity(true);
+        noPhysics = true;
+
+        if (!level.isClientSide) {
+            if (robotId != NULL_ROBOT_ID && getRegistry() != null) {
+                getRegistry().registerRobot(this);
+            }
+            resolveStations();
+            if (mainAI == null) {
+                mainAI = new AIRobotMain(this);
+                mainAI.start();
+            }
+            if (linkedStation == null || linkedStation.isInitialized()) {
+                mainAI.cycle();
+            }
+        }
+
+        if (dockingStation != null) {
+            snapToStation(dockingStation);
+        } else {
+            refreshRobotBoundingBox();
+        }
+
+        updateItem(itemInUse, 0, true);
+        for (int i = 0; i < inventory.size(); i++) {
+            updateItem(inventory.get(i), i, false);
+        }
+        battery.tick(level, position());
+
         super.tick();
-        if (!level.isClientSide && robotId != NULL_ROBOT_ID && getRegistry() != null) {
-            getRegistry().registerRobot(this);
+
+        if (dockingStation != null) {
+            snapToStation(dockingStation);
+        } else {
+            refreshRobotBoundingBox();
         }
-        if (!level.isClientSide && dockingStation != null) {
-            BlockPos pos = new BlockPos(dockingStation.x(), dockingStation.y(), dockingStation.z());
-            double x = pos.getX() + 0.5D + (dockingStation.side() == null ? 0.0D : dockingStation.side().getStepX() * 0.5D);
-            double y = pos.getY() + 0.5D + (dockingStation.side() == null ? 0.0D : dockingStation.side().getStepY() * 0.5D);
-            double z = pos.getZ() + 0.5D + (dockingStation.side() == null ? 0.0D : dockingStation.side().getStepZ() * 0.5D);
-            setPos(x, y, z);
+
+        if (!level.isClientSide && getY() < level.getMinBuildHeight() - 128) {
+            convertToItems();
         }
+    }
+
+    private void firstUpdate() {
+        if (!level.isClientSide) {
+            if (mainAI == null) {
+                mainAI = new AIRobotMain(this);
+                mainAI.start();
+            }
+            if (getRegistry() != null) {
+                getRegistry().registerRobot(this);
+            }
+        }
+    }
+
+    private void resolveStations() {
+        IRobotRegistry registry = getRegistry();
+        if (registry == null) return;
+        if (linkedStation == null && linkedStationIndex != null) {
+            linkedStation = registry.getStation(linkedStationIndex.toBlockPos(), linkedStationSide);
+        }
+        if (dockingStation == null && dockingStationIndex != null) {
+            dockingStation = registry.getStation(dockingStationIndex.toBlockPos(), dockingStationSide);
+        }
+    }
+
+    public static Vec3 stationPosition(DockingStation station) {
+        Direction side = station.side();
+        return new Vec3(
+                station.x() + 0.5D + (side == null ? 0.0D : side.getStepX() * 0.5D),
+                station.y() + 0.5D + (side == null ? 0.0D : side.getStepY() * 0.5D),
+                station.z() + 0.5D + (side == null ? 0.0D : side.getStepZ() * 0.5D)
+        );
+    }
+
+    private static double stationX(DockingStation station) {
+        return stationPosition(station).x;
+    }
+
+    private static double stationY(DockingStation station) {
+        return stationPosition(station).y;
+    }
+
+    private static double stationZ(DockingStation station) {
+        return stationPosition(station).z;
+    }
+
+    private void snapToStation(DockingStation station) {
+        Vec3 stationPos = stationPosition(station);
+        setNoGravity(true);
+        noPhysics = true;
+        setDeltaMovement(Vec3.ZERO);
+        setPos(stationPos.x, stationPos.y, stationPos.z);
+        refreshRobotBoundingBox();
+    }
+
+    private void refreshRobotBoundingBox() {
+        setBoundingBox(new AABB(
+                getX() - ROBOT_HALF_SIZE, getY() - ROBOT_HALF_SIZE, getZ() - ROBOT_HALF_SIZE,
+                getX() + ROBOT_HALF_SIZE, getY() + ROBOT_HALF_SIZE, getZ() + ROBOT_HALF_SIZE
+        ));
+    }
+
+    protected AABB makeBoundingBox() {
+        return new AABB(
+                getX() - ROBOT_HALF_SIZE, getY() - ROBOT_HALF_SIZE, getZ() - ROBOT_HALF_SIZE,
+                getX() + ROBOT_HALF_SIZE, getY() + ROBOT_HALF_SIZE, getZ() + ROBOT_HALF_SIZE
+        );
     }
 
     @Override
@@ -129,10 +287,38 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         tag.putLong("robotId", robotId);
         tag.put("battery", battery.serializeNBT());
         tag.putBoolean("itemActive", itemActive);
+        tag.putFloat("aimYaw", aimYaw);
+        tag.putFloat("aimPitch", aimPitch);
         if (!itemInUse.isEmpty()) {
             tag.put("itemInUse", itemInUse.save(new CompoundTag()));
         }
         ContainerHelper.saveAllItems(tag, inventory);
+        if (linkedStationIndex != null) {
+            tag.put("linkedStation", writeStation(linkedStationIndex, linkedStationSide));
+        }
+        if (dockingStationIndex != null) {
+            tag.put("currentStation", writeStation(dockingStationIndex, dockingStationSide));
+        }
+        if (!wearables.isEmpty()) {
+            net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
+            for (ItemStack stack : wearables) {
+                list.add(stack.save(new CompoundTag()));
+            }
+            tag.put("wearables", list);
+        }
+        if (mainAI != null) {
+            CompoundTag aiTag = new CompoundTag();
+            mainAI.writeToNBT(aiTag);
+            tag.put("mainAI", aiTag);
+        }
+        if (board != null && (mainAI == null || mainAI.getDelegateAI() != board)) {
+            CompoundTag boardTag = new CompoundTag();
+            board.writeToNBT(boardTag);
+            tag.put("boardAI", boardTag);
+        }
+        if (!tank.isEmpty()) {
+            tag.put("tank", tank.writeToNBT(new CompoundTag()));
+        }
     }
 
     @Override
@@ -141,27 +327,306 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         robotId = tag.contains("robotId") ? tag.getLong("robotId") : NULL_ROBOT_ID;
         battery.deserializeNBT(tag.getCompound("battery"));
         itemActive = tag.getBoolean("itemActive");
+        aimYaw = tag.getFloat("aimYaw");
+        aimPitch = tag.getFloat("aimPitch");
         itemInUse = tag.contains("itemInUse") ? ItemStack.of(tag.getCompound("itemInUse")) : ItemStack.EMPTY;
         ContainerHelper.loadAllItems(tag, inventory);
+        if (tag.contains("linkedStation")) {
+            readLinkedStation(tag.getCompound("linkedStation"));
+        }
+        if (tag.contains("currentStation")) {
+            readCurrentStation(tag.getCompound("currentStation"));
+        }
+        wearables.clear();
+        if (tag.contains("wearables")) {
+            net.minecraft.nbt.ListTag list = tag.getList("wearables", net.minecraft.nbt.Tag.TAG_COMPOUND);
+            for (int i = 0; i < list.size(); i++) {
+                ItemStack stack = ItemStack.of(list.getCompound(i));
+                if (!stack.isEmpty()) wearables.add(stack);
+            }
+        }
+        tank = tag.contains("tank") ? FluidStack.loadFluidStackFromNBT(tag.getCompound("tank")) : FluidStack.EMPTY;
+        if (!level.isClientSide) {
+            mainAI = null;
+            if (tag.contains("mainAI")) {
+                AIRobot loaded = AIRobot.loadAI(tag.getCompound("mainAI"), this);
+                if (loaded instanceof AIRobotMain loadedMain) {
+                    mainAI = loadedMain;
+                }
+            }
+            if (mainAI == null) {
+                mainAI = new AIRobotMain(this);
+                mainAI.start();
+            }
+        }
+    }
+
+    private static CompoundTag writeStation(BlockIndex index, @Nullable Direction side) {
+        CompoundTag tag = new CompoundTag();
+        CompoundTag indexTag = new CompoundTag();
+        index.writeTo(indexTag);
+        tag.put("index", indexTag);
+        tag.putByte("side", (byte) (side == null ? -1 : side.ordinal()));
+        return tag;
+    }
+
+    private void readLinkedStation(CompoundTag tag) {
+        linkedStationIndex = new BlockIndex(tag.getCompound("index"));
+        linkedStationSide = readSide(tag);
+    }
+
+    private void readCurrentStation(CompoundTag tag) {
+        dockingStationIndex = new BlockIndex(tag.getCompound("index"));
+        dockingStationSide = readSide(tag);
+    }
+
+    @Nullable
+    private static Direction readSide(CompoundTag tag) {
+        int sideId = tag.getByte("side");
+        return sideId >= 0 && sideId < Direction.values().length ? Direction.values()[sideId] : null;
     }
 
     @Override
-    public InteractionResult interactAt(Player player, net.minecraft.world.phys.Vec3 hitVec, InteractionHand hand) {
+    public InteractionResult interact(Player player, InteractionHand hand) {
+        return handleRobotInteract(player, hand);
+    }
+
+    public InteractionResult interactAt(Player player, Vec3 hitVec, InteractionHand hand) {
+        return handleRobotInteract(player, hand);
+    }
+
+    private InteractionResult handleRobotInteract(Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (stack.isEmpty()) {
+            return InteractionResult.PASS;
+        }
+
+        RobotEvent.Interact robotInteractEvent = new RobotEvent.Interact(this, player, stack);
+        MinecraftForge.EVENT_BUS.post(robotInteractEvent);
+        if (robotInteractEvent.isCanceled()) {
+            return InteractionResult.PASS;
+        }
+
+        if (player.isShiftKeyDown() && stack.getItem() instanceof IToolWrench wrench) {
+            RobotEvent.Dismantle robotDismantleEvent = new RobotEvent.Dismantle(this, player);
+            MinecraftForge.EVENT_BUS.post(robotDismantleEvent);
+            if (robotDismantleEvent.isCanceled()) {
+                return InteractionResult.PASS;
+            }
+            if (!level.isClientSide) {
+                onRobotHit(false);
+            } else {
+                wrench.wrenchUsed(player, hand, stack, new EntityHitResult(this));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (wearables.size() < MAX_WEARABLES && isWearable(stack)) {
+            if (!level.isClientSide) {
+                wearables.add(stack.split(1));
+            } else {
+                player.swing(hand);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
         return InteractionResult.PASS;
+    }
+
+    private boolean isWearable(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        if (stack.getItem() instanceof ArmorItem) return true;
+        return stack.getItem() instanceof ct.buildcraft.api.robots.IRobotOverlayItem
+                && ((ct.buildcraft.api.robots.IRobotOverlayItem) stack.getItem()).isValidRobotOverlay(stack);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        Entity src = source.getEntity();
+        if (src == null || src instanceof FallingBlockEntity || src instanceof Enemy || dockingStation != null) {
+            return false;
+        }
+        if (MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.living.LivingAttackEvent(this, source, amount))) {
+            return false;
+        }
+        if (!level.isClientSide) {
+            hurtTime = hurtDuration = 10;
+            int mul = 2600;
+            for (ItemStack wearable : wearables) {
+                if (wearable.getItem() instanceof ArmorItem armor) {
+                    mul = mul * 2 / Math.max(2, 2 + armor.getDefense());
+                } else {
+                    mul = Math.round(mul * 0.7F);
+                }
+            }
+            long energy = Math.round(amount * mul);
+            if (battery.getStored() - energy > 0) {
+                battery.extractPower(energy);
+                return true;
+            }
+            onRobotHit(true);
+        }
+        return true;
+    }
+
+    private void onRobotHit(boolean attacked) {
+        if (level.isClientSide) return;
+        if (attacked) {
+            convertToItems();
+        } else if (!wearables.isEmpty()) {
+            spawnAtLocation(wearables.remove(wearables.size() - 1), 0.0F);
+        } else if (!itemInUse.isEmpty()) {
+            spawnAtLocation(itemInUse, 0.0F);
+            itemInUse = ItemStack.EMPTY;
+        } else {
+            convertToItems();
+        }
+    }
+
+    private List<ItemStack> getDrops() {
+        List<ItemStack> drops = new ArrayList<>();
+        drops.add(asItemStack());
+        if (!itemInUse.isEmpty()) drops.add(itemInUse.copy());
+        for (ItemStack stack : inventory) {
+            if (!stack.isEmpty()) drops.add(stack.copy());
+        }
+        for (ItemStack stack : wearables) {
+            if (!stack.isEmpty()) drops.add(stack.copy());
+        }
+        return drops;
+    }
+
+    private void convertToItems() {
+        if (!level.isClientSide && !convertingToItems) {
+            convertingToItems = true;
+            undock();
+            releaseResources();
+            for (ItemStack stack : getDrops()) {
+                if (!stack.isEmpty()) spawnAtLocation(stack, 0.0F);
+            }
+            IRobotRegistry registry = getRegistry();
+            if (registry != null) registry.killRobot(this);
+            discard();
+        }
+    }
+
+    public void attackTargetEntityWithCurrentItem(Entity target) {
+        if (target == null || level.isClientSide || !target.isAttackable() || target.skipAttackInteraction(this)) {
+            return;
+        }
+        if (level instanceof ServerLevel serverLevel) {
+            Player fakePlayer = FakePlayerProvider.INSTANCE.getBuildCraftPlayer(serverLevel);
+            fakePlayer.setPos(getX(), getY(), getZ());
+            if (MinecraftForge.EVENT_BUS.post(new AttackEntityEvent(fakePlayer, target))) {
+                return;
+            }
+        }
+
+        float attackDamage = 2.0F;
+        if (!itemInUse.isEmpty()) {
+            Multimap<Attribute, AttributeModifier> attributes = itemInUse.getAttributeModifiers(EquipmentSlot.MAINHAND);
+            for (AttributeModifier modifier : attributes.get(Attributes.ATTACK_DAMAGE)) {
+                attackDamage = applyAttributeModifier(attackDamage, modifier);
+            }
+        }
+        if (target instanceof net.minecraft.world.entity.LivingEntity living) {
+            attackDamage += EnchantmentHelper.getDamageBonus(itemInUse, living.getMobType());
+        }
+
+        if (attackDamage > 0.0F && target.hurt(DamageSource.mobAttack(this), attackDamage)) {
+            setLastHurtMob(target);
+            if (target instanceof net.minecraft.world.entity.LivingEntity living) {
+                EnchantmentHelper.doPostHurtEffects(living, this);
+                EnchantmentHelper.doPostDamageEffects(this, target);
+                if (!itemInUse.isEmpty()) {
+                    itemInUse.getItem().hurtEnemy(itemInUse, living, this);
+                    if (itemInUse.isEmpty()) {
+                        setItemInUse(ItemStack.EMPTY);
+                    }
+                }
+            }
+        }
+    }
+
+    private static float applyAttributeModifier(float value, AttributeModifier modifier) {
+        return switch (modifier.getOperation()) {
+            case ADDITION -> (float) (value + modifier.getAmount());
+            case MULTIPLY_BASE -> (float) (value + value * modifier.getAmount());
+            case MULTIPLY_TOTAL -> (float) (value * (1.0D + modifier.getAmount()));
+        };
+    }
+
+    @Override
+    public void travel(Vec3 travelVector) {
+        if (dockingStation != null) {
+            setDeltaMovement(Vec3.ZERO);
+            return;
+        }
+        Vec3 motion = getDeltaMovement();
+        if (motion.lengthSqr() > 0.0D) {
+            noPhysics = true;
+            move(MoverType.SELF, motion);
+            refreshRobotBoundingBox();
+        }
+    }
+
+    @Override
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+        return false;
+    }
+
+    @Override
+    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
+    }
+
+    public boolean isOnLadder() {
+        return false;
+    }
+
+    public boolean onClimbable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPickable() {
+        return true;
+    }
+
+    @Override
+    public void push(Entity entity) {
+    }
+
+    public boolean canBeCollidedWith() {
+        return true;
     }
 
     @Override
     public Iterable<ItemStack> getArmorSlots() {
-        return Collections.emptyList();
+        return Collections.unmodifiableList(wearables);
     }
 
     @Override
     public ItemStack getItemBySlot(EquipmentSlot slot) {
+        if (slot == EquipmentSlot.MAINHAND) {
+            return itemInUse;
+        }
+        if (slot.getType() == EquipmentSlot.Type.ARMOR) {
+            int index = slot.getIndex();
+            return index >= 0 && index < wearables.size() ? wearables.get(index) : ItemStack.EMPTY;
+        }
         return ItemStack.EMPTY;
     }
 
     @Override
     public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
+        if (slot == EquipmentSlot.MAINHAND) {
+            setItemInUse(stack);
+        }
     }
 
     @Override
@@ -205,6 +670,20 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     @Override
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        if (slot < 0 || slot >= inventory.size()) return false;
+        ItemStack existing = inventory.get(slot);
+        return existing.isEmpty()
+                || (ItemStack.isSameItemSameTags(existing, stack) && existing.isStackable()
+                && existing.getCount() + stack.getCount() <= Math.min(existing.getMaxStackSize(), getMaxStackSize()));
+    }
+
+    @Override
+    public int getMaxStackSize() {
+        return 64;
+    }
+
+    @Override
     public void setChanged() {
     }
 
@@ -230,13 +709,20 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         itemActive = active;
     }
 
+    public boolean isItemActive() {
+        return itemActive;
+    }
+
     @Override
     public boolean isMoving() {
-        return false;
+        return getDeltaMovement().lengthSqr() > 1.0E-7D;
     }
 
     @Override
     public DockingStation getLinkedStation() {
+        if (linkedStation == null && linkedStationIndex != null && getRegistry() != null) {
+            linkedStation = getRegistry().getStation(linkedStationIndex.toBlockPos(), linkedStationSide);
+        }
         return linkedStation;
     }
 
@@ -253,10 +739,12 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public void aimItemAt(int x, int y, int z) {
-        double dx = x + 0.5D - getX();
-        double dy = y + 0.5D - getY();
-        double dz = z + 0.5D - getZ();
-        aimYaw = (float) (Math.atan2(dz, dx) * 180.0D / Math.PI) - 90.0F;
+        double dx = x - Math.floor(getX());
+        double dy = y - Math.floor(getY());
+        double dz = z - Math.floor(getZ());
+        if (dx != 0 || dz != 0) {
+            aimYaw = (float) (Math.atan2(dz, dx) * 180.0D / Math.PI) + 180.0F;
+        }
         aimPitch = (float) (-(Math.atan2(dy, Math.sqrt(dx * dx + dz * dz)) * 180.0D / Math.PI));
     }
 
@@ -282,19 +770,23 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public void dock(DockingStation station) {
-        linkedStation = station;
         dockingStation = station;
         if (station != null) {
             station.setLevel(level);
-            setPos(station.x() + 0.5D + (station.side() == null ? 0.0D : station.side().getStepX() * 0.5D),
-                    station.y() + 0.5D + (station.side() == null ? 0.0D : station.side().getStepY() * 0.5D),
-                    station.z() + 0.5D + (station.side() == null ? 0.0D : station.side().getStepZ() * 0.5D));
+            dockingStationIndex = station.index();
+            dockingStationSide = station.side();
+            snapToStation(station);
         }
     }
 
     @Override
     public void undock() {
-        dockingStation = null;
+        if (dockingStation != null) {
+            dockingStation.release(this);
+            dockingStation = null;
+            dockingStationIndex = null;
+            dockingStationSide = null;
+        }
     }
 
     @Override
@@ -319,10 +811,15 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public void unreachableEntityDetected(Entity entity) {
+        unreachableEntities.put(entity, level.getGameTime() + 1200L);
     }
 
     @Override
     public boolean isKnownUnreachable(Entity entity) {
+        Long expires = unreachableEntities.get(entity);
+        if (expires == null) return false;
+        if (expires >= level.getGameTime()) return true;
+        unreachableEntities.remove(entity);
         return false;
     }
 
@@ -351,7 +848,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     @Override
     public void remove(RemovalReason reason) {
         IRobotRegistry registry = getRegistry();
-        if (!level.isClientSide && registry != null) {
+        if (!level.isClientSide && !convertingToItems && registry != null) {
             registry.killRobot(this);
         }
         super.remove(reason);
@@ -360,36 +857,84 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     @Override
     public ItemStack receiveItem(BlockEntity blockEntity, ItemStack stack) {
         if (stack.isEmpty()) return ItemStack.EMPTY;
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).isEmpty()) {
-                inventory.set(i, stack.copy());
-                return ItemStack.EMPTY;
+        if (dockingStation == null || blockEntity == null || !dockingStation.index().nextTo(new BlockIndex(blockEntity))) {
+            return stack;
+        }
+        return insertIntoInventory(stack);
+    }
+
+    public ItemStack insertIntoInventory(ItemStack stack) {
+        return insertIntoInventory(stack, true);
+    }
+
+    public ItemStack insertIntoInventory(ItemStack stack, boolean doInsert) {
+        ItemStack remaining = stack.copy();
+        for (int i = 0; i < inventory.size() && !remaining.isEmpty(); i++) {
+            ItemStack existing = inventory.get(i);
+            if (!existing.isEmpty() && ItemStack.isSameItemSameTags(existing, remaining) && existing.isStackable()) {
+                int limit = Math.min(existing.getMaxStackSize(), getMaxStackSize());
+                int move = Math.min(limit - existing.getCount(), remaining.getCount());
+                if (move > 0) {
+                    if (doInsert) existing.grow(move);
+                    remaining.shrink(move);
+                }
             }
         }
-        return stack;
+        for (int i = 0; i < inventory.size() && !remaining.isEmpty(); i++) {
+            if (inventory.get(i).isEmpty()) {
+                int move = Math.min(Math.min(remaining.getMaxStackSize(), getMaxStackSize()), remaining.getCount());
+                if (doInsert) {
+                    ItemStack inserted = remaining.copy();
+                    inserted.setCount(move);
+                    inventory.set(i, inserted);
+                }
+                remaining.shrink(move);
+            }
+        }
+        if (doInsert && remaining.getCount() != stack.getCount()) setChanged();
+        return remaining;
     }
 
     @Override
     public void setMainStation(DockingStation station) {
-        mainStation = station;
+        if (linkedStation != null && linkedStation != station) {
+            linkedStation.unsafeRelease(this);
+        }
         linkedStation = station;
+        if (station != null) {
+            station.setLevel(level);
+            linkedStationIndex = station.index();
+            linkedStationSide = station.side();
+        } else {
+            linkedStationIndex = null;
+            linkedStationSide = null;
+        }
     }
 
     public DockingStation getMainStation() {
-        return mainStation;
+        return linkedStation;
     }
-
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
         buffer.writeUtf(boardEntry == null ? BCRoboticsBoards.EMPTY.id() : boardEntry.id());
         buffer.writeVarInt(getEnergy());
+        buffer.writeVarInt(wearables.size());
+        for (ItemStack stack : wearables) {
+            buffer.writeItem(stack);
+        }
     }
 
     @Override
     public void readSpawnData(FriendlyByteBuf buffer) {
         setBoard(BCRoboticsBoards.getById(buffer.readUtf(32767)));
         setEnergy(buffer.readVarInt());
+        wearables.clear();
+        int wearableCount = buffer.readVarInt();
+        for (int i = 0; i < wearableCount; i++) {
+            ItemStack stack = buffer.readItem();
+            if (!stack.isEmpty()) wearables.add(stack);
+        }
     }
 
     @Override
@@ -400,36 +945,68 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public int getTanks() {
-        return 0;
+        return 1;
     }
 
     @Override
     public FluidStack getFluidInTank(int tank) {
-        return FluidStack.EMPTY;
+        return tank == 0 ? this.tank.copy() : FluidStack.EMPTY;
     }
 
     @Override
     public int getTankCapacity(int tank) {
-        return 0;
+        return tank == 0 ? MAX_FLUID : 0;
     }
 
     @Override
     public boolean isFluidValid(int tank, FluidStack stack) {
-        return false;
+        return tank == 0 && (this.tank.isEmpty() || this.tank.isFluidEqual(stack));
     }
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        return 0;
+        if (resource == null || resource.isEmpty() || !isFluidValid(0, resource)) return 0;
+        int accepted = Math.min(MAX_FLUID - tank.getAmount(), resource.getAmount());
+        if (accepted <= 0) return 0;
+        if (action.execute()) {
+            if (tank.isEmpty()) {
+                tank = resource.copy();
+                tank.setAmount(accepted);
+            } else {
+                tank.grow(accepted);
+            }
+        }
+        return accepted;
     }
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
-        return FluidStack.EMPTY;
+        if (resource == null || resource.isEmpty() || tank.isEmpty() || !tank.isFluidEqual(resource)) {
+            return FluidStack.EMPTY;
+        }
+        return drain(resource.getAmount(), action);
     }
 
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
-        return FluidStack.EMPTY;
+        if (maxDrain <= 0 || tank.isEmpty()) return FluidStack.EMPTY;
+        int drained = Math.min(maxDrain, tank.getAmount());
+        FluidStack result = tank.copy();
+        result.setAmount(drained);
+        if (action.execute()) {
+            tank.shrink(drained);
+            if (tank.getAmount() <= 0) tank = FluidStack.EMPTY;
+        }
+        return result;
+    }
+
+    private void updateItem(ItemStack stack, int slot, boolean held) {
+        if (stack.isEmpty() || BLACKLISTED_ITEMS_FOR_UPDATE.contains(stack.getItem())) return;
+        try {
+            stack.inventoryTick(level, this, slot, held);
+        } catch (Exception e) {
+            e.printStackTrace();
+            BLACKLISTED_ITEMS_FOR_UPDATE.add(stack.getItem());
+        }
     }
 }

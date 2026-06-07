@@ -4,6 +4,21 @@ import ct.buildcraft.api.BCModules;
 import ct.buildcraft.lib.CreativeTabManager;
 import ct.buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import ct.buildcraft.robotics.zone.MessageZoneMapRequest;
+import ct.buildcraft.robotics.ai.AIRobotFetchItem;
+import ct.buildcraft.robotics.ai.AIRobotGotoBlock;
+import ct.buildcraft.robotics.ai.AIRobotGotoSleep;
+import ct.buildcraft.robotics.ai.AIRobotGotoStation;
+import ct.buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
+import ct.buildcraft.robotics.ai.AIRobotGotoStationToUnload;
+import ct.buildcraft.robotics.ai.AIRobotMain;
+import ct.buildcraft.robotics.ai.AIRobotRecharge;
+import ct.buildcraft.robotics.ai.AIRobotSearchAndGotoStation;
+import ct.buildcraft.robotics.ai.AIRobotSearchStation;
+import ct.buildcraft.robotics.ai.AIRobotShutdown;
+import ct.buildcraft.robotics.ai.AIRobotSleep;
+import ct.buildcraft.robotics.ai.AIRobotStraightMoveTo;
+import ct.buildcraft.robotics.ai.AIRobotUnload;
+import ct.buildcraft.robotics.boards.BoardRobotPicker;
 import ct.buildcraft.api.robots.RobotManager;
 import ct.buildcraft.robotics.client.render.RenderRobot;
 import ct.buildcraft.robotics.zone.MessageZoneMapResponse;
@@ -53,6 +68,8 @@ public class BCRobotics {
 
         RobotManager.registryProvider = SimpleRobotRegistryProvider.INSTANCE;
         RobotManager.registerDockingStation(DockingStationPipe.class, "pipe");
+        registerRoboticsAI();
+        BoardRobotPicker.onServerStart();
 
         // No config is registered yet; this keeps the module bootstrap deliberately small.
     }
@@ -66,6 +83,28 @@ public class BCRobotics {
 
     private static void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(BCRoboticsEntities.ROBOT.get(), ct.buildcraft.robotics.entity.EntityRobot.createAttributes().build());
+    }
+
+
+    private static void registerRoboticsAI() {
+        if (RobotManager.getAIRobotName(AIRobotMain.class) != null) {
+            return;
+        }
+        RobotManager.registerAIRobot(AIRobotMain.class, "main", "buildcraft.robotics.ai.AIRobotMain");
+        RobotManager.registerAIRobot(BoardRobotPicker.class, "boardPicker", "buildcraft.robotics.boards.BoardRobotPicker");
+        RobotManager.registerAIRobot(AIRobotFetchItem.class, "fetchItem", "buildcraft.robotics.ai.AIRobotFetchItem");
+        RobotManager.registerAIRobot(AIRobotGotoBlock.class, "gotoBlock", "buildcraft.robotics.ai.AIRobotGotoBlock");
+        RobotManager.registerAIRobot(AIRobotStraightMoveTo.class, "straightMoveTo", "buildcraft.robotics.ai.AIRobotStraightMoveTo");
+        RobotManager.registerAIRobot(AIRobotGotoStation.class, "gotoStation", "buildcraft.robotics.ai.AIRobotGotoStation");
+        RobotManager.registerAIRobot(AIRobotGotoStationToUnload.class, "gotoStationToUnload", "buildcraft.robotics.ai.AIRobotGotoStationToUnload");
+        RobotManager.registerAIRobot(AIRobotGotoStationAndUnload.class, "gotoStationAndUnload", "buildcraft.robotics.ai.AIRobotGotoStationAndUnload");
+        RobotManager.registerAIRobot(AIRobotSearchStation.class, "searchStation", "buildcraft.robotics.ai.AIRobotSearchStation");
+        RobotManager.registerAIRobot(AIRobotSearchAndGotoStation.class, "searchAndGotoStation", "buildcraft.robotics.ai.AIRobotSearchAndGotoStation");
+        RobotManager.registerAIRobot(AIRobotUnload.class, "unload", "buildcraft.robotics.ai.AIRobotUnload");
+        RobotManager.registerAIRobot(AIRobotGotoSleep.class, "gotoSleep", "buildcraft.robotics.ai.AIRobotGotoSleep");
+        RobotManager.registerAIRobot(AIRobotSleep.class, "sleep", "buildcraft.robotics.ai.AIRobotSleep");
+        RobotManager.registerAIRobot(AIRobotRecharge.class, "recharge", "buildcraft.robotics.ai.AIRobotRecharge");
+        RobotManager.registerAIRobot(AIRobotShutdown.class, "shutdown", "buildcraft.robotics.ai.AIRobotShutdown");
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

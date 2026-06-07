@@ -1,0 +1,96 @@
+package ct.buildcraft.robotics.ai;
+
+import ct.buildcraft.api.core.BlockIndex;
+import ct.buildcraft.api.robots.AIRobot;
+import ct.buildcraft.api.robots.DockingStation;
+import ct.buildcraft.api.robots.EntityRobotBase;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.phys.Vec3;
+
+public class AIRobotGotoStation extends AIRobot {
+    private BlockIndex stationIndex;
+    private Direction stationSide;
+
+    public AIRobotGotoStation(EntityRobotBase robot) {
+        super(robot);
+    }
+
+    public AIRobotGotoStation(EntityRobotBase robot, DockingStation station) {
+        this(robot);
+        stationIndex = station.index();
+        stationSide = station.side();
+        setSuccess(false);
+    }
+
+    @Override
+    public void start() {
+        DockingStation station = getStation();
+        if (station == null) {
+            terminate();
+        } else if (station == robot.getDockingStation()) {
+            setSuccess(true);
+            terminate();
+        } else if (station.take(robot)) {
+            Direction side = station.side();
+            int dx = side == null ? 0 : side.getStepX();
+            int dy = side == null ? 0 : side.getStepY();
+            int dz = side == null ? 0 : side.getStepZ();
+            startDelegateAI(new AIRobotGotoBlock(robot, station.x() + dx, station.y() + dy, station.z() + dz));
+        } else {
+            terminate();
+        }
+    }
+
+    @Override
+    public void delegateAIEnded(AIRobot ai) {
+        DockingStation station = getStation();
+        if (station == null) {
+            terminate();
+        } else if (ai instanceof AIRobotGotoBlock) {
+            if (ai.success()) {
+                Direction side = station.side();
+                int dx = side == null ? 0 : side.getStepX();
+                int dy = side == null ? 0 : side.getStepY();
+                int dz = side == null ? 0 : side.getStepZ();
+                startDelegateAI(new AIRobotStraightMoveTo(robot, station.x() + 0.5D + dx * 0.5D,
+                        station.y() + 0.5D + dy * 0.5D, station.z() + 0.5D + dz * 0.5D));
+            } else {
+                terminate();
+            }
+        } else {
+            setSuccess(true);
+            robot.setDeltaMovement(Vec3.ZERO);
+            if (station.side() != null && station.side().getStepY() == 0) {
+                robot.aimItemAt(station.x() + 2 * station.side().getStepX(), station.y(), station.z() + 2 * station.side().getStepZ());
+            }
+            robot.dock(station);
+            terminate();
+        }
+    }
+
+    private DockingStation getStation() {
+        if (stationIndex == null || robot.getRegistry() == null) return null;
+        return robot.getRegistry().getStation(stationIndex.toBlockPos(), stationSide);
+    }
+
+    @Override
+    public boolean canLoadFromNBT() {
+        return true;
+    }
+
+    @Override
+    public void writeSelfToNBT(CompoundTag nbt) {
+        CompoundTag idx = new CompoundTag();
+        stationIndex.writeTo(idx);
+        nbt.put("stationIndex", idx);
+        nbt.putByte("stationSide", (byte) (stationSide == null ? -1 : stationSide.ordinal()));
+    }
+
+    @Override
+    public void loadSelfFromNBT(CompoundTag nbt) {
+        stationIndex = new BlockIndex(nbt.getCompound("stationIndex"));
+        int side = nbt.getByte("stationSide");
+        stationSide = side >= 0 && side < Direction.values().length ? Direction.values()[side] : null;
+    }
+}
