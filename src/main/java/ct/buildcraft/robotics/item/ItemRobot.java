@@ -4,11 +4,24 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.BCRobotics;
 import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import ct.buildcraft.robotics.BCRoboticsItems;
+
+import ct.buildcraft.api.events.RobotEvent;
+import ct.buildcraft.robotics.entity.EntityRobot;
+import ct.buildcraft.robotics.plug.RobotStationPluggable;
+import ct.buildcraft.transport.tile.TilePipeHolder;
+import ct.buildcraft.transport.block.BlockPipeHolder;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +29,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
@@ -76,4 +90,76 @@ public class ItemRobot extends Item {
                     .withStyle(ChatFormatting.GRAY));
         }
     }
+
+    public EntityRobot createRobot(ItemStack stack, Level level) {
+        BoardEntry board = BCRoboticsBoards.getRobotBoard(stack);
+        if (board == BCRoboticsBoards.EMPTY) {
+            return null;
+        }
+        EntityRobot robot = new EntityRobot(level, board);
+        robot.setEnergy(getEnergy(stack));
+        return robot;
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level level = context.getLevel();
+        Player player = context.getPlayer();
+        if (player == null) {
+            return InteractionResult.PASS;
+        }
+        BlockEntity blockEntity = level.getBlockEntity(context.getClickedPos());
+        if (!(blockEntity instanceof TilePipeHolder tile)) {
+            return InteractionResult.PASS;
+        }
+
+        Direction side = BlockPipeHolder.rayTracePluggableSide(level, context.getClickedPos(), player);
+        if (side == null) {
+            return InteractionResult.PASS;
+        }
+        if (!(tile.getPluggable(side) instanceof RobotStationPluggable station)) {
+            return InteractionResult.PASS;
+        }
+        return placeOnStation(context.getItemInHand(), player, level, tile, side, station);
+    }
+
+    public static InteractionResult placeOnStation(ItemStack currentItem, Player player, Level level, TilePipeHolder tile,
+                                                   Direction side, RobotStationPluggable pluggable) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+        DockingStation station = pluggable.getStation();
+        if (station == null || station.isTaken()) {
+            return InteractionResult.SUCCESS;
+        }
+        BoardEntry board = BCRoboticsBoards.getRobotBoard(currentItem);
+        if (board == BCRoboticsBoards.EMPTY) {
+            return InteractionResult.SUCCESS;
+        }
+        EntityRobot robot = ((ItemRobot) currentItem.getItem()).createRobot(currentItem, level);
+        if (robot == null || robot.getRegistry() == null) {
+            return InteractionResult.SUCCESS;
+        }
+        RobotEvent.Place robotEvent = new RobotEvent.Place(robot, player);
+        MinecraftForge.EVENT_BUS.post(robotEvent);
+        if (robotEvent.isCanceled()) {
+            return InteractionResult.SUCCESS;
+        }
+
+        robot.setUniqueRobotId(robot.getRegistry().getNextRobotId());
+        BlockPos pos = tile.getPipePos();
+        robot.setPos(pos.getX() + 0.5D + side.getStepX() * 0.5D,
+                pos.getY() + 0.5D + side.getStepY() * 0.5D,
+                pos.getZ() + 0.5D + side.getStepZ() * 0.5D);
+        if (station.takeAsMain(robot)) {
+            robot.dock(robot.getLinkedStation());
+            level.addFreshEntity(robot);
+            tile.scheduleRenderUpdate();
+            if (!player.isCreative()) {
+                currentItem.shrink(1);
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
+
 }

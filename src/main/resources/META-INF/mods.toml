@@ -325,3 +325,10 @@ Robotics module base port: robot items, docking station and redstone boards.
     versionRange="[8.0.0.0]"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcrafttransport"
+    mandatory=true
+    versionRange="[8.0.0.0]"
+    ordering="AFTER"
+    side="BOTH"

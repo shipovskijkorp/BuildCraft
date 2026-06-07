@@ -4,6 +4,8 @@ import ct.buildcraft.api.BCModules;
 import ct.buildcraft.lib.CreativeTabManager;
 import ct.buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import ct.buildcraft.robotics.zone.MessageZoneMapRequest;
+import ct.buildcraft.api.robots.RobotManager;
+import ct.buildcraft.robotics.client.render.RenderRobot;
 import ct.buildcraft.robotics.zone.MessageZoneMapResponse;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +17,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
@@ -33,9 +38,12 @@ public class BCRobotics {
     public BCRobotics() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::init);
+        modEventBus.addListener(BCRobotics::registerEntityAttributes);
 
         BCRoboticsBoards.init();
+        BCRoboticsPlugs.preInit();
         BCRoboticsItems.registry(modEventBus);
+        BCRoboticsEntities.registry(modEventBus);
 
         // Keep zone planner network messages available for the partially ported robotics zone code.
         ct.buildcraft.lib.net.MessageManager.registerMessageClass(BCModules.ROBOTICS, MessageZoneMapRequest.class,
@@ -43,12 +51,21 @@ public class BCRobotics {
         ct.buildcraft.lib.net.MessageManager.registerMessageClass(BCModules.ROBOTICS, MessageZoneMapResponse.class,
                 MessageZoneMapResponse.HANDLER, MessageZoneMapResponse::toBytes, MessageZoneMapResponse::new);
 
+        RobotManager.registryProvider = SimpleRobotRegistryProvider.INSTANCE;
+        RobotManager.registerDockingStation(DockingStationPipe.class, "pipe");
+
         // No config is registered yet; this keeps the module bootstrap deliberately small.
     }
 
     private void init(final FMLCommonSetupEvent event) {
         BCRoboticsBoards.init();
+        BCRoboticsPlugs.preInit();
+        RobotManager.registryProvider = SimpleRobotRegistryProvider.INSTANCE;
         TAB_ROBOTICS.setItem(BCRoboticsItems.ROBOT.get());
+    }
+
+    private static void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(BCRoboticsEntities.ROBOT.get(), ct.buildcraft.robotics.entity.EntityRobot.createAttributes().build());
     }
 
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -63,7 +80,19 @@ public class BCRobotics {
                         (stack, level, entity, seed) -> BCRoboticsBoards.getRobotModelValue(stack));
                 ItemProperties.register(BCRoboticsItems.REDSTONE_BOARD.get(), BOARD_MODEL,
                         (stack, level, entity, seed) -> BCRoboticsBoards.getBoardModelValue(stack));
+                BCRoboticsModels.init();
             });
+        }
+
+        @SubscribeEvent
+        public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(BCRoboticsEntities.ROBOT.get(), RenderRobot::new);
+        }
+
+
+        @SubscribeEvent
+        public static void onModelBake(BakingCompleted event) {
+            BCRoboticsModels.onModelBake(event);
         }
     }
 }
