@@ -27,11 +27,16 @@ import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import ct.buildcraft.robotics.BCRoboticsEntities;
 import ct.buildcraft.robotics.ai.AIRobotMain;
+import ct.buildcraft.robotics.ai.AIRobotShutdown;
+import ct.buildcraft.robotics.ai.AIRobotSleep;
 import ct.buildcraft.robotics.item.ItemRobot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
@@ -72,6 +77,7 @@ import net.minecraftforge.network.NetworkHooks;
 public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpawnData {
     private static final Set<Item> BLACKLISTED_ITEMS_FOR_UPDATE = new HashSet<>();
     private static final double ROBOT_HALF_SIZE = 0.25D;
+    private static final EntityDataAccessor<Boolean> ROBOT_ASLEEP = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.BOOLEAN);
     /**
      * The 1.7.10 robot position is the centre of the 0.5x0.5x0.5 cube. Modern LivingEntity positions are normally
      * feet-based, so the port keeps the old centre-based position and forces a centred bounding box after every snap
@@ -143,6 +149,22 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         return boardEntry == null ? BCRoboticsBoards.EMPTY.robotTextureLocation() : boardEntry.robotTextureLocation();
     }
 
+    /**
+     * Matches the old BuildCraft renderer flag: sleeping/shutdown robots render only their base texture with the dark
+     * centre, while working robots render the red/cyan active overlay. Inventory rendering is always active.
+     */
+    public boolean isAsleepForRendering() {
+        if (level.isClientSide) {
+            return entityData.get(ROBOT_ASLEEP);
+        }
+        return isAsleepOrShutdownOnServer();
+    }
+
+    private boolean isAsleepOrShutdownOnServer() {
+        AIRobot activeAI = mainAI == null ? null : mainAI.getActiveAI();
+        return activeAI instanceof AIRobotSleep || activeAI instanceof AIRobotShutdown;
+    }
+
     public void setEnergy(int energy) {
         battery.extractAll();
         battery.addPower(Math.max(0, Math.min(MAX_ENERGY, energy)), IFluidHandler.FluidAction.EXECUTE);
@@ -182,6 +204,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             if (linkedStation == null || linkedStation.isInitialized()) {
                 mainAI.cycle();
             }
+            entityData.set(ROBOT_ASLEEP, isAsleepOrShutdownOnServer());
         }
 
         if (dockingStation != null) {
@@ -279,6 +302,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(ROBOT_ASLEEP, true);
     }
 
     @Override
@@ -287,6 +311,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         tag.putLong("robotId", robotId);
         tag.put("battery", battery.serializeNBT());
         tag.putBoolean("itemActive", itemActive);
+        tag.putBoolean("asleep", isAsleepForRendering());
         tag.putFloat("aimYaw", aimYaw);
         tag.putFloat("aimPitch", aimPitch);
         if (!itemInUse.isEmpty()) {
@@ -327,6 +352,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         robotId = tag.contains("robotId") ? tag.getLong("robotId") : NULL_ROBOT_ID;
         battery.deserializeNBT(tag.getCompound("battery"));
         itemActive = tag.getBoolean("itemActive");
+        if (tag.contains("asleep")) {
+            entityData.set(ROBOT_ASLEEP, tag.getBoolean("asleep"));
+        }
         aimYaw = tag.getFloat("aimYaw");
         aimPitch = tag.getFloat("aimPitch");
         itemInUse = tag.contains("itemInUse") ? ItemStack.of(tag.getCompound("itemInUse")) : ItemStack.EMPTY;
@@ -919,6 +947,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void writeSpawnData(FriendlyByteBuf buffer) {
         buffer.writeUtf(boardEntry == null ? BCRoboticsBoards.EMPTY.id() : boardEntry.id());
         buffer.writeVarInt(getEnergy());
+        buffer.writeBoolean(isAsleepForRendering());
         buffer.writeVarInt(wearables.size());
         for (ItemStack stack : wearables) {
             buffer.writeItem(stack);
@@ -929,6 +958,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void readSpawnData(FriendlyByteBuf buffer) {
         setBoard(BCRoboticsBoards.getById(buffer.readUtf(32767)));
         setEnergy(buffer.readVarInt());
+        entityData.set(ROBOT_ASLEEP, buffer.readBoolean());
         wearables.clear();
         int wearableCount = buffer.readVarInt();
         for (int i = 0; i < wearableCount; i++) {

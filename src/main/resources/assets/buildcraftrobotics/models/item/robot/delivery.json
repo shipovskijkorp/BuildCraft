@@ -1,6 +1,6 @@
 {
   "parent": "buildcraftrobotics:robot",
   "textures": {
-    "all": "buildcraftrobotics:entities/robot_delivery"
+    "all": "buildcraftrobotics:entities/robot_delivery_active"
   }
 }

@@ -6,6 +6,7 @@ import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import ct.buildcraft.robotics.entity.EntityRobot;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -20,6 +21,8 @@ import net.minecraft.resources.ResourceLocation;
  * the correct item override yet.
  */
 public class RenderRobot extends EntityRenderer<EntityRobot> {
+    private static final ResourceLocation OVERLAY_RED = new ResourceLocation("buildcraftrobotics", "textures/entities/overlay_side.png");
+    private static final ResourceLocation OVERLAY_CYAN = new ResourceLocation("buildcraftrobotics", "textures/entities/overlay_bottom.png");
     private static final float MIN = -4.0F / 16.0F;
     private static final float MAX = 4.0F / 16.0F;
     private static final float TEX_SIZE = 32.0F;
@@ -38,9 +41,19 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
         // and AI are ported.
         poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - robot.getYRot()));
 
-        VertexConsumer vertices = buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(robot)));
         PoseStack.Pose pose = poseStack.last();
-        renderRobotCube(vertices, pose.pose(), pose.normal(), packedLight, 1.0F);
+        renderRobotCube(buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(robot))),
+                pose.pose(), pose.normal(), packedLight, 1.0F);
+
+        // Old BuildCraft rendered this overlay for non-sleeping robots. The inventory item renderer always used this
+        // active overlay, but placed robots only show it while actually doing work.
+        if (!robot.isAsleepForRendering()) {
+            float storagePercent = Math.max(0.0F, Math.min(1.0F, robot.getEnergy() / (float) EntityRobot.MAX_ENERGY));
+            renderRobotCube(buffer.getBuffer(RenderType.entityTranslucent(OVERLAY_RED)),
+                    pose.pose(), pose.normal(), LightTexture.FULL_BRIGHT, storagePercent);
+            renderRobotCube(buffer.getBuffer(RenderType.entityTranslucent(OVERLAY_CYAN)),
+                    pose.pose(), pose.normal(), LightTexture.FULL_BRIGHT, 1.0F);
+        }
 
         poseStack.popPose();
         super.render(robot, yaw, partialTicks, poseStack, buffer, packedLight);

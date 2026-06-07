@@ -1,6 +1,6 @@
 {
   "parent": "buildcraftrobotics:robot",
   "textures": {
-    "all": "buildcraftrobotics:entities/robot_knight"
+    "all": "buildcraftrobotics:entities/robot_knight_active"
   }
 }

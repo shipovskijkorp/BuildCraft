@@ -1,6 +1,6 @@
 {
   "parent": "buildcraftrobotics:robot",
   "textures": {
-    "all": "buildcraftrobotics:entities/robot_fluid_carrier"
+    "all": "buildcraftrobotics:entities/robot_fluid_carrier_active"
   }
 }
