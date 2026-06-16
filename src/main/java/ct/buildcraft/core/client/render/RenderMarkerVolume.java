@@ -105,7 +105,9 @@ public class RenderMarkerVolume implements BlockEntityRenderer<TileMarkerVolume>
         Direction faceForMax = VecUtil.getFacing(axis, false);
         Vec3 one = offset(min, faceForMin);
         Vec3 two = offset(max, faceForMax);
-        LaserData_BC8 data = new LaserData_BC8(LASER_TYPE, one, two, SCALE);
+        // The redstone signal beam should keep the original blue texture colour.
+        // Rendering it with diffuse shading/light sampling makes it look grey/dim in dark areas.
+        LaserData_BC8 data = new LaserData_BC8(LASER_TYPE, one, two, SCALE, false, false, 11, false);
         LaserRenderer_BC8.renderLaserDynamic(pose, normal, data, bb);
     }
 
