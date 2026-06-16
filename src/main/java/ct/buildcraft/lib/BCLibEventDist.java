@@ -105,8 +105,10 @@ public class BCLibEventDist {
 
 	    @SubscribeEvent
 	    public static void textureStitchPost(TextureStitchEvent.Post event) {
-	    	if("textures/atlas/blocks.png".equals(event.getAtlas().location().getPath()))
-	        SpriteHolderRegistry.onTextureStitchPost(event);
+	    	if("textures/atlas/blocks.png".equals(event.getAtlas().location().getPath())) {
+	            SpriteHolderRegistry.onTextureStitchPost(event);
+	            FluidRenderer.onTextureStitchPost(event);
+	        }
 	    	VariablePartLed.onTextureStitchPost(event);
 	    }
 	    

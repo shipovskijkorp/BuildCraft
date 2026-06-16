@@ -89,10 +89,10 @@ public class FluidRenderer {
     }
 
     public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
+        clearSpriteCache();
+        frozenMap.clear();
+        pack.clear();
     	mixinResourcePack();
-        for (FluidSpriteType type : FluidSpriteType.values()) {
-            fluidSprites.get(type).clear();
-        }
         Map<ResourceLocation, ResourceLocation> spritesStitched = new HashMap<>();
         for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
         	var flu = IClientFluidTypeExtensions.of(fluid);
@@ -117,11 +117,18 @@ public class FluidRenderer {
     }
     
     public static void onTextureStitchPost(TextureStitchEvent.Post event) {
-    	
+        clearSpriteCache();
+        blockTexMap = event.getAtlas()::getSprite;
     }
     
+    private static void clearSpriteCache() {
+        for (FluidSpriteType type : FluidSpriteType.values()) {
+            fluidSprites.get(type).clear();
+        }
+        blockTexMap = null;
+    }
+
     private static void mixinResourcePack() {
-    	BCLog.logger.debug("called sfasfafafsafaghsg");
     	ResourceManager reloadable = Minecraft.getInstance().getResourceManager();
     	try {
     		Field field = reloadable.getClass().getDeclaredFields()[1];
