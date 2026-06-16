@@ -206,6 +206,10 @@ public enum PlugBakerFacade implements IPluggableStaticBaker<KeyPlugFacade> {
     }
 
     public List<MutableQuad> bakeForKey(KeyPlugFacade key) {
+        return bakeForKey(key, true);
+    }
+
+    public List<MutableQuad> bakeForKey(KeyPlugFacade key, boolean applyGlassAlpha) {
     	BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(key.state);
 //        RenderType renderLayer = MinecraftForgeClient.getRenderLayer();
 //        ForgeHooksClient.setRenderLayer(null);
@@ -288,9 +292,9 @@ public enum PlugBakerFacade implements IPluggableStaticBaker<KeyPlugFacade> {
                 quad.setTint(tint * Direction.values().length + key.side.ordinal());
             }
         }
-        if (isColouredGlass(key.state)) {
+        if (applyGlassAlpha && isColouredGlass(key.state)) {
             for (MutableQuad quad : quads) {
-                quad.multColourd(1.0, 1.0, 1.0, 0.4);
+                quad.multColourd(1.0, 1.0, 1.0, 0.2);
             }
         }
         return quads;

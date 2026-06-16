@@ -52,7 +52,7 @@ public enum ModelFacadeItem implements BakedModel {
 
     private static List<BakedQuad> bakeForKey(KeyPlugFacade key) {
         List<BakedQuad> quads = new ArrayList<>();
-        for (MutableQuad quad : PlugBakerFacade.INSTANCE.bakeForKey(key)) {
+        for (MutableQuad quad : PlugBakerFacade.INSTANCE.bakeForKey(key, false)) {
             quads.add(quad.toBakedItem());
         }
 
