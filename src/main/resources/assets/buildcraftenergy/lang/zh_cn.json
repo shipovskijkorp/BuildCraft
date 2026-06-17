@@ -59,5 +59,7 @@
 	"fluid_type.buildcraftenergy.fuel_mixed_light_heat_2": "混合轻燃料（§c灼热§r）",
 	"fluid_type.buildcraftenergy.fuel_gaseous": "气态燃料（§b冷§r）",
 	"fluid_type.buildcraftenergy.fuel_gaseous_heat_1": "气态燃料（§6热§r）",
-	"fluid_type.buildcraftenergy.fuel_gaseous_heat_2": "气态燃料（§c灼热§r）"
+	"fluid_type.buildcraftenergy.fuel_gaseous_heat_2": "气态燃料（§c灼热§r）",
+	"item.buildcraftenergy.engine_stone_stone": "斯特林引擎",
+	"item.buildcraftenergy.engine_iron_iron": "燃烧引擎"
 }

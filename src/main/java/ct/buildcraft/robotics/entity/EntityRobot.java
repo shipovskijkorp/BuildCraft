@@ -15,6 +15,7 @@ import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.core.BlockIndex;
 import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.api.events.RobotEvent;
+import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.api.mj.MjBattery;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
@@ -77,6 +78,8 @@ import net.minecraftforge.network.NetworkHooks;
 public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpawnData {
     private static final Set<Item> BLACKLISTED_ITEMS_FOR_UPDATE = new HashSet<>();
     private static final double ROBOT_HALF_SIZE = 0.25D;
+    /** Number of old 1.7 robot-energy units gained per 1 MJ from the modern micro-MJ network. */
+    private static final long ROBOT_ENERGY_PER_MJ = 100L;
     private static final EntityDataAccessor<Boolean> ROBOT_ASLEEP = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.BOOLEAN);
     /**
      * The 1.7.10 robot position is the centre of the 0.5x0.5x0.5 cube. Modern LivingEntity positions are normally
@@ -114,6 +117,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private boolean firstUpdateDone;
     private boolean convertingToItems;
     private int ticksCharging;
+    /** Fractional charge accumulator, stored as (microJoules * ROBOT_ENERGY_PER_MJ) % MjAPI.MJ. */
+    private long chargeRemainder;
 
     public EntityRobot(EntityType<? extends EntityRobot> type, Level level) {
         super(type, level);
@@ -170,19 +175,52 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         return mainAI != null && mainAI.getActiveAI() instanceof AIRobotShutdown;
     }
 
+    public long getMjPowerRequestedForCharging() {
+        long requestedEnergy = Math.max(0L, battery.getCapacity() - battery.getStored());
+        if (requestedEnergy <= 0) {
+            return 0;
+        }
+        long numeratorNeeded = requestedEnergy * MjAPI.MJ - Math.min(chargeRemainder, MjAPI.MJ - 1);
+        return ceilDiv(numeratorNeeded, ROBOT_ENERGY_PER_MJ);
+    }
+
     public long receivePower(long maxReceive, FluidAction action) {
         if (maxReceive <= 0) {
             return maxReceive;
         }
-        long requested = Math.max(0L, battery.getCapacity() - battery.getStored());
-        long accepted = Math.min(maxReceive, requested);
+        long requestedEnergy = Math.max(0L, battery.getCapacity() - battery.getStored());
+        if (requestedEnergy <= 0) {
+            if (action.execute()) {
+                chargeRemainder = 0;
+            }
+            return maxReceive;
+        }
+
+        long accepted = Math.min(maxReceive, getMjPowerRequestedForCharging());
         if (accepted > 0 && action.execute()) {
-            battery.addPower(accepted, FluidAction.EXECUTE);
-            if (accepted > 5 && ticksCharging <= 25) {
-                ticksCharging += 5;
+            long numerator = accepted * ROBOT_ENERGY_PER_MJ + chargeRemainder;
+            long energyReceived = numerator / MjAPI.MJ;
+            chargeRemainder = numerator % MjAPI.MJ;
+
+            if (energyReceived > 0) {
+                long added = Math.min(energyReceived, requestedEnergy);
+                battery.addPower(added, FluidAction.EXECUTE);
+                if (battery.getStored() >= battery.getCapacity()) {
+                    chargeRemainder = 0;
+                }
+                if (added > 0 && ticksCharging <= 25) {
+                    ticksCharging += 5;
+                }
             }
         }
         return maxReceive - accepted;
+    }
+
+    private static long ceilDiv(long value, long divisor) {
+        if (value <= 0) {
+            return 0;
+        }
+        return (value + divisor - 1) / divisor;
     }
 
     public void setEnergy(int energy) {
@@ -337,6 +375,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         tag.putBoolean("itemActive", itemActive);
         tag.putBoolean("asleep", isAsleepForRendering());
         tag.putInt("ticksCharging", ticksCharging);
+        tag.putLong("chargeRemainder", chargeRemainder);
         tag.putFloat("aimYaw", aimYaw);
         tag.putFloat("aimPitch", aimPitch);
         if (!itemInUse.isEmpty()) {
@@ -378,6 +417,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         battery.deserializeNBT(tag.getCompound("battery"));
         itemActive = tag.getBoolean("itemActive");
         ticksCharging = tag.getInt("ticksCharging");
+        chargeRemainder = tag.getLong("chargeRemainder");
         if (tag.contains("asleep")) {
             entityData.set(ROBOT_ASLEEP, tag.getBoolean("asleep"));
         }

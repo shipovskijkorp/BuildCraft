@@ -27,8 +27,10 @@
 	"item.buildcraftcore.map_location":"Map Location",
 	"item.buildcraftcore.list":"List",
 	"item.buildcraftcore.volume_box":"Volume Box",
+	"item.buildcraftcore.engine_redstone_wood":"Redstone Engine",
+	"item.buildcraftcore.engine_creative_creative":"Creative Engine",
 	
-	"block.buildcraftcore.engine_redstone":"Redstone Engine",
+	"block.buildcraftcore.engine_wood":"Redstone Engine",
 	"block.buildcraftcore.engine_creative":"Creative Engine",
 	"block.buildcraftcore.engine_stone":"Stirling Engine",
 	"block.buildcraftcore.engine_iron":"Combustion Engine",

@@ -117,6 +117,9 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
         if (robot == null || robot.getBattery() == null) {
             return 0;
         }
+        if (robot instanceof EntityRobot entityRobot) {
+            return entityRobot.getMjPowerRequestedForCharging();
+        }
         return Math.max(0L, robot.getBattery().getCapacity() - robot.getBattery().getStored());
     }
 

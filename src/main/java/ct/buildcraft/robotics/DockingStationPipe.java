@@ -11,6 +11,7 @@ import ct.buildcraft.api.statements.StatementSlot;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeColor;
+import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
 import ct.buildcraft.transport.pipe.flow.PipeFlowPower;
 import ct.buildcraft.api.transport.IInjectable;
@@ -137,14 +138,25 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
 
     @Override
     public Container getItemInput() {
-        if (getPipe() == null || side() == null || level() == null) return null;
-        BlockEntity neighbour = level().getBlockEntity(new net.minecraft.core.BlockPos(x(), y(), z()).relative(side()));
+        Direction inputSide = getItemInputPipeSide();
+        if (getPipe() == null || inputSide == null || level() == null) return null;
+        BlockEntity neighbour = level().getBlockEntity(new net.minecraft.core.BlockPos(x(), y(), z()).relative(inputSide));
         return neighbour instanceof Container container ? container : null;
     }
 
     @Override
     public Direction getItemInputSide() {
-        return side() == null ? null : side().getOpposite();
+        Direction inputSide = getItemInputPipeSide();
+        return inputSide == null ? null : inputSide.getOpposite();
+    }
+
+    private Direction getItemInputPipeSide() {
+        if (getPipe() == null || getPipe().getPipe() == null) return null;
+        if (!(getPipe().getPipe().flow instanceof PipeFlowItems)) return null;
+        if (!(getPipe().getPipe().behaviour instanceof PipeBehaviourWood wood)) return null;
+        Direction inputSide = wood.getCurrentDir();
+        if (inputSide == null || inputSide == side()) return null;
+        return inputSide;
     }
 
     @Override

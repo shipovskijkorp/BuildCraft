@@ -134,7 +134,7 @@ public abstract class DockingStation {
 
     /** Same as release, but does not update the registry. Intended to be called by the registry itself. */
     public void unsafeRelease(EntityRobotBase robot) {
-        if (robotTaking == robot) {
+        if (robotTaking == robot || robotTakingId == robot.getRobotId()) {
             linkIsMain = false;
             robotTaking = null;
             robotTakingId = EntityRobotBase.NULL_ROBOT_ID;

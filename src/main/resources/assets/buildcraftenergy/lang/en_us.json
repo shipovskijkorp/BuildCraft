@@ -118,5 +118,7 @@
     "item.buildcraftenergy.fuel_gaseous.hot_bucket": "Gaseous Fuel (§6Hot§r) Bucket",
     "fluid_type.buildcraftenergy.fuel_gaseous_heat_1": "Gaseous Fuel (§6Hot§r)",
     "item.buildcraftenergy.fuel_gaseous.searing_bucket": "Gaseous Fuel (§cSearing§r) Bucket",
-    "fluid_type.buildcraftenergy.fuel_gaseous_heat_2": "Gaseous Fuel (§cSearing§r)"
+    "fluid_type.buildcraftenergy.fuel_gaseous_heat_2": "Gaseous Fuel (§cSearing§r)",
+    "item.buildcraftenergy.engine_stone_stone": "Stirling Engine",
+    "item.buildcraftenergy.engine_iron_iron": "Combustion Engine"
 }

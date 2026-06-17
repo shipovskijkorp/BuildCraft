@@ -55,14 +55,18 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         @Override
         public void killRobot(EntityRobotBase robot) {
             if (robot != null) {
-                robots.remove(robot.getRobotId());
                 releaseResources(robot);
+                releaseStations(robot, true, false);
+                robots.remove(robot.getRobotId());
             }
         }
 
         @Override
         public void unloadRobot(EntityRobotBase robot) {
-            if (robot != null) robots.remove(robot.getRobotId());
+            if (robot != null) {
+                releaseStations(robot, false, true);
+                robots.remove(robot.getRobotId());
+            }
         }
 
         @Override
@@ -110,6 +114,24 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         public void releaseResources(EntityRobotBase robot) {
             if (robot == null) return;
             resources.entrySet().removeIf(entry -> entry.getValue() == robot.getRobotId());
+            releaseStations(robot, false, false);
+        }
+
+        private void releaseStations(EntityRobotBase robot, boolean forceAll, boolean resetEntities) {
+            if (robot == null) return;
+            long robotId = robot.getRobotId();
+            for (DockingStation station : stations.values()) {
+                if (station == null || station.robotIdTaking() != robotId) {
+                    continue;
+                }
+
+                if (forceAll || station.canRelease()) {
+                    station.unsafeRelease(robot);
+                    resources.remove(new StationResourceId(station), robotId);
+                } else if (resetEntities) {
+                    station.invalidateRobotTakingEntity();
+                }
+            }
         }
 
         @Override
@@ -132,6 +154,17 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         @Override
         public void removeStation(DockingStation station) {
             if (station == null) return;
+            EntityRobotBase robot = station.robotTaking();
+            if (robot != null) {
+                if (station.isMainStation()) {
+                    robot.setMainStation(null);
+                } else {
+                    robot.undock();
+                }
+                station.unsafeRelease(robot);
+            }
+            resources.entrySet().removeIf(entry -> entry.getKey() instanceof StationResourceId id
+                    && id.matches(station));
             stations.remove(new StationKey(new BlockPos(station.x(), station.y(), station.z()), station.side()));
         }
 
@@ -176,6 +209,12 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         public boolean equals(Object obj) {
             if (!(obj instanceof StationResourceId other)) return false;
             return pos.equals(other.pos) && side == other.side;
+        }
+
+        private boolean matches(DockingStation station) {
+            return station != null
+                    && pos.equals(new BlockPos(station.x(), station.y(), station.z()))
+                    && side == station.side();
         }
 
         @Override

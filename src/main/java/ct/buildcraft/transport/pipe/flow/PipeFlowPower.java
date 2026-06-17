@@ -21,6 +21,7 @@ import ct.buildcraft.api.core.EnumPipePart;
 import ct.buildcraft.api.mj.IMjConnector;
 import ct.buildcraft.api.mj.IMjPassiveProvider;
 import ct.buildcraft.api.mj.IMjReceiver;
+import ct.buildcraft.api.mj.IMjRedstoneReceiver;
 import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.api.tiles.IDebuggable;
 import ct.buildcraft.api.transport.pipe.IFlowPower;
@@ -30,6 +31,7 @@ import ct.buildcraft.api.transport.pipe.PipeApi;
 import ct.buildcraft.api.transport.pipe.PipeApi.PowerTransferInfo;
 import ct.buildcraft.api.transport.pipe.PipeEventPower;
 import ct.buildcraft.api.transport.pipe.PipeFlow;
+import ct.buildcraft.api.transport.pluggable.PipePluggable;
 import ct.buildcraft.lib.misc.LocaleUtil;
 import ct.buildcraft.lib.misc.MathUtil;
 import ct.buildcraft.lib.misc.VecUtil;
@@ -298,9 +300,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
                                 PipeFlowPower oFlow = (PipeFlowPower) neighbour.getFlow();
                                 leftover = oFlow.sections.get(face2.getOpposite()).receivePowerInternal(watts);
                             } else {
-                                IMjReceiver receiver = pipe.getHolder().getCapabilityFromPipe(
-                                    face2, MjAPI.CAP_RECEIVER
-                                ).orElse(null);
+                                IMjReceiver receiver = getPowerSink(face2);
                                 if (receiver != null && receiver.canReceive()) {
                                     leftover = receiver.receivePower(watts, FluidAction.EXECUTE);
                                 }
@@ -327,12 +327,11 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             s.displayPower = (int) (value * MjAPI.MJ);
         }
 
-        // Compute the tiles requesting power that are not power pipes
+        // Compute local consumers requesting power. This includes both external tiles and internal pluggables such as
+        // robot stations. A robot station blocks the pipe side, so it never appears as ConnectedType.TILE, but it still
+        // needs to contribute a request to the power network just like the old 1.7 pluggable IEnergyReceiver did.
         for (Direction face : Direction.values()) {
-            if (pipe.getConnectedType(face) != ConnectedType.TILE) {
-                continue;
-            }
-            IMjReceiver recv = pipe.getHolder().getCapabilityFromPipe(face, MjAPI.CAP_RECEIVER).orElse(null);
+            IMjReceiver recv = getPowerSink(face);
             if (recv != null && recv.canReceive()) {
                 long requested = recv.getPowerRequested();
                 if (requested > 0) {
@@ -412,6 +411,27 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         // s.nextPowerQuery = Math.min(s.nextPowerQuery, maxPower);
     }
 
+    @Nullable
+    private IMjReceiver getPowerSink(Direction face) {
+        PipePluggable plug = pipe.getHolder().getPluggable(face);
+        if (plug != null && plug != PipePluggable.EMPTY) {
+            LazyOptional<IMjReceiver> pluggableReceiver = plug.getInternalCapability(MjAPI.CAP_RECEIVER);
+            if (pluggableReceiver.isPresent()) {
+                return pluggableReceiver.orElse(null);
+            }
+            if (plug.isBlocking()) {
+                return null;
+            }
+        }
+
+        if (pipe.getConnectedType(face) != ConnectedType.TILE) {
+            return null;
+        }
+
+        LazyOptional<IMjReceiver> tileReceiver = pipe.getHolder().getCapabilityFromPipe(face, MjAPI.CAP_RECEIVER);
+        return tileReceiver == null ? null : tileReceiver.orElse(null);
+    }
+
     public long getPowerRequested(@Nullable Direction side) {
         long req = 0;
         for (Direction face : Direction.values()) {
@@ -434,7 +454,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         return max;*/
     }
 
-    public class Section implements IMjReceiver {
+    public class Section implements IMjReceiver, IMjRedstoneReceiver {
         public final Direction side;
 
         public final AverageInt clientDisplayAverage = new AverageInt(10);
