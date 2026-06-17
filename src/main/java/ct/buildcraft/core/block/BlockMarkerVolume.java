@@ -49,12 +49,7 @@ public class BlockMarkerVolume extends BlockMarkerBase {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileMarkerVolume) {
             TileMarkerVolume volume = (TileMarkerVolume) tile;
-
-            boolean powered = world.hasNeighborSignal(pos);
-
-            if (volume.isShowingSignals() != powered) {
-                volume.switchSignals();
-            }
+            volume.refreshSignalStateFromWorld();
         }
     }
     

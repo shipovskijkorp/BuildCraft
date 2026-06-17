@@ -20,16 +20,14 @@ import net.minecraft.world.level.Level;
 public class PathSubCache extends MarkerSubCache<PathConnection> {
     public PathSubCache(Level world) {
         super(world, MarkerCache.CACHES.indexOf(PathCache.INSTANCE));
-        PathSavedData data = null ;
-        if(world instanceof ServerLevel sworld)
-        	data = (PathSavedData) sworld.getDataStorage().computeIfAbsent(PathSavedData::new, PathSavedData::new, PathSavedData.NAME);
-        if(data == null) {
-        	data = new PathSavedData();
+        PathSavedData data;
+        if (world instanceof ServerLevel sworld) {
+            data = sworld.getDataStorage().computeIfAbsent(PathSavedData::new, PathSavedData::new, PathSavedData.NAME);
+        } else {
+            data = new PathSavedData();
         }
-        else
-    		data = new PathSavedData();
         data.loadInto(this);
-        
+        setDirty(false);
     }
 
     @Override

@@ -179,7 +179,14 @@ public class BCLibEventDist {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onConnectToServer(ClientPlayerNetworkEvent.LoggingIn event) {
+        MarkerCache.clearClientCaches();
         BuildCraftObjectCaches.onClientJoinServer();
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void onDisconnectFromServer(ClientPlayerNetworkEvent.LoggingOut event) {
+        MarkerCache.clearClientCaches();
     }
 
 
