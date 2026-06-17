@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeColor;
 import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
+import ct.buildcraft.transport.pipe.flow.PipeFlowPower;
 import ct.buildcraft.api.transport.IInjectable;
 import ct.buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.core.Direction;
@@ -144,6 +145,11 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     @Override
     public Direction getItemInputSide() {
         return side() == null ? null : side().getOpposite();
+    }
+
+    @Override
+    public boolean providesPower() {
+        return getPipe() != null && getPipe().getPipe() != null && getPipe().getPipe().flow instanceof PipeFlowPower;
     }
 
     @Override

@@ -13,6 +13,7 @@ import ct.buildcraft.api.boards.RedstoneBoardRegistry;
 import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.boards.RedstoneBoardRobotNBT;
 import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.robotics.boards.BoardRobotLumberjack;
 import ct.buildcraft.robotics.boards.BoardRobotPicker;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -205,6 +206,9 @@ public final class BCRoboticsBoards {
         public RedstoneBoardRobot create(EntityRobotBase robot) {
             if ("picker".equals(key)) {
                 return new BoardRobotPicker(robot);
+            }
+            if ("lumberjack".equals(key)) {
+                return new BoardRobotLumberjack(robot);
             }
             return new BasicRobotBoard(robot, this);
         }

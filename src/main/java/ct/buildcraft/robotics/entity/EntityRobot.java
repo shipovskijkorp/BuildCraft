@@ -113,6 +113,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private FluidStack tank = FluidStack.EMPTY;
     private boolean firstUpdateDone;
     private boolean convertingToItems;
+    private int ticksCharging;
 
     public EntityRobot(EntityType<? extends EntityRobot> type, Level level) {
         super(type, level);
@@ -165,6 +166,25 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         return activeAI instanceof AIRobotSleep || activeAI instanceof AIRobotShutdown;
     }
 
+    private boolean isShutdownActive() {
+        return mainAI != null && mainAI.getActiveAI() instanceof AIRobotShutdown;
+    }
+
+    public long receivePower(long maxReceive, FluidAction action) {
+        if (maxReceive <= 0) {
+            return maxReceive;
+        }
+        long requested = Math.max(0L, battery.getCapacity() - battery.getStored());
+        long accepted = Math.min(maxReceive, requested);
+        if (accepted > 0 && action.execute()) {
+            battery.addPower(accepted, FluidAction.EXECUTE);
+            if (accepted > 5 && ticksCharging <= 25) {
+                ticksCharging += 5;
+            }
+        }
+        return maxReceive - accepted;
+    }
+
     public void setEnergy(int energy) {
         battery.extractAll();
         battery.addPower(Math.max(0, Math.min(MAX_ENERGY, energy)), IFluidHandler.FluidAction.EXECUTE);
@@ -189,8 +209,12 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             firstUpdateDone = true;
         }
 
+        if (ticksCharging > 0) {
+            ticksCharging--;
+        }
+
         setNoGravity(true);
-        noPhysics = true;
+        noPhysics = !isShutdownActive();
 
         if (!level.isClientSide) {
             if (robotId != NULL_ROBOT_ID && getRegistry() != null) {
@@ -312,6 +336,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         tag.put("battery", battery.serializeNBT());
         tag.putBoolean("itemActive", itemActive);
         tag.putBoolean("asleep", isAsleepForRendering());
+        tag.putInt("ticksCharging", ticksCharging);
         tag.putFloat("aimYaw", aimYaw);
         tag.putFloat("aimPitch", aimPitch);
         if (!itemInUse.isEmpty()) {
@@ -352,6 +377,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         robotId = tag.contains("robotId") ? tag.getLong("robotId") : NULL_ROBOT_ID;
         battery.deserializeNBT(tag.getCompound("battery"));
         itemActive = tag.getBoolean("itemActive");
+        ticksCharging = tag.getInt("ticksCharging");
         if (tag.contains("asleep")) {
             entityData.set(ROBOT_ASLEEP, tag.getBoolean("asleep"));
         }
@@ -592,7 +618,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         }
         Vec3 motion = getDeltaMovement();
         if (motion.lengthSqr() > 0.0D) {
-            noPhysics = true;
+            noPhysics = !isShutdownActive();
             move(MoverType.SELF, motion);
             refreshRobotBoundingBox();
         }
