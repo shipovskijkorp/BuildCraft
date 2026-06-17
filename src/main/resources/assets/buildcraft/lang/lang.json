@@ -547,6 +547,7 @@
     "buildcraft.help.tank.title.tankFuel": "Fuel Tank",
     "buildcraft.help.tank.title.tankCoolant": "Coolant Tank",
     "buildcraft.help.tank.title.tankResidue": "Residue Tank",
+    "buildcraft.help.tank.title.tank": "Tank",
     "buildcraft.help.tank.fuel": "This tank can accept any kind of fuel.",
     "buildcraft.help.tank.coolant": "This tank can accept any kind of fluid\\ncoolant, or ice blocks.",
     "buildcraft.help.tank.residue": "This tank will output residue if the\\nfuel hasn't been processed\\n(for example oil).",

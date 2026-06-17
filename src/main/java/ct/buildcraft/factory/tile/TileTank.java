@@ -172,7 +172,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
             AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_STORE_FLUIDS);
         }
         if (!didChange && !player.level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            NetworkHooks.openScreen(serverPlayer, this);
+            NetworkHooks.openScreen(serverPlayer, this, worldPosition);
         }
         return InteractionResult.SUCCESS;
 	}

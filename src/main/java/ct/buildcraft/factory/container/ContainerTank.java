@@ -6,12 +6,14 @@
 
 package ct.buildcraft.factory.container;
 
-import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.factory.BCFactoryGuis;
 import ct.buildcraft.factory.tile.TileTank;
+import ct.buildcraft.lib.fluid.Tank;
+import ct.buildcraft.lib.gui.ContainerBCTile;
+import ct.buildcraft.lib.gui.widget.WidgetFluidTank;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
@@ -21,17 +23,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 
-public class ContainerTank extends AbstractContainerMenu {
+public class ContainerTank extends ContainerBCTile<TileTank> {
     private static final ForgeRegistry<Fluid> FLUIDS = (ForgeRegistry<Fluid>) ForgeRegistries.FLUIDS;
 
-    private final ContainerLevelAccess access;
     public final ContainerData data;
+    public final WidgetFluidTank widgetTank;
 
-    public ContainerTank(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new SimpleContainerData(2), ContainerLevelAccess.NULL);
+    public ContainerTank(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
+        this(containerId, playerInventory, new SimpleContainerData(2), CreateClientLevelAccess(buffer));
     }
 
     public ContainerTank(int containerId, Inventory playerInventory, TileTank tank, ContainerLevelAccess access) {
@@ -39,24 +42,14 @@ public class ContainerTank extends AbstractContainerMenu {
     }
 
     private ContainerTank(int containerId, Inventory playerInventory, ContainerData data, ContainerLevelAccess access) {
-        super(BCFactoryGuis.MENU_TANK.get(), containerId);
-        this.access = access;
+        super(BCFactoryGuis.MENU_TANK.get(), playerInventory, containerId, access);
         this.data = data;
 
-        addFullPlayerInventory(playerInventory, 8, 99);
+        addFullPlayerInventory(8, 99);
         addDataSlots(data);
-    }
 
-    private void addFullPlayerInventory(Inventory playerInventory, int startX, int startY) {
-        for (int sy = 0; sy < 3; sy++) {
-            for (int sx = 0; sx < 9; sx++) {
-                addSlot(new Slot(playerInventory, sx + sy * 9 + 9, startX + sx * 18, startY + sy * 18));
-            }
-        }
-
-        for (int sx = 0; sx < 9; sx++) {
-            addSlot(new Slot(playerInventory, sx, startX + sx * 18, startY + 58));
-        }
+        Tank guiTank = tile != null ? tile.tank : new Tank("tank", 16 * FluidType.BUCKET_VOLUME, null);
+        widgetTank = addWidget(new WidgetFluidTank(this, guiTank));
     }
 
     @Override
@@ -91,11 +84,6 @@ public class ContainerTank extends AbstractContainerMenu {
         }
 
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    public boolean stillValid(Player player) {
-        return stillValid(access, player, BCFactoryBlocks.TANK_BLOCK.get());
     }
 
     @Override
