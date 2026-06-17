@@ -4,8 +4,10 @@ import ct.buildcraft.factory.client.gui.MenuHeatExchange;
 import ct.buildcraft.factory.client.gui.ScreenHeatExchange;
 import ct.buildcraft.factory.container.ContainerAutoCraftItems;
 import ct.buildcraft.factory.container.ContainerChute;
+import ct.buildcraft.factory.container.ContainerTank;
 import ct.buildcraft.factory.gui.GuiAutoCraftItems;
 import ct.buildcraft.factory.gui.GuiChute;
+import ct.buildcraft.factory.gui.GuiTank;
 import ct.buildcraft.lib.gui.BCContainerFactory;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
@@ -25,6 +27,7 @@ public class BCFactoryGuis {
     public static final RegistryObject<MenuType<ContainerAutoCraftItems>> MENU_AUTOWORK_BENCH_ITEM = MENUS.register("menu.autoworkbench_item", () -> BCContainerFactory.create(ContainerAutoCraftItems::create));
     public static final RegistryObject<MenuType<MenuHeatExchange>> MENU_HEAT_EXCHANGE = MENUS.register("menu.heat_exchange", () -> new MenuType<>(MenuHeatExchange::new));
     public static final RegistryObject<MenuType<ContainerChute>> MENU_CHUTE = MENUS.register("menu.chute", () -> BCContainerFactory.create(ContainerChute::new));
+    public static final RegistryObject<MenuType<ContainerTank>> MENU_TANK = MENUS.register("menu.tank", () -> new MenuType<>(ContainerTank::new));
 
     @SubscribeEvent
     public static void clientInit(FMLClientSetupEvent event) {
@@ -33,6 +36,7 @@ public class BCFactoryGuis {
                 	MenuScreens.register(MENU_AUTOWORK_BENCH_ITEM.get(), GuiAutoCraftItems::new);
                 	MenuScreens.register(MENU_HEAT_EXCHANGE.get(), ScreenHeatExchange::new);
                 	MenuScreens.register(MENU_CHUTE.get(), GuiChute::new);
+                	MenuScreens.register(MENU_TANK.get(), GuiTank::new);
                 }
         );
     }

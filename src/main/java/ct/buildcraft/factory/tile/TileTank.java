@@ -22,6 +22,7 @@ import ct.buildcraft.api.core.IFluidHandlerAdv;
 import ct.buildcraft.api.items.FluidItemDrops;
 import ct.buildcraft.api.tiles.IDebuggable;
 import ct.buildcraft.factory.BCFactoryBlocks;
+import ct.buildcraft.factory.container.ContainerTank;
 import ct.buildcraft.lib.fluid.FluidSmoother;
 import ct.buildcraft.lib.fluid.FluidSmoother.FluidStackInterp;
 import ct.buildcraft.lib.fluid.Tank;
@@ -35,11 +36,17 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,8 +57,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkHooks;
 
-public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandlerAdv {
+public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandlerAdv, MenuProvider {
     public static final int NET_FLUID_DELTA = IDS.allocId("FLUID_DELTA");
 
     private static final ResourceLocation ADVANCEMENT_STORE_FLUIDS = new ResourceLocation(
@@ -163,7 +171,20 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         if (didChange && !player.level.isClientSide && amountBefore < tank.getFluidAmount()) {
             AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_STORE_FLUIDS);
         }
-        return didChange ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        if (!didChange && !player.level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            NetworkHooks.openScreen(serverPlayer, this);
+        }
+        return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+		return new ContainerTank(id, inventory, this, ContainerLevelAccess.create(level, worldPosition));
+	}
+
+	@Override
+	public Component getDisplayName() {
+		return Component.translatable(getBlockState().getBlock().getDescriptionId());
 	}
 
 
