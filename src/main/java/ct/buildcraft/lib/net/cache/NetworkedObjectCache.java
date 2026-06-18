@@ -19,7 +19,6 @@ import ct.buildcraft.lib.net.MessageManager;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fluids.FluidStack;
@@ -86,7 +85,7 @@ public abstract class NetworkedObjectCache<T> {
      *         make sure that this really is the client thread. */
     public ClientView client() {
         if (DEBUG_LOG) {
-            if (!Minecraft.getInstance().isSameThread()) {
+            if (!NetworkedObjectCacheClientHandler.isSameThread()) {
                 throw new IllegalStateException("");
             }
         }

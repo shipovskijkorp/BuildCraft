@@ -110,7 +110,6 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 //    private static final VoxelShape EXPENDED_CENTER = Shapes.box(0.125D, 0.125D, 0.125D, 0.875D, 0.875D, 0.875D);
 
 	
-	private static final SingleSpriteSet spriteSet = new SingleSpriteSet(null);
 
 	private static final ResourceLocation ADVANCEMENT_LOGIC_TRANSPORTATION = new ResourceLocation(
 			"buildcrafttransport:logic_transportation");
@@ -1073,6 +1072,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
     }
 
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean addHitEffects(BlockState state, Level world, HitResult hit, ParticleEngine manager) {
 		if(!(hit instanceof BlockHitResult target)) 
@@ -1119,7 +1119,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	            z += pos.getZ();
 
 	            TerrainParticle particle = new TerrainParticle((ClientLevel) world, x, y, z, 0, 0, 0, state, pos);
-	            spriteSet.texture = info.sprite;
+	            SingleSpriteSet spriteSet = new SingleSpriteSet(info.sprite);
 	            particle.pickSprite(spriteSet);
 	            particle.setPower(0.2f);
 	            particle.scale(0.6f);
@@ -1167,7 +1167,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
                         double _z = pos.getZ() + info.aabb.min(Axis.Z) + (z + 0.5) * sizeZ / countZ;
 
                         TerrainParticle particle = new TerrainParticle((ClientLevel) world, _x, _y, _z, d4 - 0.5, d5 - 0.5, d6 - 0.5, state, pos);
-                        spriteSet.texture = info.sprite;
+                        SingleSpriteSet spriteSet = new SingleSpriteSet(info.sprite);
                         particle.pickSprite(spriteSet);
 //                        world.addParticle(ParticleTypes.GLOW, sizeX, sizeY, sizeZ, countX, countY, countZ);
                         manager.add(particle);

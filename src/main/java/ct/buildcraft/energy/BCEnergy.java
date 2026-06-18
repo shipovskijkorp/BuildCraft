@@ -51,7 +51,6 @@ public class BCEnergy {
         BCEnergyConfig.preInit();
         ModLoadingContext.get().registerConfig(Type.COMMON, BCEnergyConfig.config);
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(BCEnergyClientProxy.class);
         // Register the Deferred Register to the mod event bus so blocks get registered
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);

@@ -16,7 +16,6 @@ import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.lib.marker.MarkerCache;
 import ct.buildcraft.lib.misc.MessageUtil;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
@@ -79,8 +78,8 @@ public class MessageMarker {
             ctx.get().setPacketHandled(true);
             return;
     	}
-    	Minecraft mc = Minecraft.getInstance();
-        Level world = mc.level;
+    	
+        Level world = MessageMarkerClientHandler.getClientLevel();
         if (world == null) {
             if (DEBUG) {
                 BCLog.logger.warn("[lib.messages][marker] The world was null for a message!");

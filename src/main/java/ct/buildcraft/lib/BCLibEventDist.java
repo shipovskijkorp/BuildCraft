@@ -137,6 +137,7 @@ public class BCLibEventDist {
     }
 */
 	@SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void renderWorldLast(RenderLevelStageEvent event) {
     	if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_SOLID_BLOCKS) {
     		return ;

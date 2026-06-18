@@ -6,6 +6,10 @@
 
 package ct.buildcraft.transport.plug;
 
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraftforge.api.distmarker.Dist;
+
 import ct.buildcraft.api.transport.pipe.IPipeHolder;
 import ct.buildcraft.api.transport.pluggable.PipePluggable;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition;
@@ -74,6 +78,7 @@ public class PluggableBlocker extends PipePluggable {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public PluggableModelKey getModelRenderKey(RenderType layer) {
         if (layer == RenderType.cutout()) return new KeyPlugBlocker(side);
         return null;

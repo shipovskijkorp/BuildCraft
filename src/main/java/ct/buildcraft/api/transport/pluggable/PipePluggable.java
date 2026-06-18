@@ -121,6 +121,7 @@ public abstract class PipePluggable {
     }
 
     @Nullable
+    @OnlyIn(Dist.CLIENT)
     public PluggableModelKey getModelRenderKey(RenderType layer) {
         return null;
     }

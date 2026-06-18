@@ -157,6 +157,7 @@ public class PluggableFacade extends PipePluggable implements IFacade {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public PluggableModelKey getModelRenderKey(RenderType layer) {
         if (states.type == FacadeType.Basic) {
             FacadePhasedState facadeState = states.phasedStates[activeState];

@@ -594,10 +594,12 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
             FriendlyByteBuf buffer = new FriendlyByteBuf(buf);
             readPayload(id, buffer, level.isClientSide ? LogicalSide.CLIENT : LogicalSide.SERVER, null);
             // Make sure that we actually read the entire message rather than just discarding it
-            MessageUtil.ensureEmpty(buffer, level.isClientSide, getClass() + ", id = " + getIdAllocator().getNameFor(id));
+            MessageUtil.ensureEmpty(buffer, false, getClass() + ", id = " + getIdAllocator().getNameFor(id));
             spawnReceiveParticles(id);
-        } catch (IOException e) {
-            throw new RuntimeException("Received an update tag that failed to read correctly!", e);
+        } catch (Exception e) {
+            // A malformed render-data packet for a single tile must NOT disconnect the player on join.
+            // (The custom-channel path in receivePayload already swallows these exceptions the same way.)
+            BCLog.logger.error("[lib.tile] Failed to read update tag for " + getClass() + " at " + worldPosition, e);
         }
     }
 

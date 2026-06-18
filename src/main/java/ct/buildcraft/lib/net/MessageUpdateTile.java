@@ -16,9 +16,6 @@ import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.lib.misc.MessageUtil;
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.PacketListener;
@@ -70,8 +67,8 @@ public class MessageUpdateTile {
                 Level level = null;
                 if(netHandler instanceof ServerGamePacketListenerImpl sim) 
                 	level = sim.player.level;
-                else if(netHandler instanceof ClientPacketListener sim)
-                	level = sim.getLevel();
+                else if(net.minecraftforge.fml.loading.FMLEnvironment.dist.isClient())
+                	level = MessageUpdateTileClientHandler.getClientLevel(netHandler);
                 if (level == null) {
                     return;
                 }
