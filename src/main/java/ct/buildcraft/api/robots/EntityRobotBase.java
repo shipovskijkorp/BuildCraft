@@ -38,6 +38,9 @@ public abstract class EntityRobotBase extends LivingEntity implements Container,
 
     public abstract DockingStation getLinkedStation();
 
+    /** Override the robot's current AI from a gate statement (e.g., go to station, wake up). */
+    public abstract void setMainAIOverride(AIRobot ai);
+
     public abstract RedstoneBoardRobot getBoard();
 
     public abstract void aimItemAt(float yaw, float pitch);

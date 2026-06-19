@@ -1,6 +1,13 @@
 package ct.buildcraft.robotics;
 
 import ct.buildcraft.api.BCModules;
+import ct.buildcraft.api.statements.StatementManager;
+import ct.buildcraft.robotics.BCRoboticsStatements;
+import ct.buildcraft.robotics.BCRoboticsSprites;
+import ct.buildcraft.robotics.statements.RobotsActionProvider;
+import ct.buildcraft.robotics.statements.RobotsTriggerProvider;
+import ct.buildcraft.robotics.statements.StatementParameterRobot;
+import ct.buildcraft.robotics.statements.StatementParameterMapLocation;
 import ct.buildcraft.lib.CreativeTabManager;
 import ct.buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import ct.buildcraft.robotics.zone.MessageZoneMapRequest;
@@ -80,6 +87,14 @@ public class BCRobotics {
     }
 
     private void init(final FMLCommonSetupEvent event) {
+        // Register robot statement providers and parameter types
+        BCRoboticsStatements.preInit();
+        BCRoboticsSprites.preInit();
+        StatementManager.registerActionProvider(new RobotsActionProvider());
+        StatementManager.registerTriggerProvider(new RobotsTriggerProvider());
+        StatementManager.registerParameter(StatementParameterRobot.TAG, StatementParameterRobot::readFromNbt);
+        StatementManager.registerParameter(StatementParameterMapLocation.TAG, StatementParameterMapLocation::readFromNbt);
+
         BCRoboticsBoards.init();
         BCRoboticsPlugs.preInit();
         RobotManager.registryProvider = SimpleRobotRegistryProvider.INSTANCE;

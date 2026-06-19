@@ -166,6 +166,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         return isAsleepOrShutdownOnServer();
     }
 
+    /** Allow gate statements to override the robot's main AI (e.g., goto station, wake up). */
+    public void setMainAIOverride(ct.buildcraft.api.robots.AIRobot ai) {
+        if (mainAI != null) mainAI.setOverridingAI(ai);
+    }
+
     private boolean isAsleepOrShutdownOnServer() {
         AIRobot activeAI = mainAI == null ? null : mainAI.getActiveAI();
         return activeAI instanceof AIRobotSleep || activeAI instanceof AIRobotShutdown;
