@@ -41,7 +41,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemMapLocation extends Item implements IMapLocation {
-    private static final String[] STORAGE_TAGS = "x,y,z,side,xMin,xMax,yMin,yMax,zMin,zMax,path,chunkMapping,name".split(",");
+    private static final String[] STORAGE_TAGS = "kind,Damage,x,y,z,side,xMin,xMax,yMin,yMax,zMin,zMax,path,chunkMapping,name".split(",");
 
     public ItemMapLocation(Item.Properties prop) {
         super(prop);
@@ -71,7 +71,7 @@ public class ItemMapLocation extends Item implements IMapLocation {
                     int x = cpt.getInt("x");
                     int y = cpt.getInt("y");
                     int z = cpt.getInt("z");
-                    Direction side = Direction.values()[cpt.getByte("side")];
+                    Direction side = getPointFace(stack);
                     strings.add(Component.translatable("{" + x + ", " + y + ", " + z + ", " + side + "}"));
                 }
                 break;
@@ -143,49 +143,70 @@ public class ItemMapLocation extends Item implements IMapLocation {
     }
 
     @Override
-	public InteractionResult useOn(UseOnContext ctx) {
-    	Level world = ctx.getLevel();
-    	BlockPos pos = ctx.getClickedPos();
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext ctx) {
+        Level world = ctx.getLevel();
         if (world.isClientSide) {
             return InteractionResult.PASS;
         }
 
-        ItemStack stack = StackUtil.asNonNull(ctx.getPlayer().getItemInHand(ctx.getHand()));
+        Player player = ctx.getPlayer();
+        if (player != null && player.isDescending()) {
+            return clearMarkerData(stack).getResult();
+        }
+
+        return writeLocationToMap(ctx, StackUtil.asNonNull(stack));
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext ctx) {
+        Level world = ctx.getLevel();
+        if (world.isClientSide) {
+            return InteractionResult.PASS;
+        }
+
+        Player player = ctx.getPlayer();
+        if (player != null && player.isDescending()) {
+            return clearMarkerData(StackUtil.asNonNull(ctx.getItemInHand())).getResult();
+        }
+
+        return writeLocationToMap(ctx, StackUtil.asNonNull(ctx.getItemInHand()));
+    }
+
+    private static InteractionResult writeLocationToMap(UseOnContext ctx, ItemStack stack) {
+        Level world = ctx.getLevel();
+        BlockPos pos = ctx.getClickedPos();
+        Player player = ctx.getPlayer();
+
         if (MapLocationType.getFromStack(stack) != MapLocationType.CLEAN) {
             return InteractionResult.FAIL;
         }
 
         ItemStack modified = stack;
-
-        if (stack.getCount() > 1) {
+        boolean splitFromStack = player != null && stack.getCount() > 1 && !player.getAbilities().instabuild;
+        if (splitFromStack) {
             modified = stack.copy();
-            stack.setCount(stack.getCount() - 1);
             modified.setCount(1);
+            stack.shrink(1);
         }
 
         BlockEntity tile = world.getBlockEntity(pos);
         CompoundTag cpt = modified.getOrCreateTag();
 
-        if (tile instanceof IPathProvider) {
-            List<BlockPos> path = ((IPathProvider) tile).getPath();
-
+        if (tile instanceof IPathProvider pathTile) {
+            List<BlockPos> path = pathTile.getPath();
             if (path.size() > 1 && path.get(0).equals(path.get(path.size() - 1))) {
-                MapLocationType.PATH_REPEATING.setToStack(stack);
+                MapLocationType.PATH_REPEATING.setToStack(modified);
             } else {
-                MapLocationType.PATH.setToStack(stack);
+                MapLocationType.PATH.setToStack(modified);
             }
 
             ListTag pathNBT = new ListTag();
-
             for (BlockPos posInPath : path) {
                 pathNBT.add(NbtUtils.writeBlockPos(posInPath));
             }
-
             cpt.put("path", pathNBT);
-        } else if (tile instanceof IAreaProvider) {
+        } else if (tile instanceof IAreaProvider areaTile) {
             MapLocationType.AREA.setToStack(modified);
-
-            IAreaProvider areaTile = (IAreaProvider) tile;
 
             cpt.putInt("xMin", areaTile.min().getX());
             cpt.putInt("yMin", areaTile.min().getY());
@@ -193,14 +214,19 @@ public class ItemMapLocation extends Item implements IMapLocation {
             cpt.putInt("xMax", areaTile.max().getX());
             cpt.putInt("yMax", areaTile.max().getY());
             cpt.putInt("zMax", areaTile.max().getZ());
-
         } else {
             MapLocationType.SPOT.setToStack(modified);
 
-            cpt.putByte("side", (byte) ctx.getHorizontalDirection().get3DDataValue());
+            cpt.putByte("side", (byte) ctx.getClickedFace().get3DDataValue());
             cpt.putInt("x", pos.getX());
             cpt.putInt("y", pos.getY());
             cpt.putInt("z", pos.getZ());
+        }
+
+        if (splitFromStack && !modified.isEmpty()) {
+            if (!player.getInventory().add(modified)) {
+                player.drop(modified, false);
+            }
         }
 
         return InteractionResult.SUCCESS;
@@ -243,7 +269,12 @@ public class ItemMapLocation extends Item implements IMapLocation {
 
     public static Direction getPointFace(@Nonnull ItemStack stack) {
         CompoundTag cpt = stack.getOrCreateTag();
-        return Direction.values()[cpt.getByte("side")];
+        int side = cpt.getByte("side");
+        Direction[] values = Direction.values();
+        if (side < 0 || side >= values.length) {
+            return Direction.UP;
+        }
+        return values[side];
     }
 
     @Override
@@ -269,7 +300,7 @@ public class ItemMapLocation extends Item implements IMapLocation {
         MapLocationType type = MapLocationType.getFromStack(item);
 
         if (type == MapLocationType.SPOT) {
-            return Direction.values()[cpt.getByte("side")];
+            return getPointFace(item);
         } else {
             return null;
         }
@@ -318,7 +349,9 @@ public class ItemMapLocation extends Item implements IMapLocation {
             case PATH:
             case PATH_REPEATING: {
                 List<BlockPos> indexList = new ArrayList<>();
-                ListTag pathNBT = (ListTag) cpt.get("path");
+                if (!(cpt.get("path") instanceof ListTag pathNBT)) {
+                    return indexList;
+                }
                 for (int i = 0; i < pathNBT.size(); i++) {
                     BlockPos pos = NBTUtilBC.readBlockPos(pathNBT.get(i));
                     if (pos != null) {

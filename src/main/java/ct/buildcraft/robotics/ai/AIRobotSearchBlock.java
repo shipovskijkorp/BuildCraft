@@ -141,9 +141,10 @@ public class AIRobotSearchBlock extends AIRobot {
         List<BlockPos> result = new ArrayList<>();
         for (Direction direction : Direction.values()) {
             BlockPos adjacent = target.relative(direction);
-            if (zone != null && !zone.contains(center(adjacent))) {
-                continue;
-            }
+            // Match the original BuildCraft behaviour: the work zone constrains the target block, not the
+            // navigation corridor. A station/robot may legitimately start outside the zone and fly through
+            // non-zone air to reach a block inside it, and edge blocks may only have a reachable soft side just
+            // outside the zone.
             if (isSoft(level, adjacent)) {
                 result.add(adjacent);
             }
@@ -193,7 +194,7 @@ public class AIRobotSearchBlock extends AIRobot {
                 BlockPos next = current.relative(direction);
                 if (closed.contains(next)) continue;
                 if (distanceSqr(next, start) > hardLimitSqr) continue;
-                if (zone != null && !zone.contains(center(next))) continue;
+                // Do not clamp the path itself to the work zone. Only the searched target block is zone-limited.
                 if (!isSoft(level, next)) continue;
 
                 int newCost = currentCost + 1;

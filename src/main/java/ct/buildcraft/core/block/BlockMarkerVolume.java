@@ -4,6 +4,7 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package ct.buildcraft.core.block;
 
+import ct.buildcraft.api.items.IMapLocation;
 import ct.buildcraft.core.blockEntity.TileMarkerVolume;
 import ct.buildcraft.lib.block.BlockMarkerBase;
 import net.minecraft.core.BlockPos;
@@ -58,6 +59,9 @@ public class BlockMarkerVolume extends BlockMarkerBase {
     @Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult hit) {
+        if (player.getItemInHand(hand).getItem() instanceof IMapLocation) {
+            return InteractionResult.PASS;
+        }
         if (!world.isClientSide) {
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileMarkerVolume) {

@@ -95,8 +95,11 @@ public class BCRobotics {
         BCRoboticsSprites.preInit();
         StatementManager.registerActionProvider(new RobotsActionProvider());
         StatementManager.registerTriggerProvider(new RobotsTriggerProvider());
-        StatementManager.registerParameter(StatementParameterRobot.TAG, StatementParameterRobot::readFromNbt);
-        StatementManager.registerParameter(StatementParameterMapLocation.TAG, StatementParameterMapLocation::readFromNbt);
+        // Register via the reader overload so both NBT persistence and GUI/network buffer sync are available.
+        // Work/load area actions store a Map Location item as a parameter; without the buffer reader, gates can save
+        // the parameter but fail to sync/open correctly when that action is configured.
+        StatementManager.registerParameter(StatementParameterRobot::readFromNbt);
+        StatementManager.registerParameter(StatementParameterMapLocation::readFromNbt);
 
         BCRoboticsBoards.init();
         BCRoboticsPlugs.preInit();
