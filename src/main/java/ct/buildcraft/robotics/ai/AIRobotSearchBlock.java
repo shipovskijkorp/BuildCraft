@@ -332,10 +332,9 @@ public class AIRobotSearchBlock extends AIRobot {
         private final boolean random;
         private final int minY;
         private final int maxY;
-        private int yOffsetIndex;
         private int radius;
-        private List<BlockPos> currentRing;
-        private int ringIndex;
+        private List<BlockPos> currentShell;
+        private int shellIndex;
         private boolean done;
 
         private CandidateScanner(Level level, BlockPos start, int range, boolean random) {
@@ -345,9 +344,8 @@ public class AIRobotSearchBlock extends AIRobot {
             this.random = random;
             this.minY = level.getMinBuildHeight();
             this.maxY = level.getMaxBuildHeight() - 1;
-            this.yOffsetIndex = 0;
             this.radius = 0;
-            buildRing();
+            buildShell();
         }
 
         private boolean isDone() {
@@ -356,68 +354,50 @@ public class AIRobotSearchBlock extends AIRobot {
 
         private BlockPos next() {
             while (!done) {
-                if (currentRing != null && ringIndex < currentRing.size()) {
-                    return currentRing.get(ringIndex++);
+                if (currentShell != null && shellIndex < currentShell.size()) {
+                    return currentShell.get(shellIndex++);
                 }
 
                 radius++;
-                if (radius <= range) {
-                    buildRing();
-                    continue;
-                }
-
-                if (!advanceYOffset()) {
+                if (radius > range) {
                     done = true;
                     return null;
                 }
-                radius = 0;
-                buildRing();
+                buildShell();
             }
             return null;
         }
 
-        private boolean advanceYOffset() {
-            while (yOffsetIndex < range * 2) {
-                yOffsetIndex++;
-                int y = currentY();
-                if (y >= minY && y <= maxY) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private int currentY() {
-            if (yOffsetIndex == 0) {
-                return start.getY();
-            }
-            int magnitude = (yOffsetIndex + 1) / 2;
-            int offset = (yOffsetIndex & 1) == 1 ? magnitude : -magnitude;
-            return start.getY() + offset;
-        }
-
-        private void buildRing() {
-            currentRing = new ArrayList<>();
-            ringIndex = 0;
-            int y = currentY();
+        private void buildShell() {
+            currentShell = new ArrayList<>();
+            shellIndex = 0;
 
             if (radius == 0) {
-                currentRing.add(new BlockPos(start.getX(), y, start.getZ()));
+                if (start.getY() >= minY && start.getY() <= maxY) {
+                    currentShell.add(start);
+                }
                 return;
             }
 
             int sx = start.getX();
+            int sy = start.getY();
             int sz = start.getZ();
             for (int dx = -radius; dx <= radius; dx++) {
-                currentRing.add(new BlockPos(sx + dx, y, sz - radius));
-                currentRing.add(new BlockPos(sx + dx, y, sz + radius));
-            }
-            for (int dz = -radius + 1; dz <= radius - 1; dz++) {
-                currentRing.add(new BlockPos(sx - radius, y, sz + dz));
-                currentRing.add(new BlockPos(sx + radius, y, sz + dz));
+                for (int dy = -radius; dy <= radius; dy++) {
+                    for (int dz = -radius; dz <= radius; dz++) {
+                        if (Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz)) != radius) {
+                            continue;
+                        }
+                        int y = sy + dy;
+                        if (y < minY || y > maxY) {
+                            continue;
+                        }
+                        currentShell.add(new BlockPos(sx + dx, y, sz + dz));
+                    }
+                }
             }
             if (random) {
-                Collections.shuffle(currentRing);
+                Collections.shuffle(currentShell);
             }
         }
     }

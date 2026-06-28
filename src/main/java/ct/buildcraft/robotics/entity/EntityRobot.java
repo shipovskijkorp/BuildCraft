@@ -797,6 +797,14 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     @Override
+    public boolean isPushedByFluid() {
+        // Classic BuildCraft robots fly under their own AI control. Water currents must not drag them away from
+        // docking stations or work targets; otherwise a stream can permanently desync the robot AI from its planned
+        // path. Keep fluid detection intact, but opt out of vanilla fluid-current motion.
+        return false;
+    }
+
+    @Override
     public void travel(Vec3 travelVector) {
         if (dockingStation != null) {
             setDeltaMovement(Vec3.ZERO);
