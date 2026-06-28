@@ -23,6 +23,7 @@ import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.robots.IRobotRegistry;
 import ct.buildcraft.api.robots.RobotManager;
+import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.api.tools.IToolWrench;
 import ct.buildcraft.lib.misc.FakePlayerProvider;
 import ct.buildcraft.robotics.BCRoboticsBoards;
@@ -31,6 +32,7 @@ import ct.buildcraft.robotics.BCRoboticsEntities;
 import ct.buildcraft.robotics.ai.AIRobotMain;
 import ct.buildcraft.robotics.ai.AIRobotShutdown;
 import ct.buildcraft.robotics.ai.AIRobotSleep;
+import ct.buildcraft.robotics.statements.ActionRobotWorkInArea;
 import ct.buildcraft.robotics.item.ItemRobot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -736,8 +738,20 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void push(Entity entity) {
     }
 
+    @Override
+    protected void pushEntities() {
+        // Robots in classic BuildCraft had noClip and did not shove dropped items or mobs while flying through their
+        // path. LivingEntity would otherwise push ItemEntity instances out of the pickup block before the picker AI
+        // has its six-tick pickup delay.
+    }
+
+    @Override
+    public boolean canCollideWith(Entity entity) {
+        return false;
+    }
+
     public boolean canBeCollidedWith() {
-        return true;
+        return false;
     }
 
     @Override
@@ -926,11 +940,29 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public IZone getZoneToWork() {
-        return null;
+        return getZone(ActionRobotWorkInArea.AreaType.WORK);
     }
 
     @Override
     public IZone getZoneToLoadUnload() {
+        IZone zone = getZone(ActionRobotWorkInArea.AreaType.LOAD_UNLOAD);
+        return zone == null ? getZoneToWork() : zone;
+    }
+
+    private IZone getZone(ActionRobotWorkInArea.AreaType areaType) {
+        DockingStation station = getLinkedStation();
+        if (station == null) {
+            return null;
+        }
+
+        for (StatementSlot slot : station.getActiveActions()) {
+            if (slot.statement instanceof ActionRobotWorkInArea action && action.getAreaType() == areaType) {
+                IZone zone = ActionRobotWorkInArea.getArea(slot);
+                if (zone != null) {
+                    return zone;
+                }
+            }
+        }
         return null;
     }
 

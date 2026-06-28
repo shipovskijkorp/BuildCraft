@@ -11,6 +11,7 @@ import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.ai.AIRobotFetchItem;
 import ct.buildcraft.robotics.ai.AIRobotGotoSleep;
 import ct.buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
+import ct.buildcraft.robotics.statements.ActionRobotFilter;
 
 /** 1.7.10 BuildCraft picker board port. Picks dropped item entities, unloads them, then sleeps. */
 public class BoardRobotPicker extends RedstoneBoardRobot {
@@ -25,7 +26,7 @@ public class BoardRobotPicker extends RedstoneBoardRobot {
     }
 
     private void fetchNewItem() {
-        startDelegateAI(new AIRobotFetchItem(robot, 250, robot.getZoneToWork()));
+        startDelegateAI(new AIRobotFetchItem(robot, 250, ActionRobotFilter.getGateFilter(robot.getLinkedStation()), robot.getZoneToWork()));
     }
 
     @Override
@@ -46,8 +47,6 @@ public class BoardRobotPicker extends RedstoneBoardRobot {
         } else if (ai instanceof AIRobotGotoStationAndUnload) {
             if (!ai.success()) {
                 startDelegateAI(new AIRobotGotoSleep(robot));
-            } else {
-                fetchNewItem();
             }
         } else if (ai instanceof AIRobotGotoSleep) {
             terminate();

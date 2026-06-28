@@ -28,7 +28,8 @@ import net.minecraft.world.phys.Vec3;
  */
 public class AIRobotSearchBlock extends AIRobot {
     private static final int DEFAULT_RANGE = 96;
-    private static final int MAX_VISITED = DEFAULT_RANGE * DEFAULT_RANGE;
+    private static final int MAX_VISITED = DEFAULT_RANGE * DEFAULT_RANGE * 8;
+    private static final int NODES_PER_TICK = 512;
 
     public BlockIndex blockFound;
     public LinkedList<BlockIndex> path;
@@ -38,6 +39,11 @@ public class AIRobotSearchBlock extends AIRobot {
     private double maxDistanceToEnd;
     private IZone zone;
     private boolean searched;
+    private BlockPos start;
+    private int hardLimit;
+    private Queue<BlockPos> queue;
+    private Set<BlockPos> seen;
+    private Map<BlockPos, BlockPos> parent;
 
     public AIRobotSearchBlock(EntityRobotBase robot) {
         super(robot);
@@ -53,39 +59,42 @@ public class AIRobotSearchBlock extends AIRobot {
 
     @Override
     public void update() {
-        if (searched) {
-            terminate();
-            return;
-        }
-        searched = true;
         if (filter == null) {
             setSuccess(false);
             terminate();
             return;
         }
 
-        SearchResult result = findTarget();
+        if (!searched) {
+            beginSearch();
+        }
+
+        SearchResult result = continueSearch();
         if (result != null) {
             blockFound = new BlockIndex(result.target());
             path = result.path();
-        } else {
+            terminate();
+        } else if (queue == null || queue.isEmpty() || seen.size() >= MAX_VISITED) {
             setSuccess(false);
+            terminate();
         }
-        terminate();
     }
 
-    private SearchResult findTarget() {
-        Level level = robot.level;
-        BlockPos start = robot.blockPosition();
-        int hardLimit = maxDistanceToEnd > 0 ? Math.max(1, (int) Math.ceil(maxDistanceToEnd)) : DEFAULT_RANGE;
-
-        Queue<BlockPos> queue = new ArrayDeque<>();
-        Set<BlockPos> seen = new HashSet<>();
-        Map<BlockPos, BlockPos> parent = new HashMap<>();
+    private void beginSearch() {
+        searched = true;
+        start = robot.blockPosition();
+        hardLimit = maxDistanceToEnd > 0 ? Math.max(1, (int) Math.ceil(maxDistanceToEnd)) : DEFAULT_RANGE;
+        queue = new ArrayDeque<>();
+        seen = new HashSet<>();
+        parent = new HashMap<>();
         queue.add(start);
         seen.add(start);
+    }
 
-        while (!queue.isEmpty() && seen.size() < MAX_VISITED) {
+    private SearchResult continueSearch() {
+        Level level = robot.level;
+        int processed = 0;
+        while (queue != null && !queue.isEmpty() && seen.size() < MAX_VISITED && processed++ < NODES_PER_TICK) {
             BlockPos current = queue.remove();
             SearchResult adjacent = findAdjacentTarget(level, start, current, parent);
             if (adjacent != null) {

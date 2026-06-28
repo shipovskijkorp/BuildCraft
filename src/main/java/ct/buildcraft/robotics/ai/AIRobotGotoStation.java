@@ -11,6 +11,7 @@ import net.minecraft.world.phys.Vec3;
 public class AIRobotGotoStation extends AIRobot {
     private BlockIndex stationIndex;
     private Direction stationSide;
+    private boolean reservedStation;
 
     public AIRobotGotoStation(EntityRobotBase robot) {
         super(robot);
@@ -27,17 +28,20 @@ public class AIRobotGotoStation extends AIRobot {
     public void start() {
         DockingStation station = getStation();
         if (station == null) {
+            setSuccess(false);
             terminate();
         } else if (station == robot.getDockingStation()) {
             setSuccess(true);
             terminate();
         } else if (station.take(robot)) {
+            reservedStation = true;
             Direction side = station.side();
             int dx = side == null ? 0 : side.getStepX();
             int dy = side == null ? 0 : side.getStepY();
             int dz = side == null ? 0 : side.getStepZ();
             startDelegateAI(new AIRobotGotoBlock(robot, station.x() + dx, station.y() + dy, station.z() + dz));
         } else {
+            setSuccess(false);
             terminate();
         }
     }
@@ -46,6 +50,7 @@ public class AIRobotGotoStation extends AIRobot {
     public void delegateAIEnded(AIRobot ai) {
         DockingStation station = getStation();
         if (station == null) {
+            setSuccess(false);
             terminate();
         } else if (ai instanceof AIRobotGotoBlock) {
             if (ai.success()) {
@@ -56,16 +61,30 @@ public class AIRobotGotoStation extends AIRobot {
                 startDelegateAI(new AIRobotStraightMoveTo(robot, station.x() + 0.5D + dx * 0.5D,
                         station.y() + 0.5D + dy * 0.5D, station.z() + 0.5D + dz * 0.5D));
             } else {
+                releaseReservation(station);
+                setSuccess(false);
                 terminate();
             }
-        } else {
-            setSuccess(true);
-            robot.setDeltaMovement(Vec3.ZERO);
-            if (station.side() != null && station.side().getStepY() == 0) {
-                robot.aimItemAt(station.x() + 2 * station.side().getStepX(), station.y(), station.z() + 2 * station.side().getStepZ());
+        } else if (ai instanceof AIRobotStraightMoveTo) {
+            if (ai.success()) {
+                setSuccess(true);
+                robot.setDeltaMovement(Vec3.ZERO);
+                if (station.side() != null && station.side().getStepY() == 0) {
+                    robot.aimItemAt(station.x() + 2 * station.side().getStepX(), station.y(), station.z() + 2 * station.side().getStepZ());
+                }
+                robot.dock(station);
+            } else {
+                releaseReservation(station);
+                setSuccess(false);
             }
-            robot.dock(station);
             terminate();
+        }
+    }
+
+    private void releaseReservation(DockingStation station) {
+        if (reservedStation && station != null && station != robot.getLinkedStation() && robot.getDockingStation() != station) {
+            station.release(robot);
+            reservedStation = false;
         }
     }
 
@@ -81,16 +100,20 @@ public class AIRobotGotoStation extends AIRobot {
 
     @Override
     public void writeSelfToNBT(CompoundTag nbt) {
-        CompoundTag idx = new CompoundTag();
-        stationIndex.writeTo(idx);
-        nbt.put("stationIndex", idx);
-        nbt.putByte("stationSide", (byte) (stationSide == null ? -1 : stationSide.ordinal()));
+        if (stationIndex != null) {
+            CompoundTag idx = new CompoundTag();
+            stationIndex.writeTo(idx);
+            nbt.put("stationIndex", idx);
+            nbt.putByte("stationSide", (byte) (stationSide == null ? -1 : stationSide.ordinal()));
+        }
     }
 
     @Override
     public void loadSelfFromNBT(CompoundTag nbt) {
-        stationIndex = new BlockIndex(nbt.getCompound("stationIndex"));
-        int side = nbt.getByte("stationSide");
-        stationSide = side >= 0 && side < Direction.values().length ? Direction.values()[side] : null;
+        if (nbt.contains("stationIndex")) {
+            stationIndex = new BlockIndex(nbt.getCompound("stationIndex"));
+            int side = nbt.getByte("stationSide");
+            stationSide = side >= 0 && side < Direction.values().length ? Direction.values()[side] : null;
+        }
     }
 }

@@ -5,6 +5,8 @@ import ct.buildcraft.api.statements.IActionInternal;
 import ct.buildcraft.api.statements.IStatement;
 import ct.buildcraft.api.statements.IStatementContainer;
 import ct.buildcraft.api.statements.IStatementParameter;
+import ct.buildcraft.api.statements.StatementSlot;
+import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.core.statements.BCStatement;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import ct.buildcraft.robotics.BCRoboticsSprites;
@@ -52,6 +54,25 @@ public class ActionRobotWorkInArea extends BCStatement implements IActionInterna
         ItemStack stack = spl.getItemStack();
         if (stack.isEmpty() || !(stack.getItem() instanceof IMapLocation)) return null;
         return (IMapLocation) stack.getItem();
+    }
+
+    public static IZone getArea(StatementSlot slot) {
+        if (slot == null || slot.parameters == null || slot.parameters.length == 0) {
+            return null;
+        }
+        IStatementParameter parameter = slot.parameters[0];
+        if (!(parameter instanceof StatementParameterMapLocation mapParam)) {
+            return null;
+        }
+        ItemStack stack = mapParam.getItemStack();
+        if (stack.isEmpty() || !(stack.getItem() instanceof IMapLocation map)) {
+            return null;
+        }
+        return map.getZone(stack);
+    }
+
+    public AreaType getAreaType() {
+        return loadUnload ? AreaType.LOAD_UNLOAD : AreaType.WORK;
     }
 
     @Override

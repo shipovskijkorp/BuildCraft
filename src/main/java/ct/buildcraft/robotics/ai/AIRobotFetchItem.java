@@ -1,6 +1,7 @@
 package ct.buildcraft.robotics.ai;
 
 import ct.buildcraft.api.core.IZone;
+import ct.buildcraft.api.core.IStackFilter;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.boards.BoardRobotPicker;
@@ -15,6 +16,7 @@ public class AIRobotFetchItem extends AIRobot {
     private ItemEntity target;
     private int targetId = -1;
     private float maxRange = 250;
+    private IStackFilter stackFilter;
     private int pickTime = -1;
     private IZone zone;
 
@@ -23,8 +25,13 @@ public class AIRobotFetchItem extends AIRobot {
     }
 
     public AIRobotFetchItem(EntityRobotBase robot, float maxRange, IZone zone) {
+        this(robot, maxRange, null, zone);
+    }
+
+    public AIRobotFetchItem(EntityRobotBase robot, float maxRange, IStackFilter stackFilter, IZone zone) {
         this(robot);
         this.maxRange = maxRange;
+        this.stackFilter = stackFilter;
         this.zone = zone;
     }
 
@@ -49,9 +56,7 @@ public class AIRobotFetchItem extends AIRobot {
         if (target == null) {
             scanForItem();
         } else {
-            if (Math.floor(target.getX()) != Math.floor(robot.getX())
-                    || Math.floor(target.getY()) != Math.floor(robot.getY())
-                    || Math.floor(target.getZ()) != Math.floor(robot.getZ())) {
+            if (!canPickTargetNow()) {
                 startDelegateAI(new AIRobotGotoBlock(robot, (int) Math.floor(target.getX()), (int) Math.floor(target.getY()), (int) Math.floor(target.getZ())));
                 return;
             }
@@ -99,6 +104,7 @@ public class AIRobotFetchItem extends AIRobot {
             if (!item.isAlive() || item.getItem().isEmpty()) continue;
             if (BoardRobotPicker.targettedItems.contains(item.getId())) continue;
             if (robot.isKnownUnreachable(item)) continue;
+            if (stackFilter != null && !stackFilter.matches(item.getItem())) continue;
             if (zone != null && !zone.contains(new Vec3(item.getX(), item.getY(), item.getZ()))) continue;
             double sqrDistance = item.distanceToSqr(robot);
             if (sqrDistance >= maxRange * maxRange) continue;
@@ -121,6 +127,18 @@ public class AIRobotFetchItem extends AIRobot {
             setSuccess(false);
             terminate();
         }
+    }
+
+    private boolean canPickTargetNow() {
+        if (target == null) {
+            return false;
+        }
+        if (Math.floor(target.getX()) == Math.floor(robot.getX())
+                && Math.floor(target.getY()) == Math.floor(robot.getY())
+                && Math.floor(target.getZ()) == Math.floor(robot.getZ())) {
+            return true;
+        }
+        return target.distanceToSqr(robot) <= 2.25D;
     }
 
     private ItemStack insert(ItemStack stack, boolean doInsert) {

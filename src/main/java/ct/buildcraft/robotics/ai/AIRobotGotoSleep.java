@@ -29,7 +29,12 @@ public class AIRobotGotoSleep extends AIRobot {
     @Override
     public void delegateAIEnded(AIRobot ai) {
         if (ai instanceof AIRobotGotoStation) {
-            startDelegateAI(new AIRobotSleep(robot));
+            if (ai.success()) {
+                startDelegateAI(new AIRobotSleep(robot));
+            } else {
+                setSuccess(false);
+                terminate();
+            }
         } else if (ai instanceof AIRobotSleep) {
             terminate();
         }

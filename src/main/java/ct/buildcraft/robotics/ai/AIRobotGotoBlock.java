@@ -28,6 +28,7 @@ public class AIRobotGotoBlock extends AIRobotGoto {
     private double maxDistance;
     private BlockIndex lastBlockInPath;
     private boolean loadedFromNBT;
+    private int stuckTicks;
 
     public AIRobotGotoBlock(EntityRobotBase robot) {
         super(robot);
@@ -81,11 +82,13 @@ public class AIRobotGotoBlock extends AIRobotGoto {
 
         if (path != null && !path.isEmpty()) {
             double distance = distanceTo(nextX, nextY, nextZ);
-            if (distance <= 0.18D || !robot.isMoving() || distance > prevDistance + 0.025D) {
+            boolean notProgressing = distance > prevDistance + 0.025D || !robot.isMoving();
+            if (distance <= 0.18D || (notProgressing && ++stuckTicks > 8)) {
                 path.removeFirst();
                 setNextInPath();
             } else {
-                prevDistance = distance;
+                stuckTicks = notProgressing ? stuckTicks : 0;
+                prevDistance = Math.min(prevDistance, distance);
             }
         }
 
@@ -107,10 +110,21 @@ public class AIRobotGotoBlock extends AIRobotGoto {
 
     private void setNextInPath() {
         if (path != null && !path.isEmpty()) {
+            boolean isFirst = prevDistance == Double.MAX_VALUE;
             BlockIndex next = path.getFirst();
             prevDistance = Double.MAX_VALUE;
-            setDestination(robot, next.x + 0.5D, next.y + 0.5D, next.z + 0.5D);
-            robot.aimItemAt(next.x, next.y, next.z);
+            stuckTicks = 0;
+
+            // The old robot had noClip, but the pathfinder still refused to route through hard blocks. Re-check the
+            // next node because blocks can change while the robot is travelling or after NBT load. The first node is
+            // allowed so a robot that is currently embedded in a station/pipe block can escape instead of deadlocking.
+            if (isFirst || isSoft(robot.level, next.toBlockPos())) {
+                setDestination(robot, next.x + 0.5D, next.y + 0.5D, next.z + 0.5D);
+                robot.aimItemAt(next.x, next.y, next.z);
+            } else {
+                path = null;
+                robot.setDeltaMovement(Vec3.ZERO);
+            }
         }
     }
 
@@ -123,6 +137,9 @@ public class AIRobotGotoBlock extends AIRobotGoto {
             return single;
         }
         Level level = robot.level;
+        if (!start.equals(target) && !isSoft(level, target)) {
+            return null;
+        }
         int hardLimit = maxDistance > 0 ? Math.max(1, (int) Math.ceil(maxDistance)) : 96;
         int maxVisited = 96 * 96;
         Queue<BlockPos> queue = new ArrayDeque<>();
@@ -136,7 +153,7 @@ public class AIRobotGotoBlock extends AIRobotGoto {
                 BlockPos next = cur.relative(dir);
                 if (seen.contains(next)) continue;
                 if (maxDistance > 0 && distanceSqr(next, start) > hardLimit * hardLimit) continue;
-                if (!next.equals(target) && !isSoft(level, next)) continue;
+                if (!isSoft(level, next)) continue;
                 parent.put(next, cur);
                 if (next.equals(target)) {
                     return reconstruct(start, target, parent);

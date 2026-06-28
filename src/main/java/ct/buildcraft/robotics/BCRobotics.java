@@ -15,6 +15,7 @@ import ct.buildcraft.robotics.ai.AIRobotBreak;
 import ct.buildcraft.robotics.ai.AIRobotFetchAndEquipItemStack;
 import ct.buildcraft.robotics.ai.AIRobotFetchItem;
 import ct.buildcraft.robotics.ai.AIRobotGotoBlock;
+import ct.buildcraft.robotics.ai.AIRobotGoAndLinkToDock;
 import ct.buildcraft.robotics.ai.AIRobotGotoSleep;
 import ct.buildcraft.robotics.ai.AIRobotGotoStation;
 import ct.buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
@@ -123,6 +124,7 @@ public class BCRobotics {
         RobotManager.registerAIRobot(AIRobotGotoBlock.class, "gotoBlock", "buildcraft.robotics.ai.AIRobotGotoBlock");
         RobotManager.registerAIRobot(AIRobotStraightMoveTo.class, "straightMoveTo", "buildcraft.robotics.ai.AIRobotStraightMoveTo");
         RobotManager.registerAIRobot(AIRobotGotoStation.class, "gotoStation", "buildcraft.robotics.ai.AIRobotGotoStation");
+        RobotManager.registerAIRobot(AIRobotGoAndLinkToDock.class, "goAndLinkToDock", "buildcraft.robotics.ai.AIRobotGoAndLinkToDock");
         RobotManager.registerAIRobot(AIRobotGotoStationToUnload.class, "gotoStationToUnload", "buildcraft.robotics.ai.AIRobotGotoStationToUnload");
         RobotManager.registerAIRobot(AIRobotGotoStationAndUnload.class, "gotoStationAndUnload", "buildcraft.robotics.ai.AIRobotGotoStationAndUnload");
         RobotManager.registerAIRobot(AIRobotSearchStation.class, "searchStation", "buildcraft.robotics.ai.AIRobotSearchStation");

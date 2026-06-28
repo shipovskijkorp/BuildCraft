@@ -93,7 +93,11 @@ public abstract class DockingStation {
     }
 
     public boolean takeAsMain(EntityRobotBase robot) {
-        if (robotTakingId == EntityRobotBase.NULL_ROBOT_ID) {
+        if (robot == null || RobotManager.registryProvider == null) {
+            return false;
+        }
+
+        if (robotTakingId == EntityRobotBase.NULL_ROBOT_ID || robotTakingId == robot.getRobotId()) {
             IRobotRegistry registry = RobotManager.registryProvider.getRegistry(robot.level);
             linkIsMain = true;
             robotTaking = robot;
@@ -105,11 +109,15 @@ public abstract class DockingStation {
 
             return true;
         }
-        return robotTakingId == robot.getRobotId();
+        return false;
     }
 
     public boolean take(EntityRobotBase robot) {
-        if (robotTaking == null) {
+        if (robot == null || RobotManager.registryProvider == null) {
+            return false;
+        }
+
+        if (robotTakingId == EntityRobotBase.NULL_ROBOT_ID) {
             IRobotRegistry registry = RobotManager.registryProvider.getRegistry(robot.level);
             linkIsMain = false;
             robotTaking = robot;
@@ -119,8 +127,16 @@ public abstract class DockingStation {
             setLevel(robot.level);
 
             return true;
+        } else if (robotTakingId == robot.getRobotId()) {
+            IRobotRegistry registry = RobotManager.registryProvider.getRegistry(robot.level);
+            robotTaking = robot;
+            registry.registryMarkDirty();
+            registry.take(this, robot.getRobotId());
+            setLevel(robot.level);
+
+            return true;
         }
-        return robot.getRobotId() == robotTakingId;
+        return false;
     }
 
     public void release(EntityRobotBase robot) {
