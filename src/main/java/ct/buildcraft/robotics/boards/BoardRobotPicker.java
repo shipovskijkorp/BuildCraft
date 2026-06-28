@@ -45,9 +45,10 @@ public class BoardRobotPicker extends RedstoneBoardRobot {
                 startDelegateAI(new AIRobotGotoSleep(robot));
             }
         } else if (ai instanceof AIRobotGotoStationAndUnload) {
-            if (!ai.success()) {
-                startDelegateAI(new AIRobotGotoSleep(robot));
-            }
+            // GotoStationAndUnload is only started after a failed item search while the robot is carrying stacks.
+            // Once it has unloaded successfully there is no current job left, so return to the main dock instead of
+            // staying at an arbitrary unload station and waiting for the next search tick to fail again.
+            startDelegateAI(new AIRobotGotoSleep(robot));
         } else if (ai instanceof AIRobotGotoSleep) {
             terminate();
         }

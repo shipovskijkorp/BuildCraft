@@ -57,7 +57,7 @@ public class AIRobotFetchItem extends AIRobot {
             scanForItem();
         } else {
             if (!canPickTargetNow()) {
-                startDelegateAI(new AIRobotGotoBlock(robot, (int) Math.floor(target.getX()), (int) Math.floor(target.getY()), (int) Math.floor(target.getZ())));
+                startDelegateAI(new AIRobotGotoBlock(robot, (int) Math.floor(target.getX()), (int) Math.floor(target.getY()), (int) Math.floor(target.getZ()), maxRange));
                 return;
             }
             pickTime++;
@@ -121,7 +121,7 @@ public class AIRobotFetchItem extends AIRobot {
             if (Math.floor(target.getX()) != Math.floor(robot.getX())
                     || Math.floor(target.getY()) != Math.floor(robot.getY())
                     || Math.floor(target.getZ()) != Math.floor(robot.getZ())) {
-                startDelegateAI(new AIRobotGotoBlock(robot, (int) Math.floor(target.getX()), (int) Math.floor(target.getY()), (int) Math.floor(target.getZ())));
+                startDelegateAI(new AIRobotGotoBlock(robot, (int) Math.floor(target.getX()), (int) Math.floor(target.getY()), (int) Math.floor(target.getZ()), maxRange));
             }
         } else {
             setSuccess(false);

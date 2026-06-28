@@ -29,8 +29,7 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
         @Override
         public boolean canInjectItems(Direction from) {
             return getPipe() != null && getPipe().getPipe() != null
-                    && getPipe().getPipe().flow instanceof PipeFlowItems
-                    && hasItemRoute(from);
+                    && getPipe().getPipe().flow instanceof PipeFlowItems;
         }
 
         @Override
@@ -38,7 +37,7 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
             if (stack.isEmpty()) {
                 return ItemStack.EMPTY;
             }
-            if (getPipe() == null || !(getPipe().getPipe().flow instanceof PipeFlowItems items) || !hasItemRoute(from)) {
+            if (getPipe() == null || !(getPipe().getPipe().flow instanceof PipeFlowItems items)) {
                 return stack;
             }
             if (doAdd) {
@@ -84,19 +83,6 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
 
     private Direction normalizeOutputSide(Direction from) {
         return side() != null ? side() : from;
-    }
-
-    private boolean hasItemRoute(Direction from) {
-        if (getPipe() == null || getPipe().getPipe() == null || !(getPipe().getPipe().flow instanceof PipeFlowItems)) {
-            return false;
-        }
-        Direction blocked = normalizeOutputSide(from);
-        for (Direction direction : Direction.values()) {
-            if (direction != blocked && getPipe().getPipe().isConnected(direction)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

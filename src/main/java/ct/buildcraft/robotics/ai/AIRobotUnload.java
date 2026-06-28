@@ -4,6 +4,7 @@ import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.transport.IInjectable;
+import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import ct.buildcraft.robotics.statements.ActionRobotFilter;
 import ct.buildcraft.robotics.statements.ActionStationAcceptItems;
@@ -38,7 +39,7 @@ public class AIRobotUnload extends AIRobot {
         for (int slot = 0; slot < robot.getContainerSize(); slot++) {
             ItemStack stack = robot.getItem(slot);
             if (stack.isEmpty()) continue;
-            if (!ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(stack), ActionStationAcceptItems.class)) {
+            if (!canUnloadStack(station, stack)) {
                 continue;
             }
 
@@ -53,7 +54,7 @@ public class AIRobotUnload extends AIRobot {
 
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!held.isEmpty()) {
-            if (!ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(held), ActionStationAcceptItems.class)) {
+            if (!canUnloadStack(station, held)) {
                 return false;
             }
 
@@ -67,6 +68,29 @@ public class AIRobotUnload extends AIRobot {
         }
 
         return false;
+    }
+
+    private static boolean canUnloadStack(DockingStation station, ItemStack stack) {
+        if (station == null || stack.isEmpty()) {
+            return false;
+        }
+
+        boolean hasExplicitAcceptAction = false;
+        for (StatementSlot slot : station.getActiveActions()) {
+            if (slot.statement instanceof ActionStationAcceptItems) {
+                hasExplicitAcceptAction = true;
+                break;
+            }
+        }
+
+        if (hasExplicitAcceptAction) {
+            return ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(stack), ActionStationAcceptItems.class);
+        }
+
+        // Classic gates can explicitly filter/allow unloading, but a plain robot station mounted on an item pipe should
+        // still be a valid unload point. Without this fallback picker robots come back with items and then fail forever
+        // unless the player has also installed a dedicated "station accepts items" gate action.
+        return station.getItemOutput() != null || station.getItemInput() != null;
     }
 
     private static ItemStack offer(DockingStation station, ItemStack stack, boolean doAdd) {

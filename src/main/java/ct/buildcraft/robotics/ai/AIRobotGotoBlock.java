@@ -1,6 +1,5 @@
 package ct.buildcraft.robotics.ai;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,7 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 import ct.buildcraft.api.core.BlockIndex;
@@ -136,33 +135,63 @@ public class AIRobotGotoBlock extends AIRobotGoto {
             single.add(new BlockIndex(target));
             return single;
         }
+
         Level level = robot.level;
-        if (!start.equals(target) && !isSoft(level, target)) {
+        if (!isSoft(level, target)) {
             return null;
         }
-        int hardLimit = maxDistance > 0 ? Math.max(1, (int) Math.ceil(maxDistance)) : 96;
-        int maxVisited = 96 * 96;
-        Queue<BlockPos> queue = new ArrayDeque<>();
-        Set<BlockPos> seen = new HashSet<>();
+
+        // Most robot paths are just long open-air runs. Try cheap axis-aligned paths first; this avoids the old
+        // breadth-first flood from exhausting its node budget after only about one chunk of 3D air.
+        LinkedList<BlockIndex> direct = directFallback(start, target, level);
+        if (direct != null) {
+            return direct;
+        }
+
+        return findAStarPath(start, target, level);
+    }
+
+    private LinkedList<BlockIndex> findAStarPath(BlockPos start, BlockPos target, Level level) {
+        int hardLimit = maxDistance > 0 ? Math.max(1, (int) Math.ceil(maxDistance)) : 256;
+        int maxVisited = Math.max(8192, Math.min(262144, hardLimit * hardLimit * 4));
+        PriorityQueue<PathNode> open = new PriorityQueue<>((a, b) -> {
+            int score = Double.compare(a.score(), b.score());
+            return score != 0 ? score : Long.compare(a.sequence(), b.sequence());
+        });
         Map<BlockPos, BlockPos> parent = new HashMap<>();
-        queue.add(start);
-        seen.add(start);
-        while (!queue.isEmpty() && seen.size() < maxVisited) {
-            BlockPos cur = queue.remove();
+        Map<BlockPos, Integer> bestCost = new HashMap<>();
+        Set<BlockPos> closed = new HashSet<>();
+        long sequence = 0;
+
+        bestCost.put(start, 0);
+        open.add(new PathNode(start, heuristic(start, target), sequence++));
+
+        while (!open.isEmpty() && closed.size() < maxVisited) {
+            PathNode node = open.poll();
+            BlockPos current = node.pos();
+            if (!closed.add(current)) {
+                continue;
+            }
+            if (current.equals(target)) {
+                return reconstruct(start, target, parent);
+            }
+
+            int currentCost = bestCost.getOrDefault(current, Integer.MAX_VALUE);
             for (Direction dir : Direction.values()) {
-                BlockPos next = cur.relative(dir);
-                if (seen.contains(next)) continue;
-                if (maxDistance > 0 && distanceSqr(next, start) > hardLimit * hardLimit) continue;
+                BlockPos next = current.relative(dir);
+                if (closed.contains(next)) continue;
+                if (distanceSqr(next, start) > hardLimit * hardLimit) continue;
                 if (!isSoft(level, next)) continue;
-                parent.put(next, cur);
-                if (next.equals(target)) {
-                    return reconstruct(start, target, parent);
+
+                int newCost = currentCost + 1;
+                if (newCost < bestCost.getOrDefault(next, Integer.MAX_VALUE)) {
+                    bestCost.put(next, newCost);
+                    parent.put(next, current);
+                    open.add(new PathNode(next, newCost + heuristic(next, target), sequence++));
                 }
-                seen.add(next);
-                queue.add(next);
             }
         }
-        return directFallback(start, target, level);
+        return null;
     }
 
     private static double distanceSqr(BlockPos a, BlockPos b) {
@@ -191,20 +220,44 @@ public class AIRobotGotoBlock extends AIRobotGoto {
         return out;
     }
 
+    private static double heuristic(BlockPos a, BlockPos b) {
+        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY()) + Math.abs(a.getZ() - b.getZ());
+    }
+
     private static LinkedList<BlockIndex> directFallback(BlockPos start, BlockPos target, Level level) {
+        int[][] orders = {
+                {0, 1, 2}, {0, 2, 1},
+                {1, 0, 2}, {1, 2, 0},
+                {2, 0, 1}, {2, 1, 0}
+        };
+        for (int[] order : orders) {
+            LinkedList<BlockIndex> out = traceAxisPath(start, target, level, order);
+            if (out != null) {
+                return out;
+            }
+        }
+        return null;
+    }
+
+    private static LinkedList<BlockIndex> traceAxisPath(BlockPos start, BlockPos target, Level level, int[] order) {
         LinkedList<BlockIndex> out = new LinkedList<>();
-        int x = start.getX();
-        int y = start.getY();
-        int z = start.getZ();
-        while (x != target.getX() || y != target.getY() || z != target.getZ()) {
-            if (x < target.getX()) x++; else if (x > target.getX()) x--;
-            else if (y < target.getY()) y++; else if (y > target.getY()) y--;
-            else if (z < target.getZ()) z++; else if (z > target.getZ()) z--;
-            BlockPos pos = new BlockPos(x, y, z);
-            if (!pos.equals(target) && !isSoft(level, pos)) return null;
-            out.add(new BlockIndex(pos));
+        int[] current = {start.getX(), start.getY(), start.getZ()};
+        int[] end = {target.getX(), target.getY(), target.getZ()};
+
+        for (int axis : order) {
+            while (current[axis] != end[axis]) {
+                current[axis] += Integer.compare(end[axis], current[axis]);
+                BlockPos pos = new BlockPos(current[0], current[1], current[2]);
+                if (!isSoft(level, pos)) {
+                    return null;
+                }
+                out.add(new BlockIndex(pos));
+            }
         }
         return out;
+    }
+
+    private record PathNode(BlockPos pos, double score, long sequence) {
     }
 
     @Override

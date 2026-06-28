@@ -39,7 +39,10 @@ public class AIRobotGotoStation extends AIRobot {
             int dx = side == null ? 0 : side.getStepX();
             int dy = side == null ? 0 : side.getStepY();
             int dz = side == null ? 0 : side.getStepZ();
-            startDelegateAI(new AIRobotGotoBlock(robot, station.x() + dx, station.y() + dy, station.z() + dz));
+            int targetX = station.x() + dx;
+            int targetY = station.y() + dy;
+            int targetZ = station.z() + dz;
+            startDelegateAI(new AIRobotGotoBlock(robot, targetX, targetY, targetZ, pathRangeTo(targetX, targetY, targetZ)));
         } else {
             setSuccess(false);
             terminate();
@@ -79,6 +82,13 @@ public class AIRobotGotoStation extends AIRobot {
             }
             terminate();
         }
+    }
+
+    private double pathRangeTo(int x, int y, int z) {
+        double dx = robot.getX() - (x + 0.5D);
+        double dy = robot.getY() - (y + 0.5D);
+        double dz = robot.getZ() - (z + 0.5D);
+        return Math.max(32.0D, Math.sqrt(dx * dx + dy * dy + dz * dz) + 16.0D);
     }
 
     private void releaseReservation(DockingStation station) {
