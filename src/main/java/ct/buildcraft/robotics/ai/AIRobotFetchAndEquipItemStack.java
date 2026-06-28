@@ -5,6 +5,8 @@ import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.IStationFilter;
+import ct.buildcraft.lib.inventory.filter.AggregateFilter;
+import ct.buildcraft.robotics.statements.ActionRobotFilterTool;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,7 +21,7 @@ public class AIRobotFetchAndEquipItemStack extends AIRobot {
 
     public AIRobotFetchAndEquipItemStack(EntityRobotBase robot, IStackFilter filter) {
         this(robot);
-        this.filter = filter;
+        this.filter = filter == null ? null : new AggregateFilter(ActionRobotFilterTool.getGateFilter(robot.getLinkedStation()), filter);
     }
 
     @Override

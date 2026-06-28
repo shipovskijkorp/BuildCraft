@@ -25,7 +25,7 @@ public class StatementParameterItemStackExact implements IStatementParameter {
     @Nonnull
     @Override
     public ItemStack getItemStack() {
-        return ItemStack.EMPTY;
+        return stack == null ? ItemStack.EMPTY : stack;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class StatementParameterItemStackExact implements IStatementParameter {
     public void writeToNbt(CompoundTag compound) {
         if (stack != null) {
             CompoundTag tagCompound = new CompoundTag();
-            stack.deserializeNBT(tagCompound);
+            stack.save(tagCompound);
             compound.put("stack", tagCompound);
         }
     }

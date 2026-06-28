@@ -1,7 +1,10 @@
 package ct.buildcraft.robotics.ai;
 
 import ct.buildcraft.api.robots.AIRobot;
+import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.api.statements.StatementSlot;
+import ct.buildcraft.robotics.statements.ActionRobotWakeUp;
 import net.minecraft.nbt.CompoundTag;
 
 public class AIRobotSleep extends AIRobot {
@@ -10,6 +13,21 @@ public class AIRobotSleep extends AIRobot {
 
     public AIRobotSleep(EntityRobotBase robot) {
         super(robot);
+    }
+
+    @Override
+    public void preempt(AIRobot ai) {
+        DockingStation station = robot.getLinkedStation();
+        if (station == null) {
+            return;
+        }
+
+        for (StatementSlot slot : station.getActiveActions()) {
+            if (slot.statement instanceof ActionRobotWakeUp) {
+                terminate();
+                return;
+            }
+        }
     }
 
     @Override

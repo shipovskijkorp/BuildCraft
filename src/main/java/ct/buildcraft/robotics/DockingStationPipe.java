@@ -1,6 +1,8 @@
 package ct.buildcraft.robotics;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import ct.buildcraft.api.core.BlockIndex;
 import ct.buildcraft.api.robots.DockingStation;
@@ -11,6 +13,7 @@ import ct.buildcraft.api.statements.StatementSlot;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeColor;
+import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
 import ct.buildcraft.transport.pipe.flow.PipeFlowPower;
@@ -60,12 +63,20 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     }
 
     public TilePipeHolder getPipe() {
-        if (pipe == null && level() != null) {
-            if (level().getBlockEntity(new net.minecraft.core.BlockPos(x(), y(), z())) instanceof TilePipeHolder holder) {
+        if (level() == null) {
+            return pipe;
+        }
+
+        net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(x(), y(), z());
+        if (pipe == null && level().isLoaded(pos)) {
+            if (level().getBlockEntity(pos) instanceof TilePipeHolder holder) {
                 pipe = holder;
             }
         }
-        if (pipe == null && level() != null && !level().isClientSide && RobotManager.registryProvider != null) {
+
+        // A station whose chunk is merely unloaded must stay in the robotics registry so the robot can rebind by id
+        // when both sides load again. Only remove the station if the chunk is loaded and the pipe is genuinely gone.
+        if (pipe == null && level().isLoaded(pos) && !level().isClientSide && RobotManager.registryProvider != null) {
             RobotManager.registryProvider.getRegistry(level()).removeStation(this);
         }
         return pipe;
@@ -90,7 +101,17 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
 
     @Override
     public Iterable<StatementSlot> getActiveActions() {
-        return Collections.emptyList();
+        if (getPipe() == null) {
+            return Collections.emptyList();
+        }
+
+        List<StatementSlot> actions = new ArrayList<>();
+        for (Direction direction : Direction.values()) {
+            if (getPipe().getPluggable(direction) instanceof PluggableGate gate) {
+                actions.addAll(gate.logic.getActiveActions());
+            }
+        }
+        return actions;
     }
 
     @Override

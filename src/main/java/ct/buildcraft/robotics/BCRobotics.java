@@ -37,6 +37,7 @@ import ct.buildcraft.robotics.zone.MessageZoneMapResponse;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -79,6 +80,7 @@ public class BCRobotics {
                 MessageZoneMapResponse.HANDLER, MessageZoneMapResponse::toBytes, MessageZoneMapResponse::new);
 
         RobotManager.registryProvider = SimpleRobotRegistryProvider.INSTANCE;
+        MinecraftForge.EVENT_BUS.register(SimpleRobotRegistryProvider.INSTANCE);
         RobotManager.registerDockingStation(DockingStationPipe.class, "pipe");
         registerRoboticsAI();
         BoardRobotPicker.onServerStart();

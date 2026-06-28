@@ -1,10 +1,18 @@
 package ct.buildcraft.robotics.statements;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import ct.buildcraft.api.core.IStackFilter;
+import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.statements.IActionInternal;
 import ct.buildcraft.api.statements.IStatementContainer;
 import ct.buildcraft.api.statements.IStatementParameter;
 import ct.buildcraft.api.statements.StatementParameterItemStack;
+import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.core.statements.BCStatement;
+import ct.buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
+import ct.buildcraft.lib.inventory.filter.PassThroughStackFilter;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import ct.buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
@@ -41,6 +49,23 @@ public class ActionRobotFilterTool extends BCStatement implements IActionInterna
         IStatementParameter p = parameters[0];
         if (p instanceof StatementParameterItemStack s) return s.getItemStack();
         return ItemStack.EMPTY;
+    }
+
+    public static IStackFilter getGateFilter(DockingStation station) {
+        Collection<ItemStack> stacks = new ArrayList<>();
+        if (station != null) {
+            for (StatementSlot slot : station.getActiveActions()) {
+                if (slot.statement instanceof ActionRobotFilterTool && slot.parameters != null) {
+                    ItemStack stack = getToolFilter(slot.parameters);
+                    if (!stack.isEmpty()) {
+                        stacks.add(stack.copy());
+                    }
+                }
+            }
+        }
+        return stacks.isEmpty()
+                ? new PassThroughStackFilter()
+                : new ArrayStackOrListFilter(stacks.toArray(new ItemStack[0]));
     }
 
     @Override

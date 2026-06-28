@@ -1,6 +1,8 @@
 package ct.buildcraft.robotics.ai;
 
 import ct.buildcraft.api.robots.AIRobot;
+import ct.buildcraft.api.robots.DockingStation;
+import ct.buildcraft.api.robots.IRobotRegistry;
 import ct.buildcraft.api.robots.EntityRobotBase;
 
 public class AIRobotGotoSleep extends AIRobot {
@@ -10,13 +12,18 @@ public class AIRobotGotoSleep extends AIRobot {
 
     @Override
     public void start() {
-        robot.getRegistry().releaseResources(robot);
-        if (robot.getLinkedStation() == null) {
+        IRobotRegistry registry = robot.getRegistry();
+        if (registry != null) {
+            registry.releaseResources(robot);
+        }
+
+        DockingStation linkedStation = robot.getLinkedStation();
+        if (linkedStation == null) {
             setSuccess(false);
             terminate();
             return;
         }
-        startDelegateAI(new AIRobotGotoStation(robot, robot.getLinkedStation()));
+        startDelegateAI(new AIRobotGotoStation(robot, linkedStation));
     }
 
     @Override

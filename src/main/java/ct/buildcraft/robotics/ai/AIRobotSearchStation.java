@@ -5,6 +5,7 @@ import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.IStationFilter;
+import ct.buildcraft.robotics.statements.ActionStationForbidRobot;
 import net.minecraft.world.phys.Vec3;
 
 public class AIRobotSearchStation extends AIRobot {
@@ -40,6 +41,7 @@ public class AIRobotSearchStation extends AIRobot {
             if (station.isTaken() && station.robotIdTaking() != robot.getRobotId()) continue;
             if (zone != null && !zone.contains(new Vec3(station.x(), station.y(), station.z()))) continue;
             if (!filter.matches(station)) continue;
+            if (ActionStationForbidRobot.isForbidden(station, robot)) continue;
             double dx = robot.getX() - station.x();
             double dy = robot.getY() - station.y();
             double dz = robot.getZ() - station.z();

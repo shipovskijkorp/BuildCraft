@@ -6,6 +6,7 @@ import ct.buildcraft.api.statements.IActionInternal;
 import ct.buildcraft.api.statements.IStatement;
 import ct.buildcraft.api.statements.IStatementContainer;
 import ct.buildcraft.api.statements.IStatementParameter;
+import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.core.statements.BCStatement;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import ct.buildcraft.robotics.BCRoboticsSprites;
@@ -49,6 +50,33 @@ public class ActionStationForbidRobot extends BCStatement implements IActionInte
         if (parameters == null) return true;
         for (IStatementParameter p : parameters) {
             if (StatementParameterRobot.matches(p, robot)) return true;
+        }
+        return false;
+    }
+
+    public static boolean isForbidden(DockingStation station, EntityRobotBase robot) {
+        if (station == null || robot == null) {
+            return false;
+        }
+
+        for (StatementSlot slot : station.getActiveActions()) {
+            if (slot.statement instanceof ActionStationForbidRobot action) {
+                if (action.invert ^ matchesSlot(slot, robot)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean matchesSlot(StatementSlot slot, EntityRobotBase robot) {
+        if (slot.parameters == null) {
+            return false;
+        }
+        for (IStatementParameter parameter : slot.parameters) {
+            if (StatementParameterRobot.matches(parameter, robot)) {
+                return true;
+            }
         }
         return false;
     }

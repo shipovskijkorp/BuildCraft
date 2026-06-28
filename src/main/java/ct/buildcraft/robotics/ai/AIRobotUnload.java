@@ -4,8 +4,12 @@ import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.transport.IInjectable;
+import ct.buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
+import ct.buildcraft.robotics.statements.ActionRobotFilter;
+import ct.buildcraft.robotics.statements.ActionStationAcceptItems;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 public class AIRobotUnload extends AIRobot {
@@ -30,9 +34,14 @@ public class AIRobotUnload extends AIRobot {
 
     public static boolean unload(EntityRobotBase robot, DockingStation station, boolean doUnload) {
         if (robot == null || station == null) return false;
+
         for (int slot = 0; slot < robot.getContainerSize(); slot++) {
             ItemStack stack = robot.getItem(slot);
             if (stack.isEmpty()) continue;
+            if (!ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(stack), ActionStationAcceptItems.class)) {
+                continue;
+            }
+
             int before = stack.getCount();
             ItemStack remaining = offer(station, stack, doUnload);
             int used = before - remaining.getCount();
@@ -41,6 +50,22 @@ public class AIRobotUnload extends AIRobot {
                 return true;
             }
         }
+
+        ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (!held.isEmpty()) {
+            if (!ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(held), ActionStationAcceptItems.class)) {
+                return false;
+            }
+
+            ItemStack remaining = offer(station, held, doUnload);
+            if (remaining.getCount() < held.getCount()) {
+                if (doUnload) {
+                    robot.setItemInUse(remaining.isEmpty() ? ItemStack.EMPTY : remaining);
+                }
+                return true;
+            }
+        }
+
         return false;
     }
 

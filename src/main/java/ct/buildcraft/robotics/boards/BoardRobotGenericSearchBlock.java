@@ -1,5 +1,8 @@
 package ct.buildcraft.robotics.boards;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.core.BlockIndex;
 import ct.buildcraft.api.robots.AIRobot;
@@ -7,12 +10,17 @@ import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.robots.ResourceIdBlock;
 import ct.buildcraft.robotics.ai.AIRobotGotoSleep;
 import ct.buildcraft.robotics.ai.AIRobotSearchAndGotoBlock;
+import ct.buildcraft.robotics.statements.ActionRobotFilter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
 
 public abstract class BoardRobotGenericSearchBlock extends RedstoneBoardRobot {
     private BlockIndex blockFound;
+    private final List<Block> blockFilter = new ArrayList<>();
 
     public BoardRobotGenericSearchBlock(EntityRobotBase robot) {
         super(robot);
@@ -65,12 +73,20 @@ public abstract class BoardRobotGenericSearchBlock extends RedstoneBoardRobot {
     }
 
     public final void updateFilter() {
-        // Robot gate block filters are not ported in this source tree yet. Keep the hook so filter-aware boards can be
-        // wired 1:1 once the old ActionRobotFilter statements are available.
+        blockFilter.clear();
+        if (robot.getLinkedStation() == null) {
+            return;
+        }
+
+        for (ItemStack stack : ActionRobotFilter.getGateFilterStacks(robot.getLinkedStation())) {
+            if (stack.getItem() instanceof BlockItem blockItem) {
+                blockFilter.add(blockItem.getBlock());
+            }
+        }
     }
 
     protected boolean matchesGateFilter(Level level, BlockPos pos) {
-        return true;
+        return blockFilter.isEmpty() || blockFilter.contains(level.getBlockState(pos).getBlock());
     }
 
     @Override

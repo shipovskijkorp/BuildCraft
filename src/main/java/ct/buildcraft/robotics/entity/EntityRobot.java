@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Multimap;
 
 import ct.buildcraft.api.boards.RedstoneBoardRobot;
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.BlockIndex;
 import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.api.events.RobotEvent;
@@ -268,6 +269,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 mainAI = new AIRobotMain(this);
                 mainAI.start();
             }
+            validateLinkedStation();
             if (linkedStation == null || linkedStation.isInitialized()) {
                 mainAI.cycle();
             }
@@ -319,6 +321,40 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         }
         if (dockingStation == null && dockingStationIndex != null) {
             dockingStation = registry.getStation(dockingStationIndex.toBlockPos(), dockingStationSide);
+        }
+    }
+
+    /**
+     * Mirrors the old BuildCraft safety check: a robot is only allowed to run if its main station can still
+     * resolve the same robot id. This prevents the AI from continuing forever after chunk unload/reload desyncs.
+     */
+    private void validateLinkedStation() {
+        if (linkedStation == null) {
+            if (linkedStationIndex != null && getRegistry() != null) {
+                linkedStation = getRegistry().getStation(linkedStationIndex.toBlockPos(), linkedStationSide);
+            }
+
+            if (linkedStation == null) {
+                shutdownRobot("no docking station");
+                return;
+            }
+        }
+
+        if (linkedStation.robotTaking() != this) {
+            if (linkedStation.robotIdTaking() == robotId) {
+                BCLog.logger.warn("A robot entity was not properly unloaded");
+                linkedStation.invalidateRobotTakingEntity();
+            }
+            if (linkedStation.robotTaking() != this) {
+                shutdownRobot("wrong docking station");
+            }
+        }
+    }
+
+    private void shutdownRobot(String reason) {
+        if (mainAI != null && !(mainAI.getDelegateAI() instanceof AIRobotShutdown)) {
+            BCLog.logger.info("Shutting down robot " + this + " - " + reason);
+            mainAI.startDelegateAI(new AIRobotShutdown(this));
         }
     }
 
@@ -900,7 +936,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public boolean containsItems() {
-        return !isEmpty();
+        return !isEmpty() || !itemInUse.isEmpty();
     }
 
     @Override
@@ -948,7 +984,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void remove(RemovalReason reason) {
         IRobotRegistry registry = getRegistry();
         if (!level.isClientSide && !convertingToItems && registry != null) {
-            registry.killRobot(this);
+            if (reason.shouldDestroy()) {
+                registry.killRobot(this);
+            } else {
+                registry.unloadRobot(this);
+            }
         }
         super.remove(reason);
     }
