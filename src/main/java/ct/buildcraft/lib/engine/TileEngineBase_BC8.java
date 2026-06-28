@@ -33,6 +33,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -83,6 +84,32 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     }
 
     @Override
+    public void onLoad() {
+        super.onLoad();
+        syncRenderProgressFromProgress();
+        if (level != null && level.isClientSide) {
+            refreshEngineModelData();
+        }
+    }
+
+    private void refreshEngineModelData() {
+        if (level == null) {
+            return;
+        }
+        requestModelDataUpdate();
+        BlockState state = getBlockState();
+        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
+    }
+
+    private void syncRenderProgressFromProgress() {
+        RenderProgress = computeRenderProgress(progress);
+    }
+
+    private static float computeRenderProgress(float progress) {
+        return progress > 0.5F ? ((1 - progress) * (8 * 2 - 0.01F)) * 0.125F : (progress * (8 * 2 - 0.01F) * 0.125F);
+    }
+
+    @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
         currentDirection = NBTUtilBC.readEnum(nbt.get("currentDirection"), Direction.class);
@@ -94,6 +121,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         power = nbt.getLong("power");
         progress = nbt.getFloat("progress");
         progressPart = nbt.getInt("progressPart");
+        syncRenderProgressFromProgress();
     }
 
     @Override
@@ -114,13 +142,17 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
             if (id == NET_RENDER_DATA) {
                 isPumping = buffer.readBoolean();
                 Direction newDir = buffer.readEnum(Direction.class);
-                if(newDir != currentDirection) {
-                	requestModelDataUpdate();
-                	level.blockUpdated(worldPosition, getBlockState().getBlock());
-                	currentDirection = newDir;
+                if (newDir == null) {
+                    newDir = Direction.UP;
                 }
+                boolean directionChanged = newDir != currentDirection;
+                currentDirection = newDir;
                 powerStage = buffer.readEnum(EnumPowerStage.class);
                 progress = buffer.readFloat();
+                syncRenderProgressFromProgress();
+                if (directionChanged) {
+                    refreshEngineModelData();
+                }
             } else if (id == NET_GUI_DATA) {
                 heat = buffer.readFloat();
                 currentOutput = buffer.readLong();
@@ -303,7 +335,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
             } else if (progress > 0) {
                 progress -= 0.01f;
             }
-            RenderProgress = progress > 0.5 ? ((1 - progress) * (8 * 2 - 0.01f)) * 0.125f : (progress * (8 * 2 - 0.01f) * 0.125f);
+            syncRenderProgressFromProgress();
 //            clientModelData.tick();
             return;
         }

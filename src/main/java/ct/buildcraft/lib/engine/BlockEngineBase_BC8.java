@@ -118,12 +118,29 @@ public abstract class BlockEngineBase_BC8<E extends Enum<E> & IEngineType & Stri
      }
     
 	@Override
-	public VoxelShape getCollisionShape(BlockState p_60572_, BlockGetter lev, BlockPos pos,
-			CollisionContext p_60575_) {
-		TileEngineBase_BC8 tile = (TileEngineBase_BC8)lev.getBlockEntity(pos);
-		if(tile == null) 
-			return BASE_ENGINE_SHAPE_UP;
-		switch(tile.currentDirection) {
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter lev, BlockPos pos,
+			CollisionContext context) {
+		return getStaticEngineShape(lev, pos);
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter lev, BlockPos pos,
+			CollisionContext context) {
+		return getStaticEngineShape(lev, pos);
+	}
+
+	@Override
+	public VoxelShape getOcclusionShape(BlockState state, BlockGetter lev, BlockPos pos) {
+		return Shapes.empty();
+	}
+
+	private VoxelShape getStaticEngineShape(BlockGetter lev, BlockPos pos) {
+		BlockEntity blockEntity = lev.getBlockEntity(pos);
+		Direction direction = blockEntity instanceof TileEngineBase_BC8 ? ((TileEngineBase_BC8) blockEntity).currentDirection : Direction.UP;
+		if (direction == null) {
+			direction = Direction.UP;
+		}
+		switch(direction) {
 		case UP:
 			return BASE_ENGINE_SHAPE_UP;
 		case DOWN:
@@ -136,31 +153,9 @@ public abstract class BlockEngineBase_BC8<E extends Enum<E> & IEngineType & Stri
 			return BASE_ENGINE_SHAPE_SOUTH;
 		case NORTH:
 			return BASE_ENGINE_SHAPE_NORTH;
+		default:
+			return BASE_ENGINE_SHAPE_UP;
 		}
-		return Shapes.block();
-	}
-
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter lev, BlockPos pos,
-			CollisionContext cc) {
-		TileEngineBase_BC8 tile = (TileEngineBase_BC8)lev.getBlockEntity(pos);
-		if(tile == null) 
-			return Shapes.empty();
-		switch(tile.currentDirection) {
-		case UP:
-			return tile != null ? Shapes.or(BASE_ENGINE_SHAPE_UP, MOVING_SHAPE_UP.move(0.0d, tile.RenderProgress*1/2, 0.0d)) : BASE_ENGINE_SHAPE_UP;
-		case DOWN:
-			return tile != null ? Shapes.or(BASE_ENGINE_SHAPE_DOWN, MOVING_SHAPE_DOWN.move(0.0d, -tile.RenderProgress*1/2, 0.0d)) : BASE_ENGINE_SHAPE_DOWN;
-		case EAST:
-			return tile != null ? Shapes.or(BASE_ENGINE_SHAPE_EAST, MOVING_SHAPE_EAST.move(tile.RenderProgress*1/2, 0.0d, 0.0d)) : BASE_ENGINE_SHAPE_EAST;
-		case WEST:
-			return tile != null ? Shapes.or(BASE_ENGINE_SHAPE_WEST, MOVING_SHAPE_WEST.move(-tile.RenderProgress*1/2, 0.0d, 0.0d)) : BASE_ENGINE_SHAPE_WEST;
-		case SOUTH:
-			return tile != null ? Shapes.or(BASE_ENGINE_SHAPE_SOUTH, MOVING_SHAPE_SOUTH.move(0.0d, 0.0d, tile.RenderProgress*1/2)) : BASE_ENGINE_SHAPE_SOUTH;
-		case NORTH:
-			return tile != null ? Shapes.or(BASE_ENGINE_SHAPE_NORTH, MOVING_SHAPE_NORTH.move(0.0d, 0.0d, -tile.RenderProgress*1/2)) : BASE_ENGINE_SHAPE_NORTH;
-		}
-		return Shapes.block();
 	}
 
 	@Override
