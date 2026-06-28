@@ -1,6 +1,5 @@
 package ct.buildcraft.robotics.ai;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,7 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 import ct.buildcraft.api.core.BlockIndex;
@@ -23,13 +22,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * 1.7.10 BuildCraft block search port. It searches reachable soft blocks and returns a path to a soft block adjacent to
- * the matching target, mirroring the old PathFindingSearch + path.removeLast() robotics flow.
+ * Searches for a matching work block and returns a path to a soft block adjacent to it.
+ *
+ * <p>The first robotics port used a pure reachable-air BFS and checked only blocks adjacent to every visited air node.
+ * In open areas that meant the search budget was spent on the volume of air around the robot before it ever reached
+ * trees a few chunks away. The original BuildCraft logic did the opposite: scan candidate blocks in an expanding area,
+ * then pathfind only to real targets. This implementation keeps that behavior while using the modern soft-block checks.</p>
  */
 public class AIRobotSearchBlock extends AIRobot {
     private static final int DEFAULT_RANGE = 96;
-    private static final int MAX_VISITED = DEFAULT_RANGE * DEFAULT_RANGE * 8;
-    private static final int NODES_PER_TICK = 512;
+    private static final int SEARCHES_PER_TICK = 65536;
+    private static final int MAX_ASTAR_VISITED = 262144;
 
     public BlockIndex blockFound;
     public LinkedList<BlockIndex> path;
@@ -40,10 +43,8 @@ public class AIRobotSearchBlock extends AIRobot {
     private IZone zone;
     private boolean searched;
     private BlockPos start;
-    private int hardLimit;
-    private Queue<BlockPos> queue;
-    private Set<BlockPos> seen;
-    private Map<BlockPos, BlockPos> parent;
+    private int searchRange;
+    private CandidateScanner scanner;
 
     public AIRobotSearchBlock(EntityRobotBase robot) {
         super(robot);
@@ -74,7 +75,7 @@ public class AIRobotSearchBlock extends AIRobot {
             blockFound = new BlockIndex(result.target());
             path = result.path();
             terminate();
-        } else if (queue == null || queue.isEmpty() || seen.size() >= MAX_VISITED) {
+        } else if (scanner == null || scanner.isDone()) {
             setSuccess(false);
             terminate();
         }
@@ -83,61 +84,160 @@ public class AIRobotSearchBlock extends AIRobot {
     private void beginSearch() {
         searched = true;
         start = robot.blockPosition();
-        hardLimit = maxDistanceToEnd > 0 ? Math.max(1, (int) Math.ceil(maxDistanceToEnd)) : DEFAULT_RANGE;
-        queue = new ArrayDeque<>();
-        seen = new HashSet<>();
-        parent = new HashMap<>();
-        queue.add(start);
-        seen.add(start);
+        searchRange = DEFAULT_RANGE;
+        if (maxDistanceToEnd > 0) {
+            searchRange = Math.max(searchRange, (int) Math.ceil(maxDistanceToEnd) + 8);
+        }
+        scanner = new CandidateScanner(robot.level, start, searchRange, random);
     }
 
     private SearchResult continueSearch() {
-        Level level = robot.level;
         int processed = 0;
-        while (queue != null && !queue.isEmpty() && seen.size() < MAX_VISITED && processed++ < NODES_PER_TICK) {
-            BlockPos current = queue.remove();
-            SearchResult adjacent = findAdjacentTarget(level, start, current, parent);
-            if (adjacent != null) {
-                return adjacent;
+        while (scanner != null && !scanner.isDone() && processed++ < SEARCHES_PER_TICK) {
+            BlockPos candidate = scanner.next();
+            if (candidate == null) {
+                break;
             }
 
-            List<Direction> directions = directions();
-            for (Direction direction : directions) {
+            SearchResult result = evaluateCandidate(candidate);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    private SearchResult evaluateCandidate(BlockPos target) {
+        Level level = robot.level;
+        if (!level.isLoaded(target)) {
+            return null;
+        }
+        if (zone != null && !zone.contains(center(target))) {
+            return null;
+        }
+        if (!filter.matches(level, target)) {
+            return null;
+        }
+
+        List<BlockPos> adjacentPositions = adjacentSoftTargets(level, target);
+        if (adjacentPositions.isEmpty()) {
+            return null;
+        }
+        if (random) {
+            Collections.shuffle(adjacentPositions);
+        }
+
+        LinkedList<BlockIndex> bestPath = null;
+        for (BlockPos adjacent : adjacentPositions) {
+            LinkedList<BlockIndex> candidatePath = pathToAdjacent(level, adjacent);
+            if (candidatePath != null && (bestPath == null || candidatePath.size() < bestPath.size())) {
+                bestPath = candidatePath;
+            }
+        }
+        return bestPath == null ? null : new SearchResult(target, bestPath);
+    }
+
+    private List<BlockPos> adjacentSoftTargets(Level level, BlockPos target) {
+        List<BlockPos> result = new ArrayList<>();
+        for (Direction direction : Direction.values()) {
+            BlockPos adjacent = target.relative(direction);
+            if (zone != null && !zone.contains(center(adjacent))) {
+                continue;
+            }
+            if (isSoft(level, adjacent)) {
+                result.add(adjacent);
+            }
+        }
+        return result;
+    }
+
+    private LinkedList<BlockIndex> pathToAdjacent(Level level, BlockPos target) {
+        if (start.equals(target)) {
+            return new LinkedList<>();
+        }
+
+        LinkedList<BlockIndex> direct = directFallback(start, target, level);
+        if (direct != null) {
+            return direct;
+        }
+        return findAStarPath(start, target, level);
+    }
+
+    private LinkedList<BlockIndex> findAStarPath(BlockPos start, BlockPos target, Level level) {
+        int hardLimit = Math.max(searchRange + 16, (int) Math.ceil(Math.sqrt(distanceSqr(start, target))) + 8);
+        int hardLimitSqr = hardLimit * hardLimit;
+        PriorityQueue<PathNode> open = new PriorityQueue<>((a, b) -> {
+            int score = Double.compare(a.score(), b.score());
+            return score != 0 ? score : Long.compare(a.sequence(), b.sequence());
+        });
+        Map<BlockPos, BlockPos> parent = new HashMap<>();
+        Map<BlockPos, Integer> bestCost = new HashMap<>();
+        Set<BlockPos> closed = new HashSet<>();
+        long sequence = 0;
+
+        bestCost.put(start, 0);
+        open.add(new PathNode(start, heuristic(start, target), sequence++));
+
+        while (!open.isEmpty() && closed.size() < MAX_ASTAR_VISITED) {
+            PathNode node = open.poll();
+            BlockPos current = node.pos();
+            if (!closed.add(current)) {
+                continue;
+            }
+            if (current.equals(target)) {
+                return reconstruct(start, target, parent);
+            }
+
+            int currentCost = bestCost.getOrDefault(current, Integer.MAX_VALUE);
+            for (Direction direction : Direction.values()) {
                 BlockPos next = current.relative(direction);
-                if (seen.contains(next)) continue;
-                if (distanceSqr(start, next) > hardLimit * hardLimit) continue;
+                if (closed.contains(next)) continue;
+                if (distanceSqr(next, start) > hardLimitSqr) continue;
                 if (zone != null && !zone.contains(center(next))) continue;
                 if (!isSoft(level, next)) continue;
-                parent.put(next, current);
-                seen.add(next);
-                queue.add(next);
+
+                int newCost = currentCost + 1;
+                if (newCost < bestCost.getOrDefault(next, Integer.MAX_VALUE)) {
+                    bestCost.put(next, newCost);
+                    parent.put(next, current);
+                    open.add(new PathNode(next, newCost + heuristic(next, target), sequence++));
+                }
             }
         }
         return null;
     }
 
-    private SearchResult findAdjacentTarget(Level level, BlockPos start, BlockPos current, Map<BlockPos, BlockPos> parent) {
-        for (Direction direction : directions()) {
-            BlockPos target = current.relative(direction);
-            if (!level.isLoaded(target)) continue;
-            if (zone != null && !zone.contains(center(target))) continue;
-            if (filter.matches(level, target)) {
-                return new SearchResult(target, reconstruct(start, current, parent));
+    private static LinkedList<BlockIndex> directFallback(BlockPos start, BlockPos target, Level level) {
+        int[][] orders = {
+                {0, 1, 2}, {0, 2, 1},
+                {1, 0, 2}, {1, 2, 0},
+                {2, 0, 1}, {2, 1, 0}
+        };
+        for (int[] order : orders) {
+            LinkedList<BlockIndex> out = traceAxisPath(start, target, level, order);
+            if (out != null) {
+                return out;
             }
         }
         return null;
     }
 
-    private List<Direction> directions() {
-        List<Direction> directions = new ArrayList<>(List.of(Direction.values()));
-        if (random) {
-            Collections.shuffle(directions);
-        }
-        return directions;
-    }
+    private static LinkedList<BlockIndex> traceAxisPath(BlockPos start, BlockPos target, Level level, int[] order) {
+        LinkedList<BlockIndex> out = new LinkedList<>();
+        int[] current = {start.getX(), start.getY(), start.getZ()};
+        int[] end = {target.getX(), target.getY(), target.getZ()};
 
-    private static Vec3 center(BlockPos pos) {
-        return new Vec3(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
+        for (int axis : order) {
+            while (current[axis] != end[axis]) {
+                current[axis] += Integer.compare(end[axis], current[axis]);
+                BlockPos pos = new BlockPos(current[0], current[1], current[2]);
+                if (!isSoft(level, pos)) {
+                    return null;
+                }
+                out.add(new BlockIndex(pos));
+            }
+        }
+        return out;
     }
 
     private static LinkedList<BlockIndex> reconstruct(BlockPos start, BlockPos target, Map<BlockPos, BlockPos> parent) {
@@ -155,6 +255,16 @@ public class AIRobotSearchBlock extends AIRobot {
         return out;
     }
 
+    private static boolean isSoft(Level level, BlockPos pos) {
+        if (!level.isLoaded(pos)) return false;
+        BlockState state = level.getBlockState(pos);
+        return state.isAir() || state.getCollisionShape(level, pos).isEmpty();
+    }
+
+    private static Vec3 center(BlockPos pos) {
+        return new Vec3(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
+    }
+
     private static double distanceSqr(BlockPos a, BlockPos b) {
         double dx = a.getX() - b.getX();
         double dy = a.getY() - b.getY();
@@ -162,10 +272,8 @@ public class AIRobotSearchBlock extends AIRobot {
         return dx * dx + dy * dy + dz * dz;
     }
 
-    private static boolean isSoft(Level level, BlockPos pos) {
-        if (!level.isLoaded(pos)) return false;
-        BlockState state = level.getBlockState(pos);
-        return state.isAir() || state.getCollisionShape(level, pos).isEmpty();
+    private static double heuristic(BlockPos a, BlockPos b) {
+        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY()) + Math.abs(a.getZ() - b.getZ());
     }
 
     @Override
@@ -211,5 +319,105 @@ public class AIRobotSearchBlock extends AIRobot {
     }
 
     private record SearchResult(BlockPos target, LinkedList<BlockIndex> path) {
+    }
+
+    private record PathNode(BlockPos pos, double score, long sequence) {
+    }
+
+    private static final class CandidateScanner {
+        private final Level level;
+        private final BlockPos start;
+        private final int range;
+        private final boolean random;
+        private final int minY;
+        private final int maxY;
+        private int yOffsetIndex;
+        private int radius;
+        private List<BlockPos> currentRing;
+        private int ringIndex;
+        private boolean done;
+
+        private CandidateScanner(Level level, BlockPos start, int range, boolean random) {
+            this.level = level;
+            this.start = start;
+            this.range = range;
+            this.random = random;
+            this.minY = level.getMinBuildHeight();
+            this.maxY = level.getMaxBuildHeight() - 1;
+            this.yOffsetIndex = 0;
+            this.radius = 0;
+            buildRing();
+        }
+
+        private boolean isDone() {
+            return done;
+        }
+
+        private BlockPos next() {
+            while (!done) {
+                if (currentRing != null && ringIndex < currentRing.size()) {
+                    return currentRing.get(ringIndex++);
+                }
+
+                radius++;
+                if (radius <= range) {
+                    buildRing();
+                    continue;
+                }
+
+                if (!advanceYOffset()) {
+                    done = true;
+                    return null;
+                }
+                radius = 0;
+                buildRing();
+            }
+            return null;
+        }
+
+        private boolean advanceYOffset() {
+            while (yOffsetIndex < range * 2) {
+                yOffsetIndex++;
+                int y = currentY();
+                if (y >= minY && y <= maxY) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private int currentY() {
+            if (yOffsetIndex == 0) {
+                return start.getY();
+            }
+            int magnitude = (yOffsetIndex + 1) / 2;
+            int offset = (yOffsetIndex & 1) == 1 ? magnitude : -magnitude;
+            return start.getY() + offset;
+        }
+
+        private void buildRing() {
+            currentRing = new ArrayList<>();
+            ringIndex = 0;
+            int y = currentY();
+
+            if (radius == 0) {
+                currentRing.add(new BlockPos(start.getX(), y, start.getZ()));
+                return;
+            }
+
+            int sx = start.getX();
+            int sz = start.getZ();
+            for (int dx = -radius; dx <= radius; dx++) {
+                currentRing.add(new BlockPos(sx + dx, y, sz - radius));
+                currentRing.add(new BlockPos(sx + dx, y, sz + radius));
+            }
+            for (int dz = -radius + 1; dz <= radius - 1; dz++) {
+                currentRing.add(new BlockPos(sx - radius, y, sz + dz));
+                currentRing.add(new BlockPos(sx + radius, y, sz + dz));
+            }
+            if (random) {
+                Collections.shuffle(currentRing);
+            }
+        }
     }
 }
