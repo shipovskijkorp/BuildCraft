@@ -58,6 +58,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -65,6 +66,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -84,6 +86,13 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     /** Number of old 1.7 robot-energy units gained per 1 MJ from the modern micro-MJ network. */
     private static final long ROBOT_ENERGY_PER_MJ = 100L;
     private static final EntityDataAccessor<Boolean> ROBOT_ASLEEP = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Float> ROBOT_AIM_YAW = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> ROBOT_AIM_PITCH = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> ROBOT_DOCKED = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> ROBOT_DOCK_X = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ROBOT_DOCK_Y = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ROBOT_DOCK_Z = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ROBOT_DOCK_SIDE = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
     /**
      * The 1.7.10 robot position is the centre of the 0.5x0.5x0.5 cube. Modern LivingEntity positions are normally
      * feet-based, so the port keeps the old centre-based position and forces a centred bounding box after every snap
@@ -283,11 +292,22 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 mainAI.cycle();
             }
             entityData.set(ROBOT_ASLEEP, isAsleepOrShutdownOnServer());
+            entityData.set(ROBOT_AIM_YAW, aimYaw);
+            entityData.set(ROBOT_AIM_PITCH, aimPitch);
+            if (dockingStation != null) {
+                syncDockingStationToClient(dockingStation);
+            } else {
+                clearDockingStationSync();
+            }
+        } else {
+            aimYaw = entityData.get(ROBOT_AIM_YAW);
+            aimPitch = entityData.get(ROBOT_AIM_PITCH);
+            updateRotationYaw(60.0F);
         }
 
         if (dockingStation != null) {
             snapToStation(dockingStation);
-        } else {
+        } else if (!snapToSyncedDockingStation()) {
             refreshRobotBoundingBox();
         }
 
@@ -301,7 +321,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
         if (dockingStation != null) {
             snapToStation(dockingStation);
-        } else {
+        } else if (!snapToSyncedDockingStation()) {
             refreshRobotBoundingBox();
         }
 
@@ -368,11 +388,14 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     public static Vec3 stationPosition(DockingStation station) {
-        Direction side = station.side();
+        return stationPosition(station.x(), station.y(), station.z(), station.side());
+    }
+
+    private static Vec3 stationPosition(int x, int y, int z, @Nullable Direction side) {
         return new Vec3(
-                station.x() + 0.5D + (side == null ? 0.0D : side.getStepX() * 0.5D),
-                station.y() + 0.5D + (side == null ? 0.0D : side.getStepY() * 0.5D),
-                station.z() + 0.5D + (side == null ? 0.0D : side.getStepZ() * 0.5D)
+                x + 0.5D + (side == null ? 0.0D : side.getStepX() * 0.5D),
+                y + 0.5D + (side == null ? 0.0D : side.getStepY() * 0.5D),
+                z + 0.5D + (side == null ? 0.0D : side.getStepZ() * 0.5D)
         );
     }
 
@@ -397,6 +420,72 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         refreshRobotBoundingBox();
     }
 
+    private boolean snapToSyncedDockingStation() {
+        if (!level.isClientSide || !entityData.get(ROBOT_DOCKED)) {
+            return false;
+        }
+        int sideId = entityData.get(ROBOT_DOCK_SIDE);
+        Direction side = sideId >= 0 && sideId < Direction.values().length ? Direction.values()[sideId] : null;
+        Vec3 stationPos = stationPosition(
+                entityData.get(ROBOT_DOCK_X),
+                entityData.get(ROBOT_DOCK_Y),
+                entityData.get(ROBOT_DOCK_Z),
+                side
+        );
+        setNoGravity(true);
+        noPhysics = true;
+        setDeltaMovement(Vec3.ZERO);
+        setPos(stationPos.x, stationPos.y, stationPos.z);
+        refreshRobotBoundingBox();
+        return true;
+    }
+
+    private void syncDockingStationToClient(DockingStation station) {
+        entityData.set(ROBOT_DOCKED, true);
+        entityData.set(ROBOT_DOCK_X, station.x());
+        entityData.set(ROBOT_DOCK_Y, station.y());
+        entityData.set(ROBOT_DOCK_Z, station.z());
+        Direction side = station.side();
+        entityData.set(ROBOT_DOCK_SIDE, side == null ? -1 : side.ordinal());
+    }
+
+    private void clearDockingStationSync() {
+        entityData.set(ROBOT_DOCKED, false);
+    }
+
+    private void alignToStation(DockingStation station) {
+        Direction side = station.side();
+        if (side != null && side.getStepY() == 0) {
+            aimItemAt(station.x() + side.getStepX() * 2, station.y(), station.z() + side.getStepZ() * 2);
+        } else {
+            aimItemAt(Mth.floor(aimYaw / 90.0F) * 90.0F + 180.0F, aimPitch);
+        }
+        forceYawToAim();
+    }
+
+    private void updateRotationYaw(float maxStep) {
+        float step = Mth.wrapDegrees(aimYaw - getYRot());
+        if (step > maxStep) {
+            step = maxStep;
+        } else if (step < -maxStep) {
+            step = -maxStep;
+        }
+        setRobotYaw(getYRot() + step);
+    }
+
+    private void forceYawToAim() {
+        setRobotYaw(aimYaw);
+    }
+
+    private void setRobotYaw(float yaw) {
+        setYRot(yaw);
+        yRotO = yaw;
+        setYHeadRot(yaw);
+        yHeadRotO = yaw;
+        yBodyRot = yaw;
+        yBodyRotO = yaw;
+    }
+
     private void refreshRobotBoundingBox() {
         setBoundingBox(new AABB(
                 getX() - ROBOT_HALF_SIZE, getY() - ROBOT_HALF_SIZE, getZ() - ROBOT_HALF_SIZE,
@@ -415,6 +504,13 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(ROBOT_ASLEEP, true);
+        entityData.define(ROBOT_AIM_YAW, 0.0F);
+        entityData.define(ROBOT_AIM_PITCH, 0.0F);
+        entityData.define(ROBOT_DOCKED, false);
+        entityData.define(ROBOT_DOCK_X, 0);
+        entityData.define(ROBOT_DOCK_Y, 0);
+        entityData.define(ROBOT_DOCK_Z, 0);
+        entityData.define(ROBOT_DOCK_SIDE, -1);
     }
 
     @Override
@@ -747,18 +843,19 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     protected void pushEntities() {
-        // Robots in classic BuildCraft had noClip and did not shove dropped items or mobs while flying through their
-        // path. LivingEntity would otherwise push ItemEntity instances out of the pickup block before the picker AI
-        // has its six-tick pickup delay.
+        // Keep classic robot movement no-clip-like: the robot itself must not shove drops out of the picker pickup
+        // range while flying. Entity collision for players is handled by canBeCollidedWith/canCollideWith below.
     }
 
     @Override
     public boolean canCollideWith(Entity entity) {
-        return false;
+        return !(entity instanceof ItemEntity);
     }
 
     public boolean canBeCollidedWith() {
-        return false;
+        // Players should be able to bump into and stand on robots like in BuildCraft 7.1.x. Dropped items are kept
+        // from being shoved by the empty pushEntities() override and the ItemEntity check in canCollideWith().
+        return isAlive();
     }
 
     @Override
@@ -891,6 +988,10 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void aimItemAt(float yaw, float pitch) {
         aimYaw = yaw;
         aimPitch = pitch;
+        if (!level.isClientSide) {
+            entityData.set(ROBOT_AIM_YAW, aimYaw);
+            entityData.set(ROBOT_AIM_PITCH, aimPitch);
+        }
     }
 
     @Override
@@ -902,6 +1003,10 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             aimYaw = (float) (Math.atan2(dz, dx) * 180.0D / Math.PI) + 180.0F;
         }
         aimPitch = (float) (-(Math.atan2(dy, Math.sqrt(dx * dx + dz * dz)) * 180.0D / Math.PI));
+        if (!level.isClientSide) {
+            entityData.set(ROBOT_AIM_YAW, aimYaw);
+            entityData.set(ROBOT_AIM_PITCH, aimPitch);
+        }
     }
 
     @Override
@@ -931,6 +1036,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             station.setLevel(level);
             dockingStationIndex = station.index();
             dockingStationSide = station.side();
+            alignToStation(station);
+            syncDockingStationToClient(station);
             snapToStation(station);
         }
     }
@@ -942,6 +1049,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             dockingStation = null;
             dockingStationIndex = null;
             dockingStationSide = null;
+            if (!level.isClientSide) {
+                clearDockingStationSync();
+            }
         }
     }
 
@@ -1098,6 +1208,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         buffer.writeUtf(boardEntry == null ? BCRoboticsBoards.EMPTY.id() : boardEntry.id());
         buffer.writeVarInt(getEnergy());
         buffer.writeBoolean(isAsleepForRendering());
+        buffer.writeFloat(aimYaw);
+        buffer.writeFloat(aimPitch);
         buffer.writeVarInt(wearables.size());
         for (ItemStack stack : wearables) {
             buffer.writeItem(stack);
@@ -1109,6 +1221,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         setBoard(BCRoboticsBoards.getById(buffer.readUtf(32767)));
         setEnergy(buffer.readVarInt());
         entityData.set(ROBOT_ASLEEP, buffer.readBoolean());
+        aimYaw = buffer.readFloat();
+        aimPitch = buffer.readFloat();
+        entityData.set(ROBOT_AIM_YAW, aimYaw);
+        entityData.set(ROBOT_AIM_PITCH, aimPitch);
+        forceYawToAim();
         wearables.clear();
         int wearableCount = buffer.readVarInt();
         for (int i = 0; i < wearableCount; i++) {
