@@ -13,8 +13,10 @@ import ct.buildcraft.api.boards.RedstoneBoardRegistry;
 import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.boards.RedstoneBoardRobotNBT;
 import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.robotics.boards.BoardRobotHarvester;
 import ct.buildcraft.robotics.boards.BoardRobotLumberjack;
 import ct.buildcraft.robotics.boards.BoardRobotPicker;
+import ct.buildcraft.robotics.boards.BoardRobotPlanter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -209,6 +211,12 @@ public final class BCRoboticsBoards {
             }
             if ("lumberjack".equals(key)) {
                 return new BoardRobotLumberjack(robot);
+            }
+            if ("harvester".equals(key)) {
+                return new BoardRobotHarvester(robot);
+            }
+            if ("planter".equals(key)) {
+                return new BoardRobotPlanter(robot);
             }
             return new BasicRobotBoard(robot, this);
         }

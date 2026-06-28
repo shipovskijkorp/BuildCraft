@@ -8,8 +8,10 @@ package ct.buildcraft.lib.crops;
 
 import ct.buildcraft.api.crops.ICropHandler;
 import ct.buildcraft.lib.misc.BlockUtil;
+import ct.buildcraft.lib.misc.FakePlayerProvider;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
@@ -86,13 +88,19 @@ public enum CropHandlerPlantable implements ICropHandler {
 
     @Override
     public boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops) {
-//        if (!world.isRemote) {
-//            BlockState state = world.getBlockState(pos);
-//            if (BlockUtil.breakBlock((LevelLevel) world, pos, drops, pos)) {
-//                SoundUtil.playBlockBreak(world, pos, state);
-//                return true;
-//            }
-//        }
+        if (!(world instanceof ServerLevel serverLevel)) {
+            return false;
+        }
+
+        BlockState state = serverLevel.getBlockState(pos);
+        if (state.isAir()) {
+            return false;
+        }
+
+        if (BlockUtil.breakBlock(serverLevel, pos, drops, pos, FakePlayerProvider.NULL_PROFILE)) {
+            serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
+            return true;
+        }
         return false;
     }
 }
