@@ -97,29 +97,32 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
 
     public void loadMarker(BlockPos pos, @Nullable TileMarker<C> marker) {
         setDirty(true);
-        boolean did = tileCache.containsKey(pos);
+        Optional<TileMarker<C>> previous = tileCache.get(pos);
+        boolean did = previous != null;
+        boolean wasUnloaded = did && previous.isEmpty();
         tileCache.put(pos, Optional.ofNullable(marker));
         if (DEBUG_FULL) {
             BCLog.logger.info("[lib.marker.full] Set a marker at " + pos + " as " + marker);
         }
-        if (isServer && !did) {
-            MessageMarker message = new MessageMarker();
-            message.add = true;
-            message.connection = false;
-            message.multiple = false;
-            message.cacheId = cacheId;
-            message.count = 1;
-            message.positions.add(pos);
-            MessageManager.sendToDimension(message, dimensionId);
+        if (isServer && (!did || wasUnloaded || marker != null)) {
+            sendMarkerAddedToDimension(pos);
+            C connection = posToConnection.get(pos);
+            if (connection != null) {
+                sendConnectionAddedToDimension(connection);
+            }
         }
     }
 
     public void unloadMarker(BlockPos pos) {
         // Keep the marker position in the cache while the chunk is unloaded so existing marker boxes stay valid.
-        // Do not remove connections here: setRemoved() is also used by vanilla for chunk unloads.
-        loadMarker(pos, null);
-        setDirty(false);
-        BCLog.d("unload");
+        // Vanilla calls setRemoved() for chunk unloads, so this must not behave like a real marker removal and it
+        // must not clear unrelated dirty state in the saved marker data.
+        boolean wasDirty = isDirty;
+        tileCache.put(pos, Optional.empty());
+        setDirty(wasDirty);
+        if (DEBUG_FULL) {
+            BCLog.logger.info("[lib.marker.full] Unloaded marker at " + pos);
+        }
     }
 
     public void removeMarker(BlockPos pos) {
@@ -134,15 +137,65 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
             refreshConnection(connection);
         }
         if (isServer) {
-            MessageMarker message = new MessageMarker();
-            message.add = false;
-            message.connection = false;
-            message.multiple = false;
-            message.cacheId = cacheId;
-            message.count = 1;
-            message.positions.add(pos);
-            MessageManager.sendToDimension(message, dimensionId);
+            sendMarkerRemovedToDimension(pos);
         }
+    }
+
+    public void syncMarkerState(BlockPos pos) {
+        if (!isServer) {
+            return;
+        }
+        if (tileCache.containsKey(pos)) {
+            sendMarkerAddedToDimension(pos);
+        }
+        C connection = getConnection(pos);
+        if (connection != null) {
+            sendConnectionAddedToDimension(connection);
+        }
+    }
+
+    private void sendMarkerAddedToDimension(BlockPos pos) {
+        MessageMarker message = new MessageMarker();
+        message.add = true;
+        message.connection = false;
+        message.multiple = false;
+        message.cacheId = cacheId;
+        message.count = 1;
+        message.positions.add(pos);
+        MessageManager.sendToDimension(message, dimensionId);
+    }
+
+    private void sendMarkerRemovedToDimension(BlockPos pos) {
+        MessageMarker message = new MessageMarker();
+        message.add = false;
+        message.connection = false;
+        message.multiple = false;
+        message.cacheId = cacheId;
+        message.count = 1;
+        message.positions.add(pos);
+        MessageManager.sendToDimension(message, dimensionId);
+    }
+
+    private void sendConnectionAddedToDimension(C connection) {
+        MessageMarker message = new MessageMarker();
+        message.add = true;
+        message.connection = true;
+        message.cacheId = cacheId;
+        message.positions.addAll(connection.getMarkerPositions());
+        message.count = message.positions.size();
+        message.multiple = message.count > 1;
+        MessageManager.sendToDimension(message, dimensionId);
+    }
+
+    private void sendConnectionRemovedToDimension(Set<BlockPos> positions) {
+        MessageMarker message = new MessageMarker();
+        message.add = false;
+        message.connection = true;
+        message.cacheId = cacheId;
+        message.positions.addAll(positions);
+        message.count = message.positions.size();
+        message.multiple = message.count > 1;
+        MessageManager.sendToDimension(message, dimensionId);
     }
 
     public ImmutableList<BlockPos> getAllMarkers() {
@@ -260,15 +313,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
             posToConnection.remove(p);
         }
         if (isServer && set.size() > 0) {
-            MessageMarker message = new MessageMarker();
-            message.add = false;
-            message.connection = true;
-            message.cacheId = cacheId;
-            message.positions.addAll(set);
-            message.count = message.positions.size();
-            message.multiple = message.count > 1;
-
-            MessageManager.sendToDimension(message, dimensionId);
+            sendConnectionRemovedToDimension(set);
         }
     }
 
@@ -290,20 +335,20 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
             posToConnection.put(p, connection);
         }
         if (isServer && lastSeen.size() > 0) {
-            MessageMarker message = new MessageMarker();
-            message.add = true;
-            message.connection = true;
-            message.cacheId = cacheId;
-            message.positions.addAll(connection.getMarkerPositions());
-            message.count = message.positions.size();
-            message.multiple = message.count > 1;
-            MessageManager.sendToDimension(message, dimensionId);
+            sendConnectionAddedToDimension(connection);
         }
     }
 
     public ImmutableList<C> getConnections() {
         validateLoadedMarkers();
-        return ImmutableList.copyOf(connectionToPos.keySet());
+        ImmutableList.Builder<C> builder = ImmutableList.builder();
+        for (Entry<C, Set<BlockPos>> entry : connectionToPos.entrySet()) {
+            Set<BlockPos> positions = entry.getValue();
+            if (positions != null && positions.size() >= 2) {
+                builder.add(entry.getKey());
+            }
+        }
+        return builder.build();
     }
 
     private void validateLoadedMarkers() {

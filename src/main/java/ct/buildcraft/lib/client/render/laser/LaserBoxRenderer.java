@@ -19,6 +19,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.phys.Vec3;
@@ -55,7 +56,12 @@ public class LaserBoxRenderer {
     }
 
     private static void makeLaserBox(Box box, LaserType type, boolean center) {
-        if (box.min().equals(box.lastMin) && box.max().equals(box.lastMax) && box.lastType == type
+        if (box == null || box.min() == null || box.max() == null) {
+            return;
+        }
+        BlockPos minPos = box.min();
+        BlockPos maxPos = box.max();
+        if (minPos.equals(box.lastMin) && maxPos.equals(box.lastMax) && box.lastType == type
             && box.laserData != null) {
             return;
         }
@@ -64,8 +70,8 @@ public class LaserBoxRenderer {
         boolean renderY = center ? box.size().getY() > 1 : true;
         boolean renderZ = center ? box.size().getZ() > 1 : true;
 
-        Vec3 min = Vec3.atLowerCornerOf(box.min()).add(center ? VecUtil.VEC_HALF : Vec3.ZERO);
-        Vec3 max = Vec3.atLowerCornerOf(box.max()).add(center ? VecUtil.VEC_HALF : VecUtil.VEC_ONE);
+        Vec3 min = Vec3.atLowerCornerOf(minPos).add(center ? VecUtil.VEC_HALF : Vec3.ZERO);
+        Vec3 max = Vec3.atLowerCornerOf(maxPos).add(center ? VecUtil.VEC_HALF : VecUtil.VEC_ONE);
 
         List<LaserData_BC8> datas = new ArrayList<>();
 
@@ -119,8 +125,8 @@ public class LaserBoxRenderer {
         }
 
         box.laserData = datas.toArray(new LaserData_BC8[0]);
-        box.lastMin = box.min();
-        box.lastMax = box.max();
+        box.lastMin = minPos;
+        box.lastMax = maxPos;
         box.lastType = type;
     }
 

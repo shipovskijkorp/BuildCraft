@@ -111,6 +111,7 @@ public class PathSubCache extends MarkerSubCache<PathConnection> {
                     }
                 }
             }
+            return true;
         }
         return false;
     }

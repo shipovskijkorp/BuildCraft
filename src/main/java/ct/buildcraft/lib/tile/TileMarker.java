@@ -43,7 +43,9 @@ public abstract class TileMarker<C extends MarkerConnection<C>> extends TileBC_N
     public void onLoad() {
         super.onLoad();
         removedFromWorld = false;
-        getLocalCache().loadMarker(getBlockPos(), this);
+        MarkerSubCache<C> cache = getLocalCache();
+        cache.loadMarker(getBlockPos(), this);
+        cache.syncMarkerState(getBlockPos());
     }
 
     @Override

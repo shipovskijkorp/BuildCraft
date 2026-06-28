@@ -28,6 +28,7 @@ import ct.buildcraft.lib.net.MessageDebugRequest;
 import ct.buildcraft.lib.net.MessageDebugResponse;
 import ct.buildcraft.lib.net.MessageManager;
 import ct.buildcraft.lib.net.MessageMarker;
+import ct.buildcraft.lib.net.MessageMarkerClientHandler;
 import ct.buildcraft.lib.net.cache.BuildCraftObjectCaches;
 import ct.buildcraft.lib.net.cache.MessageObjectCacheResponse;
 import net.minecraft.client.Minecraft;
@@ -157,8 +158,14 @@ public class BCLibEventDist {
         Entity entity = event.getEntity();
         if (entity instanceof ServerPlayer) {
             ServerPlayer playerMP = (ServerPlayer) entity;
-            // Delay sending join messages to player as it makes it work when in single-player
-            MessageUtil.doDelayedServer(() -> MarkerCache.onPlayerJoinLevel(playerMP));
+            // Delay sending join messages as it makes it work when in single-player.
+            // Send a few sync passes because marker messages can otherwise arrive before the client world exists
+            // during integrated-server login; the client queues those messages too, but these extra passes make
+            // reconnecting to an already loaded marker network deterministic.
+            MessageUtil.doDelayedServer(1, () -> MarkerCache.onPlayerJoinLevel(playerMP));
+            MessageUtil.doDelayedServer(5, () -> MarkerCache.onPlayerJoinLevel(playerMP));
+            MessageUtil.doDelayedServer(20, () -> MarkerCache.onPlayerJoinLevel(playerMP));
+            MessageUtil.doDelayedServer(60, () -> MarkerCache.onPlayerJoinLevel(playerMP));
         }
     }
 
@@ -181,6 +188,7 @@ public class BCLibEventDist {
     @OnlyIn(Dist.CLIENT)
     public static void onConnectToServer(ClientPlayerNetworkEvent.LoggingIn event) {
         MarkerCache.clearClientCaches();
+        MessageMarkerClientHandler.clearQueuedMessages();
         BuildCraftObjectCaches.onClientJoinServer();
     }
 
@@ -188,6 +196,7 @@ public class BCLibEventDist {
     @OnlyIn(Dist.CLIENT)
     public static void onDisconnectFromServer(ClientPlayerNetworkEvent.LoggingOut event) {
         MarkerCache.clearClientCaches();
+        MessageMarkerClientHandler.clearQueuedMessages();
     }
 
 
@@ -205,6 +214,7 @@ public class BCLibEventDist {
         if (event.phase == Phase.END) {
             BuildCraftObjectCaches.onClientTick();
             MessageUtil.postClientTick();
+            MessageMarkerClientHandler.flushQueuedMessages();
             Minecraft mc = Minecraft.getInstance();
             LocalPlayer player = mc.player;
             if (player != null && ItemDebugger.isShowDebugInfo(player)) {

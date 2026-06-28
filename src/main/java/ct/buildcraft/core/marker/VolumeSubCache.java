@@ -126,6 +126,7 @@ public class VolumeSubCache extends MarkerSubCache<VolumeConnection> {
                     }
                 }
             }
+            return true;
         }
         return false;
     }
