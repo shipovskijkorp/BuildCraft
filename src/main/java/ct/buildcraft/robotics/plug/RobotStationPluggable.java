@@ -44,6 +44,9 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
 public class RobotStationPluggable extends PipePluggable implements IDockingStationProvider, IMjReceiver, IMjReadable {
+    /** Match the old robot battery receiver: at most 100 robot-energy units per tick = 1 MJ/t in this port. */
+    private static final long MAX_CHARGE_PER_TICK = MjAPI.MJ;
+
     public enum RobotStationState {
         None,
         Available,
@@ -118,9 +121,9 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
             return 0;
         }
         if (robot instanceof EntityRobot entityRobot) {
-            return entityRobot.getMjPowerRequestedForCharging();
+            return Math.min(entityRobot.getMjPowerRequestedForCharging(), MAX_CHARGE_PER_TICK);
         }
-        return Math.max(0L, robot.getBattery().getCapacity() - robot.getBattery().getStored());
+        return Math.min(Math.max(0L, robot.getBattery().getCapacity() - robot.getBattery().getStored()), MAX_CHARGE_PER_TICK);
     }
 
     @Override

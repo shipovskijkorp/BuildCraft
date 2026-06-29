@@ -1,6 +1,8 @@
 package ct.buildcraft.api.mj;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
@@ -25,7 +27,7 @@ public class MjAPI {
     public static final long MJ = ONE_MINECRAFT_JOULE;
 
     /** The decimal format used to display values of MJ to the player. Note that this */
-    public static final DecimalFormat MJ_DISPLAY_FORMAT = new DecimalFormat("#,##0.##");
+    public static final DecimalFormat MJ_DISPLAY_FORMAT = new DecimalFormat("#,##0.##", DecimalFormatSymbols.getInstance(Locale.ROOT));
 
     public static IMjEffectManager EFFECT_MANAGER = NullaryEffectManager.INSTANCE;
 

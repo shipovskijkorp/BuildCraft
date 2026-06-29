@@ -42,6 +42,7 @@ import ct.buildcraft.robotics.boards.BoardRobotPlanter;
 import ct.buildcraft.api.robots.RobotManager;
 import ct.buildcraft.robotics.client.render.RenderRobot;
 import ct.buildcraft.robotics.zone.MessageZoneMapResponse;
+import ct.buildcraft.robotics.recipes.RobotIntegrationRecipe;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -110,6 +111,7 @@ public class BCRobotics {
 
         BCRoboticsBoards.init();
         BCRoboticsPlugs.preInit();
+        RobotIntegrationRecipe.register();
         RobotManager.registryProvider = SimpleRobotRegistryProvider.INSTANCE;
         TAB_ROBOTICS.setItem(BCRoboticsItems.ROBOT.get());
     }

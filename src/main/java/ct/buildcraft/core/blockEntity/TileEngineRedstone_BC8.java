@@ -29,7 +29,7 @@ public class TileEngineRedstone_BC8 extends TileEngineBase_BC8 {
     @Nonnull
     @Override
     protected IMjConnector createConnector() {
-        return new EngineConnector(true);
+        return new EngineConnector(false);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class TileEngineRedstone_BC8 extends TileEngineBase_BC8 {
     protected void engineUpdate() {
         super.engineUpdate();
         if (isRedstonePowered) {
-            power = getMaxPower();
+            addPower(getCurrentOutput());
             if (level.getGameTime() % 16 == 0) {
                 if (getHeatLevel() < 0.8) {
                     heat += 4;
@@ -92,7 +92,7 @@ public class TileEngineRedstone_BC8 extends TileEngineBase_BC8 {
 
     @Override
     public long maxPowerExtracted() {
-        return 4 * MjAPI.MJ;
+        return MjAPI.MJ;
     }
 
     @Override

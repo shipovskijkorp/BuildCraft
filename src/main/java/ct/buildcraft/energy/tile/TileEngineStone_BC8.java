@@ -178,7 +178,7 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
 
     @Override
     public long maxPowerExtracted() {
-        return 100 * MjAPI.MJ;
+        return MAX_OUTPUT;
     }
 
     @Override
