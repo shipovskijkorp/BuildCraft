@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class RequiredExtractorItem extends RequiredExtractor {
@@ -22,7 +23,7 @@ public class RequiredExtractorItem extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
         return Optional.ofNullable(path.get(tileNbt))
             .map(CompoundTag.class::cast)
             .map(ItemStack::of)
@@ -32,7 +33,7 @@ public class RequiredExtractorItem extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
         return Optional.ofNullable(path.get(entityNbt))
             .map(CompoundTag.class::cast)
             .map(ItemStack::of)

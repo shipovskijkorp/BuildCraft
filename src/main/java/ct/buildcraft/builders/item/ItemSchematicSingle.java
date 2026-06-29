@@ -4,6 +4,7 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package ct.buildcraft.builders.item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -34,7 +35,10 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class ItemSchematicSingle extends Item {
     public static final int DAMAGE_CLEAN = 0;
@@ -131,8 +135,13 @@ public class ItemSchematicSingle extends Item {
                 ISchematicBlock schematicBlock = getSchematic(stack);
                 if (schematicBlock != null) {
                     if (!schematicBlock.isBuilt(world, placePos) && schematicBlock.canBuild(world, placePos)) {
-                        List<FluidStack> requiredFluids = schematicBlock.computeRequiredFluids();
-                        List<ItemStack> requiredItems = schematicBlock.computeRequiredItems();
+                    	List<ItemStack> requiredItems = schematicBlock.computeRequiredItems(world);
+                    	List<FluidStack> requiredFluids = new ArrayList<FluidStack>();
+                    	requiredItems.stream().map(FluidUtil::getFluidHandler)
+                    		.map(opt -> opt.lazyMap(fluidHandler -> fluidHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE)))
+                    		.filter(LazyOptional::isPresent).map(opt -> opt.orElse(FluidStack.EMPTY)).forEach(requiredFluids::add);
+                    	requiredFluids.addAll(schematicBlock.computeRequiredFluids(world));
+                        
                         if (requiredFluids.isEmpty()) {
                             InventoryWrapper itemTransactor = new InventoryWrapper(player.getInventory());
                             if (StackUtil.mergeSameItems(requiredItems).stream().noneMatch(s ->

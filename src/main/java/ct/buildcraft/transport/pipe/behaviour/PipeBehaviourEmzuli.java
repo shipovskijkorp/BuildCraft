@@ -169,7 +169,7 @@ public class PipeBehaviourEmzuli extends PipeBehaviourWood implements MenuProvid
         }
         if (currentSlot == null) return 0;
         int extracted = flow.tryExtractItems(count, dir, slotColours.get(currentSlot), filter, simulate);
-        if (extracted > 0 && simulate == FluidAction.SIMULATE) {
+        if (extracted > 0 && simulate.execute()) {
             currentSlot = getNextSlot();
             pipe.getHolder().scheduleNetworkUpdate(PipeMessageReceiver.BEHAVIOUR);
         }

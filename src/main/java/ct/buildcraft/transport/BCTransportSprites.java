@@ -13,10 +13,7 @@ import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import ct.buildcraft.lib.misc.ColourUtil;
 import ct.buildcraft.transport.client.model.PipeBaseModelGenStandard;
-import ct.buildcraft.transport.pipe.PipeRegistry;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourEmzuli.SlotIndex;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -25,58 +22,6 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 
 public class BCTransportSprites {
 
-	public static TextureAtlasSprite[] TEX_SPRITES;
-	
-	public static final ResourceLocation STRUCTURE = new ResourceLocation("buildcrafttransport:pipes/structure");
-	
-	public static final ResourceLocation WOOD_ITEM = new ResourceLocation("buildcrafttransport:pipes/wood_item");
-	public static final ResourceLocation WOOD_FLUID= new ResourceLocation("buildcrafttransport:pipes/wood_fluid");
-	public static final ResourceLocation WOOD_POWER= new ResourceLocation("buildcrafttransport:pipes/wood_power");
-
-	public static final ResourceLocation STONE_ITEM = new ResourceLocation("buildcrafttransport:pipes/stone_item");
-	public static final ResourceLocation STONE_FLUID= new ResourceLocation("buildcrafttransport:pipes/stone_fluid");
-	public static final ResourceLocation STONE_POWER= new ResourceLocation("buildcrafttransport:pipes/stone_power");
-
-	public static final ResourceLocation COBBLE_ITEM = new ResourceLocation("buildcrafttransport:pipes/cobblestone_item");
-	public static final ResourceLocation COBBLE_FLUID= new ResourceLocation("buildcrafttransport:pipes/cobblestone_fluid");
-	public static final ResourceLocation COBBLE_POWER= new ResourceLocation("buildcrafttransport:pipes/cobblestone_power");
-
-	public static final ResourceLocation QUARTZ_ITEM = new ResourceLocation("buildcrafttransport:pipes/quartz_item");
-	public static final ResourceLocation QUARTZ_FLUID= new ResourceLocation("buildcrafttransport:pipes/quartz_fluid");
-	public static final ResourceLocation QUARTZ_POWER= new ResourceLocation("buildcrafttransport:pipes/quartz_power");
-
-	public static final ResourceLocation GOLD_ITEM = new ResourceLocation("buildcrafttransport:pipes/gold_item");
-	public static final ResourceLocation GOLD_FLUID= new ResourceLocation("buildcrafttransport:pipes/gold_fluid");
-	public static final ResourceLocation GOLD_POWER= new ResourceLocation("buildcrafttransport:pipes/gold_power");
-
-	public static final ResourceLocation SANDSTONE_ITEM = new ResourceLocation("buildcrafttransport:pipes/sandstone_item");
-	public static final ResourceLocation SANDSTONE_FLUID= new ResourceLocation("buildcrafttransport:pipes/sandstone_fluid");
-	public static final ResourceLocation SANDSTONE_POWER= new ResourceLocation("buildcrafttransport:pipes/sandstone_power");
-
-	public static final ResourceLocation IRON_ITEM = new ResourceLocation("buildcrafttransport:pipes/iron_item");
-	public static final ResourceLocation IRON_FLUID= new ResourceLocation("buildcrafttransport:pipes/iron_fluid");
-//	public static final ResourceLocation IRON_POWER= new ResourceLocation("buildcrafttransport:pipes/iron_power");
-
-	public static final ResourceLocation DIAMOND_ITEM = new ResourceLocation("buildcrafttransport:pipes/diamond_item");
-	public static final ResourceLocation DIAMOND_FLUID= new ResourceLocation("buildcrafttransport:pipes/diamond_fluid");
-//	public static final ResourceLocation DIAMOND_POWER= new ResourceLocation("buildcrafttransport:pipes/diamond_power");
-
-	public static final ResourceLocation DIAWOOD_ITEM = new ResourceLocation("buildcrafttransport:pipes/diamond_wood_item");
-	public static final ResourceLocation DIAWOOD_FLUID= new ResourceLocation("buildcrafttransport:pipes/diamond_wood_fluid");
-
-	public static final ResourceLocation CLAY_ITEM = new ResourceLocation("buildcrafttransport:pipes/clay_item");
-	public static final ResourceLocation CLAY_FLUID= new ResourceLocation("buildcrafttransport:pipes/clay_fluid");
-	
-	public static final ResourceLocation VOID_ITEM = new ResourceLocation("buildcrafttransport:pipes/void_item");
-	public static final ResourceLocation VOID_FLUID= new ResourceLocation("buildcrafttransport:pipes/void_fluid");
-	
-	public static final ResourceLocation OBSIDIAN_ITEM = new ResourceLocation("buildcrafttransport:pipes/obsidian_item");
-	public static final ResourceLocation OBSIDIAN_FLUID= new ResourceLocation("buildcrafttransport:pipes/obsidian_fluid");
-	
-	public static final ResourceLocation LAPIS_ITEM = new ResourceLocation("buildcrafttransport:pipes/lapis_item");
-	public static final ResourceLocation DIAZULI_ITEM = new ResourceLocation("buildcrafttransport:pipes/diazuli_item");
-	public static final ResourceLocation EMZULI_ITEM = new ResourceLocation("buildcrafttransport:pipes/emzuli_item");
-	public static final ResourceLocation STRIPES_ITEM = new ResourceLocation("buildcrafttransport:pipes/stripes_item");
 	
 	public static final ResourceLocation DIAWOOD_GUI = new ResourceLocation("buildcrafttransport:textures/gui/pipe_emerald.png");
 	public static final ResourceLocation DIAWOOD_BUTTON_GUI = new ResourceLocation("buildcrafttransport:textures/gui/pipe_emerald_button.png");
@@ -215,15 +160,6 @@ public class BCTransportSprites {
     
     public static SpriteHolder getPipeSignal(boolean active, DyeColor colour) {
         return (active ? PIPE_SIGNAL_ON : PIPE_SIGNAL_OFF).get(colour);
-    }
-    
-    public static TextureAtlasSprite[] getTexArray() {
-    	if(TEX_SPRITES == null) {
-    		TEX_SPRITES = PipeRegistry.INSTANCE.getPipeItemsMap().keySet().stream().map(($) ->$.identifier).map(
-    				Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-    				::apply).toList().toArray(new TextureAtlasSprite[1]);
-    	}
-    	return TEX_SPRITES;
     }
 
     public static SpriteHolder getPipeDirection(Direction face) {

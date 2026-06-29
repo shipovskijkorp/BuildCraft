@@ -116,7 +116,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     private final Set<PipeMessageReceiver> networkUpdates = EnumSet.noneOf(PipeMessageReceiver.class);
     private final Set<PipeMessageReceiver> networkGuiUpdates = EnumSet.noneOf(PipeMessageReceiver.class);
     
-    protected ModelData modeldata = ModelData.builder().with(ModelPipe.PipeTypeModelKey, this).build();
+    protected ModelData modeldata;
     private CompoundTag unknownData;
     public int hitPart = 0;
 
@@ -211,6 +211,19 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
 
         if (!level.isClientSide && hasOwner()) {
             AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_PLACE_PIPE);
+        }
+    }
+
+	@Override
+    public void onRemove(boolean dropSelf) {
+        super.onRemove(dropSelf);
+        if (level != null && !level.isClientSide) {
+            for (Direction face : Direction.values()) {
+                PipePluggable pluggable = getPluggable(face);
+                if (pluggable != PipePluggable.EMPTY) {
+                    pluggable.onRemove();
+                }
+            }
         }
     }
 
@@ -613,6 +626,9 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     
 	@Override
 	public @NotNull ModelData getModelData() {
+		if (modeldata == null) {
+			modeldata = TilePipeHolderModelData.build(this);
+		}
 		return modeldata;
 	}
 

@@ -59,7 +59,13 @@ public class VolumeConnection extends MarkerConnection<VolumeConnection> {
 
     public VolumeConnection(VolumeSubCache subCache, Collection<BlockPos> positions) {
         super(subCache);
-        makeup.addAll(positions);
+        if (positions != null) {
+            for (BlockPos pos : positions) {
+                if (pos != null) {
+                    makeup.add(pos);
+                }
+            }
+        }
         createBox();
     }
 
@@ -91,7 +97,7 @@ public class VolumeConnection extends MarkerConnection<VolumeConnection> {
                 return true;
             }
         }
-        return !makeup.contains(to) && box.isCorner(to);
+        return !makeup.contains(to) && box.isInitialized() && box.isCorner(to);
     }
 
     public boolean mergeWith(VolumeConnection other) {
@@ -154,7 +160,14 @@ public class VolumeConnection extends MarkerConnection<VolumeConnection> {
     }
 
     public Box getBox() {
+        if (!box.isInitialized()) {
+            return new Box();
+        }
         return new Box(box.min(), box.max());
+    }
+
+    public boolean isValidForRender() {
+        return makeup.size() >= 2 && box.isInitialized();
     }
 
     // ###########
@@ -166,6 +179,11 @@ public class VolumeConnection extends MarkerConnection<VolumeConnection> {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void renderInWorld(PoseStack pose, Matrix4f matrix) {
-        LaserBoxRenderer.renderLaserBoxStatic(pose, matrix, box, BuildCraftLaserManager.MARKER_VOLUME_CONNECTED, true);
+        if (!isValidForRender()) {
+            return;
+        }
+        // Render from an immutable snapshot. The client marker cache can be rebuilt while the world is loading,
+        // and using the mutable internal box directly makes the renderer vulnerable to partially reset state.
+        LaserBoxRenderer.renderLaserBoxStatic(pose, matrix, getBox(), BuildCraftLaserManager.MARKER_VOLUME_CONNECTED, true);
     }
 }

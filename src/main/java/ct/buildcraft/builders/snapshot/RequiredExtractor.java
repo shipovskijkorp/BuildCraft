@@ -18,28 +18,29 @@ import com.google.gson.JsonDeserializer;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 
 @SuppressWarnings("WeakerAccess")
 public abstract class RequiredExtractor {
     @Nonnull
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
         return Collections.emptyList();
     }
 
     @Nonnull
-    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
         return Collections.emptyList();
     }
 
     @Nonnull
-    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
         return Collections.emptyList();
     }
 
     @Nonnull
-    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
         return Collections.emptyList();
     }
 

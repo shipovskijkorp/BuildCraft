@@ -15,7 +15,6 @@ import ct.buildcraft.lib.gui.GuiIcon;
 import ct.buildcraft.lib.gui.config.GuiConfigManager;
 import ct.buildcraft.lib.gui.ledger.Ledger_Neptune;
 import ct.buildcraft.lib.misc.LocaleUtil;
-import ct.buildcraft.silicon.tile.TileAssemblyTable;
 import ct.buildcraft.silicon.tile.TileLaserTableBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -27,13 +26,13 @@ public class LedgerTablePower extends Ledger_Neptune {//TODO
 
     public final TileLaserTableBase tile;
 
-    public LedgerTablePower(BuildCraftGui gui, TileAssemblyTable tile, boolean expandPositive) {
+    public LedgerTablePower(BuildCraftGui gui, TileLaserTableBase tile, boolean expandPositive) {
         super(gui, OVERLAY_COLOUR, expandPositive);
         this.tile = tile;
         title = Component.translatable("gui.power");
 
         appendText(Component.literal(LocaleUtil.localize("gui.assemblyCurrentRequired") + ":"), SUB_HEADER_COLOUR).setDropShadow(true);
-        appendText(() -> LocaleUtil.localizeMj(tile.getTarget()), TEXT_COLOUR);
+        appendText(() -> LocaleUtil.localizeMj(tile.getGuiTarget()), TEXT_COLOUR);
         appendText(Component.literal(LocaleUtil.localize("gui.stored") + ":"), SUB_HEADER_COLOUR).setDropShadow(true);
         appendText(() -> LocaleUtil.localizeMj(tile.power), TEXT_COLOUR);
         appendText(Component.literal(LocaleUtil.localize("gui.assemblyRate") + ":"), SUB_HEADER_COLOUR).setDropShadow(true);

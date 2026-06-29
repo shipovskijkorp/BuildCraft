@@ -57,8 +57,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
         FluidRenderer.vertex.lighti(combinedLight);
         FluidRenderer.vertex.overlay(overlay);
 
-        FluidRenderer.renderFluid(FluidSpriteType.STILL, fluid, forRender.amount, tile.tank.getCapacity(), min, max,
-            bb, matrix.last(), sideRender);
+        FluidRenderer.renderFluid(FluidSpriteType.STILL, fluid, forRender.amount, tile.tank.getCapacity(), min, max, bb, matrix.last(), sideRender);
         matrix.popPose();
     }
     

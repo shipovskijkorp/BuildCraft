@@ -89,10 +89,10 @@ public class FluidRenderer {
     }
 
     public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
+        clearSpriteCache();
+        frozenMap.clear();
+        pack.clear();
     	mixinResourcePack();
-        for (FluidSpriteType type : FluidSpriteType.values()) {
-            fluidSprites.get(type).clear();
-        }
         Map<ResourceLocation, ResourceLocation> spritesStitched = new HashMap<>();
         for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
         	var flu = IClientFluidTypeExtensions.of(fluid);
@@ -117,11 +117,18 @@ public class FluidRenderer {
     }
     
     public static void onTextureStitchPost(TextureStitchEvent.Post event) {
-    	
+        clearSpriteCache();
+        blockTexMap = event.getAtlas()::getSprite;
     }
     
+    private static void clearSpriteCache() {
+        for (FluidSpriteType type : FluidSpriteType.values()) {
+            fluidSprites.get(type).clear();
+        }
+        blockTexMap = null;
+    }
+
     private static void mixinResourcePack() {
-    	BCLog.logger.debug("called sfasfafafsafaghsg");
     	ResourceManager reloadable = Minecraft.getInstance().getResourceManager();
     	try {
     		Field field = reloadable.getClass().getDeclaredFields()[1];
@@ -216,7 +223,7 @@ public class FluidRenderer {
 	        Vec3 max, VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender) {
         if (fluidType == null || amount <= 0 ) 
             return;
-        renderFluidInteral(type,FluidStack.EMPTY, fluidType, cap, cap, max, max, fluidBuffer, matrix, sideRender);
+        renderFluidInteral(type, FluidStack.EMPTY, fluidType, amount, cap, min, max, fluidBuffer, matrix, sideRender);
     }
     
     private static void renderFluidInteral(FluidSpriteType type, FluidStack texParam, Fluid fluidType, double amount, double cap, Vec3 min,
@@ -407,7 +414,7 @@ public class FluidRenderer {
 
         // draw all the full sprites
         RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-   //     RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(((color>>16)&0xFF)/255f, ((color>>8)&0xFF)/255f, ((color)&0xFF)/255f, ((color>>24)&0xFF)/255f);//rgba
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);

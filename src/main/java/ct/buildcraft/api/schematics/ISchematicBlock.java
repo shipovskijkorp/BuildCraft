@@ -28,12 +28,12 @@ public interface ISchematicBlock {
     }
 
     @Nonnull
-    default List<ItemStack> computeRequiredItems() {
+    default List<ItemStack> computeRequiredItems(Level level) {
         return Collections.emptyList();
     }
 
     @Nonnull
-    default List<FluidStack> computeRequiredFluids() {
+    default List<FluidStack> computeRequiredFluids(Level level) {
         return Collections.emptyList();
     }
 

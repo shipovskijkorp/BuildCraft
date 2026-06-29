@@ -15,17 +15,17 @@ import ct.buildcraft.lib.marker.MarkerSubCache;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class TileMarker<C extends MarkerConnection<C>> extends TileBC_Neptune implements IDebuggable {
-	
-    public TileMarker(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-		super(p_155228_, p_155229_, p_155230_);
-	}
+    private boolean removedFromWorld = false;
 
-	public abstract MarkerCache<? extends MarkerSubCache<C>> getCache();
+    public TileMarker(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
+        super(p_155228_, p_155229_, p_155230_);
+    }
+
+    public abstract MarkerCache<? extends MarkerSubCache<C>> getCache();
 
     public MarkerSubCache<C> getLocalCache() {
         return getCache().getSubCache(level);
@@ -42,24 +42,33 @@ public abstract class TileMarker<C extends MarkerConnection<C>> extends TileBC_N
     @Override
     public void onLoad() {
         super.onLoad();
-        getLocalCache().loadMarker(getBlockPos(), this);
+        removedFromWorld = false;
+        MarkerSubCache<C> cache = getLocalCache();
+        cache.loadMarker(getBlockPos(), this);
+        cache.syncMarkerState(getBlockPos());
     }
 
-	@Override
+    @Override
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
-        getLocalCache().unloadMarker(getBlockPos());
+        if (!removedFromWorld) {
+            getLocalCache().unloadMarker(getBlockPos());
+        }
     }
-    
+
     @Override
-	public void setRemoved() {
-		super.setRemoved();
-        getLocalCache().removeMarker(getBlockPos());
-	}
+    public void setRemoved() {
+        // Vanilla also calls setRemoved() when a chunk unloads. Do not treat that as a broken marker.
+        super.setRemoved();
+    }
 
     @Override
     public void onRemove(boolean dropSelf) {
         super.onRemove(dropSelf);
+        if (removedFromWorld) {
+            return;
+        }
+        removedFromWorld = true;
         getLocalCache().removeMarker(getBlockPos());
     }
 

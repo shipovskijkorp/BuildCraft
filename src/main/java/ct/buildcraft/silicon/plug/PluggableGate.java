@@ -6,6 +6,10 @@
 
 package ct.buildcraft.silicon.plug;
 
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraftforge.api.distmarker.Dist;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -226,6 +230,7 @@ public class PluggableGate extends PipePluggable implements IWireEmitter , MenuP
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public PluggableModelKey getModelRenderKey(RenderType layer) {
         if (layer == RenderType.cutout()) {
             return new KeyPlugGate(side, logic.variant);

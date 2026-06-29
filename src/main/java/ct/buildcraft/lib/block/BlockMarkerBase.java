@@ -9,6 +9,7 @@ import java.util.Map;
 
 import ct.buildcraft.api.blocks.ICustomRotationHandler;
 import ct.buildcraft.api.properties.BuildCraftProperties;
+import ct.buildcraft.lib.tile.TileMarker;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -141,6 +143,18 @@ public abstract class BlockMarkerBase extends BlockBCTile_Neptune implements ICu
         }
 		
 	}
+
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tile = level.getBlockEntity(pos);
+            if (tile instanceof TileMarker<?>) {
+                ((TileMarker<?>) tile).onRemove(true);
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
 
     @Override
 	public boolean canFaceVertically() {

@@ -50,7 +50,7 @@ public class BCBuildersSchematics {
         return new SchematicBlockDefault() {
             @Nonnull
             @Override
-            public List<ItemStack> computeRequiredItems() {
+            public List<ItemStack> computeRequiredItems(Level level) {
             	ItemStack itemstack = new ItemStack(BannerBlock.byColor(DyeColor.byId(tileNbt.getInt("Base"))));
             	ListTag pattern = tileNbt.getList("Patterns", 10);
             	if (pattern != null && !pattern.isEmpty()) {

@@ -41,6 +41,12 @@ public class BlockEngine_BC8 extends BlockEngineBase_BC8<EnumEngineType> {
 			Player player) {
 		return new ItemStack(BCCoreItems.ENGINE_ITEM_MAP.get(state.getValue(getEngineProperty())));
 	}
+	
+	
+	@Override
+	public ItemStack getCloneItemStack(BlockGetter p_49823_, BlockPos p_49824_, BlockState state) {
+		return new ItemStack(BCCoreItems.ENGINE_ITEM_MAP.get(state.getValue(getEngineProperty())));
+	}
 
 	@Override
 	public Property<EnumEngineType> getEngineProperty() {

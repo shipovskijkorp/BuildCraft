@@ -70,6 +70,12 @@ public abstract class MarkerCache<S extends MarkerSubCache<?>> {
         }
     }
 
+    public static void clearClientCaches() {
+        for (MarkerCache<?> cache : CACHES) {
+            cache.cacheClient.clear();
+        }
+    }
+
     private void onLevelUnloadImpl(LevelAccessor levelAccessor) {
         Map<DimensionType, S> cache = levelAccessor.isClientSide() ? cacheClient : cacheServer;
         DimensionType key = levelAccessor.dimensionType();

@@ -350,10 +350,11 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
     }
     
 	@OnlyIn(Dist.CLIENT)
-	private static Minecraft mc = Minecraft.getInstance();
+	private static Minecraft mc; // NOTE: do NOT init here; Minecraft.getInstance() in <clinit> would load the client class on the dedicated server and crash it.
 	
 	@OnlyIn(Dist.CLIENT)
 	public static ContainerLevelAccess CreateClientLevelAccess(FriendlyByteBuf buf) {
+		if (mc == null) { mc = Minecraft.getInstance(); }
 		return ContainerLevelAccess.create(mc.level, buf.readBlockPos());
 	}
 }

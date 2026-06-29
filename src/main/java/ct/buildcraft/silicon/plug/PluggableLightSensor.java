@@ -6,6 +6,10 @@
 
 package ct.buildcraft.silicon.plug;
 
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import net.minecraftforge.api.distmarker.Dist;
+
 import ct.buildcraft.api.transport.pipe.IPipeHolder;
 import ct.buildcraft.api.transport.pipe.PipeEventHandler;
 import ct.buildcraft.api.transport.pipe.PipeEventStatement;
@@ -64,6 +68,7 @@ public class PluggableLightSensor extends PipePluggable {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public PluggableModelKey getModelRenderKey(RenderType layer) {
         if (layer == RenderType.cutout()) return new KeyPlugLightSensor(side);
         return null;

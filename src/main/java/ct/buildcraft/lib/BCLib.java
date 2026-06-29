@@ -123,6 +123,8 @@ public class BCLib {
         MarkerCache.postInit();
     	BuildCraftObjectCaches.fmlPostInit();
     	MessageManager.fmlPostInit();
+        if(ModList.get().isLoaded("ic2"))
+        	Ic2Compat.init();
     }
 
     public static Error throwBadClass(Error e, Class<?> cls) throws Error {

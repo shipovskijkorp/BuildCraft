@@ -185,7 +185,7 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood implements MenuP
             advanceFilter();
         }
         int extracted = flow.tryExtractItems(1, getCurrentDir(), null, getStackFilter(), simulate);
-        if (extracted > 0 & filterMode == FilterMode.ROUND_ROBIN && simulate != FluidAction.EXECUTE) {
+        if (extracted > 0 & filterMode == FilterMode.ROUND_ROBIN && simulate.execute()) {
             advanceFilter();
         }
         return extracted;

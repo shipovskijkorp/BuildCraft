@@ -310,6 +310,7 @@
   "buildcraft.help.tank.title.tankCoolant": "Coolant Tank",
   "buildcraft.help.tank.title.tankFuel": "Fuel Tank",
   "buildcraft.help.tank.title.tankResidue": "Residue Tank",
+  "buildcraft.help.tank.title.tank": "Tank",
   "buildcraft.item.nonclean.usage": "Shift-right click to clean",
   "buildcraft.mj.flow.long": "%s Minecraft Joules per tick",
   "buildcraft.mj.flow.seconds.long": "%s Minecraft Joules per second",

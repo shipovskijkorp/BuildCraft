@@ -1,279 +1,316 @@
 modLoader="javafml"
-# Forge for 1.19 is version 41
-loaderVersion="[41,)"
-license="All rights reserved"
+loaderVersion="[43,)"
+license="MPL-2.0"
 showAsResourcePack=false
 
 [[mods]]
     modId="buildcraftlib"
-    version="8.0.0.0"
-    displayName="BuildCraft Library"
-    displayURL="buildcraft.com"
-    logoFile="logo.png"
-    credits="I'd like to thank my mother and father."
-    authors="Author"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Library"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
     description='''
-Lets you craft dirt into diamonds. This is a traditional mod that has existed for eons. It is ancient. The holy Notch created it. Jeb rainbowfied it. Dinnerbone made it upside down. Etc.
+Shared library code and runtime helpers used by the BuildCraft Community Edition modules.
     '''
     displayTest="MATCH_VERSION"
 
 [[dependencies.buildcraftlib]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftlib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
-    
-#core    
+
+[[dependencies.buildcraftlib]]
+    modId="ic2"
+    mandatory=false
+    versionRange="[1.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
 [[mods]]
     modId="buildcraftcore"
-    version="8.0.0.0"
-    displayName="BuildCraft Core"
-    displayURL="buildcraft.com"
-    logoFile="buildcraft.png"
-    credits="I'd like to thank my mother and father."
-    authors="Author"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Core"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
     description='''
-Lets you craft dirt into diamonds. This is a traditional mod that has existed for eons. It is ancient. The holy Notch created it. Jeb rainbowfied it. Dinnerbone made it upside down. Etc.
+Core BuildCraft content: common items, gears, engines, markers and shared gameplay systems.
     '''
     displayTest="MATCH_VERSION"
 
 [[dependencies.buildcraftcore]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftcore]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftcore]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0]"
+    versionRange="[8.0.0.0,)"
     ordering="AFTER"
     side="BOTH"
-    
-#factory    
+
 [[mods]]
     modId="buildcraftfactory"
-    version="8.0.0.0"
-    displayName="BuildCraft Factory"
-    displayURL="buildcraft.com"
-    logoFile="buildcraft.png"
-    credits="I'd like to thank my mother and father."
-    authors="Author"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Factory"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
     description='''
-Lets you craft dirt into diamonds. This is a traditional mod that has existed for eons. It is ancient. The holy Notch created it. Jeb rainbowfied it. Dinnerbone made it upside down. Etc.
+Factory machines and fluid infrastructure, including tanks, pumps, mining wells and processing blocks.
     '''
     displayTest="MATCH_VERSION"
 
 [[dependencies.buildcraftfactory]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftfactory]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftfactory]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0]"
+    versionRange="[8.0.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftfactory]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0]"
-    ordering="NONE"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
     side="BOTH"
-#transport    
+
 [[mods]]
     modId="buildcrafttransport"
-    version="8.0.0.0"
-    displayName="BuildCraft Transport"
-    displayURL="buildcraft.com"
-    logoFile="buildcraft.png"
-    credits="I'd like to thank my mother and father."
-    authors="Author"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Transport"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
     description='''
-Lets you craft dirt into diamonds. This is a traditional mod that has existed for eons. It is ancient. The holy Notch created it. Jeb rainbowfied it. Dinnerbone made it upside down. Etc.
+Item, fluid and power pipes, gates, wires, facades, plugs and transport automation.
     '''
     displayTest="MATCH_VERSION"
 
 [[dependencies.buildcrafttransport]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcrafttransport]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcrafttransport]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0]"
+    versionRange="[8.0.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcrafttransport]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0]"
-    ordering="NONE"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
     side="BOTH"
 
- 
-    
- #energy    
 [[mods]]
     modId="buildcraftenergy"
-    version="8.0.0.0"
-    displayName="BuildCraft Energy"
-    displayURL="buildcraft.com"
-    logoFile="buildcraft.png"
-    credits="I'd like to thank my mother and father."
-    authors="Author"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Energy"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
     description='''
-Lets you craft dirt into diamonds. This is a traditional mod that has existed for eons. It is ancient. The holy Notch created it. Jeb rainbowfied it. Dinnerbone made it upside down. Etc.
+Oil, fuels, power generation and energy-related BuildCraft mechanics.
     '''
     displayTest="MATCH_VERSION"
 
 [[dependencies.buildcraftenergy]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftenergy]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftenergy]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0]"
+    versionRange="[8.0.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftenergy]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0]"
-    ordering="NONE"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
     side="BOTH"
-    
-#builders    
+
 [[mods]]
     modId="buildcraftbuilders"
-    version="8.0.0.0"
-    displayName="BuildCraft Builders"
-    displayURL="buildcraft.com"
-    logoFile="buildcraft.png"
-    credits="I'd like to thank my mother and father."
-    authors="Author"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Builders"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
     description='''
-Lets you craft dirt into diamonds. This is a traditional mod that has existed for eons. It is ancient. The holy Notch created it. Jeb rainbowfied it. Dinnerbone made it upside down. Etc.
+Builder module content such as quarries, fillers, frames, markers, templates and construction machines.
     '''
     displayTest="MATCH_VERSION"
 
 [[dependencies.buildcraftbuilders]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftbuilders]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftbuilders]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0]"
-    ordering="NONE"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftbuilders]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0]"
-    ordering="NONE"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
     side="BOTH"
 
-#silicon    
 [[mods]]
     modId="buildcraftsilicon"
-    version="8.0.0.0"
-    displayName="BuildCraft Silicon"
-    displayURL="buildcraft.com"
-    logoFile="buildcraft.png"
-    credits="I'd like to thank my mother and father."
-    authors="Author"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Silicon"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
     description='''
-Lets you craft dirt into diamonds. This is a traditional mod that has existed for eons. It is ancient. The holy Notch created it. Jeb rainbowfied it. Dinnerbone made it upside down. Etc.
+Silicon technology: lasers, assembly tables, integration tables, programming tables, chipsets and gates.
     '''
     displayTest="MATCH_VERSION"
 
 [[dependencies.buildcraftsilicon]]
     modId="forge"
     mandatory=true
-    versionRange="[41,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftsilicon]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftsilicon]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0]"
+    versionRange="[8.0.0.0,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftsilicon]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0]"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftrobotics"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Robotics"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Robots, docking stations, redstone boards, zones and robotic automation.
+    '''
+    displayTest="MATCH_VERSION"
+
+[[dependencies.buildcraftrobotics]]
+    modId="forge"
+    mandatory=true
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
-    
+
+[[dependencies.buildcraftrobotics]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2,1.20)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftlib"
+    mandatory=true
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftcore"
+    mandatory=true
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftsilicon"
+    mandatory=true
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcrafttransport"
+    mandatory=true
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"

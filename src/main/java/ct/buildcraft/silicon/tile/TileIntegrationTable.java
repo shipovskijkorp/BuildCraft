@@ -201,6 +201,6 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
 
 	@Override
 	public Component getDisplayName() {
-		return Component.literal("TileIntegrationTable:TODO");//TODO
+		return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
 	}
 }

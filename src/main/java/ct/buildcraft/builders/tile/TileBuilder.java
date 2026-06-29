@@ -29,6 +29,7 @@ import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.api.mj.MjBattery;
 import ct.buildcraft.api.mj.MjCapabilityHelper;
 import ct.buildcraft.api.tiles.IDebuggable;
+import ct.buildcraft.api.tiles.TilesAPI;
 import ct.buildcraft.builders.BCBuildersBlocks;
 import ct.buildcraft.builders.item.ItemSnapshot;
 import ct.buildcraft.builders.menu.ContainerBuilder;
@@ -192,6 +193,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         }
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery)));
         caps.addCapabilityInstance(CapUtil.CAP_FLUIDS, tankManager, EnumPipePart.VALUES);
+        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, () -> !invSnapshot.isEmpty(), EnumPipePart.VALUES);
     }
 
     @Override
@@ -251,7 +253,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
                 templateBuildingInfo = ((Template) snapshot).new BuildingInfo(getCurrentBasePos(), rotation);
             }
             if (snapshot.getType() == EnumSnapshotType.BLUEPRINT) {
-                blueprintBuildingInfo = ((Blueprint) snapshot).new BuildingInfo(getCurrentBasePos(), rotation);
+                blueprintBuildingInfo = ((Blueprint) snapshot).new BuildingInfo(getCurrentBasePos(), rotation, level);
             }
             currentBox = Optional.ofNullable(getBuildingInfo()).map(buildingInfo -> buildingInfo.box).orElse(null);
             Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::updateSnapshot);

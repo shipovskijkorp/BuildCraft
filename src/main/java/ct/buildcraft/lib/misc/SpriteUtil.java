@@ -64,6 +64,9 @@ public class SpriteUtil {
             return null;
         }
         Minecraft mc = Minecraft.getInstance();
+        if (mc.player != null && profile.getId() != null && profile.getId().equals(mc.player.getUUID())) {
+            return mc.player.getSkinTextureLocation();
+        }
 
         if (CACHED.containsKey(profile) && CACHED.get(profile) == null && Math.random() >= 0.99) {
             CACHED.remove(profile);
@@ -104,6 +107,9 @@ public class SpriteUtil {
         if (loc == null) {
             return BCLibSprites.LOCK;
         }
+        if (loc == LOCATION_SKIN_LOADING) {
+            return BCLibSprites.LOADING;
+        }
         return new SpriteRaw(loc, 8, 8, 8, 8, 64);
     }
 
@@ -113,7 +119,7 @@ public class SpriteUtil {
             return null;
         }
         ResourceLocation loc = getSkinSpriteLocation0(profile);
-        if (loc == null) {
+        if (loc == null || loc == LOCATION_SKIN_LOADING) {
             return null;
         }
         return new SpriteRaw(loc, 40, 8, 8, 8, 64);

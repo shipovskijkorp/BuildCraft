@@ -26,8 +26,8 @@ public class BCTransportBlocks {
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BCTransport.MODID);
     private static final DeferredRegister<BlockEntityType<?>> BET = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, BCTransport.MODID);
 
-    public static final RegistryObject<Block> filterBuffer = BLOCKS.register("filtered_buffer", BlockFilteredBuffer::new);
-    public static final RegistryObject<Block> pipeHolder = BLOCKS.register("pipe_holder", BlockPipeHolder::new);
+    public static final RegistryObject<BlockFilteredBuffer> filterBuffer = BLOCKS.register("filtered_buffer", BlockFilteredBuffer::new);
+    public static final RegistryObject<BlockPipeHolder> pipeHolder = BLOCKS.register("pipe_holder", BlockPipeHolder::new);
     public static final RegistryObject<BlockEntityType<TileFilteredBuffer>> FILTERREDBUFFER_BE = BET.register("entity_filtered_buffer",
     		() -> BlockEntityType.Builder.of(TileFilteredBuffer::new, filterBuffer.get()).build(null));
     public static final RegistryObject<BlockEntityType<TilePipeHolder>> PIPE_HOLDER_BE = BET.register("entity_pipe_holder",

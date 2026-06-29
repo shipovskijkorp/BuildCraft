@@ -58,7 +58,7 @@ public class SchematicBlockFluid implements ISchematicBlock {
 
     @Nonnull
     @Override
-    public List<FluidStack> computeRequiredFluids() {
+    public List<FluidStack> computeRequiredFluids(Level level) {
         return Optional.ofNullable(BlockUtil.getFluidWithoutFlowing(blockState))
             .map(fluid -> new FluidStack(fluid, FluidType.BUCKET_VOLUME))
             .map(Collections::singletonList)

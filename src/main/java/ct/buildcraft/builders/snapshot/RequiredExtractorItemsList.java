@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 import ct.buildcraft.lib.misc.NBTUtilBC;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class RequiredExtractorItemsList extends RequiredExtractor {
@@ -24,7 +25,7 @@ public class RequiredExtractorItemsList extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
         return Optional.ofNullable(path.get(tileNbt))
             .map(NBTUtilBC::readCompoundList)
             .map(stream -> stream.map(ItemStack::of).collect(Collectors.toList()))
@@ -34,7 +35,7 @@ public class RequiredExtractorItemsList extends RequiredExtractor {
 
     @Nonnull
     @Override
-    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
         return Optional.ofNullable(path.get(entityNbt))
             .map(NBTUtilBC::readCompoundList)
             .map(stream -> stream.map(ItemStack::of).collect(Collectors.toList()))

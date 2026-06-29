@@ -200,9 +200,10 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         }
         if (fluid.isEmpty())
         {
-            fluid = new FluidStack(resource, Math.min(capacity, resource.getAmount()));
+            int amount = Math.min(capacity, resource.getAmount());
+            fluid = new FluidStack(resource, amount);
             onContentsChanged();
-            return fluid.getAmount();
+            return amount;
         }
         if (!fluid.isFluidEqual(resource))
         {

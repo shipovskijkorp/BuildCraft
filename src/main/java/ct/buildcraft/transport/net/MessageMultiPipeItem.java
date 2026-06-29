@@ -1,5 +1,9 @@
 package ct.buildcraft.transport.net;
 
+import net.minecraftforge.fml.DistExecutor;
+
+import net.minecraftforge.api.distmarker.Dist;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -122,26 +126,6 @@ public class MessageMultiPipeItem {
     }
 
     public static final BiConsumer<MessageMultiPipeItem, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
-    	ctx.get().enqueueWork(() -> {       
-    		Level world = Minecraft.getInstance().level;
-                if (world == null) {
-                    return;
-                }
-                for (Entry<BlockPos, List<TravellingItemData>> entry : message.items.entrySet()) {
-                    BlockPos pos = entry.getKey();
-                    BlockEntity tile = world.getBlockEntity(pos);
-                    if (tile instanceof IPipeHolder) {
-                        IPipe pipe = ((IPipeHolder) tile).getPipe();
-                        if (pipe == Pipe.EMPTY) {
-                            return;
-                        }
-                        PipeFlow flow = pipe.getFlow();
-                        if (flow instanceof PipeFlowItems) {
-                            ((PipeFlowItems) flow).handleClientReceviedItems(entry.getValue());
-                        }
-                    }
-                }
-    		});
-    	ctx.get().setPacketHandled(true);
-        };
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MessageMultiPipeItemClientHandler.handle(message, ctx));
+    };
 }

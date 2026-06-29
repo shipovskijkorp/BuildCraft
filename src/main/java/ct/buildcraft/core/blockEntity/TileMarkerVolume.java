@@ -49,6 +49,27 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
         caps.addCapabilityInstance(TilesAPI.CAP_TILE_AREA_PROVIDER, this, EnumPipePart.VALUES);
     }
 
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        refreshSignalStateFromWorld();
+    }
+
+    public void refreshSignalStateFromWorld() {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        boolean powered = level.hasNeighborSignal(worldPosition);
+        if (showSignals != powered) {
+            showSignals = powered;
+            markChunkDirty();
+            sendNetworkUpdate(showSignals ? NET_SIGNALS_ON : NET_SIGNALS_OFF);
+        } else {
+            sendNetworkUpdate(NET_RENDER_DATA);
+        }
+    }
+
     @Override
     public IdAllocator getIdAllocator() {
         return IDS;
@@ -156,6 +177,7 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
     @Override
     public void onPlacedBy(LivingEntity placer, ItemStack stack) {
         super.onPlacedBy(placer, stack);
+        refreshSignalStateFromWorld();
         // Check if we are the corner of an existing box
         MarkerSubCache<VolumeConnection> cache = this.getLocalCache();
         for (BlockPos other : cache.getValidConnections(getBlockPos())) {

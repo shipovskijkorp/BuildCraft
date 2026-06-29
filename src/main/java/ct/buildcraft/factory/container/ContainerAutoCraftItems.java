@@ -21,6 +21,7 @@ import net.minecraftforge.items.IItemHandler;
 public class ContainerAutoCraftItems extends ContainerBCTile<TileAutoWorkbenchItems> {
 
     public final SlotBase[] materialSlots;
+    public final SlotBase[] filtterSlots;;
     
 	public static ContainerAutoCraftItems create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
 		return new ContainerAutoCraftItems(containerId, playerInventory, buf.readInt(), CreateClientLevelAccess(buf));
@@ -42,9 +43,10 @@ public class ContainerAutoCraftItems extends ContainerBCTile<TileAutoWorkbenchIt
             }
         }
         materialSlots = new SlotBase[9];
+        filtterSlots = new SlotBase[9];
         for (int x = 0; x < 9; x++) {
             // hide the filter slots, but still sync them
-        	addSlot(new SlotPhantom(invMaterialFilter, x, -1000000, -1000000));
+        	addSlot(filtterSlots[x] = new SlotPhantom(invMaterialFilter, x, -1000000, -1000000));
         	addSlot(materialSlots[x] = new SlotBase(invMaterials, x, 8 + x * 18, 84));
         }
         addSlot(new SlotDisplay(resultClient, 0, 93, 27));

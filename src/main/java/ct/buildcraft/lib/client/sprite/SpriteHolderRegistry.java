@@ -99,19 +99,28 @@ public class SpriteHolderRegistry {
     }
 
     public static void onTextureStitchPost(TextureStitchEvent.Post event) {
+        List<ResourceLocation> locations = new ArrayList<>();
+        locations.addAll(HOLDER_MAP.keySet());
+        locations.sort(Comparator.comparing(ResourceLocation::toString));
+
+        TextureAtlas manager = event.getAtlas();
+        TextureAtlasSprite missing = manager.getSprite(MissingTextureAtlasSprite.getLocation());
+
+        // Always refresh the cached atlas sprite after stitching/resource reload.
+        // Previously this only happened while debug logging was enabled, so a lazily-cached
+        // missing/stale sprite could keep using the wrong atlas UVs and therefore the wrong colour.
+        for (ResourceLocation r : locations) {
+            SpriteHolder sprite = HOLDER_MAP.get(r);
+            TextureAtlasSprite stitched = manager.getSprite(r);
+            sprite.sprite = stitched;
+            sprite.hasCalled = false;
+        }
+
         if (DEBUG&&ModLoader.isLoadingStateValid()) {
             BCLog.logger.info("[lib.sprite.holder] List of registered sprites:");
-            List<ResourceLocation> locations = new ArrayList<>();
-            locations.addAll(HOLDER_MAP.keySet());
-            locations.sort(Comparator.comparing(ResourceLocation::toString));
-            TextureAtlas manager = event.getAtlas();
-            TextureAtlasSprite missing = manager.getSprite(MissingTextureAtlasSprite.getLocation());
-            
-            
             for (ResourceLocation r : locations) {
                 SpriteHolder sprite = HOLDER_MAP.get(r);
-                TextureAtlasSprite stitched = manager.getSprite(r);
-                sprite.sprite = stitched;
+                TextureAtlasSprite stitched = sprite.sprite;
                 String status = "  ";
                 if (missing.getU0() == stitched.getU0() && missing.getV0() == stitched.getV0()) {
                     status += "fail to load sprite "+r +" ,using missingno instead";
@@ -137,7 +146,7 @@ public class SpriteHolderRegistry {
         }
 
         protected void onTextureStitchPre(TextureStitchEvent.Pre event) {
-        	event.addSprite(spriteLocation);
+            event.addSprite(spriteLocation);
         }
 
         private TextureAtlasSprite getSpriteChecking() {

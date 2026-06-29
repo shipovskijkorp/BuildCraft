@@ -156,7 +156,7 @@ public class BCCoreConfig {
         .defineInRange("markerMaxDistance", 64, 16, 256);
 
         propPumpMaxDistance = con_builder.comment("How far, in minecraft blocks, should pumps reach in fluids? (Default: 48, matching the reduced circular search radius)")
-        .defineInRange("pumpMaxDistance", 48, 16, 128);
+        .defineInRange("pumpMaxDistance", 64, 16, 128);
 
         propNetworkUpdateRate = con_builder.comment("How often, in ticks, should network update packets be sent? Increasing this might help network performance.")
         .defineInRange("updateFactor", networkUpdateRate, 1, 10);

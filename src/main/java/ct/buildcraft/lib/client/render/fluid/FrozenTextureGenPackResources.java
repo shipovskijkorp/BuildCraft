@@ -26,7 +26,6 @@ import net.minecraft.server.packs.resources.ResourceManager;
 
 public class FrozenTextureGenPackResources implements PackResources{
 	
-	private static final ResourceManager manager = Minecraft.getInstance().getResourceManager();
 	private static final Logger logger = BCLog.logger;
 	private static final int SIZE = 2;//2
 
@@ -34,6 +33,7 @@ public class FrozenTextureGenPackResources implements PackResources{
 	private final HashBiMap<ResourceLocation, ResourceLocation> transLocations = HashBiMap.create();//<transformed, src>
 	
 	protected InputStream load(ResourceLocation srcLocation) {
+        ResourceManager manager = Minecraft.getInstance().getResourceManager();
 		Optional<Resource> resourceOp = manager.getResource(srcLocation);
 		if(resourceOp.isEmpty()) {
 			logger.error("Can not read resource : "+srcLocation+" when creating forzen sprite, maybe called too early");
@@ -131,9 +131,15 @@ public class FrozenTextureGenPackResources implements PackResources{
 		return "Generated";
 	}
 
+    public void clear() {
+        transLocations.clear();
+    }
+
 	@Override
 	public void close() {
-		transLocations.clear();
+        // This pack is a singleton that is pushed into the current resource manager during
+        // texture stitching. Old resource managers may close their packs while a new reload
+        // is already preparing the atlas, so do not clear the live generated mapping here.
 	}
 
 }
