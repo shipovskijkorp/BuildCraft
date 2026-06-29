@@ -6,9 +6,12 @@ import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.boards.BoardRobotPicker;
 import ct.buildcraft.robotics.entity.EntityRobot;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -57,7 +60,14 @@ public class AIRobotFetchItem extends AIRobot {
             scanForItem();
         } else {
             if (!canPickTargetNow()) {
-                startDelegateAI(new AIRobotGotoBlock(robot, (int) Math.floor(target.getX()), (int) Math.floor(target.getY()), (int) Math.floor(target.getZ()), maxRange));
+                BlockPos pickupPos = findPickupTargetPos(target);
+                if (pickupPos == null) {
+                    robot.unreachableEntityDetected(target);
+                    setSuccess(false);
+                    terminate();
+                    return;
+                }
+                startDelegateAI(new AIRobotGotoBlock(robot, pickupPos.getX(), pickupPos.getY(), pickupPos.getZ(), maxRange));
                 return;
             }
             pickTime++;
@@ -118,10 +128,15 @@ public class AIRobotFetchItem extends AIRobot {
             target = best;
             targetId = best.getId();
             BoardRobotPicker.targettedItems.add(targetId);
-            if (Math.floor(target.getX()) != Math.floor(robot.getX())
-                    || Math.floor(target.getY()) != Math.floor(robot.getY())
-                    || Math.floor(target.getZ()) != Math.floor(robot.getZ())) {
-                startDelegateAI(new AIRobotGotoBlock(robot, (int) Math.floor(target.getX()), (int) Math.floor(target.getY()), (int) Math.floor(target.getZ()), maxRange));
+            if (!canPickTargetNow()) {
+                BlockPos pickupPos = findPickupTargetPos(target);
+                if (pickupPos == null) {
+                    robot.unreachableEntityDetected(target);
+                    setSuccess(false);
+                    terminate();
+                    return;
+                }
+                startDelegateAI(new AIRobotGotoBlock(robot, pickupPos.getX(), pickupPos.getY(), pickupPos.getZ(), maxRange));
             }
         } else {
             setSuccess(false);
@@ -139,6 +154,44 @@ public class AIRobotFetchItem extends AIRobot {
             return true;
         }
         return target.distanceToSqr(robot) <= 2.25D;
+    }
+
+    private BlockPos findPickupTargetPos(ItemEntity item) {
+        BlockPos itemPos = new BlockPos((int) Math.floor(item.getX()), (int) Math.floor(item.getY()), (int) Math.floor(item.getZ()));
+        BlockPos[] candidates = new BlockPos[] {
+                itemPos,
+                itemPos.above(),
+                itemPos.north(),
+                itemPos.south(),
+                itemPos.west(),
+                itemPos.east(),
+                itemPos.above().north(),
+                itemPos.above().south(),
+                itemPos.above().west(),
+                itemPos.above().east()
+        };
+
+        BlockPos best = null;
+        double bestDistance = Double.MAX_VALUE;
+        for (BlockPos candidate : candidates) {
+            if (!isSoft(robot.level, candidate)) {
+                continue;
+            }
+            double distance = candidate.distToCenterSqr(item.getX(), item.getY(), item.getZ());
+            if (distance < bestDistance) {
+                best = candidate;
+                bestDistance = distance;
+            }
+        }
+        return best;
+    }
+
+    private static boolean isSoft(Level level, BlockPos pos) {
+        if (!level.isLoaded(pos)) {
+            return false;
+        }
+        BlockState state = level.getBlockState(pos);
+        return state.isAir() || state.getCollisionShape(level, pos).isEmpty();
     }
 
     private ItemStack insert(ItemStack stack, boolean doInsert) {
