@@ -15,16 +15,22 @@ import net.minecraft.world.item.ItemStack;
 
 public class AIRobotUnload extends AIRobot {
     private int waitedCycles;
+    private boolean requireAcceptAction;
 
     public AIRobotUnload(EntityRobotBase robot) {
         super(robot);
+    }
+
+    public AIRobotUnload(EntityRobotBase robot, boolean requireAcceptAction) {
+        this(robot);
+        this.requireAcceptAction = requireAcceptAction;
     }
 
     @Override
     public void update() {
         waitedCycles++;
         if (waitedCycles > 40) {
-            if (unload(robot, robot.getDockingStation(), true)) {
+            if (unload(robot, robot.getDockingStation(), true, requireAcceptAction)) {
                 waitedCycles = 0;
             } else {
                 setSuccess(!robot.containsItems());
@@ -34,12 +40,16 @@ public class AIRobotUnload extends AIRobot {
     }
 
     public static boolean unload(EntityRobotBase robot, DockingStation station, boolean doUnload) {
+        return unload(robot, station, doUnload, false);
+    }
+
+    public static boolean unload(EntityRobotBase robot, DockingStation station, boolean doUnload, boolean requireAcceptAction) {
         if (robot == null || station == null) return false;
 
         for (int slot = 0; slot < robot.getContainerSize(); slot++) {
             ItemStack stack = robot.getItem(slot);
             if (stack.isEmpty()) continue;
-            if (!canUnloadStack(station, stack)) {
+            if (!canUnloadStack(station, stack, requireAcceptAction)) {
                 continue;
             }
 
@@ -54,7 +64,7 @@ public class AIRobotUnload extends AIRobot {
 
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!held.isEmpty()) {
-            if (!canUnloadStack(station, held)) {
+            if (!canUnloadStack(station, held, requireAcceptAction)) {
                 return false;
             }
 
@@ -70,7 +80,7 @@ public class AIRobotUnload extends AIRobot {
         return false;
     }
 
-    private static boolean canUnloadStack(DockingStation station, ItemStack stack) {
+    private static boolean canUnloadStack(DockingStation station, ItemStack stack, boolean requireAcceptAction) {
         if (station == null || stack.isEmpty()) {
             return false;
         }
@@ -85,6 +95,10 @@ public class AIRobotUnload extends AIRobot {
 
         if (hasExplicitAcceptAction) {
             return ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(stack), ActionStationAcceptItems.class);
+        }
+
+        if (requireAcceptAction) {
+            return false;
         }
 
         // Classic gates can explicitly filter/allow unloading, but a plain robot station mounted on an item pipe should

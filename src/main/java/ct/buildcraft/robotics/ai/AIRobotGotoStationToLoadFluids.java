@@ -1,24 +1,25 @@
 package ct.buildcraft.robotics.ai;
 
+import ct.buildcraft.api.core.IFluidFilter;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.IStationFilter;
 
-public class AIRobotGotoStationToUnloadFluids extends AIRobot {
-    private boolean requireAcceptAction;
+public class AIRobotGotoStationToLoadFluids extends AIRobot {
+    private IFluidFilter filter;
 
-    public AIRobotGotoStationToUnloadFluids(EntityRobotBase robot) {
+    public AIRobotGotoStationToLoadFluids(EntityRobotBase robot) {
         super(robot);
     }
 
-    public AIRobotGotoStationToUnloadFluids(EntityRobotBase robot, boolean requireAcceptAction) {
+    public AIRobotGotoStationToLoadFluids(EntityRobotBase robot, IFluidFilter filter) {
         this(robot);
-        this.requireAcceptAction = requireAcceptAction;
+        this.filter = filter;
     }
 
     @Override
-    public void start() {
+    public void update() {
         startDelegateAI(new AIRobotSearchAndGotoStation(robot, new StationFilter(), robot.getZoneToLoadUnload()));
     }
 
@@ -33,7 +34,7 @@ public class AIRobotGotoStationToUnloadFluids extends AIRobot {
     private class StationFilter implements IStationFilter {
         @Override
         public boolean matches(DockingStation station) {
-            return AIRobotUnloadFluids.unload(robot, station, false, requireAcceptAction) > 0;
+            return AIRobotLoadFluids.load(robot, station, filter, false) > 0;
         }
     }
 }

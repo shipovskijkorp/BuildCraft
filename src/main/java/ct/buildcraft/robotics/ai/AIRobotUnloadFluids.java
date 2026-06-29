@@ -15,10 +15,16 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class AIRobotUnloadFluids extends AIRobot {
     private int waitedCycles;
+    private boolean requireAcceptAction;
 
     public AIRobotUnloadFluids(EntityRobotBase robot) {
         super(robot);
         setSuccess(false);
+    }
+
+    public AIRobotUnloadFluids(EntityRobotBase robot, boolean requireAcceptAction) {
+        this(robot);
+        this.requireAcceptAction = requireAcceptAction;
     }
 
     @Override
@@ -28,7 +34,7 @@ public class AIRobotUnloadFluids extends AIRobot {
             return;
         }
 
-        int moved = unload(robot, robot.getDockingStation(), true);
+        int moved = unload(robot, robot.getDockingStation(), true, requireAcceptAction);
         if (moved > 0) {
             // Keep trying every tick after the initial 40 tick docking delay.
             // The original BuildCraft 7.1.x robot does not wait 40 ticks per bucket;
@@ -41,12 +47,16 @@ public class AIRobotUnloadFluids extends AIRobot {
     }
 
     public static int unload(EntityRobotBase robot, DockingStation station, boolean doUnload) {
+        return unload(robot, station, doUnload, false);
+    }
+
+    public static int unload(EntityRobotBase robot, DockingStation station, boolean doUnload, boolean requireAcceptAction) {
         if (robot == null || station == null) {
             return 0;
         }
 
         FluidStack fluidInRobot = robot.getFluidInTank(0);
-        if (fluidInRobot.isEmpty() || !canUnloadFluid(station, new SimpleFluidFilter(fluidInRobot))) {
+        if (fluidInRobot.isEmpty() || !canUnloadFluid(station, new SimpleFluidFilter(fluidInRobot), requireAcceptAction)) {
             return 0;
         }
 
@@ -69,7 +79,7 @@ public class AIRobotUnloadFluids extends AIRobot {
         return filled;
     }
 
-    private static boolean canUnloadFluid(DockingStation station, IFluidFilter filter) {
+    private static boolean canUnloadFluid(DockingStation station, IFluidFilter filter, boolean requireAcceptAction) {
         boolean hasExplicitAcceptAction = false;
         for (StatementSlot slot : station.getActiveActions()) {
             if (slot.statement instanceof ActionStationAcceptFluids) {
@@ -80,6 +90,10 @@ public class AIRobotUnloadFluids extends AIRobot {
 
         if (hasExplicitAcceptAction) {
             return ActionRobotFilter.canInteractWithFluid(station, filter, ActionStationAcceptFluids.class);
+        }
+
+        if (requireAcceptAction) {
+            return false;
         }
 
         // A plain robot station on a fluid pipe should be usable without forcing the player to add a gate action.

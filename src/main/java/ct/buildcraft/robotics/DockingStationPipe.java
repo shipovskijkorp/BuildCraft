@@ -13,6 +13,8 @@ import ct.buildcraft.api.statements.StatementSlot;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeColor;
+import ct.buildcraft.compat.CompatCapTransfromer;
+import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
@@ -221,9 +223,33 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
         return side();
     }
 
+    @Override
+    public IFluidHandler getFluidInput() {
+        Direction inputSide = getFluidInputPipeSide();
+        if (getPipe() == null || inputSide == null || level() == null) return null;
+        BlockEntity neighbour = level().getBlockEntity(new net.minecraft.core.BlockPos(x(), y(), z()).relative(inputSide));
+        if (neighbour == null) return null;
+        return CompatCapTransfromer.INSTANCE.getCap(neighbour, CapUtil.CAP_FLUIDS, inputSide.getOpposite()).orElse(null);
+    }
+
+    @Override
+    public Direction getFluidInputSide() {
+        Direction inputSide = getFluidInputPipeSide();
+        return inputSide == null ? null : inputSide.getOpposite();
+    }
+
     private Direction getItemInputPipeSide() {
         if (getPipe() == null || getPipe().getPipe() == null) return null;
         if (!(getPipe().getPipe().flow instanceof PipeFlowItems)) return null;
+        if (!(getPipe().getPipe().behaviour instanceof PipeBehaviourWood wood)) return null;
+        Direction inputSide = wood.getCurrentDir();
+        if (inputSide == null || inputSide == side()) return null;
+        return inputSide;
+    }
+
+    private Direction getFluidInputPipeSide() {
+        if (getPipe() == null || getPipe().getPipe() == null) return null;
+        if (!(getPipe().getPipe().flow instanceof PipeFlowFluids)) return null;
         if (!(getPipe().getPipe().behaviour instanceof PipeBehaviourWood wood)) return null;
         Direction inputSide = wood.getCurrentDir();
         if (inputSide == null || inputSide == side()) return null;

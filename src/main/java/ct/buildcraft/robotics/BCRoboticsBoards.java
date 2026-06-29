@@ -13,6 +13,8 @@ import ct.buildcraft.api.boards.RedstoneBoardRegistry;
 import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.boards.RedstoneBoardRobotNBT;
 import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.robotics.boards.BoardRobotCarrier;
+import ct.buildcraft.robotics.boards.BoardRobotFluidCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotHarvester;
 import ct.buildcraft.robotics.boards.BoardRobotButcher;
 import ct.buildcraft.robotics.boards.BoardRobotFarmer;
@@ -215,6 +217,12 @@ public final class BCRoboticsBoards {
         public RedstoneBoardRobot create(EntityRobotBase robot) {
             if ("picker".equals(key)) {
                 return new BoardRobotPicker(robot);
+            }
+            if ("carrier".equals(key)) {
+                return new BoardRobotCarrier(robot);
+            }
+            if ("fluid_carrier".equals(key)) {
+                return new BoardRobotFluidCarrier(robot);
             }
             if ("lumberjack".equals(key)) {
                 return new BoardRobotLumberjack(robot);
