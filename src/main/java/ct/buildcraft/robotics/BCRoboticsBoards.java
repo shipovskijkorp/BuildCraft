@@ -19,8 +19,10 @@ import ct.buildcraft.robotics.boards.BoardRobotFarmer;
 import ct.buildcraft.robotics.boards.BoardRobotLeaveCutter;
 import ct.buildcraft.robotics.boards.BoardRobotKnight;
 import ct.buildcraft.robotics.boards.BoardRobotLumberjack;
+import ct.buildcraft.robotics.boards.BoardRobotMiner;
 import ct.buildcraft.robotics.boards.BoardRobotPicker;
 import ct.buildcraft.robotics.boards.BoardRobotPlanter;
+import ct.buildcraft.robotics.boards.BoardRobotShovelman;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -219,6 +221,9 @@ public final class BCRoboticsBoards {
             if ("harvester".equals(key)) {
                 return new BoardRobotHarvester(robot);
             }
+            if ("miner".equals(key)) {
+                return new BoardRobotMiner(robot);
+            }
             if ("planter".equals(key)) {
                 return new BoardRobotPlanter(robot);
             }
@@ -230,6 +235,9 @@ public final class BCRoboticsBoards {
             }
             if ("butcher".equals(key)) {
                 return new BoardRobotButcher(robot);
+            }
+            if ("shovelman".equals(key)) {
+                return new BoardRobotShovelman(robot);
             }
             if ("knight".equals(key)) {
                 return new BoardRobotKnight(robot);
