@@ -19,6 +19,7 @@ import ct.buildcraft.lib.gui.ledger.LedgerHelp;
 import ct.buildcraft.lib.gui.ledger.LedgerOwnership;
 import ct.buildcraft.lib.gui.pos.GuiRectangle;
 import ct.buildcraft.lib.gui.pos.IGuiArea;
+import ct.buildcraft.lib.gui.statement.GuiElementStatementParam;
 import ct.buildcraft.lib.misc.GuiUtil;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Widget;
@@ -174,6 +175,14 @@ public abstract class GuiBC8<C extends MenuBC_Neptune> extends AbstractContainer
 
     @Override
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+        boolean hitsStatementParameter = mainGui.getElementsAt(mouseX, mouseY).stream()
+            .anyMatch(element -> element instanceof GuiElementStatementParam);
+
+        if (hitsStatementParameter) {
+            mainGui.onMouseClicked(mouseX, mouseY, mouseButton);
+            return true;
+        }
+
     	boolean result = false;
     	result |= super.mouseClicked(mouseX, mouseY, mouseButton);
     	result |= mainGui.onMouseClicked(mouseX, mouseY, mouseButton);

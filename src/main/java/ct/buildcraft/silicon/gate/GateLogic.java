@@ -47,6 +47,7 @@ import ct.buildcraft.lib.statement.TriggerWrapper;
 import ct.buildcraft.lib.statement.TriggerWrapper.TriggerWrapperExternal;
 import ct.buildcraft.lib.statement.TriggerWrapper.TriggerWrapperInternal;
 import ct.buildcraft.lib.statement.TriggerWrapper.TriggerWrapperInternalSided;
+import ct.buildcraft.lib.tile.TileBC_Neptune;
 import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.transport.wire.WorldSavedDataWireSystems;
 import net.minecraft.core.Direction;
@@ -110,6 +111,18 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
         actionOn = new boolean[variant.numSlots];
 
         wireBroadcasts = EnumSet.noneOf(DyeColor.class);
+    }
+
+    private void markGateDirty() {
+        BlockEntity tile = getPipeHolder().getPipeTile();
+        if (tile == null || tile.getLevel() == null || tile.getLevel().isClientSide) {
+            return;
+        }
+
+        tile.setChanged();
+        if (tile instanceof TileBC_Neptune bcTile) {
+            bcTile.markChunkDirty();
+        }
     }
 
     // Saving + Loading
@@ -224,6 +237,10 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
             }
             StatementPair s = statements[slot];
             (isAction ? s.action : s.trigger).readFromBuffer(buffer);
+            if (side == LogicalSide.SERVER) {
+                markGateDirty();
+                sendStatementUpdate(isAction, slot);
+            }
             BCLog.d("rec "+(isAction ? s.action : s.trigger).writeToNbt());
             return;
         }

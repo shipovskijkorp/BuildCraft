@@ -14,6 +14,7 @@ import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.boards.RedstoneBoardRobotNBT;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.boards.BoardRobotCarrier;
+import ct.buildcraft.robotics.boards.BoardRobotDelivery;
 import ct.buildcraft.robotics.boards.BoardRobotFluidCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotHarvester;
 import ct.buildcraft.robotics.boards.BoardRobotButcher;
@@ -250,6 +251,9 @@ public final class BCRoboticsBoards {
             }
             if ("pump".equals(key)) {
                 return new BoardRobotPump(robot);
+            }
+            if ("delivery".equals(key)) {
+                return new BoardRobotDelivery(robot);
             }
             if ("knight".equals(key)) {
                 return new BoardRobotKnight(robot);

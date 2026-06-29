@@ -9,12 +9,14 @@ import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.robots.IRequestProvider;
 import ct.buildcraft.api.robots.RobotManager;
+import ct.buildcraft.api.statements.IStatementParameter;
 import ct.buildcraft.api.statements.StatementSlot;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeColor;
 import ct.buildcraft.compat.CompatCapTransfromer;
 import ct.buildcraft.lib.misc.CapUtil;
+import ct.buildcraft.robotics.statements.ActionStationRequestItems;
 import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
@@ -263,17 +265,54 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
 
     @Override
     public int getRequestsCount() {
-        return 0;
+        return getActiveItemRequests().size();
     }
 
     @Override
     public ItemStack getRequest(int slot) {
-        return ItemStack.EMPTY;
+        List<ItemStack> requests = getActiveItemRequests();
+        return slot >= 0 && slot < requests.size() ? requests.get(slot).copy() : ItemStack.EMPTY;
     }
 
     @Override
     public ItemStack offerItem(int slot, ItemStack stack) {
-        return stack;
+        if (stack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+        if (getRequest(slot).isEmpty()) {
+            return stack;
+        }
+
+        IInjectable output = getItemOutput();
+        Direction outputSide = getItemOutputSide();
+        if (output == null || outputSide == null || !output.canInjectItems(outputSide)) {
+            return stack;
+        }
+        return output.injectItem(stack.copy(), true, outputSide, null, 0.08D);
+    }
+
+    private List<ItemStack> getActiveItemRequests() {
+        List<ItemStack> requests = new ArrayList<>();
+        if (getPipe() == null || getPipe().getPipe() == null || !(getPipe().getPipe().flow instanceof PipeFlowItems)) {
+            return requests;
+        }
+
+        for (StatementSlot slot : getActiveActions()) {
+            if (!(slot.statement instanceof ActionStationRequestItems) || slot.parameters == null) {
+                continue;
+            }
+
+            for (IStatementParameter parameter : slot.parameters) {
+                if (parameter == null) {
+                    continue;
+                }
+                ItemStack requested = parameter.getItemStack();
+                if (!requested.isEmpty()) {
+                    requests.add(requested.copy());
+                }
+            }
+        }
+        return requests;
     }
 
     @Override
