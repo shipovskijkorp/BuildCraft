@@ -27,3 +27,6 @@ forge*changelog.txt
 src.zip
 src.rar
 saves
+mcmodsrepo
+src/main/resources/.cache/
+src/generated/resources/.cache/
