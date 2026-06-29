@@ -57,6 +57,9 @@ public class ItemRedstoneBoard extends Item {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         BoardEntry board = BCRoboticsBoards.getBoard(stack);
         if (board != BCRoboticsBoards.EMPTY) {
+            String legacyKey = board.legacyLangKey();
+            tooltip.add(Component.translatable("buildcraft." + legacyKey).withStyle(ChatFormatting.BOLD));
+            tooltip.add(Component.translatable("buildcraft." + legacyKey + ".desc").withStyle(ChatFormatting.GRAY));
             tooltip.add(Component.translatable("tooltip.buildcraftrobotics.board.energy", board.energyCost()).withStyle(ChatFormatting.GRAY));
         }
     }

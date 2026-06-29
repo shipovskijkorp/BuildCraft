@@ -73,19 +73,16 @@ public class ItemRobot extends Item {
         if (board == BCRoboticsBoards.EMPTY) {
             return Component.translatable("item.buildcraftrobotics.robot.empty");
         }
-        Component robotName = Component.translatable("item.buildcraftrobotics.robot." + board.key());
-        if (getEnergy(stack) >= EntityRobotBase.MAX_ENERGY) {
-            return Component.translatable("item.buildcraftrobotics.robot.charged", robotName);
-        }
-        return robotName;
+        return Component.translatable("item.buildcraftrobotics.robot." + board.key());
     }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         BoardEntry board = BCRoboticsBoards.getRobotBoard(stack);
         if (board != BCRoboticsBoards.EMPTY) {
-            tooltip.add(Component.translatable("tooltip.buildcraftrobotics.robot.board", Component.translatable("item.buildcraftrobotics.redstone_board." + board.key()))
-                    .withStyle(ChatFormatting.GRAY));
+            String legacyKey = board.legacyLangKey();
+            tooltip.add(Component.translatable("buildcraft." + legacyKey).withStyle(ChatFormatting.BOLD));
+            tooltip.add(Component.translatable("buildcraft." + legacyKey + ".desc").withStyle(ChatFormatting.GRAY));
             tooltip.add(Component.translatable("tooltip.buildcraftrobotics.robot.energy", getEnergy(stack), EntityRobotBase.MAX_ENERGY)
                     .withStyle(ChatFormatting.GRAY));
         }
