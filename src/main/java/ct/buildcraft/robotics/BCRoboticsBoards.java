@@ -22,6 +22,7 @@ import ct.buildcraft.robotics.boards.BoardRobotLumberjack;
 import ct.buildcraft.robotics.boards.BoardRobotMiner;
 import ct.buildcraft.robotics.boards.BoardRobotPicker;
 import ct.buildcraft.robotics.boards.BoardRobotPlanter;
+import ct.buildcraft.robotics.boards.BoardRobotPump;
 import ct.buildcraft.robotics.boards.BoardRobotShovelman;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -238,6 +239,9 @@ public final class BCRoboticsBoards {
             }
             if ("shovelman".equals(key)) {
                 return new BoardRobotShovelman(robot);
+            }
+            if ("pump".equals(key)) {
+                return new BoardRobotPump(robot);
             }
             if ("knight".equals(key)) {
                 return new BoardRobotKnight(robot);

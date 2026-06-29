@@ -16,11 +16,16 @@ import net.minecraft.world.item.DyeColor;
 import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
+import ct.buildcraft.transport.pipe.flow.PipeFlowFluids;
 import ct.buildcraft.transport.pipe.flow.PipeFlowPower;
 import ct.buildcraft.api.transport.IInjectable;
 import ct.buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import org.jetbrains.annotations.NotNull;
 
 public class DockingStationPipe extends DockingStation implements IRequestProvider {
     private TilePipeHolder pipe;
@@ -49,6 +54,55 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
                 items.insertItemsForce(stack.copy(), normalizeOutputSide(from), color, speed);
             }
             return ItemStack.EMPTY;
+        }
+    };
+
+    private final IFluidHandler injectableFluidPipe = new IFluidHandler() {
+        @Override
+        public int getTanks() {
+            return 0;
+        }
+
+        @Override
+        public @NotNull FluidStack getFluidInTank(int tank) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return 0;
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+            return canFillFluid(stack);
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            if (resource.isEmpty() || getPipe() == null || getPipe().getPipe() == null
+                    || !(getPipe().getPipe().flow instanceof PipeFlowFluids fluids)) {
+                return 0;
+            }
+            return fluids.insertFluidsForce(resource.copy(), normalizeOutputSide(side()), action);
+        }
+
+        @Override
+        public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        private boolean canFillFluid(FluidStack stack) {
+            if (stack.isEmpty() || getPipe() == null || getPipe().getPipe() == null
+                    || !(getPipe().getPipe().flow instanceof PipeFlowFluids fluids)) {
+                return false;
+            }
+            return fluids.insertFluidsForce(stack.copy(), normalizeOutputSide(side()), FluidAction.SIMULATE) > 0;
         }
     };
 
@@ -155,6 +209,16 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     public Direction getItemInputSide() {
         Direction inputSide = getItemInputPipeSide();
         return inputSide == null ? null : inputSide.getOpposite();
+    }
+
+    @Override
+    public IFluidHandler getFluidOutput() {
+        return getPipe() != null && getPipe().getPipe() != null && getPipe().getPipe().flow instanceof PipeFlowFluids ? injectableFluidPipe : null;
+    }
+
+    @Override
+    public Direction getFluidOutputSide() {
+        return side();
     }
 
     private Direction getItemInputPipeSide() {
