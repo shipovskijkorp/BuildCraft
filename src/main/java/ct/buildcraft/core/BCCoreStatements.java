@@ -13,6 +13,7 @@ import ct.buildcraft.core.statements.BCStatement;
 import ct.buildcraft.core.statements.CoreActionProvider;
 import ct.buildcraft.core.statements.CoreTriggerProvider;
 import ct.buildcraft.core.statements.StatementParamGateSideOnly;
+import ct.buildcraft.core.statements.StatementParameterItemStackExact;
 import ct.buildcraft.core.statements.TriggerEnginePowerStage;
 import ct.buildcraft.core.statements.TriggerFluidContainer;
 import ct.buildcraft.core.statements.TriggerFluidContainerLevel;
@@ -128,6 +129,7 @@ public class BCCoreStatements {
         System.arraycopy(TRIGGER_FLUID_LEVEL, 0, TRIGGER_FLUID_ALL, 4, 3);
 
         StatementManager.registerParameter(StatementParamGateSideOnly::readFromNbt);
+        StatementManager.registerParameter(StatementParameterItemStackExact::readFromNbt);
     }
 
     public static void preInit() {

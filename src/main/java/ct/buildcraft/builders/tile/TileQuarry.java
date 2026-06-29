@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -38,6 +40,7 @@ import ct.buildcraft.api.tiles.IHasWork;
 import ct.buildcraft.api.tiles.TilesAPI;
 import ct.buildcraft.builders.BCBuildersBlocks;
 import ct.buildcraft.builders.BCBuildersConfig;
+import ct.buildcraft.builders.block.BlockQuarryDrillCollision;
 import ct.buildcraft.core.BCCoreConfig;
 import ct.buildcraft.core.blockEntity.TileMarkerVolume;
 import ct.buildcraft.core.marker.VolumeCache;
@@ -74,6 +77,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.BlockPositionSource;
@@ -124,6 +128,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
     private List<AABB> collisionBoxes = ImmutableList.of();
     private Vec3 collisionDrillPos;
+    private final Set<BlockPos> collisionBlockPoses = new HashSet<>();
 
 	private final BlockPositionSource blockPosSource = new BlockPositionSource(this.worldPosition);
     public final GameEventListener worldEventListener = new GameEventListener() {
@@ -414,7 +419,11 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     private boolean canMine(BlockPos blockPos) {
-        if (level.getBlockState(blockPos).getDestroySpeed(level, blockPos) < 0) {
+        BlockState state = level.getBlockState(blockPos);
+        if (isQuarryCollisionBlock(state)) {
+            return false;
+        }
+        if (state.getDestroySpeed(level, blockPos) < 0) {
             return false;
         }
         Fluid fluid = BlockUtil.getFluidWithFlowing(level, blockPos);
@@ -422,6 +431,10 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     private boolean canMoveThrough(BlockPos blockPos) {
+        BlockState state = level.getBlockState(blockPos);
+        if (isQuarryCollisionBlock(state)) {
+            return true;
+        }
         if (level.isEmptyBlock(blockPos)) {
             return true;
         }
@@ -439,7 +452,15 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     private boolean canIgnoreInFrameBox(BlockPos blockPos) {
-        return !level.isEmptyBlock(blockPos) && BlockUtil.getFluidWithFlowing(level, blockPos) == Fluids.EMPTY;
+        BlockState state = level.getBlockState(blockPos);
+        return !isQuarryCollisionBlock(state) && !level.isEmptyBlock(blockPos) && BlockUtil.getFluidWithFlowing(level, blockPos) == Fluids.EMPTY;
+    }
+
+    public boolean hasWork() {
+        if (!frameBox.isInitialized() || !miningBox.isInitialized()) return false;
+        if (!firstChecked || currentTask != null) return true;
+        if (!frameBreakBlockPoses.isEmpty() || !framePlaceFramePoses.isEmpty()) return true;
+        return boxIterator == null || boxIterator.hasNext();
     }
 
     public boolean hasWork() {
@@ -484,6 +505,12 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     public void clearRemoved() {
         super.clearRemoved();
 //        BCBuildersEventDist.INSTANCE.validateQuarry(this);//TODO
+    }
+
+    @Override
+    public void onRemove(boolean dropSelf) {
+        clearQuarryCollisionBlocks();
+        super.onRemove(dropSelf);
     }
 
     @Override
@@ -544,6 +571,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (drillPos == null) {
             collisionBoxes = ImmutableList.of();
             collisionDrillPos = null;
+            if (level != null && !level.isClientSide) {
+                clearQuarryCollisionBlocks();
+            }
         }
         
         if (level.isClientSide) {
@@ -556,6 +586,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         }
 
         if (!frameBox.isInitialized() || !miningBox.isInitialized()) {
+            clearQuarryCollisionBlocks();
             return;
         }
 
@@ -568,6 +599,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         }
 
         if (!firstChecked) {
+            updateQuarryCollisionBlocks();
             return;
         }
 
@@ -705,6 +737,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (sendUpdate) {
             sendNetworkUpdate(NET_RENDER_DATA);
         }
+        updateQuarryCollisionBlocks();
     }
 
     public List<AABB> getCollisionBoxes() {
@@ -729,6 +762,121 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             collisionDrillPos = drillPos;
         }
         return collisionBoxes;
+    }
+
+    public boolean shouldKeepCollisionBlock(BlockPos pos) {
+        return buildCollisionBlockMasks().containsKey(pos);
+    }
+
+    private void updateQuarryCollisionBlocks() {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        Map<BlockPos, Integer> wantedBlocks = buildCollisionBlockMasks();
+        for (BlockPos oldPos : new HashSet<>(collisionBlockPoses)) {
+            if (!wantedBlocks.containsKey(oldPos)) {
+                removeCollisionBlock(oldPos);
+                collisionBlockPoses.remove(oldPos);
+            }
+        }
+        for (Map.Entry<BlockPos, Integer> entry : wantedBlocks.entrySet()) {
+            if (placeOrUpdateCollisionBlock(entry.getKey(), entry.getValue())) {
+                collisionBlockPoses.add(entry.getKey());
+            }
+        }
+    }
+
+    private Map<BlockPos, Integer> buildCollisionBlockMasks() {
+        Map<BlockPos, Integer> masks = new HashMap<>();
+        if (drillPos == null || !frameBox.isInitialized()) {
+            return masks;
+        }
+        BlockPos min = frameBox.min();
+        BlockPos max = frameBox.max();
+        int drillX = clamp(floorToBlock(drillPos.x), min.getX(), max.getX());
+        int drillY = clamp(floorToBlock(drillPos.y), level.getMinBuildHeight(), max.getY());
+        int drillZ = clamp(floorToBlock(drillPos.z), min.getZ(), max.getZ());
+        int topY = max.getY();
+
+        for (int x = min.getX(); x <= max.getX(); x++) {
+            addCollisionMask(masks, new BlockPos(x, topY, drillZ), BlockQuarryDrillCollision.MASK_X_BEAM);
+        }
+        for (int z = min.getZ(); z <= max.getZ(); z++) {
+            addCollisionMask(masks, new BlockPos(drillX, topY, z), BlockQuarryDrillCollision.MASK_Z_BEAM);
+        }
+        for (int y = drillY; y <= topY; y++) {
+            addCollisionMask(masks, new BlockPos(drillX, y, drillZ), BlockQuarryDrillCollision.MASK_DRILL);
+        }
+        return masks;
+    }
+
+    private static void addCollisionMask(Map<BlockPos, Integer> masks, BlockPos pos, int mask) {
+        masks.merge(pos.immutable(), mask, (left, right) -> left | right);
+    }
+
+    private boolean placeOrUpdateCollisionBlock(BlockPos pos, int mask) {
+        BlockState current = level.getBlockState(pos);
+        BlockState wanted = BCBuildersBlocks.QUARRY_DRILL_COLLISION.get().defaultBlockState()
+            .setValue(BlockQuarryDrillCollision.MASK, mask);
+        if (isQuarryCollisionBlock(current)) {
+            if (!canClaimCollisionBlock(pos)) {
+                return false;
+            }
+            if (!current.equals(wanted)) {
+                level.setBlock(pos, wanted, 3);
+            }
+            setCollisionBlockOwner(pos);
+            return true;
+        }
+        if (!current.isAir()) {
+            return false;
+        }
+        level.setBlock(pos, wanted, 3);
+        setCollisionBlockOwner(pos);
+        return true;
+    }
+
+    private boolean canClaimCollisionBlock(BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        return !(blockEntity instanceof TileQuarryDrillCollision collision)
+            || collision.getOwner() == null
+            || worldPosition.equals(collision.getOwner());
+    }
+
+    private void setCollisionBlockOwner(BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof TileQuarryDrillCollision collision) {
+            collision.setOwner(worldPosition);
+        }
+    }
+
+    private void clearQuarryCollisionBlocks() {
+        if (level == null || level.isClientSide || collisionBlockPoses.isEmpty()) {
+            return;
+        }
+        for (BlockPos pos : new HashSet<>(collisionBlockPoses)) {
+            removeCollisionBlock(pos);
+        }
+        collisionBlockPoses.clear();
+    }
+
+    private void removeCollisionBlock(BlockPos pos) {
+        if (isQuarryCollisionBlock(level.getBlockState(pos)) && canClaimCollisionBlock(pos)) {
+            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        }
+    }
+
+    private boolean isQuarryCollisionBlock(BlockState state) {
+        return state.getBlock() == BCBuildersBlocks.QUARRY_DRILL_COLLISION.get();
+    }
+
+    private static int floorToBlock(double value) {
+        int i = (int) value;
+        return value < i ? i - 1 : i;
+    }
+
+    private static int clamp(int value, int min, int max) {
+        return Math.max(min, Math.min(max, value));
     }
 
     @Override

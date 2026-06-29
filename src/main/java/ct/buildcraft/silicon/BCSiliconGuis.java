@@ -9,10 +9,12 @@ import ct.buildcraft.silicon.container.ContainerAdvancedCraftingTable;
 import ct.buildcraft.silicon.container.ContainerAssemblyTable;
 import ct.buildcraft.silicon.container.ContainerGate;
 import ct.buildcraft.silicon.container.ContainerIntegrationTable;
+import ct.buildcraft.silicon.container.ContainerProgrammingTable;
 import ct.buildcraft.silicon.gui.GuiAdvancedCraftingTable;
 import ct.buildcraft.silicon.gui.GuiAssemblyTable;
 import ct.buildcraft.silicon.gui.GuiGate;
 import ct.buildcraft.silicon.gui.GuiIntegrationTable;
+import ct.buildcraft.silicon.gui.GuiProgrammingTable;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -29,6 +31,7 @@ public class BCSiliconGuis {
     public static final RegistryObject<MenuType<ContainerAssemblyTable>> MENU_ASSEMBLY_TABLE = MENUS.register("assembly_table_menu", () -> BCContainerFactory.create(ContainerAssemblyTable::new));
     public static final RegistryObject<MenuType<ContainerGate>> MENU_GATE = MENUS.register("gate_menu", () -> BCContainerFactory.create(ContainerGate::creatClientMenu));
     public static final RegistryObject<MenuType<ContainerIntegrationTable>> MENU_INTEGRATION_TABLE = MENUS.register("integration_table_menu", () -> BCContainerFactory.create(ContainerIntegrationTable::new));
+    public static final RegistryObject<MenuType<ContainerProgrammingTable>> MENU_PROGRAMMING_TABLE = MENUS.register("programming_table_menu", () -> BCContainerFactory.create(ContainerProgrammingTable::new));
 
 
     public static void clientInit(ParallelDispatchEvent event) {
@@ -38,6 +41,7 @@ public class BCSiliconGuis {
                 	MenuScreens.register(MENU_ASSEMBLY_TABLE.get(), GuiAssemblyTable::new);
                 	MenuScreens.register(MENU_GATE.get(), GuiGate::new);
                 	MenuScreens.register(MENU_INTEGRATION_TABLE.get(), GuiIntegrationTable::new);
+                    MenuScreens.register(MENU_PROGRAMMING_TABLE.get(), GuiProgrammingTable::new);
                 }
         );
     }

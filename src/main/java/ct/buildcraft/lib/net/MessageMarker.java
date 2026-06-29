@@ -16,7 +16,6 @@ import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.lib.marker.MarkerCache;
 import ct.buildcraft.lib.misc.MessageUtil;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
@@ -64,6 +63,17 @@ public class MessageMarker {
         }
     }
 
+    public MessageMarker copy() {
+        MessageMarker copy = new MessageMarker();
+        copy.add = add;
+        copy.multiple = multiple;
+        copy.connection = connection;
+        copy.cacheId = cacheId;
+        copy.count = count;
+        copy.positions.addAll(positions);
+        return copy;
+    }
+
     @Override
     public String toString() {
         boolean[] flags = { add, multiple, connection };
@@ -72,31 +82,27 @@ public class MessageMarker {
     }
 
     public static final BiConsumer<MessageMarker, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
-    	if(ctx.get().getDirection() != NetworkDirection.PLAY_TO_CLIENT) {
+        NetworkEvent.Context context = ctx.get();
+        if (context.getDirection() != NetworkDirection.PLAY_TO_CLIENT) {
             if (DEBUG) {
-                BCLog.logger.warn("[lib.messages][marker] Recived invaild message from client!");
+                BCLog.logger.warn("[lib.messages][marker] Received invalid marker message from client!");
             }
-            ctx.get().setPacketHandled(true);
-            return;
-    	}
-    	Minecraft mc = Minecraft.getInstance();
-        Level world = mc.level;
-        if (world == null) {
-            if (DEBUG) {
-                BCLog.logger.warn("[lib.messages][marker] The world was null for a message!");
-            }
-            ctx.get().setPacketHandled(true);
+            context.setPacketHandled(true);
             return;
         }
-        if (message.cacheId < 0 || message.cacheId >= MarkerCache.CACHES.size()) {
-            if (DEBUG) {
-                BCLog.logger.warn("[lib.messages][marker] The cache ID " + message.cacheId + " was invalid!");
+
+        // Marker messages mutate the client marker cache that is read by the render thread. In this port
+        // MessageMarker is registered as a bidirectional message, so MessageManager may bypass its normal
+        // client-side wrapper and call this handler directly on Netty's network thread. Always hop to the
+        // client main thread here; otherwise connection updates can race with MarkerRenderer and leave a
+        // half-reset VolumeConnection/Box, which crashes in LaserBoxRenderer or leaves stale blue signal lasers.
+        context.enqueueWork(() -> {
+            if (!MessageMarkerClientHandler.handleOrQueue(message)) {
+                if (DEBUG) {
+                    BCLog.logger.warn("[lib.messages][marker] Queued marker message until the client world is ready: " + message);
+                }
             }
-            return;
-        }
-        MarkerCache<?> cache = MarkerCache.CACHES.get(message.cacheId);
-//        BCLog.logger.error("MessageMarker:FAIL to handle message!");
-        cache.getSubCache(world).handleMessageMain(message);
-        ctx.get().setPacketHandled(true);
+        });
+        context.setPacketHandled(true);
     };
 }

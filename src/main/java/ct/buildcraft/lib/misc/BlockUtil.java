@@ -426,13 +426,27 @@ public final class BlockUtil {
 
     public static boolean useItemOnBlock(Level world, Player player, ItemStack stack, BlockPos pos,
         Direction direction) {
-    	
-        boolean done = stack.getItem().onItemUseFirst(stack, new UseOnContext(world, player, InteractionHand.MAIN_HAND, stack, new BlockHitResult(Vec3.ZERO, direction, pos, false))) == InteractionResult.SUCCESS;
-
-        if (!done) {
-            done = stack.getItem().use(world, player, InteractionHand.MAIN_HAND).getResult() == InteractionResult.SUCCESS;
+        if (stack.isEmpty()) {
+            return false;
         }
-        return done;
+
+        ItemStack previous = player.getItemInHand(InteractionHand.MAIN_HAND);
+        try {
+            player.setItemInHand(InteractionHand.MAIN_HAND, stack);
+            BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), direction, pos, false);
+            UseOnContext context = new UseOnContext(world, player, InteractionHand.MAIN_HAND, stack, hit);
+
+            InteractionResult result = stack.getItem().onItemUseFirst(stack, context);
+            if (result == InteractionResult.PASS) {
+                result = stack.useOn(context);
+            }
+            if (result == InteractionResult.PASS) {
+                result = stack.getItem().use(world, player, InteractionHand.MAIN_HAND).getResult();
+            }
+            return result.consumesAction();
+        } finally {
+            player.setItemInHand(InteractionHand.MAIN_HAND, previous);
+        }
     }
 
     public static void onComparatorUpdate(Level world, BlockPos pos, Block block) {

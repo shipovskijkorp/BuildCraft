@@ -32,33 +32,42 @@ public final class CropManager {
     }
 
     public static boolean isSeed(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return false;
+        }
         for (ICropHandler cropHandler : handlers) {
             if (cropHandler.isSeed(stack)) {
                 return true;
             }
         }
-        return defaultHandler.isSeed(stack);
+        return defaultHandler != null && defaultHandler.isSeed(stack);
     }
 
     public static boolean canSustainPlant(Level world, ItemStack seed, BlockPos pos) {
+        if (seed == null || seed.isEmpty()) {
+            return false;
+        }
         for (ICropHandler cropHandler : handlers) {
             if (cropHandler.isSeed(seed) && cropHandler.canSustainPlant(world, seed, pos)) {
                 return true;
             }
         }
-        return defaultHandler.isSeed(seed) && defaultHandler.canSustainPlant(world, seed, pos);
+        return defaultHandler != null && defaultHandler.isSeed(seed) && defaultHandler.canSustainPlant(world, seed, pos);
     }
 
     /** Attempts to plant the crop given by the seed into the world. Also checks to make sure that
      * {@link ICropHandler#isSeed(ItemStack)} is true, and
      * {@link ICropHandler#canSustainPlant(Level, ItemStack, BlockPos)} is true for the position. */
     public static boolean plantCrop(Level world, Player player, ItemStack seed, BlockPos pos) {
+        if (seed == null || seed.isEmpty()) {
+            return false;
+        }
         for (ICropHandler cropHandler : handlers) {
             if (cropHandler.isSeed(seed) && cropHandler.canSustainPlant(world, seed, pos) && cropHandler.plantCrop(world, player, seed, pos)) {
                 return true;
             }
         }
-        if (defaultHandler.isSeed(seed) && defaultHandler.canSustainPlant(world, seed, pos)) {
+        if (defaultHandler != null && defaultHandler.isSeed(seed) && defaultHandler.canSustainPlant(world, seed, pos)) {
             return defaultHandler.plantCrop(world, player, seed, pos);
         }
         return false;
@@ -70,7 +79,7 @@ public final class CropManager {
                 return true;
             }
         }
-        return defaultHandler.isMature(blockAccess, state, pos);
+        return defaultHandler != null && defaultHandler.isMature(blockAccess, state, pos);
     }
 
     public static boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops) {
@@ -80,7 +89,7 @@ public final class CropManager {
                 return cropHandler.harvestCrop(world, pos, drops);
             }
         }
-        return defaultHandler.isMature(world, state, pos) && defaultHandler.harvestCrop(world, pos, drops);
+        return defaultHandler != null && defaultHandler.isMature(world, state, pos) && defaultHandler.harvestCrop(world, pos, drops);
     }
 
 }

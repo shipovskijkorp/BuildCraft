@@ -25,40 +25,30 @@ public class StatementParameterItemStackExact implements IStatementParameter {
     @Nonnull
     @Override
     public ItemStack getItemStack() {
-        return ItemStack.EMPTY;
+        return stack == null ? ItemStack.EMPTY : stack;
     }
 
     @Override
     public StatementParameterItemStackExact onClick(IStatementContainer source, IStatement stmt, ItemStack stack, StatementMouseClick mouse) {
-        if (stack != null) {
+        int delta = mouse.isShift() ? 16 : 1;
+
+        if (stack != null && !stack.isEmpty()) {
             if (areItemsEqual(this.stack, stack)) {
-                if (mouse.getButton() == 0) {
-                    this.stack.setCount(this.stack.getCount() + ((mouse.isShift()) ? 16 : 1));
-                    if (this.stack.getCount() > 64) {
-                        this.stack.setCount(64);
-                    }
+                int count = this.stack.getCount() + (mouse.getButton() == 0 ? delta : -delta);
+                if (count <= 0) {
+                    this.stack = null;
                 } else {
-                    this.stack.setCount(this.stack.getCount() - ((mouse.isShift()) ? 16 : 1));
-                    if (this.stack.getCount() < 0) {
-                        this.stack.setCount(0);
-                    }
+                    this.stack.setCount(Math.min(count, this.stack.getMaxStackSize()));
                 }
             } else {
                 this.stack = stack.copy();
             }
-        } else {
-            if (this.stack != null) {
-                if (mouse.getButton() == 0) {
-                    this.stack.setCount(this.stack.getCount() + ((mouse.isShift()) ? 16 : 1));
-                    if (this.stack.getCount() > 64) {
-                        this.stack.setCount(64);
-                    }
-                } else {
-                    this.stack.setCount(this.stack.getCount() - ((mouse.isShift()) ? 16 : 1));
-                    if (this.stack.getCount() < 0) {
-                        this.stack = null;
-                    }
-                }
+        } else if (this.stack != null && !this.stack.isEmpty()) {
+            int count = this.stack.getCount() + (mouse.getButton() == 0 ? delta : -delta);
+            if (count <= 0) {
+                this.stack = null;
+            } else {
+                this.stack.setCount(Math.min(count, this.stack.getMaxStackSize()));
             }
         }
         return this;
@@ -66,16 +56,17 @@ public class StatementParameterItemStackExact implements IStatementParameter {
 
     @Override
     public void writeToNbt(CompoundTag compound) {
-        if (stack != null) {
+        if (stack != null && !stack.isEmpty()) {
             CompoundTag tagCompound = new CompoundTag();
-            stack.deserializeNBT(tagCompound);
+            stack.save(tagCompound);
             compound.put("stack", tagCompound);
         }
     }
 
     public static StatementParameterItemStackExact readFromNbt(CompoundTag nbt) {
         StatementParameterItemStackExact param = new StatementParameterItemStackExact();
-        param.stack = ItemStack.of(nbt.getCompound("stack"));
+        ItemStack read = ItemStack.of(nbt.getCompound("stack"));
+        param.stack = read.isEmpty() ? null : read;
         return param;
     }
 
@@ -105,7 +96,7 @@ public class StatementParameterItemStackExact implements IStatementParameter {
 
     @Override
     public Component getDescription() {
-        if (stack != null) {
+        if (stack != null && !stack.isEmpty()) {
             return stack.getDisplayName();
         } else {
             return Component.empty();

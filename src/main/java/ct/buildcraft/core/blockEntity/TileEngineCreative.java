@@ -153,7 +153,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
     public void load(CompoundTag nbt) {
         super.load(nbt);
         currentOutputIndex = nbt.getInt("currentOutputIndex");
-        currentOutputIndex = Mth.clamp(currentOutputIndex, 0, outputs.length);
+        currentOutputIndex = Mth.clamp(currentOutputIndex, 0, outputs.length - 1);
     }
 
 	@Override

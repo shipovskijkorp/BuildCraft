@@ -6,12 +6,14 @@ import ct.buildcraft.builders.block.BlockElectronicLibrary;
 import ct.buildcraft.builders.block.BlockFiller;
 import ct.buildcraft.builders.block.BlockFrame;
 import ct.buildcraft.builders.block.BlockQuarry;
+import ct.buildcraft.builders.block.BlockQuarryDrillCollision;
 import ct.buildcraft.builders.block.BlockReplacer;
 import ct.buildcraft.builders.tile.TileArchitectTable;
 import ct.buildcraft.builders.tile.TileBuilder;
 import ct.buildcraft.builders.tile.TileElectronicLibrary;
 import ct.buildcraft.builders.tile.TileFiller;
 import ct.buildcraft.builders.tile.TileQuarry;
+import ct.buildcraft.builders.tile.TileQuarryDrillCollision;
 import ct.buildcraft.builders.tile.TileReplacer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,6 +35,7 @@ public class BCBuildersBlocks {
     
     public static final RegistryObject<BlockFrame> FRAME = BLOCKS.register("frame", BlockFrame::new);
     public static final RegistryObject<BlockQuarry> QUARRY = BLOCKS.register("quarry", BlockQuarry::new);
+    public static final RegistryObject<BlockQuarryDrillCollision> QUARRY_DRILL_COLLISION = BLOCKS.register("quarry_drill_collision", BlockQuarryDrillCollision::new);
 
     
     public static final RegistryObject<BlockEntityType<TileFiller>> FILLER_TILE_BC8 = BLOCK_ENTITYS.register("entity_filler", 
@@ -53,6 +56,9 @@ public class BCBuildersBlocks {
     
     public static final RegistryObject<BlockEntityType<TileQuarry>> QUARRY_TILE_BC8 = BLOCK_ENTITYS.register("entity_quarry", 
     		() -> BlockEntityType.Builder.of(TileQuarry::new, QUARRY.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<TileQuarryDrillCollision>> QUARRY_DRILL_COLLISION_TILE_BC8 = BLOCK_ENTITYS.register("entity_quarry_drill_collision",
+            () -> BlockEntityType.Builder.of(TileQuarryDrillCollision::new, QUARRY_DRILL_COLLISION.get()).build(null));
     
     public static void registry(IEventBus b) {
     	BLOCKS.register(b);

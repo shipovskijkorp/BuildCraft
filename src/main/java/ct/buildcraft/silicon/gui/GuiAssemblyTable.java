@@ -56,7 +56,7 @@ public class GuiAssemblyTable extends GuiBC8<ContainerAssemblyTable> {
     protected void drawBackgroundLayer(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
         ICON_GUI.drawAt(pose, mainGui.rootElement);
 
-        long target = container.tile.getTarget();
+        long target = container.tile.getGuiTarget();
         if (target != 0) {
             double v = (double) container.tile.power / target;
             ICON_PROGRESS.drawCutInside(

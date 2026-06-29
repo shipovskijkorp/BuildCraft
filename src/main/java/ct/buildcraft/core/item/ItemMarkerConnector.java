@@ -240,7 +240,7 @@ public class ItemMarkerConnector extends Item {
             if (other == null) {
                 return this;
             }
-            if (other.marker1 == marker2 && other.marker2 == marker1) {
+            if (other.marker1.equals(marker2) && other.marker2.equals(marker1)) {
                 return other;
             }
             if (other.distToLine < distToLine) {

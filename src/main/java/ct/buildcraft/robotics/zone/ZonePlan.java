@@ -74,17 +74,10 @@ public class ZonePlan implements IZone {
 
     public List<Vec2> getAll() {
         ImmutableList.Builder<Vec2> builder = ImmutableList.builder();
-        for (int zChunk = 0; zChunk < 16; zChunk++) {
-            for (int xChunk = 0; xChunk < 16; xChunk++) {
-                if (get(xChunk, zChunk)) {
-                    builder.add(new Vec2(xChunk, zChunk));
-                }
-            }
-        }
         chunkMapping.forEach((chunkPos, zoneChunk) -> {
-            List<Vec2> zoneChunkAll = zoneChunk.getAll();
-            zoneChunkAll.forEach(p -> p.add(new Vec2(chunkPos.getMinBlockX(), chunkPos.getMinBlockZ())));
-            builder.addAll(zoneChunkAll);
+            for (Vec2 p : zoneChunk.getAll()) {
+                builder.add(new Vec2(p.x + chunkPos.getMinBlockX(), p.y + chunkPos.getMinBlockZ()));
+            }
         });
         return builder.build();
     }
@@ -124,6 +117,7 @@ public class ZonePlan implements IZone {
     }
 
     public void readFromNBT(CompoundTag nbt) {
+        chunkMapping.clear();
         NBTUtilBC.readCompoundList(nbt.get("chunkMapping"))
                 .forEach(zoneChunkTag -> {
                     ZoneChunk chunk = new ZoneChunk();
@@ -148,8 +142,8 @@ public class ZonePlan implements IZone {
         double maxSqrDistance = Double.MAX_VALUE;
 
         for (Map.Entry<ChunkPos, ZoneChunk> e : chunkMapping.entrySet()) {
-            double dx = (e.getKey().x << 4 + 8) - index.getX();
-            double dz = (e.getKey().z << 4 + 8) - index.getZ();
+            double dx = ((e.getKey().x << 4) + 8) - index.getX();
+            double dz = ((e.getKey().z << 4) + 8) - index.getZ();
 
             double sqrDistance = dx * dx + dz * dz;
 

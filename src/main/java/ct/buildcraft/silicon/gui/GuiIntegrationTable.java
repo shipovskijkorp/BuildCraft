@@ -11,29 +11,30 @@ import ct.buildcraft.lib.gui.GuiIcon;
 import ct.buildcraft.lib.gui.pos.GuiRectangle;
 import ct.buildcraft.silicon.container.ContainerIntegrationTable;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GuiIntegrationTable extends GuiBC8<ContainerIntegrationTable> {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftsilicon:textures/gui/integration_table.png");
-    private static final int SIZE_X = 176, SIZE_Y = 191;
+    private static final int SIZE_X = 176;
+    private static final int SIZE_Y = 186;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
-    private static final GuiIcon ICON_PROGRESS = new GuiIcon(TEXTURE_BASE, SIZE_X, 0, 4, 70);
-    private static final GuiRectangle RECT_PROGRESS = new GuiRectangle(164, 22, 4, 70);
+    private static final GuiIcon ICON_PROGRESS = new GuiIcon(TEXTURE_BASE, 176, 18, 4, 69);
+    private static final GuiRectangle RECT_PROGRESS = new GuiRectangle(164, 23, 4, 69);
 
     public GuiIntegrationTable(ContainerIntegrationTable container, Inventory inv, Component title) {
         super(container, inv, title);
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
+        mainGui.shownElements.add(new LedgerTablePower(mainGui, container.tile, true));
     }
 
     @Override
     protected void drawBackgroundLayer(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
         ICON_GUI.drawAt(pose, mainGui.rootElement);
 
-        long target = container.tile.getTarget();
-        if(target != 0) {
+        long target = container.tile.getGuiTarget();
+        if (target != 0) {
             double v = (double) container.tile.power / target;
             ICON_PROGRESS.drawCutInside(
                     pose, new GuiRectangle(
@@ -48,7 +49,6 @@ public class GuiIntegrationTable extends GuiBC8<ContainerIntegrationTable> {
 
     @Override
     protected void drawForegroundLayer(PoseStack pose, int mouseX, int mouseY) {
-        MutableComponent title = Component.translatable("tile.integrationTableBlock.name");
-        font.draw(pose, title, titleLabelX + (imageWidth - font.width(title)) / 2, titleLabelY + 10, 0x404040);
+        font.draw(pose, title, leftPos + (imageWidth - font.width(title)) / 2, topPos + 6, 0x404040);
     }
 }

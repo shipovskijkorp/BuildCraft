@@ -35,6 +35,7 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements ILase
     private static final long MJ_FLOW_ROUND = MjAPI.MJ / 10;
     private final AverageLong avgPower = new AverageLong(120);
     public long avgPowerClient;
+    public long targetClient;
     public long power;
 
     protected TileLaserTableBase(BlockEntityType<? extends TileLaserTableBase> type, BlockPos pos, BlockState state) {
@@ -43,6 +44,10 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements ILase
     }
 
     public abstract long getTarget();
+
+    public long getGuiTarget() {
+        return level != null && level.isClientSide ? targetClient : getTarget();
+    }
 
     @Override
     public long getRequiredLaserPower() {
@@ -94,6 +99,7 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements ILase
         if (side == LogicalSide.SERVER) {
             if (id == NET_GUI_TICK) {
                 buffer.writeLong(power);
+                buffer.writeLong(getTarget());
                 double avg = avgPower.getAverage();
                 long pwrAvg = Math.round(avg);
                 long div = pwrAvg / MJ_FLOW_ROUND;
@@ -110,6 +116,7 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements ILase
         if (side == LogicalSide.CLIENT) {
             if (id == NET_GUI_TICK) {
                 power = buffer.readLong();
+                targetClient = buffer.readLong();
                 avgPowerClient = buffer.readInt() * MJ_FLOW_ROUND;
             }
         }

@@ -27,8 +27,10 @@
 	"item.buildcraftcore.map_location": "地图位置",
 	"item.buildcraftcore.list": "列表",
 	"item.buildcraftcore.volume_box": "体积盒",
+	"item.buildcraftcore.engine_redstone_wood": "红石引擎",
+	"item.buildcraftcore.engine_creative_creative": "创造引擎",
 	
-	"block.buildcraftcore.engine_redstone": "红石引擎",
+	"block.buildcraftcore.engine_wood": "红石引擎",
 	"block.buildcraftcore.engine_creative": "创造引擎",
 	"block.buildcraftcore.engine_stone": "斯特林引擎",
 	"block.buildcraftcore.engine_iron": "燃烧引擎",

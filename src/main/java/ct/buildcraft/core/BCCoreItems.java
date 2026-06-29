@@ -65,7 +65,7 @@ public class BCCoreItems {
     public static void registerItemProperties() {
     	ResourceLocation label = new ResourceLocation("buildcraftcore","map_type");
     	ItemProperties.register(MAP_LOCATION.get(), label, (itemStack, ClientWorld, entity, p_174638_) -> {
-    		return (MapLocationType.getFromStack(itemStack).meta + 2)/8f;
+    		return (8 - MapLocationType.getFromStack(itemStack).meta) / 8.0F;
     	});
 /*    	ItemProperties.register(TEMPLATE.get(), label, (itemStack, ClientWorld, entity, p_174638_) -> {
 			return itemStack.getDamageValue() == ItemSchematicSingle.DAMAGE_CLEAN ? 0.0F : 1.0F;

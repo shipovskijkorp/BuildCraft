@@ -24,13 +24,17 @@ public class ZoneChunk {
     public ZoneChunk() {}
 
     public ZoneChunk(ZoneChunk old) {
+        fullSet = old.fullSet;
         if (old.property != null) {
             property = BitSet.valueOf(old.property.toLongArray());
         }
     }
 
     public boolean get(int xChunk, int zChunk) {
-        return fullSet || property != null && property.get(xChunk + zChunk * 16);
+        if (fullSet) {
+            return true;
+        }
+        return property != null && property.get(xChunk + zChunk * 16);
     }
 
     public void set(int xChunk, int zChunk, boolean value) {
@@ -52,7 +56,7 @@ public class ZoneChunk {
         } else {
             if (fullSet) {
                 property = new BitSet(16 * 16);
-                property.flip(0, 16 * 16 - 1);
+                property.flip(0, 16 * 16);
                 fullSet = false;
             } else if (property == null) {
                 // Note - ZonePlan should usually destroy such chunks
@@ -116,7 +120,7 @@ public class ZoneChunk {
     }
 
     public boolean isEmpty() {
-        return !fullSet && property.isEmpty();
+        return !fullSet && (property == null || property.isEmpty());
     }
 
     public ZoneChunk readFromByteBuf(FriendlyByteBuf buf) {

@@ -25,6 +25,7 @@ import ct.buildcraft.lib.misc.data.IdAllocator;
 import ct.buildcraft.lib.statement.ActionWrapper;
 import ct.buildcraft.lib.statement.StatementWrapper;
 import ct.buildcraft.lib.statement.TriggerWrapper;
+import ct.buildcraft.lib.tile.TileBC_Neptune;
 import ct.buildcraft.silicon.BCSiliconGuis;
 import ct.buildcraft.silicon.gate.GateContext;
 import ct.buildcraft.silicon.gate.GateContext.GateGroup;
@@ -146,6 +147,13 @@ public class ContainerGate extends ContainerPipe {
                 boolean to = buffer.readBoolean();
                 if (index < gate.connections.length) {
                     gate.connections[index] = to;
+                    BlockEntity tile = gate.getPipeHolder().getPipeTile();
+                    if (tile != null && tile.getLevel() != null && !tile.getLevel().isClientSide) {
+                        tile.setChanged();
+                        if (tile instanceof TileBC_Neptune bcTile) {
+                            bcTile.markChunkDirty();
+                        }
+                    }
                     gate.sendResolveData();
                 }
             } else if (id == ID_VALID_STATEMENTS) {

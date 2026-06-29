@@ -1,5 +1,7 @@
 package ct.buildcraft.core;
 
+import net.minecraftforge.fml.DistExecutor;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,8 +78,10 @@ public class BCCore {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(BCLibEventDist.class);
 		IEventBus eventBus = MinecraftForge.EVENT_BUS;
-		eventBus.addListener(RenderTickListener::renderOverlay);
-		eventBus.addListener(RenderTickListener::renderLast);
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			eventBus.addListener(RenderTickListener::renderOverlay);
+			eventBus.addListener(RenderTickListener::renderLast);
+		});
 		BCCoreStatements.preInit();
     }
 

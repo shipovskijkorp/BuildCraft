@@ -17,6 +17,7 @@ import ct.buildcraft.lib.gui.pos.IGuiArea;
 import ct.buildcraft.lib.misc.data.IReference;
 import ct.buildcraft.lib.statement.FullStatement;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -95,37 +96,39 @@ public class GuiElementStatementParam extends GuiElementSimple
 
     @Override
     public void onMouseClicked(int button) {
-        if (ref.canInteract && contains(gui.mouse) && button == 0) {
-            IStatementParameter param = get();
-            if (param == null) {
-                return;
-            }
-            StatementMouseClick clickEvent = new StatementMouseClick(0, false);
+        if (!ref.canInteract || !contains(gui.mouse) || (button != 0 && button != 1)) {
+            return;
+        }
 
-            final ItemStack heldStack;
-            Player currentPlayer = Minecraft.getInstance().player;
-            if (currentPlayer == null) {
-                heldStack = ItemStack.EMPTY;
-            } else {
-                heldStack = currentPlayer.containerMenu.getCarried();
-            }
+        IStatementParameter param = get();
+        if (param == null) {
+            return;
+        }
+        StatementMouseClick clickEvent = new StatementMouseClick(button, Screen.hasShiftDown());
 
-            IStatementParameter pNew = param.onClick(container, ref.get(), heldStack, clickEvent);
-            if (pNew != null) {
-                set(pNew);
-            } else {
-                IStatementParameter[] possible = param.getPossible(container);
-                if (!param.isPossibleOrdered()) {
-                    List<IStatementParameter> list = new ArrayList<>();
-                    for (IStatementParameter p2 : possible) {
-                        if (p2 != null) {
-                            list.add(p2);
-                        }
+        final ItemStack heldStack;
+        Player currentPlayer = Minecraft.getInstance().player;
+        if (currentPlayer == null) {
+            heldStack = ItemStack.EMPTY;
+        } else {
+            heldStack = currentPlayer.containerMenu.getCarried();
+        }
+
+        IStatementParameter pNew = param.onClick(container, ref.get(), heldStack, clickEvent);
+        if (pNew != null) {
+            set(pNew);
+        } else {
+            IStatementParameter[] possible = param.getPossible(container);
+            if (!param.isPossibleOrdered()) {
+                List<IStatementParameter> list = new ArrayList<>();
+                for (IStatementParameter p2 : possible) {
+                    if (p2 != null) {
+                        list.add(p2);
                     }
-                    possible = list.toArray(new IStatementParameter[0]);
                 }
-                gui.currentMenu = GuiElementStatementVariant.create(gui, this, this, possible);
+                possible = list.toArray(new IStatementParameter[0]);
             }
+            gui.currentMenu = GuiElementStatementVariant.create(gui, this, this, possible);
         }
     }
 }

@@ -45,7 +45,6 @@ public class BCSilicon {
     	modEventBus.addListener(BCSilicon::commonSetup);
     	modEventBus.addListener(BCSilicon::postInit);
     	modEventBus.addListener(BCSilicon::gatherData);
-    	BCSiliconSprites.fmlPreInit();
         FacadeAPI.registry = FacadeStateManager.INSTANCE;
 
         BCSiliconConfig.preInit();

@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 
 import ct.buildcraft.api.core.BCDebugging;
 import ct.buildcraft.api.core.BCLog;
+import ct.buildcraft.lib.block.BlockMarkerBase;
 import ct.buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
 import ct.buildcraft.lib.net.MessageManager;
 import ct.buildcraft.lib.net.MessageMarker;
@@ -30,6 +31,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -39,14 +41,15 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     public final int cacheId;
     public final ResourceKey<Level> dimensionId;
     public final boolean isServer;
+    private final Level level;
     private final Map<BlockPos, C> posToConnection = new ConcurrentHashMap<>();
     private final Map<C, Set<BlockPos>> connectionToPos = new ConcurrentHashMap<>();
     private final Map<BlockPos, Optional<TileMarker<C>>> tileCache = new ConcurrentHashMap<>();
-    
+
     private boolean isDirty = false;
-    private boolean isUnload = false;
 
     public MarkerSubCache(Level world, int cacheId) {
+        this.level = world;
         this.isServer = !world.isClientSide;
         this.dimensionId = world.dimension();
         this.cacheId = cacheId;
@@ -54,6 +57,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
 
     public void onPlayerJoinLevel(ServerPlayer player) {
         if (isServer) {// Sanity Check
+            validateLoadedMarkers();
             // Send ALL loaded markers
             if (!tileCache.isEmpty()) {
                 MessageMarker message = new MessageMarker();
@@ -76,11 +80,13 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     }
 
     public boolean hasLoadedOrUnloadedMarker(BlockPos pos) {
+        validateLoadedMarker(pos);
         return tileCache.containsKey(pos);
     }
 
     @Nullable
     public TileMarker<C> getMarker(BlockPos pos) {
+        validateLoadedMarker(pos);
         Optional<TileMarker<C>> op = tileCache.get(pos);
         if (op == null) {
             return null;
@@ -90,65 +96,121 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     }
 
     public void loadMarker(BlockPos pos, @Nullable TileMarker<C> marker) {
-    	setDirty(true);
-        boolean did = tileCache.containsKey(pos);
+        setDirty(true);
+        Optional<TileMarker<C>> previous = tileCache.get(pos);
+        boolean did = previous != null;
+        boolean wasUnloaded = did && previous.isEmpty();
         tileCache.put(pos, Optional.ofNullable(marker));
         if (DEBUG_FULL) {
             BCLog.logger.info("[lib.marker.full] Set a marker at " + pos + " as " + marker);
         }
-        if (isServer && !did) {
-            MessageMarker message = new MessageMarker();
-            message.add = true;
-            message.connection = false;
-            message.multiple = false;
-            message.cacheId = cacheId;
-            message.count = 1;
-            message.positions.add(pos);
-            MessageManager.sendToDimension(message, dimensionId);
+        if (isServer && (!did || wasUnloaded || marker != null)) {
+            sendMarkerAddedToDimension(pos);
+            C connection = posToConnection.get(pos);
+            if (connection != null) {
+                sendConnectionAddedToDimension(connection);
+            }
         }
     }
 
     public void unloadMarker(BlockPos pos) {
-        loadMarker(pos, null);
-        setDirty(false);
-        BCLog.d("unload");
-        isUnload = true;
+        // Keep the marker position in the cache while the chunk is unloaded so existing marker boxes stay valid.
+        // Vanilla calls setRemoved() for chunk unloads, so this must not behave like a real marker removal and it
+        // must not clear unrelated dirty state in the saved marker data.
+        boolean wasDirty = isDirty;
+        tileCache.put(pos, Optional.empty());
+        setDirty(wasDirty);
+        if (DEBUG_FULL) {
+            BCLog.logger.info("[lib.marker.full] Unloaded marker at " + pos);
+        }
     }
 
     public void removeMarker(BlockPos pos) {
-    	setDirty(true);
+        setDirty(true);
         if (DEBUG_FULL) {
             BCLog.logger.info("[lib.marker.full] Removed a marker at " + pos);
         }
         tileCache.remove(pos);
-        C connection = getConnection(pos);
+        C connection = posToConnection.get(pos);
         if (connection != null) {
             connection.removeMarker(pos);
             refreshConnection(connection);
         }
         if (isServer) {
-            MessageMarker message = new MessageMarker();
-            message.add = false;
-            message.connection = false;
-            message.multiple = false;
-            message.cacheId = cacheId;
-            message.count = 1;
-            message.positions.add(pos);
-            MessageManager.sendToDimension(message, dimensionId);
+            sendMarkerRemovedToDimension(pos);
         }
     }
 
+    public void syncMarkerState(BlockPos pos) {
+        if (!isServer) {
+            return;
+        }
+        if (tileCache.containsKey(pos)) {
+            sendMarkerAddedToDimension(pos);
+        }
+        C connection = getConnection(pos);
+        if (connection != null) {
+            sendConnectionAddedToDimension(connection);
+        }
+    }
+
+    private void sendMarkerAddedToDimension(BlockPos pos) {
+        MessageMarker message = new MessageMarker();
+        message.add = true;
+        message.connection = false;
+        message.multiple = false;
+        message.cacheId = cacheId;
+        message.count = 1;
+        message.positions.add(pos);
+        MessageManager.sendToDimension(message, dimensionId);
+    }
+
+    private void sendMarkerRemovedToDimension(BlockPos pos) {
+        MessageMarker message = new MessageMarker();
+        message.add = false;
+        message.connection = false;
+        message.multiple = false;
+        message.cacheId = cacheId;
+        message.count = 1;
+        message.positions.add(pos);
+        MessageManager.sendToDimension(message, dimensionId);
+    }
+
+    private void sendConnectionAddedToDimension(C connection) {
+        MessageMarker message = new MessageMarker();
+        message.add = true;
+        message.connection = true;
+        message.cacheId = cacheId;
+        message.positions.addAll(connection.getMarkerPositions());
+        message.count = message.positions.size();
+        message.multiple = message.count > 1;
+        MessageManager.sendToDimension(message, dimensionId);
+    }
+
+    private void sendConnectionRemovedToDimension(Set<BlockPos> positions) {
+        MessageMarker message = new MessageMarker();
+        message.add = false;
+        message.connection = true;
+        message.cacheId = cacheId;
+        message.positions.addAll(positions);
+        message.count = message.positions.size();
+        message.multiple = message.count > 1;
+        MessageManager.sendToDimension(message, dimensionId);
+    }
+
     public ImmutableList<BlockPos> getAllMarkers() {
+        validateLoadedMarkers();
         return ImmutableList.copyOf(tileCache.keySet());
     }
 
     @Nullable
     public C getConnection(BlockPos pos) {
+        validateLoadedMarker(pos);
         return posToConnection.get(pos);
     }
 
     public void destroyConnection(@Nullable C connection) {
-    	setDirty(true);
+        setDirty(true);
         if (connection == null) {
             return;
         }
@@ -163,7 +225,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     }
 
     public void addConnection(@Nonnull C connection) {
-    	setDirty(true);
+        setDirty(true);
         Set<BlockPos> lastSeen = new HashSet<>(connection.getMarkerPositions());
         initConnection(connection, lastSeen);
         if (DEBUG_FULL) {
@@ -172,7 +234,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     }
 
     public void refreshConnection(@Nonnull C connection) {
-    	setDirty(true);
+        setDirty(true);
         Set<BlockPos> lastSeen = connectionToPos.get(connection);
         if (DEBUG_FULL) {
             BCLog.logger.info("[lib.marker.full] Refreshing a connection");
@@ -199,7 +261,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     }
 
     private void validateAllConnections() {
-    	setDirty(true);
+        setDirty(true);
         final String logStart = "[lib.marker.full][" + cacheId + "]";
 
         Set<C> visited = new HashSet<>();
@@ -243,7 +305,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     }
 
     private void deinitConnection(Set<BlockPos> set) {
-    	setDirty(true);
+        setDirty(true);
         if (DEBUG_FULL) {
             BCLog.logger.info("[lib.marker.full] Tearing down all connections in " + set);
         }
@@ -251,20 +313,12 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
             posToConnection.remove(p);
         }
         if (isServer && set.size() > 0) {
-            MessageMarker message = new MessageMarker();
-            message.add = false;
-            message.connection = true;
-            message.cacheId = cacheId;
-            message.positions.addAll(set);
-            message.count = message.positions.size();
-            message.multiple = message.count > 1;
-            
-            MessageManager.sendToDimension(message, dimensionId);
+            sendConnectionRemovedToDimension(set);
         }
     }
 
     private void initConnection(C connection, Set<BlockPos> lastSeen) {
-    	setDirty(true);
+        setDirty(true);
         if (DEBUG_FULL) {
             BCLog.logger.info("[lib.marker.full] Setting up a connection with " + lastSeen);
         }
@@ -281,19 +335,59 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
             posToConnection.put(p, connection);
         }
         if (isServer && lastSeen.size() > 0) {
-            MessageMarker message = new MessageMarker();
-            message.add = true;
-            message.connection = true;
-            message.cacheId = cacheId;
-            message.positions.addAll(connection.getMarkerPositions());
-            message.count = message.positions.size();
-            message.multiple = message.count > 1;
-            MessageManager.sendToDimension(message, dimensionId);
+            sendConnectionAddedToDimension(connection);
         }
     }
 
     public ImmutableList<C> getConnections() {
-        return ImmutableList.copyOf(connectionToPos.keySet());
+        validateLoadedMarkers();
+        ImmutableList.Builder<C> builder = ImmutableList.builder();
+        for (Entry<C, Set<BlockPos>> entry : connectionToPos.entrySet()) {
+            Set<BlockPos> positions = entry.getValue();
+            if (positions != null && positions.size() >= 2) {
+                builder.add(entry.getKey());
+            }
+        }
+        return builder.build();
+    }
+
+    private void validateLoadedMarkers() {
+        Set<BlockPos> toCheck = new HashSet<>();
+        toCheck.addAll(tileCache.keySet());
+        toCheck.addAll(posToConnection.keySet());
+        for (BlockPos pos : toCheck) {
+            validateLoadedMarker(pos);
+        }
+    }
+
+    private void validateLoadedMarker(BlockPos pos) {
+        if (!tileCache.containsKey(pos) && !posToConnection.containsKey(pos)) {
+            return;
+        }
+        if (isMarkerStillValidOrUnloaded(pos)) {
+            return;
+        }
+        if (DEBUG_FULL) {
+            BCLog.logger.info("[lib.marker.full] Pruning stale marker at " + pos);
+        }
+        removeMarker(pos);
+    }
+
+    private boolean isMarkerStillValidOrUnloaded(BlockPos pos) {
+        if (!level.hasChunkAt(pos)) {
+            return true;
+        }
+        if (!(level.getBlockState(pos).getBlock() instanceof BlockMarkerBase)) {
+            return false;
+        }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity == null) {
+            return true;
+        }
+        if (!(blockEntity instanceof TileMarker<?> marker)) {
+            return false;
+        }
+        return ((Object) marker.getCache().getSubCache(level)) == this;
     }
 
     public abstract boolean tryConnect(BlockPos from, BlockPos to);
@@ -308,7 +402,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
 
     @OnlyIn(Dist.CLIENT)
     public final void handleMessageMain(MessageMarker message) {
-    	setDirty(true);
+        setDirty(true);
         if (handleMessage(message)) {
             return;
         }
@@ -331,11 +425,11 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     @OnlyIn(Dist.CLIENT)
     protected abstract boolean handleMessage(MessageMarker message);
 
-	public boolean isDirty() {
-		return isDirty&&(!isUnload);
-	}
+    public boolean isDirty() {
+        return isDirty;
+    }
 
-	public void setDirty(boolean isDirty) {
-		this.isDirty = isDirty;
-	}
+    public void setDirty(boolean isDirty) {
+        this.isDirty = isDirty;
+    }
 }
