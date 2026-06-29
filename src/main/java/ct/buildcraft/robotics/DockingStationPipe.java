@@ -11,12 +11,14 @@ import ct.buildcraft.api.robots.IRequestProvider;
 import ct.buildcraft.api.robots.RobotManager;
 import ct.buildcraft.api.statements.IStatementParameter;
 import ct.buildcraft.api.statements.StatementSlot;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeColor;
 import ct.buildcraft.compat.CompatCapTransfromer;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.robotics.statements.ActionStationRequestItems;
+import ct.buildcraft.robotics.plug.RobotStationPluggable;
 import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
@@ -24,6 +26,8 @@ import ct.buildcraft.transport.pipe.flow.PipeFlowFluids;
 import ct.buildcraft.transport.pipe.flow.PipeFlowPower;
 import ct.buildcraft.api.transport.IInjectable;
 import ct.buildcraft.transport.tile.TilePipeHolder;
+import ct.buildcraft.transport.pipe.Pipe;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -33,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DockingStationPipe extends DockingStation implements IRequestProvider {
     private TilePipeHolder pipe;
+    private boolean removingInvalidStation;
 
     private final IInjectable injectablePipe = new IInjectable() {
         @Override
@@ -120,23 +125,52 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     }
 
     public TilePipeHolder getPipe() {
-        if (level() == null) {
+        Level stationLevel = level();
+        if (stationLevel == null) {
+            return pipe != null && !pipe.isRemoved() ? pipe : null;
+        }
+
+        BlockPos pos = new BlockPos(x(), y(), z());
+
+        // A station whose chunk is merely unloaded must stay in the robotics registry so the robot can rebind by id
+        // when both sides load again. Only validate and remove the station if the chunk is loaded.
+        if (!stationLevel.isLoaded(pos)) {
             return pipe;
         }
 
-        net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(x(), y(), z());
-        if (pipe == null && level().isLoaded(pos)) {
-            if (level().getBlockEntity(pos) instanceof TilePipeHolder holder) {
-                pipe = holder;
-            }
+        BlockEntity blockEntity = stationLevel.getBlockEntity(pos);
+        if (blockEntity instanceof TilePipeHolder holder
+                && !holder.isRemoved()
+                && holder.getPipe() != null
+                && holder.getPipe() != Pipe.EMPTY
+                && side() != null
+                && holder.getPluggable(side()) instanceof RobotStationPluggable) {
+            pipe = holder;
+            return pipe;
         }
 
-        // A station whose chunk is merely unloaded must stay in the robotics registry so the robot can rebind by id
-        // when both sides load again. Only remove the station if the chunk is loaded and the pipe is genuinely gone.
-        if (pipe == null && level().isLoaded(pos) && !level().isClientSide && RobotManager.registryProvider != null) {
-            RobotManager.registryProvider.getRegistry(level()).removeStation(this);
+        pipe = null;
+        removeInvalidStation(stationLevel);
+        return null;
+    }
+
+    private void removeInvalidStation(Level stationLevel) {
+        if (stationLevel == null || stationLevel.isClientSide || RobotManager.registryProvider == null || removingInvalidStation) {
+            return;
         }
-        return pipe;
+
+        removingInvalidStation = true;
+        try {
+            RobotManager.registryProvider.getRegistry(stationLevel).removeStation(this);
+        } finally {
+            removingInvalidStation = false;
+        }
+    }
+
+    private void scheduleRenderUpdateIfLoaded() {
+        if (pipe != null && !pipe.isRemoved() && pipe.getLevel() != null) {
+            pipe.scheduleRenderUpdate();
+        }
     }
 
     private Direction normalizeOutputSide(Direction from) {
@@ -186,9 +220,7 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     @Override
     public void unsafeRelease(EntityRobotBase robot) {
         super.unsafeRelease(robot);
-        if (getPipe() != null) {
-            pipe.scheduleRenderUpdate();
-        }
+        scheduleRenderUpdateIfLoaded();
     }
 
     @Override

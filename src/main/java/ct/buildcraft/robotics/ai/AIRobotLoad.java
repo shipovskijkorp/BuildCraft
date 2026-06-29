@@ -4,7 +4,6 @@ import ct.buildcraft.api.core.IStackFilter;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
-import ct.buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import ct.buildcraft.robotics.statements.ActionRobotFilter;
 import ct.buildcraft.robotics.statements.ActionStationProvideItems;
 import net.minecraft.core.Direction;
@@ -60,7 +59,7 @@ public class AIRobotLoad extends AIRobot {
             if (stack.isEmpty() || !canTake(container, slot, stack, side) || !filter.matches(stack)) {
                 continue;
             }
-            if (!ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(stack), ActionStationProvideItems.class)) {
+            if (!canStationProvide(station, stack, filter)) {
                 continue;
             }
 
@@ -92,7 +91,7 @@ public class AIRobotLoad extends AIRobot {
             if (stack.isEmpty() || !canTake(container, slot, stack, side) || !filter.matches(stack)) {
                 continue;
             }
-            if (!ActionRobotFilter.canInteractWithItem(station, new ArrayStackOrListFilter(stack), ActionStationProvideItems.class)) {
+            if (!canStationProvide(station, stack, filter)) {
                 continue;
             }
 
@@ -120,6 +119,12 @@ public class AIRobotLoad extends AIRobot {
             }
         }
         return loaded > 0;
+    }
+
+
+    private static boolean canStationProvide(DockingStation station, ItemStack stack, IStackFilter requestedFilter) {
+        return ActionStationProvideItems.canExtractItem(station, stack)
+                && ActionRobotFilter.canInteractWithItem(station, requestedFilter, ActionStationProvideItems.class);
     }
 
     private static int[] getSlots(Container container, Direction side) {

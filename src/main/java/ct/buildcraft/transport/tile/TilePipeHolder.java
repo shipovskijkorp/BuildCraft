@@ -215,6 +215,19 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     }
 
 	@Override
+    public void onRemove(boolean dropSelf) {
+        super.onRemove(dropSelf);
+        if (level != null && !level.isClientSide) {
+            for (Direction face : Direction.values()) {
+                PipePluggable pluggable = getPluggable(face);
+                if (pluggable != PipePluggable.EMPTY) {
+                    pluggable.onRemove();
+                }
+            }
+        }
+    }
+
+	@Override
 	public void setRemoved() {
 		super.setRemoved();
 		eventBus.fireEvent(new PipeEventTileState.Invalidate(this));

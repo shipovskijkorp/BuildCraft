@@ -17,6 +17,7 @@ import ct.buildcraft.robotics.boards.BoardRobotCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotDelivery;
 import ct.buildcraft.robotics.boards.BoardRobotFluidCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotHarvester;
+import ct.buildcraft.robotics.boards.BoardRobotBomber;
 import ct.buildcraft.robotics.boards.BoardRobotButcher;
 import ct.buildcraft.robotics.boards.BoardRobotFarmer;
 import ct.buildcraft.robotics.boards.BoardRobotLeaveCutter;
@@ -178,6 +179,10 @@ public final class BCRoboticsBoards {
         public ResourceLocation robotTextureLocation() {
             return new ResourceLocation(BCRobotics.MODID, "textures/entities/" + robotTexture + ".png");
         }
+
+        public boolean isInDev() {
+            return "builder".equals(key) || "stripes".equals(key);
+        }
     }
 
     public static class BasicBoardNBT extends RedstoneBoardRobotNBT {
@@ -257,6 +262,9 @@ public final class BCRoboticsBoards {
             }
             if ("knight".equals(key)) {
                 return new BoardRobotKnight(robot);
+            }
+            if ("bomber".equals(key)) {
+                return new BoardRobotBomber(robot);
             }
             return new BasicRobotBoard(robot, this);
         }

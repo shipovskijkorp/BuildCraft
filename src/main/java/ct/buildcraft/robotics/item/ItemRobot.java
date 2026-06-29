@@ -83,6 +83,9 @@ public class ItemRobot extends Item {
             String legacyKey = board.legacyLangKey();
             tooltip.add(Component.translatable("buildcraft." + legacyKey).withStyle(ChatFormatting.BOLD));
             tooltip.add(Component.translatable("buildcraft." + legacyKey + ".desc").withStyle(ChatFormatting.GRAY));
+            if (board.isInDev()) {
+                tooltip.add(Component.literal("in dev").withStyle(ChatFormatting.RED));
+            }
             tooltip.add(Component.translatable("tooltip.buildcraftrobotics.robot.energy", getEnergy(stack), EntityRobotBase.MAX_ENERGY)
                     .withStyle(ChatFormatting.GRAY));
         }

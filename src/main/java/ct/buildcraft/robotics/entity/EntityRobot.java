@@ -283,6 +283,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 getRegistry().registerRobot(this);
             }
             resolveStations();
+            validateStationReferences();
             if (mainAI == null) {
                 mainAI = new AIRobotMain(this);
                 mainAI.start();
@@ -351,6 +352,50 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         if (dockingStation == null && dockingStationIndex != null) {
             dockingStation = registry.getStation(dockingStationIndex.toBlockPos(), dockingStationSide);
         }
+    }
+
+    private void validateStationReferences() {
+        DockingStation currentDockingStation = dockingStation;
+        if (currentDockingStation != null && isStationGone(currentDockingStation)) {
+            currentDockingStation.unsafeRelease(this);
+            if (dockingStation == currentDockingStation) {
+                dockingStation = null;
+                dockingStationIndex = null;
+                dockingStationSide = null;
+            }
+            clearDockingStationSync();
+        }
+
+        DockingStation currentLinkedStation = linkedStation;
+        if (currentLinkedStation != null && isStationGone(currentLinkedStation)) {
+            currentLinkedStation.unsafeRelease(this);
+            if (linkedStation == currentLinkedStation) {
+                linkedStation = null;
+                linkedStationIndex = null;
+                linkedStationSide = null;
+            }
+        }
+    }
+
+    private boolean isStationGone(DockingStation station) {
+        if (station == null) {
+            return true;
+        }
+
+        IRobotRegistry registry = getRegistry();
+        if (registry != null && registry.getStation(station.index().toBlockPos(), station.side()) != station) {
+            return true;
+        }
+
+        Level stationLevel = station.level();
+        if (stationLevel != null && stationLevel.isLoaded(station.index().toBlockPos())) {
+            if (!station.isInitialized()) {
+                return true;
+            }
+            return registry != null && registry.getStation(station.index().toBlockPos(), station.side()) != station;
+        }
+
+        return false;
     }
 
     /**

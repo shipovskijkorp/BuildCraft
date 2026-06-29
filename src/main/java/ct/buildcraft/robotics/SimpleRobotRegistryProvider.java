@@ -258,10 +258,13 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
 
             EntityRobotBase robot = station.robotTaking();
             if (robot != null) {
-                if (station.isMainStation()) {
-                    robot.setMainStation(null);
-                } else {
+                // A destroyed station can be both the robot's home station and its current dock. The old port only
+                // cleared one of those references, which left robots snapped to a phantom station after explosions.
+                if (robot.getDockingStation() == station) {
                     robot.undock();
+                }
+                if (station.isMainStation() || robot.getLinkedStation() == station) {
+                    robot.setMainStation(null);
                 }
                 station.unsafeRelease(robot);
             }
