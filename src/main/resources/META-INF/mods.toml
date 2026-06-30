@@ -35,6 +35,13 @@ Shared library code and runtime helpers used by the BuildCraft Community Edition
     ordering="AFTER"
     side="BOTH"
 
+[[dependencies.buildcraftlib]]
+    modId="jei"
+    mandatory=false
+    versionRange="[11,)"
+    ordering="AFTER"
+    side="CLIENT"
+
 [[mods]]
     modId="buildcraftcore"
     version="${file.jarVersion}"
