@@ -147,7 +147,7 @@ public class FluidRenderer {
     		}
         } catch (Exception e) {
         	BCLog.logger.error("Can not put generated fluidTextureResourcePack into ReourceManager");
-            e.printStackTrace();
+            ct.buildcraft.api.core.BCLog.logger.error("Can not put generated fluidTextureResourcePack into ResourceManager", e);
         }
     }
 

@@ -76,7 +76,7 @@ public class VolumeBox {
                 addons.put(slot, addon);
                 addon.postReadFromNbt();
             } catch (Exception e) {
-                e.printStackTrace();
+                ct.buildcraft.api.core.BCLog.logger.warn("Failed to clone volume box stored snapshot", e);
             }
         });
         NBTUtilBC.readCompoundList(nbt.get("locks")).map(lockTag -> {

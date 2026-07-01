@@ -110,7 +110,7 @@ public class BCTransport {
                     "[transport] Recieved a facade IMC message that should be directed to 'buildcraftsilicon' instead!");
 
                 // a bit bigger fuss
-                new IllegalArgumentException().printStackTrace();
+                ct.buildcraft.api.core.BCLog.logger.warn("Facade IMC messages are no longer handled by buildcrafttransport", new IllegalArgumentException());
 
                 {
                     // and a tantrum

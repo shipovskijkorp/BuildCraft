@@ -43,8 +43,7 @@ public enum StripesHandlerDispenser implements IStripesHandlerItem {
 					DISPENSER_REGISTRY = (Map<Item, DispenseItemBehavior>) f.get(null);
 					break;
 				} catch (IllegalArgumentException | IllegalAccessException e) {
-					BCLog.logger.error("Failed to get DispenserBlock#DISPENSER_REGISTRY");
-					e.printStackTrace();
+					BCLog.logger.error("Failed to get DispenserBlock#DISPENSER_REGISTRY", e);
 				}
     		}
     	}

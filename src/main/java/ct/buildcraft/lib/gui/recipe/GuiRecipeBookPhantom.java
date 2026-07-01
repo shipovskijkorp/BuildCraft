@@ -86,7 +86,7 @@ public class GuiRecipeBookPhantom  extends RecipeBookComponent {
             button.x = -100000;
             button.y = -100000;
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            ct.buildcraft.api.core.BCLog.logger.warn("Failed to update phantom recipe book", e);
             throw new Error("Couldn't access the toggle button!");
         }
     }

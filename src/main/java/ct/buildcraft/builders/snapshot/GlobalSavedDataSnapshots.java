@@ -88,7 +88,7 @@ public class GlobalSavedDataSnapshots {
                             return Pair.of(snapshot, snapshotFile);
                         }
                     } catch (IOException e) {
-                        new IOException("Failed to read the snapshot " + snapshotFile, e).printStackTrace();
+                        ct.buildcraft.api.core.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, e);
                     }
                 }
             }
@@ -108,7 +108,7 @@ public class GlobalSavedDataSnapshots {
                             listBuilder.add(snapshot.key);
                         }
                     } catch (IOException io) {
-                        new IOException("Failed to read the snapshot " + snapshotFile, io).printStackTrace();
+                        ct.buildcraft.api.core.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, io);
                     }
                 }
             }
@@ -125,7 +125,7 @@ public class GlobalSavedDataSnapshots {
             try (FileOutputStream fileOutputStream = new FileOutputStream(snapshotFile)) {
                 NbtSquisher.squishVanilla(Snapshot.writeToNBT(snapshot), fileOutputStream);
             } catch (IOException e) {
-                new IOException("Failed to write the snapshot file: " + snapshotFile, e).printStackTrace();
+                ct.buildcraft.api.core.BCLog.logger.warn("Failed to write the snapshot file: " + snapshotFile, e);
             }
         }
         snapshotsCache.invalidate(snapshot.key);
@@ -135,7 +135,7 @@ public class GlobalSavedDataSnapshots {
     public void removeSnapshot(Snapshot.Key key) {
         Optional.ofNullable(readSnapshot(key)).map(Pair::getRight).ifPresent(snapshotFile -> {
             if (!snapshotFile.delete()) {
-                new IOException("Failed to read the snapshot file: " + snapshotFile).printStackTrace();
+                ct.buildcraft.api.core.BCLog.logger.warn("Failed to delete the snapshot file: " + snapshotFile);
             }
             snapshotsCache.invalidate(key);
         });

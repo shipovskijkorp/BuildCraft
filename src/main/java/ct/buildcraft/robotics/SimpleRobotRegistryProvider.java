@@ -378,7 +378,7 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
                         resources.put(new StationResourceId(station), station.linkedId());
                     }
                 } catch (ReflectiveOperationException exception) {
-                    exception.printStackTrace();
+                    ct.buildcraft.api.core.BCLog.logger.warn("Failed to load robot docking station from NBT", exception);
                 }
             }
         }
