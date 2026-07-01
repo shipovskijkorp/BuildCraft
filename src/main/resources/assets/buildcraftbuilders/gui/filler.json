@@ -11,7 +11,7 @@
     "elements": {
         "title": {
             "type": "buildcraftlib:text",
-            "text": "tile.fillerBlock.name",
+            "text": "block.buildcraftbuilders.filler",
             "pos": [88,10],
             "colour": "0x40_40_40",
             "centered": true
@@ -28,6 +28,14 @@
             "colour": "0x40_40_40",
             "pos": [7,141]
         },
+        "no_area_warning": {
+            "type": "buildcraftlib:text",
+            "visible": "!filler.has_box",
+            "text": "gui.filler.no_area",
+            "colour": "0xFF_CC_33_33",
+            "pos": [88,64],
+            "centered": true
+        },
         "ledger_progress": {
             "type": "buildcraftlib:ledger",
             "title": "gui.progress",
@@ -37,7 +45,7 @@
                 "icon": {
                     "type":"buildcraftlib:drawable",
                     "source": {
-                        "sprite": "minecraft:items/iron_ingot",
+                        "sprite": "minecraft:item/iron_ingot",
                         "area": [0, 0, 16, 16]
                     },
                     "area": [0, 0, 16, 16]
@@ -54,7 +62,7 @@
                         "icon": {
                             "type": "buildcraftlib:drawable",
                             "size": [ 16, 16 ],
-                            "source.sprite": "minecraft:items/iron_pickaxe"
+                            "source.sprite": "minecraft:item/iron_pickaxe"
                         },
                         "text": {
                             "type": "buildcraftlib:text",
@@ -148,20 +156,20 @@
         "filler_inventory": {
             "type": "buildcraftlib:slot",
             "slot": "filler.inventory",
-            "pos": "GuiPosition.pos(18 * (index % 9) + 7, 18 * floor(index / 9) + 84)",
+            "pos": "GuiPosition.pos(18 * (index % 9) + 7, 18 * floor(index / 9) + 85)",
             "iterator": "index = [0, 27)"
         },
         "player_inventory": {
             "type": "buildcraftlib:slot",
             "slot": "player.inventory",
-            "pos": "GuiPosition.pos(18 * (index % 9) + 7, 18 * floor(index / 9) + 152)",
+            "pos": "GuiPosition.pos(18 * (index % 9) + 7, 18 * floor(index / 9) + 153)",
             "iterator": "index = [0, 27)"
         },
         "player_inventory_hand": {
             "type": "buildcraftlib:slot",
             "slot": "player.inventory",
             "index": "i + 27",
-            "pos": "GuiPosition.pos(18 * (i % 9) + 7, 18 * floor(i / 9) + 210)",
+            "pos": "GuiPosition.pos(18 * (i % 9) + 7, 18 * floor(i / 9) + 211)",
             "iterator": "i = [0, 9)"
         }
     }

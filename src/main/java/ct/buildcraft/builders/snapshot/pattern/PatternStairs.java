@@ -11,6 +11,7 @@ import ct.buildcraft.builders.BCBuildersSprites;
 import ct.buildcraft.builders.snapshot.pattern.parameter.PatternParameterXZDir;
 import ct.buildcraft.builders.snapshot.pattern.parameter.PatternParameterYDir;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
+import net.minecraft.core.Direction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -40,32 +41,81 @@ public class PatternStairs extends Pattern implements IFillerPatternShape {
         return index == 1 ? PatternParameterXZDir.EAST : PatternParameterYDir.UP;
     }
 
-    // TODO: convert to for loops?
     @Override
     public boolean fillTemplate(IFilledTemplate filledTemplate, IStatementParameter[] params) {
         PatternParameterYDir yDir = getParam(0, params, PatternParameterYDir.UP);
         PatternParameterXZDir xzDir = getParam(1, params, PatternParameterXZDir.EAST);
 
-        int y = yDir == PatternParameterYDir.UP ? 0 : filledTemplate.getMax().getY();
-        final int yStep = yDir == PatternParameterYDir.UP ? 1 : -1;
-        final int yEnd = yDir == PatternParameterYDir.UP ? filledTemplate.getMax().getY() + 1 : -1;
+        int xMin = 0;
+        int yMin = 0;
+        int zMin = 0;
+        int xMax = filledTemplate.getMax().getX();
+        int yMax = filledTemplate.getMax().getY();
+        int zMax = filledTemplate.getMax().getZ();
 
-        int fx = 0;
-        int fz = 0;
-        int tx = filledTemplate.getMax().getX();
-        int tz = filledTemplate.getMax().getZ();
+        int sizeX = xMax - xMin + 1;
+        int sizeZ = zMax - zMin + 1;
 
-        while (y != yEnd) {
-            filledTemplate.setAreaXZ(fx, tx, y, fz, tz, true);
+        int height;
+        int heightStep;
+        if (yDir.up) {
+            height = Math.min(yMax, Math.max(xMax, zMax));
+            heightStep = -1;
+        } else {
+            height = Math.max(yMin, yMax - Math.max(xMax, zMax));
+            heightStep = 1;
+        }
 
-            fx += xzDir.dir.getStepX() > 0 ? 1 : 0;
-            fz += xzDir.dir.getStepX() > 0 ? 1 : 0;
-            tx += xzDir.dir.getStepX() < 0 ? -1 : 0;
-            tz += xzDir.dir.getStepX() < 0 ? -1 : 0;
-            y += yStep;
+        int stepEast = 0;
+        int stepWest = 0;
+        int stepSouth = 0;
+        int stepNorth = 0;
+        Direction direction = xzDir.dir;
+        if (direction == Direction.EAST) {
+            stepEast = 1;
+        } else if (direction == Direction.WEST) {
+            stepWest = 1;
+        } else if (direction == Direction.SOUTH) {
+            stepSouth = 1;
+        } else if (direction == Direction.NORTH) {
+            stepNorth = 1;
+        }
 
-            if (fx > tx) break;
-            if (fz > tz) break;
+        int x1 = xMin;
+        int x2 = xMax;
+        int z1 = zMin;
+        int z2 = zMax;
+
+        if (stepEast == 1) {
+            x1 = xMax - sizeX + 1;
+            x2 = x1;
+        }
+        if (stepWest == 1) {
+            x2 = xMin + sizeX - 1;
+            x1 = x2;
+        }
+        if (stepSouth == 1) {
+            z1 = zMax - sizeZ + 1;
+            z2 = z1;
+        }
+        if (stepNorth == 1) {
+            z2 = zMin + sizeZ - 1;
+            z1 = z2;
+        }
+
+        while (x2 - x1 + 1 > 0
+            && z2 - z1 + 1 > 0
+            && x2 - x1 < sizeX
+            && z2 - z1 < sizeZ
+            && height >= yMin
+            && height <= yMax) {
+            filledTemplate.setAreaXZ(x1, x2, height, z1, z2, true);
+
+            x2 += stepEast;
+            x1 -= stepWest;
+            z2 += stepSouth;
+            z1 -= stepNorth;
+            height += heightStep;
         }
         return true;
     }

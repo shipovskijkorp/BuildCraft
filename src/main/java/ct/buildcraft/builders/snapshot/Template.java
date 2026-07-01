@@ -151,7 +151,7 @@ public class Template extends Snapshot {
             checkPos(fromX, y, fromZ);
             checkPos(toX, y, toZ);
             for (int z = fromZ; z <= toZ; z++) {
-                setLineX(fromX, toX, y, z, true);
+                setLineX(fromX, toX, y, z, value);
             }
         }
 
@@ -160,7 +160,7 @@ public class Template extends Snapshot {
             checkPos(fromX, fromY, z);
             checkPos(toX, toY, z);
             for (int y = fromY; y <= toY; y++) {
-                setLineX(fromX, toX, y, z, true);
+                setLineX(fromX, toX, y, z, value);
             }
         }
 

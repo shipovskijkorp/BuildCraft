@@ -31,6 +31,7 @@
 	"block.architect.noallowCreative": "Mode: Survival",
 	"block.architect.tooltip.allowCreative.1": "Creative allows all blocks - Creative Mode only!",
 	"block.architect.tooltip.allowCreative.2": "Survival ignores all unsupported blocks",
-	"block.architect.excavate": "Excavate"
+	"block.architect.excavate": "Excavate",
+	"gui.filler.no_area": "No selected area: place the Filler next to markers or a volume box"
 	
 }

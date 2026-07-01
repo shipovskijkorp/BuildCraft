@@ -22,7 +22,7 @@ public class MenuReplacer extends AbstractContainerMenu {
 	
 	public MenuReplacer(int containerId, Inventory playerInventory, IItemHandler snapshot, IItemHandler from, IItemHandler to, ContainerLevelAccess access) {
 		super(BCBuildersGuis.MENU_REPLACER.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		for(int i = 0; i < 3; ++i) 
 			for(int j = 0; j < 9; ++j) 
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 48 + j * 18, 84 + i * 18));
@@ -31,7 +31,7 @@ public class MenuReplacer extends AbstractContainerMenu {
 			this.addSlot(new Slot(playerInventory, k, 48 + k * 18, 142));
 		this.addSlot(new SlotItemHandler(snapshot, 0 ,95, 35));
 		this.addSlot(new SlotItemHandler(from, 0 ,154, 35));
-		this.addSlot(new SlotItemHandler(from, 0 ,184, 35));
+		this.addSlot(new SlotItemHandler(to, 0 ,184, 35));
 		
 /*		for(int j = 0; j<9;j++) {
 			Slot typeSlot = new RecordSlot(filter, j, 8+18*j, 27).setBackground(InventoryMenu.BLOCK_ATLAS, BCTransportSprites.FILTERED_BUFFER_EMPTY_SLOT_GUI);

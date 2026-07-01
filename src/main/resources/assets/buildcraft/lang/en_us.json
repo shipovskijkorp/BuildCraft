@@ -476,6 +476,7 @@
   "fillerpattern.2d_square": "Square",
   "fillerpattern.2d_triangle": "Triangle",
   "fillerpattern.box": "Box",
+  "fillerpattern.cylinder": "Cylinder",
   "fillerpattern.clear": "Clear",
   "fillerpattern.fill": "Fill",
   "fillerpattern.flatten": "Flatten",

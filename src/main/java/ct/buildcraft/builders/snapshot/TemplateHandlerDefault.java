@@ -7,26 +7,18 @@
 package ct.buildcraft.builders.snapshot;
 
 import ct.buildcraft.api.template.ITemplateHandler;
+import ct.buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 
 public enum TemplateHandlerDefault implements ITemplateHandler {
     INSTANCE;
 
     @Override
     public boolean handle(Level world, BlockPos pos, Player player, ItemStack stack) {
-        return stack.useOn(new UseOnContext(
-            world,
-            player,
-            player.getUsedItemHand(),
-            stack, new BlockHitResult(new Vec3(0.5f, 0.0f, 0.5f), Direction.UP, pos, false))
-        ) == InteractionResult.SUCCESS;
+        return BlockUtil.useItemOnBlock(world, player, stack, pos, Direction.UP);
     }
 }

@@ -20,7 +20,11 @@ public class FillerUtil {
                                                            FullStatement<IFillerPattern> patternStatement,
                                                            IStatementParameter[] params,
                                                            boolean inverted) {
-        Template.FilledTemplate filledTemplate = (Template.FilledTemplate) patternStatement.get().createTemplate(
+        IFillerPattern pattern = patternStatement.get();
+        if (pattern == null) {
+            return null;
+        }
+        Template.FilledTemplate filledTemplate = (Template.FilledTemplate) pattern.createTemplate(
             filler,
             params
         );

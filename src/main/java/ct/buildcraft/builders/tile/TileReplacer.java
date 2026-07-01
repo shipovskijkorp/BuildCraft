@@ -96,7 +96,7 @@ public class TileReplacer extends TileBC_Neptune implements MenuProvider{
                             ItemSnapshot.getUsed(
                                 EnumSnapshotType.BLUEPRINT,
                                 new Header(
-                                    blueprint.key,
+                                    newBlueprint.key,
                                     getOwner().getId(),
                                     new Date(),
                                     header.name

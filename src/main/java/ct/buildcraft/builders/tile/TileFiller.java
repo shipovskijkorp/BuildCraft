@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.stream.IntStream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import ct.buildcraft.api.core.EnumPipePart;
 import ct.buildcraft.api.core.IAreaProvider;
@@ -63,6 +64,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -73,7 +75,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class TileFiller extends TileBC_Neptune 
     implements IDebuggable, ITileForTemplateBuilder, IFillerStatementContainer, IControllable, MenuProvider {
@@ -92,7 +93,7 @@ public class TileFiller extends TileBC_Neptune
         itemManager.addInvHandler(
             "resources",
             27,
-            (slot, stack) -> ForgeRegistries.ITEMS.containsValue(stack.getItem()),
+            (slot, stack) -> stack.getItem() instanceof BlockItem,
             EnumAccess.INSERT,
             EnumPipePart.VALUES
         );
@@ -127,59 +128,108 @@ public class TileFiller extends TileBC_Neptune
         if (level.isClientSide) {
             return;
         }
+        refreshAreaFromMarkers(placer);
+    }
+
+    /**
+     * Tries to attach this filler to a marker or volume box next to it.
+     *
+     * BC8 only checked the block in front of the machine at placement time. That is fragile in the port because the
+     * facing direction is easy to get wrong and it made the filler appear broken even when a valid marker/volume box was
+     * directly adjacent. The port now prefers the original facing-adjacent position, then falls back to every side.
+     */
+    public boolean refreshAreaFromMarkers(@Nullable LivingEntity placer) {
+        if (level == null || level.isClientSide || hasBox()) {
+            return hasBox();
+        }
+
         BlockState blockState = level.getBlockState(worldPosition);
         WorldSavedDataVolumeBoxes volumeBoxes = WorldSavedDataVolumeBoxes.get(level);
-        BlockPos offsetPos = worldPosition.offset(blockState.getValue(BlockBCBase_Neptune.PROP_FACING).getOpposite().getNormal());
-        VolumeBox volumeBox = volumeBoxes.getVolumeBoxAt(offsetPos);
-        BlockEntity tile = level.getBlockEntity(offsetPos);
-        if (volumeBox != null) {
-            addon = (AddonFillerPlanner) volumeBox.addons
-                .values()
-                .stream()
-                .filter(AddonFillerPlanner.class::isInstance)
-                .findFirst()
-                .orElse(null);
-            if (addon != null) {
-                volumeBox.locks.add(
-                    new Lock(
-                        new Lock.Cause.CauseBlock(worldPosition, blockState.getBlock()),
-                        new Lock.Target.TargetAddon(addon.getSlot()),
-                        new Lock.Target.TargetRemove(),
-                        new Lock.Target.TargetResize(),
-                        new Lock.Target.TargetUsedByMachine(
-                            Lock.Target.TargetUsedByMachine.EnumType.STRIPES_WRITE
-                        )
-                    )
-                );
-                volumeBoxes.setDirty();
-                addon.updateBuildingInfo();
-                markerBox = false;
-            } else {
-                box.reset();
-                box.setMin(volumeBox.box.min());
-                box.setMax(volumeBox.box.max());
-                volumeBox.locks.add(
-                    new Lock(
-                        new Lock.Cause.CauseBlock(worldPosition, blockState.getBlock()),
-                        new Lock.Target.TargetRemove(),
-                        new Lock.Target.TargetResize(),
-                        new Lock.Target.TargetUsedByMachine(
-                            Lock.Target.TargetUsedByMachine.EnumType.STRIPES_WRITE
-                        )
-                    )
-                );
-                volumeBoxes.setDirty();
-                markerBox = false;
+        Direction preferred = blockState.hasProperty(BlockBCBase_Neptune.PROP_FACING)
+            ? blockState.getValue(BlockBCBase_Neptune.PROP_FACING).getOpposite()
+            : Direction.NORTH;
+
+        Direction[] searchOrder = new Direction[] {
+            preferred,
+            Direction.NORTH,
+            Direction.SOUTH,
+            Direction.WEST,
+            Direction.EAST,
+            Direction.UP,
+            Direction.DOWN
+        };
+
+        for (Direction direction : searchOrder) {
+            BlockPos offsetPos = worldPosition.relative(direction);
+            VolumeBox volumeBox = volumeBoxes.getVolumeBoxAt(offsetPos);
+            if (volumeBox != null && attachToVolumeBox(volumeBoxes, volumeBox, blockState)) {
+                updateBuildingInfo();
+                setChanged();
+                sendNetworkUpdate(NET_RENDER_DATA);
+                return true;
             }
-        } else if (tile instanceof IAreaProvider) {
-            IAreaProvider provider = (IAreaProvider) tile;
-            box.reset();
-            box.setMin(provider.min());
-            box.setMax(provider.max());
-            provider.removeFromWorld(placer instanceof Player player ? player : null);
+
+            BlockEntity tile = level.getBlockEntity(offsetPos);
+            if (tile instanceof IAreaProvider provider) {
+                box.reset();
+                box.setMin(provider.min());
+                box.setMax(provider.max());
+                provider.removeFromWorld(placer instanceof Player player ? player : null);
+                markerBox = true;
+                updateBuildingInfo();
+                setChanged();
+                sendNetworkUpdate(NET_RENDER_DATA);
+                return true;
+            }
         }
+
         updateBuildingInfo();
+        setChanged();
         sendNetworkUpdate(NET_RENDER_DATA);
+        return hasBox();
+    }
+
+    private boolean attachToVolumeBox(WorldSavedDataVolumeBoxes volumeBoxes, VolumeBox volumeBox, BlockState blockState) {
+        addon = (AddonFillerPlanner) volumeBox.addons
+            .values()
+            .stream()
+            .filter(AddonFillerPlanner.class::isInstance)
+            .findFirst()
+            .orElse(null);
+        if (addon != null) {
+            volumeBox.locks.add(
+                new Lock(
+                    new Lock.Cause.CauseBlock(worldPosition, blockState.getBlock()),
+                    new Lock.Target.TargetAddon(addon.getSlot()),
+                    new Lock.Target.TargetRemove(),
+                    new Lock.Target.TargetResize(),
+                    new Lock.Target.TargetUsedByMachine(
+                        Lock.Target.TargetUsedByMachine.EnumType.STRIPES_WRITE
+                    )
+                )
+            );
+            volumeBoxes.setDirty();
+            addon.updateBuildingInfo();
+            markerBox = false;
+            return true;
+        }
+
+        box.reset();
+        box.setMin(volumeBox.box.min());
+        box.setMax(volumeBox.box.max());
+        volumeBox.locks.add(
+            new Lock(
+                new Lock.Cause.CauseBlock(worldPosition, blockState.getBlock()),
+                new Lock.Target.TargetRemove(),
+                new Lock.Target.TargetResize(),
+                new Lock.Target.TargetUsedByMachine(
+                    Lock.Target.TargetUsedByMachine.EnumType.STRIPES_WRITE
+                )
+            )
+        );
+        volumeBoxes.setDirty();
+        markerBox = false;
+        return true;
     }
 
     @Override
@@ -204,15 +254,27 @@ public class TileFiller extends TileBC_Neptune
             patternStatement.canInteract = !isLocked();
             return;
         }
+        battery.tick(level, worldPosition);
         sendNetworkUpdate(NET_RENDER_DATA);
         lockedTicks--;
         if (lockedTicks < 0) {
             lockedTicks = 0;
         }
-        if (mode == Mode.OFF/* || (mode == Mode.ON && finished)*/) { // TODO: finished
+        if (mode == Mode.OFF || (mode == Mode.ON && finished)) {
             return;
         }
-        Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::tick);
+        if (battery.getStored() < MjAPI.MJ) {
+            return;
+        }
+        SnapshotBuilder<?> currentBuilder = getBuilder();
+        if (currentBuilder != null) {
+            boolean nowFinished = currentBuilder.tick();
+            if (finished != nowFinished) {
+                finished = nowFinished;
+                setChanged();
+                sendNetworkGuiUpdate(NET_GUI_TICK);
+            }
+        }
     }
 
     @Override
@@ -238,6 +300,7 @@ public class TileFiller extends TileBC_Neptune
                 writePayload(NET_CAN_EXCAVATE, buffer, side);
                 writePayload(NET_INVERT, buffer, side);
                 writePayload(NET_PATTERN, buffer, side);
+                writePayload(NET_BOX, buffer, side);
                 builder.writeToByteBuf(buffer);
                 buffer.writeBoolean(finished);
                 buffer.writeBoolean(lockedTicks > 0);
@@ -271,6 +334,7 @@ public class TileFiller extends TileBC_Neptune
                 readPayload(NET_CAN_EXCAVATE, buffer, side, ctx);
                 readPayload(NET_INVERT, buffer, side, ctx);
                 readPayload(NET_PATTERN, buffer, side, ctx);
+                readPayload(NET_BOX, buffer, side, ctx);
                 builder.readFromByteBuf(buffer);
                 finished = buffer.readBoolean();
                 lockedTicks = buffer.readBoolean() ? (byte) 1 : (byte) 0;
@@ -280,16 +344,16 @@ public class TileFiller extends TileBC_Neptune
                 markerBox = buffer.readBoolean();
                 if (buffer.readBoolean()) {
                     UUID volumeBoxId = buffer.readUUID();
+                    EnumAddonSlot slot = buffer.readEnum(EnumAddonSlot.class);
                     VolumeBox volumeBox = level.isClientSide
-                        ?
-                        ClientVolumeBoxes.INSTANCE.volumeBoxes.stream()
+                        ? ClientVolumeBoxes.INSTANCE.volumeBoxes.stream()
                             .filter(localVolumeBox -> localVolumeBox.id.equals(volumeBoxId))
                             .findFirst()
-                            .orElseThrow(NullPointerException::new)
+                            .orElse(null)
                         : WorldSavedDataVolumeBoxes.get(level).getVolumeBoxFromId(volumeBoxId);
-                    addon = (AddonFillerPlanner) volumeBox
-                        .addons
-                        .get(buffer.readEnum(EnumAddonSlot.class));
+                    addon = volumeBox == null ? null : (AddonFillerPlanner) volumeBox.addons.get(slot);
+                } else {
+                    addon = null;
                 }
             } else if (id == NET_CAN_EXCAVATE) {
                 canExcavate = buffer.readBoolean();
@@ -364,9 +428,9 @@ public class TileFiller extends TileBC_Neptune
         lockedTicks = nbt.getByte("lockedTicks");
         mode = Optional.ofNullable(NBTUtilBC.readEnum(nbt.get("mode"), Mode.class)).orElse(Mode.ON);
         box.initialize(nbt.getCompound("box"));
-        if (nbt.contains("addonSlot")) {
-            addon = (AddonFillerPlanner) WorldSavedDataVolumeBoxes.get(level)
-                .getVolumeBoxFromId(nbt.getUUID("addonVolumeBoxId"))
+        if (nbt.contains("addonSlot") && level != null) {
+            VolumeBox volumeBox = WorldSavedDataVolumeBoxes.get(level).getVolumeBoxFromId(nbt.getUUID("addonVolumeBoxId"));
+            addon = volumeBox == null ? null : (AddonFillerPlanner) volumeBox
                 .addons
                 .get(NBTUtilBC.readEnum(nbt.get("addonSlot"), EnumAddonSlot.class));
         }
@@ -512,6 +576,7 @@ public class TileFiller extends TileBC_Neptune
             finished = false;
         }
         this.mode = mode;
+        setChanged();
     }
 
 	@Override
