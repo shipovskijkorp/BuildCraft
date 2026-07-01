@@ -25,6 +25,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ContainerFiller extends ContainerBCTile<TileFiller> implements IContainerFilling {
+    private final ItemHandlerSimple resources;
     private final FullStatement<IFillerPattern> patternStatementClient = new FullStatement<>(
         FillerType.INSTANCE,
         4,
@@ -38,15 +39,21 @@ public class ContainerFiller extends ContainerBCTile<TileFiller> implements ICon
     public ContainerFiller(int containerId, Inventory playerInventory, ItemHandlerSimple invResources, ContainerLevelAccess access) {
         super(BCBuildersGuis.MENU_FILLER.get(), playerInventory, containerId, access);
 
+        resources = tile != null ? tile.invResources : invResources;
+
         addFullPlayerInventory(153);
 
         for (int sy = 0; sy < 3; sy++) {
             for (int sx = 0; sx < 9; sx++) {
-            	addSlot(new SlotBase(invResources, sx + sy * 9, sx * 18 + 8, sy * 18 + 85));
+            	addSlot(new SlotBase(resources, sx + sy * 9, sx * 18 + 8, sy * 18 + 85));
             }
         }
 
         init();
+    }
+
+    public ItemHandlerSimple getResources() {
+        return resources;
     }
 
     @Override
@@ -61,16 +68,30 @@ public class ContainerFiller extends ContainerBCTile<TileFiller> implements ICon
 
     @Override
     public FullStatement<IFillerPattern> getPatternStatement() {
+        if (tile == null) {
+            return patternStatementClient;
+        }
         return tile.addon != null ? tile.addon.patternStatement : tile.patternStatement;
     }
 
     @Override
     public boolean isInverted() {
+        if (tile == null) {
+            return false;
+        }
         return tile.addon != null ? tile.addon.inverted : tile.inverted;
     }
 
     @Override
+    public boolean isLocked() {
+        return tile != null && tile.isLocked();
+    }
+
+    @Override
     public void setInverted(boolean value) {
+        if (tile == null) {
+            return;
+        }
         if (tile.addon != null) {
             tile.addon.inverted = value;
         } else {
@@ -80,6 +101,9 @@ public class ContainerFiller extends ContainerBCTile<TileFiller> implements ICon
 
     @Override
     public void valuesChanged() {
+        if (tile == null) {
+            return;
+        }
         if (tile.addon != null) {
             tile.addon.updateBuildingInfo();
             if (!playerInventory.player.level.isClientSide) {

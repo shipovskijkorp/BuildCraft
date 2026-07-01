@@ -40,9 +40,8 @@ public class BCLiquidBlock extends LiquidBlock{
 
 	@Override
 	public Optional<SoundEvent> getPickupSound() {
-		// TODO Auto-generated method stub
 		return super.getPickupSound();
-	}//TODO
+	}
 
 	@Override
 	public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {

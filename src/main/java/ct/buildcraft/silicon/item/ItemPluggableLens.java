@@ -77,7 +77,7 @@ public class ItemPluggableLens extends Item implements IItemPluggable {
     @OnlyIn(Dist.CLIENT)
     public FontRenderer getFontRenderer(ItemStack stack) {
         return SpecialColourFontRenderer.INSTANCE;
-    }*///TODO
+    }*/
 
 	@Override
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {

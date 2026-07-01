@@ -14,10 +14,12 @@ import ct.buildcraft.api.enums.EnumSnapshotType;
 import ct.buildcraft.builders.snapshot.Snapshot;
 import ct.buildcraft.builders.snapshot.Snapshot.Header;
 import ct.buildcraft.lib.misc.HashUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -114,23 +116,49 @@ public class ItemSnapshot extends Item {
     @OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
+        EnumItemSnapshotType type = EnumItemSnapshotType.getFromStack(stack);
         Snapshot.Header header = getHeader(stack);
-        //BCLog.logger.debug("" + (header == null));
         if (header == null) {
-            tooltip.add(Component.translatable("item.blueprint.blank"));
-        } else {
-            tooltip.add(Component.translatable(header.name));
-            Player owner = header.getOwnerPlayer(world);
-            if (owner != null) {
-                tooltip.add(Component.translatable("item.blueprint.author").append(owner.getDisplayName()));
-            }
-            if (flag.isAdvanced()) {
-                tooltip.add(Component.literal("Hash: " + HashUtil.convertHashToString(header.key.hash)));
-                tooltip.add(Component.literal("Date: " + header.created));
-                tooltip.add(Component.literal("Owner UUID: " + header.owner));
-            }
+            tooltip.add(Component.translatable("item.blueprint.blank").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("item.buildcraftbuilders.snapshot.clean_hint").withStyle(ChatFormatting.DARK_GRAY));
+            return;
+        }
+
+        tooltip.add(getDisplayName(header).withStyle(ChatFormatting.GRAY));
+
+        Player owner = world == null ? null : header.getOwnerPlayer(world);
+        if (owner != null) {
+            tooltip.add(Component.translatable("item.blueprint.author", owner.getDisplayName()).withStyle(ChatFormatting.DARK_GRAY));
+        }
+
+        tooltip.add(Component.translatable(
+            type.snapshotType == EnumSnapshotType.BLUEPRINT
+                ? "item.buildcraftbuilders.blueprint.used_hint"
+                : "item.buildcraftbuilders.template.used_hint"
+        ).withStyle(ChatFormatting.DARK_GRAY));
+
+        if (flag.isAdvanced()) {
+            tooltip.add(Component.translatable(
+                "item.buildcraftbuilders.snapshot.hash",
+                HashUtil.convertHashToString(header.key.hash)
+            ).withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.translatable(
+                "item.buildcraftbuilders.snapshot.created",
+                header.created.toInstant().toString()
+            ).withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.translatable(
+                "item.buildcraftbuilders.snapshot.owner_uuid",
+                header.owner.toString()
+            ).withStyle(ChatFormatting.DARK_GRAY));
         }
 	}
+
+    private static MutableComponent getDisplayName(Snapshot.Header header) {
+        if (header.name == null || header.name.isBlank() || "<unnamed>".equals(header.name)) {
+            return Component.translatable("item.blueprint.unnamed");
+        }
+        return Component.literal(header.name);
+    }
 
     public enum EnumItemSnapshotType implements StringRepresentable {
         TEMPLATE_CLEAN(EnumSnapshotType.TEMPLATE, false),

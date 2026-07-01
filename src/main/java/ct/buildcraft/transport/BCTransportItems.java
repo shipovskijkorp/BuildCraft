@@ -150,7 +150,6 @@ public class BCTransportItems {
 
     public static RegistryObject<ItemPipeHolder> makePipeItem(PipeDefinition def) {
     	var t = ITEMS.register(def.identifier.getPath(), () -> PipeRegistry.INSTANCE.createItemForPipe(def));
- //   	System.out.println("\"item.buildcrafttransport."+(def.identifier.getPath()).replace('/', '.')+"\":\"\",");
 
     	PIPE_MAP.put(def, t);
     	return t;

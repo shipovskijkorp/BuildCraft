@@ -21,6 +21,7 @@ import ct.buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -39,10 +40,32 @@ public class ContainerElectronicLibrary extends ContainerBCTile<TileElectronicLi
         addFullPlayerInventory(138);
 
         addSlot(new SlotOutput(invDownOut, 0, 175, 57));
-        addSlot(new SlotBase(invDownIn, 0, 219, 57));
+        addSlot(new SlotDownloadInput(invDownIn, 0, 219, 57));
 
-        addSlot(new SlotBase(invUpIn, 0, 175, 79));
+        addSlot(new SlotUploadInput(invUpIn, 0, 175, 79));
         addSlot(new SlotOutput(invUpOut, 0, 219, 79));
+    }
+
+    private static class SlotDownloadInput extends SlotBase {
+        SlotDownloadInput(ItemHandlerSimple handler, int slotIndex, int posX, int posY) {
+            super(handler, slotIndex, posX, posY);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return TileElectronicLibrary.isUsedSnapshot(stack) && super.mayPlace(stack);
+        }
+    }
+
+    private static class SlotUploadInput extends SlotBase {
+        SlotUploadInput(ItemHandlerSimple handler, int slotIndex, int posX, int posY) {
+            super(handler, slotIndex, posX, posY);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return TileElectronicLibrary.isCleanSnapshot(stack) && super.mayPlace(stack);
+        }
     }
 
     @Override

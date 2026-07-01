@@ -215,32 +215,17 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
 
     @Override
     public void removeFromWorld(Player player) {
-        if (level.isClientSide) {
+        if (level == null || level.isClientSide) {
             return;
         }
         VolumeConnection connection = getCurrentConnection();
         if (connection != null) {
-            // Copy the list over because the iterator doesn't like it if you change the connection while using it
+            // Copy the list over because the iterator doesn't like it if you change the connection while using it.
+            // Claimed markers are always returned to the world, matching BC7/BC8 machine placement behaviour.
             List<BlockPos> allPositions = ImmutableList.copyOf(connection.getMarkerPositions());
-  //          NonNullList<ItemStack> drops = NonNullList.create();
             for (BlockPos p : allPositions) {
-                level.destroyBlock(p, player == null || !player.isCreative());
+                removeClaimedMarkerBlock(p);
             }
-            
-/*            if(player instanceof ServerPlayer serverPlayer) {//TODO
-            	boolean isCreative = serverPlayer.isCreative();
-	            for (BlockPos p : allPositions) {
-					if(!isCreative)
-	            		drops.addAll(level.getBlockState(p).getDrops(new LootContext.Builder((ServerLevel) level)));
-	                level.destroyBlock(p, false);
-	            }
-	            Containers.dropContents(level, player.blockPosition(), drops);
-            }
-            else {
-	            for (BlockPos p : allPositions) {
-	                level.destroyBlock(p, false);
-	            }
-            }*/
         }
     }
 

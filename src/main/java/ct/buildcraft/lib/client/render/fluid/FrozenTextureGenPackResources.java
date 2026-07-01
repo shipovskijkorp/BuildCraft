@@ -79,7 +79,7 @@ public class FrozenTextureGenPackResources implements PackResources{
             return data;
 		} catch (IOException e) {
 			logger.error("fail to open NativeImage at "+srcLocation);
-			e.printStackTrace();
+			ct.buildcraft.api.core.BCLog.logger.warn("Failed to read generated fluid texture", e);
 		}
 		return null;
 	}

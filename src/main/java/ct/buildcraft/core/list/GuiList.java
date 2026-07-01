@@ -36,6 +36,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
+import ct.buildcraft.lib.gui.ledger.LedgerHelp;
 
 public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventListener {
     private static final ResourceLocation TEXTURE_BASE =
@@ -149,6 +151,11 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
                 b.registerListener(this);
             }
         }
+
+        GuiHelpUtil.addRoot(mainGui, 8, 8, 160, 18, "buildcraft.help.list.name.title", 0xFF_66_AA_FF, "buildcraft.help.list.name.desc");
+        GuiHelpUtil.addRoot(mainGui, 8, 32, 160, 68, "buildcraft.help.list.entries.title", 0xFF_88_CC_88, "buildcraft.help.list.entries.desc");
+        GuiHelpUtil.addRoot(mainGui, 118, 50, 40, 34, "buildcraft.help.list.options.title", 0xFF_CC_AA_FF, "buildcraft.help.list.options.desc");
+        mainGui.shownElements.add(new LedgerHelp(mainGui, false));
 
         textField = new EditBox(font, leftPos + 10, topPos + 10, 156, 12, Component.empty());
         textField.setValue(BCCoreItems.LIST.get().getLabelName(container.getListItemStack()));

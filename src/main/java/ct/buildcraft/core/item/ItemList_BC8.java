@@ -56,7 +56,7 @@ public class ItemList_BC8 extends Item implements IList, MenuProvider {
     public void addModelVariants(TIntObjectHashMap<ModelResourceLocation> variants) {
         addVariant(variants, 0, "clean");
         addVariant(variants, 1, "used");
-    }*///TODO
+    }*/
 
 /*    @Override
     public int getMetadata(ItemStack stack) {

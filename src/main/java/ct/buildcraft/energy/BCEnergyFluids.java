@@ -175,7 +175,6 @@ public class BCEnergyFluids {
         OIL_SOURCE.add(SOURCE);
         OIL_BUCKET.add(BUCKET);
         OIL_BLOCK.add(FUEL_GAS_COOL_BLOCK);
-//    	System.out.println("\"item.buildcraftenergy."+(NAME[id]+"/"+NAME[id]+TEM_NAMES[tem]+"_bucket").replace('/', '.')+"\":\"\",");
 
     
     }

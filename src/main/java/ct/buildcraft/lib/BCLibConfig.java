@@ -4,7 +4,7 @@
  * https://mozilla.org/MPL/2.0/
  */
 
-package ct.buildcraft.lib;//TODO
+package ct.buildcraft.lib;
 
 import java.io.File;
 import java.util.ArrayList;

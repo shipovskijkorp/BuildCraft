@@ -27,7 +27,7 @@ public class LedgerOwnership extends Ledger_Neptune {
         this.title = Component.translatable("gui.ledger.ownership");
         this.tile = tile;
 
-        appendText(() ->Component.translatable(getOwnerName()), 0);
+        appendText(this::getOwnerComponent, 0);
 
         calculateMaxSize();
         setOpenProperty(GuiConfigManager.getOrAddBoolean(new ResourceLocation("buildcraftlib:base"),
@@ -44,12 +44,12 @@ public class LedgerOwnership extends Ledger_Neptune {
         }
     }
 
-    private String getOwnerName() {
-//    	if(tile == null) return "no-one";
+    private Component getOwnerComponent() {
         GameProfile owner = tile.getOwner();
-        if (owner == null) {
-            return "no-one";
+        String name = owner == null ? null : owner.getName();
+        if (name == null || name.isBlank()) {
+            return Component.translatable("gui.ledger.ownership.none");
         }
-        return owner.getName();
+        return Component.literal(name);
     }
 }

@@ -6,13 +6,13 @@
 	"overrides": [
 	        {
 	            "predicate": {
-	                "used": 1
+	                "buildcraftbuilders:used": 1
 	            },
 	            "model": "buildcraftbuilders:item/schematic_single/used"
 	        },
 	        {
 	            "predicate": {
-	                "used": 0
+	                "buildcraftbuilders:used": 0
 	            },
 	            "model": "buildcraftbuilders:item/schematic_single/clean"
 	        }

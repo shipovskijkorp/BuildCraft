@@ -16,7 +16,6 @@ public class RecordContainerSlot extends Slot {
 
 	public RecordContainerSlot(Container container, int index, int xPosition, int yPosition) {
 		super(container,  index, xPosition, yPosition);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

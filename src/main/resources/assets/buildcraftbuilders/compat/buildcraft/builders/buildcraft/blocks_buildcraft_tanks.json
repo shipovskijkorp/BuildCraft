@@ -6,9 +6,13 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "tank"]
+                "path": [
+                    "tanks",
+                    "tank"
+                ]
             }
         ]
     },
@@ -19,15 +23,27 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "in"]
-            }, {
+                "path": [
+                    "tanks",
+                    "in"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "gasOut"]
-            }, {
+                "path": [
+                    "tanks",
+                    "gasOut"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "liquidOut"]
+                "path": [
+                    "tanks",
+                    "liquidOut"
+                ]
             }
         ]
     },
@@ -38,41 +54,61 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "tank"]
+                "path": [
+                    "tanks",
+                    "tank"
+                ]
             }
         ]
     },
     {
         "selectors": [
-            "buildcraftfactory:heat_exchange_start"
+            "buildcraftfactory:heat_exchange[part=start]"
         ],
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "heatableIn"]
-            }, {
+                "path": [
+                    "tanks",
+                    "heatableIn"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "coolableOut"]
+                "path": [
+                    "tanks",
+                    "coolableOut"
+                ]
             }
         ]
     },
     {
         "selectors": [
-            "buildcraftfactory:heat_exchange_start"
+            "buildcraftfactory:heat_exchange[part=end]"
         ],
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "heatableOut"]
-            }, {
+                "path": [
+                    "tanks",
+                    "heatableOut"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "coolableIn"]
+                "path": [
+                    "tanks",
+                    "coolableIn"
+                ]
             }
         ]
     },
@@ -83,9 +119,13 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "tank"]
+                "path": [
+                    "tanks",
+                    "tank"
+                ]
             }
         ]
     },
@@ -96,15 +136,27 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "fuel"]
-            }, {
+                "path": [
+                    "tanks",
+                    "fuel"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "coolant"]
-            }, {
+                "path": [
+                    "tanks",
+                    "coolant"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "residue"]
+                "path": [
+                    "tanks",
+                    "residue"
+                ]
             }
         ]
     },
@@ -115,18 +167,34 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "tank1"]
-            }, {
+                "path": [
+                    "tanks",
+                    "tank1"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "tank2"]
-            }, {
+                "path": [
+                    "tanks",
+                    "tank2"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "tank3"]
-            }, {
+                "path": [
+                    "tanks",
+                    "tank3"
+                ]
+            },
+            {
                 "type": "tank",
-                "path": ["tanks", "tank4"]
+                "path": [
+                    "tanks",
+                    "tank4"
+                ]
             }
         ]
     }

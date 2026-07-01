@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 
-public abstract class ContainerBCTile<T extends TileBC_Neptune> extends MenuBC_Neptune {
+public abstract class ContainerBCTile<T extends TileBC_Neptune> extends MenuBC_Neptune implements IMenuBCTile {
 	public final T tile;
     protected final ContainerLevelAccess access;
 
@@ -27,6 +27,11 @@ public abstract class ContainerBCTile<T extends TileBC_Neptune> extends MenuBC_N
         	return b;
         }, null));
 
+    }
+
+    @Override
+    public TileBC_Neptune getBCTile() {
+        return tile;
     }
 
     @Override

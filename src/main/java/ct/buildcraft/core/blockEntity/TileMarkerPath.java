@@ -4,6 +4,8 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package ct.buildcraft.core.blockEntity;
 
+import java.util.LinkedHashSet;
+
 import com.google.common.collect.ImmutableList;
 
 import ct.buildcraft.api.core.IPathProvider;
@@ -32,9 +34,13 @@ public class TileMarkerPath extends TileMarker<PathConnection> implements IPathP
 
     @Override
     public void removeFromWorld(Player player) {
-    	boolean shouldDrop = player == null || !player.isCreative();
-        for (BlockPos pos : getPath()) {
-            level.destroyBlock(pos, shouldDrop);
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        // Paths may contain the same marker twice when they loop. Remove each block once, but always return markers
+        // when a machine claims the path.
+        for (BlockPos pos : new LinkedHashSet<>(getPath())) {
+            removeClaimedMarkerBlock(pos);
         }
     }
 

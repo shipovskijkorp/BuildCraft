@@ -20,8 +20,21 @@ public class RecordSlot extends SlotItemHandler {
 
 	@Override
 	public boolean mayPlace(@NotNull ItemStack stack) {
-		this.set(stack.isEmpty() ? ItemStack.EMPTY : stack.copy().split(1));
 		return false;
+	}
+
+	public void setRecordedStack(@NotNull ItemStack stack) {
+		ItemStack copy = stack.isEmpty() ? ItemStack.EMPTY : stack.copy();
+		if (!copy.isEmpty()) {
+			copy.setCount(1);
+		}
+		this.set(copy);
+		this.setChanged();
+	}
+
+	public void clearRecordedStack() {
+		this.set(ItemStack.EMPTY);
+		this.setChanged();
 	}
 
 	@Override
@@ -31,13 +44,13 @@ public class RecordSlot extends SlotItemHandler {
 
 	@Override
 	public ItemStack safeTake(int p_150648_, int p_150649_, Player p_150650_) {
-		this.set(ItemStack.EMPTY);
+		clearRecordedStack();
 		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public Optional<ItemStack> tryRemove(int p_150642_, int p_150643_, Player p_150644_) {
-		this.set(ItemStack.EMPTY);
+		clearRecordedStack();
 		return Optional.of(ItemStack.EMPTY);
 	}
 

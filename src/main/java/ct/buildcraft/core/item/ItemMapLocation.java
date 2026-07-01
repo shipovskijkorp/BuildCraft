@@ -331,6 +331,7 @@ public class ItemMapLocation extends Item implements IMapLocation {
             case AREA: {
                 return getBox(item);
             }
+            case SPOT:
             case PATH:
             case PATH_REPEATING: {
                 return getPointBox(item);

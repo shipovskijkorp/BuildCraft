@@ -17,6 +17,8 @@ import ct.buildcraft.lib.gui.json.BuildCraftJsonGui;
 import ct.buildcraft.lib.gui.json.InventorySlotHolder;
 import ct.buildcraft.lib.gui.ledger.LedgerHelp;
 import ct.buildcraft.lib.gui.ledger.LedgerOwnership;
+import ct.buildcraft.lib.gui.ledger.Ledger_Neptune;
+import ct.buildcraft.lib.tile.TileBC_Neptune;
 import ct.buildcraft.lib.gui.pos.GuiRectangle;
 import ct.buildcraft.lib.gui.pos.IGuiArea;
 import ct.buildcraft.lib.gui.statement.GuiElementStatementParam;
@@ -59,8 +61,11 @@ public abstract class GuiBC8<C extends MenuBC_Neptune> extends AbstractContainer
     }
 
     private final void standardLedgerInit() {
-        if (container instanceof ContainerBCTile<?>) {
-//            mainGui.shownElements.add(new LedgerOwnership(mainGui, ((ContainerBCTile<?>) container).tile, true));
+        if (shouldAddOwnerLedger() && container instanceof IMenuBCTile tileMenu) {
+            TileBC_Neptune tile = tileMenu.getBCTile();
+            if (tile != null) {
+                mainGui.shownElements.add(new LedgerOwnership(mainGui, tile, true));
+            }
         }
         if (shouldAddHelpLedger()) {
             mainGui.shownElements.add(new LedgerHelp(mainGui, false));
@@ -76,6 +81,10 @@ public abstract class GuiBC8<C extends MenuBC_Neptune> extends AbstractContainer
         }
         
 	}
+
+    protected boolean shouldAddOwnerLedger() {
+        return true;
+    }
 
     protected boolean shouldAddHelpLedger() {
         return true;
@@ -175,10 +184,13 @@ public abstract class GuiBC8<C extends MenuBC_Neptune> extends AbstractContainer
 
     @Override
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        boolean hitsStatementParameter = mainGui.getElementsAt(mouseX, mouseY).stream()
+        List<IGuiElement> buildCraftElements = mainGui.getElementsAt(mouseX, mouseY);
+        boolean hitsStatementParameter = buildCraftElements.stream()
             .anyMatch(element -> element instanceof GuiElementStatementParam);
+        boolean hitsLedger = buildCraftElements.stream()
+            .anyMatch(element -> element instanceof Ledger_Neptune);
 
-        if (hitsStatementParameter) {
+        if (hitsStatementParameter || hitsLedger) {
             mainGui.onMouseClicked(mouseX, mouseY, mouseButton);
             return true;
         }

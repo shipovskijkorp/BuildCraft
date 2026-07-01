@@ -113,6 +113,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             powerStored = 0;
         }
         if (didChange) {
+            resultClient = crafting.getAssumedResult().copy();
             createFilters();
             sendNetworkGuiUpdate(NET_GUI_DATA);
         }
@@ -125,8 +126,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             if (id == NET_GUI_TICK) {
                 buffer.writeLong(powerStored);
             } else if (id == NET_GUI_DATA) {
-            	resultClient = crafting.getAssumedResult();
-                //buffer.writeItem(crafting.getAssumedResult());
+                resultClient = crafting.getAssumedResult().copy();
             }
         }
     }

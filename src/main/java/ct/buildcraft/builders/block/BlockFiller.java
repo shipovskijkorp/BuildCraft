@@ -62,14 +62,15 @@ public class BlockFiller extends BlockBCTile_Neptune implements IBlockWithFacing
 			BlockHitResult hit) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileFiller filler) {
-            if (!filler.hasBox()) {
-                return InteractionResult.PASS;
+            if (!world.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                if (!filler.hasBox()) {
+                    filler.refreshAreaFromMarkers(player);
+                }
+            	NetworkHooks.openScreen(serverPlayer, filler, pos);
             }
-            if (!world.isClientSide) {
-            	NetworkHooks.openScreen((ServerPlayer)player, filler, pos);
-            }
+            return InteractionResult.sidedSuccess(world.isClientSide);
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResult.PASS;
 	}
 
     @Override

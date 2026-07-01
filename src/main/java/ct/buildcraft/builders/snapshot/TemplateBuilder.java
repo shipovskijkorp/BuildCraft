@@ -10,13 +10,17 @@ import java.util.Collections;
 import java.util.List;
 
 import ct.buildcraft.api.template.TemplateApi;
+import ct.buildcraft.api.core.IStackFilter;
 import ct.buildcraft.api.core.BuildCraftAPI;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.FakePlayer;
 
 public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
+    private static final IStackFilter PLACEABLE_BLOCK_FILTER = stack -> stack.getItem() instanceof BlockItem;
+
     public TemplateBuilder(ITileForTemplateBuilder tile) {
         super(tile);
     }
@@ -48,12 +52,12 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
 
     @Override
     protected boolean hasEnoughToPlaceItems(BlockPos blockPos) {
-        return !tile.needMeterial() || !tile.getInvResources().extract(null, 1, 1, true).isEmpty();
+        return !tile.needMeterial() || !tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, true).isEmpty();
     }
 
     @Override
     protected List<ItemStack> getToPlaceItems(BlockPos blockPos) {
-        return Collections.singletonList(tile.getInvResources().extract(null, 1, 1, false));
+        return Collections.singletonList(tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, false));
     }
 
     @Override
@@ -63,7 +67,6 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
             tile.getOwner(),
             tile.getBuilderPos()
         );
-        fakePlayer.setItemInHand(fakePlayer.getUsedItemHand(), placeTask.items.get(0));
         return TemplateApi.templateRegistry.handle(
             tile.getWorldBC(),
             placeTask.pos,

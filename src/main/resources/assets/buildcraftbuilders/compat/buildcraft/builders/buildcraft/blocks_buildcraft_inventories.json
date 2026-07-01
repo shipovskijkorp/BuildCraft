@@ -6,12 +6,22 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "in", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "in",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "out", "items"]
+                "path": [
+                    "items",
+                    "out",
+                    "items"
+                ]
             }
         ]
     },
@@ -22,12 +32,22 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "snapshot", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "snapshot",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "resources", "items"]
+                "path": [
+                    "items",
+                    "resources",
+                    "items"
+                ]
             }
         ]
     },
@@ -38,9 +58,14 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "resources", "items"]
+                "path": [
+                    "items",
+                    "resources",
+                    "items"
+                ]
             }
         ]
     },
@@ -51,15 +76,30 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "snapshot", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "snapshot",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "schematicFrom", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "schematicFrom",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "schematicTo", "items"]
+                "path": [
+                    "items",
+                    "schematicTo",
+                    "items"
+                ]
             }
         ]
     },
@@ -70,18 +110,38 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "downIn", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "downIn",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "downOut", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "downOut",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "upIn", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "upIn",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "upOut", "items"]
+                "path": [
+                    "items",
+                    "upOut",
+                    "items"
+                ]
             }
         ]
     },
@@ -92,18 +152,38 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "blueprint", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "blueprint",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "materials", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "materials",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "result", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "result",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "overflow", "items"]
+                "path": [
+                    "items",
+                    "overflow",
+                    "items"
+                ]
             }
         ]
     },
@@ -114,40 +194,14 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
-                "type": "items_list",
-                "path": ["items", "inv", "items"]
-            }
-        ]
-    },
-    {
-        "selectors": [
-            "buildcraftrobotics:zone_planner"
-        ],
-        "requiredExtractors": [
+            },
             {
-                "type": "item_from_block"
-            }, {
                 "type": "items_list",
-                "path": ["items", "paintbrushes", "items"]
-            }, {
-                "type": "items_list",
-                "path": ["items", "inputPaintbrush", "items"]
-            }, {
-                "type": "items_list",
-                "path": ["items", "inputMapLocation", "items"]
-            }, {
-                "type": "items_list",
-                "path": ["items", "inputResult", "items"]
-            }, {
-                "type": "items_list",
-                "path": ["items", "outputPaintbrush", "items"]
-            }, {
-                "type": "items_list",
-                "path": ["items", "outputMapLocation", "items"]
-            }, {
-                "type": "items_list",
-                "path": ["items", "outputResult", "items"]
+                "path": [
+                    "items",
+                    "inv",
+                    "items"
+                ]
             }
         ]
     },
@@ -158,9 +212,14 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "inv", "items"]
+                "path": [
+                    "items",
+                    "inv",
+                    "items"
+                ]
             }
         ]
     },
@@ -171,15 +230,30 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "blueprint", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "blueprint",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "materials", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "materials",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "result", "items"]
+                "path": [
+                    "items",
+                    "result",
+                    "items"
+                ]
             }
         ]
     },
@@ -190,15 +264,30 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "target", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "target",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "toIntegrate", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "toIntegrate",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "result", "items"]
+                "path": [
+                    "items",
+                    "result",
+                    "items"
+                ]
             }
         ]
     },
@@ -209,9 +298,14 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "fuel", "items"]
+                "path": [
+                    "items",
+                    "fuel",
+                    "items"
+                ]
             }
         ]
     },
@@ -222,12 +316,22 @@
         "requiredExtractors": [
             {
                 "type": "item_from_block"
-            }, {
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "filter", "items"]
-            }, {
+                "path": [
+                    "items",
+                    "filter",
+                    "items"
+                ]
+            },
+            {
                 "type": "items_list",
-                "path": ["items", "main", "items"]
+                "path": [
+                    "items",
+                    "main",
+                    "items"
+                ]
             }
         ]
     }

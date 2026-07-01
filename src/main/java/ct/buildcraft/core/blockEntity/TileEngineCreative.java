@@ -40,7 +40,6 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
 	
     public TileEngineCreative(BlockPos pos, BlockState state) {
 		super(BCCoreBlocks.ENGINE_CREATIVE_TILE_BC8.get(), pos, state);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static final long[] outputs = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };

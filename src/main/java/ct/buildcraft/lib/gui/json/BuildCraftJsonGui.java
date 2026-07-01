@@ -90,7 +90,7 @@ public class BuildCraftJsonGui extends BuildCraftGui {
         } catch (InvalidExpressionException iee) {
             throw new JsonSyntaxException("Failed to resolve the size of " + jsonGuiDefinition, iee);
         } catch (Exception e) {
-        	e.printStackTrace();
+            ct.buildcraft.api.core.BCLog.logger.error("Failed to load json gui " + jsonGuiDefinition, e);
             throw new Error(e);
         }
         loadHistory.finishLoading();

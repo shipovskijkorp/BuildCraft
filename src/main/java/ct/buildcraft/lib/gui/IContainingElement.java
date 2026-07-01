@@ -72,7 +72,7 @@ public interface IContainingElement extends IInteractionElement {
     default void onMouseDragged(int button, double finalX, double finalY) {
         for (IGuiElement elem : getChildElements()) {
             if (elem instanceof IInteractionElement) {
-                ((IInteractionElement) elem).onMouseDragged(button, finalY, finalY);
+                ((IInteractionElement) elem).onMouseDragged(button, finalX, finalY);
             }
         }
     }

@@ -38,7 +38,7 @@ public class BCEnergy {
 //			test();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ct.buildcraft.api.core.BCLog.logger.warn("Failed to initialise BuildCraft Energy integration", e);
 		} 
         //TEST_CODE_END
         // Register the commonSetup method for modloading

@@ -100,72 +100,15 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
     @Nullable
     @Override
     public void clicked(int slotId, int dragType, ClickType clickType, Player player) {
-        Slot slot = slotId < 0 ? null : this.slots.get(slotId);
-        if (slot == null) {
-            super.clicked(slotId, dragType, clickType, player);
-        }
-
-        ItemStack playerStack = getCarried();
-        if (slot instanceof IPhantomSlot) {
-            IPhantomSlot phantom = (IPhantomSlot) slot;
-            if (playerStack.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else if (!StackUtil.canMerge(playerStack, StackUtil.asNonNull(slot.getItem()))) {
-                ItemStack copy = playerStack.copy();
-                copy.setCount(1);
-                slot.set(copy);
-            } else if (phantom.canAdjustCount()) {
-                ItemStack stack = slot.getItem();
-                if (stack.getCount() < stack.getMaxStackSize()) {
-                    stack.grow(1);
-                    slot.set(stack);
-                }
-            }
+        if (BCMenuUtil.handleFakeSlotClick(this, slotId, dragType, clickType, player)) {
+            return;
         }
         super.clicked(slotId, dragType, clickType, player);
     }
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = slots.get(index);
-        Slot firstSlot = slots.get(0);
-        int playerInventorySize = 36;
-        boolean playerInventoryFirst = firstSlot.container instanceof Inventory;
-
-        if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-
-            if (slots.size() == playerInventorySize) return ItemStack.EMPTY;
-            if (playerInventoryFirst) {
-                if (index < playerInventorySize) {
-                    if (!this.moveItemStackTo(itemstack1, playerInventorySize, slots.size(), false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (!this.moveItemStackTo(itemstack1, 0, playerInventorySize, true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                if (index < slots.size() - playerInventorySize) {
-                    if (!this.moveItemStackTo(itemstack1, slots.size() - playerInventorySize,
-                        slots.size(), false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (!this.moveItemStackTo(itemstack1, 0, slots.size() - playerInventorySize,
-                    true)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-
-            if (itemstack1.isEmpty()) {
-                slot.safeInsert(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-        }
-
-        return itemstack;
+        return BCMenuUtil.quickMoveStack(this, playerIn, index);
     }
 
     public static ItemStack safeCopy(ItemStack in) {

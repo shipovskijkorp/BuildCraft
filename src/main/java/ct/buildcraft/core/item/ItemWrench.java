@@ -77,13 +77,12 @@ public class ItemWrench extends Item implements IToolWrench{
 
 	@Override
 	public boolean canWrench(Player player, InteractionHand hand, ItemStack wrench, HitResult rayTrace) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void wrenchUsed(Player player, InteractionHand hand, ItemStack wrench, HitResult rayTrace) {
-//        AdvancementUtil.unlockAdvancement(player, ADVANCEMENT);/TODO
+//        AdvancementUtil.unlockAdvancement(player, ADVANCEMENT);
         player.swingingArm = hand;
 	}
 
