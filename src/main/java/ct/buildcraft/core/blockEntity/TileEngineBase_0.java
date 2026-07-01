@@ -27,7 +27,7 @@ public abstract class TileEngineBase_0 extends BlockEntity implements ICapabilit
     public static final double IDEAL_HEAT = 100;
     public static final double MAX_HEAT = 250;
     
-    protected double heat = MIN_HEAT;// TODO: sync gui data
+    protected double heat = MIN_HEAT;
 	public int power = 0;
 	public float progress = 0;
 	protected boolean isRedstonePowered;

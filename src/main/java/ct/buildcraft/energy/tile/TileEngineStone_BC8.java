@@ -272,21 +272,18 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
 
 	@Override
 	public ItemStack removeItemNoUpdate(int p_18951_) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
 	public void setItem(int p_18944_, ItemStack p_18945_) {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
 	public boolean stillValid(Player p_18946_) {
-		// TODO Auto-generated method stub
 		return false;
 	}*/
 }

@@ -33,7 +33,6 @@ public class BCTank implements IFluidHandler,IFluidTank{
 		setTanks(getTanks() - tank_num);
 	}
 	public int getCapacity() {
-		// TODO Auto-generated method stub
 		return capacity;
 	}
 	public Boolean tryAddTank(BCTank subtank) {
@@ -56,7 +55,6 @@ public class BCTank implements IFluidHandler,IFluidTank{
 		return true;
 	}
 	public @NotNull FluidStack getFluid() {
-		// TODO Auto-generated method stub
 		return fluid;
 	}
 	public int getAmountOnNUM(int num) {
@@ -78,7 +76,6 @@ public class BCTank implements IFluidHandler,IFluidTank{
     }
 	@Override
 	public int getTanks() {
-		// TODO Auto-generated method stub
 		return tanks;
 	}
 	@Override
@@ -92,7 +89,6 @@ public class BCTank implements IFluidHandler,IFluidTank{
 	}
 	@Override
 	public int getTankCapacity(int tank) {
-		// TODO Auto-generated method stub
 		return capacity;
 	}
 	@Override
@@ -177,7 +173,6 @@ public class BCTank implements IFluidHandler,IFluidTank{
 		this.tanks = tanks;
 	}
 	public int getFluidAmount() {
-		// TODO Auto-generated method stub
 		return fluid.getAmount();
 	}
 	public void writeToNBT(CompoundTag tag) {

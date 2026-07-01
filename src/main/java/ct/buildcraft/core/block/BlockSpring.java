@@ -80,7 +80,6 @@ public class BlockSpring extends BlockBCBase_Neptune implements EntityBlock {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_,
 			BlockEntityType<T> p_153214_) {
-		// TODO Auto-generated method stub
 		return EntityBlock.super.getTicker(p_153212_, p_153213_, p_153214_);
 	}
 

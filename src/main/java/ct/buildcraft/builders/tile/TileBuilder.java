@@ -500,7 +500,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     @OnlyIn(Dist.CLIENT)
     public double getMaxRenderDistanceSquared() {
         return Double.MAX_VALUE;
-    } *///TODO
+    } */
     
     @Nonnull
     @Override

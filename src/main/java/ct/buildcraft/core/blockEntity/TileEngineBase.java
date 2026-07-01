@@ -43,8 +43,8 @@ public abstract class TileEngineBase extends BlockEntity {
 
 	public IEnergyStorage targe;
 
-	protected double heat = MIN_HEAT;// TODO: sync gui data
-	protected int power = 0;// TODO: sync gui data
+	protected double heat = MIN_HEAT;
+	protected int power = 0;
 //    private long lastPower = 0;
 	/** Increments from 0 to 1. Above 0.5 all of the held power is emitted. */
 	public float progress;
@@ -55,7 +55,7 @@ public abstract class TileEngineBase extends BlockEntity {
 	protected EnumPowerStage powerStage = EnumPowerStage.BLUE;
 	protected Direction currentDirection = Direction.UP;
 
-	public long currentOutput;// TODO: sync gui data
+	public long currentOutput;
 	public boolean isRedstonePowered = false;
 	protected boolean isPumping = true;
 
@@ -75,7 +75,6 @@ public abstract class TileEngineBase extends BlockEntity {
 	public TileEngineBase(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
 		super(p_155228_, p_155229_, p_155230_);
 //		this.EnergyLazyOptional = LazyOptional.of(() -> battery);
-		// TODO Auto-generated constructor stub
 	}
 
 	// Supplied instance (e.g. () -> inventoryHandler)
@@ -428,13 +427,11 @@ public abstract class TileEngineBase extends BlockEntity {
 
 	@Override
 	public Packet<ClientGamePacketListener> getUpdatePacket() {
-		// TODO Auto-generated method stub
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
 	public CompoundTag getUpdateTag() {
-		// TODO Auto-generated method stub
 		CompoundTag ct = super.getUpdateTag();
 		saveAdditional(ct);
 		return ct;
@@ -456,12 +453,10 @@ public abstract class TileEngineBase extends BlockEntity {
 	
 
 	public int getCurrentOutput() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public void onActivated(Player player, InteractionHand hand, Direction side) {
-		// TODO Auto-generated method stub
 	}
 
 }
