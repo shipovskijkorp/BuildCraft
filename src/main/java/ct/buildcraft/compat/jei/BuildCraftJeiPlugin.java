@@ -353,12 +353,17 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class DistillationCategory implements IRecipeCategory<IRefineryRecipeManager.IDistillationRecipe> {
+        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
         private final IDrawable background;
         private final IDrawable icon;
+        private final IDrawable slotBackground;
+        private final IDrawable arrow;
 
         DistillationCategory(IGuiHelper guiHelper) {
             background = guiHelper.createBlankDrawable(150, 58);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCFactoryItems.DISTILLER_BLOCK_ITEM.get()));
+            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
+            arrow = guiHelper.createDrawable(SLOT_TEXTURE, 28, 40, 12, 10);
         }
 
         @Override
@@ -383,13 +388,27 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, IRefineryRecipeManager.IDistillationRecipe recipe, IFocusGroup focuses) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 12, 18).addIngredient(ForgeTypes.FLUID_STACK, recipe.in().copy());
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 8).addIngredient(ForgeTypes.FLUID_STACK, recipe.outGas().copy());
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 30).addIngredient(ForgeTypes.FLUID_STACK, recipe.outLiquid().copy());
+            FluidStack in = recipe.in().copy();
+            FluidStack outGas = recipe.outGas().copy();
+            FluidStack outLiquid = recipe.outLiquid().copy();
+
+            builder.addSlot(RecipeIngredientRole.INPUT, 15, 18)
+                    .setBackground(slotBackground, -1, -1)
+                    .setFluidRenderer(Math.max(1, in.getAmount()), false, 16, 16)
+                    .addIngredient(ForgeTypes.FLUID_STACK, in);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 8)
+                    .setBackground(slotBackground, -1, -1)
+                    .setFluidRenderer(Math.max(1, outGas.getAmount()), false, 16, 16)
+                    .addIngredient(ForgeTypes.FLUID_STACK, outGas);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 30)
+                    .setBackground(slotBackground, -1, -1)
+                    .setFluidRenderer(Math.max(1, outLiquid.getAmount()), false, 16, 16)
+                    .addIngredient(ForgeTypes.FLUID_STACK, outLiquid);
         }
 
         @Override
         public void draw(IRefineryRecipeManager.IDistillationRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+            arrow.draw(stack, 68, 22);
             Minecraft.getInstance().font.draw(stack, formatMj(recipe.powerRequired()), 4, 48, 0xFF404040);
         }
     }
