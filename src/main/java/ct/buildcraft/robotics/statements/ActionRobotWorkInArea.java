@@ -1,8 +1,5 @@
 package ct.buildcraft.robotics.statements;
 
-import java.util.Random;
-
-import ct.buildcraft.api.core.IBox;
 import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.api.items.IMapLocation;
 import ct.buildcraft.api.statements.IActionInternal;
@@ -14,10 +11,8 @@ import ct.buildcraft.core.statements.BCStatement;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import ct.buildcraft.robotics.BCRoboticsSprites;
 import ct.buildcraft.robotics.BCRoboticsStatements;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -74,67 +69,7 @@ public class ActionRobotWorkInArea extends BCStatement implements IActionInterna
             return null;
         }
 
-        if (IMapLocation.MapLocationType.getFromStack(stack) == IMapLocation.MapLocationType.AREA) {
-            IBox box = map.getBox(stack);
-            return box == null ? null : new HorizontalAreaZone(box);
-        }
-
         return map.getZone(stack);
-    }
-
-    /**
-     * Robot work areas are treated as a horizontal map area. Volume markers still store their full 3D
-     * box in the Map Location item, but the robot action should use only the X/Z footprint. This matches
-     * the way players use a marker area to fence off a working plot: trees, dropped items, and stations
-     * may be above or below the marker's Y range and should still count as inside the area.
-     */
-    private static final class HorizontalAreaZone implements IZone {
-        private final IBox area;
-
-        private HorizontalAreaZone(IBox area) {
-            this.area = area;
-        }
-
-        @Override
-        public double distanceTo(BlockPos pos) {
-            return Math.sqrt(distanceToSquared(pos));
-        }
-
-        @Override
-        public double distanceToSquared(BlockPos pos) {
-            double dx = axisDistance(pos.getX(), area.min().getX(), area.max().getX());
-            double dz = axisDistance(pos.getZ(), area.min().getZ(), area.max().getZ());
-            return dx * dx + dz * dz;
-        }
-
-        @Override
-        public boolean contains(Vec3 point) {
-            int x = (int) Math.floor(point.x);
-            int z = (int) Math.floor(point.z);
-            return x >= area.min().getX() && x <= area.max().getX()
-                    && z >= area.min().getZ() && z <= area.max().getZ();
-        }
-
-        @Override
-        public BlockPos getRandomBlockPos(Random rand) {
-            int x = randomInclusive(rand, area.min().getX(), area.max().getX());
-            int z = randomInclusive(rand, area.min().getZ(), area.max().getZ());
-            return new BlockPos(x, area.min().getY(), z);
-        }
-
-        private static double axisDistance(int value, int min, int max) {
-            if (value < min) {
-                return min - value;
-            }
-            if (value > max) {
-                return value - max;
-            }
-            return 0;
-        }
-
-        private static int randomInclusive(Random rand, int min, int max) {
-            return min + rand.nextInt(max - min + 1);
-        }
     }
 
     public AreaType getAreaType() {
