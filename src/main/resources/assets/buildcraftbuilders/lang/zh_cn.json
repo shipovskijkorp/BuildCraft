@@ -53,5 +53,6 @@
   "item.buildcraftbuilders.schematic_single.not_enough_items": "Not enough items. Total needed: %s",
   "item.buildcraftbuilders.schematic_single.requires_fluids": "Schematic requires fluids",
   "item.buildcraftbuilders.schematic_single.invalid_with_reason": "Invalid schematic: %s",
-  "gui.buildcraftbuilders.filler.locked": "已锁定"
+  "gui.buildcraftbuilders.filler.locked": "已锁定",
+  "block.buildcraftbuilders.quarry_drill_collision": "采石场钻头碰撞体"
 }

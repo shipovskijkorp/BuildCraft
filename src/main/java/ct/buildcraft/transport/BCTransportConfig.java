@@ -113,9 +113,10 @@ public class BCTransportConfig {
     	powerTransfer(BCTransportPipes.woodPower, basePowerRate * 4, 128, true);
     	powerTransfer(BCTransportPipes.sandstonePower, basePowerRate * 4, 32, false);
     	powerTransfer(BCTransportPipes.quartzPower, basePowerRate * 8, 32, false);
-    	// powerTransfer(BCTransportPipes.ironPower, basePowerRate * 8, false);
+	powerTransfer(BCTransportPipes.ironPower, basePowerRate * 8, 32, false);
     	powerTransfer(BCTransportPipes.goldPower, basePowerRate * 16, 32, false);
-    	// powerTransfer(BCTransportPipes.diamondPower, basePowerRate * 32, false);
+	powerTransfer(BCTransportPipes.diamondPower, basePowerRate * 64, 32, false);
+	powerTransfer(BCTransportPipes.diaWoodPower, basePowerRate * 64, 32, true);
     }	
 
     private static void fluidTransfer(PipeDefinition def, int rate, int delay) {

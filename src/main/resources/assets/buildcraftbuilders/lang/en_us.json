@@ -60,5 +60,6 @@
   "item.buildcraftbuilders.schematic_single.not_enough_items": "Not enough items. Total needed: %s",
   "item.buildcraftbuilders.schematic_single.requires_fluids": "Schematic requires fluids",
   "item.buildcraftbuilders.schematic_single.invalid_with_reason": "Invalid schematic: %s",
-  "gui.buildcraftbuilders.filler.locked": "Locked"
+  "gui.buildcraftbuilders.filler.locked": "Locked",
+  "block.buildcraftbuilders.quarry_drill_collision": "Quarry Drill Collision"
 }
