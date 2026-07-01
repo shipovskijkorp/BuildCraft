@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import ct.buildcraft.api.core.render.ISprite;
 import ct.buildcraft.builders.menu.ContainerElectronicLibrary;
 import ct.buildcraft.builders.snapshot.GlobalSavedDataSnapshots;
 import ct.buildcraft.builders.snapshot.Snapshot;
@@ -25,6 +26,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import ct.buildcraft.lib.gui.help.GuiHelpUtil;
+import ct.buildcraft.lib.misc.GuiUtil;
 
 public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
     private static final ResourceLocation TEXTURE_BASE =
@@ -80,8 +82,8 @@ public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
     protected void drawBackgroundLayer(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
     	RenderSystem._setShaderTexture(0, TEXTURE_BASE);
         ICON_GUI.drawAt(pose, mainGui.rootElement);
-        drawProgress(pose, RECT_PROGRESS_DOWN, ICON_PROGRESS_DOWN, -container.tile.deltaProgressDown.getDynamic(partialTicks), 1);
-        drawProgress(pose, RECT_PROGRESS_UP, ICON_PROGRESS_UP, container.tile.deltaProgressUp.getDynamic(partialTicks), 1);
+        drawHorizontalProgress(pose, RECT_PROGRESS_DOWN, ICON_PROGRESS_DOWN, container.tile.getDownloadProgress(partialTicks), true);
+        drawHorizontalProgress(pose, RECT_PROGRESS_UP, ICON_PROGRESS_UP, container.tile.getUploadProgress(partialTicks), false);
         iterateSnapshots((i, rect, key) -> {
             boolean isSelected = key.equals(container.tile.selected);
             if (isSelected) {
@@ -93,6 +95,23 @@ public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
             drawString(pose, font, text, rect.x, rect.y, colour);
         });
         delButton.enabled = getSnapshots().getSnapshot(container.tile.selected) != null;
+    }
+
+
+    private void drawHorizontalProgress(PoseStack pose, GuiRectangle rect, GuiIcon icon, double progress, boolean rightToLeft) {
+        if (progress <= 0) {
+            return;
+        }
+        progress = Math.min(1, progress);
+        double width = rect.width * progress;
+        double x = mainGui.rootElement.getX() + rect.x;
+        if (rightToLeft) {
+            x += rect.width - width;
+        }
+        double y = mainGui.rootElement.getY() + rect.y;
+        double u = rightToLeft ? 1 - progress : 0;
+        ISprite sprite = GuiUtil.subRelative(icon.sprite, u, 0, progress, 1);
+        GuiIcon.draw(pose, sprite, x, y, x + width, y + rect.height);
     }
 
     private GlobalSavedDataSnapshots getSnapshots() {

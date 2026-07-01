@@ -25,8 +25,6 @@ import ct.buildcraft.builders.item.ItemSnapshot;
 import ct.buildcraft.builders.menu.ContainerElectronicLibrary;
 import ct.buildcraft.builders.snapshot.GlobalSavedDataSnapshots;
 import ct.buildcraft.builders.snapshot.Snapshot;
-import ct.buildcraft.lib.delta.DeltaInt;
-import ct.buildcraft.lib.delta.DeltaManager;
 import ct.buildcraft.lib.misc.StackUtil;
 import ct.buildcraft.lib.misc.data.IdAllocator;
 import ct.buildcraft.lib.nbt.NbtSquisher;
@@ -35,7 +33,6 @@ import ct.buildcraft.lib.tile.TileBC_Neptune;
 import ct.buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import ct.buildcraft.lib.tile.item.ItemHandlerSimple;
 import ct.buildcraft.lib.tile.item.StackInsertionFunction;
-import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -46,6 +43,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -60,8 +58,7 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
     public final ItemHandlerSimple invDownIn = itemManager.addInvHandler(
         "downIn",
         1,
-        (slot, stack) -> stack.getItem() instanceof ItemSnapshot &&
-            ItemSnapshot.EnumItemSnapshotType.getFromStack(stack).used,
+        (slot, stack) -> isUsedSnapshot(stack),
         StackInsertionFunction.getInsertionFunction(1),
         EnumAccess.INSERT,
         EnumPipePart.VALUES
@@ -76,7 +73,7 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
     public final ItemHandlerSimple invUpIn = itemManager.addInvHandler(
         "upIn",
         1,
-        (slot, stack) -> stack.getItem() instanceof ItemSnapshot,
+        (slot, stack) -> isCleanSnapshot(stack),
         StackInsertionFunction.getInsertionFunction(1),
         EnumAccess.INSERT,
         EnumPipePart.VALUES
@@ -88,51 +85,64 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
         EnumAccess.EXTRACT,
         EnumPipePart.VALUES
     );
+    public static final int TRANSFER_TIME = 50;
+
     public Snapshot.Key selected = null;
     private int progressDown = -1;
     private int progressUp = -1;
-    public final DeltaInt deltaProgressDown = deltaManager.addDelta("progressDown", DeltaManager.EnumNetworkVisibility.GUI_ONLY);
-    public final DeltaInt deltaProgressUp = deltaManager.addDelta("progressUp", DeltaManager.EnumNetworkVisibility.GUI_ONLY);
+    private int progressDownLast = -1;
+    private int progressUpLast = -1;
     private final Map<Pair<UUID, Snapshot.Key>, List<byte[]>> upSnapshotsParts = new HashMap<>();
 
     public TileElectronicLibrary(BlockPos pos, BlockState state) {
 		super(BCBuildersBlocks.LIBRARY_TILE_BC8.get(), pos, state);
 	}
+
+    public static boolean isUsedSnapshot(ItemStack stack) {
+        return ItemSnapshot.getHeader(stack) != null;
+    }
+
+    public static boolean isCleanSnapshot(ItemStack stack) {
+        return stack.getItem() instanceof ItemSnapshot && !ItemSnapshot.EnumItemSnapshotType.getFromStack(stack).used;
+    }
+
+    private Snapshot getSnapshotForDownload() {
+        Snapshot.Header header = ItemSnapshot.getHeader(invDownIn.getStackInSlot(0));
+        return header == null || level == null ? null : GlobalSavedDataSnapshots.get(level).getSnapshot(header.key);
+    }
     
     @Override
     protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
         super.onSlotChange(handler, slot, before, after);
-        if (handler == invDownIn) {
-            if (progressDown > 0) {
-                progressDown = -1;
-                deltaProgressDown.setValue(0);
-            }
+        if (handler == invDownIn && progressDown > 0) {
+            progressDown = -1;
         }
-        if (handler == invUpIn) {
-            if (progressUp > 0) {
-                progressUp = -1;
-                deltaProgressUp.setValue(0);
-            }
+        if (handler == invUpIn && progressUp > 0) {
+            progressUp = -1;
         }
     }
 
     @Override
     public void update() {
-        deltaManager.tick();
-
         if (level.isClientSide) {
+            progressDownLast = progressDown;
+            progressUpLast = progressUp;
             return;
         }
 
-        if (!invDownIn.getStackInSlot(0).isEmpty() && invDownOut.getStackInSlot(0).isEmpty()) {
+        progressDownLast = progressDown;
+        progressUpLast = progressUp;
+
+        boolean canDownload = getSnapshotForDownload() != null && invDownOut.getStackInSlot(0).isEmpty();
+        if (canDownload) {
             if (progressDown == -1) {
                 progressDown = 0;
-                deltaProgressDown.addDelta(0, 50, 1);
-                deltaProgressDown.addDelta(50, 55, -1);
             }
-            if (progressDown >= 50) {
+            if (progressDown >= TRANSFER_TIME) {
                 sendNetworkGuiUpdate(NET_DOWN);
-                invDownOut.setStackInSlot(0, invDownIn.getStackInSlot(0));
+                ItemStack downloaded = invDownIn.getStackInSlot(0).copy();
+                downloaded.setCount(1);
+                invDownOut.setStackInSlot(0, downloaded);
                 invDownIn.setStackInSlot(0, StackUtil.EMPTY);
                 progressDown = -1;
             } else {
@@ -140,16 +150,14 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
             }
         } else if (progressDown != -1) {
             progressDown = -1;
-            deltaProgressDown.setValue(0);
         }
 
-        if (selected != null && !invUpIn.getStackInSlot(0).isEmpty() && invUpOut.getStackInSlot(0).isEmpty()) {
+        boolean canUpload = selected != null && isCleanSnapshot(invUpIn.getStackInSlot(0)) && invUpOut.getStackInSlot(0).isEmpty();
+        if (canUpload) {
             if (progressUp == -1) {
                 progressUp = 0;
-                deltaProgressUp.addDelta(0, 50, 1);
-                deltaProgressUp.addDelta(50, 55, -1);
             }
-            if (progressUp >= 50) {
+            if (progressUp >= TRANSFER_TIME) {
                 sendNetworkGuiUpdate(NET_UP);
                 progressUp = -1;
             } else {
@@ -157,8 +165,32 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
             }
         } else if (progressUp != -1) {
             progressUp = -1;
-            deltaProgressUp.setValue(0);
         }
+    }
+
+    public double getDownloadProgress(float partialTicks) {
+        return interpolateProgress(progressDownLast, progressDown, partialTicks);
+    }
+
+    public double getUploadProgress(float partialTicks) {
+        return interpolateProgress(progressUpLast, progressUp, partialTicks);
+    }
+
+    private static double interpolateProgress(int last, int current, float partialTicks) {
+        if (current < 0) {
+            return 0;
+        }
+        if (last < 0) {
+            last = current;
+        }
+        double value = last * (1.0D - partialTicks) + current * partialTicks;
+        if (value <= 0) {
+            return 0;
+        }
+        if (value >= TRANSFER_TIME) {
+            return 1;
+        }
+        return value / TRANSFER_TIME;
     }
 
     // How networking works here:
@@ -182,26 +214,26 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
             }
             if (id == NET_DOWN) {
                 Snapshot.Header header = ItemSnapshot.getHeader(invDownIn.getStackInSlot(0));
-                if (header != null) {
-                    Snapshot snapshot = GlobalSavedDataSnapshots.get(level).getSnapshot(header.key);
-                    if (snapshot != null) {
-                        snapshot = snapshot.copy();
-                        snapshot.key = new Snapshot.Key(snapshot.key, header);
-                        buffer.writeBoolean(true);
-                        NbtSquisher.squish(
-                            Snapshot.writeToNBT(snapshot),
-                            NbtSquishConstants.BUILDCRAFT_V1_COMPRESSED,
-                            buffer
-                        );
-                    } else {
-                        buffer.writeBoolean(false);
-                    }
+                Snapshot snapshot = getSnapshotForDownload();
+                if (header != null && snapshot != null) {
+                    snapshot = snapshot.copy();
+                    snapshot.key = new Snapshot.Key(snapshot.key, header);
+                    buffer.writeBoolean(true);
+                    NbtSquisher.squish(
+                        Snapshot.writeToNBT(snapshot),
+                        NbtSquishConstants.BUILDCRAFT_V1_COMPRESSED,
+                        buffer
+                    );
                 } else {
                     buffer.writeBoolean(false);
                 }
             }
             // noinspection StatementWithEmptyBody
             if (id == NET_UP) {
+            }
+            if (id == NET_GUI_DATA || (id == NET_GUI_TICK && (progressDown != progressDownLast || progressUp != progressUpLast))) {
+                buffer.writeVarInt(progressDown);
+                buffer.writeVarInt(progressUp);
             }
         }
     }
@@ -224,6 +256,12 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
                     GlobalSavedDataSnapshots.get(level).addSnapshot(snapshot);
                 }
             }
+            if (id == NET_GUI_TICK || id == NET_GUI_DATA) {
+                progressDownLast = progressDown;
+                progressUpLast = progressUp;
+                progressDown = buffer.readVarInt();
+                progressUp = buffer.readVarInt();
+            }
             if (id == NET_UP) {
                 if (selected != null) {
                     Snapshot snapshot = GlobalSavedDataSnapshots.get(level).getSnapshot(selected);
@@ -235,8 +273,6 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
                             
                             private void write(boolean last) throws IOException {
                                 MessageManager.sendToServer(createMessage(NET_UP, localBuffer -> {
-                                    ClientPacketListener listener = (ClientPacketListener) ctx.getNetworkManager().getPacketListener();
-                                    localBuffer.writeUUID(listener.getLocalGameProfile().getId());
                                     selected.writeToByteBuf(localBuffer);
                                     localBuffer.writeBoolean(last);
                                     localBuffer.writeByteArray(buf);
@@ -276,13 +312,17 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
         }
         if (side == LogicalSide.SERVER) {
             if (id == NET_UP) {
-                UUID playerId = buffer.readUUID();
+                ServerPlayer sender = ctx == null ? null : ctx.getSender();
+                UUID playerId = sender == null ? new UUID(0L, 0L) : sender.getUUID();
                 Snapshot.Key key = new Snapshot.Key(buffer);
                 Pair<UUID, Snapshot.Key> pair = Pair.of(playerId, key);
                 boolean last = buffer.readBoolean();
                 upSnapshotsParts.computeIfAbsent(pair, localPair -> new ArrayList<>()).add(buffer.readByteArray());
                 if (last && upSnapshotsParts.containsKey(pair)) {
                     try {
+                        if (selected == null || !selected.equals(key) || !isCleanSnapshot(invUpIn.getStackInSlot(0)) || !invUpOut.getStackInSlot(0).isEmpty()) {
+                            return;
+                        }
                         Snapshot snapshot = Snapshot.readFromNBT(
                             NbtSquisher.expand(
                                 Bytes.concat(
@@ -292,6 +332,9 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
                             )
                         );
                         Snapshot.Header header = snapshot.key.header;
+                        if (header == null) {
+                            return;
+                        }
                         snapshot = snapshot.copy();
                         snapshot.key = new Snapshot.Key(snapshot.key, (Snapshot.Header) null);
                         snapshot.computeKey();
