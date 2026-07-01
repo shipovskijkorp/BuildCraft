@@ -75,6 +75,14 @@ public class MenuReplacer extends AbstractContainerMenu {
     }
 
     @Override
+    public void clicked(int slotId, int dragType, net.minecraft.world.inventory.ClickType clickType, Player player) {
+        if (ct.buildcraft.lib.gui.BCMenuUtil.handleFakeSlotClick(this, slotId, dragType, clickType, player)) {
+            return;
+        }
+        super.clicked(slotId, dragType, clickType, player);
+    }
+
+    @Override
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack original = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
