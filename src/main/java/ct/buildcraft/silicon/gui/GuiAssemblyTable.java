@@ -21,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiAssemblyTable extends GuiBC8<ContainerAssemblyTable> {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftsilicon:textures/gui/assembly_table.png");
@@ -37,6 +38,9 @@ public class GuiAssemblyTable extends GuiBC8<ContainerAssemblyTable> {
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
         mainGui.shownElements.add(new LedgerTablePower(mainGui, container.tile, true));
+        GuiHelpUtil.addSlots(mainGui, 8, 36, 3, 4, "buildcraft.help.assembly.ingredients.title", 0xFF_88_CC_88, "buildcraft.help.assembly.ingredients.desc");
+        GuiHelpUtil.addSlots(mainGui, 116, 36, 3, 4, "buildcraft.help.assembly.recipes.title", 0xFF_66_AA_FF, "buildcraft.help.assembly.recipes.desc");
+        GuiHelpUtil.addRoot(mainGui, 86, 36, 4, 70, "buildcraft.help.silicon.progress.title", 0xFF_DD_CC_55, "buildcraft.help.silicon.progress.desc");
         titleLabelY += 8;
     }
 

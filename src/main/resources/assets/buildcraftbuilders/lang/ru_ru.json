@@ -1,0 +1,14 @@
+{
+  "block.buildcraftbuilders.filler": "Заполнитель",
+  "block.buildcraftbuilders.builder": "Строитель",
+  "block.buildcraftbuilders.architect": "Стол архитектора",
+  "block.buildcraftbuilders.library": "Электронная библиотека",
+  "block.buildcraftbuilders.replacer": "Заменитель",
+  "block.buildcraftbuilders.quarry": "Карьер",
+  "gui.filler.no_area": "Область не выбрана: поставьте заполнитель рядом с маркерами или объёмной рамкой",
+  "gui.buildcraftbuilders.filler.locked": "Заблокировано",
+  "gui.buildcraftbuilders.replacer.preview.no_blueprint": "Вставьте записанный чертёж",
+  "gui.buildcraftbuilders.replacer.preview.loading": "Загрузка чертежа...",
+  "gui.buildcraftbuilders.replacer.preview.not_blueprint": "Можно изменять только чертежи",
+  "gui.buildcraftbuilders.replacer.preview.empty": "Нет блоков для предпросмотра"
+}

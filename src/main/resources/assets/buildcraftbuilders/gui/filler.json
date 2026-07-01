@@ -121,15 +121,15 @@
         "is_locked_tooltip": {
             "type": "buildcraftlib:tooltip",
             "visible": "filler.is_locked",
-            "text": "Locked",
+            "text": "gui.buildcraftbuilders.filler.locked",
             "area": [12, 16, 16, 16]
         },
         "is_locked_help": {
             "type": "buildcraftlib:help",
             "area": [10, 14, 19, 20],
             "colour": "0xFF_FF_BB_33",
-            "title": "Locked",
-            "text": [ "Shows a lock if the pattern", "is set by a nearby gate" ]
+            "title": "buildcraft.help.filler.locked.title",
+            "text": "buildcraft.help.filler.locked.desc"
         },
         "mode_icon": {
             "type": "buildcraftlib:drawable",
@@ -150,8 +150,8 @@
             "type": "buildcraftlib:help",
             "area": [30, 14, 20, 20],
             "colour": "0xFF_33_BB_FF",
-            "title": "Control mode",
-            "text": [ "Either ON, OFF, or LOOP.", "Set by gates." ]
+            "title": "buildcraft.help.filler.mode.title",
+            "text": "buildcraft.help.filler.mode.desc"
         },
         "filler_inventory": {
             "type": "buildcraftlib:slot",

@@ -25,7 +25,7 @@ public class BCFactoryGuis {
 	public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, BCFactory.MODID);
 	
     public static final RegistryObject<MenuType<ContainerAutoCraftItems>> MENU_AUTOWORK_BENCH_ITEM = MENUS.register("menu.autoworkbench_item", () -> BCContainerFactory.create(ContainerAutoCraftItems::create));
-    public static final RegistryObject<MenuType<MenuHeatExchange>> MENU_HEAT_EXCHANGE = MENUS.register("menu.heat_exchange", () -> new MenuType<>(MenuHeatExchange::new));
+    public static final RegistryObject<MenuType<MenuHeatExchange>> MENU_HEAT_EXCHANGE = MENUS.register("menu.heat_exchange", () -> BCContainerFactory.create(MenuHeatExchange::new));
     public static final RegistryObject<MenuType<ContainerChute>> MENU_CHUTE = MENUS.register("menu.chute", () -> BCContainerFactory.create(ContainerChute::new));
     public static final RegistryObject<MenuType<ContainerTank>> MENU_TANK = MENUS.register("menu.tank", () -> BCContainerFactory.create(ContainerTank::new));
 

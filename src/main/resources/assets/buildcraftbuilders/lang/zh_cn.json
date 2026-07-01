@@ -52,5 +52,6 @@
   "gui.buildcraftbuilders.replacer.status.no_match": "Source block was not found in blueprint",
   "item.buildcraftbuilders.schematic_single.not_enough_items": "Not enough items. Total needed: %s",
   "item.buildcraftbuilders.schematic_single.requires_fluids": "Schematic requires fluids",
-  "item.buildcraftbuilders.schematic_single.invalid_with_reason": "Invalid schematic: %s"
+  "item.buildcraftbuilders.schematic_single.invalid_with_reason": "Invalid schematic: %s",
+  "gui.buildcraftbuilders.filler.locked": "已锁定"
 }

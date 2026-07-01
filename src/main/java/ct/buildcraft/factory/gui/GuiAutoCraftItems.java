@@ -33,6 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implements RecipeUpdateListener {
     private static final ResourceLocation TEXTURE_BASE =
@@ -67,6 +68,10 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
         }
         recipeBook =null;//= book;
         mainGui.shownElements.add(new LedgerHelp(mainGui, true));
+        GuiHelpUtil.addSlots(mainGui, 30, 17, 3, 3, "buildcraft.help.autoworkbench.recipe.title", 0xFF_66_AA_FF, "buildcraft.help.autoworkbench.recipe.desc");
+        GuiHelpUtil.addSlots(mainGui, 8, 84, 9, 1, "buildcraft.help.autoworkbench.materials.title", 0xFF_88_CC_88, "buildcraft.help.autoworkbench.materials.desc");
+        GuiHelpUtil.addSlot(mainGui, 124, 35, "buildcraft.help.autoworkbench.result.title", 0xFF_DD_CC_55, "buildcraft.help.autoworkbench.result.desc");
+        GuiHelpUtil.addRoot(mainGui, 90, 47, 23, 10, "buildcraft.help.autoworkbench.progress.title", 0xFF_CC_AA_FF, "buildcraft.help.autoworkbench.progress.desc");
     }
 
     private void sendRecipe(Recipe<?> recipe) {

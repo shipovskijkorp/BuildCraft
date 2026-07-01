@@ -2,21 +2,28 @@ package ct.buildcraft.builders.gui;
 
 import java.util.function.Predicate;
 
+import javax.annotation.Nullable;
+
 import ct.buildcraft.builders.BCBuildersBlocks;
 import ct.buildcraft.builders.BCBuildersGuis;
 import ct.buildcraft.builders.item.ItemSchematicSingle;
 import ct.buildcraft.builders.item.ItemSnapshot;
+import ct.buildcraft.builders.tile.TileReplacer;
+import ct.buildcraft.lib.gui.IMenuBCTile;
+import ct.buildcraft.lib.gui.MenuBC_Neptune;
+import ct.buildcraft.lib.tile.TileBC_Neptune;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class MenuReplacer extends AbstractContainerMenu {
+public class MenuReplacer extends MenuBC_Neptune implements IMenuBCTile {
 
     private static final int MACHINE_SLOT_COUNT = 3;
     private static final int PLAYER_INV_START = MACHINE_SLOT_COUNT;
@@ -25,14 +32,37 @@ public class MenuReplacer extends AbstractContainerMenu {
     private static final int HOTBAR_END = HOTBAR_START + 9;
 
     protected final ContainerLevelAccess access;
+    @Nullable
+    public final TileReplacer tile;
+
+    public MenuReplacer(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
+        this(
+            containerId,
+            playerInventory,
+            new ItemStackHandler(1),
+            new ItemStackHandler(1),
+            new ItemStackHandler(1),
+            CreateClientLevelAccess(buf)
+        );
+    }
 
     public MenuReplacer(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, new ItemStackHandler(1), new ItemStackHandler(1), new ItemStackHandler(1), ContainerLevelAccess.NULL);
     }
 
     public MenuReplacer(int containerId, Inventory playerInventory, IItemHandler snapshot, IItemHandler from, IItemHandler to, ContainerLevelAccess access) {
-        super(BCBuildersGuis.MENU_REPLACER.get(), containerId);
+        super(playerInventory, BCBuildersGuis.MENU_REPLACER.get(), containerId);
         this.access = access;
+        this.tile = access.evaluate((level, pos) -> {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof TileReplacer replacer) {
+                if (!level.isClientSide) {
+                    replacer.onPlayerOpen(playerInventory.player);
+                }
+                return replacer;
+            }
+            return null;
+        }, null);
 
         // BC8 layout: blueprint preview at the top, source/target schematic slots near the bottom, then player inventory.
         this.addSlot(filteredSlot(snapshot, 0, 8, 115, MenuReplacer::isUsedBlueprint));
@@ -75,11 +105,19 @@ public class MenuReplacer extends AbstractContainerMenu {
     }
 
     @Override
-    public void clicked(int slotId, int dragType, net.minecraft.world.inventory.ClickType clickType, Player player) {
-        if (ct.buildcraft.lib.gui.BCMenuUtil.handleFakeSlotClick(this, slotId, dragType, clickType, player)) {
-            return;
+    public void removed(Player player) {
+        super.removed(player);
+        if (tile != null) {
+            tile.onPlayerClose(player);
         }
-        super.clicked(slotId, dragType, clickType, player);
+    }
+
+    @Override
+    public void broadcastChanges() {
+        super.broadcastChanges();
+        if (tile != null) {
+            tile.sendNetworkGuiTick(playerInventory.player);
+        }
     }
 
     @Override
@@ -129,6 +167,14 @@ public class MenuReplacer extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
+        if (tile != null) {
+            return tile.canInteractWith(player);
+        }
         return super.stillValid(this.access, player, BCBuildersBlocks.REPLACER.get());
+    }
+
+    @Override
+    public TileBC_Neptune getBCTile() {
+        return tile;
     }
 }

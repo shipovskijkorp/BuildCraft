@@ -13,7 +13,14 @@ import ct.buildcraft.builders.item.ItemSnapshot;
 import ct.buildcraft.builders.snapshot.Blueprint;
 import ct.buildcraft.builders.snapshot.ClientSnapshots;
 import ct.buildcraft.builders.snapshot.Snapshot;
+import ct.buildcraft.lib.gui.BuildCraftGui;
+import ct.buildcraft.lib.gui.help.DummyHelpElement;
+import ct.buildcraft.lib.gui.help.ElementHelpInfo;
+import ct.buildcraft.lib.gui.ledger.LedgerHelp;
+import ct.buildcraft.lib.gui.ledger.LedgerOwnership;
+import ct.buildcraft.lib.gui.pos.GuiRectangle;
 import net.minecraft.client.Minecraft;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,14 +44,59 @@ public class ScreenReplacer extends AbstractContainerScreen<MenuReplacer> {
     private static final int ERROR_COLOUR = 0xAA0000;
     private static final int OK_COLOUR = 0x2F6F2F;
 
+    private final BuildCraftGui mainGui;
+
     public ScreenReplacer(MenuReplacer menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
+        this.mainGui = new BuildCraftGui(this, BuildCraftGui.createWindowedArea(this));
+        if (menu.tile != null) {
+            this.mainGui.shownElements.add(new LedgerOwnership(this.mainGui, menu.tile, true));
+        }
+        this.mainGui.shownElements.add(new DummyHelpElement(
+            new GuiRectangle(PREVIEW_X, PREVIEW_Y, PREVIEW_W, PREVIEW_H).offset(this.mainGui.rootElement).expand(2),
+            new ElementHelpInfo(
+                "buildcraft.help.replacer.preview.title",
+                0xFF_CC_AA_88,
+                "buildcraft.help.replacer.preview.desc"
+            )
+        ));
+        this.mainGui.shownElements.add(new DummyHelpElement(
+            new GuiRectangle(8, 115, 18, 18).offset(this.mainGui.rootElement).expand(2),
+            new ElementHelpInfo(
+                "buildcraft.help.replacer.blueprint.title",
+                0xFF_88_AA_CC,
+                "buildcraft.help.replacer.blueprint.desc"
+            )
+        ));
+        this.mainGui.shownElements.add(new DummyHelpElement(
+            new GuiRectangle(8, 137, 18, 18).offset(this.mainGui.rootElement).expand(2),
+            new ElementHelpInfo(
+                "buildcraft.help.replacer.from.title",
+                0xFF_CC_88_88,
+                "buildcraft.help.replacer.from.desc"
+            )
+        ));
+        this.mainGui.shownElements.add(new DummyHelpElement(
+            new GuiRectangle(56, 137, 18, 18).offset(this.mainGui.rootElement).expand(2),
+            new ElementHelpInfo(
+                "buildcraft.help.replacer.to.title",
+                0xFF_88_CC_88,
+                "buildcraft.help.replacer.to.desc"
+            )
+        ));
+        this.mainGui.shownElements.add(new LedgerHelp(this.mainGui, false));
         this.imageWidth = SIZE_X;
         this.imageHeight = SIZE_Y;
         this.titleLabelX = 8;
         this.titleLabelY = 6;
         this.inventoryLabelX = 8;
         this.inventoryLabelY = 148;
+    }
+
+    @Override
+    public void containerTick() {
+        super.containerTick();
+        this.mainGui.tick();
     }
 
     @Override
@@ -63,11 +115,45 @@ public class ScreenReplacer extends AbstractContainerScreen<MenuReplacer> {
         RenderSystem.setShaderTexture(0, TEXTURE_BASE);
         this.blit(pose, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         renderBlueprintPreview(pose);
+        this.mainGui.drawBackgroundLayer(pose, partialTick, mouseX, mouseY, () -> {});
+        this.mainGui.drawElementBackgrounds(pose);
     }
 
     @Override
     protected void renderLabels(PoseStack pose, int mouseX, int mouseY) {
         // Keep the GUI visually clean: the only text we render is the centred preview message inside the preview panel.
+        this.mainGui.preDrawForeground(pose);
+        this.mainGui.drawElementForegrounds(pose, () -> {});
+        this.mainGui.postDrawForeground(pose);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        boolean result = super.mouseClicked(mouseX, mouseY, button);
+        this.mainGui.onMouseClicked(mouseX, mouseY, button);
+        return result;
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        boolean result = super.mouseReleased(mouseX, mouseY, button);
+        this.mainGui.onMouseReleased(mouseX, mouseY, button);
+        return result;
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        boolean result = super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+        this.mainGui.onMouseDragged(mouseX, mouseY, button, dragX, dragY);
+        return result;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (this.mainGui.onKeyTyped(modifiers, InputConstants.getKey(keyCode, scanCode))) {
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     private void renderBlueprintPreview(PoseStack pose) {

@@ -23,7 +23,6 @@ import ct.buildcraft.lib.gui.elem.GuiElementContainerHelp;
 import ct.buildcraft.lib.gui.help.ElementHelpInfo.HelpPosition;
 import ct.buildcraft.lib.gui.pos.IGuiArea;
 import ct.buildcraft.lib.misc.GuiUtil;
-import ct.buildcraft.lib.misc.LocaleUtil;
 import ct.buildcraft.lib.misc.RenderUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -43,8 +42,8 @@ public class LedgerHelp extends Ledger_Neptune {
             GuiUtil.slice(GuiUtil.subRelative(BCLibSprites.HELP_SPLIT, 8, 8, 8, 8, 16), 2, 2, 6, 6, 8);
     }
 
-    private IGuiElement selected = null;
-    private boolean foundAny = false, init = false;
+    private HelpPosition selected = null;
+    private boolean foundAny = false;
 
     public LedgerHelp(BuildCraftGui gui, boolean expandPositive) {
         super(gui, 0xFF_CC_99_FF, expandPositive);
@@ -58,26 +57,22 @@ public class LedgerHelp extends Ledger_Neptune {
     @Override
     public void tick() {
         super.tick();
+        List<HelpPosition> positions = collectHelpPositions();
+        foundAny = !positions.isEmpty();
+
         if (currentWidth == CLOSED_WIDTH && currentHeight == CLOSED_HEIGHT) {
-            selected = null;
-            if (openElements.size() == 2) {
-                openElements.remove(1);
-                title = Component.translatable("gui.ledger.help");
-                calculateMaxSize();
-            }
+            clearSelected();
+            return;
+        }
+
+        if (selected != null && positions.stream().noneMatch(this::sameAsSelected)) {
+            clearSelected();
         }
     }
 
     @Override
     protected void drawIcon(PoseStack pose, double x, double y) {
-        if (!init) {
-            init = true;
-            List<HelpPosition> elements = new ArrayList<>();
-            for (IGuiElement element : gui.shownElements) {
-                element.addHelpElements(elements);
-            }
-            foundAny = elements.size() > 0;
-        }
+        foundAny = !collectHelpPositions().isEmpty();
         ISprite sprite = foundAny ? BCLibSprites.HELP : BCLibSprites.WARNING_MINOR;
         GuiIcon.draw(pose, sprite, x, y, x + 16, y + 16);
     }
@@ -89,36 +84,77 @@ public class LedgerHelp extends Ledger_Neptune {
         if (!shouldDrawOpen()) {
             return;
         }
-        boolean set = false;
-        List<HelpPosition> elements = new ArrayList<>();
-        for (IGuiElement element : gui.shownElements) {
-            element.addHelpElements(elements);
-            foundAny |= elements.size() > 0;
-            for (HelpPosition info : elements) {
-                IGuiArea rect = info.target;
-                boolean isHovered = rect.contains(gui.mouse);
-                if (isHovered) {
-                    if (selected != element && !set) {
-                        selected = element;
-                        GuiElementContainerHelp container = new GuiElementContainerHelp(gui, positionLedgerInnerStart);
-                        info.info.addGuiElements(container);
-                        if (openElements.size() == 2) {
-                            openElements.remove(1);
-                        }
-                        openElements.add(container);
-                        title = Component.literal(LocaleUtil.localize("gui.ledger.help") + ": " + LocaleUtil.localize(info.info.title));//TODO
-                        calculateMaxSize();
-                        set = true;
-                    }
-                }
-                boolean isSelected = selected == element;
-                SpriteNineSliced split = SPRITE_HELP_SPLIT[isHovered ? 1 : 0][isSelected ? 1 : 0];
-                RenderUtil.setGLColorFromInt(info.info.colour);
-                split.draw(pose, rect);
+
+        List<HelpPosition> positions = collectHelpPositions();
+        foundAny = !positions.isEmpty();
+
+        HelpPosition hovered = null;
+        for (HelpPosition info : positions) {
+            if (info.target.contains(gui.mouse)) {
+                hovered = info;
+                break;
             }
-            elements.clear();
+        }
+        if (hovered != null && !same(hovered, selected)) {
+            setSelected(hovered);
+        }
+
+        for (HelpPosition info : positions) {
+            IGuiArea rect = info.target;
+            boolean isHovered = rect.contains(gui.mouse);
+            boolean isSelected = same(info, selected);
+            SpriteNineSliced split = SPRITE_HELP_SPLIT[isHovered ? 1 : 0][isSelected ? 1 : 0];
+            RenderUtil.setGLColorFromInt(info.info.colour);
+            split.draw(pose, rect);
         }
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        //RenderSystem.disableBlend();
+    }
+
+    private List<HelpPosition> collectHelpPositions() {
+        List<HelpPosition> positions = new ArrayList<>();
+        for (IGuiElement element : gui.shownElements) {
+            if (element != this) {
+                element.addHelpElements(positions);
+            }
+        }
+        return positions;
+    }
+
+    private void setSelected(HelpPosition info) {
+        selected = info;
+        GuiElementContainerHelp container = new GuiElementContainerHelp(gui, positionLedgerInnerStart);
+        info.info.addGuiElements(container);
+        removeSelectedContainer();
+        openElements.add(container);
+        title = Component.translatable("gui.ledger.help.selected", info.info.getLocalizedTitle());
+        calculateMaxSize();
+    }
+
+    private void clearSelected() {
+        if (selected == null && openElements.size() <= 1) {
+            return;
+        }
+        selected = null;
+        removeSelectedContainer();
+        title = Component.translatable("gui.ledger.help");
+        calculateMaxSize();
+    }
+
+    private void removeSelectedContainer() {
+        while (openElements.size() > 1) {
+            openElements.remove(openElements.size() - 1);
+        }
+    }
+
+    private boolean sameAsSelected(HelpPosition other) {
+        return same(other, selected);
+    }
+
+    private static boolean same(HelpPosition a, HelpPosition b) {
+        return a != null && b != null && a.info == b.info &&
+            a.target.getX() == b.target.getX() &&
+            a.target.getY() == b.target.getY() &&
+            a.target.getWidth() == b.target.getWidth() &&
+            a.target.getHeight() == b.target.getHeight();
     }
 }

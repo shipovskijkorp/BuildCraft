@@ -24,6 +24,7 @@ import ct.buildcraft.lib.gui.pos.IGuiPosition;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
     private static final ResourceLocation TEXTURE_BASE =
@@ -34,6 +35,11 @@ public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
     private static final GuiRectangle RECT_PROGRESS_DOWN = new GuiRectangle(194, 58, 22, 16);
     private static final GuiIcon ICON_PROGRESS_UP = new GuiIcon(TEXTURE_BASE, 234, 224, 22, 16);
     private static final GuiRectangle RECT_PROGRESS_UP = new GuiRectangle(194, 79, 22, 16);
+    private static final GuiRectangle RECT_SNAPSHOT_LIST = new GuiRectangle(8, 22, 154, 108);
+    private static final int SNAPSHOT_ROW_HEIGHT = 8;
+    private static final int MAX_VISIBLE_SNAPSHOTS = RECT_SNAPSHOT_LIST.height < SNAPSHOT_ROW_HEIGHT ? 0
+        : (int) (RECT_SNAPSHOT_LIST.height / SNAPSHOT_ROW_HEIGHT);
+    private static final GuiRectangle RECT_DELETE_BUTTON = new GuiRectangle(174, 109, 25, 15);
 
     private final GuiButtonDrawable delButton;
 
@@ -47,6 +53,17 @@ public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
         delButton.registerListener(this::onDelButtonClick);
         mainGui.shownElements.add(delButton);
         mainGui.shownElements.add(delButton.createTextElement(Component.translatable("gui.del")));
+        GuiHelpUtil.addRoot(mainGui, (int) RECT_SNAPSHOT_LIST.x, (int) RECT_SNAPSHOT_LIST.y, (int) RECT_SNAPSHOT_LIST.width,
+            (int) RECT_SNAPSHOT_LIST.height, "buildcraft.help.library.list.title", 0xFF_66_AA_FF,
+            "buildcraft.help.library.list.desc");
+        GuiHelpUtil.addSlot(mainGui, 175, 57, "buildcraft.help.library.download_output.title", 0xFF_88_CC_88, "buildcraft.help.library.download_output.desc");
+        GuiHelpUtil.addSlot(mainGui, 219, 57, "buildcraft.help.library.download_input.title", 0xFF_DD_CC_55, "buildcraft.help.library.download_input.desc");
+        GuiHelpUtil.addSlot(mainGui, 175, 79, "buildcraft.help.library.upload_input.title", 0xFF_CC_AA_FF, "buildcraft.help.library.upload_input.desc");
+        GuiHelpUtil.addSlot(mainGui, 219, 79, "buildcraft.help.library.upload_output.title", 0xFF_55_BB_DD, "buildcraft.help.library.upload_output.desc");
+        GuiHelpUtil.addRoot(mainGui, 194, 58, 22, 37, "buildcraft.help.library.progress.title", 0xFF_EE_DD_77, "buildcraft.help.library.progress.desc");
+        GuiHelpUtil.addRoot(mainGui, (int) RECT_DELETE_BUTTON.x, (int) RECT_DELETE_BUTTON.y, (int) RECT_DELETE_BUTTON.width,
+            (int) RECT_DELETE_BUTTON.height, "buildcraft.help.library.delete.title", 0xFF_CC_55_55,
+            "buildcraft.help.library.delete.desc");
     }
 
     private void onDelButtonClick(IButtonClickEventTrigger button, int buttonKey) {
@@ -84,10 +101,12 @@ public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
 
     private void iterateSnapshots(ISnapshotIterator iterator) {
         List<Snapshot.Key> list = getSnapshots().getList();
-        GuiRectangle rect = new GuiRectangle(mainGui.rootElement.getX() + 8, mainGui.rootElement.getY() + 22, 154, 8);
-        for (int i = 0; i < list.size(); i++) {
+        GuiRectangle rect = new GuiRectangle(mainGui.rootElement.getX() + RECT_SNAPSHOT_LIST.x,
+            mainGui.rootElement.getY() + RECT_SNAPSHOT_LIST.y, RECT_SNAPSHOT_LIST.width, SNAPSHOT_ROW_HEIGHT);
+        int max = Math.min(list.size(), MAX_VISIBLE_SNAPSHOTS);
+        for (int i = 0; i < max; i++) {
             iterator.call(i, rect, list.get(i));
-            rect = rect.offset(0, 8);
+            rect = rect.offset(0, SNAPSHOT_ROW_HEIGHT);
         }
     }
     

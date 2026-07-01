@@ -15,6 +15,7 @@ import ct.buildcraft.transport.container.ContainerFilteredBuffer_BC8;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiFilteredBuffer extends GuiBC8<ContainerFilteredBuffer_BC8> {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcrafttransport:textures/gui/filtered_buffer.png");
@@ -25,6 +26,8 @@ public class GuiFilteredBuffer extends GuiBC8<ContainerFilteredBuffer_BC8> {
         super(container, inv, title);
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
+        GuiHelpUtil.addSlots(mainGui, 8, 27, 9, 1, "buildcraft.help.filtered_buffer.filters.title", 0xFF_66_AA_FF, "buildcraft.help.filtered_buffer.filters.desc");
+        GuiHelpUtil.addSlots(mainGui, 8, 61, 9, 1, "buildcraft.help.filtered_buffer.inventory.title", 0xFF_88_CC_88, "buildcraft.help.filtered_buffer.inventory.desc");
     }
 
     @Override

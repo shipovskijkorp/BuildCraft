@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiEngineIron_BC8 extends GuiBC8<ContainerEngineIron_BC8> {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftenergy:textures/gui/combustion_engine_gui.png");
@@ -33,6 +34,9 @@ public class GuiEngineIron_BC8 extends GuiBC8<ContainerEngineIron_BC8> {
         inventoryLabelX = 8;
         inventoryLabelY = SIZE_Y - 96;
         mainGui.shownElements.add(new LedgerEngine(mainGui, container.tile, true));
+        GuiHelpUtil.addRoot(mainGui, 26, 18, 16, 60, "buildcraft.help.engine.fuel_tank.title", 0xFF_CC_88_44, "buildcraft.help.engine.fuel_tank.desc");
+        GuiHelpUtil.addRoot(mainGui, 80, 18, 16, 60, "buildcraft.help.engine.coolant_tank.title", 0xFF_55_BB_DD, "buildcraft.help.engine.coolant_tank.desc");
+        GuiHelpUtil.addRoot(mainGui, 134, 18, 16, 60, "buildcraft.help.engine.residue_tank.title", 0xFF_77_77_77, "buildcraft.help.engine.residue_tank.desc");
     }
 
     @Override

@@ -16,6 +16,7 @@ import ct.buildcraft.lib.misc.collect.TypedKeyMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiFiller extends GuiBC8<ContainerFiller> {
     private static final ResourceLocation LOCATION = new ResourceLocation("buildcraftbuilders:gui/filler.json");
@@ -29,6 +30,9 @@ public class GuiFiller extends GuiBC8<ContainerFiller> {
         jsonGui.load();
         imageWidth = jsonGui.getSizeX();
         imageHeight = jsonGui.getSizeY();
+        GuiHelpUtil.addRoot(mainGui, 8, 85, 162, 54, "buildcraft.help.filler.resources.title", 0xFF_88_CC_88, "buildcraft.help.filler.resources.desc");
+        GuiHelpUtil.addRoot(mainGui, 9, 35, 158, 30, "buildcraft.help.filler.pattern.title", 0xFF_66_AA_FF, "buildcraft.help.filler.pattern.desc");
+        GuiHelpUtil.addRoot(mainGui, 8, 64, 162, 14, "buildcraft.help.filler.work.title", 0xFF_DD_CC_55, "buildcraft.help.filler.work.desc");
     }
 
     protected void preLoad(BuildCraftJsonGui json) {

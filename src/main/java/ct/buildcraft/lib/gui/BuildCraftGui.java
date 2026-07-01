@@ -345,7 +345,7 @@ public class BuildCraftGui {
 
         IMenuElement m = currentMenu;
         if (m != null) {
-            m.onMouseDragged(clickedMouseButton, finalY, finalY);
+            m.onMouseDragged(clickedMouseButton, finalX, finalY);
             if (m.shouldFullyOverride()) {
                 return;
             }
@@ -353,7 +353,7 @@ public class BuildCraftGui {
 
         for (IGuiElement element : shownElements) {
             if (element instanceof IInteractionElement) {
-                ((IInteractionElement) element).onMouseDragged(clickedMouseButton, finalY, finalY);
+                ((IInteractionElement) element).onMouseDragged(clickedMouseButton, finalX, finalY);
             }
         }
     }

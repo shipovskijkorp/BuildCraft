@@ -33,7 +33,7 @@ public class BCBuildersGuis {
     public static final RegistryObject<MenuType<ContainerBuilder>> MENU_BUILDER = MENUS.register("builder_menu", () -> BCContainerFactory.create(ContainerBuilder::new));
     public static final RegistryObject<MenuType<ContainerElectronicLibrary>> MENU_ELIBRARY = MENUS.register("elibrary_menu", () -> BCContainerFactory.create(ContainerElectronicLibrary::new));
     public static final RegistryObject<MenuType<ContainerFiller>> MENU_FILLER = MENUS.register("filler_menu", () -> BCContainerFactory.create(ContainerFiller::new));
-    public static final RegistryObject<MenuType<MenuReplacer>> MENU_REPLACER = MENUS.register("replacer_menu", () -> new MenuType<>(MenuReplacer::new));
+    public static final RegistryObject<MenuType<MenuReplacer>> MENU_REPLACER = MENUS.register("replacer_menu", () -> BCContainerFactory.create(MenuReplacer::new));
 
 
     public static void clientInit(FMLClientSetupEvent event) {

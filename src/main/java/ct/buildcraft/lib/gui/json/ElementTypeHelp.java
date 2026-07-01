@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ct.buildcraft.lib.expression.FunctionContext;
+import ct.buildcraft.lib.expression.api.IExpressionNode.INodeBoolean;
 import ct.buildcraft.lib.gui.IGuiElement;
 import ct.buildcraft.lib.gui.help.DummyHelpElement;
 import ct.buildcraft.lib.gui.help.ElementHelpInfo;
@@ -30,7 +31,7 @@ public class ElementTypeHelp extends ElementType {
     public IGuiElement deserialize0(BuildCraftJsonGui gui, IGuiPosition parent, JsonGuiInfo info, JsonGuiElement json) {
         FunctionContext ctx = createContext(json);
 
-        String title = json.properties.get("title");
+        String title = json.properties.getOrDefault("title", "gui.ledger.help");
 
         List<String> text = new ArrayList<>();
         if (json.properties.containsKey("text[0]")) {
@@ -47,6 +48,7 @@ public class ElementTypeHelp extends ElementType {
             text.add(json.properties.getOrDefault("text", "ERROR: Help not given!"));
         }
         int colour = resolveEquationInt(json, "colour", ctx);
+        INodeBoolean visible = getEquationBool(json, "visible", ctx, true);
         ElementHelpInfo help = new ElementHelpInfo(title, colour, text.toArray(new String[0]));
 
         inheritProperty(json, "pos[0]", "area[0]");
@@ -55,6 +57,6 @@ public class ElementTypeHelp extends ElementType {
         inheritProperty(json, "size[1]", "area[3]");
 
         IGuiArea area = resolveArea(json, "area", parent, ctx);
-        return new DummyHelpElement(area, help);
+        return new DummyHelpElement(area, help, visible);
     }
 }

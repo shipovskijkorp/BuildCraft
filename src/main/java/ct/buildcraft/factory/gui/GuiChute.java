@@ -12,6 +12,7 @@ import ct.buildcraft.lib.gui.GuiIcon;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiChute extends GuiBC8<ContainerChute> {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftfactory:textures/gui/chute.png");
@@ -22,6 +23,8 @@ public class GuiChute extends GuiBC8<ContainerChute> {
         super(container, inv, title);
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
+        GuiHelpUtil.addSlots(mainGui, 62, 18, 3, 1, "buildcraft.help.chute.inventory.title", 0xFF_88_CC_88, "buildcraft.help.chute.inventory.desc");
+        GuiHelpUtil.addSlot(mainGui, 80, 36, "buildcraft.help.chute.buffer.title", 0xFF_66_AA_FF, "buildcraft.help.chute.buffer.desc");
     }
 
     @Override

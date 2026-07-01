@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.items.IItemHandler;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiDiamondPipe extends GuiBC8<ContainerDiamondPipe> {
     private static final ResourceLocation TEXTURE = new ResourceLocation("buildcrafttransport:textures/gui/filter.png");
@@ -33,6 +34,7 @@ public class GuiDiamondPipe extends GuiBC8<ContainerDiamondPipe> {
         this.filterInventory = container.filters;
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
+        GuiHelpUtil.addSlots(mainGui, 8, 18, 9, 6, "buildcraft.help.pipe.diamond.filters.title", 0xFF_66_AA_FF, "buildcraft.help.pipe.diamond.filters.desc");
     }
 
     @Override
