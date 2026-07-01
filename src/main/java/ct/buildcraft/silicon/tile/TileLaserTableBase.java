@@ -28,6 +28,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -120,6 +121,21 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements ILase
                 avgPowerClient = buffer.readInt() * MJ_FLOW_ROUND;
             }
         }
+    }
+
+
+    protected long getDirectPowerRequested() {
+        return Math.max(0, getTarget() - power);
+    }
+
+    protected long receiveDirectPower(long microJoules, FluidAction action) {
+        long accepted = Math.min(getDirectPowerRequested(), microJoules);
+        if (accepted > 0 && action.execute()) {
+            power += accepted;
+            avgPower.push(accepted);
+            markChunkDirty();
+        }
+        return microJoules - accepted;
     }
 
     @Override

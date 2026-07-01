@@ -174,5 +174,9 @@
   "buildcraft.help.architect.rotate.title": "Поворот",
   "buildcraft.help.architect.rotate.desc": "Определяет, можно ли будет поворачивать записанный чертёж/шаблон при дальнейшем использовании.",
   "buildcraft.help.architect.excavate.title": "Данные раскопки",
-  "buildcraft.help.architect.excavate.desc": "Определяет, будет ли чертёж/шаблон хранить данные очистки блоков перед строительством."
+  "buildcraft.help.architect.excavate.desc": "Определяет, будет ли чертёж/шаблон хранить данные очистки блоков перед строительством.",
+  "buildcraft.help.charging_table.slot.title": "Слот зарядки",
+  "buildcraft.help.charging_table.slot.desc": "Вставьте предмет с Forge Energy. Лазеры или энергетические трубы BuildCraft MJ превращают энергию BuildCraft в заряд предмета. Роботы и чертежи BuildCraft не являются Forge Energy предметами.",
+  "buildcraft.help.advanced_crafting.power.title": "Питание",
+  "buildcraft.help.advanced_crafting.power.desc": "Стол можно питать лазерами или напрямую энергетическими трубами BuildCraft MJ. Он запрашивает энергию только когда рецепт валиден, все материалы есть, а выходной слот может принять результат."
 }

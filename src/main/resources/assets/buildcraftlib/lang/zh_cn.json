@@ -244,5 +244,9 @@
   "buildcraft.help.architect.rotate.title": "Rotation",
   "buildcraft.help.architect.rotate.desc": "Controls whether the recorded blueprint/template may be rotated when it is used later.",
   "buildcraft.help.architect.excavate.title": "Excavation data",
-  "buildcraft.help.architect.excavate.desc": "Controls whether the blueprint/template records excavation information for clearing blocks before building."
+  "buildcraft.help.architect.excavate.desc": "Controls whether the blueprint/template records excavation information for clearing blocks before building.",
+  "buildcraft.help.charging_table.slot.title": "Charge slot",
+  "buildcraft.help.charging_table.slot.desc": "Insert a Forge Energy item. Lasers or BuildCraft MJ power pipes convert BuildCraft power into item charge. BuildCraft robots and blueprints are not Forge Energy items.",
+  "buildcraft.help.advanced_crafting.power.title": "Power input",
+  "buildcraft.help.advanced_crafting.power.desc": "This table can be powered by lasers or directly by BuildCraft MJ power pipes. It only requests power when the recipe is valid, all materials are present, and the output can fit."
 }

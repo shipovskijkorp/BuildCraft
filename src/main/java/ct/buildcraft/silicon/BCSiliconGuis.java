@@ -6,12 +6,14 @@ package ct.buildcraft.silicon;
 
 import ct.buildcraft.lib.gui.BCContainerFactory;
 import ct.buildcraft.silicon.container.ContainerAdvancedCraftingTable;
+import ct.buildcraft.silicon.container.ContainerChargingTable;
 import ct.buildcraft.silicon.container.ContainerAssemblyTable;
 import ct.buildcraft.silicon.container.ContainerGate;
 import ct.buildcraft.silicon.container.ContainerIntegrationTable;
 import ct.buildcraft.silicon.container.ContainerProgrammingTable;
 import ct.buildcraft.silicon.gui.GuiAdvancedCraftingTable;
 import ct.buildcraft.silicon.gui.GuiAssemblyTable;
+import ct.buildcraft.silicon.gui.GuiChargingTable;
 import ct.buildcraft.silicon.gui.GuiGate;
 import ct.buildcraft.silicon.gui.GuiIntegrationTable;
 import ct.buildcraft.silicon.gui.GuiProgrammingTable;
@@ -28,6 +30,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class BCSiliconGuis {
 	public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, BCSilicon.MODID);
     public static final RegistryObject<MenuType<ContainerAdvancedCraftingTable>> MENU_AD_CRAFTING_TABLE = MENUS.register("advanced_crafting_table_menu", () -> BCContainerFactory.create(ContainerAdvancedCraftingTable::new));
+    public static final RegistryObject<MenuType<ContainerChargingTable>> MENU_CHARGING_TABLE = MENUS.register("charging_table_menu", () -> BCContainerFactory.create(ContainerChargingTable::new));
     public static final RegistryObject<MenuType<ContainerAssemblyTable>> MENU_ASSEMBLY_TABLE = MENUS.register("assembly_table_menu", () -> BCContainerFactory.create(ContainerAssemblyTable::new));
     public static final RegistryObject<MenuType<ContainerGate>> MENU_GATE = MENUS.register("gate_menu", () -> BCContainerFactory.create(ContainerGate::creatClientMenu));
     public static final RegistryObject<MenuType<ContainerIntegrationTable>> MENU_INTEGRATION_TABLE = MENUS.register("integration_table_menu", () -> BCContainerFactory.create(ContainerIntegrationTable::new));
@@ -39,6 +42,7 @@ public class BCSiliconGuis {
                 () -> {
                 	MenuScreens.register(MENU_AD_CRAFTING_TABLE.get(), GuiAdvancedCraftingTable::new);
                 	MenuScreens.register(MENU_ASSEMBLY_TABLE.get(), GuiAssemblyTable::new);
+                    MenuScreens.register(MENU_CHARGING_TABLE.get(), GuiChargingTable::new);
                 	MenuScreens.register(MENU_GATE.get(), GuiGate::new);
                 	MenuScreens.register(MENU_INTEGRATION_TABLE.get(), GuiIntegrationTable::new);
                     MenuScreens.register(MENU_PROGRAMMING_TABLE.get(), GuiProgrammingTable::new);

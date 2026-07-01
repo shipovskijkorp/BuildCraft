@@ -172,7 +172,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
             return;
         }
 
-        if (tank.getFluidAmount() < FluidType.BUCKET_VOLUME) {
+        if (tank.getFluidAmount() < FluidType.BUCKET_VOLUME || level.hasNeighborSignal(worldPosition)) {
             return;
         }
 
@@ -189,7 +189,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
                             if (p.equals(currentPos)) {
                                 continue;
                             }
-                            if (!canFillThrough(currentPos)) {
+                            if (!canFillThrough(p)) {
                                 canFill = false;
                                 break;
                             }

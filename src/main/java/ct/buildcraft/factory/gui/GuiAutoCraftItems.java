@@ -35,7 +35,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
-public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implements RecipeUpdateListener {
+public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> {
     private static final ResourceLocation TEXTURE_BASE =
         new ResourceLocation("buildcraftfactory:textures/gui/autobench_item.png");
     private static final ResourceLocation TEXTURE_MISC =
@@ -291,14 +291,12 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
 
     // IRecipeShownListener
 
-    @Override
     public void recipesUpdated() {
         if (recipeBook != null) {
             recipeBook.recipesUpdated();
         }
     }
 
-    @Override
     public RecipeBookComponent getRecipeBookComponent() {
         return recipeBook;
     }
