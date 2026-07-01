@@ -8,6 +8,7 @@ package ct.buildcraft.transport.pipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
@@ -166,8 +167,33 @@ public class SchematicBlockPipe implements ISchematicBlock {
     	}
 //		if(worldTile == null)
 			
-		boolean flag2 = tileTag != null && copy.toString().equals(copy.toString());
+		boolean flag2 = tileTag != null && copy.equals(tileTag);
 		return flag2;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof SchematicBlockPipe that)) {
+            return false;
+        }
+        return tileRotation == that.tileRotation &&
+            Objects.equals(normalizeTileNbt(tileNbt), normalizeTileNbt(that.tileNbt));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(normalizeTileNbt(tileNbt), tileRotation);
+    }
+
+    private static CompoundTag normalizeTileNbt(CompoundTag tag) {
+        CompoundTag copy = tag == null ? new CompoundTag() : tag.copy();
+        copy.remove("x");
+        copy.remove("y");
+        copy.remove("z");
+        return copy;
     }
 
     @Override

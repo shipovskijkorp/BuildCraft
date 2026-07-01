@@ -7,9 +7,9 @@
 package ct.buildcraft.builders.snapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,9 +53,101 @@ public class Blueprint extends Snapshot {
         return blueprint;
     }
 
-    public void replace(ISchematicBlock from, ISchematicBlock to) {
-        Collections.replaceAll(palette, from, to);
-        // TODO: reallocate IDs
+    /**
+     * Counts blueprint blocks whose palette entry matches {@code schematicBlock}. This counts placed blocks, not palette
+     * rows, so a single palette entry used one hundred times returns 100.
+     */
+    public int countMatchingSchematic(ISchematicBlock schematicBlock) {
+        if (schematicBlock == null || data == null || palette.isEmpty()) {
+            return 0;
+        }
+        int matches = 0;
+        for (int index : data) {
+            if (index >= 0 && index < palette.size() && schematicMatchesForReplacement(palette.get(index), schematicBlock)) {
+                matches++;
+            }
+        }
+        return matches;
+    }
+
+    /**
+     * Replaces every palette entry matching {@code from} with {@code to} and compacts the palette afterwards.
+     *
+     * @return the number of blueprint blocks whose schematic was changed.
+     */
+    public int replace(ISchematicBlock from, ISchematicBlock to) {
+        if (from == null || to == null || data == null || palette.isEmpty() || schematicMatchesForReplacement(from, to)) {
+            return 0;
+        }
+
+        int replacedBlocks = countMatchingSchematic(from);
+        if (replacedBlocks <= 0) {
+            return 0;
+        }
+
+        int[] remap = new int[palette.size()];
+        List<ISchematicBlock> newPalette = new ArrayList<>();
+        for (int oldIndex = 0; oldIndex < palette.size(); oldIndex++) {
+            ISchematicBlock schematicBlock = palette.get(oldIndex);
+            ISchematicBlock replacement = schematicMatchesForReplacement(schematicBlock, from) ? to : schematicBlock;
+            int newIndex = findMatchingPaletteIndex(newPalette, replacement);
+            if (newIndex < 0) {
+                newIndex = newPalette.size();
+                newPalette.add(replacement);
+            }
+            remap[oldIndex] = newIndex;
+        }
+
+        for (int i = 0; i < data.length; i++) {
+            int oldIndex = data[i];
+            if (oldIndex >= 0 && oldIndex < remap.length) {
+                data[i] = remap[oldIndex];
+            }
+        }
+
+        palette.clear();
+        palette.addAll(newPalette);
+        return replacedBlocks;
+    }
+
+    private static int findMatchingPaletteIndex(List<ISchematicBlock> palette, ISchematicBlock schematicBlock) {
+        for (int i = 0; i < palette.size(); i++) {
+            if (schematicMatchesForReplacement(palette.get(i), schematicBlock)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static boolean schematicMatchesForReplacement(ISchematicBlock a, ISchematicBlock b) {
+        if (Objects.equals(a, b)) {
+            return true;
+        }
+        if (a == null || b == null || a.getClass() != b.getClass()) {
+            return false;
+        }
+        CompoundTag tagA = normalizedSchematicTag(a);
+        CompoundTag tagB = normalizedSchematicTag(b);
+        return tagA.equals(tagB);
+    }
+
+    private static CompoundTag normalizedSchematicTag(ISchematicBlock schematicBlock) {
+        CompoundTag tag = SchematicBlockManager.writeToNBT(schematicBlock).copy();
+        normalizeSchematicTag(tag);
+        return tag;
+    }
+
+    private static void normalizeSchematicTag(CompoundTag tag) {
+        CompoundTag dataTag = tag.getCompound("data");
+        if (dataTag.contains("tileNbt", Tag.TAG_COMPOUND)) {
+            normalizeBlockEntityTag(dataTag.getCompound("tileNbt"));
+        }
+    }
+
+    private static void normalizeBlockEntityTag(CompoundTag tag) {
+        tag.remove("x");
+        tag.remove("y");
+        tag.remove("z");
     }
 
     @Override
