@@ -15,6 +15,8 @@ import ct.buildcraft.lib.marker.MarkerSubCache;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -77,6 +79,29 @@ public abstract class TileMarker<C extends MarkerConnection<C>> extends TileBC_N
         if (currentConnection != null) {
             currentConnection.removeMarker(getBlockPos());
         }
+    }
+
+    /**
+     * Removes a marker as part of a machine claiming its area/path.
+     *
+     * This intentionally drops the marker item even if the player who placed the machine is in creative mode. BC7/BC8
+     * always returned consumed markers, and relying on {@code destroyBlock(pos, true)} made the port behave like a
+     * normal player break instead. The machine is not "breaking" the marker; it is converting the marker-defined area
+     * into its own saved box/path and returning the reusable marker item.
+     */
+    protected void removeClaimedMarkerBlock(BlockPos pos) {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        BlockState state = level.getBlockState(pos);
+        if (state.isAir()) {
+            return;
+        }
+        ItemStack drop = new ItemStack(state.getBlock().asItem());
+        if (!drop.isEmpty()) {
+            Block.popResource(level, pos, drop);
+        }
+        level.destroyBlock(pos, false);
     }
 
     @Override

@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {
+      "item": "buildcraftcore:engine_redstone"
+    },
+    "title": {
+      "translate": "advancements.buildcraftenergy.poweringUp.title"
+    },
+    "description": {
+      "translate": "advancements.buildcraftenergy.poweringUp.description"
+    }
+  },
+  "parent": "buildcraftenergy:engine",
+  "criteria": {
+    "code_trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
