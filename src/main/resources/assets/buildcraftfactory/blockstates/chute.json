@@ -1,30 +1,17 @@
 {
-  "variants": {
-    "facing=down": {
-      "model": "buildcraftfactory:block/chute",
-      "x": 180
-    },
-    "facing=east": {
-      "model": "buildcraftfactory:block/chute",
-      "x": 90,
-      "y": 90
-    },
-    "facing=north": {
-      "model": "buildcraftfactory:block/chute",
-      "x": 90
-    },
-    "facing=south": {
-      "model": "buildcraftfactory:block/chute",
-      "x": 90,
-      "y": 180
-    },
-    "facing=up": {
-      "model": "buildcraftfactory:block/chute"
-    },
-    "facing=west": {
-      "model": "buildcraftfactory:block/chute",
-      "x": 90,
-      "y": 270
-    }
-  }
+  "multipart": [
+    { "when": { "facing": "up" }, "apply": { "model": "buildcraftfactory:block/chute" } },
+    { "when": { "facing": "down" }, "apply": { "model": "buildcraftfactory:block/chute", "x": 180 } },
+    { "when": { "facing": "north" }, "apply": { "model": "buildcraftfactory:block/chute", "x": 90 } },
+    { "when": { "facing": "south" }, "apply": { "model": "buildcraftfactory:block/chute", "x": 90, "y": 180 } },
+    { "when": { "facing": "east" }, "apply": { "model": "buildcraftfactory:block/chute", "x": 90, "y": 90 } },
+    { "when": { "facing": "west" }, "apply": { "model": "buildcraftfactory:block/chute", "x": 90, "y": 270 } },
+
+    { "when": { "connected_down": "true" }, "apply": { "model": "buildcraftfactory:block/chute_connected" } },
+    { "when": { "connected_up": "true" }, "apply": { "model": "buildcraftfactory:block/chute_connected", "x": 180 } },
+    { "when": { "connected_north": "true" }, "apply": { "model": "buildcraftfactory:block/chute_connected", "x": 90, "y": 180 } },
+    { "when": { "connected_south": "true" }, "apply": { "model": "buildcraftfactory:block/chute_connected", "x": 90 } },
+    { "when": { "connected_east": "true" }, "apply": { "model": "buildcraftfactory:block/chute_connected", "x": 90, "y": 270 } },
+    { "when": { "connected_west": "true" }, "apply": { "model": "buildcraftfactory:block/chute_connected", "x": 90, "y": 90 } }
+  ]
 }
