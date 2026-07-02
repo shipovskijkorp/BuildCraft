@@ -18,21 +18,27 @@ public class TankComponent extends AbstractComponent{
 	protected int typeCache;
 	protected Fluid fluidCache;
 	protected final int capacity;
+	protected final int capacityOffset;
 	protected final byte renderType;
 	protected /*final*/ int tankx;
 	protected /*final*/ int tanky;
 	
 	public TankComponent(int x, int y, int sx, int sy, int capacity, int tankx, int tanky) {
-		super(x, y, sx, sy);
-		this.capacity = capacity;
-		renderType = U_TO_D;
-		this.tankx = tankx;
-		this.tanky = tanky;
+		this(x, y, sx, sy, capacity, tankx, tanky, -1, U_TO_D);
+	}
+	
+	public TankComponent(int x, int y, int sx, int sy, int capacity, int tankx, int tanky, int capacityOffset) {
+		this(x, y, sx, sy, capacity, tankx, tanky, capacityOffset, U_TO_D);
 	}
 	
 	public TankComponent(int x, int y, int sx, int sy, int capacity, int tankx, int tanky, byte type) {
+		this(x, y, sx, sy, capacity, tankx, tanky, -1, type);
+	}
+
+	public TankComponent(int x, int y, int sx, int sy, int capacity, int tankx, int tanky, int capacityOffset, byte type) {
 		super(x, y, sx, sy);
 		this.capacity = capacity;
+		this.capacityOffset = capacityOffset;
 		renderType = type;
 		this.tankx = tankx;
 		this.tanky = tanky;
@@ -53,7 +59,8 @@ public class TankComponent extends AbstractComponent{
 			typeCache = type;
 			fluidCache = TankContainerData.getFluid(type);
 		}
-		if(this.fluidCache != null)
+		int capacity = getCapacity();
+		if(this.fluidCache != null && capacity > 0)
 			FluidRenderer.drawFluidForGui(this.fluidCache,leftpos+x,toppos+y+ys, leftpos+x+xs, toppos+y+ys-(ys*data.get(offset+1)/capacity), pose.last());
 	}
 	
@@ -66,16 +73,26 @@ public class TankComponent extends AbstractComponent{
 	@Override
 	public void renderTooltip(PoseStack pose, int x, int y) {
 		if(super.isHovering(x-screen.getGuiLeft(), y-screen.getGuiTop()))
-			screen.renderComponentTooltip(pose, getToolTip(fluidCache, data.get(offset+1)), x, y);
+			screen.renderComponentTooltip(pose, getToolTip(fluidCache, data.get(offset+1), getCapacity()), x, y);
 	}
 
 
 	@Override
 	public int getNeedDataSize() {
-		return 2;
+		return capacityOffset >= 0 ? Math.max(2, capacityOffset + 1) : 2;
 	}
 
-	protected List<Component> getToolTip(Fluid fluid,int amount) {
+	protected int getCapacity() {
+		if (capacityOffset >= 0 && data != null) {
+			int dynamicCapacity = data.get(offset + capacityOffset);
+			if (dynamicCapacity > 0) {
+				return dynamicCapacity;
+			}
+		}
+		return capacity;
+	}
+
+	protected List<Component> getToolTip(Fluid fluid,int amount, int capacity) {
         List<Component> toolTip = Lists.newArrayList();
         if (amount > 0) 
         	toolTip.add(fluid.getFluidType().getDescription());

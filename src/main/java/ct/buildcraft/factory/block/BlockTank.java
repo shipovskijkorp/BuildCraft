@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -36,8 +37,16 @@ public class BlockTank extends BlockBCTile_Neptune implements ICustomPipeConnect
 	private static final VoxelShape BOUNDING_BOX = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
 	public BlockTank() {
-		super(BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(6.0f, 10.0f).requiresCorrectToolForDrops());
+		this(defaultProperties());
+	}
+
+	protected BlockTank(BlockBehaviour.Properties properties) {
+		super(properties);
 		this.registerDefaultState(this.stateDefinition.any().setValue(JOINED_BELOW, false));
+	}
+
+	protected static BlockBehaviour.Properties defaultProperties() {
+		return BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(6.0f, 10.0f).requiresCorrectToolForDrops();
 	}
 
 	@Override
@@ -71,28 +80,68 @@ public class BlockTank extends BlockBCTile_Neptune implements ICustomPipeConnect
 		return new TileTank(pos, state);
 	}
 
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext bpc) {
-		boolean isTankBelow = bpc.getLevel().getBlockState(bpc.getClickedPos().below())
-				.getBlock() instanceof ITankBlockConnector;
-		return defaultBlockState().setValue(JOINED_BELOW, isTankBelow);
-	}
-	
-	@Override
-	public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-		return level.getBlockEntity(pos) instanceof TileTank tile ? 
-				tile.tank.getFluid().getFluid().getFluidType().getLightLevel() : 0;//TODOoS
-	}
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext bpc) {
+        boolean isTankBelow = bpc.getLevel().getBlockState(bpc.getClickedPos().below())
+                .getBlock() instanceof ITankBlockConnector;
+        return defaultBlockState().setValue(JOINED_BELOW, isTankBelow);
+    }
 
-	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos,
-			boolean p_60514_) {
-		boolean isTankBelow = level.getBlockState(pos.below()
-				)
-				.getBlock() instanceof ITankBlockConnector;
-		level.setBlockAndUpdate(pos, state.setValue(JOINED_BELOW, isTankBelow));
-		super.neighborChanged(state.setValue(JOINED_BELOW, isTankBelow), level, pos, block, fromPos, p_60514_);
-	}
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        if (!(level.getBlockEntity(pos) instanceof TileTank tile)) {
+            return 0;
+        }
+        FluidStack fluid = tile.tank.getFluid();
+        return fluid.isEmpty() ? 0 : fluid.getFluid().getFluidType().getLightLevel();
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos,
+            boolean p_60514_) {
+        boolean joinedBelow = canJoinTankBelow(level, pos);
+        BlockState updatedState = state.setValue(JOINED_BELOW, joinedBelow);
+        if (state.getValue(JOINED_BELOW) != joinedBelow) {
+            level.setBlockAndUpdate(pos, updatedState);
+        }
+        super.neighborChanged(updatedState, level, pos, block, fromPos, p_60514_);
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, level, pos, oldState, isMoving);
+        if (!oldState.is(state.getBlock())) {
+            updateJoinedBelow(level, pos, state);
+            updateJoinedBelow(level, pos.above(), level.getBlockState(pos.above()));
+        }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        super.onRemove(state, level, pos, newState, isMoving);
+        if (!state.is(newState.getBlock())) {
+            updateJoinedBelow(level, pos.above(), level.getBlockState(pos.above()));
+        }
+    }
+
+    private static void updateJoinedBelow(Level level, BlockPos pos, BlockState state) {
+        if (!state.hasProperty(JOINED_BELOW)) {
+            return;
+        }
+        boolean joinedBelow = canJoinTankBelow(level, pos);
+        if (state.getValue(JOINED_BELOW) != joinedBelow) {
+            level.setBlockAndUpdate(pos, state.setValue(JOINED_BELOW, joinedBelow));
+        }
+    }
+
+    private static boolean canJoinTankBelow(BlockGetter level, BlockPos pos) {
+        BlockEntity tile = level.getBlockEntity(pos);
+        BlockEntity below = level.getBlockEntity(pos.below());
+        if (tile instanceof TileTank tank && below instanceof TileTank tankBelow) {
+            return TileTank.canTanksConnect(tank, tankBelow, Direction.DOWN);
+        }
+        return level.getBlockState(pos.below()).getBlock() instanceof ITankBlockConnector;
+    }
 	
 	@Override
 	public boolean hasAnalogOutputSignal(BlockState p_60457_) {

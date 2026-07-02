@@ -30,7 +30,8 @@ public class GuiTank extends GuiBC8<ContainerTank> {
     private final TankComponent tankComponent = new TankComponent(
         80, 18, 16, 64,
         16 * FluidType.BUCKET_VOLUME,
-        176, 0
+        176, 0,
+        2
     );
 
     public GuiTank(ContainerTank menu, Inventory inventory, Component title) {
