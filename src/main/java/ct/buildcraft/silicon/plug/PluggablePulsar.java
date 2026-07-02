@@ -33,6 +33,7 @@ import ct.buildcraft.lib.expression.info.VariableInfo.VariableInfoObject;
 import ct.buildcraft.lib.expression.node.value.NodeVariableBoolean;
 import ct.buildcraft.lib.expression.node.value.NodeVariableDouble;
 import ct.buildcraft.lib.expression.node.value.NodeVariableObject;
+import ct.buildcraft.lib.misc.ExpressionCompat;
 import ct.buildcraft.lib.misc.MathUtil;
 import ct.buildcraft.lib.misc.SoundUtil;
 import ct.buildcraft.lib.misc.data.ModelVariableData;
@@ -98,6 +99,8 @@ public class PluggablePulsar extends PipePluggable {
         BOXES[Direction.SOUTH.ordinal()] = Shapes.box(min, min, ul, max, max, uu);
         BOXES[Direction.WEST.ordinal()] = Shapes.box(ll, min, min, lu, max, max);
         BOXES[Direction.EAST.ordinal()] = Shapes.box(ul, min, min, uu, max, max);
+
+        ExpressionCompat.setup();
 
         MODEL_FUNC_CTX = DefaultContexts.createWithAll();
         MODEL_SIDE = MODEL_FUNC_CTX.putVariableObject("side", Direction.class);

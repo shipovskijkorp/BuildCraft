@@ -33,6 +33,7 @@ import ct.buildcraft.lib.expression.info.VariableInfo.VariableInfoObject;
 import ct.buildcraft.lib.expression.node.value.NodeVariableBoolean;
 import ct.buildcraft.lib.expression.node.value.NodeVariableObject;
 import ct.buildcraft.lib.misc.AdvancementUtil;
+import ct.buildcraft.lib.misc.ExpressionCompat;
 import ct.buildcraft.lib.misc.MessageUtil;
 import ct.buildcraft.lib.misc.data.ModelVariableData;
 import ct.buildcraft.lib.net.IPayloadWriter;
@@ -109,6 +110,8 @@ public class PluggableGate extends PipePluggable implements IWireEmitter , MenuP
         BOXES[Direction.SOUTH.get3DDataValue()] = Shapes.box(min, min, ul, max, max, uu);
         BOXES[Direction.WEST.get3DDataValue()] = Shapes.box(ll, min, min, lu, max, max);
         BOXES[Direction.EAST.get3DDataValue()] = Shapes.box(ul, min, min, uu, max, max);
+
+        ExpressionCompat.setup();
 
         MODEL_FUNC_CTX_STATIC = DefaultContexts.createWithAll();
         MODEL_MATERIAL = MODEL_FUNC_CTX_STATIC.putVariableString("material");
