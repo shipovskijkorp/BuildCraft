@@ -8,8 +8,12 @@ package ct.buildcraft.builders.tile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,12 +33,14 @@ import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.api.mj.MjBattery;
 import ct.buildcraft.api.mj.MjCapabilityHelper;
 import ct.buildcraft.api.tiles.IDebuggable;
+import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.tiles.TilesAPI;
 import ct.buildcraft.builders.BCBuildersBlocks;
 import ct.buildcraft.builders.item.ItemSnapshot;
 import ct.buildcraft.builders.menu.ContainerBuilder;
 import ct.buildcraft.builders.snapshot.Blueprint;
 import ct.buildcraft.builders.snapshot.BlueprintBuilder;
+import ct.buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildTask;
 import ct.buildcraft.builders.snapshot.GlobalSavedDataSnapshots;
 import ct.buildcraft.builders.snapshot.ITileForBlueprintBuilder;
 import ct.buildcraft.builders.snapshot.ITileForTemplateBuilder;
@@ -96,6 +102,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     public static final int NET_CAN_EXCAVATE = IDS.allocId("CAN_EXCAVATE");
     public static final int NET_SNAPSHOT_TYPE = IDS.allocId("SNAPSHOT_TYPE");
     private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftbuilders:paving_the_way");
+    private static final Set<TileBuilder> LOADED_BUILDERS = Collections.newSetFromMap(new WeakHashMap<>());
 
     public final ItemHandlerSimple invSnapshot =
         itemManager
@@ -230,12 +237,18 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     @Override
     public void clearRemoved() {
         super.clearRemoved();
+        if (level != null && !level.isClientSide) {
+            LOADED_BUILDERS.add(this);
+        }
         templateBuilder.validate();
         blueprintBuilder.validate();
     }
 
     @Override
     public void setRemoved() {
+        if (level != null && !level.isClientSide) {
+            LOADED_BUILDERS.remove(this);
+        }
         super.setRemoved();
         templateBuilder.invalidate();
         blueprintBuilder.invalidate();
@@ -317,7 +330,12 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         level.getProfiler().popPush("builder");
         SnapshotBuilder<?> builder = getBuilder();
         if (builder != null) {
-            isDone = builder.tick();
+            if (battery.getStored() <= 0) {
+                builder.stopRenderingForNoPower();
+                isDone = false;
+            } else {
+                isDone = builder.tick();
+            }
             if (isDone) {
                 if (currentBasePosIndex < basePoses.size() - 1) {
                 	BlockPos currentBasePos = getCurrentBasePos();
@@ -471,8 +489,61 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     @Override
 	public void onLoad() {
 		super.onLoad();
+        if (level != null && !level.isClientSide) {
+            LOADED_BUILDERS.add(this);
+        }
 		this.onSlotChange(invSnapshot, 0, invSnapshot.getStackInSlot(0), invSnapshot.getStackInSlot(0));//TODO:find a better way
 	}
+
+    @Override
+    public void onChunkUnloaded() {
+        if (level != null && !level.isClientSide) {
+            LOADED_BUILDERS.remove(this);
+        }
+        super.onChunkUnloaded();
+    }
+
+    public static Collection<TileBuilder> getLoadedBuilders() {
+        return java.util.List.copyOf(LOADED_BUILDERS);
+    }
+
+    public boolean canRobotsBuild() {
+        return level != null
+            && !level.isClientSide
+            && !isRemoved()
+            && snapshotType == EnumSnapshotType.BLUEPRINT
+            && blueprintBuildingInfo != null
+            && blueprintBuilder != null
+            && !invSnapshot.getStackInSlot(0).isEmpty();
+    }
+
+    public RobotBuildTask reserveRobotBuildTask(EntityRobotBase robot) {
+        if (!canRobotsBuild()) {
+            return null;
+        }
+        return blueprintBuilder.reserveNextRobotTask(robot, needMaterial);
+    }
+
+    public List<RobotBuildTask> reserveRobotBuildTasks(EntityRobotBase robot, int maxItems) {
+        if (!canRobotsBuild()) {
+            return Collections.emptyList();
+        }
+        return blueprintBuilder.reserveNextRobotTasks(robot, needMaterial, maxItems);
+    }
+
+    public boolean buildRobotTask(EntityRobotBase robot, RobotBuildTask task) {
+        if (!canRobotsBuild()) {
+            releaseRobotBuildTask(robot, task);
+            return false;
+        }
+        return blueprintBuilder.buildRobotTask(robot, task);
+    }
+
+    public void releaseRobotBuildTask(EntityRobotBase robot, RobotBuildTask task) {
+        if (blueprintBuilder != null) {
+            blueprintBuilder.releaseRobotTask(robot, task);
+        }
+    }
 
     // Rendering
 

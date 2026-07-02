@@ -52,6 +52,7 @@ import ct.buildcraft.robotics.boards.BoardRobotDelivery;
 import ct.buildcraft.robotics.boards.BoardRobotFluidCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotHarvester;
 import ct.buildcraft.robotics.boards.BoardRobotBomber;
+import ct.buildcraft.robotics.boards.BoardRobotBuilder;
 import ct.buildcraft.robotics.boards.BoardRobotButcher;
 import ct.buildcraft.robotics.boards.BoardRobotFarmer;
 import ct.buildcraft.robotics.boards.BoardRobotLeaveCutter;
@@ -165,6 +166,7 @@ public class BCRobotics {
         RobotManager.registerAIRobot(BoardRobotDelivery.class, "boardRobotDelivery", "buildcraft.robotics.boards.BoardRobotDelivery");
         RobotManager.registerAIRobot(BoardRobotKnight.class, "boardKnight", "buildcraft.robotics.boards.BoardRobotKnight");
         RobotManager.registerAIRobot(BoardRobotBomber.class, "boardBomber", "buildcraft.robotics.boards.BoardRobotBomber");
+        RobotManager.registerAIRobot(BoardRobotBuilder.class, "boardBuilder", "buildcraft.robotics.boards.BoardRobotBuilder");
         RobotManager.registerAIRobot(AIRobotFetchItem.class, "fetchItem", "buildcraft.robotics.ai.AIRobotFetchItem");
         RobotManager.registerAIRobot(AIRobotFetchAndEquipItemStack.class, "fetchAndEquipItemStack", "buildcraft.robotics.ai.AIRobotFetchAndEquipItemStack");
         RobotManager.registerAIRobot(AIRobotSearchBlock.class, "searchBlock", "buildcraft.robotics.ai.AIRobotSearchBlock");

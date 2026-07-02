@@ -18,6 +18,7 @@ import ct.buildcraft.robotics.boards.BoardRobotDelivery;
 import ct.buildcraft.robotics.boards.BoardRobotFluidCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotHarvester;
 import ct.buildcraft.robotics.boards.BoardRobotBomber;
+import ct.buildcraft.robotics.boards.BoardRobotBuilder;
 import ct.buildcraft.robotics.boards.BoardRobotButcher;
 import ct.buildcraft.robotics.boards.BoardRobotFarmer;
 import ct.buildcraft.robotics.boards.BoardRobotLeaveCutter;
@@ -181,7 +182,7 @@ public final class BCRoboticsBoards {
         }
 
         public boolean isInDev() {
-            return "builder".equals(key) || "stripes".equals(key);
+            return "stripes".equals(key);
         }
     }
 
@@ -265,6 +266,9 @@ public final class BCRoboticsBoards {
             }
             if ("bomber".equals(key)) {
                 return new BoardRobotBomber(robot);
+            }
+            if ("builder".equals(key)) {
+                return new BoardRobotBuilder(robot);
             }
             return new BasicRobotBoard(robot, this);
         }

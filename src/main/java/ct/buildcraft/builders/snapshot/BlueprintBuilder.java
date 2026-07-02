@@ -11,29 +11,38 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.google.common.collect.ImmutableList;
+import ct.buildcraft.api.mj.MjAPI;
+import ct.buildcraft.lib.misc.*;
 import org.apache.commons.lang3.tuple.Pair;
 
 import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.schematics.ISchematicBlock;
 import ct.buildcraft.api.schematics.ISchematicEntity;
+import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.api.robots.ResourceIdBlock;
 import ct.buildcraft.api.schematics.SchematicEntityContext;
-import ct.buildcraft.lib.misc.FluidUtilBC;
-import ct.buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -48,6 +57,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     public List<ItemStack> remainingDisplayRequired = new ArrayList<>();
     private final Map<Pair<List<ItemStack>, List<FluidStack>>, Optional<List<ItemStack>>> extractRequiredCache =
         new HashMap<>();
+    private final Set<BlockPos> robotReservedBlocks = new HashSet<>();
 
     public BlueprintBuilder(ITileForBlueprintBuilder tile) {
         super(tile);
@@ -87,12 +97,14 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     public void resourcesChanged() {
         super.resourcesChanged();
         extractRequiredCache.clear();
+        robotReservedBlocks.clear();
     }
 
     @Override
     public void cancel() {
         super.cancel();
         remainingDisplayRequiredBlocks = null;
+        robotReservedBlocks.clear();
     }
 
     private Stream<ItemStack> getDisplayRequired(List<ItemStack> requiredItems, List<FluidStack> requiredFluids) {
@@ -160,6 +172,329 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
             Pair.of(requiredItems, requiredFluids),
             pair -> function.get()
         );
+    }
+
+
+    /**
+     * Reserves the next blueprint block that a Builder Robot can construct. Kept for compatibility with older board
+     * code; the modern board asks for a full 128-item batch through {@link #reserveNextRobotTasks}.
+     */
+    public RobotBuildTask reserveNextRobotTask(EntityRobotBase robot, boolean needMaterial) {
+        List<RobotBuildTask> tasks = reserveNextRobotTasks(robot, needMaterial, 1);
+        return tasks.isEmpty() ? null : tasks.get(0);
+    }
+
+    public List<RobotBuildTask> reserveNextRobotTasks(EntityRobotBase robot, boolean needMaterial, int maxItems) {
+        if (robot == null || getBuildingInfo() == null || checkResults == null || maxItems <= 0) {
+            return Collections.emptyList();
+        }
+
+        List<RobotBuildTask> tasks = new ArrayList<>();
+        int maxTasks = Math.max(1, maxItems);
+
+        if (tile.canExcavate()) {
+            for (int index : getBreakOrder()) {
+                if (tasks.size() >= maxTasks) {
+                    break;
+                }
+                BlockPos blockPos = indexToPos(index);
+                if (!canRobotWorkAt(robot, blockPos)) {
+                    continue;
+                }
+                check(blockPos);
+                if (checkResults[index] != CHECK_RESULT_TO_BREAK) {
+                    continue;
+                }
+                RobotBuildTask task = makeRobotBreakTask(robot, blockPos);
+                if (task != null) {
+                    tasks.add(task);
+                }
+            }
+            if (!tasks.isEmpty()) {
+                return tasks;
+            }
+        }
+
+        List<ItemStack> carried = new ArrayList<>();
+        int carriedItems = 0;
+        for (int index : getPlaceOrder()) {
+            BlockPos blockPos = indexToPos(index);
+            if (!canRobotWorkAt(robot, blockPos)) {
+                continue;
+            }
+            check(blockPos);
+            if (checkResults[index] != CHECK_RESULT_TO_PLACE || !canPlace(blockPos) || !isReadyToPlace(blockPos)) {
+                continue;
+            }
+            RobotBuildTask task = makeRobotTask(robot, blockPos, needMaterial);
+            if (task == null) {
+                continue;
+            }
+
+            List<ItemStack> nextCarried = new ArrayList<>(carried.stream().map(ItemStack::copy).collect(Collectors.toList()));
+            for (ItemStack stack : task.requirements()) {
+                mergeRequirement(nextCarried, stack);
+            }
+            nextCarried = splitRequirements(nextCarried);
+            int nextCarriedItems = nextCarried.stream().mapToInt(ItemStack::getCount).sum();
+            if ((!tasks.isEmpty() && nextCarriedItems > maxItems) || nextCarried.size() > robot.getContainerSize()) {
+                releaseRobotTask(robot, task);
+                break;
+            }
+            if (nextCarriedItems > maxItems) {
+                releaseRobotTask(robot, task);
+                continue;
+            }
+
+            tasks.add(task);
+            carried = nextCarried;
+            carriedItems = nextCarriedItems;
+            if (carriedItems >= maxItems || tasks.size() >= maxTasks) {
+                break;
+            }
+        }
+        return tasks;
+    }
+
+    private boolean canRobotWorkAt(EntityRobotBase robot, BlockPos blockPos) {
+        return (robot.getZoneToWork() == null || robot.getZoneToWork().contains(Vec3.atCenterOf(blockPos)))
+            && !robotReservedBlocks.contains(blockPos)
+            && (robot.getRegistry() == null || !robot.getRegistry().isTaken(new ResourceIdBlock(blockPos)));
+    }
+
+    private RobotBuildTask makeRobotBreakTask(EntityRobotBase robot, BlockPos blockPos) {
+        if (BlockUtil.getFluidWithFlowing(tile.getWorldBC(), blockPos) != Fluids.EMPTY
+            || BlockUtil.isUnbreakableBlock(tile.getWorldBC(), blockPos, tile.getOwner())) {
+            return null;
+        }
+        ResourceIdBlock resource = new ResourceIdBlock(blockPos);
+        if (robot.getRegistry() != null && !robot.getRegistry().take(resource, robot)) {
+            return null;
+        }
+        robotReservedBlocks.add(blockPos);
+        return new RobotBuildTask(blockPos, Collections.emptyList(), computeRobotBreakEnergyCost(blockPos), true);
+    }
+
+    private RobotBuildTask makeRobotTask(EntityRobotBase robot, BlockPos blockPos, boolean needMaterial) {
+        int index = posToIndex(blockPos);
+        List<FluidStack> requiredFluids = getBuildingInfo().toPlaceRequiredFluids[index];
+        if (requiredFluids != null && requiredFluids.stream().anyMatch(stack -> stack != null && !stack.isEmpty())) {
+            return null;
+        }
+
+        List<ItemStack> requirements = needMaterial
+            ? StackUtil.mergeSameItems(Optional.ofNullable(getBuildingInfo().toPlaceRequiredItems[index])
+                .orElseGet(java.util.Collections::emptyList)
+                .stream()
+                .filter(stack -> stack != null && !stack.isEmpty())
+                .map(ItemStack::copy)
+                .collect(Collectors.toList()))
+            : java.util.Collections.emptyList();
+        if (requirements.size() > robot.getContainerSize() || requirements.stream().anyMatch(stack -> stack.getCount() > stack.getMaxStackSize())) {
+            return null;
+        }
+
+        ResourceIdBlock resource = new ResourceIdBlock(blockPos);
+        if (robot.getRegistry() != null && !robot.getRegistry().take(resource, robot)) {
+            return null;
+        }
+        robotReservedBlocks.add(blockPos);
+        return new RobotBuildTask(blockPos, requirements, computeRobotEnergyCost(blockPos), false);
+    }
+
+    public void releaseRobotTask(EntityRobotBase robot, RobotBuildTask task) {
+        if (task == null) {
+            return;
+        }
+        robotReservedBlocks.remove(task.pos());
+        if (robot != null && robot.getRegistry() != null) {
+            robot.getRegistry().release(new ResourceIdBlock(task.pos()));
+        }
+    }
+
+    public boolean buildRobotTask(EntityRobotBase robot, RobotBuildTask task) {
+        if (robot == null || task == null || getBuildingInfo() == null) {
+            releaseRobotTask(robot, task);
+            return false;
+        }
+
+        BlockPos blockPos = task.pos();
+        try {
+            if (task.breakTask()) {
+                check(blockPos);
+                if (checkResults[posToIndex(blockPos)] == CHECK_RESULT_CORRECT || tile.getWorldBC().isEmptyBlock(blockPos)) {
+                    return true;
+                }
+                if (!tile.canExcavate()
+                    || BlockUtil.getFluidWithFlowing(tile.getWorldBC(), blockPos) != Fluids.EMPTY
+                    || BlockUtil.isUnbreakableBlock(tile.getWorldBC(), blockPos, tile.getOwner())) {
+                    return false;
+                }
+                boolean broken = tile.getWorldBC() instanceof ServerLevel serverLevel
+                    && BlockUtil.breakBlockAndGetDrops(
+                        serverLevel,
+                        blockPos,
+                        new ItemStack(Items.DIAMOND_PICKAXE),
+                        tile.getOwner()
+                    ).isPresent();
+                if (broken && check(blockPos)) {
+                    afterChecks();
+                }
+                return broken;
+            }
+
+            if (isBlockCorrect(blockPos)) {
+                check(blockPos);
+                return true;
+            }
+            check(blockPos);
+            int index = posToIndex(blockPos);
+            if (checkResults[index] != CHECK_RESULT_TO_PLACE || !canPlace(blockPos) || !isReadyToPlace(blockPos)) {
+                return false;
+            }
+            if (!hasRobotRequirements(robot, task.requirements())) {
+                return false;
+            }
+            ISchematicBlock schematicBlock = getSchematicBlock(blockPos);
+            if (schematicBlock == null || schematicBlock.isAir()) {
+                return false;
+            }
+
+            boolean built = schematicBlock.build(tile.getWorldBC(), blockPos);
+            if (built) {
+                consumeRobotRequirements(robot, task.requirements());
+                if (check(blockPos)) {
+                    afterChecks();
+                }
+            }
+            return built;
+        } finally {
+            releaseRobotTask(robot, task);
+        }
+    }
+
+    private boolean hasRobotRequirements(EntityRobotBase robot, List<ItemStack> requirements) {
+        for (ItemStack requirement : requirements) {
+            int found = 0;
+            for (int slot = 0; slot < robot.getContainerSize(); slot++) {
+                ItemStack stack = robot.getItem(slot);
+                if (!stack.isEmpty() && StackUtil.canMerge(requirement, stack)) {
+                    found += stack.getCount();
+                    if (found >= requirement.getCount()) {
+                        break;
+                    }
+                }
+            }
+            if (found < requirement.getCount()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void consumeRobotRequirements(EntityRobotBase robot, List<ItemStack> requirements) {
+        for (ItemStack requirement : requirements) {
+            int left = requirement.getCount();
+            for (int slot = 0; slot < robot.getContainerSize() && left > 0; slot++) {
+                ItemStack stack = robot.getItem(slot);
+                if (!stack.isEmpty() && StackUtil.canMerge(requirement, stack)) {
+                    int used = Math.min(left, stack.getCount());
+                    robot.removeItem(slot, used);
+                    left -= used;
+                }
+            }
+        }
+    }
+
+    private void mergeRequirement(List<ItemStack> merged, ItemStack requirement) {
+        if (requirement == null || requirement.isEmpty()) {
+            return;
+        }
+        for (ItemStack existing : merged) {
+            if (ItemStack.isSameItemSameTags(existing, requirement)) {
+                existing.grow(requirement.getCount());
+                return;
+            }
+        }
+        merged.add(requirement.copy());
+    }
+
+    private List<ItemStack> splitRequirements(List<ItemStack> merged) {
+        List<ItemStack> split = new ArrayList<>();
+        for (ItemStack stack : merged) {
+            int left = stack.getCount();
+            int limit = Math.max(1, stack.getMaxStackSize());
+            while (left > 0) {
+                ItemStack copy = stack.copy();
+                copy.setCount(Math.min(limit, left));
+                split.add(copy);
+                left -= copy.getCount();
+            }
+        }
+        return split;
+    }
+
+    private int computeRobotEnergyCost(BlockPos blockPos) {
+        return Math.max(8, (int) Math.ceil(Math.sqrt(blockPos.distSqr(tile.getBuilderPos())) * 10.0D));
+    }
+
+    private int computeRobotBreakEnergyCost(BlockPos blockPos) {
+        long breakMj = Math.max(1L, BlockUtil.computeBlockBreakPower(tile.getWorldBC(), blockPos) / MjAPI.MJ);
+        return Math.max(16, computeRobotEnergyCost(blockPos) + (int) Math.min(10_000L, breakMj));
+    }
+
+    public static class RobotBuildTask {
+        private final BlockPos pos;
+        private final List<ItemStack> requirements;
+        private final int energyCost;
+        private final boolean breakTask;
+
+        public RobotBuildTask(BlockPos pos, List<ItemStack> requirements, int energyCost) {
+            this(pos, requirements, energyCost, false);
+        }
+
+        public RobotBuildTask(BlockPos pos, List<ItemStack> requirements, int energyCost, boolean breakTask) {
+            this.pos = pos;
+            this.requirements = ImmutableList.copyOf(requirements == null ? java.util.Collections.emptyList() : requirements);
+            this.energyCost = energyCost;
+            this.breakTask = breakTask;
+        }
+
+        public RobotBuildTask(CompoundTag nbt) {
+            this.pos = NbtUtils.readBlockPos(nbt.getCompound("pos"));
+            this.requirements = ImmutableList.copyOf(
+                NBTUtilBC.readCompoundList(nbt.get("requirements"))
+                    .map(ItemStack::of)
+                    .collect(Collectors.toList())
+            );
+            this.energyCost = nbt.getInt("energyCost");
+            this.breakTask = nbt.getBoolean("breakTask");
+        }
+
+        public BlockPos pos() {
+            return pos;
+        }
+
+        public List<ItemStack> requirements() {
+            return requirements;
+        }
+
+        public int energyCost() {
+            return energyCost;
+        }
+
+        public boolean breakTask() {
+            return breakTask;
+        }
+
+        public CompoundTag writeToNBT() {
+            CompoundTag nbt = new CompoundTag();
+            nbt.put("pos", NbtUtils.writeBlockPos(pos));
+            nbt.put("requirements", NBTUtilBC.writeObjectList(requirements.stream().map(ItemStack::serializeNBT)));
+            nbt.putInt("energyCost", energyCost);
+            nbt.putBoolean("breakTask", breakTask);
+            return nbt;
+        }
     }
 
     @Override

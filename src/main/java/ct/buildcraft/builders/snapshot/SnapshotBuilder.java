@@ -114,6 +114,22 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     protected abstract Snapshot.BuildingInfo getBuildingInfo();
 
+    /**
+     * Iteration order for blocks that should be removed before building.
+     * Kept behind an accessor so subclasses do not depend on field visibility.
+     */
+    protected int[] getBreakOrder() {
+        return breakOrder;
+    }
+
+    /**
+     * Iteration order for blocks that should be placed by normal builder logic or builder robots.
+     * Kept behind an accessor so subclasses do not depend on field visibility.
+     */
+    protected int[] getPlaceOrder() {
+        return placeOrder;
+    }
+
     public void validate() {
     	Level level = tile.getWorldBC();
         if (!level.isClientSide) {
@@ -528,12 +544,33 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     protected void afterChecks() {
     }
+
+    public void stopRenderingForNoPower() {
+        if (!tile.getWorldBC().isClientSide) {
+            for (BreakTask breakTask : breakTasks) {
+                tile.getWorldBC().destroyBlockProgress(breakTask.pos.hashCode(), breakTask.pos, -1);
+            }
+        }
+        clientBreakTasks.clear();
+        prevClientBreakTasks.clear();
+        clientPlaceTasks.clear();
+        prevClientPlaceTasks.clear();
+        prevRobotPos = null;
+        robotPos = null;
+    }
     
     public GameEventListener getListener() {
     	return this.worldEventListener;
     }
 
     public void writeToByteBuf(FriendlyByteBuf buffer) {
+        if (tile.getBattery().getStored() <= 0) {
+            buffer.writeInt(0);
+            buffer.writeInt(0);
+            buffer.writeInt(leftToBreak);
+            buffer.writeInt(leftToPlace);
+            return;
+        }
         buffer.writeInt(breakTasks.size());
         breakTasks.forEach(breakTask -> breakTask.writePayload(buffer));
         buffer.writeInt(placeTasks.size());
