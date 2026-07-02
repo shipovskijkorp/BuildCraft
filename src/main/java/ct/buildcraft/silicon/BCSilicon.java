@@ -94,8 +94,11 @@ public class BCSilicon {
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
-        public ClientModEvents() {
-        	BCSiliconSprites.fmlPreInit();
+        static {
+            // Ensure sprite/model holders are created before texture stitching.
+            // The subscriber class is loaded by Forge, but its constructor is never guaranteed to run.
+            // Previously timer trigger icons were created too late, so the atlas stitched missing-texture squares.
+            BCSiliconSprites.fmlPreInit();
             BCSiliconModels.fmlPreInit();
         }
         

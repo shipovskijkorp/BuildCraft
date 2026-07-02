@@ -11,6 +11,7 @@ import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.silicon.plug.PluggableLens;
 import ct.buildcraft.silicon.plug.PluggableLightSensor;
 import ct.buildcraft.silicon.plug.PluggablePulsar;
+import ct.buildcraft.silicon.plug.PluggableTimer;
 import net.minecraft.resources.ResourceLocation;
 
 public class BCSiliconPlugs {
@@ -19,6 +20,7 @@ public class BCSiliconPlugs {
     public static PluggableDefinition lens;
     public static PluggableDefinition pulsar;
     public static PluggableDefinition lightSensor;
+    public static PluggableDefinition timer;
     public static PluggableDefinition facade;
 
     public static void preInit() {
@@ -26,6 +28,7 @@ public class BCSiliconPlugs {
         lens = register("lens", PluggableLens::new, PluggableLens::new);
         pulsar = register("pulsar", PluggablePulsar::new, PluggablePulsar::new);
         lightSensor = register("daylight_sensor", PluggableLightSensor::new);
+        timer = register("timer", PluggableTimer::new);
         facade = register("facade", PluggableFacade::new, PluggableFacade::new);
     }
 

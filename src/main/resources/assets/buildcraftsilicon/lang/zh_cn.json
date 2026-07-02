@@ -99,7 +99,7 @@
   "gate.trigger.pipe.tooMuchEnergy": "能量过载",
   "gate.trigger.pipe.wire.active": "%s 管道信号开启",
   "gate.trigger.pipe.wire.inactive": "%s 管道信号关闭",
-  "gate.trigger.timer": "%s 秒定时器",
+  "gate.trigger.timer": "%s 秒计时器",
   "gate.trigger.robot.sleep": "睡眠",
   "gate.trigger.robot.in.station": "机器人在站点",
   "gate.trigger.robot.linked": "站点已链接",
@@ -153,5 +153,6 @@
   "item.filter.black": "§8黑色§r过滤器",
   "item.buildcraftsilicon.plug.gate": "门控",
   "item.buildcraftsilicon.plug.facade": "伪装板",
-  "item.buildcraftsilicon.plug.lens": "透镜"
+  "item.buildcraftsilicon.plug.lens": "透镜",
+  "item.buildcraftsilicon.plug.timer": "计时器"
 }

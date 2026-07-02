@@ -153,5 +153,6 @@
   "item.filter.black": "§8Black§r Filter",
   "item.buildcraftsilicon.plug.gate": "Gate",
   "item.buildcraftsilicon.plug.facade": "Facade",
-  "item.buildcraftsilicon.plug.lens": "Lens"
+  "item.buildcraftsilicon.plug.lens": "Lens",
+  "item.buildcraftsilicon.plug.timer": "Timer"
 }

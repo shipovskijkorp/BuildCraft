@@ -18,5 +18,7 @@
   "item.buildcraftsilicon.laser": "Лазер",
   "item.buildcraftsilicon.assembly_table": "Сборочный стол",
   "item.buildcraftsilicon.integration_table": "Стол интеграции",
-  "item.buildcraftsilicon.programming_table": "Стол программирования"
+  "item.buildcraftsilicon.programming_table": "Стол программирования",
+  "item.buildcraftsilicon.plug.timer": "Таймер",
+  "gate.trigger.timer": "Таймер %s сек."
 }

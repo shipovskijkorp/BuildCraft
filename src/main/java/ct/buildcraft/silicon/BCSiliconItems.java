@@ -30,6 +30,7 @@ public class BCSiliconItems {
     public static final RegistryObject<ItemPluggableFacade> PLUG_FACADE_ITEM = ITEMS.register("plug/facade", ItemPluggableFacade::new); 
     public static final RegistryObject<ItemPluggableLens> PLUG_LENS_ITEM = ITEMS.register("plug/lens", ItemPluggableLens::new); 
     public static final RegistryObject<ItemPluggableSimple> PLUG_LIGHT_SENSOR_ITEM = ITEMS.register("plug/light_sensor", () -> new ItemPluggableSimple(BCSiliconPlugs.lightSensor, new Item.Properties().tab(BCSilicon.tabPlugs))); 
+    public static final RegistryObject<ItemPluggableSimple> PLUG_TIMER_ITEM = ITEMS.register("plug/timer", () -> new ItemPluggableSimple(BCSiliconPlugs.timer, new Item.Properties().tab(BCSilicon.tabPlugs))); 
     public static final RegistryObject<ItemPluggableSimple> PLUG_PULSAR_ITEM = ITEMS.register("plug/pulsar", () -> new ItemPluggableSimple(BCSiliconPlugs.pulsar, PluggablePulsar::new, ItemPluggableSimple.PIPE_BEHAVIOUR_ACCEPTS_RS_POWER, new Item.Properties().tab(BCSilicon.tabPlugs))); 
     public static final RegistryObject<ItemGateCopier> GATE_COPIER_ITEM = ITEMS.register("gate_copier", ItemGateCopier::new);
     
