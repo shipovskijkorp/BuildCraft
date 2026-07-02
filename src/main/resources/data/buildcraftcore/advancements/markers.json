@@ -10,7 +10,7 @@
       "translate": "advancements.buildcraftcore.markers.description"
     }
   },
-  "parent": "buildcraftcore:guide",
+  "parent": "buildcraftcore:root",
   "criteria": {
     "has_marker": {
       "trigger": "minecraft:inventory_changed",
@@ -20,19 +20,18 @@
             "items": [
               "buildcraftcore:marker_volume"
             ]
-          },
-          {
-            "items": [
-              "buildcraftcore:marker_path"
-            ]
           }
         ]
       }
+    },
+    "code_trigger": {
+      "trigger": "minecraft:impossible"
     }
   },
   "requirements": [
     [
-      "has_marker"
+      "has_marker",
+      "code_trigger"
     ]
   ]
 }

@@ -87,7 +87,7 @@ public class TilePump extends TileMiner {
     }
 
     private static final ResourceLocation ADVANCEMENT_DRAIN_ANY
-        = new ResourceLocation("buildcraftfactory:draining_the_level");
+        = new ResourceLocation("buildcraftfactory:draining_the_world");
 
     private static final ResourceLocation ADVANCEMENT_DRAIN_OIL
         = new ResourceLocation("buildcraftfactory:oil_platform");

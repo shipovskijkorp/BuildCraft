@@ -12,8 +12,27 @@
   },
   "parent": "buildcraftenergy:engine",
   "criteria": {
-    "code_trigger": {
-      "trigger": "minecraft:impossible"
+    "has_engine_and_redstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftenergy:engine_stone"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:redstone"
+            ]
+          }
+        ]
+      }
     }
-  }
+  },
+  "requirements": [
+    [
+      "has_engine_and_redstone"
+    ]
+  ]
 }

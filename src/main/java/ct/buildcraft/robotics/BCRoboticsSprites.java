@@ -2,7 +2,10 @@ package ct.buildcraft.robotics;
 
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class BCRoboticsSprites {
 
     // ── Triggers ──────────────────────────────────────────────

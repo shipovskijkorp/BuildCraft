@@ -13,8 +13,22 @@
   },
   "parent": "buildcraftbuilders:architect",
   "criteria": {
-    "code_trigger": {
-      "trigger": "minecraft:impossible"
+    "has_builder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftbuilders:builder"
+            ]
+          }
+        ]
+      }
     }
-  }
+  },
+  "requirements": [
+    [
+      "has_builder"
+    ]
+  ]
 }

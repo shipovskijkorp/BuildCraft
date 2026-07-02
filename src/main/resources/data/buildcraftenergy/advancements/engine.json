@@ -10,7 +10,7 @@
       "translate": "advancements.buildcraftcore.engine.description"
     }
   },
-  "parent": "buildcraftcore:guide",
+  "parent": "buildcraftcore:root",
   "criteria": {
     "redstone_engine": {
       "trigger": "minecraft:inventory_changed",

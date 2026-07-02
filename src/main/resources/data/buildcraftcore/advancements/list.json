@@ -1,13 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:book"
+      "item": "buildcraftcore:list"
     },
     "title": {
-      "translate": "advancements.buildcraftcore.guide.title"
+      "translate": "advancements.buildcraftcore.list.title"
     },
     "description": {
-      "translate": "advancements.buildcraftcore.guide.description"
+      "translate": "advancements.buildcraftcore.list.description"
     }
   },
   "parent": "buildcraftcore:root",

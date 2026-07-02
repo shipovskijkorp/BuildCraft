@@ -16,7 +16,7 @@
     "oil": {
       "trigger": "minecraft:enter_block",
       "conditions": {
-        "block": "buildcraftenergy:fluid_block_oil_heat_0"
+        "block": "buildcraftenergy:oil"
       }
     }
   }

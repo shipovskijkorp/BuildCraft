@@ -12,8 +12,27 @@
   },
   "parent": "buildcraftenergy:powering_up",
   "criteria": {
-    "code_trigger": {
-      "trigger": "minecraft:impossible"
+    "has_combustion_and_coolant": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftenergy:engine_iron"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:water_bucket"
+            ]
+          }
+        ]
+      }
     }
-  }
+  },
+  "requirements": [
+    [
+      "has_combustion_and_coolant"
+    ]
+  ]
 }

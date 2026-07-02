@@ -12,8 +12,27 @@
   },
   "parent": "buildcraftfactory:oil_platform",
   "criteria": {
-    "code_trigger": {
-      "trigger": "minecraft:impossible"
+    "has_refinery_setup": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftfactory:distiller"
+            ]
+          },
+          {
+            "items": [
+              "buildcraftfactory:heat_exchange"
+            ]
+          }
+        ]
+      }
     }
-  }
+  },
+  "requirements": [
+    [
+      "has_refinery_setup"
+    ]
+  ]
 }

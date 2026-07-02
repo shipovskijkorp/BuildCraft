@@ -13,8 +13,22 @@
   },
   "parent": "buildcraftbuilders:shaping_the_world",
   "criteria": {
-    "code_trigger": {
-      "trigger": "minecraft:impossible"
+    "has_filler": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftbuilders:filler"
+            ]
+          }
+        ]
+      }
     }
-  }
+  },
+  "requirements": [
+    [
+      "has_filler"
+    ]
+  ]
 }

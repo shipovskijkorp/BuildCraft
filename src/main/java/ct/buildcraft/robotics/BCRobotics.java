@@ -3,7 +3,6 @@ package ct.buildcraft.robotics;
 import ct.buildcraft.api.BCModules;
 import ct.buildcraft.api.statements.StatementManager;
 import ct.buildcraft.robotics.BCRoboticsStatements;
-import ct.buildcraft.robotics.BCRoboticsSprites;
 import ct.buildcraft.robotics.statements.RobotsActionProvider;
 import ct.buildcraft.robotics.statements.RobotsTriggerProvider;
 import ct.buildcraft.robotics.statements.StatementParameterRobot;
@@ -124,7 +123,6 @@ public class BCRobotics {
     private void init(final FMLCommonSetupEvent event) {
         // Register robot statement providers and parameter types
         BCRoboticsStatements.preInit();
-        BCRoboticsSprites.preInit();
         StatementManager.registerActionProvider(new RobotsActionProvider());
         StatementManager.registerTriggerProvider(new RobotsTriggerProvider());
         // Register via the reader overload so both NBT persistence and GUI/network buffer sync are available.
@@ -210,6 +208,7 @@ public class BCRobotics {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            BCRoboticsSprites.preInit();
             event.enqueueWork(() -> {
                 ItemProperties.register(BCRoboticsItems.ROBOT.get(), ROBOT_MODEL,
                         (stack, level, entity, seed) -> BCRoboticsBoards.getRobotModelValue(stack));

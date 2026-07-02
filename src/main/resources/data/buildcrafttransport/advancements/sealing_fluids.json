@@ -12,8 +12,22 @@
   },
   "parent": "buildcrafttransport:pipe_diversification",
   "criteria": {
-    "code_trigger": {
-      "trigger": "minecraft:impossible"
+    "has_pipe_sealant": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:waterproof"
+            ]
+          }
+        ]
+      }
     }
-  }
+  },
+  "requirements": [
+    [
+      "has_pipe_sealant"
+    ]
+  ]
 }

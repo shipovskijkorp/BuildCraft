@@ -27,6 +27,7 @@ import ct.buildcraft.api.tiles.IDebuggable;
 import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.factory.block.BlockFloodGate;
 import ct.buildcraft.lib.fluid.Tank;
+import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.misc.BlockUtil;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.FluidUtilBC;
@@ -63,7 +64,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     };
 
     private static final ResourceLocation ADVANCEMENT_FLOOD_SINGLE = new ResourceLocation(
-        "buildcraftfactory:flooding_the_level"
+        "buildcraftfactory:flooding_the_world"
     );
 
     private static final int[] REBUILD_DELAYS = { 16, 32, 64, 128, 256 };
@@ -199,7 +200,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
 //                        FakePlayer fakePlayer =
 //                            BuildCraftAPI.fakePlayerProvider.getFakePlayer((WorldServer) level, getOwner(), currentPos);
                         if (FluidUtil.tryPlaceFluid(null, level, null, currentPos, tank, fluid)) {
-//                            AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_FLOOD_SINGLE);
+                            AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_FLOOD_SINGLE);
                             for (Direction side : Direction.values()) {
                                 level.neighborChanged(getBlockState(), currentPos.offset(side.getNormal()), BCFactoryBlocks.FLOOD_GATE_BLOCK.get(),
                                     currentPos, false);
