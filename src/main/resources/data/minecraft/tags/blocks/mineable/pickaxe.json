@@ -27,6 +27,7 @@
     "buildcraftbuilders:frame",
     "buildcraftcore:marker_path",
     "buildcraftcore:marker_volume",
-    "buildcraftrobotics:zone_planner"
+    "buildcraftrobotics:zone_planner",
+    "buildcraftrobotics:requester"
   ]
 }

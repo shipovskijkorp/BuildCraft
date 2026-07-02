@@ -25,6 +25,9 @@ public class BCRoboticsItems {
     public static final RegistryObject<BlockItem> ZONE_PLANNER = ITEMS.register("zone_planner",
             () -> new BlockItem(BCRoboticsBlocks.ZONE_PLANNER.get(), new Item.Properties().tab(BCRobotics.TAB_ROBOTICS)));
 
+    public static final RegistryObject<BlockItem> REQUESTER = ITEMS.register("requester",
+            () -> new BlockItem(BCRoboticsBlocks.REQUESTER.get(), new Item.Properties().tab(BCRobotics.TAB_ROBOTICS)));
+
     public static void registry(IEventBus bus) {
         ITEMS.register(bus);
     }

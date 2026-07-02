@@ -349,6 +349,16 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
 
     @Override
     public IRequestProvider getRequestProvider() {
+        Level level = level();
+        if (level != null) {
+            BlockPos pos = new BlockPos(x(), y(), z());
+            for (Direction dir : Direction.values()) {
+                BlockEntity neighbour = level.getBlockEntity(pos.relative(dir));
+                if (neighbour instanceof IRequestProvider provider) {
+                    return provider;
+                }
+            }
+        }
         return this;
     }
 

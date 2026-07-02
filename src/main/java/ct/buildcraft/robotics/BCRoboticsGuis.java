@@ -1,7 +1,9 @@
 package ct.buildcraft.robotics;
 
 import ct.buildcraft.lib.gui.BCContainerFactory;
+import ct.buildcraft.robotics.container.ContainerRequester;
 import ct.buildcraft.robotics.container.ContainerZonePlanner;
+import ct.buildcraft.robotics.gui.GuiRequester;
 import ct.buildcraft.robotics.gui.GuiZonePlanner;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.inventory.MenuType;
@@ -19,11 +21,19 @@ public final class BCRoboticsGuis {
             () -> BCContainerFactory.create(ContainerZonePlanner::new)
     );
 
+    public static final RegistryObject<MenuType<ContainerRequester>> MENU_REQUESTER = MENUS.register(
+            "menu.requester",
+            () -> BCContainerFactory.create(ContainerRequester::new)
+    );
+
     private BCRoboticsGuis() {
     }
 
     public static void clientInit(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> MenuScreens.register(MENU_ZONE_PLANNER.get(), GuiZonePlanner::new));
+        event.enqueueWork(() -> {
+            MenuScreens.register(MENU_ZONE_PLANNER.get(), GuiZonePlanner::new);
+            MenuScreens.register(MENU_REQUESTER.get(), GuiRequester::new);
+        });
     }
 
     public static void registry(IEventBus bus) {

@@ -115,5 +115,13 @@
   "buildcraftrobotics.help.zone_planner.crafting.title": "Map Location export",
   "buildcraftrobotics.help.zone_planner.crafting.desc": "Put a blank Map Location in the top slot. After the progress bar fills, the lower slot receives a Map Location containing the currently selected zone layer and the name from the text field.",
   "buildcraftrobotics.help.zone_planner.import.title": "Import Map Location",
-  "buildcraftrobotics.help.zone_planner.import.desc": "Put an existing zone Map Location here to load its area into the selected colour layer. This is useful for editing a zone that was saved earlier."
+  "buildcraftrobotics.help.zone_planner.import.desc": "Put an existing zone Map Location here to load its area into the selected colour layer. This is useful for editing a zone that was saved earlier.",
+  "item.buildcraftrobotics.requester": "Requester",
+  "block.buildcraftrobotics.requester": "Requester",
+  "buildcraftrobotics.help.requester.templates.title": "Request templates",
+  "buildcraftrobotics.help.requester.templates.desc": "Click a slot with an item stack on the cursor to set the requested item and amount. Click with an empty cursor, or shift-click the template slot, to clear it.",
+  "buildcraftrobotics.help.requester.storage.title": "Delivered items",
+  "buildcraftrobotics.help.requester.storage.desc": "Delivery robots fill these slots until the matching request template is satisfied. Only items matching the template can be inserted into each slot.",
+  "buildcraftrobotics.help.requester.arrow.title": "Requester flow",
+  "buildcraftrobotics.help.requester.arrow.desc": "The left side defines what is wanted. The right side stores what robots have delivered."
 }

@@ -92,5 +92,13 @@
   "buildcraftrobotics.help.zone_planner.crafting.title": "Экспорт Map Location",
   "buildcraftrobotics.help.zone_planner.crafting.desc": "Положи чистую Map Location в верхний слот. Когда шкала прогресса заполнится, в нижнем слоте появится Map Location с выбранным слоем зоны и названием из текстового поля.",
   "buildcraftrobotics.help.zone_planner.import.title": "Импорт Map Location",
-  "buildcraftrobotics.help.zone_planner.import.desc": "Положи сюда существующую Map Location зоны, чтобы загрузить её область в выбранный цветовой слой. Это удобно для правки зоны, сохранённой ранее."
+  "buildcraftrobotics.help.zone_planner.import.desc": "Положи сюда существующую Map Location зоны, чтобы загрузить её область в выбранный цветовой слой. Это удобно для правки зоны, сохранённой ранее.",
+  "item.buildcraftrobotics.requester": "Запросчик",
+  "block.buildcraftrobotics.requester": "Запросчик",
+  "buildcraftrobotics.help.requester.templates.title": "Шаблоны запросов",
+  "buildcraftrobotics.help.requester.templates.desc": "Кликни по слоту предметом на курсоре, чтобы задать запрашиваемый предмет и количество. Клик пустым курсором или Shift-клик по шаблону очищает слот.",
+  "buildcraftrobotics.help.requester.storage.title": "Доставленные предметы",
+  "buildcraftrobotics.help.requester.storage.desc": "Роботы-доставщики заполняют эти слоты, пока соответствующий запрос не будет выполнен. В каждый слот можно положить только предмет, совпадающий с его шаблоном.",
+  "buildcraftrobotics.help.requester.arrow.title": "Поток запросчика",
+  "buildcraftrobotics.help.requester.arrow.desc": "Слева задаётся, что нужно запросить. Справа хранится то, что роботы уже доставили."
 }
