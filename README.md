@@ -9,8 +9,8 @@ BuildCraft 8 is the latest release with a fresh take on classic BuildCraft mecha
 
 * Port robotics (ready)
 * Move from alpha to beta (ready)
-* Port builders (current task)
-* Global project checkup
+* Port builders (ready)
+* Global project checkup (current task)
 * Forge release for 1.19.2
 * Port to 1.20.1
 * Port to NeoForge/Fabric
