@@ -26,6 +26,7 @@
     "buildcrafttransport:pipe_holder",
     "buildcraftbuilders:frame",
     "buildcraftcore:marker_path",
-    "buildcraftcore:marker_volume"
+    "buildcraftcore:marker_volume",
+    "buildcraftrobotics:zone_planner"
   ]
 }

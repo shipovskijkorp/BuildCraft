@@ -83,10 +83,10 @@ import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
- * Minimal BuildCraft Robotics bootstrap for the 1.19.2 port.
+ * BuildCraft Robotics bootstrap for the 1.19.2 port.
  *
- * This intentionally ports only the base item layer: the robotics creative tab, robot item variants,
- * docking station item, redstone board variants, item models and vanilla crafting recipes.
+ * Registers the robotics creative tab, robot items, docking station, boards, zone planner,
+ * client/server networking and menu bindings used by the ported robotics systems.
  */
 @Mod(BCRobotics.MODID)
 public class BCRobotics {
@@ -102,8 +102,10 @@ public class BCRobotics {
 
         BCRoboticsBoards.init();
         BCRoboticsPlugs.preInit();
+        BCRoboticsBlocks.registry(modEventBus);
         BCRoboticsItems.registry(modEventBus);
         BCRoboticsEntities.registry(modEventBus);
+        BCRoboticsGuis.registry(modEventBus);
 
         // Keep zone planner network messages available for the partially ported robotics zone code.
         ct.buildcraft.lib.net.MessageManager.registerMessageClass(BCModules.ROBOTICS, MessageZoneMapRequest.class,

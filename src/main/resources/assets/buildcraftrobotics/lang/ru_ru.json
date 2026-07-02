@@ -76,5 +76,21 @@
   "buildcraft.boardRobotDelivery.desc": "Delivers items upon request",
   "buildcraft.boardRobotPump.desc": "Pumps out liquids",
   "buildcraft.boardRobotStripes.desc": "Uhh... Stripes!",
-  "buildcraft.boardRobotBreaker.desc": "Mines stone"
+  "buildcraft.boardRobotBreaker.desc": "Mines stone",
+  "item.buildcraftrobotics.zone_planner": "Планировщик зон",
+  "block.buildcraftrobotics.zone_planner": "Планировщик зон",
+  "buildcraftrobotics.help.zone_planner.map.title": "Карта зон",
+  "buildcraftrobotics.help.zone_planner.map.desc": "Эта панель показывает область вокруг планировщика зон. Зажми ЛКМ и протяни мышь, чтобы выделить прямоугольник на выбранном слое. ПКМ по карте переносит центр карты в указанную точку. Колесо мыши, + и - меняют масштаб.",
+  "buildcraftrobotics.help.zone_planner.layers.title": "Слои зон",
+  "buildcraftrobotics.help.zone_planner.layers.desc": "Каждый цвет кисти — отдельный слой зоны. Нажми на кисть, чтобы выбрать редактируемый слой. Затем экспортированную Map Location можно использовать в роботах и гейтах.",
+  "buildcraftrobotics.help.zone_planner.mode.title": "Добавление / удаление",
+  "buildcraftrobotics.help.zone_planner.mode.desc": "Кнопка + / - меняет действие выделения на карте. В режиме + выделенные блоки добавляются в текущий слой. В режиме - выделенные блоки удаляются из него.",
+  "buildcraftrobotics.help.zone_planner.fullscreen.title": "Полноэкранная карта",
+  "buildcraftrobotics.help.zone_planner.fullscreen.desc": "Кнопка FS открывает карту на весь экран. Shift+M делает то же самое. Нажми M или Esc, чтобы вернуться в обычное окно планировщика.",
+  "buildcraftrobotics.help.zone_planner.name.title": "Название карты",
+  "buildcraftrobotics.help.zone_planner.name.desc": "Текст в этом поле станет названием экспортированной Map Location. Кликни по полю, чтобы редактировать его. Enter, Esc или клик вне поля прекращают ввод.",
+  "buildcraftrobotics.help.zone_planner.crafting.title": "Экспорт Map Location",
+  "buildcraftrobotics.help.zone_planner.crafting.desc": "Положи чистую Map Location в верхний слот. Когда шкала прогресса заполнится, в нижнем слоте появится Map Location с выбранным слоем зоны и названием из текстового поля.",
+  "buildcraftrobotics.help.zone_planner.import.title": "Импорт Map Location",
+  "buildcraftrobotics.help.zone_planner.import.desc": "Положи сюда существующую Map Location зоны, чтобы загрузить её область в выбранный цветовой слой. Это удобно для правки зоны, сохранённой ранее."
 }
