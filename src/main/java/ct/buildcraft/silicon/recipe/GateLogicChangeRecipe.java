@@ -67,7 +67,7 @@ public class GateLogicChangeRecipe extends CustomRecipe{
 			} catch (Exception e) {
 				BCLog.logger.error("GateLogicChangeRecipe:Encounter a gate with invaild gate nbt!");
 				if(BCLib.DEV)//TODO
-					e.printStackTrace();
+					ct.buildcraft.api.core.BCLog.logger.warn("Failed to copy gate logic NBT", e);
 			}
 
 	      }

@@ -47,7 +47,7 @@ public class Ic2Compat {
         try {
             return (Fluids) field.get(obj);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            ct.buildcraft.api.core.BCLog.logger.warn("Failed to initialise IC2 compatibility", e);
             return null;
         }
     }

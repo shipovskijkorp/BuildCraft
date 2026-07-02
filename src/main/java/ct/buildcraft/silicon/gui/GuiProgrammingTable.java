@@ -10,6 +10,7 @@ import ct.buildcraft.silicon.tile.TileProgrammingTable_Neptune;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiProgrammingTable extends GuiBC8<ContainerProgrammingTable> {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftsilicon:textures/gui/programming_table.png");
@@ -25,6 +26,10 @@ public class GuiProgrammingTable extends GuiBC8<ContainerProgrammingTable> {
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
         mainGui.shownElements.add(new LedgerTablePower(mainGui, container.tile, true));
+        GuiHelpUtil.addSlot(mainGui, 8, 36, "buildcraft.help.programming.input.title", 0xFF_66_AA_FF, "buildcraft.help.programming.input.desc");
+        GuiHelpUtil.addSlot(mainGui, 8, 90, "buildcraft.help.programming.output.title", 0xFF_88_CC_88, "buildcraft.help.programming.output.desc");
+        GuiHelpUtil.addSlots(mainGui, 43, 36, 6, 4, "buildcraft.help.programming.options.title", 0xFF_CC_AA_FF, "buildcraft.help.programming.options.desc");
+        GuiHelpUtil.addRoot(mainGui, 164, 36, 4, 70, "buildcraft.help.silicon.progress.title", 0xFF_DD_CC_55, "buildcraft.help.silicon.progress.desc");
     }
 
     private int optionX(int index) {

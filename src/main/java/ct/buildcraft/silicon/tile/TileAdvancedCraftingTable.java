@@ -11,7 +11,10 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 
 import ct.buildcraft.api.core.EnumPipePart;
+import ct.buildcraft.api.mj.IMjConnector;
+import ct.buildcraft.api.mj.IMjRedstoneReceiver;
 import ct.buildcraft.api.mj.MjAPI;
+import ct.buildcraft.api.mj.MjCapabilityHelper;
 import ct.buildcraft.lib.tile.craft.IAutoCraft;
 import ct.buildcraft.lib.tile.craft.WorkbenchCrafting;
 import ct.buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
@@ -32,12 +35,13 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 
-public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAutoCraft, MenuProvider {
+public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAutoCraft, MenuProvider, IMjRedstoneReceiver {
     private static final long POWER_REQ = 500 * MjAPI.MJ;
 
     public final ItemHandlerSimple invBlueprint;
@@ -53,6 +57,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
         invMaterials = itemManager.addInvHandler("materials", 5 * 3, EnumAccess.INSERT, EnumPipePart.VALUES);
         invResults = itemManager.addInvHandler("result", 3 * 3, EnumAccess.EXTRACT, EnumPipePart.VALUES);
         crafting = new WorkbenchCrafting(3, 3, this, invBlueprint, invMaterials, invResults);
+        caps.addProvider(new MjCapabilityHelper(this));
     }
 
     @Override
@@ -86,6 +91,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
             }
         }
         if (didChange) {
+            resultClient.setStackInSlot(0, crafting.getAssumedResult());
             sendNetworkGuiUpdate(NET_GUI_DATA);
         }
     }
@@ -105,8 +111,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
         super.writePayload(id, buffer, side);
         if (side == LogicalSide.SERVER) {
             if (id == NET_GUI_DATA) {
-               // buffer.writeItem(crafting.getAssumedResult());
-            	resultClient.setStackInSlot(0, crafting.getAssumedResult());
+                resultClient.setStackInSlot(0, crafting.getAssumedResult());
             }
         }
     }
@@ -124,13 +129,29 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
 		return new ContainerAdvancedCraftingTable(id, inventory, invMaterials, invResults, invBlueprint, resultClient, ContainerLevelAccess.create(level, worldPosition));
 	}
 
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("TileAdvancedCraftingTable:TODO");//TODO
-	}
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
+    }
 
     public WorkbenchCrafting getWorkbenchCrafting() {
         return crafting;
+    }
+
+
+    @Override
+    public boolean canConnect(@Nonnull IMjConnector other) {
+        return true;
+    }
+
+    @Override
+    public long getPowerRequested() {
+        return getDirectPowerRequested();
+    }
+
+    @Override
+    public long receivePower(long microJoules, FluidAction action) {
+        return receiveDirectPower(microJoules, action);
     }
 
     // IAutoCraft

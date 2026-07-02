@@ -59,8 +59,8 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     public final IMjConnector mjConnector = createConnector();
     private final MjCapabilityHelper mjCaps = new MjCapabilityHelper(mjConnector);
 
-    protected double heat = MIN_HEAT;// TODO: sync gui data
-    protected long power = 0;// TODO: sync gui data
+    protected double heat = MIN_HEAT;
+    protected long power = 0;
     private long lastPower = 0;
     /** Increments from 0 to 1. Above 0.5 all of the held power is emitted. */
     public float progress;
@@ -71,7 +71,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     protected EnumPowerStage powerStage = EnumPowerStage.BLUE;
     protected Direction currentDirection = Direction.UP;
 
-    public long currentOutput;// TODO: sync gui data
+    public long currentOutput;
     public boolean isRedstonePowered = false;
     protected boolean isPumping = false;
 
@@ -444,7 +444,6 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         sendNetworkUpdate(NET_RENDER_DATA);
     }
 
-    // TEMP
     @FunctionalInterface
     public interface ITileBuffer {
         BlockEntity getTile();

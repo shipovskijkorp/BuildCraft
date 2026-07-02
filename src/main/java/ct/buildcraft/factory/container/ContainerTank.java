@@ -34,7 +34,7 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
     public final WidgetFluidTank widgetTank;
 
     public ContainerTank(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(containerId, playerInventory, new SimpleContainerData(2), CreateClientLevelAccess(buffer));
+        this(containerId, playerInventory, new SimpleContainerData(3), CreateClientLevelAccess(buffer));
     }
 
     public ContainerTank(int containerId, Inventory playerInventory, TileTank tank, ContainerLevelAccess access) {
@@ -114,6 +114,7 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
             return switch (index) {
                 case 0 -> FLUIDS.getID(fluid.isEmpty() ? Fluids.EMPTY : fluid.getFluid());
                 case 1 -> fluid.getAmount();
+                case 2 -> tank.getTankCapacity(0);
                 default -> 0;
             };
         }
@@ -124,7 +125,7 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
 }

@@ -7,11 +7,15 @@
 package ct.buildcraft.builders;
 
 import ct.buildcraft.api.statements.StatementManager;
+import ct.buildcraft.builders.filler.FillerStatementContext;
 import ct.buildcraft.builders.snapshot.pattern.Pattern;
 import ct.buildcraft.builders.snapshot.pattern.PatternBox;
 import ct.buildcraft.builders.snapshot.pattern.PatternClear;
 import ct.buildcraft.builders.snapshot.pattern.PatternFill;
 import ct.buildcraft.builders.snapshot.pattern.PatternFrame;
+import ct.buildcraft.builders.snapshot.pattern.PatternHorizon;
+import ct.buildcraft.builders.snapshot.pattern.PatternFlatten;
+import ct.buildcraft.builders.snapshot.pattern.PatternCylinder;
 import ct.buildcraft.builders.snapshot.pattern.PatternNone;
 import ct.buildcraft.builders.snapshot.pattern.PatternPyramid;
 import ct.buildcraft.builders.snapshot.pattern.PatternShape2dArc;
@@ -39,10 +43,11 @@ public class BCBuildersStatements {
     public static final PatternFill PATTERN_FILL = new PatternFill();
     public static final PatternBox PATTERN_BOX = new PatternBox();
     public static final PatternFrame PATTERN_FRAME = new PatternFrame();
-    // public static final PatternHorizon PATTERN_HORIZON = new PatternHorizon(); // broken ATM
+    public static final PatternHorizon PATTERN_HORIZON = new PatternHorizon();
+    public static final PatternFlatten PATTERN_FLATTEN = new PatternFlatten();
+    public static final PatternCylinder PATTERN_CYLINDER = new PatternCylinder();
     public static final PatternPyramid PATTERN_PYRAMID = new PatternPyramid();
     public static final PatternStairs PATTERN_STAIRS = new PatternStairs();
-    // public static final PatternFlatten PATTERN_FLATTEN = new PatternFlatten(); // broken ATM
     public static final PatternShape2dTriangle PATTERN_TRIANGLE = new PatternShape2dTriangle();
     public static final PatternShape2dSquare PATTERN_SQUARE = new PatternShape2dSquare();
     public static final PatternShape2dPentagon PATTERN_PENTAGON = new PatternShape2dPentagon();
@@ -58,7 +63,7 @@ public class BCBuildersStatements {
 
     public static final Pattern[] PATTERNS = { //
         PATTERN_NONE, PATTERN_CLEAR, PATTERN_FILL, PATTERN_BOX, PATTERN_FRAME, //
-        /* PATTERN_HORIZON, PATTERN_FLATTEN, */ PATTERN_PYRAMID, PATTERN_STAIRS, //
+        PATTERN_HORIZON, PATTERN_FLATTEN, PATTERN_CYLINDER, PATTERN_PYRAMID, PATTERN_STAIRS, //
         PATTERN_TRIANGLE, PATTERN_SQUARE, PATTERN_PENTAGON, PATTERN_HEXAGON, //
         PATTERN_OCTAGON, PATTERN_ARC, PATTERN_SEMI_CIRCLE, PATTERN_CIRCLE, //
         PATTERN_SPHERE, PATTERN_HEMI_SPHERE, PATTERN_QUARTER_SPHERE, //
@@ -77,5 +82,6 @@ public class BCBuildersStatements {
 
     public static void preInit() {
         StatementManager.registerActionProvider(BCBuildersActionProvider.INSTANCE);
+        FillerStatementContext.setupPossible();
     }
 }

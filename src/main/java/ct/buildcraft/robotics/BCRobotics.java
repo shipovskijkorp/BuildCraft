@@ -3,7 +3,6 @@ package ct.buildcraft.robotics;
 import ct.buildcraft.api.BCModules;
 import ct.buildcraft.api.statements.StatementManager;
 import ct.buildcraft.robotics.BCRoboticsStatements;
-import ct.buildcraft.robotics.BCRoboticsSprites;
 import ct.buildcraft.robotics.statements.RobotsActionProvider;
 import ct.buildcraft.robotics.statements.RobotsTriggerProvider;
 import ct.buildcraft.robotics.statements.StatementParameterRobot;
@@ -53,6 +52,7 @@ import ct.buildcraft.robotics.boards.BoardRobotDelivery;
 import ct.buildcraft.robotics.boards.BoardRobotFluidCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotHarvester;
 import ct.buildcraft.robotics.boards.BoardRobotBomber;
+import ct.buildcraft.robotics.boards.BoardRobotBuilder;
 import ct.buildcraft.robotics.boards.BoardRobotButcher;
 import ct.buildcraft.robotics.boards.BoardRobotFarmer;
 import ct.buildcraft.robotics.boards.BoardRobotLeaveCutter;
@@ -84,10 +84,10 @@ import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
- * Minimal BuildCraft Robotics bootstrap for the 1.19.2 port.
+ * BuildCraft Robotics bootstrap for the 1.19.2 port.
  *
- * This intentionally ports only the base item layer: the robotics creative tab, robot item variants,
- * docking station item, redstone board variants, item models and vanilla crafting recipes.
+ * Registers the robotics creative tab, robot items, docking station, boards, zone planner,
+ * client/server networking and menu bindings used by the ported robotics systems.
  */
 @Mod(BCRobotics.MODID)
 public class BCRobotics {
@@ -103,8 +103,10 @@ public class BCRobotics {
 
         BCRoboticsBoards.init();
         BCRoboticsPlugs.preInit();
+        BCRoboticsBlocks.registry(modEventBus);
         BCRoboticsItems.registry(modEventBus);
         BCRoboticsEntities.registry(modEventBus);
+        BCRoboticsGuis.registry(modEventBus);
 
         // Keep zone planner network messages available for the partially ported robotics zone code.
         ct.buildcraft.lib.net.MessageManager.registerMessageClass(BCModules.ROBOTICS, MessageZoneMapRequest.class,
@@ -124,7 +126,6 @@ public class BCRobotics {
     private void init(final FMLCommonSetupEvent event) {
         // Register robot statement providers and parameter types
         BCRoboticsStatements.preInit();
-        BCRoboticsSprites.preInit();
         StatementManager.registerActionProvider(new RobotsActionProvider());
         StatementManager.registerTriggerProvider(new RobotsTriggerProvider());
         // Register via the reader overload so both NBT persistence and GUI/network buffer sync are available.
@@ -165,6 +166,7 @@ public class BCRobotics {
         RobotManager.registerAIRobot(BoardRobotDelivery.class, "boardRobotDelivery", "buildcraft.robotics.boards.BoardRobotDelivery");
         RobotManager.registerAIRobot(BoardRobotKnight.class, "boardKnight", "buildcraft.robotics.boards.BoardRobotKnight");
         RobotManager.registerAIRobot(BoardRobotBomber.class, "boardBomber", "buildcraft.robotics.boards.BoardRobotBomber");
+        RobotManager.registerAIRobot(BoardRobotBuilder.class, "boardBuilder", "buildcraft.robotics.boards.BoardRobotBuilder");
         RobotManager.registerAIRobot(AIRobotFetchItem.class, "fetchItem", "buildcraft.robotics.ai.AIRobotFetchItem");
         RobotManager.registerAIRobot(AIRobotFetchAndEquipItemStack.class, "fetchAndEquipItemStack", "buildcraft.robotics.ai.AIRobotFetchAndEquipItemStack");
         RobotManager.registerAIRobot(AIRobotSearchBlock.class, "searchBlock", "buildcraft.robotics.ai.AIRobotSearchBlock");
@@ -210,6 +212,7 @@ public class BCRobotics {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            BCRoboticsSprites.preInit();
             event.enqueueWork(() -> {
                 ItemProperties.register(BCRoboticsItems.ROBOT.get(), ROBOT_MODEL,
                         (stack, level, entity, seed) -> BCRoboticsBoards.getRobotModelValue(stack));

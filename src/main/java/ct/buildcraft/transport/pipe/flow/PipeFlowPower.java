@@ -151,7 +151,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         pipe.getHolder().fireEvent(configure);
         isReceiver = configure.isReceiver();
         maxPower = configure.getMaxPower();
-        if (maxPower <= 0) {
+        if (maxPower < 0) {
             maxPower = DEFAULT_MAX_POWER;
         }
         powerLoss = MathUtil.clamp(configure.getPowerLoss(), -1, maxPower);

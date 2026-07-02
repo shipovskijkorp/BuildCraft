@@ -14,26 +14,12 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-import com.mojang.datafixers.util.Either;
-
-import ct.buildcraft.api.schematics.ISchematicBlock;
-import ct.buildcraft.builders.client.BlueprintTooltip;
 import ct.buildcraft.builders.client.ClientArchitectTables;
-import ct.buildcraft.builders.item.ItemSchematicSingle;
-import ct.buildcraft.builders.item.ItemSnapshot;
-import ct.buildcraft.builders.snapshot.Blueprint;
-import ct.buildcraft.builders.snapshot.ClientSnapshots;
-import ct.buildcraft.builders.snapshot.Snapshot;
-import ct.buildcraft.builders.snapshot.Snapshot.Header;
 import ct.buildcraft.builders.tile.TileQuarry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -89,15 +75,6 @@ public class BCBuildersEventDist {
             }
         }
     }*/
-
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void onRenderTooltipPostText(RenderTooltipEvent.GatherComponents event) {
-    	ItemStack itemStack = event.getItemStack();
-		if(itemStack.getItem() == BCBuildersItems.BLUEPRINT.get()) {
-			event.getTooltipElements().add(Either.right(new BlueprintTooltip(itemStack)));
-		}
-    }
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent

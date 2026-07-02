@@ -24,6 +24,7 @@ import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourEmzuli;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourGold;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourIron;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourLapis;
+import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourLimiter;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourObsidian;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourQuartz;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourSandstone;
@@ -69,14 +70,15 @@ public class BCTransportPipes {
 
     public static PipeDefinition ironItem;
     public static PipeDefinition ironFluid;
-    // public static PipeDefinition ironPower;
+    public static PipeDefinition ironPower;
 
     public static PipeDefinition diamondItem;
     public static PipeDefinition diamondFluid;
-    // public static PipeDefinition diamondPower;
+    public static PipeDefinition diamondPower;
 
     public static PipeDefinition diaWoodItem;
     public static PipeDefinition diaWoodFluid;
+    public static PipeDefinition diaWoodPower;
 
     public static PipeDefinition clayItem;
     public static PipeDefinition clayFluid;
@@ -136,7 +138,6 @@ public class BCTransportPipes {
         builder.logic(PipeBehaviourIron::new, PipeBehaviourIron::new).texSuffixes("_clear", "_filled");
         ironItem = builder.idTexPrefix("iron_item").flowItem().define();
         ironFluid = builder.idTexPrefix("iron_fluid").flowFluid().define();
-        // ironPower = builder.idTexPrefix("iron_power").flowPower().define();
 
         String[] diamondTextureSuffixes = new String[8];
         diamondTextureSuffixes[0] = "";
@@ -153,9 +154,18 @@ public class BCTransportPipes {
         diamondFluid = builder.idTexPrefix("diamond_fluid").flowFluid().define();
         builder.builder.itemTex(0);
 
+        builder.logic(PipeBehaviourLimiter::new, PipeBehaviourLimiter::new).flowPower();
+        builder.texSuffixes("_m0", "_m4", "_m8", "_m16", "_m32", "_m64", "_m128");
+        builder.builder.itemTex(6);
+        ironPower = builder.idTexPrefix("iron_power").define();
+        diamondPower = builder.idTexPrefix("diamond_power").define();
+        builder.builder.itemTex(0);
+
         builder.logic(PipeBehaviourWoodDiamond::new, PipeBehaviourWoodDiamond::new).texSuffixes("_clear", "_filled");
         diaWoodItem = builder.idTexPrefix("diamond_wood_item").flowItem().define();
         diaWoodFluid = builder.idTexPrefix("diamond_wood_fluid").flowFluid().define();
+        builder.logic(PipeBehaviourWoodPower::new, PipeBehaviourWoodPower::new);
+        diaWoodPower = builder.idTexPrefix("diamond_wood_power").flowPower().define();
 
         builder.logic(PipeBehaviourClay::new, PipeBehaviourClay::new);
         clayItem = builder.idTex("clay_item").flowItem().define();

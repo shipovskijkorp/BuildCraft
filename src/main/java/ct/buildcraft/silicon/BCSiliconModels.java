@@ -21,6 +21,7 @@ import ct.buildcraft.silicon.client.model.key.KeyPlugGate;
 import ct.buildcraft.silicon.client.model.key.KeyPlugLens;
 import ct.buildcraft.silicon.client.model.key.KeyPlugLightSensor;
 import ct.buildcraft.silicon.client.model.key.KeyPlugPulsar;
+import ct.buildcraft.silicon.client.model.key.KeyPlugTimer;
 import ct.buildcraft.silicon.client.model.plug.ModelFacadeItem;
 import ct.buildcraft.silicon.client.model.plug.ModelLensItem;
 import ct.buildcraft.silicon.client.model.plug.PlugBakerFacade;
@@ -47,6 +48,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BCSiliconModels {
     public static final ModelHolderStatic LIGHT_SENSOR;
+    public static final ModelHolderStatic TIMER;
 
     public static final ModelHolderVariable GATE_STATIC;
     public static final ModelHolderVariable GATE_DYNAMIC;
@@ -62,9 +64,11 @@ public class BCSiliconModels {
 
     public static final IPluggableStaticBaker<KeyPlugPulsar> BAKER_PLUG_PULSAR;
     public static final IPluggableStaticBaker<KeyPlugLightSensor> BAKER_PLUG_LIGHT_SENSOR;
+    public static final IPluggableStaticBaker<KeyPlugTimer> BAKER_PLUG_TIMER;
 
     static {
         LIGHT_SENSOR = getStaticModel("plugs/light_sensor");
+        TIMER = getStaticModel("plugs/timer");
         GATE_STATIC = getModel("plugs/gate", PluggableGate.MODEL_FUNC_CTX_STATIC);
         GATE_DYNAMIC = getModel("plugs/gate_dynamic", PluggableGate.MODEL_FUNC_CTX_DYNAMIC);
         PULSAR_STATIC = getStaticModel("plugs/pulsar_static");
@@ -72,6 +76,7 @@ public class BCSiliconModels {
 
         BAKER_PLUG_PULSAR = new PlugBakerSimple<>(PULSAR_STATIC::getCutoutQuads);
         BAKER_PLUG_LIGHT_SENSOR = new PlugBakerSimple<>(LIGHT_SENSOR::getCutoutQuads);
+        BAKER_PLUG_TIMER = new PlugBakerSimple<>(TIMER::getCutoutQuads);
 
         {
             FunctionContext fnCtx = DefaultContexts.createWithAll();
@@ -104,6 +109,7 @@ public class BCSiliconModels {
             pipeRegistryClient.registerBaker(KeyPlugGate.class, PlugGateBaker.INSTANCE);
             pipeRegistryClient.registerBaker(KeyPlugPulsar.class, BAKER_PLUG_PULSAR);
             pipeRegistryClient.registerBaker(KeyPlugLightSensor.class, BAKER_PLUG_LIGHT_SENSOR);
+            pipeRegistryClient.registerBaker(KeyPlugTimer.class, BAKER_PLUG_TIMER);
             pipeRegistryClient.registerBaker(KeyPlugLens.class, PlugBakerLens.INSTANCE);
             pipeRegistryClient.registerBaker(KeyPlugFacade.class, PlugBakerFacade.INSTANCE);
 
@@ -129,6 +135,7 @@ public class BCSiliconModels {
         putModel(event, "plug/pulsar#inventory",
             new ModelPluggableItem(PULSAR_STATIC.getCutoutQuads(), PULSAR_DYNAMIC.getCutoutQuads()));
         putModel(event, "plug/light_sensor#inventory", new ModelPluggableItem(LIGHT_SENSOR.getCutoutQuads()));
+        putModel(event, "plug/timer#inventory", new ModelPluggableItem(TIMER.getCutoutQuads()));
         putModel(event, "plug/facade#inventory", ModelFacadeItem.INSTANCE);
 
         PlugGateBaker.onModelBake();

@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 import ct.buildcraft.api.blocks.ICustomRotationHandler;
-import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.EnumPipePart;
 import ct.buildcraft.api.recipes.BuildcraftRecipeRegistry;
 import ct.buildcraft.api.recipes.IRefineryRecipeManager;
@@ -19,7 +18,6 @@ import ct.buildcraft.api.recipes.IRefineryRecipeManager.IHeatableRecipe;
 import ct.buildcraft.api.tiles.IDebuggable;
 import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.factory.block.BlockHeatExchange;
-import ct.buildcraft.factory.block.BlockHeatExchange.EnumExchangePart;
 import ct.buildcraft.factory.client.gui.MenuHeatExchange;
 import ct.buildcraft.lib.block.BlockBCBase_Neptune;
 import ct.buildcraft.lib.block.VanillaRotationHandlers;
@@ -92,7 +90,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
     /** the maximum amount of fluid that can be transferred per tick for each number of middle sections. numbers need to
      * be divisors of 1000 */
     private static final int[] FLUID_MULT = { 5, 10, 20 };
-    
+
     protected TankContainerData tankData = null;
     protected Tank[] tanks = new Tank[4];
     protected DataSlot stateData = new DataSlot(){
@@ -107,7 +105,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
     public TileHeatExchange(BlockPos pos, BlockState state) {
 		super(BCFactoryBlocks.ENTITYBLOCKHEATEXCHANGE.get(), pos, state);
 	}
-    
+
     @Override
     public IdAllocator getIdAllocator() {
         return IDS;
@@ -116,7 +114,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
     protected ExchangeSection section;
     private boolean checkNeighbours = true;
 
-    
+
     @Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
@@ -130,7 +128,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         }
         checkNeighbours = true;
 	}
-    
+
     @Override
 	public void onLoad() {
 //    	checkNeighbours = true;
@@ -174,7 +172,9 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                         tile.removeSection();
                     }
                 } else if (exchangers.size() > 5) {
-                    // TODO: Remove all exchangers sections
+                    for (TileHeatExchange tile : exchangers) {
+                        tile.removeSection();
+                    }
                 } else {
                     ExchangeSectionStart sectionStart = null;
                     ExchangeSectionEnd sectionEnd = null;
@@ -195,6 +195,11 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                             }
                         }
                         exchange.section = null;
+                        exchange.tankData = null;
+                        exchange.tanks[0] = null;
+                        exchange.tanks[1] = null;
+                        exchange.tanks[2] = null;
+                        exchange.tanks[3] = null;
                     }
                     if (sectionStart == null) {
                         sectionStart = new ExchangeSectionStart(exchangers.getFirst());
@@ -206,33 +211,32 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                     sectionStart.middleCount = exchangers.size() - 2;
                     exchangers.getFirst().setSection(sectionStart);
                     exchangers.getLast().setSection(sectionEnd);
-                    
-                    tankData = new TankContainerData(sectionStart.tankInput, sectionStart.tankOutput, sectionEnd.tankInput, sectionEnd.tankOutput);
-                    tanks[0] = sectionStart.tankInput;
-                    tanks[1] = sectionStart.tankOutput;
-                    tanks[2] = sectionEnd.tankInput;
-                    tanks[3] = sectionEnd.tankOutput;
-                    exchangers.getFirst().tankData = tankData;
-                    exchangers.getLast().tankData = tankData;
-                    
+
+                    TankContainerData structureTankData = new TankContainerData(
+                        sectionStart.tankInput,
+                        sectionStart.tankOutput,
+                        sectionEnd.tankInput,
+                        sectionEnd.tankOutput
+                    );
+                    TileHeatExchange startTile = exchangers.getFirst();
+                    TileHeatExchange endTile = exchangers.getLast();
+                    startTile.tankData = structureTankData;
+                    endTile.tankData = structureTankData;
+                    startTile.tanks[0] = sectionStart.tankInput;
+                    startTile.tanks[1] = sectionStart.tankOutput;
+                    startTile.tanks[2] = sectionEnd.tankInput;
+                    startTile.tanks[3] = sectionEnd.tankOutput;
+                    endTile.tanks[0] = sectionStart.tankInput;
+                    endTile.tanks[1] = sectionStart.tankOutput;
+                    endTile.tanks[2] = sectionEnd.tankInput;
+                    endTile.tanks[3] = sectionEnd.tankOutput;
+
                     for (TileHeatExchange exchange : exchangers) {
                         exchange.sendNetworkUpdate(NET_ID_CHANGE_SECTION);
-                        //update BlockState
-                        BlockState state = exchange.getBlockState();
-                        EnumExchangePart part ;
-                        if (exchange.isStart()) {
-                            part = EnumExchangePart.START;
-                        } else if (exchange.isEnd()) {
-                            part = EnumExchangePart.END;
-                        } else {
-                            part = EnumExchangePart.MIDDLE;
-                        }
-                        if(part != state.getValue(BlockHeatExchange.PROP_PART)) {
-                        	level.setBlock(exchange.worldPosition, state.setValue(BlockHeatExchange.PROP_PART, part), Block.UPDATE_ALL);
-                        }
+                        exchange.syncBlockState();
                     }
                 }
-                
+
             }
 
         }
@@ -248,6 +252,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         tanks[2] = null;
         tanks[3] = null;
         if (section == null) {
+            syncBlockState();
             return;
         }
 //        BCLog.logger.info("[] removing section...");
@@ -256,19 +261,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         InventoryUtil.dropAll(getLevel(), getBlockPos(), list);
         section = null;
         sendNetworkUpdate(NET_ID_CHANGE_SECTION);
-        //update BlockState
-        BlockState state = getBlockState();
-        EnumExchangePart part ;
-        if (isStart()) {
-            part = EnumExchangePart.START;
-        } else if (isEnd()) {
-            part = EnumExchangePart.END;
-        } else {
-            part = EnumExchangePart.MIDDLE;
-        }
-        if(part != state.getValue(BlockHeatExchange.PROP_PART)) {
-        	level.setBlock(worldPosition, state.setValue(BlockHeatExchange.PROP_PART, part), Block.UPDATE_ALL);
-        }
+        syncBlockState();
     }
 
     private Deque<TileHeatExchange> findAdjacentExchangers() {
@@ -313,6 +306,21 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             this.section = section;
             section.setTile(this);
             sendNetworkUpdate(NET_ID_CHANGE_SECTION);
+            syncBlockState();
+        }
+    }
+
+    private void syncBlockState() {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        BlockState state = getCurrentStateForBlock(BCFactoryBlocks.HEATEXCHANGE_BLOCK.get());
+        if (state == null) {
+            return;
+        }
+        BlockState actual = BlockHeatExchange.withActualState(state, level, worldPosition);
+        if (actual != state) {
+            level.setBlock(worldPosition, actual, Block.UPDATE_ALL);
         }
     }
 
@@ -330,7 +338,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                         section = section instanceof ExchangeSectionEnd ? section : new ExchangeSectionEnd(this);
                     }
                     section.readPayload(NET_ID_CHANGE_SECTION, buffer, side, ctx);
-                    
+
 
                 } else {
                     section = null;
@@ -361,7 +369,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             }
         }
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     @Override
 	public AABB getRenderBoundingBox() {
@@ -379,14 +387,14 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         }
         return LazyOptional.empty();
     }
-    
+
     @Override
 	public InteractionResult onActivated(Player player, InteractionHand hand, BlockHitResult hit) {
         if (section != null&&FluidUtilBC.onTankActivated(player, worldPosition, hand, section.tankManager)) {
             return InteractionResult.SUCCESS;
         }
         if (!level.isClientSide()&&tankData != null && level.getBlockEntity(worldPosition) instanceof TileHeatExchange tile) {
-            NetworkHooks.openScreen((ServerPlayer)player, tile);
+            NetworkHooks.openScreen((ServerPlayer) player, tile, worldPosition);
         }
         return InteractionResult.SUCCESS;
 	}
@@ -412,6 +420,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             return;
         }
         checkNeighbours = true;
+        syncBlockState();
 	}
 
 	@Override
@@ -434,18 +443,26 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
      * of a larger structure then all adjacent heat exchangers will be rotated 180 degrees to swap the start and end
      * blocks. */
     @Override
-    public void rotate(Rotation axis) {//TODO
-    	BlockState state = this.getBlockState();
+    public void rotate(Rotation axis) {
         Direction thisFacing = getFacing();
-        if (thisFacing == null) {
+        if (thisFacing == null || level == null || level.isClientSide) {
             return;
         }
         Deque<TileHeatExchange> exchangers = findAdjacentExchangers();
         if (exchangers.size() == 1) {
-            // Just this one tile, so rotate this by 90 degrees
-        	state.setValue(BlockHeatExchange.PROP_FACING, VanillaRotationHandlers.ROTATE_HORIZONTAL.next(thisFacing));
+            BlockState state = getBlockState();
+            level.setBlock(
+                getBlockPos(),
+                BlockHeatExchange.withActualState(
+                    state.setValue(BlockHeatExchange.PROP_FACING, VanillaRotationHandlers.ROTATE_HORIZONTAL.next(thisFacing)),
+                    level,
+                    worldPosition
+                ),
+                Block.UPDATE_ALL
+            );
+            checkNeighbours = true;
+            markChunkDirty();
         } else {
-            // Rotate every heat exchanger 180 degrees
             ExchangeSectionStart start = null;
             ExchangeSectionEnd end = null;
             for (TileHeatExchange exchange : exchangers) {
@@ -455,14 +472,21 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                     end = (ExchangeSectionEnd) exchange.section;
                 }
                 exchange.section = null;
+                exchange.tankData = null;
+                exchange.tanks[0] = null;
+                exchange.tanks[1] = null;
+                exchange.tanks[2] = null;
+                exchange.tanks[3] = null;
+                BlockState exchangeState = exchange.getBlockState()
+                    .setValue(BlockHeatExchange.PROP_FACING, thisFacing.getOpposite());
                 level.setBlock(
                     exchange.getBlockPos(),
-                    exchange.getBlockState().setValue(BlockHeatExchange.PROP_FACING, thisFacing.getOpposite()), 2
+                    BlockHeatExchange.withActualState(exchangeState, level, exchange.getBlockPos()),
+                    Block.UPDATE_ALL
                 );
                 exchange.checkNeighbours = true;
                 exchange.markChunkDirty();
             }
-            state.setValue(BlockHeatExchange.PROP_FACING, thisFacing.getOpposite());
             if (start != null) {
                 TileHeatExchange tile = exchangers.getLast();
                 tile.section = start;
@@ -478,10 +502,15 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                 tile.markChunkDirty();
                 tile.sendNetworkUpdate(NET_ID_CHANGE_SECTION);
             }
+
+            for (TileHeatExchange exchange : exchangers) {
+                exchange.syncBlockState();
+            }
         }
 
         SoundUtil.playSlideSound(getLevel(), getBlockPos());
     }
+
 
     public boolean isStart() {
         return section instanceof ExchangeSectionStart;
@@ -494,12 +523,12 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
     public ExchangeSection getSection() {
         return section;
     }
-    
+
     @Nullable
     public FluidStackInterp getTankInRenderInfo(double part) {
     	return section == null ? null : section.smoothedTankInput.getFluidForRender(part);
     }
-    
+
     @Nullable
     public FluidStackInterp getTankOutRenderInfo(double part) {
     	return section == null ? null : section.smoothedTankOutput.getFluidForRender(part);
@@ -530,8 +559,6 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         public final FluidSmoother smoothedTankInput, smoothedTankOutput;
         public final CapabilityHelper caps = new CapabilityHelper();
         private TileHeatExchange tile;
-    	private FluidStack fluidCache;
-    	private FluidType fluidTypeCache;
 
         ExchangeSection(TileHeatExchange tile) {
             tankInput = new Tank("input", 2 * FluidType.BUCKET_VOLUME, tile);
@@ -616,18 +643,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             tankInput.setBlockEntity(tile);
             tankOutput.setBlockEntity(tile);
         }
-        
-        public FluidStack getInputFluidForRender(boolean cache) {
-        	if(cache) {
-        		BCLog.logger.debug("cache");
-        		fluidCache = smoothedTankInput.getFluidForRender();
-        		fluidTypeCache = fluidCache.getFluid().getFluidType();
-        	}
-        	return fluidCache;
-        }
-        public FluidType getInputFluidType() {
-        	return fluidTypeCache;
-        }
+
     }
 
     public static class ExchangeSectionStart extends ExchangeSection {
@@ -659,7 +675,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
 
         @Override
         CompoundTag writeToNbt() {
-            CompoundTag nbt = new CompoundTag();
+            CompoundTag nbt = super.writeToNbt();
             nbt.putBoolean("start", true);
             nbt.putInt("coolantCharge", inputCoolantAmountCharge);
             nbt.putInt("heatantCharge", inputHeatantAmountCharge);
@@ -785,6 +801,10 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
 
             // Find the minimum common amount that we can process from each tank up to `max_amount`
             // min_common_multiplier == 0 indicates that we can no longer process (tanks full/empty)
+            if (middleCount < 1 || middleCount > FLUID_MULT.length) {
+                progressState = EnumProgressState.STOPPING;
+                return;
+            }
             int max_amount = FLUID_MULT[middleCount - 1];
             FluidStack c_in_f = setAmount(c_recipe.in(), max_amount);
             FluidStack c_out_f = setAmount(c_recipe.out(), max_amount);
@@ -994,7 +1014,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         /** Progress is decreasing from max to 0. */
         STOPPING;
     }
-    
+
     public Tank getSectionTank(int index) {
     	return tanks[index%4];
     }

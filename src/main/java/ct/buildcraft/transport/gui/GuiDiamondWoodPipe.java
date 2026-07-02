@@ -23,6 +23,7 @@ import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourWoodDiamond.FilterMod
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiDiamondWoodPipe extends GuiBC8<ContainerDiamondWoodPipe> implements IButtonClickEventListener {
     private static final ResourceLocation TEXTURE = new ResourceLocation("buildcrafttransport:textures/gui/pipe_emerald.png");
@@ -48,6 +49,8 @@ public class GuiDiamondWoodPipe extends GuiBC8<ContainerDiamondWoodPipe> impleme
         
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
+        GuiHelpUtil.addSlots(mainGui, 8, 18, 9, 1, "buildcraft.help.pipe.emerald.filters.title", 0xFF_66_AA_FF, "buildcraft.help.pipe.emerald.filters.desc");
+        GuiHelpUtil.addRoot(mainGui, 7, 41, 54, 18, "buildcraft.help.pipe.emerald.mode.title", 0xFF_88_CC_88, "buildcraft.help.pipe.emerald.mode.desc");
     }
 
     @Override

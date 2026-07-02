@@ -34,6 +34,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.DyeColor;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiEmzuliPipe_BC8 extends GuiBC8<ContainerEmzuliPipe_BC8> {
     private static final ResourceLocation TEXTURE =
@@ -54,6 +55,12 @@ public class GuiEmzuliPipe_BC8 extends GuiBC8<ContainerEmzuliPipe_BC8> {
         super(container, inv, title);
         imageWidth = SIZE_X;
         imageHeight = SIZE_Y;
+        GuiHelpUtil.addSlot(mainGui, 25, 21, "buildcraft.help.pipe.emzuli.filter.title", 0xFF_66_AA_FF, "buildcraft.help.pipe.emzuli.filter.desc");
+        GuiHelpUtil.addSlot(mainGui, 25, 49, "buildcraft.help.pipe.emzuli.filter.title", 0xFF_66_AA_FF, "buildcraft.help.pipe.emzuli.filter.desc");
+        GuiHelpUtil.addSlot(mainGui, 134, 21, "buildcraft.help.pipe.emzuli.filter.title", 0xFF_66_AA_FF, "buildcraft.help.pipe.emzuli.filter.desc");
+        GuiHelpUtil.addSlot(mainGui, 134, 49, "buildcraft.help.pipe.emzuli.filter.title", 0xFF_66_AA_FF, "buildcraft.help.pipe.emzuli.filter.desc");
+        GuiHelpUtil.addRoot(mainGui, 49, 19, 20, 48, "buildcraft.help.pipe.emzuli.paint.title", 0xFF_CC_AA_FF, "buildcraft.help.pipe.emzuli.paint.desc");
+        GuiHelpUtil.addRoot(mainGui, 106, 19, 20, 48, "buildcraft.help.pipe.emzuli.paint.title", 0xFF_CC_AA_FF, "buildcraft.help.pipe.emzuli.paint.desc");
     }
 
     @Override

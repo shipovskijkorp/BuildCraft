@@ -168,7 +168,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
                 }
             } catch (InvalidInputDataException e) {
                 // Unfortunately we can't throw an exception because then this tile won't persist :/
-                e.printStackTrace();
+                ct.buildcraft.api.core.BCLog.logger.warn("Failed to load pipe data; preserving unknown pipe NBT", e);
                 unknownData = nbt.copy();
             }
         }

@@ -19,7 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class LedgerEngine extends Ledger_Neptune {
-    private static final int OVERLAY_COLOUR = 0xFF_D4_6C_1F;// 0xFF_FF_55_11;// TEMP!
+    private static final int OVERLAY_COLOUR = 0xFF_D4_6C_1F;
     private static final int HEADER_COLOUR = 0xFF_E1_C9_2F;
     private static final int SUB_HEADER_COLOUR = 0xFF_AA_AF_b8;
     private static final int TEXT_COLOUR = 0xFF_00_00_00;

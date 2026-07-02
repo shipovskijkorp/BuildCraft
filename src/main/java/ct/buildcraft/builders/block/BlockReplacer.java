@@ -29,16 +29,16 @@ public class BlockReplacer extends BlockBCTile_Neptune implements IBlockWithFaci
 
     @Nullable
     @Override
-	public TileBC_Neptune newBlockEntity(BlockPos pos, BlockState state) {
-		return new TileReplacer(pos, state);
-	}
-    
+    public TileBC_Neptune newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileReplacer(pos, state);
+    }
+
     @Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-			BlockHitResult hit) {
-        if (!world.isClientSide && world.getBlockEntity(pos) instanceof TileReplacer tile) {
-        	NetworkHooks.openScreen((ServerPlayer)player, tile, pos);
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
+        BlockHitResult hit) {
+        if (!world.isClientSide && player instanceof ServerPlayer serverPlayer && world.getBlockEntity(pos) instanceof TileReplacer tile) {
+            NetworkHooks.openScreen(serverPlayer, tile, pos);
         }
-        return InteractionResult.SUCCESS;
-	}
+        return InteractionResult.sidedSuccess(world.isClientSide);
+    }
 }

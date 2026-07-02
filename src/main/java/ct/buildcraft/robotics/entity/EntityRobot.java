@@ -1355,7 +1355,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         try {
             stack.inventoryTick(level, this, slot, held);
         } catch (Exception e) {
-            e.printStackTrace();
+            ct.buildcraft.api.core.BCLog.logger.warn("Disabling item inventoryTick in robot after it threw an exception: " + stack, e);
             BLACKLISTED_ITEMS_FOR_UPDATE.add(stack.getItem());
         }
     }

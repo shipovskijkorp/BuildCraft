@@ -39,7 +39,7 @@ public abstract class ResourceId {
             id.readFromNBT(nbt);
             return id;
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            ct.buildcraft.api.core.BCLog.logger.warn("Failed to load robot resource id from NBT", throwable);
         }
 
         return null;

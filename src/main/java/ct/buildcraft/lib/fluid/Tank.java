@@ -495,6 +495,17 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
 		return capacity;
 	}
 
+	public void setCapacity(int capacity) {
+		if (capacity <= 0) {
+			throw new IllegalArgumentException("Tank capacity must be positive: " + capacity);
+		}
+		this.capacity = capacity;
+		if (!fluid.isEmpty() && fluid.getAmount() > capacity) {
+			fluid.setAmount(capacity);
+		}
+		onContentsChanged();
+	}
+
 	@Override
 	public int getTanks() {
 		return 1;

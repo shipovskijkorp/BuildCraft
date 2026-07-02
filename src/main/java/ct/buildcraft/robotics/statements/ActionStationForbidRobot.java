@@ -8,7 +8,7 @@ import ct.buildcraft.api.statements.IStatementContainer;
 import ct.buildcraft.api.statements.IStatementParameter;
 import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.core.statements.BCStatement;
-import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
+import ct.buildcraft.api.core.render.ISprite;
 import ct.buildcraft.robotics.BCRoboticsSprites;
 import ct.buildcraft.robotics.BCRoboticsStatements;
 import net.minecraft.network.chat.Component;
@@ -91,7 +91,7 @@ public class ActionStationForbidRobot extends BCStatement implements IActionInte
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public SpriteHolder getSprite() {
+    public ISprite getSprite() {
         return invert ? BCRoboticsSprites.ACTION_STATION_ROBOT_MANDATORY : BCRoboticsSprites.ACTION_STATION_ROBOT_FORBIDDEN;
     }
 }

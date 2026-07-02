@@ -1,16 +1,7 @@
 package ct.buildcraft.lib.gui.json;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import ct.buildcraft.lib.client.model.ResourceLoaderContext;
-import ct.buildcraft.lib.expression.DefaultContexts;
 
 /** Turns several json elements into some functional gui data. */
 public class JsonGuiTypeRegistry {
@@ -35,16 +26,5 @@ public class JsonGuiTypeRegistry {
         TYPES.put(type.name, type);
     }
 
-    // Simple test
-    public static void main(String[] args) throws IOException {
-        String loc = "/assets/buildcraftbuilders/gui/filler.json";
-        InputStream is = JsonGuiTypeRegistry.class.getResourceAsStream(loc);
-        JsonObject obj;
-        try (InputStreamReader isr = new InputStreamReader(is)) {
-            obj = new Gson().fromJson(isr, JsonObject.class);
-        }
 
-        JsonGuiInfo info = new JsonGuiInfo(obj, DefaultContexts.createWithAll(), new ResourceLoaderContext());
-        info.printOut(System.out::println);
-    }
 }

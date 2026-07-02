@@ -118,6 +118,13 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
            .save(writer, new ResourceLocation("buildcraftsilicon", "assembly/light_sensor"));
         }
 
+        if (BCSiliconItems.PLUG_TIMER_ITEM.get() != null) {
+           new AssemblyRecipeBuilder(500 * MjAPI.MJ, ImmutableSet.of(IngredientStack.of(net.minecraft.world.item.Items.CLOCK)),
+                new ItemStack(BCSiliconItems.PLUG_TIMER_ITEM.get()))
+           .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
+           .save(writer, new ResourceLocation("buildcraftsilicon", "assembly/plug_timer"));
+        }
+
         if (BCSiliconItems.PLUG_FACADE_ITEM.get() != null) {
         	SpecialRecipeBuilder.special(BCSiliconRecipes.FACADE_SERIALIZER.get()).save(writer, "buildcraftsilicon:special/facade");
             //ForgeRegistries.RECIPE_TYPES.register(FacadeSwapRecipe.INSTANCE);

@@ -13,7 +13,7 @@ import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.core.statements.BCStatement;
 import ct.buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import ct.buildcraft.lib.inventory.filter.PassThroughStackFilter;
-import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
+import ct.buildcraft.api.core.render.ISprite;
 import ct.buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +70,7 @@ public class ActionRobotFilterTool extends BCStatement implements IActionInterna
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public SpriteHolder getSprite() {
+    public ISprite getSprite() {
         return BCRoboticsSprites.ACTION_ROBOT_FILTER_TOOL;
     }
 }

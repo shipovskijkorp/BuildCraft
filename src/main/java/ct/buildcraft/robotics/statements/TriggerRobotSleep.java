@@ -6,7 +6,7 @@ import ct.buildcraft.api.statements.IStatementContainer;
 import ct.buildcraft.api.statements.IStatementParameter;
 import ct.buildcraft.api.statements.ITriggerInternal;
 import ct.buildcraft.core.statements.BCStatement;
-import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
+import ct.buildcraft.api.core.render.ISprite;
 import ct.buildcraft.robotics.BCRoboticsSprites;
 import ct.buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.network.chat.Component;
@@ -38,7 +38,7 @@ public class TriggerRobotSleep extends BCStatement implements ITriggerInternal {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public SpriteHolder getSprite() {
+    public ISprite getSprite() {
         return BCRoboticsSprites.TRIGGER_ROBOT_SLEEP;
     }
 }

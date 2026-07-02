@@ -20,7 +20,6 @@ import net.minecraft.world.phys.Vec3;
 public class BCFluidBlock extends LiquidBlock {
 	public BCFluidBlock(FlowingFluid p_54694_, Properties p_54695_) {
 		super(p_54694_, p_54695_);
-		// TODO Auto-generated constructor stub
 	}
 
 	private boolean sticky = false;
@@ -60,7 +59,6 @@ public class BCFluidBlock extends LiquidBlock {
 
     @Override
 	public boolean isStickyBlock(BlockState state) {
-		// TODO Auto-generated method stub
 		return this.sticky;
 	}
 

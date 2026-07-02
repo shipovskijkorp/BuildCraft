@@ -17,18 +17,21 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public class ContainerChute extends ContainerBCTile<TileChute> {
-	
-	public ContainerChute(int containerId, Inventory playInventory, FriendlyByteBuf buf) {
-		this(containerId, playInventory, new ItemHandlerSimple(containerId), CreateClientLevelAccess(buf));
-	}
-	
-    public ContainerChute(int containerId, Inventory playInventory, IItemHandlerAdv inv, ContainerLevelAccess access) {
-        super(BCFactoryGuis.MENU_CHUTE.get(), playInventory, containerId, access);
+
+    public ContainerChute(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
+        this(containerId, playerInventory, new ItemHandlerSimple(4), CreateClientLevelAccess(buffer));
+    }
+
+    public ContainerChute(int containerId, Inventory playerInventory, IItemHandlerAdv inventory,
+        ContainerLevelAccess access) {
+        super(BCFactoryGuis.MENU_CHUTE.get(), playerInventory, containerId, access);
+        IItemHandlerAdv chuteInventory = tile != null ? tile.inv : inventory;
+
         addFullPlayerInventory(71);
 
-        addSlot(new SlotBase(tile.inv, 0, 62, 18));
-        addSlot(new SlotBase(tile.inv, 1, 80, 18));
-        addSlot(new SlotBase(tile.inv, 2, 98, 18));
-        addSlot(new SlotBase(tile.inv, 3, 80, 36));
+        addSlot(new SlotBase(chuteInventory, 0, 62, 18));
+        addSlot(new SlotBase(chuteInventory, 1, 80, 18));
+        addSlot(new SlotBase(chuteInventory, 2, 98, 18));
+        addSlot(new SlotBase(chuteInventory, 3, 80, 36));
     }
 }

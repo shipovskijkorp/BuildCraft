@@ -23,6 +23,7 @@ import ct.buildcraft.api.mj.MjCapabilityHelper;
 import ct.buildcraft.api.tiles.IDebuggable;
 import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.factory.block.BlockChute;
+import ct.buildcraft.factory.container.ContainerChute;
 import ct.buildcraft.lib.block.BlockBCBase_Neptune;
 import ct.buildcraft.lib.inventory.ItemTransactorHelper;
 import ct.buildcraft.lib.inventory.NoSpaceTransactor;
@@ -36,18 +37,29 @@ import ct.buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.network.NetworkHooks;
 
-public class TileChute extends TileBC_Neptune implements IDebuggable {
+public class TileChute extends TileBC_Neptune implements IDebuggable, MenuProvider {
     private static final ResourceLocation ADVANCEMENT_DID_INSERT = new ResourceLocation("buildcraftfactory:retired_hopper");
 
     private static final int PICKUP_MAX = 3;
@@ -63,7 +75,7 @@ public class TileChute extends TileBC_Neptune implements IDebuggable {
     private int progress = 0;
 
     public TileChute(BlockPos pos, BlockState state) {
-    	super(BCFactoryBlocks.ENTITYBLOCKCHUTE.get(), pos, state);
+        super(BCFactoryBlocks.ENTITYBLOCKCHUTE.get(), pos, state);
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery)));
     }
 
@@ -111,11 +123,9 @@ public class TileChute extends TileBC_Neptune implements IDebuggable {
         }
     }
 
-    // ITickable
-
     @Override
     public void update() {
-        if (level.isClientSide) {
+        if (level == null || level.isClientSide) {
             return;
         }
 
@@ -142,20 +152,36 @@ public class TileChute extends TileBC_Neptune implements IDebuggable {
     }
 
     @Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         progress = nbt.getInt("progress");
         battery.deserializeNBT(nbt.getCompound("battery"));
-	}
+    }
 
-	@Override
-	public void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+    @Override
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         nbt.putInt("progress", progress);
         nbt.put("battery", battery.serializeNBT());
-	}
+    }
 
-    // IDebuggable
+    @Override
+    public InteractionResult onActivated(Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            NetworkHooks.openScreen(serverPlayer, this, worldPosition);
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        return new ContainerChute(id, inventory, inv, ContainerLevelAccess.create(level, worldPosition));
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable(getBlockState().getBlock().getDescriptionId());
+    }
 
     @Override
     public void getDebugInfo(List<String> left, List<String> right, Direction side) {

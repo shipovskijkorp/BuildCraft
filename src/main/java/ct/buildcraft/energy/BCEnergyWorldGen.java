@@ -166,7 +166,7 @@ public class BCEnergyWorldGen {
 					}
 				} catch (Exception e) {
 					BCLog.logger.debug("BCEnergyBiomes:invoke:fail to get BiomeReplaceMent");
-					//e.printStackTrace();
+					// Expected on mappings where the biome builder internals differ.
 				} 
 			} 
 		}
@@ -182,7 +182,7 @@ public class BCEnergyWorldGen {
 			output.close();
 		} catch (Exception e) {
 			BCLog.logger.debug("BCEnergyBiomes:save:fail to open BiomeReplaceMent.json");
-			e.printStackTrace();
+			ct.buildcraft.api.core.BCLog.logger.warn("Failed to save BuildCraft oil biome replacement cache", e);
 			return false;
 		}
     	return true;
@@ -202,7 +202,7 @@ public class BCEnergyWorldGen {
 			loadMapIntoList(map);
 		} catch (Exception e) {
 			BCLog.logger.debug("BCEnergyBiomes:save:fail to open BiomeReplaceMent.json");
-			e.printStackTrace();
+			ct.buildcraft.api.core.BCLog.logger.warn("Failed to load BuildCraft oil biome replacement cache", e);
 			return false;
 		}
     	return true;

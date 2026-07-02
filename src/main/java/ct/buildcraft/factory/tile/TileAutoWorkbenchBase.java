@@ -18,6 +18,7 @@ import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.api.mj.MjCapabilityHelper;
 import ct.buildcraft.api.tiles.IHasWork;
 import ct.buildcraft.api.tiles.TilesAPI;
+import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.misc.MathUtil;
 import ct.buildcraft.lib.misc.StackUtil;
 import ct.buildcraft.lib.tile.TileBC_Neptune;
@@ -102,7 +103,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
                     // This is used for #hasWork(), to ensure that it doesn't return
                     // false for the one tick in between crafts.
                     powerStored = crafting.canCraft() ? 1 : 0;
-//                    AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_AUTOCRAFT);
+                    AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_AUTOCRAFT);
                 }
             } else {
                 powerStored += POWER_GEN_PASSIVE;
@@ -113,6 +114,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             powerStored = 0;
         }
         if (didChange) {
+            resultClient = crafting.getAssumedResult().copy();
             createFilters();
             sendNetworkGuiUpdate(NET_GUI_DATA);
         }
@@ -125,8 +127,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             if (id == NET_GUI_TICK) {
                 buffer.writeLong(powerStored);
             } else if (id == NET_GUI_DATA) {
-            	resultClient = crafting.getAssumedResult();
-                //buffer.writeItem(crafting.getAssumedResult());
+                resultClient = crafting.getAssumedResult().copy();
             }
         }
     }

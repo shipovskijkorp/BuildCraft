@@ -27,16 +27,16 @@ public class MessageZoneMapResponse {
 
     public MessageZoneMapResponse(FriendlyByteBuf buf) {
         key = new ZonePlannerMapChunkKey(buf);
-        data = new ZonePlannerMapChunk(new FriendlyByteBuf(buf));
+        data = new ZonePlannerMapChunk(buf);
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         key.toBytes(buf);
-        data.write(new FriendlyByteBuf(buf));
+        data.write(buf);
     }
 
     public static final BiConsumer<MessageZoneMapResponse, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
-        ZonePlannerMapDataClient.INSTANCE.onChunkReceived(message.key, message.data);
+        ctx.get().enqueueWork(() -> ZonePlannerMapDataClient.INSTANCE.onChunkReceived(message.key, message.data));
         ctx.get().setPacketHandled(true);
     };
 }

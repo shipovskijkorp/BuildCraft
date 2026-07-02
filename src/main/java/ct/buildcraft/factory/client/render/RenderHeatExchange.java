@@ -23,21 +23,20 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
 
 public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>{
 
     public RenderHeatExchange(BlockEntityRendererProvider.Context ctx) {
     	mc = Minecraft.getInstance();
     }
-    
+
     protected static final Vec3 INLINE_MIN = new Vec3(0,0.25+0.001,0.25+0.001);
     protected static final Vec3 INLINE_MAX = new Vec3(0.125,0.75-0.001,0.75-0.001);
     protected static final Vec3 OUTLINE_MIN = new Vec3(0.125+0.001,0.875+0.001,0.125+0.001);
     protected static final Vec3 OUTLINE_MAX = new Vec3(0.875-0.001,1-0.001,0.875-0.001);
     protected static final boolean[] sideRender = { true, true, true, true, true, true };
 	private static Minecraft mc;
-    
+
 
 	@Override
 	public void render(TileHeatExchange tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
@@ -61,13 +60,10 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
                     double progressStart = p0;
                     double progressEnd = p0 + length * progress;
                     boolean flip = progressState == EnumProgressState.PREPARING;
-                    
-                    boolean cache = flip&progress<0.016;
-                    FluidStack fluidstart = start.getInputFluidForRender(cache);
-                    FluidType typestart = start.getInputFluidType();
-                    FluidStack fluidend = sectionEnd.getInputFluidForRender(cache);
-                    FluidType typeend = sectionEnd.getInputFluidType();
-                    
+
+                    FluidStack fluidstart = start.smoothedTankInput.getFluidForRender();
+                    FluidStack fluidend = sectionEnd.smoothedTankInput.getFluidForRender();
+
                     flip ^= face.getAxisDirection() == AxisDirection.NEGATIVE;
 
                     if (flip) {
@@ -82,9 +78,9 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
                     double otherEnd = flip ? p0 + length * progress : p1;
                     Vec3 vDiff = Vec3.atLowerCornerOf(diff);
                     renderFlow(vDiff, face, matrix, bb, progressStart + 0.01, progressEnd - 0.01,
-                    		fluidend , typeend, 4, partialTicks, light);
+                    		fluidend, 4, partialTicks, light);
                     renderFlow(vDiff, face.getOpposite(), matrix, bb, otherStart, otherEnd,
-                    		fluidstart , typestart, 2, partialTicks, light);
+                    		fluidstart, 2, partialTicks, light);
                 }
     			matrix.translate(0.5, 0.5, 0.5);
     	        switch(face) {
@@ -103,7 +99,7 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
     			renderInline(output, partialTicks, matrix, bb, light, overlay);
     			matrix.translate(0, -0.875, 0);
     			renderOutline(input, partialTicks, matrix, bb, light, overlay);
-    		
+
 			}
 		}
 		else if(section instanceof ExchangeSectionEnd end) {
@@ -128,12 +124,12 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
 			renderInline(input, partialTicks, matrix, bb, light, overlay);
 			renderOutline(output, partialTicks, matrix, bb, light, overlay);
 		}
-		
-		
+
+
 
 		matrix.popPose();
 	}
-	
+
 	private void renderInline(FluidStackInterp forRender, float partialTicks, PoseStack matrix, VertexConsumer bb, int light, int overlay) {
 		if(forRender ==null)
 			return;
@@ -147,7 +143,7 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
         FluidRenderer.renderFluid(FluidSpriteType.STILL, fluid, forRender.amount, 2000, INLINE_MIN, INLINE_MAX,
             bb, matrix.last(), sideRender);
 	}
-	
+
 	private void renderOutline(FluidStackInterp forRender, float partialTicks, PoseStack matrix, VertexConsumer bb, int light, int overlay) {
 		if(forRender == null)
 			return;
@@ -161,9 +157,12 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
         FluidRenderer.renderFluid(FluidSpriteType.STILL, fluid, forRender.amount, 2000, OUTLINE_MIN, OUTLINE_MAX,
             bb, matrix.last(), sideRender);
 	}
-	
-    private static void renderFlow(Vec3 diff, Direction face, PoseStack matrix, VertexConsumer bb, double s, double e, FluidStack fluid, FluidType type,
-            int point, float partialTicks, int light) {
+
+    private static void renderFlow(Vec3 diff, Direction face, PoseStack matrix, VertexConsumer bb, double s, double e,
+            FluidStack fluid, int point, float partialTicks, int light) {
+            if (fluid == null || fluid.isEmpty() || mc.level == null || e <= s) {
+                return;
+            }
             double tickTime = mc.level.getGameTime();
             double offset = (tickTime + partialTicks) % 31 / 31.0;
             if (face.getAxisDirection() == AxisDirection.NEGATIVE) {
@@ -203,7 +202,7 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
                 }
                 int blocklight0 = light&0x0000F0;
                 int skylight0 = light&0xF00000;
-                int blocklight = type.getLightLevel()<<4;
+                int blocklight = fluid.getFluid().getFluidType().getLightLevel(fluid)<<4;
                 blocklight = blocklight > blocklight0 ? blocklight : blocklight0;
                 int combinedLight = (skylight0)+(blocklight);
                 FluidRenderer.vertex.lighti(combinedLight);
@@ -211,7 +210,7 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
                 matrix.translate(-d.x, -d.y, -d.z);
             }
         }
-	
-	
+
+
 
 }

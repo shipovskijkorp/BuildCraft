@@ -31,7 +31,7 @@ public class BCEnergyProvider{
 				    }
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ct.buildcraft.api.core.BCLog.logger.warn("Failed to register energy provider item", e);
 			}
 			
 		}
@@ -54,7 +54,7 @@ public class BCEnergyProvider{
 				        	.texture("particle", "buildcraftenergy:blocks/fluids/"+name+"/"+BCEnergyFluids.HEAT_NAMES[h]+"_still");
 				    }
 			} catch (Exception e) {
-				e.printStackTrace();
+				ct.buildcraft.api.core.BCLog.logger.warn("Failed to register energy provider fluid", e);
 			}
 		}
 		
@@ -78,7 +78,7 @@ public class BCEnergyProvider{
 				        			.applyTint(false).flipGas(true).fluid(BCEnergyFluids.OIL_SOURCE.get(3*id+h).get()).end();
 				    }
 			} catch (Exception e) {
-				e.printStackTrace();
+				ct.buildcraft.api.core.BCLog.logger.warn("Failed to register energy provider block", e);
 			}
 		}
 		

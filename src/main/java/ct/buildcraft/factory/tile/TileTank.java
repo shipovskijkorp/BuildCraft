@@ -35,6 +35,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -49,6 +50,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -76,15 +78,27 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     private int lastComparatorLevel;
 
     public TileTank(BlockPos pos, BlockState state) {
-        this(16 * FluidType.BUCKET_VOLUME, pos, state);
+        this(BCFactoryBlocks.ENTITYBLOCKTANK.get(), pos, state);
+    }
+
+    public TileTank(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        this(type, 16 * FluidType.BUCKET_VOLUME, pos, state);
     }
 
     protected TileTank(int capacity, BlockPos pos, BlockState state) {
-        this(new Tank("tank", capacity, null), pos, state);
+        this(BCFactoryBlocks.ENTITYBLOCKTANK.get(), capacity, pos, state);
+    }
+
+    public TileTank(BlockEntityType<?> type, int capacity, BlockPos pos, BlockState state) {
+        this(type, new Tank("tank", capacity, null), pos, state);
     }
 
     protected TileTank(Tank tank, BlockPos pos, BlockState state) {
-    	super(BCFactoryBlocks.ENTITYBLOCKTANK.get(), pos, state);
+        this(BCFactoryBlocks.ENTITYBLOCKTANK.get(), tank, pos, state);
+    }
+
+    public TileTank(BlockEntityType<?> type, Tank tank, BlockPos pos, BlockState state) {
+    	super(type, pos, state);
         tank.setBlockEntity(this);
         this.tank = tank;
         tankManager.addLast(tank);
@@ -101,6 +115,17 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         int amount = tank.getFluidAmount();
         int cap = tank.getCapacity();
         return amount * 14 / cap + (amount > 0 ? 1 : 0);
+    }
+
+    /**
+     * Sets the capacity of the local tank in millibuckets.
+     * <p>
+     * Addons that expose different tank tiers should normally prefer the
+     * {@link #TileTank(BlockEntityType, int, BlockPos, BlockState)} constructor so the capacity is already correct when
+     * the block entity is created. This method is kept as a small compatibility helper for upgrade-style code.
+     */
+    public void setTankCapacity(int capacity) {
+        tank.setCapacity(capacity);
     }
 
     // ITickable
@@ -132,7 +157,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     /** Moves fluids around to their preferred positions. (For gaseous fluids this will move everything as high as
      * possible, for liquid fluids this will move everything as low as possible.) */
     public void balanceTankFluids() {
-        List<TileTank> tanks = i_getTanks();
+        List<TileTank> tanks = getConnectedTanks();
         FluidStack fluid = FluidStack.EMPTY;
         for (TileTank tile : tanks) {
             FluidStack held = tile.tank.getFluid();
@@ -258,7 +283,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     }
 
     /** @return A list of all connected tanks around this block, ordered by position from bottom to top. */
-    private List<TileTank> i_getTanks() {
+    public List<TileTank> getConnectedTanks() {
         // double-ended queue rather than array list to avoid
         // the copy operation when we search downwards
         Deque<TileTank> tanks = new ArrayDeque<>();
@@ -298,7 +323,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
 
 /*    @Override
     public IFluidTankProperties[] getTankProperties() {
-        List<TileTank> tanks = i_getTanks();
+        List<TileTank> tanks = getConnectedTanks();
         TileTank bottom = tanks.get(0);
         TileTank top = tanks.get(tanks.size() - 1);
         FluidStack total = bottom.tank.getFluid();
@@ -325,36 +350,45 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     }*/
     
     public FluidStack getFluidInTank(int tank) {
-        List<TileTank> tanks = i_getTanks();
+        if (tank != 0) {
+            return FluidStack.EMPTY;
+        }
+
+        List<TileTank> tanks = getConnectedTanks();
         TileTank bottom = tanks.get(0);
         TileTank top = tanks.get(tanks.size() - 1);
         FluidStack total = bottom.tank.getFluid();
         if (total.isEmpty()) {
-            return top.tank.getFluid();
+            total = top.tank.getFluid();
         }
+        if (total.isEmpty()) {
+            return FluidStack.EMPTY;
+        }
+
         total = total.copy();
         total.setAmount(0);
         for (TileTank t : tanks) {
-        	FluidStack other = t.tank.getFluid();
-        	if (other != FluidStack.EMPTY) {
-        		total.grow(other.getAmount());
-        	}
+            FluidStack other = t.tank.getFluid();
+            if (!other.isEmpty()) {
+                total.grow(other.getAmount());
+            }
         }
         return total;
     }
-    
-    
-    
 
     @Override
-	public int getTankCapacity(int tank) {
-        List<TileTank> tanks = i_getTanks();
+    public int getTankCapacity(int tank) {
+        if (tank != 0) {
+            return 0;
+        }
+
+        List<TileTank> tanks = getConnectedTanks();
         int capacity = 0;
         for (TileTank t : tanks) {
             capacity += t.tank.getCapacity();
         }
         return capacity;
-	}
+    }
 
 	@Override
     public int fill(FluidStack resource, FluidAction doFill) {
@@ -362,7 +396,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
             return 0;
         }
         int filled = 0;
-        List<TileTank> tanks = i_getTanks();
+        List<TileTank> tanks = getConnectedTanks();
         for (TileTank t : tanks) {
             FluidStack current = t.tank.getFluid();
             if (!current.isEmpty() && !current.isFluidEqual(resource)) {
@@ -410,7 +444,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         if (maxDrain <= 0) {
             return FluidStack.EMPTY;
         }
-        List<TileTank> tanks = i_getTanks();
+        List<TileTank> tanks = getConnectedTanks();
         boolean gas = false;
         for (TileTank tile : tanks) {
             FluidStack fluid = tile.tank.getFluid();
@@ -448,26 +482,37 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
 		super.addDrops(toDrop, fortune);
 	}
 
-	@Override
-	public void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
-		nbt.put("tanks", tank.serializeNBT());
-	}
+    @Override
+    public void saveAdditional(CompoundTag nbt) {
+        // Let the base BuildCraft tile save tankManager in the standard {tanks:{tank:{...}}} format.
+        // Older API-layer builds overwrote "tanks" with a direct FluidStack tag; load(...) keeps that readable.
+        super.saveAdditional(nbt);
+    }
 
-	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
-		tank.readFromNBT(nbt.getCompound("tanks"));
-	}
+    @Override
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
 
-	@Override
-	public int getTanks() {
-		return i_getTanks().size();
-	}
+        // Compatibility with the early IronTanks API-layer format, where "tanks" was the direct tank NBT rather than
+        // the normal TankManager compound keyed by tank name.
+        if (nbt.contains("tanks", Tag.TAG_COMPOUND)) {
+            CompoundTag tanks = nbt.getCompound("tanks");
+            if (!tanks.contains(tank.getTankName(), Tag.TAG_COMPOUND) && !tanks.isEmpty()) {
+                tank.readFromNBT(tanks);
+            }
+        }
+    }
 
-	@Override
-	public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-		return this.tank.isFluidValid(stack);
-	}
+    @Override
+    public int getTanks() {
+        // The vertical BuildCraft tank stack is exposed as one logical fluid handler tank. Returning one entry per
+        // block would make external pipes/mods see the same combined contents and capacity multiple times.
+        return 1;
+    }
+
+    @Override
+    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+        return tank == 0 && this.tank.isFluidValid(stack);
+    }
 
 }

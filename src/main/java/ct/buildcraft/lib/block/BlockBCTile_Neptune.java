@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableList;
 import ct.buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -70,7 +71,17 @@ public abstract class BlockBCTile_Neptune extends BlockBCBase_Neptune implements
         BlockEntity tile = level.getBlockEntity(pos);
         if (tile instanceof TileBC_Neptune) {
             TileBC_Neptune tileBC = (TileBC_Neptune) tile;
-            tileBC.onRemove(!player.isCreative()&&willHarvest);
+
+            // Vanilla skips block loot entirely when a creative-mode player breaks a block. BuildCraft machines are
+            // different: their internal inventories/tanks are real world contents, and BC7/BC8 always returned them.
+            // Drop only the internal contents here; the block item itself remains suppressed by creative mode.
+            if (!level.isClientSide && player.isCreative()) {
+                NonNullList<ItemStack> contents = NonNullList.create();
+                tileBC.addDrops(contents, UPDATE_ALL);
+                Containers.dropContents(level, pos, contents);
+            }
+
+            tileBC.onRemove(!player.isCreative() && willHarvest);
         }
 		return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
 	}

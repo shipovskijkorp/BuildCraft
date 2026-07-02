@@ -200,7 +200,7 @@ public enum ClientSnapshots {
             pose.popPose();
             multibuffersource$buffersource.endBatch();
            // GlStateManager.popAttrib();
-        }*///TODO
+        }*/
 /*        GlStateManager.popMatrix();
         GlStateManager.disableRescaleNormal();
         GlStateManager.matrixMode(GL11.GL_PROJECTION);

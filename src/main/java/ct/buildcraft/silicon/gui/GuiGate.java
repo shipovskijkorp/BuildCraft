@@ -11,6 +11,7 @@ import ct.buildcraft.silicon.gate.GateLogic;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiGate extends GuiBC8<ContainerGate> {
 
@@ -24,6 +25,24 @@ public class GuiGate extends GuiBC8<ContainerGate> {
         jsonGui.load();
         imageWidth = jsonGui.getSizeX();
         imageHeight = jsonGui.getSizeY();
+        addStatementHelpZones();
+    }
+
+    private void addStatementHelpZones() {
+        GateLogic gate = container.gate;
+        int horizontalSlotCount = gate.isSplitInTwo() ? 2 : 1;
+        int verticalSlotCount = Math.max(1, container.slotHeight);
+        int slotPairWidth = 18 * (3 + gate.variant.numTriggerArgs + gate.variant.numActionArgs);
+        int totalStatementWidth = slotPairWidth + (horizontalSlotCount > 1 ? slotPairWidth + 18 : 0);
+        int slotPairStart = (162 - totalStatementWidth) / 2;
+        int y = 16;
+        int height = verticalSlotCount * 18;
+
+        for (int column = 0; column < horizontalSlotCount; column++) {
+            int x = slotPairStart + 7 + column * (18 + slotPairWidth);
+            GuiHelpUtil.addRoot(mainGui, x, y, slotPairWidth, height, "buildcraft.help.gate.statements.title", 0xFF_66_AA_FF,
+                "buildcraft.help.gate.statements.desc");
+        }
     }
 
     protected void preLoad(BuildCraftJsonGui json) {

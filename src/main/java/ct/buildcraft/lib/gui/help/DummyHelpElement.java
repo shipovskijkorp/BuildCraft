@@ -8,6 +8,8 @@ package ct.buildcraft.lib.gui.help;
 
 import java.util.List;
 
+import ct.buildcraft.lib.expression.api.IExpressionNode.INodeBoolean;
+import ct.buildcraft.lib.expression.node.value.NodeConstantBoolean;
 import ct.buildcraft.lib.gui.IGuiElement;
 import ct.buildcraft.lib.gui.help.ElementHelpInfo.HelpPosition;
 import ct.buildcraft.lib.gui.pos.IGuiArea;
@@ -16,10 +18,16 @@ import ct.buildcraft.lib.gui.pos.IGuiArea;
 public class DummyHelpElement implements IGuiElement {
     public final IGuiArea area;
     public final ElementHelpInfo help;
+    private final INodeBoolean visible;
 
     public DummyHelpElement(IGuiArea area, ElementHelpInfo help) {
+        this(area, help, NodeConstantBoolean.TRUE);
+    }
+
+    public DummyHelpElement(IGuiArea area, ElementHelpInfo help, INodeBoolean visible) {
         this.area = area;
         this.help = help;
+        this.visible = visible;
     }
 
     @Override
@@ -44,6 +52,8 @@ public class DummyHelpElement implements IGuiElement {
 
     @Override
     public void addHelpElements(List<HelpPosition> elements) {
-        elements.add(help.target(area));
+        if (visible.evaluate()) {
+            elements.add(help.target(area));
+        }
     }
 }

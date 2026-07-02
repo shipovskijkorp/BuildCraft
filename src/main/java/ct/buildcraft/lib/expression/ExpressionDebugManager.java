@@ -8,16 +8,18 @@ package ct.buildcraft.lib.expression;
 
 import java.util.function.Consumer;
 
+import ct.buildcraft.api.core.BCLog;
+
 /** Holds the debugging mechanisms for this project. The most useful part of this (for users) is the {@link #logger}
- * field: changing this will allow rerouting logging away from {@link System#out} */
+ * field: changing this allows rerouting expression debug logging. */
 public class ExpressionDebugManager {
 
     /** Modifiable field to enable or disable debugging for testing. */
     public static boolean debug = false;
 
-    /** Customisable logger to use instead of {@link System#out}. Set by BCLib automatically to
-     * <code>BCLog.logger::info</code> */
-    public static Consumer<String> logger = System.out::println;
+    /** Customisable logger. Set by BCLib automatically to
+     * <code>BCLog.logger::info</code>. */
+    public static Consumer<String> logger = BCLog.logger::info;
 
     private static String debugIndentCache = "";
 

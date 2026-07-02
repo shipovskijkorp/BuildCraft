@@ -14,12 +14,12 @@ import ct.buildcraft.lib.gui.GuiBC8;
 import ct.buildcraft.lib.gui.GuiIcon;
 import ct.buildcraft.lib.gui.component.TankComponent;
 import ct.buildcraft.lib.gui.help.DummyHelpElement;
-import ct.buildcraft.lib.gui.ledger.LedgerOwnership;
 import ct.buildcraft.lib.gui.pos.GuiRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.fluids.FluidType;
+import ct.buildcraft.lib.gui.help.GuiHelpUtil;
 
 public class GuiTank extends GuiBC8<ContainerTank> {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftfactory:textures/gui/tank.png");
@@ -30,7 +30,8 @@ public class GuiTank extends GuiBC8<ContainerTank> {
     private final TankComponent tankComponent = new TankComponent(
         80, 18, 16, 64,
         16 * FluidType.BUCKET_VOLUME,
-        176, 0
+        176, 0,
+        2
     );
 
     public GuiTank(ContainerTank menu, Inventory inventory, Component title) {
@@ -43,8 +44,9 @@ public class GuiTank extends GuiBC8<ContainerTank> {
         tankComponent.setDataoffset(0);
         tankComponent.setup(this, menu.data);
 
+        GuiHelpUtil.addRoot(mainGui, 80, 18, 16, 64, "buildcraft.help.tank.slot.title", 0xFF_55_BB_DD, "buildcraft.help.tank.slot.desc");
+
         if (menu.tile != null) {
-            mainGui.shownElements.add(new LedgerOwnership(mainGui, menu.tile, true));
             mainGui.shownElements.add(new DummyHelpElement(
                 new GuiRectangle(80, 18, 16, 64).offset(mainGui.rootElement).expand(4),
                 menu.tile.tank.helpInfo

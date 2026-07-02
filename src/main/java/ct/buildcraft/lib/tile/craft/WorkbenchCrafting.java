@@ -224,8 +224,6 @@ public class WorkbenchCrafting extends CraftingContainer {
             areMaterialsDirty = false;
             switch (recipeType) {
                 case INGREDIENTS:
-                    // cachedHasRequirements = hasIngredients();
-                    // break;
                 case EXACT_STACKS: {
                     cachedHasRequirements = hasExactStacks();
                     break;
@@ -251,7 +249,6 @@ public class WorkbenchCrafting extends CraftingContainer {
 
         switch (recipeType) {
             case INGREDIENTS:
-                // return craftByIngredients();
             case EXACT_STACKS: {
                 return craftExact();
             }
@@ -262,7 +259,7 @@ public class WorkbenchCrafting extends CraftingContainer {
     }
 
     private boolean hasExactStacks() {
-        Object2IntMap<ItemStackKey> required = new Object2IntArrayMap<>(craftTableSize);//TODO choose the faster one
+        Object2IntMap<ItemStackKey> required = new Object2IntArrayMap<>(craftTableSize);
         for (int s = 0; s < craftTableSize; s++) {
             ItemStack req = invBlueprint.getStackInSlot(s);
             if (!req.isEmpty()) {
@@ -272,16 +269,18 @@ public class WorkbenchCrafting extends CraftingContainer {
                     req.setCount(1);
                 }
                 ItemStackKey key = new ItemStackKey(req);
-                required.merge(key, count, (a, b) -> a+b);
+                required.merge(key, count, (a, b) -> a + b);
             }
         }
-        final boolean[] flag = {false};
-        required.forEach((stack, count) -> {
-            ArrayStackFilter filter = new ArrayStackFilter(stack.baseStack);
+        for (Object2IntMap.Entry<ItemStackKey> entry : required.object2IntEntrySet()) {
+            int count = entry.getIntValue();
+            ArrayStackFilter filter = new ArrayStackFilter(entry.getKey().baseStack);
             ItemStack inInventory = invMaterials.extract(filter, count, count, true);
-            flag[0] |= !inInventory.isEmpty() && inInventory.getCount() == count;
-        });
-        return flag[0];
+            if (inInventory.isEmpty() || inInventory.getCount() != count) {
+                return false;
+            }
+        }
+        return !required.isEmpty();
     }
 
     /** Implementation of {@link #craft()}, assuming nothing about the current recipe. */
@@ -314,9 +313,10 @@ public class WorkbenchCrafting extends CraftingContainer {
         // matches before calling getCraftingResult, as they store the
         // result of matches for getCraftingResult and getResult.
         if (!currentRecipe.matches(this, world)) {
+            clearInventory();
             return false;
         }
-        ItemStack result = currentRecipe.getResultItem();
+        ItemStack result = currentRecipe.assemble(this);
         if (result.isEmpty()) {
             // what?
             clearInventory();
@@ -337,17 +337,9 @@ public class WorkbenchCrafting extends CraftingContainer {
             }
 
             if (!remaining.isEmpty()) {
-                if (inSlot.isEmpty()) {
-//                	super.setItem(s, remaining);
-                } else if (ItemStack.isSame(inSlot, remaining)
-                    && ItemStack.isSameItemSameTags(inSlot, remaining)) {
-                    remaining.grow(inSlot.getCount());
-//                    super.setItem(s, remaining);
-                } else {
-                    leftover = invMaterials.insert(remaining, false, false);
-                    if (!leftover.isEmpty()) {
-                        InventoryUtil.addToBestAcceptor(world, pos, null, leftover);
-                    }
+                leftover = invMaterials.insert(remaining, false, false);
+                if (!leftover.isEmpty()) {
+                    InventoryUtil.addToBestAcceptor(world, pos, null, leftover);
                 }
             }
         }
