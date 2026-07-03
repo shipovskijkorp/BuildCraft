@@ -1,6 +1,6 @@
 package ct.buildcraft.transport.client.gui;
 
-import ct.buildcraft.core.BCCoreBlocks;
+import ct.buildcraft.transport.BCTransportBlocks;
 import ct.buildcraft.lib.gui.RecordSlot;
 import ct.buildcraft.transport.BCTransportGuis;
 
@@ -23,7 +23,7 @@ public class MenuPipeDiamond extends AbstractContainerMenu {
 	
 	public MenuPipeDiamond(int containerId, Inventory playerInventory, IItemHandler dataInventory, ContainerLevelAccess access) {
 		super(BCTransportGuis.MENU_PIPE_DIAMOND.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 //		this.addSlot(new SlotItemHandler(dataInventory,  0, 80, 41));
 		for(int i = 0; i < 3; ++i) 
 			for(int j = 0; j < 9; ++j) 
@@ -53,7 +53,7 @@ public class MenuPipeDiamond extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCCoreBlocks.ENGINE_BC8.get());
+		return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCTransportBlocks.pipeHolder.get());
 	}
 
 	

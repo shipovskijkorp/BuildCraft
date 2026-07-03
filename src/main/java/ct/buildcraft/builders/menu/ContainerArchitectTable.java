@@ -35,7 +35,7 @@ public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable>
    // public final ContainerData deltaProgress;
     
 	public ContainerArchitectTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(1), DataSlot.standalone(), CreateClientLevelAccess(buf));
+		this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(1), DataSlot.standalone(), createLevelAccess(playerInventory, buf));
 	}
 
     public ContainerArchitectTable(int containerId, Inventory playerInventory, IItemHandlerAdv in, IItemHandlerAdv out, DataSlot setting, ContainerLevelAccess access) {

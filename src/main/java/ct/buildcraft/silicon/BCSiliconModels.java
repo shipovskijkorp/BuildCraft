@@ -1,6 +1,5 @@
 package ct.buildcraft.silicon;
 
-import ct.buildcraft.api.BCModules;
 import ct.buildcraft.api.transport.pipe.PipeApiClient;
 import ct.buildcraft.api.transport.pipe.PipeApiClient.IClientRegistry;
 import ct.buildcraft.api.transport.pluggable.IPluggableStaticBaker;
@@ -36,6 +35,7 @@ import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.silicon.plug.PluggablePulsar;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -148,7 +148,7 @@ public class BCSiliconModels {
     }
 
     private static void putModel(BakingCompleted event, String str, BakedModel model) {
-        event.getModels().put(BCModules.SILICON.createModelLocation(str), model);
+        event.getModels().put(new ModelResourceLocation(BCSilicon.MODID + ":" + str), model);
     }
 
     public static MutableQuad[] getGateStaticQuads(Direction side, GateVariant variant) {

@@ -57,7 +57,7 @@ public class ContainerGate extends ContainerPipe {
     public final GateContext<ActionWrapper> possibleActionsContext;
 
 	public static ContainerGate creatClientMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		ContainerLevelAccess access = CreateClientLevelAccess(buf);
+		ContainerLevelAccess access = createLevelAccess(playerInventory, buf);
 		Direction gateSide = buf.readEnum(Direction.class);
 		return access.evaluate((level, pos) -> {
 			BlockEntity tile = level.getBlockEntity(pos);

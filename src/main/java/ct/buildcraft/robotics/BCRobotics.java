@@ -216,6 +216,7 @@ public class BCRobotics {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            BCRoboticsClientGuis.clientInit(event);
             BCRoboticsSprites.preInit();
             event.enqueueWork(() -> {
                 ItemProperties.register(BCRoboticsItems.ROBOT.get(), ROBOT_MODEL,

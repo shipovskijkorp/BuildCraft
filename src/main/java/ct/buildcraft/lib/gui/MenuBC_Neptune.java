@@ -26,7 +26,6 @@ import ct.buildcraft.lib.net.IPayloadWriter;
 import ct.buildcraft.lib.net.MessageContainer;
 import ct.buildcraft.lib.net.MessageManager;
 import ct.buildcraft.lib.tile.item.IItemHandlerAdv;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,8 +37,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -148,8 +145,8 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
         MessageContainer message = new MessageContainer(containerId, id, payload);
         if (playerInventory.player.level.isClientSide) {
             MessageManager.sendToServer(message);
-        } else {
-            MessageManager.sendTo(message, (ServerPlayer) playerInventory.player);
+        } else if (playerInventory.player instanceof ServerPlayer serverPlayer) {
+            MessageManager.sendTo(message, serverPlayer);
         }
     }
 
@@ -292,12 +289,13 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
         });
     }
     
-	@OnlyIn(Dist.CLIENT)
-	private static Minecraft mc; // NOTE: do NOT init here; Minecraft.getInstance() in <clinit> would load the client class on the dedicated server and crash it.
-	
-	@OnlyIn(Dist.CLIENT)
-	public static ContainerLevelAccess CreateClientLevelAccess(FriendlyByteBuf buf) {
-		if (mc == null) { mc = Minecraft.getInstance(); }
-		return ContainerLevelAccess.create(mc.level, buf.readBlockPos());
-	}
+    public static ContainerLevelAccess createLevelAccess(Inventory playerInventory, FriendlyByteBuf buf) {
+        return ContainerLevelAccess.create(playerInventory.player.level, buf.readBlockPos());
+    }
+
+    /** @deprecated use {@link #createLevelAccess(Inventory, FriendlyByteBuf)}. */
+    @Deprecated
+    public static ContainerLevelAccess CreateClientLevelAccess(Inventory playerInventory, FriendlyByteBuf buf) {
+        return createLevelAccess(playerInventory, buf);
+    }
 }

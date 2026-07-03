@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableList;
 
 import ct.buildcraft.api.core.BCDebugging;
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.EnumPipePart;
 import ct.buildcraft.api.core.IAreaProvider;
 import ct.buildcraft.api.mj.MjAPI;
@@ -561,7 +562,20 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             blocksInArea.sort(BlockUtil.uniqueBlockPosComparator(Comparator.comparingDouble(worldPosition::distSqr)));
             frameBoxPosesCount = blocksInArea.size();
             toCheck.addAll(blocksInArea);
-            framePoses.addAll(getFramePositions());
+            try {
+                framePoses.addAll(getFramePositions());
+            } catch (IllegalStateException e) {
+                BCLog.logger.warn("Resetting invalid quarry frame/mining box at " + worldPosition, e);
+                frameBox.reset();
+                miningBox.reset();
+                drillPos = null;
+                currentTask = null;
+                boxIterator = null;
+                framePoses.clear();
+                frameBoxPosesCount = 0;
+                toCheck.clear();
+                sendNetworkUpdate(NET_RENDER_DATA);
+            }
 //            ChunkLoaderManager.loadChunksForTile(this);
         }
     }
@@ -909,9 +923,14 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         frameBox.initialize(nbt.getCompound("frame"));
         boxIterator = BoxIterator.readFromNbt(nbt.getCompound("boxIterator"));
         battery.deserializeNBT(nbt.getCompound("battery"));
-        if (nbt.contains("currentTask")) {
-            currentTask = EnumTaskType.values()[(int) nbt.getByte("currentTaskId")].supplier.apply(this);
-            currentTask.readFromNBT(nbt.getCompound("currentTaskData"));
+        if (nbt.contains("currentTaskId") && nbt.contains("currentTaskData")) {
+            int currentTaskId = Byte.toUnsignedInt(nbt.getByte("currentTaskId"));
+            if (currentTaskId >= 0 && currentTaskId < EnumTaskType.values().length) {
+                currentTask = EnumTaskType.values()[currentTaskId].supplier.apply(this);
+                currentTask.readFromNBT(nbt.getCompound("currentTaskData"));
+            } else {
+                currentTask = null;
+            }
         } else {
             currentTask = null;
         }
@@ -1009,12 +1028,17 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                     drillPos = null;
                 }
                 if (buffer.readBoolean()) {
-                    int taskId = buffer.readByte();
-                    Task task = EnumTaskType.values()[taskId].supplier.apply(this);
+                    int taskId = Byte.toUnsignedInt(buffer.readByte());
+                    EnumTaskType[] values = EnumTaskType.values();
+                    if (taskId >= values.length) {
+                        currentTask = null;
+                        return;
+                    }
+                    Task task = values[taskId].supplier.apply(this);
                     task.fromBytes(buffer);
                     if (currentTask == null || !currentTask.equals(task)) {
                         currentTask = task;
-                        Task tempTask = EnumTaskType.values()[taskId].supplier.apply(this);
+                        Task tempTask = values[taskId].supplier.apply(this);
                         tempTask.fromBytes(buffer);
                     } else {
                         currentTask.fromBytes(buffer);

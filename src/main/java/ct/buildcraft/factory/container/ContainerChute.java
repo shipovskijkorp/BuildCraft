@@ -19,7 +19,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 public class ContainerChute extends ContainerBCTile<TileChute> {
 
     public ContainerChute(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(containerId, playerInventory, new ItemHandlerSimple(4), CreateClientLevelAccess(buffer));
+        this(containerId, playerInventory, new ItemHandlerSimple(4), createLevelAccess(playerInventory, buffer));
     }
 
     public ContainerChute(int containerId, Inventory playerInventory, IItemHandlerAdv inventory,

@@ -105,7 +105,7 @@ public class BCSilicon {
     	@SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-    		BCSiliconGuis.clientInit(event);
+    		BCSiliconClientGuis.clientInit(event);
             event.enqueueWork(BCSiliconItems::registerItemProperties);
     		BCSiliconModels.init();
         }

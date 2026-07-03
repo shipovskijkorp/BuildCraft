@@ -157,8 +157,8 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                 return InteractionResult.PASS;
             }
         }
-        if (!level.isClientSide) {
-        	NetworkHooks.openScreen(((net.minecraft.server.level.ServerPlayer)player), this, worldPosition);
+        if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+            NetworkHooks.openScreen(serverPlayer, this, worldPosition);
         }
         return InteractionResult.SUCCESS;
 	}

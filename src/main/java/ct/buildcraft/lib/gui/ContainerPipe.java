@@ -10,9 +10,10 @@ import net.minecraft.world.inventory.MenuType;
 
 public abstract class ContainerPipe extends MenuBC_Neptune implements IMenuBCTile {
 
+    @Nullable
     public final IPipeHolder pipeHolder;
 
-    public ContainerPipe(Inventory playerInventory, MenuType<?> type, int id, IPipeHolder pipeHolder) {
+    public ContainerPipe(Inventory playerInventory, MenuType<?> type, int id, @Nullable IPipeHolder pipeHolder) {
         super(playerInventory, type, id);
         this.pipeHolder = pipeHolder;
     }
@@ -23,8 +24,16 @@ public abstract class ContainerPipe extends MenuBC_Neptune implements IMenuBCTil
         return pipeHolder instanceof TileBC_Neptune tile ? tile : null;
     }
 
+    public boolean isValidPipeMenu() {
+        return pipeHolder != null;
+    }
+
+    protected void closeInvalidClientMenu() {
+        playerInventory.player.closeContainer();
+    }
+
 	@Override
 	public boolean stillValid(Player player) {
-		return pipeHolder.canPlayerInteract(player);
+		return pipeHolder != null && pipeHolder.canPlayerInteract(player);
 	}
 }

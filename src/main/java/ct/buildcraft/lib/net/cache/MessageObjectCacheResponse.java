@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+import ct.buildcraft.api.core.BCLog;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 public class MessageObjectCacheResponse {
+
+    private static final int MAX_IDS = 4096;
+    private static final int MAX_VALUE_SIZE = 0xFFFF;
 
     private int cacheId;
 
@@ -36,6 +41,9 @@ public class MessageObjectCacheResponse {
         buf.writeByte(msg.cacheId);
         buf.writeShort(msg.ids.length);
         for (int i = 0; i < msg.ids.length; i++) {
+            if (msg.values[i].length > MAX_VALUE_SIZE) {
+                throw new IllegalStateException("Object cache response value is too large: " + msg.values[i].length);
+            }
             buf.writeInt(msg.ids[i]);
             buf.writeShort(msg.values[i].length);
             buf.writeBytes(msg.values[i]);
@@ -44,26 +52,45 @@ public class MessageObjectCacheResponse {
 
     public MessageObjectCacheResponse(ByteBuf buf) {
         cacheId = buf.readByte();
-        int idCount = buf.readShort();
+        int idCount = buf.readUnsignedShort();
+        if (idCount > MAX_IDS) {
+            throw new DecoderException("Invalid object cache response count: " + idCount);
+        }
         ids = new int[idCount];
         values = new byte[idCount][];
         for (int i = 0; i < idCount; i++) {
+            if (buf.readableBytes() < Integer.BYTES + Short.BYTES) {
+                throw new DecoderException("Truncated object cache response header");
+            }
             ids[i] = buf.readInt();
-            values[i] = new byte[buf.readShort()];
+            int valueSize = buf.readUnsignedShort();
+            if (valueSize > MAX_VALUE_SIZE || valueSize > buf.readableBytes()) {
+                throw new DecoderException("Invalid object cache response value size: " + valueSize
+                    + " readable=" + buf.readableBytes());
+            }
+            values[i] = new byte[valueSize];
             buf.readBytes(values[i]);
         }
     }
 
     public static final BiConsumer<MessageObjectCacheResponse, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
-        try {
-            NetworkedObjectCache<?> cache = BuildCraftObjectCaches.CACHES.get(message.cacheId);
-            for (int i = 0; i < message.ids.length; i++) {
-                int id = message.ids[i];
-                byte[] payload = message.values[i];
-                cache.readObjectClient(id, new FriendlyByteBuf(Unpooled.copiedBuffer(payload)));
+        NetworkEvent.Context context = ctx.get();
+        context.enqueueWork(() -> {
+            try {
+                if (message.cacheId < 0 || message.cacheId >= BuildCraftObjectCaches.CACHES.size()) {
+                    BCLog.logger.warn("Dropped object cache response with invalid cache id {}", message.cacheId);
+                    return;
+                }
+                NetworkedObjectCache<?> cache = BuildCraftObjectCaches.CACHES.get(message.cacheId);
+                for (int i = 0; i < message.ids.length; i++) {
+                    int id = message.ids[i];
+                    byte[] payload = message.values[i];
+                    cache.readObjectClient(id, new FriendlyByteBuf(Unpooled.copiedBuffer(payload)));
+                }
+            } catch (IOException | RuntimeException io) {
+                BCLog.logger.warn("Dropped invalid object cache response", io);
             }
-        } catch (IOException io) {
-            throw new Error(io);
-        }
+        });
+        context.setPacketHandled(true);
     };
 }

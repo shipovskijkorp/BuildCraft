@@ -24,7 +24,7 @@ public class ContainerAutoCraftItems extends ContainerBCTile<TileAutoWorkbenchIt
     public final SlotBase[] filtterSlots;;
     
 	public static ContainerAutoCraftItems create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		return new ContainerAutoCraftItems(containerId, playerInventory, buf.readInt(), CreateClientLevelAccess(buf));
+		return new ContainerAutoCraftItems(containerId, playerInventory, buf.readInt(), createLevelAccess(playerInventory, buf));
 	}
 	
 	ContainerAutoCraftItems(int containerId, Inventory playerInventory, int size, ContainerLevelAccess access){

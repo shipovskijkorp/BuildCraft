@@ -393,8 +393,8 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         if (section != null&&FluidUtilBC.onTankActivated(player, worldPosition, hand, section.tankManager)) {
             return InteractionResult.SUCCESS;
         }
-        if (!level.isClientSide()&&tankData != null && level.getBlockEntity(worldPosition) instanceof TileHeatExchange tile) {
-            NetworkHooks.openScreen((ServerPlayer) player, tile, worldPosition);
+        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer && tankData != null && level.getBlockEntity(worldPosition) instanceof TileHeatExchange tile) {
+            NetworkHooks.openScreen(serverPlayer, tile, worldPosition);
         }
         return InteractionResult.SUCCESS;
 	}

@@ -12,6 +12,7 @@ import ct.buildcraft.lib.gui.slot.SlotPhantom;
 import ct.buildcraft.lib.tile.item.IItemHandlerAdv;
 import ct.buildcraft.lib.tile.item.ItemHandlerSimple;
 import ct.buildcraft.transport.BCTransportGuis;
+import javax.annotation.Nullable;
 import ct.buildcraft.transport.pipe.Pipe;
 import ct.buildcraft.transport.pipe.behaviour.PipeBehaviourDiamond;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,19 +23,29 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class ContainerDiamondPipe extends ContainerPipe {
+    @Nullable
     private final PipeBehaviourDiamond behaviour;
     public final IItemHandlerAdv filters;
     
     public static ContainerDiamondPipe create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-    	ContainerLevelAccess access = CreateClientLevelAccess(buf);
-    	return access.evaluate((level, pos) -> {
+    	ContainerLevelAccess access = createLevelAccess(playerInventory, buf);
+        ContainerDiamondPipe menu = access.evaluate((level, pos) -> {
     		BlockEntity tile = level.getBlockEntity(pos);
     		if(tile instanceof IPipeHolder pipeHolder && pipeHolder.getPipe() != Pipe.EMPTY) {
     			if(pipeHolder.getPipe().getBehaviour() instanceof PipeBehaviourDiamond diamond)
     			return new ContainerDiamondPipe(containerId, playerInventory, new ItemHandlerSimple(PipeBehaviourDiamond.FILTERS_PER_SIDE * 6), diamond);
     		}
-    		return null;
+    		return new ContainerDiamondPipe(containerId, playerInventory);
     	}, null);
+        return menu != null ? menu : new ContainerDiamondPipe(containerId, playerInventory);
+    }
+
+    private ContainerDiamondPipe(int containerId, Inventory playerInventory) {
+        super(playerInventory, BCTransportGuis.MENU_PIPE_DIAMOND.get(), containerId, null);
+        this.behaviour = null;
+        this.filters = new ItemHandlerSimple(PipeBehaviourDiamond.FILTERS_PER_SIDE * 6);
+        addFullPlayerInventory(140);
+        closeInvalidClientMenu();
     }
 
     public ContainerDiamondPipe(int containerId, Inventory playerInventory, IItemHandlerAdv filterInv, PipeBehaviourDiamond pipe) {
@@ -63,6 +74,8 @@ public class ContainerDiamondPipe extends ContainerPipe {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        behaviour.pipe.getHolder().onPlayerClose(player);
+        if (behaviour != null) {
+            behaviour.pipe.getHolder().onPlayerClose(player);
+        }
     }
 }

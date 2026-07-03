@@ -4,14 +4,32 @@ import ct.buildcraft.lib.gui.slot.IPhantomSlot;
 import ct.buildcraft.lib.misc.StackUtil;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 public final class BCMenuUtil {
     private static final int PLAYER_SLOT_COUNT = 36;
 
     private BCMenuUtil() {}
+
+    public static boolean stillValidBlock(ContainerLevelAccess access, Player player, Block expectedBlock) {
+        if (access == null || expectedBlock == null) {
+            return false;
+        }
+        return access.evaluate((level, pos) -> {
+            if (level.getBlockState(pos).getBlock() != expectedBlock) {
+                return false;
+            }
+            return player.distanceToSqr(
+                pos.getX() + 0.5D,
+                pos.getY() + 0.5D,
+                pos.getZ() + 0.5D
+            ) <= 64.0D;
+        }, false);
+    }
 
     public static boolean handleFakeSlotClick(AbstractContainerMenu menu, int slotId, int dragType, ClickType clickType, Player player) {
         if (slotId < 0 || slotId >= menu.slots.size()) {

@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.EnumPipePart;
 import ct.buildcraft.api.core.IAreaProvider;
 import ct.buildcraft.api.core.IBox;
@@ -113,6 +114,8 @@ public class TileFiller extends TileBC_Neptune
         4,
         (statement, paramIndex) -> onStatementChange()
     );
+    private static final int RENDER_UPDATE_INTERVAL = 10;
+    private int renderUpdateCooldown = RENDER_UPDATE_INTERVAL;
     private BuildingInfo buildingInfo;
     public TemplateBuilder builder = new TemplateBuilder(this);
 
@@ -255,7 +258,10 @@ public class TileFiller extends TileBC_Neptune
             return;
         }
         battery.tick(level, worldPosition);
-        sendNetworkUpdate(NET_RENDER_DATA);
+        if (--renderUpdateCooldown <= 0) {
+            renderUpdateCooldown = RENDER_UPDATE_INTERVAL;
+            sendNetworkUpdate(NET_RENDER_DATA);
+        }
         lockedTicks--;
         if (lockedTicks < 0) {
             lockedTicks = 0;
@@ -351,7 +357,7 @@ public class TileFiller extends TileBC_Neptune
                             .findFirst()
                             .orElse(null)
                         : WorldSavedDataVolumeBoxes.get(level).getVolumeBoxFromId(volumeBoxId);
-                    addon = volumeBox == null ? null : (AddonFillerPlanner) volumeBox.addons.get(slot);
+                    addon = getFillerAddon(volumeBox, slot);
                 } else {
                     addon = null;
                 }
@@ -369,6 +375,22 @@ public class TileFiller extends TileBC_Neptune
                 sendNetworkGuiUpdate(NET_CAN_EXCAVATE);
             }
         }
+    }
+
+    @Nullable
+    private AddonFillerPlanner getFillerAddon(@Nullable VolumeBox volumeBox, @Nullable EnumAddonSlot slot) {
+        if (volumeBox == null || slot == null) {
+            return null;
+        }
+        Object candidate = volumeBox.addons.get(slot);
+        if (candidate instanceof AddonFillerPlanner planner) {
+            return planner;
+        }
+        if (candidate != null) {
+            BCLog.logger.warn("Ignoring non-filler addon " + candidate.getClass().getName() + " in filler box "
+                + volumeBox.id + " slot " + slot);
+        }
+        return null;
     }
 
     private void updateBuildingInfo() {
@@ -428,11 +450,11 @@ public class TileFiller extends TileBC_Neptune
         lockedTicks = nbt.getByte("lockedTicks");
         mode = Optional.ofNullable(NBTUtilBC.readEnum(nbt.get("mode"), Mode.class)).orElse(Mode.ON);
         box.initialize(nbt.getCompound("box"));
-        if (nbt.contains("addonSlot") && level != null) {
+        if (nbt.contains("addonSlot") && nbt.contains("addonVolumeBoxId") && level != null) {
             VolumeBox volumeBox = WorldSavedDataVolumeBoxes.get(level).getVolumeBoxFromId(nbt.getUUID("addonVolumeBoxId"));
-            addon = volumeBox == null ? null : (AddonFillerPlanner) volumeBox
-                .addons
-                .get(NBTUtilBC.readEnum(nbt.get("addonSlot"), EnumAddonSlot.class));
+            addon = getFillerAddon(volumeBox, NBTUtilBC.readEnum(nbt.get("addonSlot"), EnumAddonSlot.class));
+        } else {
+            addon = null;
         }
         markerBox = nbt.getBoolean("markerBox");
         patternStatement.readFromNbt(nbt.getCompound("patternStatement"));

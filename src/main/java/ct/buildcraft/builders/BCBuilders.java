@@ -47,9 +47,6 @@ public class BCBuilders {
     	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     	modEventBus.addListener(BCBuilders::commonSetup);
 //    	modEventBus.addListener(this::gatherData);//DataGenerator
-    	modEventBus.addListener(ClientModEvents::onGatherTooltipFactory);
-
-    	
     	BCBuildersBlocks.registry(modEventBus);
     	BCBuildersItems.registry(modEventBus);
     	BCBuildersSchematics.preInit();
@@ -88,7 +85,7 @@ public class BCBuilders {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event){
         	BCBuildersSprites.init();
-        	BCBuildersGuis.clientInit(event);
+        	BCBuildersClientGuis.clientInit(event);
         	event.enqueueWork(BCBuildersItems::registerItemProperties);
         }
         
@@ -126,6 +123,7 @@ public class BCBuilders {
         	}*/
         }
         
+        @SubscribeEvent
         public static void onGatherTooltipFactory(RegisterClientTooltipComponentFactoriesEvent event) {
         	event.register(BlueprintTooltip.class, BlueprintTooltipComponent::new);
         }

@@ -19,7 +19,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 public class ContainerEngineStone_BC8 extends ContainerBCTile<TileEngineStone_BC8> {
 	
 	public ContainerEngineStone_BC8(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		this(containerId, playerInventory, new ItemHandlerSimple(1), CreateClientLevelAccess(buf));
+		this(containerId, playerInventory, new ItemHandlerSimple(1), createLevelAccess(playerInventory, buf));
 	}
 	
     public ContainerEngineStone_BC8(int containerId, Inventory playerInventory, IItemHandlerAdv invFuel, ContainerLevelAccess access) {

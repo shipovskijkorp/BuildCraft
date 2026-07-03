@@ -23,7 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 public class ContainerAdvancedCraftingTable extends ContainerBCTile<TileAdvancedCraftingTable> {
 	
 	public ContainerAdvancedCraftingTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		this(containerId, playerInventory, new ItemHandlerSimple(15), new ItemHandlerSimple(9), new ItemHandlerSimple(9), new ItemHandlerSimple(1), CreateClientLevelAccess(buf));
+		this(containerId, playerInventory, new ItemHandlerSimple(15), new ItemHandlerSimple(9), new ItemHandlerSimple(9), new ItemHandlerSimple(1), createLevelAccess(playerInventory, buf));
 	}
 	
     public ContainerAdvancedCraftingTable(int containerId, Inventory playerInventory, IItemHandlerAdv invMaterials, 

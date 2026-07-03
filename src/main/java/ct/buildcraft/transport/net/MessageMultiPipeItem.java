@@ -14,21 +14,13 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import ct.buildcraft.api.core.BCLog;
-import ct.buildcraft.api.transport.pipe.IPipe;
-import ct.buildcraft.api.transport.pipe.IPipeHolder;
-import ct.buildcraft.api.transport.pipe.PipeFlow;
 import ct.buildcraft.lib.misc.MessageUtil;
-import ct.buildcraft.transport.pipe.Pipe;
-import ct.buildcraft.transport.pipe.flow.PipeFlowItems;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 
 public class MessageMultiPipeItem {
@@ -42,12 +34,18 @@ public class MessageMultiPipeItem {
     }
 
     public MessageMultiPipeItem(FriendlyByteBuf buf) {
-        int blockCount = buf.readShort();
+        int blockCount = buf.readUnsignedShort();
+        if (blockCount > MAX_POSITIONS) {
+            throw new DecoderException("Invalid pipe item position count: " + blockCount);
+        }
         for (int b = 0; b < blockCount; b++) {
             BlockPos pos = buf.readBlockPos();
             List<TravellingItemData> posItems = new ArrayList<>();
             items.put(pos, posItems);
             int itemCount = buf.readUnsignedByte();
+            if (itemCount > MAX_ITEMS_PER_PIPE) {
+                throw new DecoderException("Invalid pipe item count: " + itemCount);
+            }
             for (int i = 0; i < itemCount; i++) {
                 posItems.add(new TravellingItemData(buf));
             }

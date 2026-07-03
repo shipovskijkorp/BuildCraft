@@ -28,7 +28,7 @@ public class ContainerRequester extends ContainerBCTile<TileRequester> {
     private final ItemHandlerSimple requestInventory;
 
     public ContainerRequester(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(containerId, playerInventory, null, CreateClientLevelAccess(buffer));
+        this(containerId, playerInventory, null, createLevelAccess(playerInventory, buffer));
     }
 
     public ContainerRequester(int containerId, Inventory playerInventory, TileRequester tile, ContainerLevelAccess access) {
