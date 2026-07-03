@@ -20,8 +20,8 @@ BuildCraft 8 is the latest release with a fresh take on classic BuildCraft mecha
 
 ## Current Status
 
-- Now in mod avaible > 70% of content from BC8 and BC7
-- Robotics has 15/17 robots
+- Now in mod avaible > 95% of content from BC8 and BC7
+- Robotics has 16/17 robots
 - Quarry, pump, distillers, engines, fluids it's all fully work
 
 ## Credits
