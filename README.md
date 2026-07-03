@@ -24,7 +24,7 @@ Now in mod available > 95% of content from BC8 and BC7
 - Core: 100%
 - Transport 100%
 - Builders: 95%
-- Robotics: 90%
+- Robotics: 100%
 - Factory 90%
 - Silicon 90%
 - Energy 90%
