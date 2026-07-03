@@ -9,6 +9,7 @@ package ct.buildcraft.builders.snapshot;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.lib.net.MessageManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.LogicalSide;
@@ -30,8 +31,20 @@ public class MessageSnapshotRequest{
     }
 
     public static final BiConsumer<MessageSnapshotRequest, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
-        Snapshot snapshot = GlobalSavedDataSnapshots.get(LogicalSide.SERVER).getSnapshot(message.key);
-        if(snapshot != null)
-        	MessageManager.sendTo(new MessageSnapshotResponse(snapshot), ctx.get().getSender());
+        NetworkEvent.Context context = ctx.get();
+        context.enqueueWork(() -> {
+            try {
+                if (context.getSender() == null) {
+                    return;
+                }
+                Snapshot snapshot = GlobalSavedDataSnapshots.get(LogicalSide.SERVER).getSnapshot(message.key);
+                if (snapshot != null) {
+                    MessageManager.sendTo(new MessageSnapshotResponse(snapshot), context.getSender());
+                }
+            } catch (RuntimeException e) {
+                BCLog.logger.warn("Dropped invalid snapshot request packet", e);
+            }
+        });
+        context.setPacketHandled(true);
     };
 }

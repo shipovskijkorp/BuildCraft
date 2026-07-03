@@ -22,7 +22,7 @@ public class MenuArchitectTable extends AbstractContainerMenu {
 	
 	public MenuArchitectTable(int containerId, Inventory playerInventory, IItemHandler in, IItemHandler out, ContainerLevelAccess access) {
 		super(BCBuildersGuis.MENU_ARCHITECT_TABLE.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		for(int i = 0; i < 3; ++i) 
 			for(int j = 0; j < 9; ++j) 
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 48 + j * 18, 84 + i * 18));
@@ -53,7 +53,7 @@ public class MenuArchitectTable extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCBuildersBlocks.ARCHITECT.get());
+		return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCBuildersBlocks.ARCHITECT.get());
 	}
 
 	

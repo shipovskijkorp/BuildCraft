@@ -170,7 +170,7 @@ public class MenuReplacer extends MenuBC_Neptune implements IMenuBCTile {
         if (tile != null) {
             return tile.canInteractWith(player);
         }
-        return super.stillValid(this.access, player, BCBuildersBlocks.REPLACER.get());
+        return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCBuildersBlocks.REPLACER.get());
     }
 
     @Override

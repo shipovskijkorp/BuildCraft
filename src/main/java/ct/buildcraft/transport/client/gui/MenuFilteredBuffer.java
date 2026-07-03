@@ -56,7 +56,7 @@ public class MenuFilteredBuffer extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCTransportBlocks.filterBuffer.get());
+		return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCTransportBlocks.filterBuffer.get());
 	}
 
 	

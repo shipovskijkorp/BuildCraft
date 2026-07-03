@@ -10,17 +10,28 @@ import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+import ct.buildcraft.api.core.BCLog;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
+import io.netty.handler.codec.DecoderException;
+import io.netty.handler.codec.EncoderException;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 public class MessageSnapshotResponse {
+    private static final int MAX_COMPRESSED_SNAPSHOT_BYTES = 8 * 1024 * 1024;
+
     private Snapshot snapshot;
 
     public MessageSnapshotResponse(Snapshot snapshot) {
         this.snapshot = snapshot;
+    }
+
+    Snapshot getSnapshot() {
+        return snapshot;
     }
 
     public void toBytes(FriendlyByteBuf buf) {
@@ -33,24 +44,44 @@ public class MessageSnapshotResponse {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
+        int before = buf.writerIndex();
         try {
-        	NbtIo.writeCompressed(Snapshot.writeToNBT(snapshot), new ByteBufOutputStream(buf));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            NbtIo.writeCompressed(Snapshot.writeToNBT(snapshot), new ByteBufOutputStream(buf));
+        } catch (IOException | RuntimeException e) {
+            throw new EncoderException("Failed to encode BuildCraft snapshot", e);
+        }
+        int written = buf.writerIndex() - before;
+        if (written > MAX_COMPRESSED_SNAPSHOT_BYTES) {
+            throw new EncoderException("BuildCraft snapshot payload is too large: " + written);
         }
     }
 
     public MessageSnapshotResponse(FriendlyByteBuf buf) {
+        int readable = buf.readableBytes();
+        if (readable <= 0 || readable > MAX_COMPRESSED_SNAPSHOT_BYTES) {
+            throw new DecoderException("Invalid BuildCraft snapshot payload size: " + readable);
+        }
         try {
 //            snapshot = Snapshot.readFromNBT(NbtSquisher.expand(buf.readBytes(buf.readInt()).array()));
 //            snapshot = Snapshot.readFromNBT(CompressedStreamTools.read(new ByteBufInputStream(buf), NBTSizeTracker.INFINITE));
             snapshot = Snapshot.readFromNBT(NbtIo.readCompressed(new ByteBufInputStream(buf)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | RuntimeException e) {
+            throw new DecoderException("Failed to decode BuildCraft snapshot", e);
         }
     }
 
     public static final BiConsumer<MessageSnapshotResponse, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
-        ClientSnapshots.INSTANCE.onSnapshotReceived(message.snapshot);
+        NetworkEvent.Context context = ctx.get();
+        context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(
+            Dist.CLIENT,
+            () -> () -> {
+                try {
+                    MessageSnapshotResponseClientHandler.handle(message);
+                } catch (RuntimeException e) {
+                    BCLog.logger.warn("Dropped invalid snapshot response packet", e);
+                }
+            }
+        ));
+        context.setPacketHandled(true);
     };
 }

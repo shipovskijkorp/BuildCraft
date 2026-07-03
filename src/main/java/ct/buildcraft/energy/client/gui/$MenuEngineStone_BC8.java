@@ -25,7 +25,7 @@ public class $MenuEngineStone_BC8 extends AbstractContainerMenu {
 	
 	public $MenuEngineStone_BC8(int containerId, Inventory playerInventory, IItemHandler dataInventory, ContainerData data, ContainerLevelAccess access) {
 		super(BCEnergyGuis.MENU_STONE.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		this.data = data;
 		this.addSlot(new SlotItemHandler(dataInventory,  0, 80, 41));
 	      for(int i = 0; i < 3; ++i) {
@@ -58,7 +58,7 @@ public class $MenuEngineStone_BC8 extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCCoreBlocks.ENGINE_BC8.get());
+		return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCCoreBlocks.ENGINE_BC8.get());
 	}
 	
 	protected double getBurnProgress(float partialTicks) {

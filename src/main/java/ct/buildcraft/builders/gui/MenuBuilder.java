@@ -72,7 +72,7 @@ public class MenuBuilder extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCBuildersBlocks.BUILDER.get());
+		return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCBuildersBlocks.BUILDER.get());
 	}
 
 	@Override

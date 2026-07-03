@@ -22,7 +22,7 @@ public class MenuElectronicLibrary extends AbstractContainerMenu {
 	
 	public MenuElectronicLibrary(int containerId, Inventory playerInventory, IItemHandler downIn, IItemHandler downOut, IItemHandler upIn, IItemHandler upOut, ContainerLevelAccess access) {
 		super(BCBuildersGuis.MENU_ELIBRARY.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		for(int i = 0; i < 3; ++i) 
 			for(int j = 0; j < 9; ++j) 
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 48 + j * 18, 84 + i * 18));
@@ -57,7 +57,7 @@ public class MenuElectronicLibrary extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCBuildersBlocks.LIBRARY.get());
+		return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCBuildersBlocks.LIBRARY.get());
 	}
 
 	

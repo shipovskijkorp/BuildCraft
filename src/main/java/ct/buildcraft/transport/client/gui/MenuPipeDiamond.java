@@ -53,7 +53,7 @@ public class MenuPipeDiamond extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCTransportBlocks.pipeHolder.get());
+		return ct.buildcraft.lib.gui.BCMenuUtil.stillValidBlock(this.access, player, BCTransportBlocks.pipeHolder.get());
 	}
 
 	
