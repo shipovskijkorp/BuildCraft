@@ -47,7 +47,7 @@ public class BCTransportEventDist {
         public static void onClientCommonSetup(FMLCommonSetupEvent event)
         {
         	PipeApiClient.registry = PipeRegistryClient.INSTANCE;
-        	BCTransportGuis.clientInit(event);
+        	BCTransportClientGuis.clientInit(event);
         }
         
         @SubscribeEvent

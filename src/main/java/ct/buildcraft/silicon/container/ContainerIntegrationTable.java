@@ -23,7 +23,7 @@ public class ContainerIntegrationTable extends ContainerBCTile<TileIntegrationTa
 
     public ContainerIntegrationTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
         this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(8),
-                new ItemHandlerSimple(1), new ItemHandlerSimple(1), CreateClientLevelAccess(buf));
+                new ItemHandlerSimple(1), new ItemHandlerSimple(1), createLevelAccess(playerInventory, buf));
     }
 
     public ContainerIntegrationTable(int containerId, Inventory playerInventory, IItemHandlerAdv invTarget,

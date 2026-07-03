@@ -28,7 +28,7 @@ public class ContainerDiamondPipe extends ContainerPipe {
     public final IItemHandlerAdv filters;
     
     public static ContainerDiamondPipe create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-    	ContainerLevelAccess access = CreateClientLevelAccess(buf);
+    	ContainerLevelAccess access = createLevelAccess(playerInventory, buf);
         ContainerDiamondPipe menu = access.evaluate((level, pos) -> {
     		BlockEntity tile = level.getBlockEntity(pos);
     		if(tile instanceof IPipeHolder pipeHolder && pipeHolder.getPipe() != Pipe.EMPTY) {

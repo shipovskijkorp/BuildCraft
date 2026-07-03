@@ -42,7 +42,7 @@ public class MenuReplacer extends MenuBC_Neptune implements IMenuBCTile {
             new ItemStackHandler(1),
             new ItemStackHandler(1),
             new ItemStackHandler(1),
-            CreateClientLevelAccess(buf)
+            createLevelAccess(playerInventory, buf)
         );
     }
 

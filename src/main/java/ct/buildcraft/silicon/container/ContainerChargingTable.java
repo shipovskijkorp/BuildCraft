@@ -20,7 +20,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 public class ContainerChargingTable extends ContainerBCTile<TileChargingTable> {
 
     public ContainerChargingTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(containerId, playerInventory, new ItemHandlerSimple(1), CreateClientLevelAccess(buf));
+        this(containerId, playerInventory, new ItemHandlerSimple(1), createLevelAccess(playerInventory, buf));
     }
 
     public ContainerChargingTable(int containerId, Inventory playerInventory, IItemHandlerAdv invCharge, ContainerLevelAccess access) {

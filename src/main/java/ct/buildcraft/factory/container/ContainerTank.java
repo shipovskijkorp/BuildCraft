@@ -34,7 +34,7 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
     public final WidgetFluidTank widgetTank;
 
     public ContainerTank(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(containerId, playerInventory, new SimpleContainerData(3), CreateClientLevelAccess(buffer));
+        this(containerId, playerInventory, new SimpleContainerData(3), createLevelAccess(playerInventory, buffer));
     }
 
     public ContainerTank(int containerId, Inventory playerInventory, TileTank tank, ContainerLevelAccess access) {

@@ -29,7 +29,7 @@ public class ContainerBuilder extends ContainerBCTile<TileBuilder> {
     
 	public ContainerBuilder(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
 		this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(27),
-				new ItemHandlerSimple(24), DataSlot.standalone(), CreateClientLevelAccess(buf));
+				new ItemHandlerSimple(24), DataSlot.standalone(), createLevelAccess(playerInventory, buf));
 	}
 
 

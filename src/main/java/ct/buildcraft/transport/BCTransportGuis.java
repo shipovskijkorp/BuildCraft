@@ -9,16 +9,10 @@ import ct.buildcraft.transport.container.ContainerDiamondPipe;
 import ct.buildcraft.transport.container.ContainerDiamondWoodPipe;
 import ct.buildcraft.transport.container.ContainerEmzuliPipe_BC8;
 import ct.buildcraft.transport.container.ContainerFilteredBuffer_BC8;
-import ct.buildcraft.transport.gui.GuiDiamondPipe;
-import ct.buildcraft.transport.gui.GuiDiamondWoodPipe;
-import ct.buildcraft.transport.gui.GuiEmzuliPipe_BC8;
-import ct.buildcraft.transport.gui.GuiFilteredBuffer;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -34,17 +28,6 @@ public class BCTransportGuis {
     public static final RegistryObject<MenuType<ContainerFilteredBuffer_BC8>> MENU_FILTERED_BUFFER = MENUS.register("pipe_filtered_buffer", () -> BCContainerFactory.create(ContainerFilteredBuffer_BC8::new));
     public static final RegistryObject<MenuType<ContainerEmzuliPipe_BC8>> MENU_PIPE_EMZULI = MENUS.register("pipe_emzuli_menu", () -> BCContainerFactory.create(ContainerEmzuliPipe_BC8::create));
 
-
-    public static void clientInit(ParallelDispatchEvent event) {
-        event.enqueueWork(
-                () -> {
-                	MenuScreens.register(MENU_PIPE_DIAMOND_WOOD.get(), GuiDiamondWoodPipe::new);
-                	MenuScreens.register(MENU_PIPE_DIAMOND.get(), GuiDiamondPipe::new);
-                	MenuScreens.register(MENU_FILTERED_BUFFER.get(), GuiFilteredBuffer::new);
-                	MenuScreens.register(MENU_PIPE_EMZULI.get(), GuiEmzuliPipe_BC8::new);
-                }
-        );
-    }
     
 
     public void openGui(Player player) {

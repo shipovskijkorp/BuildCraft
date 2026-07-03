@@ -22,7 +22,7 @@ public class ContainerProgrammingTable extends ContainerBCTile<TileProgrammingTa
 
     public ContainerProgrammingTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
         this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(1),
-                new ItemHandlerSimple(TileProgrammingTable_Neptune.OPTION_COUNT), CreateClientLevelAccess(buf));
+                new ItemHandlerSimple(TileProgrammingTable_Neptune.OPTION_COUNT), createLevelAccess(playerInventory, buf));
     }
 
     public ContainerProgrammingTable(int containerId, Inventory playerInventory, IItemHandlerAdv invInput,

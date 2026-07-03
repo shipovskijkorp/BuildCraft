@@ -33,7 +33,7 @@ public class ContainerFiller extends ContainerBCTile<TileFiller> implements ICon
     );
     
 	public ContainerFiller(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		this(containerId, playerInventory, new ItemHandlerSimple(27), CreateClientLevelAccess(buf));
+		this(containerId, playerInventory, new ItemHandlerSimple(27), createLevelAccess(playerInventory, buf));
 	}
 
     public ContainerFiller(int containerId, Inventory playerInventory, ItemHandlerSimple invResources, ContainerLevelAccess access) {

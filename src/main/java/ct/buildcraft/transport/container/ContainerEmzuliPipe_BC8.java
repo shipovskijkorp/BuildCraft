@@ -37,7 +37,7 @@ public class ContainerEmzuliPipe_BC8 extends ContainerPipe {
     public final EnumMap<SlotIndex, PaintWidget> paintWidgets = new EnumMap<>(SlotIndex.class);
 
     public static ContainerEmzuliPipe_BC8 create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-    	ContainerLevelAccess access = CreateClientLevelAccess(buf);
+    	ContainerLevelAccess access = createLevelAccess(playerInventory, buf);
         ContainerEmzuliPipe_BC8 menu = access.evaluate((level, pos) -> {
     		BlockEntity tile = level.getBlockEntity(pos);
     		if(tile instanceof IPipeHolder pipeHolder && pipeHolder.getPipe() != Pipe.EMPTY) {

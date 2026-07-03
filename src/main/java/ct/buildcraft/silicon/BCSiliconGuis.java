@@ -11,18 +11,10 @@ import ct.buildcraft.silicon.container.ContainerAssemblyTable;
 import ct.buildcraft.silicon.container.ContainerGate;
 import ct.buildcraft.silicon.container.ContainerIntegrationTable;
 import ct.buildcraft.silicon.container.ContainerProgrammingTable;
-import ct.buildcraft.silicon.gui.GuiAdvancedCraftingTable;
-import ct.buildcraft.silicon.gui.GuiAssemblyTable;
-import ct.buildcraft.silicon.gui.GuiChargingTable;
-import ct.buildcraft.silicon.gui.GuiGate;
-import ct.buildcraft.silicon.gui.GuiIntegrationTable;
-import ct.buildcraft.silicon.gui.GuiProgrammingTable;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -36,19 +28,6 @@ public class BCSiliconGuis {
     public static final RegistryObject<MenuType<ContainerIntegrationTable>> MENU_INTEGRATION_TABLE = MENUS.register("integration_table_menu", () -> BCContainerFactory.create(ContainerIntegrationTable::new));
     public static final RegistryObject<MenuType<ContainerProgrammingTable>> MENU_PROGRAMMING_TABLE = MENUS.register("programming_table_menu", () -> BCContainerFactory.create(ContainerProgrammingTable::new));
 
-
-    public static void clientInit(ParallelDispatchEvent event) {
-        event.enqueueWork(
-                () -> {
-                	MenuScreens.register(MENU_AD_CRAFTING_TABLE.get(), GuiAdvancedCraftingTable::new);
-                	MenuScreens.register(MENU_ASSEMBLY_TABLE.get(), GuiAssemblyTable::new);
-                    MenuScreens.register(MENU_CHARGING_TABLE.get(), GuiChargingTable::new);
-                	MenuScreens.register(MENU_GATE.get(), GuiGate::new);
-                	MenuScreens.register(MENU_INTEGRATION_TABLE.get(), GuiIntegrationTable::new);
-                    MenuScreens.register(MENU_PROGRAMMING_TABLE.get(), GuiProgrammingTable::new);
-                }
-        );
-    }
     
 
     public void openGui(Player player) {

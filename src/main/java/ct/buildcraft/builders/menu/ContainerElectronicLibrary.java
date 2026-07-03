@@ -31,7 +31,7 @@ public class ContainerElectronicLibrary extends ContainerBCTile<TileElectronicLi
     
 	public ContainerElectronicLibrary(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
 		this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(1), 
-				new ItemHandlerSimple(1), new ItemHandlerSimple(1), CreateClientLevelAccess(buf));
+				new ItemHandlerSimple(1), new ItemHandlerSimple(1), createLevelAccess(playerInventory, buf));
 	}
 
     public ContainerElectronicLibrary(int containerId, Inventory playerInventory, ItemHandlerSimple invDownOut,

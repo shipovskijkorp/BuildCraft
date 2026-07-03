@@ -34,7 +34,7 @@ public class ContainerZonePlanner extends ContainerBCTile<TileZonePlanner> {
     public String mapName = "";
 
     public ContainerZonePlanner(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(containerId, playerInventory, null, CreateClientLevelAccess(buffer));
+        this(containerId, playerInventory, null, createLevelAccess(playerInventory, buffer));
     }
 
     public ContainerZonePlanner(int containerId, Inventory playerInventory, TileZonePlanner tile,

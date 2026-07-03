@@ -22,7 +22,7 @@ public class ContainerEngineIron_BC8 extends ContainerBCTile<TileEngineIron_BC8>
     public final WidgetFluidTank widgetTankResidue;
     
 	public ContainerEngineIron_BC8(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		this(containerId, playerInventory, CreateClientLevelAccess(buf));
+		this(containerId, playerInventory, createLevelAccess(playerInventory, buf));
 	}
 
     public ContainerEngineIron_BC8(int containerId, Inventory playerInventory, ContainerLevelAccess access) {

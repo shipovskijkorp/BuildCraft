@@ -23,7 +23,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 public class ContainerFilteredBuffer_BC8 extends ContainerBCTile<TileFilteredBuffer> {
 	
 	public ContainerFilteredBuffer_BC8(int containerId, Inventory inv, FriendlyByteBuf buf) {
-		this(containerId, inv, new ItemHandlerSimple(9), new ItemHandlerSimple(9), CreateClientLevelAccess(buf));
+		this(containerId, inv, new ItemHandlerSimple(9), new ItemHandlerSimple(9), createLevelAccess(inv, buf));
 	}
 	
     public ContainerFilteredBuffer_BC8(int containerId, Inventory inventory, IItemHandlerAdv invFilter, IItemHandlerAdv invMain, ContainerLevelAccess access) {

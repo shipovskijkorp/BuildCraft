@@ -21,7 +21,7 @@ import net.minecraftforge.items.IItemHandler;
 public class ContainerAssemblyTable extends ContainerBCTile<TileAssemblyTable> {
 	
 	public ContainerAssemblyTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		this(containerId, playerInventory, new ItemHandlerSimple(12), new ItemHandlerSimple(12), CreateClientLevelAccess(buf));
+		this(containerId, playerInventory, new ItemHandlerSimple(12), new ItemHandlerSimple(12), createLevelAccess(playerInventory, buf));
 	}
 	
     public ContainerAssemblyTable(int containerId, Inventory playerInventory, IItemHandlerAdv invResources, IItemHandler display, ContainerLevelAccess access) {

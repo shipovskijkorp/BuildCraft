@@ -33,7 +33,7 @@ public class ContainerDiamondWoodPipe extends ContainerPipe {
     public final PipeBehaviourWoodDiamond behaviour;
     
     public static ContainerDiamondWoodPipe create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-    	ContainerLevelAccess access = CreateClientLevelAccess(buf);
+    	ContainerLevelAccess access = createLevelAccess(playerInventory, buf);
         ContainerDiamondWoodPipe menu = access.evaluate((level, pos) -> {
     		BlockEntity tile = level.getBlockEntity(pos);
     		if(tile instanceof IPipeHolder pipeHolder && pipeHolder.getPipe() != Pipe.EMPTY) {

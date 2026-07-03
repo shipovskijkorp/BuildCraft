@@ -30,7 +30,7 @@ public class MenuHeatExchange extends MenuBC_Neptune implements IMenuBCTile {
     public final TileHeatExchange tile;
 
     public MenuHeatExchange(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(containerId, playerInventory, new ItemStackHandler(4), new SimpleContainerData(8), DataSlot.standalone(), CreateClientLevelAccess(buf));
+        this(containerId, playerInventory, new ItemStackHandler(4), new SimpleContainerData(8), DataSlot.standalone(), createLevelAccess(playerInventory, buf));
     }
 
     public MenuHeatExchange(int containerId, Inventory playerInventory) {
