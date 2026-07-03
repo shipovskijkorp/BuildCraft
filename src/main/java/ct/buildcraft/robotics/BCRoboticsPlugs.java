@@ -2,6 +2,7 @@ package ct.buildcraft.robotics;
 
 import ct.buildcraft.api.transport.pipe.PipeApi;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition;
+import ct.buildcraft.lib.BCLibRegistries;
 import ct.buildcraft.robotics.plug.RobotStationPluggable;
 import net.minecraft.resources.ResourceLocation;
 
@@ -15,9 +16,8 @@ public final class BCRoboticsPlugs {
         if (robotStation == null) {
             robotStation = new PluggableDefinition(idFor("robot_station"), RobotStationPluggable::readFromNbt, RobotStationPluggable::loadFromBuffer);
         }
-        if (PipeApi.pluggableRegistry != null) {
-            PipeApi.pluggableRegistry.register(robotStation);
-        }
+        BCLibRegistries.initApiRegistries();
+        PipeApi.pluggableRegistry.register(robotStation);
     }
 
     private static ResourceLocation idFor(String name) {

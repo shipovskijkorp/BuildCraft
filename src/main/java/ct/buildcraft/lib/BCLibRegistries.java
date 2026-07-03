@@ -21,13 +21,26 @@ import ct.buildcraft.lib.recipe.RefineryRecipeRegistry;
 import ct.buildcraft.lib.registry.PluggableRegistry;
 
 public class BCLibRegistries {
+    /**
+     * Initializes API registries that can be used by other BuildCraft modules while Forge is still constructing mods.
+     * <p>
+     * BuildCraft is distributed as one jar, but Forge still constructs buildcraftlib, buildcrafttransport,
+     * buildcraftsilicon, etc. as separate mods. In large modpacks the construction order can differ, so modules must
+     * not assume that the buildcraftlib constructor has already populated static API registries.
+     */
+    public static synchronized void initApiRegistries() {
+        if (PipeApi.pluggableRegistry == null) {
+            PipeApi.pluggableRegistry = PluggableRegistry.INSTANCE;
+        }
+    }
+
     public static void fmlPreInit() {
         BuildcraftRecipeRegistry.integrationRecipes = IntegrationRecipeRegistry.INSTANCE;
         BuildcraftRecipeRegistry.refineryRecipes = RefineryRecipeRegistry.INSTANCE;
         BuildcraftFuelRegistry.fuel = FuelRegistry.INSTANCE;
         BuildcraftFuelRegistry.coolant = CoolantRegistry.INSTANCE;
         BuildCraftAPI.fakePlayerProvider = FakePlayerProvider.INSTANCE;
-        PipeApi.pluggableRegistry = PluggableRegistry.INSTANCE;
+        initApiRegistries();
 
 //        ReloadableRegistryManager dataManager = ReloadableRegistryManager.DATA_PACKS;
 //        BuildCraftRegistryManager.managerDataPacks = dataManager;
