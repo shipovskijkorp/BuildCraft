@@ -6,6 +6,7 @@ import ct.buildcraft.api.transport.pluggable.PluggableDefinition;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableCreator;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNbtReader;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNetLoader;
+import ct.buildcraft.lib.BCLibRegistries;
 import ct.buildcraft.silicon.plug.PluggableFacade;
 import ct.buildcraft.silicon.plug.PluggableGate;
 import ct.buildcraft.silicon.plug.PluggableLens;
@@ -42,6 +43,7 @@ public class BCSiliconPlugs {
 
     private static PluggableDefinition register(PluggableDefinition def) {
         // TODO: Add config for enabling/disabling
+        BCLibRegistries.initApiRegistries();
         PipeApi.pluggableRegistry.register(def);
 
         // This handles the migration of most of the transport pluggables into silicon

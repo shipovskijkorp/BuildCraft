@@ -8,6 +8,7 @@ package ct.buildcraft.transport;
 
 import ct.buildcraft.api.BCModules;
 import ct.buildcraft.api.schematics.SchematicBlockFactoryRegistry;
+import ct.buildcraft.lib.BCLibRegistries;
 import ct.buildcraft.lib.CreativeTabManager;
 import ct.buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import ct.buildcraft.lib.net.MessageManager;
@@ -41,6 +42,7 @@ public class BCTransport {
         modEventBus.addListener(this::init);
     	modEventBus.addListener(this::gatherData);//DataGenerator
 
+        BCLibRegistries.initApiRegistries();
         BCTransportRegistries.preInit();
         BCTransportConfig.preInit();
         BCTransportPipes.preInit();

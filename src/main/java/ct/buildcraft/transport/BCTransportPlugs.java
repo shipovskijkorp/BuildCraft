@@ -13,6 +13,7 @@ import ct.buildcraft.api.transport.pluggable.PluggableDefinition;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableCreator;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNbtReader;
 import ct.buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNetLoader;
+import ct.buildcraft.lib.BCLibRegistries;
 
 import ct.buildcraft.transport.plug.PluggableBlocker;
 import ct.buildcraft.transport.plug.PluggablePowerAdaptor;
@@ -37,6 +38,7 @@ public class BCTransportPlugs {
 
     private static PluggableDefinition register(PluggableDefinition def) {
         // TODO: Add config for enabling/disabling
+        BCLibRegistries.initApiRegistries();
         PipeApi.pluggableRegistry.register(def);
         return def;
     }
