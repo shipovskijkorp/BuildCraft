@@ -145,8 +145,8 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
         MessageContainer message = new MessageContainer(containerId, id, payload);
         if (playerInventory.player.level.isClientSide) {
             MessageManager.sendToServer(message);
-        } else {
-            MessageManager.sendTo(message, (ServerPlayer) playerInventory.player);
+        } else if (playerInventory.player instanceof ServerPlayer serverPlayer) {
+            MessageManager.sendTo(message, serverPlayer);
         }
     }
 

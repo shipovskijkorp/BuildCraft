@@ -26,7 +26,7 @@ public class MenuPipeDiawood extends AbstractContainerMenu {
 	
 	public MenuPipeDiawood(int containerId, Inventory playerInventory, IItemHandler dataInventory, DataSlot modeData, DataSlot filterData, ContainerLevelAccess access) {
 		super(BCTransportGuis.MENU_PIPE_DIAMOND_WOOD.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		this.modeData = modeData;
 		this.filterData = filterData;
 //		this.addSlot(new SlotItemHandler(dataInventory,  0, 80, 41));

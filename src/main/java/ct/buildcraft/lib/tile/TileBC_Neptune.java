@@ -481,7 +481,9 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
             if (message.getPayloadSize() <= Short.BYTES) {
                 return;
             }
-            MessageManager.sendTo(message, (ServerPlayer) player);
+            if (player instanceof ServerPlayer serverPlayer) {
+                MessageManager.sendTo(message, serverPlayer);
+            }
         }
     }
 

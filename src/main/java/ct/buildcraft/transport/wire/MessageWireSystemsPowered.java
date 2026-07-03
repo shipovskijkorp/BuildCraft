@@ -6,26 +6,20 @@
 
 package ct.buildcraft.transport.wire;
 
-import net.minecraftforge.fml.DistExecutor;
-
-import net.minecraftforge.api.distmarker.Dist;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import ct.buildcraft.api.transport.IWireManager;
-import ct.buildcraft.api.transport.pipe.IPipeHolder;
-
-import net.minecraft.client.Minecraft;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 public class MessageWireSystemsPowered {
+    private static final int MAX_SYSTEMS = 4096;
+
     Map<Integer, Boolean> hashesPowered = new HashMap<>();
 
     @SuppressWarnings("unused")
@@ -39,12 +33,18 @@ public class MessageWireSystemsPowered {
     public MessageWireSystemsPowered(FriendlyByteBuf buf) {
         hashesPowered.clear();
         int count = buf.readInt();
+        if (count < 0 || count > MAX_SYSTEMS) {
+            throw new DecoderException("Invalid powered wire system count: " + count);
+        }
         for (int i = 0; i < count; i++) {
             hashesPowered.put(buf.readInt(), buf.readBoolean());
         }
     }
-    
+
     public static void toBytes(MessageWireSystemsPowered msg, FriendlyByteBuf buf) {
+        if (msg.hashesPowered.size() > MAX_SYSTEMS) {
+            throw new IllegalStateException("Too many powered wire systems: " + msg.hashesPowered.size());
+        }
         buf.writeInt(msg.hashesPowered.size());
         msg.hashesPowered.forEach((wiresHashCode, powered) -> {
             buf.writeInt(wiresHashCode);
@@ -54,5 +54,6 @@ public class MessageWireSystemsPowered {
 
     public static final BiConsumer<MessageWireSystemsPowered, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MessageWireSystemsPoweredClientHandler.handle(message, ctx));
+        ctx.get().setPacketHandled(true);
     };
 }

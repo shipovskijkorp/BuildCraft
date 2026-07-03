@@ -78,8 +78,8 @@ public class BlockBuilder extends BlockBCTile_Neptune implements IBlockWithFacin
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult hit) {
-        if (!world.isClientSide && world.getBlockEntity(pos) instanceof TileBuilder builder) {
-            NetworkHooks.openScreen((ServerPlayer)player, builder, pos);
+        if (!world.isClientSide && player instanceof ServerPlayer serverPlayer && world.getBlockEntity(pos) instanceof TileBuilder builder) {
+            NetworkHooks.openScreen(serverPlayer, builder, pos);
         }
         return InteractionResult.SUCCESS;
 	}

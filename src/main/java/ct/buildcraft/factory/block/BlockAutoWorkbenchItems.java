@@ -32,8 +32,8 @@ public class BlockAutoWorkbenchItems extends BlockBCTile_Neptune {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult hit) {
-        if (!world.isClientSide() && world.getBlockEntity(pos) instanceof TileAutoWorkbenchItems tile) {
-            NetworkHooks.openScreen((ServerPlayer)player, tile, buf ->{
+        if (!world.isClientSide() && player instanceof ServerPlayer serverPlayer && world.getBlockEntity(pos) instanceof TileAutoWorkbenchItems tile) {
+            NetworkHooks.openScreen(serverPlayer, tile, buf ->{
             	buf.writeInt(tile.getWorkbenchCrafting().getSlotSize());
             	buf.writeBlockPos(pos);
             });

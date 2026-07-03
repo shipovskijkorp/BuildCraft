@@ -10,14 +10,18 @@ import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
+import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.lib.gui.MenuBC_Neptune;
 import ct.buildcraft.lib.misc.MessageUtil;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
 public class MessageContainer {
+
+    private static final int MAX_PAYLOAD_SIZE = 32 * 1024;
 
     private int windowId;
     private int msgId;
@@ -34,6 +38,7 @@ public class MessageContainer {
 
     // Packet breakdown:
     // INT - WindowId
+    // USHORT - MsgId
     // USHORT - PAYLOAD_SIZE->"size"
     // BYTE[size] - PAYLOAD
 
@@ -41,6 +46,10 @@ public class MessageContainer {
         windowId = buf.readInt();
         msgId = buf.readUnsignedShort();
         int payloadSize = buf.readUnsignedShort();
+        if (payloadSize > MAX_PAYLOAD_SIZE || payloadSize > buf.readableBytes()) {
+            throw new DecoderException("Invalid container packet payload size: " + payloadSize
+                + " readable=" + buf.readableBytes());
+        }
         payload = new FriendlyByteBuf(buf.readBytes(payloadSize));
     }
 
@@ -48,34 +57,40 @@ public class MessageContainer {
         buf.writeInt(msg.windowId);
         buf.writeShort(msg.msgId);
         int length = msg.payload.readableBytes();
+        if (length > MAX_PAYLOAD_SIZE) {
+            throw new IllegalStateException("Container packet payload is too large: " + length);
+        }
         buf.writeShort(length);
         buf.writeBytes(msg.payload, 0, length);
     }
 
     public static final BiConsumer<MessageContainer, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
-        try {
-            int id = message.windowId;
-            NetworkEvent.Context context = ctx.get();
-            ServerPlayer per = context.getSender();
-            LogicalSide side = context.getDirection().getReceptionSide();
-            if (per != null && per.containerMenu.containerId == id && 
-            		per.containerMenu instanceof MenuBC_Neptune container) {
-            	
-                container.readMessage(message.msgId, message.payload, side, context);
-                // error checking
-                String extra = container.getClass() + ", id = " + container.getIdAllocator().getNameFor(message.msgId);
-                MessageUtil.ensureEmpty(message.payload, side == LogicalSide.CLIENT, extra);
+        NetworkEvent.Context context = ctx.get();
+        context.enqueueWork(() -> {
+            try {
+                int id = message.windowId;
+                ServerPlayer player = context.getSender();
+                LogicalSide side = context.getDirection().getReceptionSide();
+                if (player != null && player.containerMenu.containerId == id
+                    && player.containerMenu instanceof MenuBC_Neptune container) {
+
+                    container.readMessage(message.msgId, message.payload, side, context);
+                    String extra = container.getClass() + ", id = "
+                        + container.getIdAllocator().getNameFor(message.msgId);
+                    MessageUtil.ensureEmpty(message.payload, side == LogicalSide.CLIENT, extra);
+                } else if (side == LogicalSide.CLIENT
+                    && MessageContainerClientHandler.getClientContainerMenu() instanceof MenuBC_Neptune container) {
+                    container.readMessage(message.msgId, message.payload, side, context);
+                    String extra = container.getClass() + ", id = "
+                        + container.getIdAllocator().getNameFor(message.msgId);
+                    MessageUtil.ensureEmpty(message.payload, true, extra);
+                }
+            } catch (IOException | RuntimeException e) {
+                BCLog.logger.warn("Dropped invalid BuildCraft container packet", e);
+            } finally {
+                // message.payload.release();
             }
-            else if(side == LogicalSide.CLIENT && MessageContainerClientHandler.getClientContainerMenu() instanceof MenuBC_Neptune container)
-            	container.readMessage(message.msgId, message.payload, side, context);
-        } catch (IOException e) {
-            throw new Error(e);
-        } finally {
-            //message.payload.release();
-        }
-    	ctx.get().setPacketHandled(true);
+        });
+        context.setPacketHandled(true);
     };
-
-	
-
 }

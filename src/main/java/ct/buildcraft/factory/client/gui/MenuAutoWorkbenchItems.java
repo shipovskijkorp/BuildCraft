@@ -1,6 +1,6 @@
 package ct.buildcraft.factory.client.gui;
 
-import ct.buildcraft.core.BCCoreBlocks;
+import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.factory.BCFactoryGuis;
 import ct.buildcraft.lib.gui.RecordContainerSlot;
 import net.minecraft.world.Container;
@@ -24,7 +24,7 @@ public class MenuAutoWorkbenchItems extends AbstractContainerMenu {
 	
 	public MenuAutoWorkbenchItems(int containerId, Inventory playerInventory, Container craft, ContainerLevelAccess access) {
 		super(BCFactoryGuis.MENU_AUTOWORK_BENCH_ITEM.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		for(int i = 0; i < 3; ++i) 
 			for(int j = 0; j < 9; ++j) 
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 95 + i * 18));
@@ -58,7 +58,7 @@ public class MenuAutoWorkbenchItems extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCCoreBlocks.ENGINE_BC8.get());
+		return super.stillValid(this.access, player, BCFactoryBlocks.AUTO_BENCH_BLOCK.get());
 	}
 
 }

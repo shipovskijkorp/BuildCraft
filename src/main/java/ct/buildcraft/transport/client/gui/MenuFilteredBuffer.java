@@ -1,6 +1,6 @@
 package ct.buildcraft.transport.client.gui;
 
-import ct.buildcraft.core.BCCoreBlocks;
+import ct.buildcraft.transport.BCTransportBlocks;
 import ct.buildcraft.lib.gui.RecordSlot;
 import ct.buildcraft.transport.BCTransportGuis;
 import ct.buildcraft.transport.BCTransportSprites;
@@ -25,7 +25,7 @@ public class MenuFilteredBuffer extends AbstractContainerMenu {
 	
 	public MenuFilteredBuffer(int containerId, Inventory playerInventory, IItemHandler filter, IItemHandler main, ContainerLevelAccess access) {
 		super(BCTransportGuis.MENU_FILTERED_BUFFER.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		for(int i = 0; i < 3; ++i) 
 			for(int j = 0; j < 9; ++j) 
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 86 + i * 18));
@@ -56,7 +56,7 @@ public class MenuFilteredBuffer extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCCoreBlocks.ENGINE_BC8.get());
+		return super.stillValid(this.access, player, BCTransportBlocks.filterBuffer.get());
 	}
 
 	

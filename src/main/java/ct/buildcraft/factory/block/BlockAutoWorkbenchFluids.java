@@ -35,8 +35,8 @@ public class BlockAutoWorkbenchFluids extends BlockBCTile_Neptune {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult hit) {
-        if (!world.isClientSide() && world.getBlockEntity(pos) instanceof TileAutoWorkbenchFluids tile) {
-            NetworkHooks.openScreen((ServerPlayer)player, tile);
+        if (!world.isClientSide() && player instanceof ServerPlayer serverPlayer && world.getBlockEntity(pos) instanceof TileAutoWorkbenchFluids tile) {
+            NetworkHooks.openScreen(serverPlayer, tile);
         }
         return InteractionResult.SUCCESS;
 	}

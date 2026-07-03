@@ -142,8 +142,8 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood implements MenuP
                 return false;
             }
         }
-        if (!player.level.isClientSide()) {
-        	NetworkHooks.openScreen((ServerPlayer)player, this, pipe.getHolder().getPipePos());
+        if (!player.level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            NetworkHooks.openScreen(serverPlayer, this, pipe.getHolder().getPipePos());
         }
         return true;
     }

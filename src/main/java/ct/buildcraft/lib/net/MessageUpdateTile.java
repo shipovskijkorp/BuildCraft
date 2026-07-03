@@ -14,20 +14,18 @@ import org.jetbrains.annotations.Nullable;
 
 import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.lib.misc.MessageUtil;
-import com.mojang.logging.LogUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.PacketListener;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
+import io.netty.handler.codec.DecoderException;
 
 public class MessageUpdateTile {
+    private static final int MAX_PAYLOAD_SIZE = 1024 * 1024;
+
     private BlockPos pos;
     private FriendlyByteBuf payload;
 
@@ -37,8 +35,8 @@ public class MessageUpdateTile {
     public MessageUpdateTile(BlockPos pos, FriendlyByteBuf payload) {
         this.pos = pos;
         this.payload = payload;
-        if (getPayloadSize() > 1 << 24) {
-            throw new IllegalStateException("Can't write out " + getPayloadSize() + "bytes!");
+        if (getPayloadSize() > MAX_PAYLOAD_SIZE) {
+            throw new IllegalStateException("Can't write out " + getPayloadSize() + " bytes!");
         }
     }
 
@@ -49,12 +47,18 @@ public class MessageUpdateTile {
     public MessageUpdateTile(FriendlyByteBuf buf) {
         pos = buf.readBlockPos();
         int size = buf.readUnsignedMedium();
+        if (size > MAX_PAYLOAD_SIZE || size > buf.readableBytes()) {
+            throw new DecoderException("Invalid tile update payload size: " + size + " readable=" + buf.readableBytes());
+        }
         payload = new FriendlyByteBuf(buf.readBytes(size));
     }
 
     public static void toBytes(MessageUpdateTile msg, FriendlyByteBuf buf) {
         buf.writeBlockPos(msg.pos);
         int length = msg.payload.readableBytes();
+        if (length > MAX_PAYLOAD_SIZE) {
+            throw new IllegalStateException("Tile update payload is too large: " + length);
+        }
         buf.writeMedium(length);
         buf.writeBytes(msg.payload, 0, length);
     }
@@ -83,8 +87,8 @@ public class MessageUpdateTile {
                         + " (found " + tile + ")");
                 }
                 return;
-            } catch (IOException io) {
-                throw new RuntimeException(io);
+            } catch (IOException | RuntimeException io) {
+                BCLog.logger.warn("Dropped invalid BuildCraft tile update packet", io);
             } finally {
   //          	ctx.get().setPacketHandled(true);
                 //message.payload.release();

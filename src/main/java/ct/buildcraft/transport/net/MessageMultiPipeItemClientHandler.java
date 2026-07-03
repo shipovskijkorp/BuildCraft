@@ -35,7 +35,7 @@ public class MessageMultiPipeItemClientHandler {
                     if (tile instanceof IPipeHolder) {
                         IPipe pipe = ((IPipeHolder) tile).getPipe();
                         if (pipe == Pipe.EMPTY) {
-                            return;
+                            continue;
                         }
                         PipeFlow flow = pipe.getFlow();
                         if (flow instanceof PipeFlowItems) {

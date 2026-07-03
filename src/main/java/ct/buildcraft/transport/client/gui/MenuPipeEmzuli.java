@@ -1,6 +1,6 @@
 package ct.buildcraft.transport.client.gui;
 
-import ct.buildcraft.core.BCCoreBlocks;
+import ct.buildcraft.transport.BCTransportBlocks;
 import ct.buildcraft.lib.gui.RecordSlot;
 import ct.buildcraft.transport.BCTransportGuis;
 
@@ -26,7 +26,7 @@ public class MenuPipeEmzuli extends AbstractContainerMenu {
 	
 	public MenuPipeEmzuli(int containerId, Inventory playerInventory, IItemHandler dataInventory, ContainerData data, ContainerLevelAccess access) {
 		super(BCTransportGuis.MENU_PIPE_EMZULI.get(), containerId);
-		this.access = ContainerLevelAccess.NULL;
+		this.access = access;
 		this.data = data;
 		for(int i = 0; i < 3; ++i) 
 			for(int j = 0; j < 9; ++j) 
@@ -57,7 +57,7 @@ public class MenuPipeEmzuli extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return super.stillValid(this.access, player, BCCoreBlocks.ENGINE_BC8.get());
+		return super.stillValid(this.access, player, BCTransportBlocks.pipeHolder.get());
 	}
 
 	@Override

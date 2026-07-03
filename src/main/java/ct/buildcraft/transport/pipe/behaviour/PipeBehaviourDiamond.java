@@ -100,8 +100,8 @@ public abstract class PipeBehaviourDiamond extends PipeBehaviour implements Menu
     @Override
     public boolean onPipeActivate(Player player, BlockHitResult trace, Level level,
         EnumPipePart part) {
-        if (!level.isClientSide()) {
-        	NetworkHooks.openScreen((ServerPlayer)player, this, pipe.getHolder().getPipePos());
+        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            NetworkHooks.openScreen(serverPlayer, this, pipe.getHolder().getPipePos());
         }
         return true;
     }

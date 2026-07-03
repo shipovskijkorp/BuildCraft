@@ -232,8 +232,8 @@ public class PipeBehaviourEmzuli extends PipeBehaviourWood implements MenuProvid
         if (EntityUtil.getWrenchHand(player) != null) {
             return super.onPipeActivate(player, trace, level, part);
         }
-        if (!player.getLevel().isClientSide()) {
-        	NetworkHooks.openScreen((ServerPlayer)player, this, trace.getBlockPos());
+        if (!player.getLevel().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            NetworkHooks.openScreen(serverPlayer, this, trace.getBlockPos());
         }
         return true;
     }

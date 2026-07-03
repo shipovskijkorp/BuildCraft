@@ -902,9 +902,14 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         frameBox.initialize(nbt.getCompound("frame"));
         boxIterator = BoxIterator.readFromNbt(nbt.getCompound("boxIterator"));
         battery.deserializeNBT(nbt.getCompound("battery"));
-        if (nbt.contains("currentTask")) {
-            currentTask = EnumTaskType.values()[(int) nbt.getByte("currentTaskId")].supplier.apply(this);
-            currentTask.readFromNBT(nbt.getCompound("currentTaskData"));
+        if (nbt.contains("currentTaskId") && nbt.contains("currentTaskData")) {
+            int currentTaskId = Byte.toUnsignedInt(nbt.getByte("currentTaskId"));
+            if (currentTaskId >= 0 && currentTaskId < EnumTaskType.values().length) {
+                currentTask = EnumTaskType.values()[currentTaskId].supplier.apply(this);
+                currentTask.readFromNBT(nbt.getCompound("currentTaskData"));
+            } else {
+                currentTask = null;
+            }
         } else {
             currentTask = null;
         }
