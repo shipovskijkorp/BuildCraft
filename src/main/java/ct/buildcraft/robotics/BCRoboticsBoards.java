@@ -29,6 +29,7 @@ import ct.buildcraft.robotics.boards.BoardRobotPicker;
 import ct.buildcraft.robotics.boards.BoardRobotPlanter;
 import ct.buildcraft.robotics.boards.BoardRobotPump;
 import ct.buildcraft.robotics.boards.BoardRobotShovelman;
+import ct.buildcraft.robotics.boards.BoardRobotStripes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -182,7 +183,7 @@ public final class BCRoboticsBoards {
         }
 
         public boolean isInDev() {
-            return "stripes".equals(key);
+            return false;
         }
     }
 
@@ -266,6 +267,9 @@ public final class BCRoboticsBoards {
             }
             if ("bomber".equals(key)) {
                 return new BoardRobotBomber(robot);
+            }
+            if ("stripes".equals(key)) {
+                return new BoardRobotStripes(robot);
             }
             if ("builder".equals(key)) {
                 return new BoardRobotBuilder(robot);
