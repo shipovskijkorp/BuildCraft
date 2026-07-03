@@ -82,6 +82,7 @@
   "gui.leftToBreak": "To break",
   "gui.leftToPlace": "To place",
   "gui.ledger.ownership.none": "No owner",
+  "gui.ledger.ownership.unknown": "Unknown owner",
   "gui.ledger.help.selected": "Help: %s",
   "buildcraft.help.filler.invert.title": "Invert pattern",
   "buildcraft.help.filler.invert.desc": "Makes the selected filler pattern affect the opposite set of positions.",

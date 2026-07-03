@@ -824,6 +824,9 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 
 		NonNullList<ItemStack> toDrop = NonNullList.create();
 		BCBlockHitResult t = rayTrace(world, pos, player);
+		if (t == null) {
+			return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
+		}
 		int subHit = t.subHit;
 		BlockHitResult trace = t.result;
 		

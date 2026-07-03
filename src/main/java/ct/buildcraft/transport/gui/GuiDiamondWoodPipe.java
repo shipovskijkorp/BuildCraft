@@ -56,6 +56,10 @@ public class GuiDiamondWoodPipe extends GuiBC8<ContainerDiamondWoodPipe> impleme
     @Override
     public void init() {
         super.init();
+        if (pipe == null) {
+            minecraft.player.closeContainer();
+            return;
+        }
 
         this.whiteListButton = new GuiImageButton(mainGui, WHITE_LIST_BUTTON_ID, this.leftPos + 7, this.topPos + 41, 18, TEXTURE_BUTTON, 19, 19);
         this.whiteListButton.setToolTip(ToolTip.createLocalized("tip.PipeItemsEmerald.whitelist"));
@@ -99,6 +103,9 @@ public class GuiDiamondWoodPipe extends GuiBC8<ContainerDiamondWoodPipe> impleme
             return;
         }
         int id = Integer.parseInt(((GuiImageButton) sender).id);
+        if (pipe == null) {
+            return;
+        }
         FilterMode newFilterMode = FilterMode.get(id);
         this.pipe.filterMode = newFilterMode;
         container.sendNewFilterMode(newFilterMode);
@@ -115,6 +122,9 @@ public class GuiDiamondWoodPipe extends GuiBC8<ContainerDiamondWoodPipe> impleme
         double titleX = mainGui.rootElement.getX() + (imageWidth - font.width(title)) / 2;
         font.draw(pose, title, (int) titleX, (int) mainGui.rootElement.getY() + 6, 0x404040);
         font.draw(pose, Component.translatable("gui.inventory"), (int) mainGui.rootElement.getX() + 8, (int) mainGui.rootElement.getY() + imageHeight - 93, 0x404040);
+        if (pipe == null) {
+            return;
+        }
         if (pipe.filterMode == FilterMode.ROUND_ROBIN) {
             RenderSystem.clearColor(1, 1, 1, 1);
             GuiIcon icon = pipe.filterValid ? ICON_ROUND_ROBIN_INDEX : ICON_ROUND_ROBIN_NONE;

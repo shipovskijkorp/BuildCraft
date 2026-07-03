@@ -82,6 +82,7 @@
   "gui.leftToBreak": "待破坏",
   "gui.leftToPlace": "待放置",
   "gui.ledger.ownership.none": "无所有者",
+  "gui.ledger.ownership.unknown": "Unknown owner",
   "gui.ledger.help.selected": "帮助：%s",
   "buildcraft.help.filler.invert.title": "Invert pattern",
   "buildcraft.help.filler.invert.desc": "Makes the selected filler pattern affect the opposite set of positions.",

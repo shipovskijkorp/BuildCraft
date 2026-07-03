@@ -66,6 +66,10 @@ public class GuiEmzuliPipe_BC8 extends GuiBC8<ContainerEmzuliPipe_BC8> {
     @Override
     public void init() {
         super.init();
+        if (container.behaviour == null) {
+            minecraft.player.closeContainer();
+            return;
+        }
         addButton(SlotIndex.SQUARE, 49, 19);
         addButton(SlotIndex.CIRCLE, 49, 47);
         addButton(SlotIndex.TRIANGLE, 106, 19);
@@ -130,6 +134,9 @@ public class GuiEmzuliPipe_BC8 extends GuiBC8<ContainerEmzuliPipe_BC8> {
     @Override
     protected void drawBackgroundLayer(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
         ICON_GUI.drawAt(pose, mainGui.rootElement);
+        if (container.behaviour == null) {
+            return;
+        }
 
         SlotIndex currentSlot = container.behaviour.getCurrentSlot();
         for (SlotIndex index : container.behaviour.getActiveSlots()) {

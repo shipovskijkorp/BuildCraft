@@ -9,6 +9,7 @@ package ct.buildcraft.lib.gui;
 import ct.buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 
@@ -21,10 +22,14 @@ public abstract class ContainerBCTile<T extends TileBC_Neptune> extends MenuBC_N
         super(playerInventory, type, id);
         this.access = access;
         this.tile = (T)(access.evaluate((level, pos) -> {
-        	TileBC_Neptune b = (TileBC_Neptune) level.getBlockEntity(pos);
-            if (!level.isClientSide) 
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (!(blockEntity instanceof TileBC_Neptune b)) {
+                return null;
+            }
+            if (!level.isClientSide) {
                 b.onPlayerOpen(playerInventory.player);
-        	return b;
+            }
+            return b;
         }, null));
 
     }

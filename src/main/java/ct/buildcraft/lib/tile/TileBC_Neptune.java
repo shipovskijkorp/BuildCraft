@@ -307,27 +307,31 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
         tankManager.addDrops(toDrop);
     }
 
-    public void onPlacedBy(LivingEntity placer, ItemStack stack) {
-        if (!placer.level.isClientSide()) {
-            if (placer instanceof Player) {
-                Player player = (Player) placer;
-                owner = player.getGameProfile();
-                if (owner.getId() == null) {
-                    // Basically everything relies on the UUID
-                    throw new IllegalArgumentException("No UUID for owner! ( " + placer.getClass() + " " + placer + " -> " + owner + " )");
-                }
-            } else {
-                throw new IllegalArgumentException("Not an Player! (placer = " + placer + ")");
-            }
+    public void onPlacedBy(@Nullable LivingEntity placer, ItemStack stack) {
+        if (level == null || level.isClientSide()) {
+            return;
         }
+        if (placer instanceof Player player) {
+            GameProfile profile = player.getGameProfile();
+            if (profile != null && profile.getId() != null) {
+                owner = profile;
+                return;
+            }
+            BCLog.logger.warn("[lib.tile] Player placer did not have a usable owner profile for " + getClass() + " at " + getBlockPos() + ": " + profile);
+        } else {
+            BCLog.logger.warn("[lib.tile] Non-player placer for " + getClass() + " at " + getBlockPos() + ": " + placer);
+        }
+        owner = FakePlayerProvider.NULL_PROFILE;
     }
 
     public void onPlayerOpen(Player player) {
-        if (owner == null/* || owner == FakePlayerProvider.NULL_PROFILE*/) {
-            owner = player.getGameProfile();
-            if (owner.getId() == null) {
-                // Basically everything relies on the UUID
-                throw new IllegalArgumentException("No UUID for owner! ( " + player.getClass() + " " + player + " -> " + owner + " )");
+        if (owner == null) {
+            GameProfile profile = player.getGameProfile();
+            if (profile != null && profile.getId() != null) {
+                owner = profile;
+            } else {
+                BCLog.logger.warn("[lib.tile] Player opening GUI did not have a usable owner profile for " + getClass() + " at " + getBlockPos() + ": " + profile);
+                owner = FakePlayerProvider.NULL_PROFILE;
             }
         }
         sendNetworkUpdate(NET_GUI_DATA, player);

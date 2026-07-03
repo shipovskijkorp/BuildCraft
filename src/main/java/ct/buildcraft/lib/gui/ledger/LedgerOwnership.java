@@ -14,6 +14,7 @@ import ct.buildcraft.lib.gui.BuildCraftGui;
 import ct.buildcraft.lib.gui.GuiIcon;
 import ct.buildcraft.lib.gui.config.GuiConfigManager;
 import ct.buildcraft.lib.misc.SpriteUtil;
+import ct.buildcraft.lib.misc.FakePlayerProvider;
 import ct.buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -46,6 +47,9 @@ public class LedgerOwnership extends Ledger_Neptune {
 
     private Component getOwnerComponent() {
         GameProfile owner = tile.getOwner();
+        if (owner != null && FakePlayerProvider.NULL_PROFILE.getId().equals(owner.getId())) {
+            return Component.translatable("gui.ledger.ownership.unknown");
+        }
         String name = owner == null ? null : owner.getName();
         if (name == null || name.isBlank()) {
             return Component.translatable("gui.ledger.ownership.none");

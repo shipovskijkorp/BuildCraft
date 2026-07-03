@@ -5,6 +5,7 @@
   "gui.leftToPlace": "Поставить",
   "gui.ledger.ownership": "Владелец",
   "gui.ledger.ownership.none": "Нет владельца",
+  "gui.ledger.ownership.unknown": "Неизвестный владелец",
   "gui.ledger.help": "Справка",
   "gui.ledger.help.selected": "Справка: %s",
   "buildcraft.help.filler.invert.title": "Инверсия шаблона",

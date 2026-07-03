@@ -9,6 +9,8 @@ package ct.buildcraft.transport.container;
 import java.io.IOException;
 import java.util.EnumMap;
 
+import javax.annotation.Nullable;
+
 import ct.buildcraft.api.transport.pipe.IPipeHolder;
 import ct.buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
 import ct.buildcraft.lib.gui.ContainerPipe;
@@ -30,19 +32,28 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ContainerEmzuliPipe_BC8 extends ContainerPipe {
+    @Nullable
     public final PipeBehaviourEmzuli behaviour;
     public final EnumMap<SlotIndex, PaintWidget> paintWidgets = new EnumMap<>(SlotIndex.class);
 
     public static ContainerEmzuliPipe_BC8 create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
     	ContainerLevelAccess access = CreateClientLevelAccess(buf);
-    	return access.evaluate((level, pos) -> {
+        ContainerEmzuliPipe_BC8 menu = access.evaluate((level, pos) -> {
     		BlockEntity tile = level.getBlockEntity(pos);
     		if(tile instanceof IPipeHolder pipeHolder && pipeHolder.getPipe() != Pipe.EMPTY) {
     			if(pipeHolder.getPipe().getBehaviour() instanceof PipeBehaviourEmzuli emzuli)
     			return new ContainerEmzuliPipe_BC8(containerId, playerInventory, new ItemHandlerSimple(4), emzuli);
     		}
-    		return null;
+    		return new ContainerEmzuliPipe_BC8(containerId, playerInventory);
     	}, null);
+        return menu != null ? menu : new ContainerEmzuliPipe_BC8(containerId, playerInventory);
+    }
+
+    private ContainerEmzuliPipe_BC8(int containerId, Inventory inventory) {
+        super(inventory, BCTransportGuis.MENU_PIPE_EMZULI.get(), containerId, null);
+        this.behaviour = null;
+        addFullPlayerInventory(84);
+        closeInvalidClientMenu();
     }
     
     public ContainerEmzuliPipe_BC8(int containerId, Inventory inventory, IItemHandlerAdv filterInv, PipeBehaviourEmzuli behaviour) {
@@ -71,7 +82,9 @@ public class ContainerEmzuliPipe_BC8 extends ContainerPipe {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        behaviour.pipe.getHolder().onPlayerClose(player);
+        if (behaviour != null) {
+            behaviour.pipe.getHolder().onPlayerClose(player);
+        }
     }
 
     public static class PaintWidget extends Widget_Neptune<ContainerEmzuliPipe_BC8> {
@@ -89,6 +102,9 @@ public class ContainerEmzuliPipe_BC8 extends ContainerPipe {
         @Override
         public void handleWidgetDataServer(NetworkEvent.Context ctx, FriendlyByteBuf buffer) throws IOException {
             DyeColor colour = MessageUtil.readEnumOrNull(buffer, DyeColor.class);
+            if (container.behaviour == null) {
+                return;
+            }
             if (colour == null) {
                 container.behaviour.slotColours.remove(index);
             } else {
