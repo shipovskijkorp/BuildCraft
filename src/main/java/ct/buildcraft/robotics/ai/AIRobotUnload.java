@@ -14,7 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 public class AIRobotUnload extends AIRobot {
-    private static final int UNLOAD_DELAY_TICKS = 40;
+    private static final int UNLOAD_DELAY_TICKS = 10;
     private int waitedCycles;
     private boolean requireAcceptAction;
 
