@@ -88,6 +88,8 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     @Override
     public void updateSnapshot() {
         super.updateSnapshot();
+        extractRequiredCache.clear();
+        robotReservedBlocks.clear();
         // noinspection unchecked
         remainingDisplayRequiredBlocks = (List<ItemStack>[]) new List<?>[getBuildingInfo().getSnapshot().getDataSize()];
         Arrays.fill(remainingDisplayRequiredBlocks, Collections.emptyList());
@@ -104,6 +106,9 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     public void cancel() {
         super.cancel();
         remainingDisplayRequiredBlocks = null;
+        remainingDisplayRequiredBlocksConcat = Collections.emptyList();
+        remainingDisplayRequired.clear();
+        extractRequiredCache.clear();
         robotReservedBlocks.clear();
     }
 

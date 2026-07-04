@@ -9,9 +9,9 @@ Why BC8 + BC7? BuildCraft 8 is the latest release with a fresh take on classic B
 *   Port robotics (ready)
 *   Move from alpha to beta (ready)
 *   Port builders (ready)
-*   Global project checkup (finalization)
-*   Forge release for 1.19.2 (current task)
-*   Port to 1.20.1
+*   Global project checkup (ready)
+*   Forge release for 1.19.2 (ready)
+*   Port to 1.20.1 (current task)
 *   Port to NeoForge/Fabric
 *   Port to 1.21.1
 *   Port to 1.21.11
@@ -23,7 +23,7 @@ Now in mod available > 95% of content from BC8 and BC7
 
 - Core: 100%
 - Transport 100%
-- Builders: 95%
+- Builders: 100%
 - Robotics: 100%
 - Factory 90%
 - Silicon 90%
