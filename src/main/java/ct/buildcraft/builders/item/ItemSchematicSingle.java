@@ -232,11 +232,17 @@ public class ItemSchematicSingle extends Item {
     }
 
     public static boolean isUsed(@Nonnull ItemStack stack) {
-        return stack.getItem() instanceof ItemSchematicSingle && stack.getDamageValue() == DAMAGE_USED;
+        return stack.getItem() instanceof ItemSchematicSingle
+            && (stack.getDamageValue() == DAMAGE_USED || hasSchematicData(stack));
     }
 
     public static boolean isValidUsed(@Nonnull ItemStack stack) {
         return isUsed(stack) && getSchematicSilently(stack) != null;
+    }
+
+    private static boolean hasSchematicData(@Nonnull ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag != null && tag.contains(NBT_KEY, Tag.TAG_COMPOUND);
     }
 
     public static void clear(@Nonnull ItemStack stack) {
