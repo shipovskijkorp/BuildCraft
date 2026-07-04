@@ -1,6 +1,7 @@
 package ct.buildcraft.compat.jei;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +14,9 @@ import ct.buildcraft.api.recipes.IRefineryRecipeManager.IHeatExchangerRecipe;
 import ct.buildcraft.api.recipes.IngredientStack;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.factory.BCFactoryItems;
+import ct.buildcraft.lib.misc.ItemStackKey;
 import ct.buildcraft.lib.recipe.AssemblyRecipeBasic;
+import ct.buildcraft.lib.recipe.ChangingItemStack;
 import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import ct.buildcraft.robotics.BCRoboticsItems;
@@ -21,11 +24,16 @@ import ct.buildcraft.robotics.item.ItemRedstoneBoard;
 import ct.buildcraft.robotics.item.ItemRobot;
 import ct.buildcraft.silicon.BCSiliconItems;
 import ct.buildcraft.silicon.BCSiliconRecipes;
+import ct.buildcraft.silicon.recipe.FacadeAssemblyRecipes;
+import ct.buildcraft.silicon.plug.FacadeBlockStateInfo;
+import ct.buildcraft.silicon.plug.FacadeStateManager;
+import ct.buildcraft.transport.BCTransportItems;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -38,11 +46,15 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @JeiPlugin
 public class BuildCraftJeiPlugin implements IModPlugin {
@@ -75,7 +87,13 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         Level level = Minecraft.getInstance().level;
         if (level != null) {
-            registration.addRecipes(ASSEMBLY, new ArrayList<>(level.getRecipeManager().getAllRecipesFor(BCSiliconRecipes.ASSEMBLY_TYPE.get())));
+            List<AssemblyRecipeBasic> assemblyRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(BCSiliconRecipes.ASSEMBLY_TYPE.get()));
+            boolean hadFacadeRecipe = assemblyRecipes.removeIf(FacadeAssemblyRecipes.class::isInstance);
+            if (hadFacadeRecipe) {
+                assemblyRecipes.add(FacadeAssemblyJeiRecipe.solid());
+                assemblyRecipes.add(FacadeAssemblyJeiRecipe.hollow());
+            }
+            registration.addRecipes(ASSEMBLY, assemblyRecipes);
         }
 
         BCRoboticsBoards.init();
@@ -135,6 +153,17 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         return stacks;
     }
 
+    private static List<ItemStack> expandChangingStack(ChangingItemStack changing) {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (ItemStackKey key : changing.getOptions()) {
+            ItemStack copy = key.baseStack.copy();
+            if (!copy.isEmpty()) {
+                stacks.add(copy);
+            }
+        }
+        return stacks;
+    }
+
     private static String formatMj(long microJoules) {
         if (microJoules <= 0) {
             return "0 MJ";
@@ -178,6 +207,92 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public record HeatExchangeRecipeView(IHeatExchangerRecipe recipe, boolean heating) {
     }
 
+    private static List<FacadeBlockStateInfo> getVisibleFacadeInfos() {
+        List<FacadeBlockStateInfo> infos = new ArrayList<>();
+        for (FacadeBlockStateInfo info : FacadeStateManager.validFacadeStates.values()) {
+            if (info.isVisible && !info.requiredStack.isEmpty()) {
+                infos.add(info);
+            }
+        }
+        infos.sort(Comparator
+                .comparing((FacadeBlockStateInfo info) -> String.valueOf(ForgeRegistries.BLOCKS.getKey(info.state.getBlock())))
+                .thenComparing(info -> info.state.toString())
+                .thenComparing(info -> String.valueOf(ForgeRegistries.ITEMS.getKey(info.requiredStack.getItem()))));
+        return infos;
+    }
+
+    private static ItemStack createFacadeBaseRequirementStack() {
+        if (!BCTransportItems.PIPE_STRUCTURE.isPresent()) {
+            return new ItemStack(Blocks.COBBLESTONE_WALL);
+        }
+        return new ItemStack(BCTransportItems.PIPE_STRUCTURE.get(), 3);
+    }
+
+    private static class FacadeAssemblyJeiRecipe extends FacadeAssemblyRecipes {
+        private static final ResourceLocation SOLID_ID = new ResourceLocation("buildcraftsilicon", "jei/facade_solid");
+        private static final ResourceLocation HOLLOW_ID = new ResourceLocation("buildcraftsilicon", "jei/facade_hollow");
+
+        private final boolean hollow;
+
+        private FacadeAssemblyJeiRecipe(ResourceLocation id, boolean hollow) {
+            super(id);
+            this.hollow = hollow;
+        }
+
+        static FacadeAssemblyJeiRecipe solid() {
+            return new FacadeAssemblyJeiRecipe(SOLID_ID, false);
+        }
+
+        static FacadeAssemblyJeiRecipe hollow() {
+            return new FacadeAssemblyJeiRecipe(HOLLOW_ID, true);
+        }
+
+        @Override
+        public ChangingItemStack[] getRecipeInputs() {
+            ChangingItemStack[] inputs = new ChangingItemStack[2];
+            inputs[0] = new ChangingItemStack(createFacadeBaseRequirementStack());
+
+            NonNullList<ItemStack> facadeInputs = NonNullList.create();
+            for (FacadeBlockStateInfo info : getVisibleFacadeInfos()) {
+                facadeInputs.add(info.requiredStack.copy());
+            }
+            if (facadeInputs.isEmpty()) {
+                facadeInputs.add(ItemStack.EMPTY);
+            }
+            inputs[1] = new ChangingItemStack(facadeInputs);
+            inputs[1].setTimeGap(500);
+            return inputs;
+        }
+
+        @Override
+        public ChangingItemStack getRecipeOutputs() {
+            NonNullList<ItemStack> outputs = NonNullList.create();
+            for (FacadeBlockStateInfo info : getVisibleFacadeInfos()) {
+                outputs.add(FacadeAssemblyRecipes.createFacadeStack(info, hollow));
+            }
+            if (outputs.isEmpty()) {
+                return super.getRecipeOutputs();
+            }
+            ChangingItemStack changing = new ChangingItemStack(outputs);
+            changing.setTimeGap(500);
+            return changing;
+        }
+
+        @Override
+        public ItemStack getResultItem() {
+            List<FacadeBlockStateInfo> infos = getVisibleFacadeInfos();
+            if (infos.isEmpty()) {
+                return super.getResultItem();
+            }
+            return FacadeAssemblyRecipes.createFacadeStack(infos.get(0), hollow);
+        }
+
+        @Override
+        public RecipeSerializer<?> getSerializer() {
+            return BCSiliconRecipes.FACADE_SERIALIZER.get();
+        }
+    }
+
     private static class AssemblyCategory implements IRecipeCategory<AssemblyRecipeBasic> {
         private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
         private final IDrawable background;
@@ -212,6 +327,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, AssemblyRecipeBasic recipe, IFocusGroup focuses) {
+            if (recipe instanceof FacadeAssemblyRecipes facadeRecipe) {
+                setFacadeRecipe(builder, facadeRecipe);
+                return;
+            }
+
             ItemStack result = recipe.getResultItem();
             Set<IngredientStack> inputs = recipe.getInputsFor(result);
             int inputCount = !inputs.isEmpty() ? inputs.size() : recipe.getIngredients().size();
@@ -238,6 +358,30 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
                     .setBackground(slotBackground, -1, -1)
                     .addItemStack(result);
+        }
+
+        private void setFacadeRecipe(IRecipeLayoutBuilder builder, FacadeAssemblyRecipes recipe) {
+            ChangingItemStack[] inputs = recipe.getRecipeInputs();
+            if (inputs.length > 0) {
+                builder.addSlot(RecipeIngredientRole.INPUT, 4, 22)
+                        .setBackground(slotBackground, -1, -1)
+                        .addItemStacks(expandChangingStack(inputs[0]));
+            }
+
+            IRecipeSlotBuilder facadeInputSlot = null;
+            if (inputs.length > 1) {
+                facadeInputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 30, 22)
+                        .setBackground(slotBackground, -1, -1)
+                        .addItemStacks(expandChangingStack(inputs[1]));
+            }
+
+            IRecipeSlotBuilder facadeOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
+                    .setBackground(slotBackground, -1, -1)
+                    .addItemStacks(expandChangingStack(recipe.getRecipeOutputs()));
+
+            if (facadeInputSlot != null) {
+                builder.createFocusLink(facadeInputSlot, facadeOutputSlot);
+            }
         }
 
         @Override
