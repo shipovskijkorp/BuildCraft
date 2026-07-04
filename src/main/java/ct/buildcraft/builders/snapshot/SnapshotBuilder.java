@@ -24,7 +24,6 @@ import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.lib.misc.BlockUtil;
 import ct.buildcraft.lib.misc.MessageUtil;
 import ct.buildcraft.lib.misc.NBTUtilBC;
-import ct.buildcraft.lib.misc.VecUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -44,7 +43,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> implements INBTSerializable<CompoundTag> {
-    private static final int MAX_QUEUE_SIZE = 16;
+    private static final int MAX_QUEUE_SIZE = 48;
     protected static final byte CHECK_RESULT_UNKNOWN = 0;
     protected static final byte CHECK_RESULT_CORRECT = 1;
     protected static final byte CHECK_RESULT_TO_BREAK = 2;
@@ -52,8 +51,10 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     private static final byte REQUIRED_UNKNOWN = 0;
     private static final byte REQUIRED_TRUE = 1;
     private static final byte REQUIRED_FALSE = 2;
-    private static final int CHECKS_PER_TICK = 10;
-    private static final long MAX_POWER_PER_TICK = 256 * MjAPI.MJ;
+    private static final int CHECKS_PER_TICK = 24;
+    private static final int FAST_CHECKS_PER_TICK = 128;
+    private static final long MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
+    private static final int POWER_EFFICIENCY_MULTIPLIER = 2;
 
     protected final T tile;
 	private BlockPositionSource blockPosSource;
@@ -102,10 +103,10 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     private int[] placeOrder;
     private int[] checkOrder;
     private int currentCheckIndex;
-    public Vec3 robotPos = null;
-    public Vec3 prevRobotPos = null;
+    private int unknownCheckResults = 0;
     public int leftToBreak = 0;
     public int leftToPlace = 0;
+    private boolean renderWork = false;
 
    
     protected SnapshotBuilder(T tile) {
@@ -144,6 +145,19 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 //        	BlockPos pos = tile.getBuilderPos();
 //        	level.getChunk(pos).getEventDispatcher(SectionPos.blockToSectionCoord(pos.getY())).unregister(worldEventListener);
         }
+    }
+
+    public boolean isInitialized() {
+        return checkResults != null
+            && requiredCache != null
+            && breakOrder != null
+            && placeOrder != null
+            && checkOrder != null
+            && checkOrder.length > 0;
+    }
+
+    public void resetWorkRendering() {
+        renderWork = false;
     }
 
     protected abstract boolean isAir(BlockPos blockPos);
@@ -200,17 +214,13 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     public void updateSnapshot() {
         tile.getWorldBC().getProfiler().push("init");
-        checkResults = new byte[
-            getBuildingInfo().box.size().getX() *
-                getBuildingInfo().box.size().getY() *
-                getBuildingInfo().box.size().getZ()
-            ];
+        int size = getBuildingInfo().box.size().getX() *
+            getBuildingInfo().box.size().getY() *
+            getBuildingInfo().box.size().getZ();
+        checkResults = new byte[size];
         Arrays.fill(checkResults, CHECK_RESULT_UNKNOWN);
-        requiredCache = new byte[
-            getBuildingInfo().box.size().getX() *
-                getBuildingInfo().box.size().getY() *
-                getBuildingInfo().box.size().getZ()
-            ];
+        unknownCheckResults = checkResults.length;
+        requiredCache = new byte[size];
         Arrays.fill(requiredCache, REQUIRED_UNKNOWN);
         breakOrder = getBuildingInfo().box.getBlocksInArea().stream()
             .sorted(BlockUtil.uniqueBlockPosComparator(Comparator.comparingDouble(blockPos ->
@@ -240,7 +250,26 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     }
 
     public void resourcesChanged() {
-        Arrays.fill(requiredCache, REQUIRED_UNKNOWN);
+        if (requiredCache != null) {
+            Arrays.fill(requiredCache, REQUIRED_UNKNOWN);
+        }
+    }
+
+    public void forceRecheckCurrentTask() {
+        if (getBuildingInfo() == null) {
+            cancel();
+            return;
+        }
+        if (!isInitialized()) {
+            updateSnapshot();
+        } else {
+            Arrays.fill(checkResults, CHECK_RESULT_UNKNOWN);
+            Arrays.fill(requiredCache, REQUIRED_UNKNOWN);
+            currentCheckIndex = 0;
+            unknownCheckResults = checkResults.length;
+        }
+        clearActiveTasks();
+        resourcesChanged();
     }
 
     public void cancel() {
@@ -258,10 +287,22 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         placeOrder = null;
         checkOrder = null;
         currentCheckIndex = 0;
-        robotPos = null;
-        prevRobotPos = null;
+        unknownCheckResults = 0;
         leftToBreak = 0;
         leftToPlace = 0;
+        renderWork = false;
+    }
+
+    private void clearActiveTasks() {
+        breakTasks.clear();
+        clientBreakTasks.clear();
+        prevClientBreakTasks.clear();
+        placeTasks.clear();
+        clientPlaceTasks.clear();
+        prevClientPlaceTasks.clear();
+        leftToBreak = 0;
+        leftToPlace = 0;
+        renderWork = false;
     }
 
     /**
@@ -279,39 +320,24 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             prevClientPlaceTasks.addAll(clientPlaceTasks);
             clientPlaceTasks.clear();
             clientPlaceTasks.addAll(placeTasks);
-            prevRobotPos = robotPos;
-            if (!breakTasks.isEmpty()) {
-                Vec3 newRobotPos = breakTasks.stream()
-                    .map(breakTask -> breakTask.pos)
-                    .map(Vec3::atLowerCornerOf)
-                    .map(VecUtil.VEC_HALF::add)
-                    .reduce(Vec3.ZERO, Vec3::add)
-                    .scale(1D / breakTasks.size());
-                newRobotPos = new Vec3(
-                    newRobotPos.x,
-                    breakTasks.stream()
-                        .map(breakTask -> breakTask.pos)
-                        .mapToDouble(BlockPos::getY)
-                        .max()
-                        .orElse(newRobotPos.y),
-                    newRobotPos.z
-                );
-                newRobotPos = newRobotPos.add(new Vec3(0, 3, 0));
-                Vec3 oldRobotPos = robotPos;
-                robotPos = newRobotPos;
-                if (oldRobotPos != null) {
-                    robotPos = oldRobotPos.add(newRobotPos.subtract(oldRobotPos).scale(1 / 4D));
-                }
-            } else {
-                robotPos = null;
+            return false;
+        }
+
+        if (!isInitialized()) {
+            if (getBuildingInfo() == null) {
+                return false;
             }
+            updateSnapshot();
+        }
+        if (!isInitialized()) {
             return false;
         }
 
         boolean checkResultsChanged = false;
 
         tile.getWorldBC().getProfiler().push("scan");
-        for (int i = 0; i < CHECKS_PER_TICK; i++) {
+        int checksThisTick = unknownCheckResults > 0 ? FAST_CHECKS_PER_TICK : CHECKS_PER_TICK;
+        for (int i = 0; i < checksThisTick; i++) {
             if (check(indexToPos(currentCheckIndex))) {
                 checkResultsChanged = true;
             }
@@ -380,7 +406,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                 .filter(i -> checkResults[i] == CHECK_RESULT_TO_PLACE && !placeTasksIndexes.contains(i))
                 .toArray();
             leftToPlace = blocks.length;
-            if (!tile.canExcavate() || breakTasks.isEmpty()) {
+            if (!tile.canExcavate() || (leftToBreak == 0 && breakTasks.isEmpty())) {
                 if (blocks.length != 0) {
                     isDone = false;
                 }
@@ -428,13 +454,15 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                     continue;
                 }
                 long target = breakTask.getTarget();
-                breakTask.power += tile.getBattery().extractPower(
-                    0,
-                    Math.min(
-                        target - breakTask.power,
-                        max / breakTasks.size()
-                    )
+                long progress = extractProgressPower(
+                    target,
+                    breakTask.power,
+                    max / breakTasks.size()
                 );
+                breakTask.power += progress;
+                if (progress > 0) {
+                    renderWork = true;
+                }
                 if (breakTask.power >= target) {
                     tile.getWorldBC().getProfiler().push("work");
                     tile.getWorldBC().destroyBlockProgress(
@@ -472,13 +500,15 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             for (Iterator<PlaceTask> iterator = placeTasks.iterator(); iterator.hasNext(); ) {
                 PlaceTask placeTask = iterator.next();
                 long target = placeTask.getTarget();
-                placeTask.power += tile.getBattery().extractPower(
-                    0,
-                    Math.min(
-                        target - placeTask.power,
-                        max / placeTasks.size()
-                    )
+                long progress = extractProgressPower(
+                    target,
+                    placeTask.power,
+                    max / placeTasks.size()
                 );
+                placeTask.power += progress;
+                if (progress > 0) {
+                    renderWork = true;
+                }
                 if (placeTask.power >= target) {
                     tile.getWorldBC().getProfiler().push("work");
                     if (!doPlaceTask(placeTask)) {
@@ -508,7 +538,21 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         return isDone0;
     }
 
-   
+
+    private long extractProgressPower(long target, long currentProgress, long maxPower) {
+        long remainingProgress = target - currentProgress;
+        if (remainingProgress <= 0 || maxPower <= 0) {
+            return 0;
+        }
+        long wantedPower = Math.min(ceilDiv(remainingProgress, POWER_EFFICIENCY_MULTIPLIER), maxPower);
+        long extractedPower = tile.getBattery().extractPower(0, wantedPower);
+        return Math.min(remainingProgress, extractedPower * POWER_EFFICIENCY_MULTIPLIER);
+    }
+
+    private static long ceilDiv(long value, long divisor) {
+        return (value + divisor - 1) / divisor;
+    }
+
     protected int posToIndex(BlockPos blockPos) {
         return getBuildingInfo().getSnapshot().posToIndex(getBuildingInfo().fromWorld(blockPos));
     }
@@ -533,19 +577,35 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         } else {
             if (isBlockCorrect(blockPos)) {
                 checkResults[i] = CHECK_RESULT_CORRECT;
+            } else if (!tile.getWorldBC().isEmptyBlock(blockPos)) {
+                checkResults[i] = CHECK_RESULT_TO_BREAK;
             } else if (canPlace(blockPos)) {
                 checkResults[i] = CHECK_RESULT_TO_PLACE;
             } else {
                 checkResults[i] = CHECK_RESULT_TO_BREAK;
             }
         }
+        if (prev == CHECK_RESULT_UNKNOWN && checkResults[i] != CHECK_RESULT_UNKNOWN && unknownCheckResults > 0) {
+            unknownCheckResults--;
+        }
         return prev != checkResults[i];
+    }
+
+    private int countUnknownCheckResults() {
+        int unknown = 0;
+        for (byte checkResult : checkResults) {
+            if (checkResult == CHECK_RESULT_UNKNOWN) {
+                unknown++;
+            }
+        }
+        return unknown;
     }
 
     protected void afterChecks() {
     }
 
     public void stopRenderingForNoPower() {
+        renderWork = false;
         if (!tile.getWorldBC().isClientSide) {
             for (BreakTask breakTask : breakTasks) {
                 tile.getWorldBC().destroyBlockProgress(breakTask.pos.hashCode(), breakTask.pos, -1);
@@ -555,8 +615,6 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         prevClientBreakTasks.clear();
         clientPlaceTasks.clear();
         prevClientPlaceTasks.clear();
-        prevRobotPos = null;
-        robotPos = null;
     }
     
     public GameEventListener getListener() {
@@ -564,7 +622,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     }
 
     public void writeToByteBuf(FriendlyByteBuf buffer) {
-        if (tile.getBattery().getStored() <= 0) {
+        if (!renderWork) {
             buffer.writeInt(0);
             buffer.writeInt(0);
             buffer.writeInt(leftToBreak);
@@ -591,6 +649,9 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
+        if (!isInitialized()) {
+            return nbt;
+        }
         nbt.putByteArray("checkResults", checkResults);
         nbt.put("breakTasks", NBTUtilBC.writeObjectList(breakTasks.stream().map(BreakTask::writeToNBT)));
         nbt.put("placeTasks", NBTUtilBC.writeObjectList(placeTasks.stream().map(PlaceTask::writeToNBT)));
@@ -600,13 +661,10 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        updateSnapshot();
-        checkResults = nbt.getByteArray("checkResults");
-        breakTasks.clear();
-        NBTUtilBC.readCompoundList(nbt.get("breakTasks")).map(BreakTask::new).forEach(breakTasks::add);
-        placeTasks.clear();
-        NBTUtilBC.readCompoundList(nbt.get("placeTasks")).map(PlaceTask::new).forEach(placeTasks::add);
-        currentCheckIndex = nbt.getInt("currentCheckIndex");
+        // Never trust saved per-block state after a world/chunk reload. The blocks in the current
+        // area may have changed while the builder was not ticking, so keep the restored path/base
+        // position but force this current build area to be scanned again.
+        forceRecheckCurrentTask();
     }
 
     public class BreakTask {

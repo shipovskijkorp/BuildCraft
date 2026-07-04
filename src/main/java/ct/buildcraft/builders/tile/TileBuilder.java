@@ -127,6 +127,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     private Blueprint.BuildingInfo blueprintBuildingInfo = null;
     public TemplateBuilder templateBuilder = new TemplateBuilder(this);
     public BlueprintBuilder blueprintBuilder = new BlueprintBuilder(this);
+    private boolean needsRestartAfterLoad = false;
     private Box currentBox = new Box();
     @NotNull
     private Rotation rotation = Rotation.NONE;
@@ -144,9 +145,26 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
 		
 		@Override
 		public void set(int p) {
+            boolean oldNeedMaterial = needMaterial;
+            boolean oldCanRotate = canRotate;
+            boolean oldCanExcavate = canExcavate;
+
 			needMaterial = (p&0b1) == 1;
 			canRotate = (p&0b10) == 0b10;
 			canExcavate = (p&0b100) == 0b100;
+
+            if (level != null && !level.isClientSide) {
+                if (oldNeedMaterial != needMaterial) {
+                    Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::resourcesChanged);
+                }
+                if (oldCanRotate != canRotate) {
+                    reloadSnapshotFromItem(invSnapshot.getStackInSlot(0), false, true);
+                }
+                if (oldCanExcavate != canExcavate) {
+                    Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::forceRecheckCurrentTask);
+                    sendNetworkUpdate(NET_CAN_EXCAVATE);
+                }
+            }
 		}
 		
 		@Override
@@ -213,18 +231,8 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         @Nonnull ItemStack after) {
         if (!level.isClientSide) {
             if (handler == invSnapshot) {
-                currentBasePosIndex = 0;
-                snapshot = null;
-                if (after.getItem() instanceof ItemSnapshot) {
-                    Snapshot.Header header = ItemSnapshot.getHeader(after);
-                    if (header != null) {
-                        Snapshot newSnapshot = GlobalSavedDataSnapshots.get(level).getSnapshot(header.key);
-                        if (newSnapshot != null) {
-                            snapshot = newSnapshot;
-                        }
-                    }
-                }
-                updateSnapshot(true);
+                needsRestartAfterLoad = false;
+                reloadSnapshotFromItem(after, true, true);
                 sendNetworkUpdate(NET_SNAPSHOT_TYPE);
             }
             if (handler == invResources) {
@@ -232,6 +240,61 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             }
         }
         super.onSlotChange(handler, slot, before, after);
+    }
+
+    private void reloadSnapshotFromItem(ItemStack stack, boolean resetBasePosIndex, boolean canGetFacing) {
+        if (resetBasePosIndex) {
+            currentBasePosIndex = 0;
+        }
+        if (level == null) {
+            return;
+        }
+        if (basePoses.isEmpty()) {
+            updateBasePoses();
+        }
+        if (!basePoses.isEmpty()) {
+            currentBasePosIndex = Math.max(0, Math.min(currentBasePosIndex, basePoses.size() - 1));
+        }
+
+        snapshot = null;
+        if (stack.getItem() instanceof ItemSnapshot) {
+            Snapshot.Header header = ItemSnapshot.getHeader(stack);
+            if (header != null) {
+                Snapshot newSnapshot = GlobalSavedDataSnapshots.get(level).getSnapshot(header.key);
+                if (newSnapshot != null) {
+                    snapshot = newSnapshot;
+                }
+            }
+        }
+        updateSnapshot(canGetFacing);
+    }
+
+    private void restartSnapshotAfterLoad() {
+        if (level == null || level.isClientSide || !needsRestartAfterLoad) {
+            return;
+        }
+
+        ItemStack stack = invSnapshot.getStackInSlot(0);
+        if (stack.isEmpty()) {
+            needsRestartAfterLoad = false;
+            snapshot = null;
+            snapshotType = null;
+            templateBuildingInfo = null;
+            blueprintBuildingInfo = null;
+            currentBox = new Box();
+            isDone = false;
+            return;
+        }
+
+        // After a world/chunk reload, do the same thing as manually taking the blueprint out and
+        // putting it back in: forget the saved builder progress, return to the first path position,
+        // and rebuild the SnapshotBuilder from the item in the blueprint slot.
+        needsRestartAfterLoad = false;
+        isDone = false;
+        updateBasePoses();
+        reloadSnapshotFromItem(stack, true, true);
+        Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::forceRecheckCurrentTask);
+        sendNetworkUpdate(NET_SNAPSHOT_TYPE);
     }
 
     @Override
@@ -328,43 +391,69 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         level.getProfiler().push("power");
         battery.tick(getLevel(), getBlockPos());
         level.getProfiler().popPush("builder");
+        if (!level.isClientSide) {
+            restartSnapshotAfterLoad();
+        }
         SnapshotBuilder<?> builder = getBuilder();
         if (builder != null) {
-            if (battery.getStored() <= 0) {
-                builder.stopRenderingForNoPower();
-                isDone = false;
+            if (level.isClientSide) {
+                // Client-side ticking only interpolates data that the server already sent.
+                // Do not gate this on the local client battery value: it is not the source of truth
+                // and it can stay at 0, which makes the builder drone disappear forever.
+                builder.tick();
             } else {
-                isDone = builder.tick();
-            }
-            if (isDone) {
-                if (currentBasePosIndex < basePoses.size() - 1) {
-                	BlockPos currentBasePos = getCurrentBasePos();
-                	Box newBox ;
-                    do{
-                    	currentBasePosIndex++;
-                    	BlockPos newBasePos = getCurrentBasePos();
-                    	if(newBasePos == null) break;
-                    	BlockPos dPos = newBasePos.subtract(currentBasePos);
-                    	newBox = new Box(currentBox.min().offset(dPos), currentBox.max().offset(dPos));
-                   // 	BCLog.d(currentBox.doesIntersectWith(newBox));
-                    }while(currentBox.doesTouchWith(newBox));
-                    if (currentBasePosIndex == basePoses.size() && currentBasePosIndex > 1)
-                        AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT);
-                    if (currentBasePosIndex >= basePoses.size()) {
-                        currentBasePosIndex = basePoses.size() - 1;
-                    }
-                    updateSnapshot(true);
+                builder.resetWorkRendering();
+                if (battery.getStored() <= 0) {
+                    builder.stopRenderingForNoPower();
+                    isDone = false;
+                } else {
+                    isDone = builder.tick();
                 }
-                else {
-                	ItemStack blueprint = invSnapshot.extractItem(0, 1, false);
-                	if(!invResources.insert(blueprint, true ,false).isEmpty())
-                		Containers.dropItemStack(level, getBlockPos().getX(), getBlockPos().getY()+1, getBlockPos().getZ(), blueprint);
+                if (isDone) {
+                    int nextBasePosIndex = findNextBasePosIndex();
+                    if (nextBasePosIndex >= 0) {
+                        currentBasePosIndex = nextBasePosIndex;
+                        updateSnapshot(true);
+                    } else {
+                        finishCurrentSnapshot();
+                    }
                 }
             }
         }
-        sendNetworkUpdate(NET_RENDER_DATA); // FIXME
+        if (!level.isClientSide) {
+            sendNetworkUpdate(NET_RENDER_DATA); // FIXME
+        }
         level.getProfiler().pop();
         level.getProfiler().pop();
+    }
+
+    private int findNextBasePosIndex() {
+        if (currentBasePosIndex >= basePoses.size() - 1 || currentBox == null || !currentBox.isInitialized()) {
+            return -1;
+        }
+        BlockPos currentBasePos = getCurrentBasePos();
+        if (currentBasePos == null) {
+            return -1;
+        }
+        for (int i = currentBasePosIndex + 1; i < basePoses.size(); i++) {
+            BlockPos newBasePos = basePoses.get(i);
+            BlockPos dPos = newBasePos.subtract(currentBasePos);
+            Box newBox = new Box(currentBox.min().offset(dPos), currentBox.max().offset(dPos));
+            if (!currentBox.doesTouchWith(newBox)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void finishCurrentSnapshot() {
+        if (basePoses.size() > 1 && getOwner() != null) {
+            AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT);
+        }
+        ItemStack blueprint = invSnapshot.extractItem(0, 1, false);
+        if (!blueprint.isEmpty() && !invResources.insert(blueprint, true ,false).isEmpty()) {
+            Containers.dropItemStack(level, getBlockPos().getX(), getBlockPos().getY()+1, getBlockPos().getZ(), blueprint);
+        }
     }
 
     // Networking
@@ -463,9 +552,11 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             nbt.put("path", NBTUtilBC.writeObjectList(path.stream().map(NbtUtils::writeBlockPos)));
         }
         nbt.put("basePoses", NBTUtilBC.writeObjectList(basePoses.stream().map(NbtUtils::writeBlockPos)));
+        nbt.putInt("currentBasePosIndex", currentBasePosIndex);
+        nbt.putBoolean("needMaterial", needMaterial);
+        nbt.putBoolean("canRotate", canRotate);
         nbt.putBoolean("canExcavate", canExcavate);
         nbt.put("rotation", NBTUtilBC.writeEnum(rotation));
-        Optional.ofNullable(getBuilder()).ifPresent(builder -> nbt.put("builder", builder.serializeNBT()));
 	}
 
 	@Override
@@ -477,13 +568,25 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         }
         basePoses = NBTUtilBC.readCompoundList(nbt.get("basePoses")).map(NbtUtils::readBlockPos)
             .collect(Collectors.toList());
-        canExcavate = nbt.getBoolean("canExcavate");
-        rotation = NBTUtilBC.readEnum(nbt.get("rotation"), Rotation.class);
-        if (nbt.contains("builder")) {
-            updateSnapshot(false);
-            Optional.ofNullable(getBuilder())
-                .ifPresent(builder -> builder.deserializeNBT(nbt.getCompound("builder")));
+        if (basePoses.isEmpty() && level != null) {
+            updateBasePoses();
         }
+        currentBasePosIndex = nbt.getInt("currentBasePosIndex");
+        if (!basePoses.isEmpty()) {
+            currentBasePosIndex = Math.max(0, Math.min(currentBasePosIndex, basePoses.size() - 1));
+        }
+        // Persist the builder mode switches too. Without this, a builder that had
+        // "need materials" disabled in creative would reload with it enabled, scan the
+        // target area, cache all missing blocks as unavailable, and then sit idle until
+        // any resource-inventory change invalidated that cache.
+        needMaterial = !nbt.contains("needMaterial") || nbt.getBoolean("needMaterial");
+        canRotate = !nbt.contains("canRotate") || nbt.getBoolean("canRotate");
+        canExcavate = !nbt.contains("canExcavate") || nbt.getBoolean("canExcavate");
+        rotation = NBTUtilBC.readEnum(nbt.get("rotation"), Rotation.class);
+        // A loaded builder intentionally restarts instead of restoring in-progress tasks.
+        // This mirrors the stable manual workaround: reinsert the blueprint after joining.
+        currentBasePosIndex = 0;
+        needsRestartAfterLoad = true;
 	}
 	
     @Override
@@ -491,8 +594,8 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
 		super.onLoad();
         if (level != null && !level.isClientSide) {
             LOADED_BUILDERS.add(this);
+            restartSnapshotAfterLoad();
         }
-		this.onSlotChange(invSnapshot, 0, invSnapshot.getStackInSlot(0), invSnapshot.getStackInSlot(0));//TODO:find a better way
 	}
 
     @Override
