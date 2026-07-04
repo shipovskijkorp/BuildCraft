@@ -163,7 +163,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         toolTip.add(LocaleUtil.localizeFluidStaticAmount(amount, getCapacity()).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
         FluidStack serverFluid = getFluid();
         if (serverFluid != null && serverFluid.getAmount() > 0) {
-            toolTip.add(Component.literal("BUG: Server-side fluid on client!").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+            toolTip.add(Component.translatable("tooltip.buildcraftlib.fluid.server_side_on_client").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
             toolTip.add(serverFluid.getDisplayName());
             toolTip.add(LocaleUtil.localizeFluidStaticAmount(serverFluid.getAmount(), getCapacity()));
         }

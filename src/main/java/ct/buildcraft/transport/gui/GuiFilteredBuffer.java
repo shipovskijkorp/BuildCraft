@@ -69,7 +69,7 @@ public class GuiFilteredBuffer extends GuiBC8<ContainerFilteredBuffer_BC8> {
     protected void drawForegroundLayer(PoseStack pose, int mouseX, int mouseY) {
         int x = leftPos;
         int y = topPos;
-        Component title = Component.translatable("tile.filteredBufferBlock.name");
+        Component title = Component.translatable("block.buildcrafttransport.filtered_buffer");
         int xPos = (imageWidth - font.width(title)) / 2;
         font.draw(pose, title, x + xPos, y + 10, 0x404040);
     }

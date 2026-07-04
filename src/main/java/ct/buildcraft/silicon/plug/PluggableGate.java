@@ -351,7 +351,7 @@ public class PluggableGate extends PipePluggable implements IWireEmitter , MenuP
 
 	@Override
 	public Component getDisplayName() {
-		return Component.literal("PluggableGate:TODO");
+		return Component.translatable("item.buildcraftsilicon.plug.gate");
 	}
 
 	@Override

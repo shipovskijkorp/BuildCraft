@@ -249,5 +249,12 @@
   "buildcraft.help.charging_table.slot.title": "Charge slot",
   "buildcraft.help.charging_table.slot.desc": "Insert a Forge Energy item. Lasers or BuildCraft MJ power pipes convert BuildCraft power into item charge. BuildCraft robots and blueprints are not Forge Energy items.",
   "buildcraft.help.advanced_crafting.power.title": "Power input",
-  "buildcraft.help.advanced_crafting.power.desc": "This table can be powered by lasers or directly by BuildCraft MJ power pipes. It only requests power when the recipe is valid, all materials are present, and the output can fit."
+  "buildcraft.help.advanced_crafting.power.desc": "This table can be powered by lasers or directly by BuildCraft MJ power pipes. It only requests power when the recipe is valid, all materials are present, and the output can fit.",
+  "tooltip.buildcraftlib.fluid.server_side_on_client": "错误：客户端上存在服务器端流体！",
+  "gui.buildcraftlib.ledger.unknown": "未知",
+  "gui.buildcraft.mode.on": "开启",
+  "gui.buildcraft.mode.off": "关闭",
+  "gui.buildcraft.mode.loop": "循环",
+  "tip.filler.excavate.on": "采掘",
+  "tip.filler.excavate.off": "不采掘"
 }

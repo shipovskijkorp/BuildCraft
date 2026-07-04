@@ -8,7 +8,6 @@ package ct.buildcraft.silicon.gate;
 
 import java.util.Objects;
 
-import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -78,12 +77,12 @@ public class GateVariant {
     public Component getLocalizedName() {
         if (material == EnumGateMaterial.CLAY_BRICK) {
             return Component.translatable("gate.name.basic");
-        } else {
-        	Language lang = Language.getInstance();
-        	String materialm = lang.getOrDefault("gate.material." + material.tag);
-        	String logicm = lang.getOrDefault("gate.logic." + logic.tag);
-            return Component.translatable("gate.name", materialm, logicm);
         }
+        return Component.translatable(
+            "gate.name",
+            Component.translatable("gate.material." + material.tag),
+            Component.translatable("gate.logic." + logic.tag)
+        );
     }
 
     @Override

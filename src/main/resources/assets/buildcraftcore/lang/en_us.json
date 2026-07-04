@@ -46,5 +46,7 @@
   "item.buildcraftcore.spring_water": "Water Spring",
   "item.buildcraftcore.spring_oil": "Oil Spring",
   "item.buildcraftcore.marker_path": "Path Marker",
-  "item.buildcraftcore.marker_volume": "Land Mark"
+  "item.buildcraftcore.marker_volume": "Land Mark",
+  "chat.pipe.power.iron.mode": "Switched MJ/t limit to %d",
+  "chat.pipe.power.iron.mode.numberless": "Switched to %s limit"
 }

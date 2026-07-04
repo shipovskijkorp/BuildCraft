@@ -47,13 +47,13 @@ public class ScreenPipeDiawood extends AbstractContainerScreen<MenuPipeDiawood>{
 		case 0:
 			break;
 		case 1:
-			renderTooltip(pose, Component.translatable("write list"), x, y);
+			renderTooltip(pose, Component.translatable("gui.buildcrafttransport.diamond_wood_pipe.whitelist"), x, y);
 			break;
 		case 2:
-			renderTooltip(pose, Component.translatable("black"), x, y);
+			renderTooltip(pose, Component.translatable("gui.buildcrafttransport.diamond_wood_pipe.blacklist"), x, y);
 			break;
 		case 3:
-			renderTooltip(pose, Component.translatable("loop"), x, y);
+			renderTooltip(pose, Component.translatable("gui.buildcrafttransport.diamond_wood_pipe.round_robin"), x, y);
 		}
 		super.renderTooltip(pose, x, y);
 	}

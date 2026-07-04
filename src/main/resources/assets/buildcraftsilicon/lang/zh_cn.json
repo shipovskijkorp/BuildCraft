@@ -154,5 +154,10 @@
   "item.buildcraftsilicon.plug.gate": "门控",
   "item.buildcraftsilicon.plug.facade": "伪装板",
   "item.buildcraftsilicon.plug.lens": "透镜",
-  "item.buildcraftsilicon.plug.timer": "计时器"
+  "item.buildcraftsilicon.plug.timer": "计时器",
+  "item.buildcraftsilicon.facade": "伪装板",
+  "item.buildcraftsilicon.facade.named": "%s [%s]",
+  "item.buildcraftsilicon.facade_phased": "相位伪装板",
+  "item.buildcraftsilicon.facade_phased.state": "%s：%s",
+  "item.buildcraftsilicon.facade_phased.state_default": "默认：%s"
 }
