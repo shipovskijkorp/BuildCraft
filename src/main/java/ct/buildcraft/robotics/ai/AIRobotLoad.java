@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class AIRobotLoad extends AIRobot {
     public static final int ANY_QUANTITY = -1;
+    private static final int LOAD_DELAY_TICKS = 10;
 
     private IStackFilter filter;
     private int quantity;
@@ -37,7 +38,7 @@ public class AIRobotLoad extends AIRobot {
         }
 
         waitedCycles++;
-        if (waitedCycles > 40) {
+        if (waitedCycles > LOAD_DELAY_TICKS) {
             setSuccess(load(robot, robot.getDockingStation(), filter, quantity, true));
             terminate();
         }
@@ -85,6 +86,7 @@ public class AIRobotLoad extends AIRobot {
         }
 
         int loaded = 0;
+        int targetQuantity = quantity == ANY_QUANTITY ? robot.getMaxStackSize() : quantity;
         Direction side = station.getItemInputSide();
         for (int slot : getSlots(container, side)) {
             ItemStack stack = container.getItem(slot);
@@ -95,7 +97,7 @@ public class AIRobotLoad extends AIRobot {
                 continue;
             }
 
-            int toMove = quantity == ANY_QUANTITY ? stack.getCount() : Math.min(stack.getCount(), quantity - loaded);
+            int toMove = Math.min(stack.getCount(), targetQuantity - loaded);
             if (toMove <= 0) {
                 return true;
             }
@@ -114,7 +116,7 @@ public class AIRobotLoad extends AIRobot {
             }
             loaded += moved;
 
-            if (quantity == ANY_QUANTITY || loaded >= quantity) {
+            if (loaded >= targetQuantity) {
                 return true;
             }
         }

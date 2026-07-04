@@ -100,5 +100,8 @@
   "item.pipewire.brown": "§6Коричневый§r провод для труб",
   "item.pipewire.green": "§aЗелёный§r провод для труб",
   "item.pipewire.red": "§cКрасный§r провод для труб",
-  "item.pipewire.black": "§8Чёрный§r провод для труб"
+  "item.pipewire.black": "§8Чёрный§r провод для труб",
+  "gui.buildcrafttransport.diamond_wood_pipe.whitelist": "Белый список",
+  "gui.buildcrafttransport.diamond_wood_pipe.blacklist": "Чёрный список",
+  "gui.buildcrafttransport.diamond_wood_pipe.round_robin": "По кругу"
 }

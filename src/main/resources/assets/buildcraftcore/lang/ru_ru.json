@@ -132,5 +132,7 @@
   "advancements.buildcrafttransport.plugging_the_gap.title": "Закрывая разрыв",
   "advancements.buildcrafttransport.plugging_the_gap.description": "Закройте трубу заглушкой",
   "advancements.buildcrafttransport.sealing_fluids.title": "Герметизация жидкостей",
-  "advancements.buildcrafttransport.sealing_fluids.description": "Переплавьте кактус и создайте краситель, чтобы получить герметик для труб"
+  "advancements.buildcrafttransport.sealing_fluids.description": "Переплавьте кактус и создайте краситель, чтобы получить герметик для труб",
+  "chat.pipe.power.iron.mode": "Лимит MJ/t переключён на %d",
+  "chat.pipe.power.iron.mode.numberless": "Лимит переключён на %s"
 }

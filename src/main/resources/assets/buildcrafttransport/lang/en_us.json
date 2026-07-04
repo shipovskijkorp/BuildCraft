@@ -99,5 +99,8 @@
   "tip.pipe.buildcrafttransport.diamond_wood_power": "Extracts Minecraft Joules",
   "write list": "Whitelist",
   "black": "Blacklist",
-  "loop": "Round robin"
+  "loop": "Round robin",
+  "gui.buildcrafttransport.diamond_wood_pipe.whitelist": "Whitelist",
+  "gui.buildcrafttransport.diamond_wood_pipe.blacklist": "Blacklist",
+  "gui.buildcrafttransport.diamond_wood_pipe.round_robin": "Round robin"
 }

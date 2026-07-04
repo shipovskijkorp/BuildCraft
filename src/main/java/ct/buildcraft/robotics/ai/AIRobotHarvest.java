@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 
 /** Harvests one mature crop block and drops the crop output at the robot. Ported from BuildCraft 7.1.x AIRobotHarvest. */
 public class AIRobotHarvest extends AIRobot {
+    private static final int HARVEST_DELAY_TICKS = 12;
     private BlockIndex blockFound;
     private int delay;
 
@@ -41,7 +42,7 @@ public class AIRobotHarvest extends AIRobot {
             return;
         }
 
-        if (delay++ <= 20) {
+        if (delay++ <= HARVEST_DELAY_TICKS) {
             return;
         }
 

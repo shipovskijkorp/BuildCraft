@@ -71,7 +71,7 @@ public class Ledger_Neptune implements IInteractionElement, IContainingElement {
     protected final List<IGuiElement> openElements = new ArrayList<>();
 
     protected IGuiPosition positionAppending;
-    protected Component title = Component.literal("unknown");
+    protected Component title = Component.translatable("gui.buildcraftlib.ledger.unknown");
 
     /** -1 means shrinking, 0 no change, 1 expanding */
     private int currentDifference = 0;

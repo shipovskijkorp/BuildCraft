@@ -46,5 +46,7 @@
   "item.buildcraftcore.spring_water": "水泉",
   "item.buildcraftcore.spring_oil": "油泉",
   "item.buildcraftcore.marker_path": "路径标记",
-  "item.buildcraftcore.marker_volume": "地标"
+  "item.buildcraftcore.marker_volume": "地标",
+  "chat.pipe.power.iron.mode": "切换为 %d MJ/t 限制",
+  "chat.pipe.power.iron.mode.numberless": "切换为 %s 限制"
 }

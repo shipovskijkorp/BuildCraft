@@ -104,7 +104,7 @@ public class TankContainerData implements ContainerData{
 	            add(LocaleUtil.localizeFluidStaticAmount(amount, data.get(point + 4)).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 	            FluidStack serverFluid = new FluidStack(fluids.getValue(data.get(point + 0)), data.get(point + 1));
 	            if (serverFluid != FluidStack.EMPTY && serverFluid.getAmount() > 0) {
-	                add(Component.literal("BUG: Server-side fluid on client!").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+	                add(Component.translatable("tooltip.buildcraftlib.fluid.server_side_on_client").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
 	                add(serverFluid.getDisplayName());
 	                add(LocaleUtil.localizeFluidStaticAmount(serverFluid.getAmount(), data.get(point + 4)));
 	            }

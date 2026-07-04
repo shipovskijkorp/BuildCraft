@@ -5,6 +5,7 @@ import ct.buildcraft.api.robots.EntityRobotBase;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class AIRobotGoto extends AIRobot {
+    private static final double ROBOT_MOVE_SPEED = 0.15D;
     protected double nextX, nextY, nextZ;
     protected double dirX, dirY, dirZ;
 
@@ -27,7 +28,7 @@ public abstract class AIRobotGoto extends AIRobot {
         } else {
             dirX = dirY = dirZ = 0;
         }
-        robot.setDeltaMovement(new Vec3(dirX / 10.0D, dirY / 10.0D, dirZ / 10.0D));
+        robot.setDeltaMovement(new Vec3(dirX * ROBOT_MOVE_SPEED, dirY * ROBOT_MOVE_SPEED, dirZ * ROBOT_MOVE_SPEED));
     }
 
     @Override

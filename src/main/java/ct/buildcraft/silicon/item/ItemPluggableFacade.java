@@ -142,26 +142,19 @@ public class ItemPluggableFacade extends Item implements IItemPluggable, IFacade
 	public Component getName(ItemStack stack) {
         FacadeInstance fullState = getStates(stack);
         if (fullState.type == FacadeType.Basic) {
-            String displayName = getFacadeStateDisplayName(fullState.phasedStates[0]);
-            return Component.translatable("item.Facade.name")
-                .append(" [")
-                .append(Component.literal(displayName))
-                .append("]");
+            return Component.translatable(
+                "item.buildcraftsilicon.facade.named",
+                Component.translatable("item.buildcraftsilicon.facade"),
+                getFacadeStateDisplayName(fullState.phasedStates[0])
+            );
         } else {
-            return Component.translatable("item.FacadePhased.name");
+            return Component.translatable("item.buildcraftsilicon.facade_phased");
         }
 	}
 
-    public static String getFacadeStateDisplayName(FacadePhasedState state) {
+    public static Component getFacadeStateDisplayName(FacadePhasedState state) {
         ItemStack assumedStack = state.stateInfo.requiredStack;
-        return stripOuterSquareBrackets(assumedStack.getDisplayName().getString());
-    }
-
-    private static String stripOuterSquareBrackets(String name) {
-        if (name != null && name.length() >= 2 && name.startsWith("[") && name.endsWith("]")) {
-            return name.substring(1, name.length() - 1);
-        }
-        return name;
+        return assumedStack.getHoverName();
     }
 
     @Override
@@ -169,19 +162,23 @@ public class ItemPluggableFacade extends Item implements IItemPluggable, IFacade
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
     	 FacadeInstance states = getStates(stack);
          if (states.type == FacadeType.Phased) {
-             String stateString = LocaleUtil.localize("item.FacadePhased.state");
              FacadePhasedState defaultState = null;
              for (FacadePhasedState state : states.phasedStates) {
                  if (state.activeColour == null) {
                      defaultState = state;
                      continue;
                  }
-                 tooltip.add(Component.translatable(stateString, state.activeColour,
-                     getFacadeStateDisplayName(state)));
+                 tooltip.add(Component.translatable(
+                     "item.buildcraftsilicon.facade_phased.state",
+                     LocaleUtil.localizeColourComponent(state.activeColour),
+                     getFacadeStateDisplayName(state)
+                 ));
              }
              if (defaultState != null) {
-                 tooltip.add(1, Component.translatable(("item.FacadePhased.state_default"),
-                     getFacadeStateDisplayName(defaultState)));
+                 tooltip.add(1, Component.translatable(
+                     "item.buildcraftsilicon.facade_phased.state_default",
+                     getFacadeStateDisplayName(defaultState)
+                 ));
              }
          } else {
              if (flag.isAdvanced()) {

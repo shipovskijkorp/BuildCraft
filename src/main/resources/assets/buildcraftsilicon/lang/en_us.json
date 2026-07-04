@@ -154,5 +154,10 @@
   "item.buildcraftsilicon.plug.gate": "Gate",
   "item.buildcraftsilicon.plug.facade": "Facade",
   "item.buildcraftsilicon.plug.lens": "Lens",
-  "item.buildcraftsilicon.plug.timer": "Timer"
+  "item.buildcraftsilicon.plug.timer": "Timer",
+  "item.buildcraftsilicon.facade": "Facade",
+  "item.buildcraftsilicon.facade.named": "%s [%s]",
+  "item.buildcraftsilicon.facade_phased": "Phased Facade",
+  "item.buildcraftsilicon.facade_phased.state": "%s: %s",
+  "item.buildcraftsilicon.facade_phased.state_default": "Default: %s"
 }

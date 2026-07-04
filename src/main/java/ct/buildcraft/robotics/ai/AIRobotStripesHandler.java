@@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
 
 /** Applies the transport Stripes item handlers from a robot-held item to the reserved target block. */
 public class AIRobotStripesHandler extends AIRobot implements IStripesActivator {
-    private static final int USE_DELAY_TICKS = 60;
+    private static final int USE_DELAY_TICKS = 12;
 
     private BlockIndex useToBlock;
     private int useCycles;

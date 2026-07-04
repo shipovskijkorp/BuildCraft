@@ -64,7 +64,7 @@ public class ItemPluggableGate extends Item implements IItemPluggable {
     
     @Override
 	public String getDescriptionId(ItemStack stack) {
-    	return getName(stack).getString();//TODO
+    	return "item.buildcraftsilicon.plug.gate";
 	}
     
     @Override

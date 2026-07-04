@@ -40,7 +40,7 @@ public class BCBuildersItems {
     }
     
     public static void registerItemProperties() {
-        ResourceLocation snapshotUsed = new ResourceLocation("buildcraftbuilders", "used");
+        ResourceLocation snapshotUsed = new ResourceLocation(BCBuilders.MODID, "used");
         ItemProperties.register(BLUEPRINT.get(), snapshotUsed, (itemStack, ClientWorld, entity, p_174638_) -> {
             return EnumItemSnapshotType.getFromStack(itemStack).used ? 1.0F : 0.0F;
         });
@@ -48,7 +48,7 @@ public class BCBuildersItems {
             return EnumItemSnapshotType.getFromStack(itemStack).used ? 1.0F : 0.0F;
         });
         ItemProperties.register(SCHEMATIC_SINGLE.get(), snapshotUsed, (itemStack, ClientWorld, entity, p_174638_) -> {
-            return itemStack.getDamageValue() == ItemSchematicSingle.DAMAGE_USED ? 1.0F : 0.0F;
+            return ItemSchematicSingle.isUsed(itemStack) ? 1.0F : 0.0F;
         });
     }
 }
