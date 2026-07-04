@@ -21,8 +21,10 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-/** Planter board. Fetches up to 16 matching seeds, then keeps planting from the held stack until it runs out. */
+/** Planter board. Fetches up to 32 matching seeds, then keeps planting from the held stack until it runs out. */
 public class BoardRobotPlanter extends RedstoneBoardRobot {
+    private static final int MAX_SEED_BATCH_SIZE = 32;
+
     private BlockIndex blockFound;
 
     private final IStackFilter seedFilter = stack -> !stack.isEmpty() && CropManager.isSeed(stack);
@@ -41,7 +43,7 @@ public class BoardRobotPlanter extends RedstoneBoardRobot {
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
         if (held.isEmpty()) {
             startDelegateAI(new AIRobotFetchAndEquipItemStack(robot,
-                    new AggregateFilter(seedFilter, ActionRobotFilter.getGateFilter(robot.getLinkedStation())), 16));
+                    new AggregateFilter(seedFilter, ActionRobotFilter.getGateFilter(robot.getLinkedStation())), MAX_SEED_BATCH_SIZE));
             return;
         }
 
