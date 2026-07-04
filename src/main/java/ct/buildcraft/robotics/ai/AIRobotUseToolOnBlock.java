@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 
 /** BuildCraft 7.1.x AIRobotUseToolOnBlock port. Used by the farmer board to hoe dirt into farmland. */
 public class AIRobotUseToolOnBlock extends AIRobot {
-    private static final int USE_DELAY_TICKS = 40;
+    private static final int USE_DELAY_TICKS = 12;
 
     private BlockIndex useToBlock;
     private int useCycles;

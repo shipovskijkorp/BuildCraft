@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 
 /** BuildCraft 7.1.x AIRobotAttack port. Moves into melee range and attacks with the equipped robot tool. */
 public class AIRobotAttack extends AIRobot {
+    private static final int ATTACK_DELAY_TICKS = 12;
     private Entity target;
     private int delay = 10;
 
@@ -45,7 +46,7 @@ public class AIRobotAttack extends AIRobot {
         robot.setItemActive(true);
         delay++;
 
-        if (delay > 20) {
+        if (delay > ATTACK_DELAY_TICKS) {
             delay = 0;
             if (robot instanceof EntityRobot entityRobot) {
                 entityRobot.attackTargetEntityWithCurrentItem(target);

@@ -13,6 +13,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class AIRobotLoadFluids extends AIRobot {
+    private static final int FLUID_LOAD_DELAY_TICKS = 10;
     private IFluidFilter filter;
     private int waitedCycles;
 
@@ -35,7 +36,7 @@ public class AIRobotLoadFluids extends AIRobot {
         }
 
         waitedCycles++;
-        if (waitedCycles > 40) {
+        if (waitedCycles > FLUID_LOAD_DELAY_TICKS) {
             int loaded = load(robot, robot.getDockingStation(), filter, true);
             if (loaded <= 0) {
                 terminate();

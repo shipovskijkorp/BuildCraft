@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 
 /** Fetches a matching stack from a station-side inventory and equips it as the robot held item. */
 public class AIRobotFetchAndEquipItemStack extends AIRobot {
+    private static final int FETCH_AND_EQUIP_DELAY_TICKS = 10;
     private IStackFilter filter;
     private int maxStackSize = 1;
     private int delay;
@@ -49,7 +50,7 @@ public class AIRobotFetchAndEquipItemStack extends AIRobot {
             terminate();
             return;
         }
-        if (delay++ > 40) {
+        if (delay++ > FETCH_AND_EQUIP_DELAY_TICKS) {
             ItemStack stack = takeMatching(robot.getDockingStation(), filter, maxStackSize, true);
             if (!stack.isEmpty()) {
                 robot.setItemInUse(stack);

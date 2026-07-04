@@ -8,7 +8,7 @@ import ct.buildcraft.robotics.statements.ActionRobotWakeUp;
 import net.minecraft.nbt.CompoundTag;
 
 public class AIRobotSleep extends AIRobot {
-    private static final int SLEEPING_TIME = 60 * 20;
+    private static final int SLEEPING_TIME = 30 * 20;
     private int sleptTime;
 
     public AIRobotSleep(EntityRobotBase robot) {

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 public class AIRobotUnload extends AIRobot {
+    private static final int UNLOAD_DELAY_TICKS = 40;
     private int waitedCycles;
     private boolean requireAcceptAction;
 
@@ -29,7 +30,7 @@ public class AIRobotUnload extends AIRobot {
     @Override
     public void update() {
         waitedCycles++;
-        if (waitedCycles > 40) {
+        if (waitedCycles > UNLOAD_DELAY_TICKS) {
             if (unload(robot, robot.getDockingStation(), true, requireAcceptAction)) {
                 waitedCycles = 0;
             } else {

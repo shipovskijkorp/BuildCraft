@@ -14,6 +14,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class AIRobotUnloadFluids extends AIRobot {
+    private static final int FLUID_UNLOAD_INITIAL_DELAY_TICKS = 10;
     private int waitedCycles;
     private boolean requireAcceptAction;
 
@@ -30,7 +31,7 @@ public class AIRobotUnloadFluids extends AIRobot {
     @Override
     public void update() {
         waitedCycles++;
-        if (waitedCycles <= 40) {
+        if (waitedCycles <= FLUID_UNLOAD_INITIAL_DELAY_TICKS) {
             return;
         }
 

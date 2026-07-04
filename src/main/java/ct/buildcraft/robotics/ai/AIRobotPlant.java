@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 
 /** Plants one item from the robot's held seed stack on the reserved soil block. */
 public class AIRobotPlant extends AIRobot {
-    private static final int PLANT_DELAY_TICKS = 30;
+    private static final int PLANT_DELAY_TICKS = 12;
 
     private BlockIndex blockFound;
     private int delay;

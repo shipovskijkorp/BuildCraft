@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class AIRobotLoad extends AIRobot {
     public static final int ANY_QUANTITY = -1;
+    private static final int LOAD_DELAY_TICKS = 10;
 
     private IStackFilter filter;
     private int quantity;
@@ -37,7 +38,7 @@ public class AIRobotLoad extends AIRobot {
         }
 
         waitedCycles++;
-        if (waitedCycles > 40) {
+        if (waitedCycles > LOAD_DELAY_TICKS) {
             setSuccess(load(robot, robot.getDockingStation(), filter, quantity, true));
             terminate();
         }

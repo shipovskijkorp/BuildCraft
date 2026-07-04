@@ -45,7 +45,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class RobotStationPluggable extends PipePluggable implements IDockingStationProvider, IMjReceiver, IMjReadable {
     /** Match the old robot battery receiver: at most 100 robot-energy units per tick = 1 MJ/t in this port. */
-    private static final long MAX_CHARGE_PER_TICK = MjAPI.MJ;
+    private static final long MAX_CHARGE_PER_TICK = 20 * MjAPI.MJ;
 
     public enum RobotStationState {
         None,
