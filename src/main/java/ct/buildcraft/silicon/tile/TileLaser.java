@@ -167,7 +167,8 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
     }
 
     public long getMaxPowerPerTick() {
-        return 4 * MjAPI.MJ;
+        // 128 MJ/s = 6.4 MJ/t at 20 ticks per second.
+        return 128 * MjAPI.MJ / 20;
     }
 
     public void update() {

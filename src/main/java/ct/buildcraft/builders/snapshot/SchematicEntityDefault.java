@@ -29,14 +29,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.decoration.HangingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
@@ -66,6 +63,14 @@ public class SchematicEntityDefault implements ISchematicEntity {
     @Override
     public void init(SchematicEntityContext context) {
         entityNbt = context.entity.serializeNBT();
+        ResourceLocation entityId = EntityType.getKey(context.entity.getType());
+        if (entityId != null) {
+            InventoryContentPolicy.stripDisallowedEntityContent(
+                entityId,
+                entityNbt,
+                RulesLoader.getRules(entityId, entityNbt)
+            );
+        }
         pos = context.entity.position().subtract(Vec3.atLowerCornerOf(context.basePos));
         if (context.entity instanceof HangingEntity) {
         	HangingEntity entityHanging = (HangingEntity) context.entity;
@@ -85,8 +90,9 @@ public class SchematicEntityDefault implements ISchematicEntity {
     @Nonnull
     @Override
     public List<ItemStack> computeRequiredItems(Level level) {
+        ResourceLocation entityId = new ResourceLocation(entityNbt.getString("id"));
         Set<JsonRule> rules = RulesLoader.getRules(
-            new ResourceLocation(entityNbt.getString("id")),
+            entityId,
             entityNbt
         );
         if (rules.isEmpty()) {
@@ -96,6 +102,7 @@ public class SchematicEntityDefault implements ISchematicEntity {
             .map(rule -> rule.requiredExtractors)
             .filter(Objects::nonNull)
             .flatMap(Collection::stream)
+            .filter(requiredExtractor -> InventoryContentPolicy.isItemListExtractorAllowedForEntity(entityId, requiredExtractor))
             .flatMap(requiredExtractor -> requiredExtractor.extractItemsFromEntity(entityNbt, level).stream())
             .filter(((Predicate<ItemStack>) ItemStack::isEmpty).negate())
             .collect(Collectors.toList());
@@ -130,8 +137,9 @@ public class SchematicEntityDefault implements ISchematicEntity {
 
     @Override
     public Entity build(BlockAndTintGetter world, BlockPos basePos) {
+        ResourceLocation entityId = new ResourceLocation(entityNbt.getString("id"));
         Set<JsonRule> rules = RulesLoader.getRules(
-            new ResourceLocation(entityNbt.getString("id")),
+            entityId,
             entityNbt
         );
         CompoundTag replaceNbt = rules.stream()
@@ -154,28 +162,32 @@ public class SchematicEntityDefault implements ISchematicEntity {
             newEntityNbt.putInt("TileX", placeHangingPos.getX());
             newEntityNbt.putInt("TileY", placeHangingPos.getY());
             newEntityNbt.putInt("TileZ", placeHangingPos.getZ());
-            newEntityNbt.putByte("Facing", (byte) hangingFacing.get2DDataValue());
+            newEntityNbt.putByte("Facing", (byte) hangingFacing.get3DDataValue());
         } else {
             rotate = true;
         }
         CompoundTag nbt = replaceNbt != null
                 ? (CompoundTag) NBTUtilBC.merge(newEntityNbt, replaceNbt)
                 : newEntityNbt;
-        EntityType<?> entityType = EntityType.by(nbt).get();
+        InventoryContentPolicy.stripDisallowedEntityContent(entityId, nbt, rules);
         Entity entity = null;
-        if (entityType != null) {
-        	if(world instanceof ServerLevel seworld)
-        		entity = entityType.spawn(seworld, (CompoundTag)null, (Component)null, (Player)null, new BlockPos(placePos), MobSpawnType.STRUCTURE, false, false);
-        	else if(world instanceof FakeWorld fakeWorld)
-        		fakeWorld.addEntity(entity);
-        	if (rotate) {
-                entity.absMoveTo(
-                    placePos.x,
-                    placePos.y,
-                    placePos.z,
-                    2 * entity.getYRot() + (/*entity.getYRot()*/ - entity.rotate(entityRotation)),
-                    entity.getXRot()
-                );
+        if (world instanceof Level level) {
+            entity = EntityType.create(nbt, level).orElse(null);
+            if (entity != null) {
+                if (rotate) {
+                    entity.absMoveTo(
+                        placePos.x,
+                        placePos.y,
+                        placePos.z,
+                        2 * entity.getYRot() + (/*entity.getYRot()*/ - entity.rotate(entityRotation)),
+                        entity.getXRot()
+                    );
+                }
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.addFreshEntity(entity);
+                } else if (level instanceof FakeWorld fakeWorld) {
+                    fakeWorld.addEntity(entity);
+                }
             }
         }
         return entity;
