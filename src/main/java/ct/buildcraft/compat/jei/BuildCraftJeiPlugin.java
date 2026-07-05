@@ -24,6 +24,7 @@ import ct.buildcraft.robotics.item.ItemRedstoneBoard;
 import ct.buildcraft.robotics.item.ItemRobot;
 import ct.buildcraft.silicon.BCSiliconItems;
 import ct.buildcraft.silicon.BCSiliconRecipes;
+import ct.buildcraft.silicon.item.ItemPluggableFacade;
 import ct.buildcraft.silicon.recipe.FacadeAssemblyRecipes;
 import ct.buildcraft.silicon.plug.FacadeBlockStateInfo;
 import ct.buildcraft.silicon.plug.FacadeStateManager;
@@ -37,6 +38,8 @@ import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
+import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
@@ -44,8 +47,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -72,6 +77,12 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        registration.registerSubtypeInterpreter(BCSiliconItems.PLUG_FACADE_ITEM.get(),
+                (stack, context) -> getFacadeSubtype(stack));
+    }
+
+    @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(
@@ -90,8 +101,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             List<AssemblyRecipeBasic> assemblyRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(BCSiliconRecipes.ASSEMBLY_TYPE.get()));
             boolean hadFacadeRecipe = assemblyRecipes.removeIf(FacadeAssemblyRecipes.class::isInstance);
             if (hadFacadeRecipe) {
-                assemblyRecipes.add(FacadeAssemblyJeiRecipe.solid());
-                assemblyRecipes.add(FacadeAssemblyJeiRecipe.hollow());
+                assemblyRecipes.add(FacadeAssemblyJeiRecipe.create());
             }
             registration.addRecipes(ASSEMBLY, assemblyRecipes);
         }
@@ -228,23 +238,81 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         return new ItemStack(BCTransportItems.PIPE_STRUCTURE.get(), 3);
     }
 
+    private static String getFacadeSubtype(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag == null ? IIngredientSubtypeInterpreter.NONE : tag.toString();
+    }
+
+    private static ItemStack getFocusedItemStack(IFocus<?> focus) {
+        return focus.getTypedValue().getIngredient(VanillaTypes.ITEM_STACK).orElse(ItemStack.EMPTY);
+    }
+
+    private static FacadeBlockStateInfo getFocusedFacadeInfo(IFocusGroup focuses) {
+        return focuses.getFocuses(RecipeIngredientRole.OUTPUT)
+                .map(BuildCraftJeiPlugin::getFocusedItemStack)
+                .filter(stack -> stack.getItem() == BCSiliconItems.PLUG_FACADE_ITEM.get())
+                .map(ItemPluggableFacade::getStates)
+                .filter(instance -> instance.phasedStates.length > 0)
+                .map(instance -> instance.phasedStates[0].stateInfo)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static List<FacadeBlockStateInfo> getFocusedFacadeInputInfos(IFocusGroup focuses) {
+        List<ItemStack> focusedInputs = focuses.getFocuses(RecipeIngredientRole.INPUT)
+                .map(BuildCraftJeiPlugin::getFocusedItemStack)
+                .filter(stack -> !stack.isEmpty())
+                .toList();
+        if (focusedInputs.isEmpty()) {
+            return List.of();
+        }
+
+        ItemStack baseRequirement = createFacadeBaseRequirementStack();
+        baseRequirement.setCount(1);
+        List<FacadeBlockStateInfo> infos = new ArrayList<>();
+        for (FacadeBlockStateInfo info : getVisibleFacadeInfos()) {
+            ItemStack required = info.requiredStack.copy();
+            required.setCount(1);
+            for (ItemStack focused : focusedInputs) {
+                ItemStack focusedCopy = focused.copy();
+                focusedCopy.setCount(1);
+                if (ItemStack.isSameItemSameTags(baseRequirement, focusedCopy)) {
+                    continue;
+                }
+                if (ItemStack.isSameItemSameTags(required, focusedCopy)) {
+                    infos.add(info);
+                    break;
+                }
+            }
+        }
+        return infos;
+    }
+
+    private static List<ItemStack> createFacadeRequirementStacks(List<FacadeBlockStateInfo> infos) {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (FacadeBlockStateInfo info : infos) {
+            stacks.add(info.requiredStack.copy());
+        }
+        return stacks;
+    }
+
+    private static List<ItemStack> createFacadeOutputStacks(List<FacadeBlockStateInfo> infos, boolean hollow) {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (FacadeBlockStateInfo info : infos) {
+            stacks.add(FacadeAssemblyRecipes.createFacadeStack(info, hollow));
+        }
+        return stacks;
+    }
+
     private static class FacadeAssemblyJeiRecipe extends FacadeAssemblyRecipes {
-        private static final ResourceLocation SOLID_ID = new ResourceLocation("buildcraftsilicon", "jei/facade_solid");
-        private static final ResourceLocation HOLLOW_ID = new ResourceLocation("buildcraftsilicon", "jei/facade_hollow");
+        private static final ResourceLocation ID = new ResourceLocation("buildcraftsilicon", "jei/facades");
 
-        private final boolean hollow;
-
-        private FacadeAssemblyJeiRecipe(ResourceLocation id, boolean hollow) {
-            super(id);
-            this.hollow = hollow;
+        private FacadeAssemblyJeiRecipe() {
+            super(ID);
         }
 
-        static FacadeAssemblyJeiRecipe solid() {
-            return new FacadeAssemblyJeiRecipe(SOLID_ID, false);
-        }
-
-        static FacadeAssemblyJeiRecipe hollow() {
-            return new FacadeAssemblyJeiRecipe(HOLLOW_ID, true);
+        static FacadeAssemblyJeiRecipe create() {
+            return new FacadeAssemblyJeiRecipe();
         }
 
         @Override
@@ -268,7 +336,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         public ChangingItemStack getRecipeOutputs() {
             NonNullList<ItemStack> outputs = NonNullList.create();
             for (FacadeBlockStateInfo info : getVisibleFacadeInfos()) {
-                outputs.add(FacadeAssemblyRecipes.createFacadeStack(info, hollow));
+                outputs.add(FacadeAssemblyRecipes.createFacadeStack(info, false));
+                outputs.add(FacadeAssemblyRecipes.createFacadeStack(info, true));
             }
             if (outputs.isEmpty()) {
                 return super.getRecipeOutputs();
@@ -284,7 +353,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             if (infos.isEmpty()) {
                 return super.getResultItem();
             }
-            return FacadeAssemblyRecipes.createFacadeStack(infos.get(0), hollow);
+            return FacadeAssemblyRecipes.createFacadeStack(infos.get(0), false);
         }
 
         @Override
@@ -328,7 +397,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, AssemblyRecipeBasic recipe, IFocusGroup focuses) {
             if (recipe instanceof FacadeAssemblyRecipes facadeRecipe) {
-                setFacadeRecipe(builder, facadeRecipe);
+                setFacadeRecipe(builder, facadeRecipe, focuses);
                 return;
             }
 
@@ -360,28 +429,54 @@ public class BuildCraftJeiPlugin implements IModPlugin {
                     .addItemStack(result);
         }
 
-        private void setFacadeRecipe(IRecipeLayoutBuilder builder, FacadeAssemblyRecipes recipe) {
-            ChangingItemStack[] inputs = recipe.getRecipeInputs();
-            if (inputs.length > 0) {
-                builder.addSlot(RecipeIngredientRole.INPUT, 4, 22)
-                        .setBackground(slotBackground, -1, -1)
-                        .addItemStacks(expandChangingStack(inputs[0]));
+        private void setFacadeRecipe(IRecipeLayoutBuilder builder, FacadeAssemblyRecipes recipe, IFocusGroup focuses) {
+            List<FacadeBlockStateInfo> infos = getVisibleFacadeInfos();
+
+            FacadeBlockStateInfo focusedOutput = getFocusedFacadeInfo(focuses);
+            if (focusedOutput != null) {
+                infos = List.of(focusedOutput);
+            } else {
+                List<FacadeBlockStateInfo> focusedInputs = getFocusedFacadeInputInfos(focuses);
+                if (!focusedInputs.isEmpty()) {
+                    infos = focusedInputs;
+                }
             }
 
-            IRecipeSlotBuilder facadeInputSlot = null;
-            if (inputs.length > 1) {
-                facadeInputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 30, 22)
+            if (infos.isEmpty()) {
+                ChangingItemStack[] inputs = recipe.getRecipeInputs();
+                if (inputs.length > 0) {
+                    builder.addSlot(RecipeIngredientRole.INPUT, 4, 22)
+                            .setBackground(slotBackground, -1, -1)
+                            .addItemStacks(expandChangingStack(inputs[0]));
+                }
+                if (inputs.length > 1) {
+                    builder.addSlot(RecipeIngredientRole.INPUT, 22, 22)
+                            .setBackground(slotBackground, -1, -1)
+                            .addItemStacks(expandChangingStack(inputs[1]));
+                }
+                builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
                         .setBackground(slotBackground, -1, -1)
-                        .addItemStacks(expandChangingStack(inputs[1]));
+                        .addItemStacks(expandChangingStack(recipe.getRecipeOutputs()));
+                return;
             }
 
-            IRecipeSlotBuilder facadeOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
+            builder.addSlot(RecipeIngredientRole.INPUT, 4, 22)
                     .setBackground(slotBackground, -1, -1)
-                    .addItemStacks(expandChangingStack(recipe.getRecipeOutputs()));
+                    .addItemStack(createFacadeBaseRequirementStack());
 
-            if (facadeInputSlot != null) {
-                builder.createFocusLink(facadeInputSlot, facadeOutputSlot);
-            }
+            IRecipeSlotBuilder facadeInputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 22, 22)
+                    .setBackground(slotBackground, -1, -1)
+                    .addItemStacks(createFacadeRequirementStacks(infos));
+
+            IRecipeSlotBuilder solidOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 108, 22)
+                    .setBackground(slotBackground, -1, -1)
+                    .addItemStacks(createFacadeOutputStacks(infos, false));
+
+            IRecipeSlotBuilder hollowOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
+                    .setBackground(slotBackground, -1, -1)
+                    .addItemStacks(createFacadeOutputStacks(infos, true));
+
+            builder.createFocusLink(facadeInputSlot, solidOutputSlot, hollowOutputSlot);
         }
 
         @Override
