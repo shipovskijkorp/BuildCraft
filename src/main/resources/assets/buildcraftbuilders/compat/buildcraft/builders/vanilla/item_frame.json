@@ -15,5 +15,22 @@
                 "path": ["Item"]
             }
         ]
+    },
+    {
+        "selectors": ["minecraft:glow_item_frame"],
+        "capture": true,
+        "requiredExtractors": [
+            {
+                "type": "constant",
+                "items": [
+                    {
+                        "item": "minecraft:glow_item_frame"
+                    }
+                ]
+            }, {
+                "type": "item",
+                "path": ["Item"]
+            }
+        ]
     }
 ]

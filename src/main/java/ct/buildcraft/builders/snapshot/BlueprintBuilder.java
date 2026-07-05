@@ -649,38 +649,44 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         }
         level.getProfiler().pop();
         // Call superclass method
-        if (super.tick()) {
-            // Spawn needed entities
-            if (!toSpawn.isEmpty()) {
-                if (!tile.getBattery().isFull()) {
-                    return false;
-                } else {
-                    level.getProfiler().push("spawn");
-                    toSpawn.stream()
-                        .filter(schematicEntity ->
-                            tryExtractRequired(
-                                getBuildingInfo().entitiesRequiredItems.get(schematicEntity),
-                                getBuildingInfo().entitiesRequiredFluids.get(schematicEntity),
-                                true
-                            ).isPresent()
-                        )
-                        .filter(schematicEntity ->
-                            schematicEntity.build(level, getBuildingInfo().offsetPos) != null
-                        )
-                        .forEach(schematicEntity ->
-                            tryExtractRequired(
-                                getBuildingInfo().entitiesRequiredItems.get(schematicEntity),
-                                getBuildingInfo().entitiesRequiredFluids.get(schematicEntity),
-                                false
-                            )
-                        );
-                    level.getProfiler().pop();
-                }
-            }
-            return true;
-        } else {
+        if (!super.tick()) {
             return false;
         }
+
+        // Spawn needed entities. Missing resources or failed entity placement must keep the builder active;
+        // otherwise the tile marks the blueprint as finished and never retries item frames / armor stands.
+        if (toSpawn.isEmpty()) {
+            return true;
+        }
+        if (!tile.getBattery().isFull()) {
+            return false;
+        }
+
+        boolean spawnedAll = true;
+        level.getProfiler().push("spawn");
+        for (ISchematicEntity schematicEntity : toSpawn) {
+            List<ItemStack> requiredItems = getBuildingInfo().entitiesRequiredItems.get(schematicEntity);
+            List<FluidStack> requiredFluids = getBuildingInfo().entitiesRequiredFluids.get(schematicEntity);
+            if (!tile.needMeterial()) {
+                if (schematicEntity.build(level, getBuildingInfo().offsetPos) == null) {
+                    spawnedAll = false;
+                }
+                continue;
+            }
+
+            Optional<List<ItemStack>> extracted = tryExtractRequired(requiredItems, requiredFluids, false);
+            if (!extracted.isPresent()) {
+                spawnedAll = false;
+                continue;
+            }
+            if (schematicEntity.build(level, getBuildingInfo().offsetPos) == null) {
+                cancelPlaceTask(new PlaceTask(tile.getBuilderPos(), extracted.get(), 0));
+                spawnedAll = false;
+                continue;
+            }
+        }
+        level.getProfiler().pop();
+        return spawnedAll;
     }
 
     @Override

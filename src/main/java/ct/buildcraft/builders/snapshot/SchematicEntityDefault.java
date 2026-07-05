@@ -29,14 +29,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.decoration.HangingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
@@ -154,28 +151,31 @@ public class SchematicEntityDefault implements ISchematicEntity {
             newEntityNbt.putInt("TileX", placeHangingPos.getX());
             newEntityNbt.putInt("TileY", placeHangingPos.getY());
             newEntityNbt.putInt("TileZ", placeHangingPos.getZ());
-            newEntityNbt.putByte("Facing", (byte) hangingFacing.get2DDataValue());
+            newEntityNbt.putByte("Facing", (byte) hangingFacing.get3DDataValue());
         } else {
             rotate = true;
         }
         CompoundTag nbt = replaceNbt != null
                 ? (CompoundTag) NBTUtilBC.merge(newEntityNbt, replaceNbt)
                 : newEntityNbt;
-        EntityType<?> entityType = EntityType.by(nbt).get();
         Entity entity = null;
-        if (entityType != null) {
-        	if(world instanceof ServerLevel seworld)
-        		entity = entityType.spawn(seworld, (CompoundTag)null, (Component)null, (Player)null, new BlockPos(placePos), MobSpawnType.STRUCTURE, false, false);
-        	else if(world instanceof FakeWorld fakeWorld)
-        		fakeWorld.addEntity(entity);
-        	if (rotate) {
-                entity.absMoveTo(
-                    placePos.x,
-                    placePos.y,
-                    placePos.z,
-                    2 * entity.getYRot() + (/*entity.getYRot()*/ - entity.rotate(entityRotation)),
-                    entity.getXRot()
-                );
+        if (world instanceof Level level) {
+            entity = EntityType.create(nbt, level).orElse(null);
+            if (entity != null) {
+                if (rotate) {
+                    entity.absMoveTo(
+                        placePos.x,
+                        placePos.y,
+                        placePos.z,
+                        2 * entity.getYRot() + (/*entity.getYRot()*/ - entity.rotate(entityRotation)),
+                        entity.getXRot()
+                    );
+                }
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.addFreshEntity(entity);
+                } else if (level instanceof FakeWorld fakeWorld) {
+                    fakeWorld.addEntity(entity);
+                }
             }
         }
         return entity;
