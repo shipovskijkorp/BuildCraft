@@ -119,6 +119,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
             BlockEntity tileEntity = context.world.getBlockEntity(context.pos);
             if (tileEntity != null) {
                 tileNbt = tileEntity.serializeNBT();
+                InventoryContentPolicy.stripDisallowedBlockContent(context.blockState, tileNbt, rules);
             }
         }
     }
@@ -196,14 +197,32 @@ public class SchematicBlockDefault implements ISchematicBlock {
             .map(rule -> rule.requiredExtractors)
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
-        return (
+        Set<NbtPath> extractedItemListPaths = new HashSet<>();
+        List<ItemStack> items = (
             collect.isEmpty()
                 ? Stream.of(new RequiredExtractorItemFromBlock())
                 : collect.stream().flatMap(Collection::stream)
         )
+            .filter(requiredExtractor -> {
+                if (requiredExtractor instanceof RequiredExtractorItemsList itemsList) {
+                    NbtPath path = itemsList.getPath();
+                    if (!InventoryContentPolicy.canCopyBlockItems(blockState, path)) {
+                        return false;
+                    }
+                    extractedItemListPaths.add(path);
+                }
+                return true;
+            })
             .flatMap(requiredExtractor -> requiredExtractor.extractItemsFromBlock(blockState, tileNbt, level).stream())
             .filter(((Predicate<ItemStack>) ItemStack::isEmpty).negate())
             .collect(Collectors.toList());
+        InventoryContentPolicy.getAllowedBlockItemPaths(blockState).stream()
+            .filter(path -> !extractedItemListPaths.contains(path))
+            .map(RequiredExtractorItemsList::new)
+            .flatMap(requiredExtractor -> requiredExtractor.extractItemsFromBlock(blockState, tileNbt, level).stream())
+            .filter(((Predicate<ItemStack>) ItemStack::isEmpty).negate())
+            .forEach(items::add);
+        return items;
     }
 
     @Nonnull
@@ -301,12 +320,14 @@ public class SchematicBlockDefault implements ISchematicBlock {
                 newTileNbt.putInt("z", blockPos.getZ());
                 level.getProfiler().pop();
                 level.getProfiler().push("place tile");
+                CompoundTag finalTileNbt = replaceNbt != null
+                    ? (CompoundTag) NBTUtilBC.merge(newTileNbt, replaceNbt)
+                    : newTileNbt;
+                InventoryContentPolicy.stripDisallowedBlockContent(blockState, finalTileNbt, rules);
                 BlockEntity tileEntity = BlockEntity.loadStatic(
                     blockPos,
                     blockState,
-                    replaceNbt != null
-                        ? (CompoundTag) NBTUtilBC.merge(newTileNbt, replaceNbt)
-                        : newTileNbt
+                    finalTileNbt
                 );
                 if (tileEntity != null) {
                     tileEntity.setLevel(level);
@@ -332,6 +353,8 @@ public class SchematicBlockDefault implements ISchematicBlock {
                 newTileNbt.putInt("x", blockPos.getX());
                 newTileNbt.putInt("y", blockPos.getY());
                 newTileNbt.putInt("z", blockPos.getZ());
+                Set<JsonRule> rules = RulesLoader.getRules(blockState, tileNbt);
+                InventoryContentPolicy.stripDisallowedBlockContent(blockState, newTileNbt, rules);
                 BlockEntity tileEntity = BlockEntity.loadStatic(blockPos, blockState, newTileNbt);
                 if (tileEntity != null) {
                     tileEntity.setLevel(Level);

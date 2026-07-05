@@ -23,9 +23,23 @@ import net.minecraft.world.level.block.state.BlockState;
 public class RequiredExtractorItemsList extends RequiredExtractor {
     private NbtPath path = null;
 
+    public RequiredExtractorItemsList() {
+    }
+
+    public RequiredExtractorItemsList(NbtPath path) {
+        this.path = path;
+    }
+
+    public NbtPath getPath() {
+        return path;
+    }
+
     @Nonnull
     @Override
     public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
+        if (path == null || tileNbt == null) {
+            return Collections.emptyList();
+        }
         return Optional.ofNullable(path.get(tileNbt))
             .map(NBTUtilBC::readCompoundList)
             .map(stream -> stream.map(ItemStack::of).collect(Collectors.toList()))
@@ -36,6 +50,9 @@ public class RequiredExtractorItemsList extends RequiredExtractor {
     @Nonnull
     @Override
     public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
+        if (path == null) {
+            return Collections.emptyList();
+        }
         return Optional.ofNullable(path.get(entityNbt))
             .map(NBTUtilBC::readCompoundList)
             .map(stream -> stream.map(ItemStack::of).collect(Collectors.toList()))

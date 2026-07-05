@@ -6,7 +6,10 @@
 
 package ct.buildcraft.builders.snapshot;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
@@ -30,6 +33,49 @@ public class NbtPath {
 
     private NbtPath(List<String> elements) {
         this.elements = elements;
+    }
+
+    public static NbtPath of(String... elements) {
+        return new NbtPath(Arrays.asList(elements));
+    }
+
+    public static NbtPath of(List<String> elements) {
+        return new NbtPath(elements);
+    }
+
+    public List<String> getElements() {
+        return Collections.unmodifiableList(elements);
+    }
+
+    public void remove(CompoundTag tag) {
+        if (tag == null || elements.isEmpty()) {
+            return;
+        }
+        remove((Tag) tag, 0);
+    }
+
+    private void remove(Tag tag, int index) {
+        if (tag == null || index >= elements.size()) {
+            return;
+        }
+        if (tag instanceof CompoundTag compoundTag) {
+            String key = elements.get(index);
+            if (index == elements.size() - 1) {
+                compoundTag.remove(key);
+            } else if (compoundTag.contains(key)) {
+                remove(compoundTag.get(key), index + 1);
+            }
+        } else if (tag instanceof ListTag listTag) {
+            int key;
+            try {
+                key = Integer.parseInt(elements.get(index));
+            } catch (NumberFormatException e) {
+                return;
+            }
+            if (key >= 0 && key < listTag.size()) {
+                remove(listTag.get(key), index + 1);
+            }
+        }
     }
 
     public Tag get(ByteTag tag) {
@@ -193,6 +239,22 @@ public class NbtPath {
     @Override
     public String toString() {
         return "NbtPath{" + elements + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof NbtPath nbtPath)) {
+            return false;
+        }
+        return elements.equals(nbtPath.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(elements);
     }
 
     @SuppressWarnings("WeakerAccess")

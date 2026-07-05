@@ -70,6 +70,8 @@ public class RulesLoader {
     public static void loadAll() {
         RULES.clear();
         READ_DOMAINS.clear();
+        BLOCK_RULES_CACHE.invalidateAll();
+        InventoryContentPolicy.loadConfig();
         ModList.get().forEachModContainer(($, modContainer) -> {
             String domain = modContainer.getModId();
             if (!READ_DOMAINS.contains(domain)) {
@@ -120,6 +122,8 @@ public class RulesLoader {
         if (!BCLib.DEV) {
             READ_DOMAINS.removeIf(domain -> domain.startsWith("buildcraft"));
         }
+        READ_DOMAINS.addAll(InventoryContentPolicy.getAllowedBlockDomains());
+        BLOCK_RULES_CACHE.invalidateAll();
     }
 
     private static Set<JsonRule> getBlockRulesInternal(BlockState blockState, CompoundTag tileNbt) {

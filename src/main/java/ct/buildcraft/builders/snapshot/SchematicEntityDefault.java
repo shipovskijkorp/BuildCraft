@@ -63,6 +63,14 @@ public class SchematicEntityDefault implements ISchematicEntity {
     @Override
     public void init(SchematicEntityContext context) {
         entityNbt = context.entity.serializeNBT();
+        ResourceLocation entityId = EntityType.getKey(context.entity.getType());
+        if (entityId != null) {
+            InventoryContentPolicy.stripDisallowedEntityContent(
+                entityId,
+                entityNbt,
+                RulesLoader.getRules(entityId, entityNbt)
+            );
+        }
         pos = context.entity.position().subtract(Vec3.atLowerCornerOf(context.basePos));
         if (context.entity instanceof HangingEntity) {
         	HangingEntity entityHanging = (HangingEntity) context.entity;
@@ -82,8 +90,9 @@ public class SchematicEntityDefault implements ISchematicEntity {
     @Nonnull
     @Override
     public List<ItemStack> computeRequiredItems(Level level) {
+        ResourceLocation entityId = new ResourceLocation(entityNbt.getString("id"));
         Set<JsonRule> rules = RulesLoader.getRules(
-            new ResourceLocation(entityNbt.getString("id")),
+            entityId,
             entityNbt
         );
         if (rules.isEmpty()) {
@@ -93,6 +102,7 @@ public class SchematicEntityDefault implements ISchematicEntity {
             .map(rule -> rule.requiredExtractors)
             .filter(Objects::nonNull)
             .flatMap(Collection::stream)
+            .filter(requiredExtractor -> InventoryContentPolicy.isItemListExtractorAllowedForEntity(entityId, requiredExtractor))
             .flatMap(requiredExtractor -> requiredExtractor.extractItemsFromEntity(entityNbt, level).stream())
             .filter(((Predicate<ItemStack>) ItemStack::isEmpty).negate())
             .collect(Collectors.toList());
@@ -127,8 +137,9 @@ public class SchematicEntityDefault implements ISchematicEntity {
 
     @Override
     public Entity build(BlockAndTintGetter world, BlockPos basePos) {
+        ResourceLocation entityId = new ResourceLocation(entityNbt.getString("id"));
         Set<JsonRule> rules = RulesLoader.getRules(
-            new ResourceLocation(entityNbt.getString("id")),
+            entityId,
             entityNbt
         );
         CompoundTag replaceNbt = rules.stream()
@@ -158,6 +169,7 @@ public class SchematicEntityDefault implements ISchematicEntity {
         CompoundTag nbt = replaceNbt != null
                 ? (CompoundTag) NBTUtilBC.merge(newEntityNbt, replaceNbt)
                 : newEntityNbt;
+        InventoryContentPolicy.stripDisallowedEntityContent(entityId, nbt, rules);
         Entity entity = null;
         if (world instanceof Level level) {
             entity = EntityType.create(nbt, level).orElse(null);

@@ -24,6 +24,9 @@ public class RequiredExtractorItem extends RequiredExtractor {
     @Nonnull
     @Override
     public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt, Level level) {
+        if (path == null || tileNbt == null) {
+            return Collections.emptyList();
+        }
         return Optional.ofNullable(path.get(tileNbt))
             .map(CompoundTag.class::cast)
             .map(ItemStack::of)
@@ -34,6 +37,9 @@ public class RequiredExtractorItem extends RequiredExtractor {
     @Nonnull
     @Override
     public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt, Level level) {
+        if (path == null) {
+            return Collections.emptyList();
+        }
         return Optional.ofNullable(path.get(entityNbt))
             .map(CompoundTag.class::cast)
             .map(ItemStack::of)
