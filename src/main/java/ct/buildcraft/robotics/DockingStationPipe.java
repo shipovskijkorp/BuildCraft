@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeColor;
 import ct.buildcraft.compat.CompatCapTransfromer;
+import ct.buildcraft.lib.misc.BlockUtil;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.robotics.statements.ActionStationRequestItems;
 import ct.buildcraft.robotics.plug.RobotStationPluggable;
@@ -236,8 +237,24 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     @Override
     public Container getItemInput() {
         Direction inputSide = getItemInputPipeSide();
-        if (getPipe() == null || inputSide == null || level() == null) return null;
-        BlockEntity neighbour = level().getBlockEntity(new net.minecraft.core.BlockPos(x(), y(), z()).relative(inputSide));
+        Level level = level();
+        if (getPipe() == null || inputSide == null || level == null) return null;
+        BlockEntity neighbour = level.getBlockEntity(new net.minecraft.core.BlockPos(x(), y(), z()).relative(inputSide));
+        return getNeighbourItemContainer(neighbour);
+    }
+
+    private static Container getNeighbourItemContainer(BlockEntity neighbour) {
+        if (neighbour == null) {
+            return null;
+        }
+
+        // A vanilla double chest is stored as two separate ChestBlockEntity instances. Returning the raw neighbour
+        // container exposes only the contacted half, so robots treat a 54-slot chest as a 27-slot chest.
+        Container doubleChest = BlockUtil.getCombinedDoubleChestContainer(neighbour);
+        if (doubleChest != null) {
+            return doubleChest;
+        }
+
         return neighbour instanceof Container container ? container : null;
     }
 

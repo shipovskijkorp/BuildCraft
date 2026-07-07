@@ -38,6 +38,8 @@ import net.minecraft.network.protocol.game.ClientboundExplodePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.CompoundContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -463,6 +465,22 @@ public final class BlockUtil {
             return adjacent instanceof ChestBlockEntity ? (ChestBlockEntity) adjacent : null ;
         }
         return null;
+    }
+
+    public static @Nullable Container getCombinedDoubleChestContainer(BlockEntity inv) {
+        if (!(inv instanceof ChestBlockEntity chest)
+                || chest.getLevel() == null
+                || !chest.getBlockState().hasProperty(BlockStateProperties.CHEST_TYPE)) {
+            return null;
+        }
+
+        ChestBlockEntity other = getOtherDoubleChest(chest);
+        if (other == null || other.isRemoved()) {
+            return null;
+        }
+
+        ChestType type = chest.getBlockState().getValue(BlockStateProperties.CHEST_TYPE);
+        return type == ChestType.RIGHT ? new CompoundContainer(other, chest) : new CompoundContainer(chest, other);
     }
 
     public static <T extends Comparable<T>> BlockState copyProperty(Property<T> property, BlockState dst,

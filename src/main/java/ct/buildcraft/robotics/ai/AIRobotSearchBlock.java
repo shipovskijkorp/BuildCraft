@@ -36,6 +36,16 @@ public class AIRobotSearchBlock extends AIRobot {
     private static final int DEFAULT_RANGE = 96;
     private static final int MARKER_ZONE_MAX_EXACT_SIZE = 65;
     private static final int MAX_ASTAR_VISITED = 262144;
+    /**
+     * Raw block positions checked per robot tick while scanning chunks. This keeps the ring scanner lazy: it can
+     * pause inside a chunk/height slice and resume next tick without jumping to the next ring early.
+     */
+    private static final int MAX_BLOCK_CANDIDATES_PER_TICK = 1024;
+    /**
+     * Path checks are much more expensive than raw block/filter checks, so matching targets are throttled
+     * separately. A target that runs out of path budget is kept as pending and finished before scanning new blocks.
+     */
+    private static final int MAX_PATH_SEARCHES_PER_TICK = 1;
 
     public BlockIndex blockFound;
     public LinkedList<BlockIndex> path;
@@ -48,6 +58,7 @@ public class AIRobotSearchBlock extends AIRobot {
     private BlockPos start;
     private int searchRange;
     private CandidateScanner scanner;
+    private CandidateEvaluation pendingEvaluation;
 
     public AIRobotSearchBlock(EntityRobotBase robot) {
         super(robot);
@@ -78,7 +89,7 @@ public class AIRobotSearchBlock extends AIRobot {
             blockFound = new BlockIndex(result.target());
             path = result.path();
             terminate();
-        } else if (scanner == null || scanner.isDone()) {
+        } else if (isSearchComplete()) {
             setSuccess(false);
             terminate();
         }
@@ -92,24 +103,42 @@ public class AIRobotSearchBlock extends AIRobot {
             searchRange = Math.max(searchRange, (int) Math.ceil(maxDistanceToEnd) + 8);
         }
         scanner = new CandidateScanner(robot.level, start, searchRange, random, zone);
+        pendingEvaluation = null;
+    }
+
+    private boolean isSearchComplete() {
+        return pendingEvaluation == null && (scanner == null || scanner.isDone());
     }
 
     private SearchResult continueSearch() {
-        while (scanner != null && !scanner.isDone()) {
+        SearchBudget budget = new SearchBudget(MAX_BLOCK_CANDIDATES_PER_TICK, MAX_PATH_SEARCHES_PER_TICK);
+
+        if (pendingEvaluation != null) {
+            SearchResult result = continuePendingEvaluation(budget);
+            if (result != null || pendingEvaluation != null) {
+                return result;
+            }
+        }
+
+        while (scanner != null && !scanner.isDone() && budget.canScanBlock()) {
             BlockPos candidate = scanner.next();
             if (candidate == null) {
                 break;
             }
 
-            SearchResult result = evaluateCandidate(candidate);
+            budget.consumeBlockScan();
+            SearchResult result = evaluateCandidate(candidate, budget);
             if (result != null) {
                 return result;
+            }
+            if (pendingEvaluation != null) {
+                return null;
             }
         }
         return null;
     }
 
-    private SearchResult evaluateCandidate(BlockPos target) {
+    private SearchResult evaluateCandidate(BlockPos target, SearchBudget budget) {
         Level level = robot.level;
         if (!level.isLoaded(target)) {
             return null;
@@ -129,14 +158,37 @@ public class AIRobotSearchBlock extends AIRobot {
             Collections.shuffle(adjacentPositions);
         }
 
-        LinkedList<BlockIndex> bestPath = null;
-        for (BlockPos adjacent : adjacentPositions) {
+        pendingEvaluation = new CandidateEvaluation(target, adjacentPositions);
+        return continuePendingEvaluation(budget);
+    }
+
+    private SearchResult continuePendingEvaluation(SearchBudget budget) {
+        if (pendingEvaluation == null) {
+            return null;
+        }
+
+        Level level = robot.level;
+        while (pendingEvaluation.hasMoreAdjacents()) {
+            if (!budget.canSearchPath()) {
+                return null;
+            }
+
+            budget.consumePathSearch();
+            BlockPos adjacent = pendingEvaluation.nextAdjacent();
             LinkedList<BlockIndex> candidatePath = pathToAdjacent(level, adjacent);
-            if (candidatePath != null && (bestPath == null || candidatePath.size() < bestPath.size())) {
-                bestPath = candidatePath;
+            if (candidatePath != null) {
+                pendingEvaluation.acceptPath(candidatePath);
+                if (candidatePath.isEmpty()) {
+                    SearchResult result = pendingEvaluation.toResult();
+                    pendingEvaluation = null;
+                    return result;
+                }
             }
         }
-        return bestPath == null ? null : new SearchResult(target, bestPath);
+
+        SearchResult result = pendingEvaluation.toResult();
+        pendingEvaluation = null;
+        return result;
     }
 
     private List<BlockPos> adjacentSoftTargets(Level level, BlockPos target) {
@@ -325,6 +377,62 @@ public class AIRobotSearchBlock extends AIRobot {
     }
 
     private record PathNode(BlockPos pos, double score, long sequence) {
+    }
+
+    private static final class SearchBudget {
+        private int remainingBlockScans;
+        private int remainingPathSearches;
+
+        private SearchBudget(int remainingBlockScans, int remainingPathSearches) {
+            this.remainingBlockScans = remainingBlockScans;
+            this.remainingPathSearches = remainingPathSearches;
+        }
+
+        private boolean canScanBlock() {
+            return remainingBlockScans > 0;
+        }
+
+        private void consumeBlockScan() {
+            remainingBlockScans--;
+        }
+
+        private boolean canSearchPath() {
+            return remainingPathSearches > 0;
+        }
+
+        private void consumePathSearch() {
+            remainingPathSearches--;
+        }
+    }
+
+    private static final class CandidateEvaluation {
+        private final BlockPos target;
+        private final List<BlockPos> adjacentPositions;
+        private int adjacentIndex;
+        private LinkedList<BlockIndex> bestPath;
+
+        private CandidateEvaluation(BlockPos target, List<BlockPos> adjacentPositions) {
+            this.target = target;
+            this.adjacentPositions = adjacentPositions;
+        }
+
+        private boolean hasMoreAdjacents() {
+            return adjacentIndex < adjacentPositions.size();
+        }
+
+        private BlockPos nextAdjacent() {
+            return adjacentPositions.get(adjacentIndex++);
+        }
+
+        private void acceptPath(LinkedList<BlockIndex> candidatePath) {
+            if (bestPath == null || candidatePath.size() < bestPath.size()) {
+                bestPath = candidatePath;
+            }
+        }
+
+        private SearchResult toResult() {
+            return bestPath == null ? null : new SearchResult(target, bestPath);
+        }
     }
 
     private static final class CandidateScanner {
