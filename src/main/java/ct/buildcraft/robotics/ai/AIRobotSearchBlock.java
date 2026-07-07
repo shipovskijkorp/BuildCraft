@@ -11,12 +11,15 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import ct.buildcraft.api.core.BlockIndex;
+import ct.buildcraft.api.core.IBox;
 import ct.buildcraft.api.core.IZone;
+import ct.buildcraft.robotics.zone.ZonePlan;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -31,7 +34,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class AIRobotSearchBlock extends AIRobot {
     private static final int DEFAULT_RANGE = 96;
-    private static final int SEARCHES_PER_TICK = 65536;
+    private static final int MARKER_ZONE_MAX_EXACT_SIZE = 65;
     private static final int MAX_ASTAR_VISITED = 262144;
 
     public BlockIndex blockFound;
@@ -88,12 +91,11 @@ public class AIRobotSearchBlock extends AIRobot {
         if (maxDistanceToEnd > 0) {
             searchRange = Math.max(searchRange, (int) Math.ceil(maxDistanceToEnd) + 8);
         }
-        scanner = new CandidateScanner(robot.level, start, searchRange, random);
+        scanner = new CandidateScanner(robot.level, start, searchRange, random, zone);
     }
 
     private SearchResult continueSearch() {
-        int processed = 0;
-        while (scanner != null && !scanner.isDone() && processed++ < SEARCHES_PER_TICK) {
+        while (scanner != null && !scanner.isDone()) {
             BlockPos candidate = scanner.next();
             if (candidate == null) {
                 break;
@@ -328,24 +330,37 @@ public class AIRobotSearchBlock extends AIRobot {
     private static final class CandidateScanner {
         private final Level level;
         private final BlockPos start;
-        private final int range;
         private final boolean random;
-        private final int minY;
-        private final int maxY;
-        private int radius;
-        private List<BlockPos> currentShell;
-        private int shellIndex;
+        private final ZonePlan zonePlan;
+        private final ScanBounds bounds;
+        private final int centerChunkX;
+        private final int centerChunkZ;
+        private final int maxRing;
+
+        private int ring;
+        private List<ScanArea> currentRingAreas;
+        private int areaIndex;
+        private AreaIterator currentArea;
         private boolean done;
 
-        private CandidateScanner(Level level, BlockPos start, int range, boolean random) {
+        private CandidateScanner(Level level, BlockPos start, int range, boolean random, IZone zone) {
             this.level = level;
             this.start = start;
-            this.range = range;
             this.random = random;
-            this.minY = level.getMinBuildHeight();
-            this.maxY = level.getMaxBuildHeight() - 1;
-            this.radius = 0;
-            buildShell();
+            this.zonePlan = zone instanceof ZonePlan plan ? plan : null;
+            this.bounds = createBounds(level, start, range, zone);
+            this.centerChunkX = start.getX() >> 4;
+            this.centerChunkZ = start.getZ() >> 4;
+
+            if (bounds == null || bounds.isEmpty()) {
+                this.maxRing = -1;
+                this.done = true;
+                return;
+            }
+
+            this.maxRing = bounds.maxRingFrom(centerChunkX, centerChunkZ);
+            this.ring = 0;
+            buildRing();
         }
 
         private boolean isDone() {
@@ -354,51 +369,255 @@ public class AIRobotSearchBlock extends AIRobot {
 
         private BlockPos next() {
             while (!done) {
-                if (currentShell != null && shellIndex < currentShell.size()) {
-                    return currentShell.get(shellIndex++);
+                if (currentArea != null) {
+                    BlockPos next = currentArea.next();
+                    if (next != null) {
+                        return next;
+                    }
+                    currentArea = null;
                 }
 
-                radius++;
-                if (radius > range) {
+                if (currentRingAreas != null && areaIndex < currentRingAreas.size()) {
+                    currentArea = new AreaIterator(currentRingAreas.get(areaIndex++), start, random);
+                    continue;
+                }
+
+                ring++;
+                if (ring > maxRing) {
                     done = true;
                     return null;
                 }
-                buildShell();
+                buildRing();
             }
             return null;
         }
 
-        private void buildShell() {
-            currentShell = new ArrayList<>();
-            shellIndex = 0;
+        private void buildRing() {
+            currentRingAreas = new ArrayList<>();
+            areaIndex = 0;
+            currentArea = null;
 
-            if (radius == 0) {
-                if (start.getY() >= minY && start.getY() <= maxY) {
-                    currentShell.add(start);
-                }
-                return;
-            }
+            for (int dx = -ring; dx <= ring; dx++) {
+                for (int dz = -ring; dz <= ring; dz++) {
+                    if (Math.max(Math.abs(dx), Math.abs(dz)) != ring) {
+                        continue;
+                    }
 
-            int sx = start.getX();
-            int sy = start.getY();
-            int sz = start.getZ();
-            for (int dx = -radius; dx <= radius; dx++) {
-                for (int dy = -radius; dy <= radius; dy++) {
-                    for (int dz = -radius; dz <= radius; dz++) {
-                        if (Math.max(Math.max(Math.abs(dx), Math.abs(dy)), Math.abs(dz)) != radius) {
-                            continue;
-                        }
-                        int y = sy + dy;
-                        if (y < minY || y > maxY) {
-                            continue;
-                        }
-                        currentShell.add(new BlockPos(sx + dx, y, sz + dz));
+                    int chunkX = centerChunkX + dx;
+                    int chunkZ = centerChunkZ + dz;
+                    if (zonePlan != null && !zonePlan.hasChunk(new ChunkPos(chunkX, chunkZ))) {
+                        continue;
+                    }
+
+                    ScanArea area = bounds.clipChunk(chunkX, chunkZ);
+                    if (area != null) {
+                        currentRingAreas.add(area);
                     }
                 }
             }
+
+            currentRingAreas.sort((a, b) -> {
+                int distance = Double.compare(a.horizontalDistanceSqrTo(start), b.horizontalDistanceSqrTo(start));
+                if (distance != 0) {
+                    return distance;
+                }
+                int chunkXCompare = Integer.compare(a.chunkX(), b.chunkX());
+                return chunkXCompare != 0 ? chunkXCompare : Integer.compare(a.chunkZ(), b.chunkZ());
+            });
+
+            if (random && currentRingAreas.size() > 1) {
+                Collections.shuffle(currentRingAreas);
+            }
+        }
+
+        private static ScanBounds createBounds(Level level, BlockPos start, int range, IZone zone) {
+            int levelMinY = level.getMinBuildHeight();
+            int levelMaxY = level.getMaxBuildHeight() - 1;
+
+            if (zone instanceof IBox box) {
+                BlockPos min = box.min();
+                BlockPos max = box.max();
+                if (min == null || max == null) {
+                    return null;
+                }
+
+                BlockPos size = box.size();
+                boolean markerLikeExact = size.getX() <= MARKER_ZONE_MAX_EXACT_SIZE
+                        && size.getZ() <= MARKER_ZONE_MAX_EXACT_SIZE;
+
+                int rawMinY = Math.min(min.getY(), max.getY());
+                int rawMaxY = Math.max(min.getY(), max.getY());
+                int minY = Math.max(rawMinY, levelMinY);
+                int maxY = Math.min(rawMaxY, levelMaxY);
+                if (minY > maxY) {
+                    return null;
+                }
+
+                // Marker-like boxes (<= 65x65) are scanned exactly and without the default 96 block cap.
+                // Bigger boxes still use ring ordering, but every scanned chunk is clipped to the real marker volume.
+                return new ScanBounds(
+                        Math.min(min.getX(), max.getX()),
+                        minY,
+                        Math.min(min.getZ(), max.getZ()),
+                        Math.max(min.getX(), max.getX()),
+                        maxY,
+                        Math.max(min.getZ(), max.getZ()),
+                        markerLikeExact
+                );
+            }
+
+            if (zone instanceof ZonePlan plan) {
+                if (plan.getChunkPoses().isEmpty()) {
+                    return null;
+                }
+
+                int minChunkX = Integer.MAX_VALUE;
+                int minChunkZ = Integer.MAX_VALUE;
+                int maxChunkX = Integer.MIN_VALUE;
+                int maxChunkZ = Integer.MIN_VALUE;
+                for (ChunkPos chunkPos : plan.getChunkPoses()) {
+                    minChunkX = Math.min(minChunkX, chunkPos.x);
+                    minChunkZ = Math.min(minChunkZ, chunkPos.z);
+                    maxChunkX = Math.max(maxChunkX, chunkPos.x);
+                    maxChunkZ = Math.max(maxChunkZ, chunkPos.z);
+                }
+
+                // Zone Planner zones are X/Z plans. They use the robot's default vertical search range and no 96 block cap.
+                return new ScanBounds(
+                        minChunkX << 4,
+                        levelMinY,
+                        minChunkZ << 4,
+                        (maxChunkX << 4) + 15,
+                        levelMaxY,
+                        (maxChunkZ << 4) + 15,
+                        false
+                );
+            }
+
+            // Unknown IZone implementations do not expose bounds, so keep the old 96 block safety range and filter by contains().
+            return new ScanBounds(
+                    start.getX() - range,
+                    levelMinY,
+                    start.getZ() - range,
+                    start.getX() + range,
+                    levelMaxY,
+                    start.getZ() + range,
+                    false
+            );
+        }
+
+    }
+
+    private record ScanBounds(int minX, int minY, int minZ, int maxX, int maxY, int maxZ, boolean markerLikeExact) {
+        private boolean isEmpty() {
+            return minX > maxX || minY > maxY || minZ > maxZ;
+        }
+
+        private int maxRingFrom(int centerChunkX, int centerChunkZ) {
+            int minChunkX = minX >> 4;
+            int minChunkZ = minZ >> 4;
+            int maxChunkX = maxX >> 4;
+            int maxChunkZ = maxZ >> 4;
+            return Math.max(
+                    Math.max(Math.abs(minChunkX - centerChunkX), Math.abs(maxChunkX - centerChunkX)),
+                    Math.max(Math.abs(minChunkZ - centerChunkZ), Math.abs(maxChunkZ - centerChunkZ))
+            );
+        }
+
+        private ScanArea clipChunk(int chunkX, int chunkZ) {
+            int chunkMinX = chunkX << 4;
+            int chunkMinZ = chunkZ << 4;
+            int clippedMinX = Math.max(minX, chunkMinX);
+            int clippedMinZ = Math.max(minZ, chunkMinZ);
+            int clippedMaxX = Math.min(maxX, chunkMinX + 15);
+            int clippedMaxZ = Math.min(maxZ, chunkMinZ + 15);
+
+            if (clippedMinX > clippedMaxX || clippedMinZ > clippedMaxZ) {
+                return null;
+            }
+            return new ScanArea(chunkX, chunkZ, clippedMinX, minY, clippedMinZ, clippedMaxX, maxY, clippedMaxZ);
+        }
+    }
+
+    private record ScanArea(int chunkX, int chunkZ, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+        private double horizontalDistanceSqrTo(BlockPos start) {
+            double x = clamp(start.getX(), minX, maxX);
+            double z = clamp(start.getZ(), minZ, maxZ);
+            double dx = start.getX() - x;
+            double dz = start.getZ() - z;
+            return dx * dx + dz * dz;
+        }
+
+        private static int clamp(int value, int min, int max) {
+            return Math.max(min, Math.min(max, value));
+        }
+    }
+
+    private static final class AreaIterator {
+        private final int[] xs;
+        private final int[] ys;
+        private final int[] zs;
+        private int xIndex;
+        private int yIndex;
+        private int zIndex;
+
+        private AreaIterator(ScanArea area, BlockPos start, boolean random) {
+            this.xs = buildAxisOrder(area.minX(), area.maxX(), start.getX(), random);
+            this.ys = buildAxisOrder(area.minY(), area.maxY(), start.getY(), random);
+            this.zs = buildAxisOrder(area.minZ(), area.maxZ(), start.getZ(), random);
+        }
+
+        private BlockPos next() {
+            if (yIndex >= ys.length) {
+                return null;
+            }
+
+            BlockPos pos = new BlockPos(xs[xIndex], ys[yIndex], zs[zIndex]);
+            zIndex++;
+            if (zIndex >= zs.length) {
+                zIndex = 0;
+                xIndex++;
+                if (xIndex >= xs.length) {
+                    xIndex = 0;
+                    yIndex++;
+                }
+            }
+            return pos;
+        }
+
+        private static int[] buildAxisOrder(int min, int max, int origin, boolean random) {
+            int[] values = new int[max - min + 1];
             if (random) {
-                Collections.shuffle(currentShell);
+                for (int i = 0; i < values.length; i++) {
+                    values[i] = min + i;
+                }
+                shuffle(values);
+                return values;
+            }
+
+            int index = 0;
+            int maxDelta = Math.max(Math.abs(origin - min), Math.abs(origin - max));
+            for (int delta = 0; delta <= maxDelta; delta++) {
+                int left = origin - delta;
+                int right = origin + delta;
+                if (left >= min && left <= max) {
+                    values[index++] = left;
+                }
+                if (delta != 0 && right >= min && right <= max) {
+                    values[index++] = right;
+                }
+            }
+            return values;
+        }
+
+        private static void shuffle(int[] values) {
+            for (int i = values.length - 1; i > 0; i--) {
+                int j = java.util.concurrent.ThreadLocalRandom.current().nextInt(i + 1);
+                int tmp = values[i];
+                values[i] = values[j];
+                values[j] = tmp;
             }
         }
     }
+
 }
