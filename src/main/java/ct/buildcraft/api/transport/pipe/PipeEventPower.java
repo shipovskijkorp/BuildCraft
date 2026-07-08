@@ -26,6 +26,7 @@ public abstract class PipeEventPower extends PipeEvent {
          * or by {@link #powerResistance} if it is set. This is capped at the value given in {@link #getMaxPower()} */
         private long powerLoss = -1;
         private boolean receiver = false;
+        private boolean transferDisabled = false;
 
         public Configure(IPipeHolder holder, IFlowPower flow) {
             super(holder, flow);
@@ -70,6 +71,17 @@ public abstract class PipeEventPower extends PipeEvent {
         /** Sets this pipe to be one that receives power from external sources. */
         public void setReceiver(boolean receiver) {
             this.receiver = receiver;
+        }
+
+        /** Completely disables transfer through this pipe.
+         * <p>This is intentionally separate from {@link #setMaxPower(long)}: a zero max-power value is not a safe
+         * transfer state for the power flow renderer and request propagation logic.</p> */
+        public void disableTransfer() {
+            this.transferDisabled = true;
+        }
+
+        public boolean isTransferDisabled() {
+            return this.transferDisabled;
         }
     }
 

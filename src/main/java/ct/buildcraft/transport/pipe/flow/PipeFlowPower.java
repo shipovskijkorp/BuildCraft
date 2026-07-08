@@ -62,6 +62,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     private long maxPower = -1;
     private long powerLoss = -1;
     private long powerResistance = -1;
+    private boolean disabled = false;
 
     private long currentWorldTime;
 
@@ -151,7 +152,8 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         pipe.getHolder().fireEvent(configure);
         isReceiver = configure.isReceiver();
         maxPower = configure.getMaxPower();
-        if (maxPower < 0) {
+        disabled = configure.isTransferDisabled();
+        if (maxPower <= 0) {
             maxPower = DEFAULT_MAX_POWER;
         }
         powerLoss = MathUtil.clamp(configure.getPowerLoss(), -1, maxPower);
@@ -170,7 +172,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
     @Override
     public long tryExtractPower(long maxExtracted, Direction from) {
-        if (!isReceiver) {
+        if (!isReceiver || disabled) {
             return 0;
         }
         BlockEntity tile = pipe.getConnectedTile(from);
@@ -213,6 +215,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     public void getDebugInfo(List<String> left, List<String> right, Direction side) {
         left.add("maxPower = " + LocaleUtil.localizeMj(maxPower));
         left.add("isReceiver = " + isReceiver);
+        left.add("disabled = " + disabled);
         left.add(
             "internalPower = " + arrayToString(s -> s.internalPower) + " <- " + arrayToString(s -> s.internalNextPower)
         );
@@ -357,6 +360,9 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
         // Transfer requested power to neighbouring pipes
         for (Direction face : Direction.values()) {
+            if (disabled) {
+                continue;
+            }
             if (transferQueryTemp[face.ordinal()] <= 0 || !pipe.isConnected(face)) {
                 continue;
             }
@@ -400,6 +406,9 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     }
 
     private void requestPower(Direction from, long amount) {
+        if (disabled || amount <= 0) {
+            return;
+        }
         step();
 
         Section s = sections.get(from);
@@ -408,7 +417,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         } else {
             s.nextPowerQuery += amount;
         }
-        // s.nextPowerQuery = Math.min(s.nextPowerQuery, maxPower);
+        s.nextPowerQuery = Math.min(s.nextPowerQuery, maxPower);
     }
 
     @Nullable
@@ -433,6 +442,9 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     }
 
     public long getPowerRequested(@Nullable Direction side) {
+        if (disabled) {
+            return 0;
+        }
         long req = 0;
         for (Direction face : Direction.values()) {
             if (side == null || face != side) {
@@ -497,6 +509,9 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         }
 
         long receivePowerInternal(long sent) {
+            if (disabled) {
+                return sent;
+            }
             if (sent > 0) {
                 debugPowerOffered += sent;
                 internalNextPower += sent;
@@ -507,7 +522,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
         @Override
         public long receivePower(long microJoules, FluidAction simulate) {
-            if (isReceiver) {
+            if (isReceiver && !disabled) {
                 PipeFlowPower.this.step();
                 if (simulate == FluidAction.EXECUTE) {
                     return this.receivePowerInternal(microJoules);
@@ -519,7 +534,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
         @Override
         public boolean canReceive() {
-            return isReceiver;
+            return isReceiver && !disabled;
         }
     }
 
