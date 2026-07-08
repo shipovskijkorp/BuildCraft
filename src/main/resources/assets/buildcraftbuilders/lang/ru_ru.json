@@ -89,5 +89,7 @@
   "fillerpattern.sphere_eighth": "Восьмая часть сферы",
   "fillerpattern.sphere_half": "Полусфера",
   "fillerpattern.sphere_quarter": "Четверть сферы",
-  "fillerpattern.stairs": "Лестница"
+  "fillerpattern.stairs": "Лестница",
+  "block.buildcraftbuilders.marker_construction": "Строительная метка",
+  "item.buildcraftbuilders.marker_construction": "Строительная метка"
 }

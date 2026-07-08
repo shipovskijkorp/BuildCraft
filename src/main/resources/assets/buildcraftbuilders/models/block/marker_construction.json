@@ -1,6 +1,44 @@
 {
-    "parent":"buildcraftcore:block/centeredTorch",
-    "textures": {
-        "torch":"buildcraftbuilders:blocks/marker/construction"
+  "ambientocclusion": false,
+  "render_type": "cutout",
+  "textures": {
+    "particle": "buildcraftbuilders:blocks/construction_marker/default",
+    "marker": "buildcraftbuilders:blocks/construction_marker/default"
+  },
+  "elements": [
+    {
+      "from": [ 6, 0, 6 ],
+      "to": [ 10, 9, 10 ],
+      "shade": false,
+      "faces": {
+        "down": { "uv": [ 7, 14, 9, 16 ], "texture": "#marker" },
+        "up": { "uv": [ 7, 7, 9, 9 ], "texture": "#marker" }
+      }
+    },
+    {
+      "from": [ 7, 0, 0 ],
+      "to": [ 9, 16, 16 ],
+      "shade": false,
+      "faces": {
+        "west": { "uv": [ 0, 0, 16, 16 ], "texture": "#marker" },
+        "east": { "uv": [ 0, 0, 16, 16 ], "texture": "#marker" }
+      }
+    },
+    {
+      "from": [ 0, 0, 7 ],
+      "to": [ 16, 16, 9 ],
+      "shade": false,
+      "faces": {
+        "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#marker" },
+        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#marker" }
+      }
     }
+  ],
+  "display": {
+    "thirdperson": {
+      "rotation": [ 40, -45, 140 ],
+      "translation": [ 0, 0, -2.25 ],
+      "scale": [ 0.5, 0.5, 0.5 ]
+    }
+  }
 }

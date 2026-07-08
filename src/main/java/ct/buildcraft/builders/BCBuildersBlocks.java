@@ -2,6 +2,7 @@ package ct.buildcraft.builders;
 
 import ct.buildcraft.builders.block.BlockArchitectTable;
 import ct.buildcraft.builders.block.BlockBuilder;
+import ct.buildcraft.builders.block.BlockConstructionMarker;
 import ct.buildcraft.builders.block.BlockElectronicLibrary;
 import ct.buildcraft.builders.block.BlockFiller;
 import ct.buildcraft.builders.block.BlockFrame;
@@ -10,6 +11,7 @@ import ct.buildcraft.builders.block.BlockQuarryDrillCollision;
 import ct.buildcraft.builders.block.BlockReplacer;
 import ct.buildcraft.builders.tile.TileArchitectTable;
 import ct.buildcraft.builders.tile.TileBuilder;
+import ct.buildcraft.builders.tile.TileConstructionMarker;
 import ct.buildcraft.builders.tile.TileElectronicLibrary;
 import ct.buildcraft.builders.tile.TileFiller;
 import ct.buildcraft.builders.tile.TileQuarry;
@@ -32,6 +34,7 @@ public class BCBuildersBlocks {
     public static final RegistryObject<BlockArchitectTable> ARCHITECT = BLOCKS.register("architect", BlockArchitectTable::new);
     public static final RegistryObject<BlockElectronicLibrary> LIBRARY = BLOCKS.register("library", BlockElectronicLibrary::new);
     public static final RegistryObject<BlockReplacer> REPLACER = BLOCKS.register("replacer", BlockReplacer::new);
+    public static final RegistryObject<BlockConstructionMarker> CONSTRUCTION_MARKER = BLOCKS.register("marker_construction", BlockConstructionMarker::new);
     
     public static final RegistryObject<BlockFrame> FRAME = BLOCKS.register("frame", BlockFrame::new);
     public static final RegistryObject<BlockQuarry> QUARRY = BLOCKS.register("quarry", BlockQuarry::new);
@@ -52,6 +55,9 @@ public class BCBuildersBlocks {
     
     public static final RegistryObject<BlockEntityType<TileReplacer>> REPLACER_TILE_BC8 = BLOCK_ENTITYS.register("entity_replacer", 
     		() -> BlockEntityType.Builder.of(TileReplacer::new, REPLACER.get()).build(null));
+    
+    public static final RegistryObject<BlockEntityType<TileConstructionMarker>> CONSTRUCTION_MARKER_TILE_BC8 = BLOCK_ENTITYS.register("entity_marker_construction", 
+            () -> BlockEntityType.Builder.of(TileConstructionMarker::new, CONSTRUCTION_MARKER.get()).build(null));
     
     
     public static final RegistryObject<BlockEntityType<TileQuarry>> QUARRY_TILE_BC8 = BLOCK_ENTITYS.register("entity_quarry", 
