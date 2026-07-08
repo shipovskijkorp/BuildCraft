@@ -40,7 +40,7 @@ public class AIRobotSearchBlock extends AIRobot {
      * Raw block positions checked per robot tick while scanning chunks. This keeps the ring scanner lazy: it can
      * pause inside a chunk/height slice and resume next tick without jumping to the next ring early.
      */
-    private static final int MAX_BLOCK_CANDIDATES_PER_TICK = 1024;
+    private static final int MAX_BLOCK_CANDIDATES_PER_TICK = 4096;
     /**
      * Path checks are much more expensive than raw block/filter checks, so matching targets are throttled
      * separately. A target that runs out of path budget is kept as pending and finished before scanning new blocks.
