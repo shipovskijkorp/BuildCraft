@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ct.buildcraft.builders.BCBuildersGuis;
+import ct.buildcraft.builders.item.ItemSnapshot;
 import ct.buildcraft.builders.tile.TileBuilder;
 import ct.buildcraft.lib.gui.ContainerBCTile;
 import ct.buildcraft.lib.gui.slot.SlotBase;
@@ -19,12 +20,15 @@ import ct.buildcraft.lib.tile.item.IItemHandlerAdv;
 import ct.buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 public class ContainerBuilder extends ContainerBCTile<TileBuilder> {
     public final List<WidgetFluidTank> widgetTanks;
+    private int snapshotSlotIndex = -1;
    
     
 	public ContainerBuilder(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
@@ -39,6 +43,7 @@ public class ContainerBuilder extends ContainerBCTile<TileBuilder> {
 
         addFullPlayerInventory(140);
 
+        snapshotSlotIndex = slots.size();
         addSlot(new SlotBase(invSnapshot, 0, 80, 27));
 
         for (int sy = 0; sy < 3; sy++) {
@@ -53,11 +58,40 @@ public class ContainerBuilder extends ContainerBCTile<TileBuilder> {
         
 		addDataSlot(setting);
 
-		setting.set((setting.get()&0b110) | (playerInventory.player.isCreative() ? 0b0 : 0b1));
         for(int y = 0; y < 6; y++) {
             for(int x = 0; x < 4; x++) {
             	addSlot(new SlotDisplay(invRequire, x + y * 4, 179 + x * 18, 18 + y * 18));
             }
+        }
+    }
+
+    @Override
+    public void clicked(int slotId, int dragType, ClickType clickType, net.minecraft.world.entity.player.Player player) {
+        ItemStack before = getSnapshotSlotStack();
+        super.clicked(slotId, dragType, clickType, player);
+        applyInsertedSnapshotSettings(before, player);
+    }
+
+    @Override
+    public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player, int index) {
+        ItemStack before = getSnapshotSlotStack();
+        ItemStack result = super.quickMoveStack(player, index);
+        applyInsertedSnapshotSettings(before, player);
+        return result;
+    }
+
+    private ItemStack getSnapshotSlotStack() {
+        if (snapshotSlotIndex < 0 || snapshotSlotIndex >= slots.size()) {
+            return ItemStack.EMPTY;
+        }
+        return slots.get(snapshotSlotIndex).getItem().copy();
+    }
+
+    private void applyInsertedSnapshotSettings(ItemStack before, net.minecraft.world.entity.player.Player player) {
+        ItemStack after = getSnapshotSlotStack();
+        if (!ItemStack.matches(before, after) && after.getItem() instanceof ItemSnapshot
+            && ItemSnapshot.getHeader(after) != null) {
+            tile.applySnapshotSettingsFromInsertedItem(after, player);
         }
     }
 }

@@ -133,7 +133,10 @@ public class TileReplacer extends TileBC_Neptune implements MenuProvider {
                         newBlueprint.key,
                         getOwnerId(header),
                         new Date(),
-                        header.name
+                        header.name,
+                        header.allowCreative,
+                        header.canRotate,
+                        header.canExcavate
                     )
                 )
             );

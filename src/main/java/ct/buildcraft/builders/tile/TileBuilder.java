@@ -233,6 +233,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             if (handler == invSnapshot) {
                 needsRestartAfterLoad = false;
                 reloadSnapshotFromItem(after, true, true);
+                applySnapshotSettingsFromInsertedItem(after, null);
                 sendNetworkUpdate(NET_SNAPSHOT_TYPE);
             }
             if (handler == invResources) {
@@ -267,6 +268,40 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             }
         }
         updateSnapshot(canGetFacing);
+    }
+
+    public void applySnapshotSettingsFromInsertedItem(ItemStack stack, Player player) {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        Snapshot.Header header = ItemSnapshot.getHeader(stack);
+        if (header == null) {
+            return;
+        }
+
+        boolean oldNeedMaterial = needMaterial;
+        boolean oldCanRotate = canRotate;
+        boolean oldCanExcavate = canExcavate;
+
+        // The blueprint only permits creative building if the architect-table author allowed it.
+        // The actual no-material mode still depends on the gamemode of the player who inserted the blueprint.
+        needMaterial = !(header.allowCreative && player != null && player.isCreative());
+        canRotate = header.canRotate;
+        canExcavate = header.canExcavate;
+
+        if (oldCanRotate != canRotate) {
+            reloadSnapshotFromItem(stack, false, true);
+        }
+        if (oldNeedMaterial != needMaterial) {
+            Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::resourcesChanged);
+        }
+        if (oldCanExcavate != canExcavate) {
+            Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::forceRecheckCurrentTask);
+            sendNetworkUpdate(NET_CAN_EXCAVATE);
+        }
+        if (oldNeedMaterial != needMaterial || oldCanRotate != canRotate || oldCanExcavate != canExcavate) {
+            setChanged();
+        }
     }
 
     private void restartSnapshotAfterLoad() {
@@ -321,9 +356,11 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::cancel);
         if (snapshot != null && getCurrentBasePos() != null) {
             snapshotType = snapshot.getType();
-            if (canGetFacing) {
+            if (canGetFacing && canRotate) {
                 rotation = Arrays.stream(Rotation.values()).filter(r -> r.rotate(snapshot.facing) == level
                     .getBlockState(worldPosition).getValue(BlockBCBase_Neptune.PROP_FACING)).findFirst().orElse(Rotation.NONE);
+            } else {
+                rotation = Rotation.NONE;
             }
             if (snapshot.getType() == EnumSnapshotType.TEMPLATE) {
                 templateBuildingInfo = ((Template) snapshot).new BuildingInfo(getCurrentBasePos(), rotation);
