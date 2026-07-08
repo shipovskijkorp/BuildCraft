@@ -9,21 +9,21 @@
     },
     "facing=north": {
       "model": "buildcraftbuilders:block/marker_construction_up",
-      "x": 270
+      "x": 90
     },
     "facing=south": {
       "model": "buildcraftbuilders:block/marker_construction_up",
-      "x": 90
+      "x": 270
     },
     "facing=west": {
       "model": "buildcraftbuilders:block/marker_construction_up",
       "x": 270,
-      "y": 90
+      "y": 270
     },
     "facing=east": {
       "model": "buildcraftbuilders:block/marker_construction_up",
       "x": 270,
-      "y": 270
+      "y": 90
     }
   }
 }
