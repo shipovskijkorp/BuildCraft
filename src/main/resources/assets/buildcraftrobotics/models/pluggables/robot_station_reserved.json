@@ -1,0 +1,7 @@
+{
+  "parent": "buildcraftrobotics:pluggables/robot_station",
+  "textures": {
+    "particle": "buildcrafttransport:pipes/robot_station_reserved",
+    "station": "buildcrafttransport:pipes/robot_station_reserved"
+  }
+}
