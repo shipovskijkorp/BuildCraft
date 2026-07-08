@@ -183,6 +183,9 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
 
     @Override
     public void onPlacedBy(Player player) {
+        if (isClientSide()) {
+            return;
+        }
         validateStation();
         refreshRenderState();
         scheduleNetworkUpdate();
@@ -190,6 +193,10 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
 
     @Override
     public void onTick() {
+        if (isClientSide()) {
+            return;
+        }
+
         validateStation();
         RobotStationState old = renderState;
         refreshRenderState();
@@ -247,6 +254,10 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
         }
     }
 
+    private boolean isClientSide() {
+        return holder != null && holder.getPipeWorld() != null && holder.getPipeWorld().isClientSide;
+    }
+
     public RobotStationState getRenderState() {
         return renderState == null ? RobotStationState.None : renderState;
     }
@@ -281,7 +292,11 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
     private void readState(FriendlyByteBuf buffer) {
         int id = buffer.readUnsignedByte();
         RobotStationState[] values = RobotStationState.values();
+        RobotStationState old = renderState;
         renderState = id >= 0 && id < values.length ? values[id] : RobotStationState.None;
+        if (old != renderState && holder != null) {
+            holder.scheduleRenderUpdate();
+        }
     }
 
     @Override
