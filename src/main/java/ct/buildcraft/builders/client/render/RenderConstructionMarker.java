@@ -81,7 +81,7 @@ public class RenderConstructionMarker implements BlockEntityRenderer<TileConstru
 
         Vec3 start = Vec3.atCenterOf(tile.getBlockPos());
         Vec3 end = start.add(Vec3.atLowerCornerOf(direction.getNormal()).scale(0.5D));
-        LaserData_BC8 data = new LaserData_BC8(BuildCraftLaserManager.STRIPES_WRITE_DIRECTION, start, end, 1 / 16.1, true);
+        LaserData_BC8 data = new LaserData_BC8(BuildCraftLaserManager.STRIPES_WRITE_DIRECTION, start, end, 1 / 32.0, true);
         LaserRenderer_BC8.renderLaserDynamic(pose, normal, data, bb);
     }
 

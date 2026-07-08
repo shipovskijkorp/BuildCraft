@@ -155,9 +155,29 @@ public class TileConstructionMarker extends TileBC_Neptune implements IDebuggabl
     public void onPlacedBy(LivingEntity placer, ItemStack stack) {
         super.onPlacedBy(placer, stack);
         if (placer != null) {
-            direction = placer.getDirection().getOpposite();
+            Direction placedDirection = placer.getDirection();
+            if (placedDirection != null && placedDirection.getAxis().isHorizontal()) {
+                // BC7 uses the player's 2D look direction for the construction marker's short direction laser.
+                direction = placedDirection;
+            }
         }
         updateSnapshot(true);
+        if (level != null && !level.isClientSide) {
+            sendNetworkUpdate(NET_RENDER_DATA);
+        }
+    }
+
+    @Override
+    public void rotate(Rotation axis) {
+        super.rotate(axis);
+        Direction rotated = axis.rotate(direction);
+        if (rotated != null && rotated.getAxis().isHorizontal()) {
+            direction = rotated;
+            updateSnapshot(true);
+            if (level != null && !level.isClientSide) {
+                sendNetworkUpdate(NET_RENDER_DATA);
+            }
+        }
     }
 
     @Override
@@ -215,7 +235,10 @@ public class TileConstructionMarker extends TileBC_Neptune implements IDebuggabl
             } else {
                 rotation = Rotation.NONE;
             }
-            BlockPos basePos = worldPosition.offset(direction.getOpposite().getNormal());
+            BlockPos basePos = worldPosition.offset(direction.getNormal());
+            if (!canRotate) {
+                basePos = adjustBasePosIfOverlappingMarker(blueprint, basePos, rotation);
+            }
             blueprintBuildingInfo = blueprint.new BuildingInfo(basePos, rotation, level);
             currentBox = Optional.ofNullable(blueprintBuildingInfo.box).orElseGet(Box::new);
             blueprintBuilder.updateSnapshot();
@@ -225,6 +248,24 @@ public class TileConstructionMarker extends TileBC_Neptune implements IDebuggabl
             currentBox = new Box();
         }
         setChanged();
+    }
+
+    private BlockPos adjustBasePosIfOverlappingMarker(Blueprint blueprint, BlockPos basePos, Rotation appliedRotation) {
+        Blueprint.BuildingInfo buildingInfo = blueprint.new BuildingInfo(basePos, appliedRotation, level);
+        if (!buildingInfo.box.contains(worldPosition)) {
+            return basePos;
+        }
+
+        int maxShift = Math.max(1, Math.max(blueprint.size.getX(), blueprint.size.getZ())) + 1;
+        BlockPos shiftedBasePos = basePos;
+        for (int i = 0; i < maxShift; i++) {
+            shiftedBasePos = shiftedBasePos.offset(direction.getNormal());
+            buildingInfo = blueprint.new BuildingInfo(shiftedBasePos, appliedRotation, level);
+            if (!buildingInfo.box.contains(worldPosition)) {
+                return shiftedBasePos;
+            }
+        }
+        return shiftedBasePos;
     }
 
     @Override

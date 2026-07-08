@@ -362,11 +362,15 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             } else {
                 rotation = Rotation.NONE;
             }
+            BlockPos buildBasePos = getCurrentBasePos();
+            if (!canRotate) {
+                buildBasePos = adjustBasePosIfOverlappingBuilder(buildBasePos, rotation);
+            }
             if (snapshot.getType() == EnumSnapshotType.TEMPLATE) {
-                templateBuildingInfo = ((Template) snapshot).new BuildingInfo(getCurrentBasePos(), rotation);
+                templateBuildingInfo = ((Template) snapshot).new BuildingInfo(buildBasePos, rotation);
             }
             if (snapshot.getType() == EnumSnapshotType.BLUEPRINT) {
-                blueprintBuildingInfo = ((Blueprint) snapshot).new BuildingInfo(getCurrentBasePos(), rotation, level);
+                blueprintBuildingInfo = ((Blueprint) snapshot).new BuildingInfo(buildBasePos, rotation, level);
             }
             currentBox = Optional.ofNullable(getBuildingInfo()).map(buildingInfo -> buildingInfo.box).orElse(null);
             Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::updateSnapshot);
@@ -380,6 +384,38 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         if (currentBox == null) {
             currentBox = new Box();
         }
+    }
+
+    private BlockPos adjustBasePosIfOverlappingBuilder(BlockPos basePos, Rotation appliedRotation) {
+        Snapshot.BuildingInfo buildingInfo = createBuildingInfo(basePos, appliedRotation);
+        if (buildingInfo == null || !buildingInfo.box.contains(worldPosition)) {
+            return basePos;
+        }
+
+        Direction buildDirection = level.getBlockState(worldPosition).getValue(BlockBCBase_Neptune.PROP_FACING).getOpposite();
+        int maxShift = Math.max(1, Math.max(snapshot.size.getX(), snapshot.size.getZ())) + 1;
+        BlockPos shiftedBasePos = basePos;
+        for (int i = 0; i < maxShift; i++) {
+            shiftedBasePos = shiftedBasePos.offset(buildDirection.getNormal());
+            buildingInfo = createBuildingInfo(shiftedBasePos, appliedRotation);
+            if (buildingInfo == null || !buildingInfo.box.contains(worldPosition)) {
+                return shiftedBasePos;
+            }
+        }
+        return shiftedBasePos;
+    }
+
+    private Snapshot.BuildingInfo createBuildingInfo(BlockPos basePos, Rotation appliedRotation) {
+        if (snapshot == null || basePos == null) {
+            return null;
+        }
+        if (snapshot.getType() == EnumSnapshotType.TEMPLATE) {
+            return ((Template) snapshot).new BuildingInfo(basePos, appliedRotation);
+        }
+        if (snapshot.getType() == EnumSnapshotType.BLUEPRINT) {
+            return ((Blueprint) snapshot).new BuildingInfo(basePos, appliedRotation, level);
+        }
+        return null;
     }
 
     private void updateBasePoses() {
