@@ -261,6 +261,8 @@
   "buildcraft.jade.yes": "Yes",
   "buildcraft.jade.no": "No",
   "buildcraft.jade.engine.stage": "Stage: %s",
+  "buildcraft.jade.engine.name": "Engine: %s",
+  "buildcraft.jade.pipe.wire.powered": "powered",
   "buildcraft.jade.engine.heat": "Heat: %s",
   "buildcraft.jade.engine.output": "Output: %s",
   "buildcraft.jade.engine.redstone": "Redstone: %s",

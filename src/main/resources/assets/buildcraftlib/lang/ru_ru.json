@@ -261,6 +261,8 @@
   "buildcraft.jade.yes": "Да",
   "buildcraft.jade.no": "Нет",
   "buildcraft.jade.engine.stage": "Стадия: %s",
+  "buildcraft.jade.engine.name": "Двигатель: %s",
+  "buildcraft.jade.pipe.wire.powered": "запитан",
   "buildcraft.jade.engine.heat": "Нагрев: %s",
   "buildcraft.jade.engine.output": "Выход: %s",
   "buildcraft.jade.engine.redstone": "Редстоун: %s",

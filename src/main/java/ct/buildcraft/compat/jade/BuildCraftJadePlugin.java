@@ -15,11 +15,15 @@ import com.mojang.authlib.GameProfile;
 
 import ct.buildcraft.api.mj.IMjReadable;
 import ct.buildcraft.api.mj.MjAPI;
+import ct.buildcraft.api.properties.BuildCraftProperties;
 import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.transport.EnumWirePart;
 import ct.buildcraft.api.transport.pipe.IPipe.ConnectedType;
 import ct.buildcraft.api.transport.pluggable.PipePluggable;
+import ct.buildcraft.core.BCCoreBlocks;
+import ct.buildcraft.core.blockEntity.TileEngineCreative;
+import ct.buildcraft.energy.BCEnergyFluids;
 import ct.buildcraft.lib.block.BlockBCTile_Neptune;
 import ct.buildcraft.lib.engine.TileEngineBase_BC8;
 import ct.buildcraft.lib.fluid.Tank;
@@ -36,19 +40,27 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import snownee.jade.api.Accessor;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.EntityAccessor;
@@ -68,6 +80,7 @@ import snownee.jade.api.view.IServerExtensionProvider;
 import snownee.jade.api.view.ItemView;
 import snownee.jade.api.view.ProgressView;
 import snownee.jade.api.view.ViewGroup;
+import snownee.jade.api.ui.IElement;
 
 @WailaPlugin
 public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin {
@@ -124,6 +137,16 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         registration.registerFluidStorageClient(FluidStorageProvider.INSTANCE);
         registration.registerEnergyStorageClient(MjStorageProvider.INSTANCE);
         registration.registerProgressClient(ProgressProvider.INSTANCE);
+
+        registration.usePickedResult(BCCoreBlocks.ENGINE_BC8.get());
+        for (RegistryObject<LiquidBlock> block : BCEnergyFluids.OIL_BLOCK) {
+            try {
+                registration.usePickedResult(block.get());
+            } catch (IllegalStateException ignored) {
+                // The registry object is not ready in very early client setup paths.
+            }
+        }
+        registration.addTooltipCollectedCallback(1000, BuildCraftJadePlugin::preserveBuildCraftTitleColours);
     }
 
     private enum BlockProvider implements IBlockComponentProvider, IServerDataProvider<BlockEntity> {
@@ -503,7 +526,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
             return;
         }
         CompoundTag tag = new CompoundTag();
-        tag.putString("Stage", engine.getPowerStage().name().toLowerCase(Locale.ROOT));
+        tag.putString("NameKey", engineNameKey(engine.getBlockState()));
+        String stage = engine instanceof TileEngineCreative ? "blue" : engine.getPowerStage().name().toLowerCase(Locale.ROOT);
+        tag.putString("Stage", stage);
         tag.putDouble("Heat", engine.getHeat());
         tag.putFloat("HeatLevel", (float) clamp01(engine.getHeatLevel()));
         tag.putLong("Output", engine.currentOutput);
@@ -600,6 +625,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
     }
 
     private static void appendEngineTooltip(ITooltip tooltip, CompoundTag tag) {
+        if (tag.contains("NameKey")) {
+            tooltip.add(line("engine.name", Component.translatable(tag.getString("NameKey")).withStyle(ChatFormatting.WHITE)));
+        }
         tooltip.add(line("engine.stage", Component.translatable("buildcraft.jade.engine.stage." + safeTranslationPart(tag.getString("Stage"))).withStyle(ChatFormatting.WHITE)));
         tooltip.add(line("engine.heat", Component.literal(String.format(Locale.ROOT, "%.1f C", tag.getDouble("Heat"))).withStyle(ChatFormatting.WHITE)));
         long output = tag.getLong("Output");
@@ -612,14 +640,14 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
     private static void appendPipeTooltip(ITooltip tooltip, CompoundTag tag, boolean showDetails) {
         tooltip.add(line("pipe.id", Component.literal(tag.getString("Id")).withStyle(ChatFormatting.WHITE)));
         if (tag.contains("Colour")) {
-            tooltip.add(line("pipe.colour", Component.translatable("color." + tag.getString("Colour").replace('_', '.')).withStyle(ChatFormatting.WHITE)));
+            tooltip.add(line("pipe.colour", dyeColorComponent(tag.getString("Colour"))));
         }
         int connectionCount = tag.getList("Connections", Tag.TAG_STRING).size();
         tooltip.add(line("pipe.connections", Component.literal(Integer.toString(connectionCount)).withStyle(ChatFormatting.WHITE)));
         if (showDetails) {
             addStringList(tooltip, "pipe.connection", tag.getList("Connections", Tag.TAG_STRING));
             addStringList(tooltip, "pipe.pluggable", tag.getList("Plugs", Tag.TAG_STRING));
-            addStringList(tooltip, "pipe.wire", tag.getList("Wires", Tag.TAG_STRING));
+            addWireList(tooltip, tag.getList("Wires", Tag.TAG_STRING));
         }
     }
 
@@ -772,10 +800,101 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         return Component.translatable("buildcraft.jade." + key, value).withStyle(ChatFormatting.GRAY);
     }
 
+    private static void addWireList(ITooltip tooltip, ListTag list) {
+        for (Tag entry : list) {
+            String[] parts = entry.getAsString().split(":");
+            if (parts.length >= 2) {
+                MutableComponent value = Component.empty()
+                        .append(Component.literal(parts[0]).withStyle(ChatFormatting.WHITE))
+                        .append(Component.literal(": ").withStyle(ChatFormatting.WHITE))
+                        .append(dyeColorComponent(parts[1]));
+                if (parts.length >= 3 && "powered".equals(parts[2])) {
+                    value.append(Component.literal(" ").append(Component.translatable("buildcraft.jade.pipe.wire.powered").withStyle(ChatFormatting.GREEN)));
+                }
+                tooltip.add(line("pipe.wire", value));
+            } else {
+                tooltip.add(line("pipe.wire", Component.literal(entry.getAsString()).withStyle(ChatFormatting.WHITE)));
+            }
+        }
+    }
+
+    private static Component dyeColorComponent(String name) {
+        DyeColor colour = DyeColor.byName(name, null);
+        if (colour == null) {
+            return Component.literal(name).withStyle(ChatFormatting.WHITE);
+        }
+        return Component.translatable("color.minecraft." + colour.getName()).withStyle(style -> style.withColor(colour.getTextColor()));
+    }
+
     private static void addStringList(ITooltip tooltip, String key, ListTag list) {
         for (Tag entry : list) {
             tooltip.add(line(key, Component.literal(entry.getAsString()).withStyle(ChatFormatting.WHITE)));
         }
+    }
+
+    private static void preserveBuildCraftTitleColours(ITooltip tooltip, Accessor<?> accessor) {
+        if (tooltip.isEmpty()) {
+            return;
+        }
+        Component title = getBuildCraftTitle(accessor);
+        if (title == null) {
+            return;
+        }
+        List<IElement> left = tooltip.get(0, IElement.Align.LEFT);
+        if (left == null || left.isEmpty()) {
+            return;
+        }
+        left.clear();
+        left.add(tooltip.getElementHelper().text(title));
+    }
+
+    private static Component getBuildCraftTitle(Accessor<?> accessor) {
+        if (accessor instanceof BlockAccessor blockAccessor) {
+            BlockState state = blockAccessor.getBlockState();
+            Block block = state.getBlock();
+            if (blockAccessor.getBlockEntity() instanceof TileEngineBase_BC8 || state.hasProperty(BuildCraftProperties.ENGINE_TYPE)) {
+                return Component.translatable(engineNameKey(state)).withStyle(ChatFormatting.WHITE);
+            }
+            if (block instanceof LiquidBlock && isBuildCraftBlock(block)) {
+                return block.getName();
+            }
+            ItemStack picked = blockAccessor.getPickedResult();
+            if (isBuildCraftStack(picked)) {
+                return picked.getHoverName();
+            }
+            if (isBuildCraftBlock(block)) {
+                return block.getName();
+            }
+            return null;
+        }
+        if (accessor instanceof EntityAccessor entityAccessor && entityAccessor.getEntity() instanceof ItemEntity itemEntity) {
+            ItemStack stack = itemEntity.getItem();
+            if (isBuildCraftStack(stack)) {
+                return stack.getHoverName();
+            }
+        }
+        return null;
+    }
+
+    private static boolean isBuildCraftBlock(Block block) {
+        ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
+        return key != null && key.getNamespace().startsWith("buildcraft");
+    }
+
+    private static boolean isBuildCraftStack(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return false;
+        }
+        Item item = stack.getItem();
+        ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
+        return key != null && key.getNamespace().startsWith("buildcraft");
+    }
+
+    private static String engineNameKey(BlockState state) {
+        if (state.hasProperty(BuildCraftProperties.ENGINE_TYPE)) {
+            return "block.buildcraftcore.engine_" + state.getValue(BuildCraftProperties.ENGINE_TYPE).getSerializedName();
+        }
+        return "block.buildcraftcore.engine";
     }
 
     private static String stationToString(DockingStation station) {
