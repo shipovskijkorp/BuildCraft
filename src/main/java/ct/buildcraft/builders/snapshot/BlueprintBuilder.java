@@ -262,7 +262,8 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     }
 
     private boolean canRobotWorkAt(EntityRobotBase robot, BlockPos blockPos) {
-        return (robot.getZoneToWork() == null || robot.getZoneToWork().contains(Vec3.atCenterOf(blockPos)))
+        return !blockPos.equals(tile.getBuilderPos())
+            && (robot.getZoneToWork() == null || robot.getZoneToWork().contains(Vec3.atCenterOf(blockPos)))
             && !robotReservedBlocks.contains(blockPos)
             && (robot.getRegistry() == null || !robot.getRegistry().isTaken(new ResourceIdBlock(blockPos)));
     }

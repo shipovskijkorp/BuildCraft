@@ -236,9 +236,7 @@ public class TileConstructionMarker extends TileBC_Neptune implements IDebuggabl
                 rotation = Rotation.NONE;
             }
             BlockPos basePos = worldPosition.offset(direction.getNormal());
-            if (!canRotate) {
-                basePos = adjustBasePosIfOverlappingMarker(blueprint, basePos, rotation);
-            }
+            basePos = adjustBasePosIfOverlappingMarker(blueprint, basePos, rotation);
             blueprintBuildingInfo = blueprint.new BuildingInfo(basePos, rotation, level);
             currentBox = Optional.ofNullable(blueprintBuildingInfo.box).orElseGet(Box::new);
             blueprintBuilder.updateSnapshot();
