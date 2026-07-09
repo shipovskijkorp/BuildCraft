@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "buildcraftbuilders:blocks/marker/construction_default"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "buildcraftbuilders:recording": 1.0
+      },
+      "model": "buildcraftbuilders:blocks/marker/construction_recording"
+    }
+  ]
+}

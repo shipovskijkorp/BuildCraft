@@ -1,6 +1,7 @@
 package ct.buildcraft.builders;
 
 import ct.buildcraft.api.enums.EnumSnapshotType;
+import ct.buildcraft.builders.item.ItemConstructionMarker;
 import ct.buildcraft.builders.item.ItemFillerPlanner;
 import ct.buildcraft.builders.item.ItemSchematicSingle;
 import ct.buildcraft.builders.item.ItemSnapshot;
@@ -29,6 +30,7 @@ public class BCBuildersItems {
     public static final RegistryObject<BlockItem> ARCHITECT_BLOCK_ITEM = ITEMS.register("architect", () -> new BlockItem(BCBuildersBlocks.ARCHITECT.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<BlockItem> LIBRARY_BLOCK_ITEM = ITEMS.register("library", () -> new BlockItem(BCBuildersBlocks.LIBRARY.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<BlockItem> REPLACER_BLOCK_ITEM = ITEMS.register("replacer", () -> new BlockItem(BCBuildersBlocks.REPLACER.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
+    public static final RegistryObject<ItemConstructionMarker> CONSTRUCTION_MARKER = ITEMS.register("marker_construction", () -> new ItemConstructionMarker(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<BlockItem> FRAME_BLOCK_ITEM = ITEMS.register("frame", () -> new BlockItem(BCBuildersBlocks.FRAME.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<BlockItem> QUARRY_BLOCK_ITEM = ITEMS.register("quarry", () -> new BlockItem(BCBuildersBlocks.QUARRY.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     
@@ -49,6 +51,10 @@ public class BCBuildersItems {
         });
         ItemProperties.register(SCHEMATIC_SINGLE.get(), snapshotUsed, (itemStack, ClientWorld, entity, p_174638_) -> {
             return ItemSchematicSingle.isUsed(itemStack) ? 1.0F : 0.0F;
+        });
+        ResourceLocation recording = new ResourceLocation(BCBuilders.MODID, "recording");
+        ItemProperties.register(CONSTRUCTION_MARKER.get(), recording, (itemStack, ClientWorld, entity, p_174638_) -> {
+            return ItemConstructionMarker.isRecording(itemStack) ? 1.0F : 0.0F;
         });
     }
 }

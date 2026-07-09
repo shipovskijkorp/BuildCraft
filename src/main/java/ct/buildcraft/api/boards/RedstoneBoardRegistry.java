@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public abstract class RedstoneBoardRegistry {
     public static RedstoneBoardRegistry instance;
 
-    /** Register a redstone board type. The energy cost is measured in BuildCraft microjoules. */
+    /** Register a redstone board type. The energy cost is measured in whole BuildCraft MJ, matching the 1.7 API. */
     public abstract void registerBoardType(RedstoneBoardNBT<?> redstoneBoardNBT, int energyCost);
 
     /** Deprecated 1.7 compatibility entry point. Prefer {@link #registerBoardType(RedstoneBoardNBT, int)}. */

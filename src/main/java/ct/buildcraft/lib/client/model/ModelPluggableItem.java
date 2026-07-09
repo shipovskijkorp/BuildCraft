@@ -28,7 +28,11 @@ public class ModelPluggableItem implements BakedModel {
         ImmutableList.Builder<BakedQuad> list = ImmutableList.builder();
         for (MutableQuad[] qa : quads) {
             for (MutableQuad q : qa) {
-                list.add(q.toBakedBlock());
+                MutableQuad itemQuad = new MutableQuad(q);
+                itemQuad.setShade(false);
+                itemQuad.colouri(0xFFFFFFFF);
+                itemQuad.lighti(15, 15);
+                list.add(itemQuad.toBakedItem());
             }
         }
         this.quads = list.build();
@@ -41,12 +45,12 @@ public class ModelPluggableItem implements BakedModel {
 
     @Override
     public boolean useAmbientOcclusion() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isGui3d() {
-        return true;
+        return false;
     }
 
     @Override

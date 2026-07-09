@@ -10,7 +10,6 @@ import ct.buildcraft.api.transport.pipe.PipeApiClient;
 import ct.buildcraft.api.transport.pluggable.IPluggableStaticBaker;
 import ct.buildcraft.lib.client.model.ModelHolderStatic;
 import ct.buildcraft.lib.client.model.ModelHolderVariable;
-import ct.buildcraft.lib.client.model.ModelPluggableItem;
 import ct.buildcraft.lib.client.model.MutableQuad;
 import ct.buildcraft.lib.client.model.plug.PlugBakerSimple;
 import ct.buildcraft.lib.expression.DefaultContexts;
@@ -115,8 +114,9 @@ public class BCTransportModels {
         PipeApiClient.registry.registerBaker(KeyPlugBlocker.class, BAKER_PLUG_BLOCKER);
         PipeApiClient.registry.registerBaker(KeyPlugPowerAdaptor.class, BAKER_PLUG_POWER_ADAPTOR);
         
-        putModel(event, "plug_blocker#inventory", new ModelPluggableItem(BLOCKER.getCutoutQuads()));//new ModelPluggableItem(BLOCKER.getCutoutQuads()));
-        putModel(event, "plug_power_adaptor#inventory", new ModelPluggableItem(POWER_ADAPTER.getCutoutQuads()));
+        // Pipe pluggable items use ordinary generated item models. Using the in-world pluggable baked model here makes
+        // inventory icons look like they are rendered with bad block lighting. The in-world bakers above still use the
+        // pluggable geometry when the parts are installed on pipes.
     	
         PipeFlowRendererItems.onModelBake();
 

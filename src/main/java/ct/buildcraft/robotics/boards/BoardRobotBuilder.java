@@ -12,7 +12,9 @@ import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.robots.ResourceIdBlock;
 import ct.buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildTask;
+import ct.buildcraft.builders.tile.IRobotBuilderTarget;
 import ct.buildcraft.builders.tile.TileBuilder;
+import ct.buildcraft.builders.tile.TileConstructionMarker;
 import ct.buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import ct.buildcraft.lib.misc.NBTUtilBC;
 import ct.buildcraft.robotics.BCRoboticsBoards;
@@ -29,11 +31,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * BuildCraft 7 style Builder robot for the modern Builder block.
+ * BuildCraft 7 style Builder robot.
  * <p>
- * The original 7.1 robot reserved a construction-marker slot, fetched the required stacks, flew to the destination,
- * and committed the slot. The port has no construction marker tile; the active Builder block is the closest equivalent,
- * so this board reserves blueprint positions from nearby Builder blocks and performs the same fetch -> fly -> build loop.
+ * It can reserve blueprint positions from nearby Builder blocks and from classic Construction Markers, then performs the
+ * same fetch -> fly -> build loop used by BuildCraft 7.
  */
 public class BoardRobotBuilder extends RedstoneBoardRobot {
     private static final int MAX_RANGE_SQ = 3 * 64 * 64;
@@ -62,7 +63,7 @@ public class BoardRobotBuilder extends RedstoneBoardRobot {
             return;
         }
 
-        TileBuilder builder = getTargetBuilder();
+        IRobotBuilderTarget builder = getTargetBuilder();
         if (currentTasks.isEmpty()) {
             if (robot.containsItems()) {
                 startDelegateAI(new AIRobotGotoStationAndUnload(robot));
@@ -114,7 +115,7 @@ public class BoardRobotBuilder extends RedstoneBoardRobot {
                 startDelegateAI(new AIRobotGotoSleep(robot));
             }
         } else if (ai instanceof AIRobotGotoBlock || ai instanceof AIRobotStraightMoveTo) {
-            TileBuilder builder = getTargetBuilder();
+            IRobotBuilderTarget builder = getTargetBuilder();
             if (!ai.success() || builder == null || currentTasks.isEmpty()) {
                 releaseCurrentTasks();
                 startDelegateAI(new AIRobotGotoSleep(robot));
@@ -155,13 +156,15 @@ public class BoardRobotBuilder extends RedstoneBoardRobot {
         releaseCurrentTasks();
     }
 
-    private TileBuilder reserveClosestTasks() {
-        List<TileBuilder> builders = new ArrayList<>(TileBuilder.getLoadedBuilders());
+    private IRobotBuilderTarget reserveClosestTasks() {
+        List<IRobotBuilderTarget> builders = new ArrayList<>();
+        builders.addAll(TileBuilder.getLoadedBuilders());
+        builders.addAll(TileConstructionMarker.getLoadedMarkers());
         builders.removeIf(builder -> builder == null || builder.getLevel() != robot.level || !builder.canRobotsBuild()
             || robot.blockPosition().distSqr(builder.getBlockPos()) > MAX_RANGE_SQ);
         builders.sort(Comparator.comparingDouble(builder -> robot.blockPosition().distSqr(builder.getBlockPos())));
 
-        for (TileBuilder builder : builders) {
+        for (IRobotBuilderTarget builder : builders) {
             if (robot.getZoneToWork() != null && !robot.getZoneToWork().contains(Vec3.atCenterOf(builder.getBlockPos()))) {
                 continue;
             }
@@ -176,16 +179,16 @@ public class BoardRobotBuilder extends RedstoneBoardRobot {
         return null;
     }
 
-    private TileBuilder getTargetBuilder() {
+    private IRobotBuilderTarget getTargetBuilder() {
         if (builderPos == null || robot.level == null || !robot.level.isLoaded(builderPos)) {
             return null;
         }
-        return robot.level.getBlockEntity(builderPos) instanceof TileBuilder builder ? builder : null;
+        return robot.level.getBlockEntity(builderPos) instanceof IRobotBuilderTarget builder ? builder : null;
     }
 
     private void releaseCurrentTasks() {
         if (!currentTasks.isEmpty()) {
-            TileBuilder builder = getTargetBuilder();
+            IRobotBuilderTarget builder = getTargetBuilder();
             for (RobotBuildTask task : currentTasks) {
                 if (builder != null) {
                     builder.releaseRobotBuildTask(robot, task);

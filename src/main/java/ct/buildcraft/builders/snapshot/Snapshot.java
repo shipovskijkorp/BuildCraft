@@ -227,12 +227,24 @@ public abstract class Snapshot {
         public final UUID owner;
         public final Date created;
         public final String name;
+        /** If true, a creative inserter may make the builder work without consuming materials. */
+        public final boolean allowCreative;
+        public final boolean canRotate;
+        public final boolean canExcavate;
 
         public Header(Key key, UUID owner, Date created, String name) {
+            this(key, owner, created, name, true, true, true);
+        }
+
+        public Header(Key key, UUID owner, Date created, String name, boolean allowCreative, boolean canRotate,
+            boolean canExcavate) {
             this.key = key;
             this.owner = owner;
             this.created = created;
             this.name = name;
+            this.allowCreative = allowCreative;
+            this.canRotate = canRotate;
+            this.canExcavate = canExcavate;
         }
 
         public Header(CompoundTag nbt) {
@@ -240,6 +252,11 @@ public abstract class Snapshot {
             owner = nbt.getUUID("owner");
             created = new Date(nbt.getLong("created"));
             name = nbt.getString("name");
+            // Old blueprints/templates did not store these switches. Keep their old behaviour:
+            // a creative inserter may build without materials, rotation is allowed, and excavation is allowed.
+            allowCreative = !nbt.contains("allowCreative") || nbt.getBoolean("allowCreative");
+            canRotate = !nbt.contains("canRotate") || nbt.getBoolean("canRotate");
+            canExcavate = !nbt.contains("canExcavate") || nbt.getBoolean("canExcavate");
         }
 
         public Header(FriendlyByteBuf buffer) {
@@ -247,6 +264,9 @@ public abstract class Snapshot {
             owner = buffer.readUUID();
             created = new Date(buffer.readLong());
             name = buffer.readUtf();
+            allowCreative = buffer.readBoolean();
+            canRotate = buffer.readBoolean();
+            canExcavate = buffer.readBoolean();
         }
 
         public CompoundTag serializeNBT() {
@@ -255,6 +275,9 @@ public abstract class Snapshot {
             nbt.putUUID("owner", owner);
             nbt.putLong("created", created.getTime());
             nbt.putString("name", name);
+            nbt.putBoolean("allowCreative", allowCreative);
+            nbt.putBoolean("canRotate", canRotate);
+            nbt.putBoolean("canExcavate", canExcavate);
             return nbt;
         }
 
@@ -263,6 +286,9 @@ public abstract class Snapshot {
             buffer.writeUUID(owner);
             buffer.writeLong(created.getTime());
             buffer.writeUtf(name);
+            buffer.writeBoolean(allowCreative);
+            buffer.writeBoolean(canRotate);
+            buffer.writeBoolean(canExcavate);
         }
 
         public Player getOwnerPlayer(Level world) {
@@ -277,7 +303,10 @@ public abstract class Snapshot {
                     key.equals(((Header) o).key) &&
                     owner.equals(((Header) o).owner) &&
                     created.equals(((Header) o).created) &&
-                    name.equals(((Header) o).name);
+                    name.equals(((Header) o).name) &&
+                    allowCreative == ((Header) o).allowCreative &&
+                    canRotate == ((Header) o).canRotate &&
+                    canExcavate == ((Header) o).canExcavate;
         }
 
         @Override
@@ -286,6 +315,9 @@ public abstract class Snapshot {
             result = 31 * result + owner.hashCode();
             result = 31 * result + created.hashCode();
             result = 31 * result + name.hashCode();
+            result = 31 * result + Boolean.hashCode(allowCreative);
+            result = 31 * result + Boolean.hashCode(canRotate);
+            result = 31 * result + Boolean.hashCode(canExcavate);
             return result;
         }
 

@@ -13,6 +13,7 @@ import ct.buildcraft.api.inventory.IItemTransactor;
 import ct.buildcraft.api.inventory.IItemTransactor.IItemInsertable;
 import ct.buildcraft.api.transport.IInjectable;
 import ct.buildcraft.api.transport.pipe.PipeApi;
+import ct.buildcraft.lib.misc.BlockUtil;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.InventoryUtil;
 import ct.buildcraft.lib.misc.StackUtil;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.IItemHandler;
@@ -40,6 +42,13 @@ public class ItemTransactorHelper {
         IItemTransactor trans = provider.getCapability(CapUtil.CAP_ITEM_TRANSACTOR, face).orElse(null);
         if (trans != null) {
             return trans;
+        }
+
+        if (provider instanceof BlockEntity blockEntity) {
+            Container doubleChest = BlockUtil.getCombinedDoubleChestContainer(blockEntity);
+            if (doubleChest != null) {
+                return new InventoryWrapper(doubleChest);
+            }
         }
 
         IItemHandler handler = provider.getCapability(CapUtil.CAP_ITEMS, face).orElse(null);

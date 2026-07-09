@@ -97,7 +97,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkEvent;
 
-public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileForTemplateBuilder, ITileForBlueprintBuilder, MenuProvider {
+public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileForTemplateBuilder, ITileForBlueprintBuilder, IRobotBuilderTarget, MenuProvider {
     public static final IdAllocator IDS = TileBC_Neptune.IDS.makeChild("builder");
     public static final int NET_CAN_EXCAVATE = IDS.allocId("CAN_EXCAVATE");
     public static final int NET_SNAPSHOT_TYPE = IDS.allocId("SNAPSHOT_TYPE");
@@ -233,6 +233,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             if (handler == invSnapshot) {
                 needsRestartAfterLoad = false;
                 reloadSnapshotFromItem(after, true, true);
+                applySnapshotSettingsFromInsertedItem(after, null);
                 sendNetworkUpdate(NET_SNAPSHOT_TYPE);
             }
             if (handler == invResources) {
@@ -267,6 +268,40 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             }
         }
         updateSnapshot(canGetFacing);
+    }
+
+    public void applySnapshotSettingsFromInsertedItem(ItemStack stack, Player player) {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        Snapshot.Header header = ItemSnapshot.getHeader(stack);
+        if (header == null) {
+            return;
+        }
+
+        boolean oldNeedMaterial = needMaterial;
+        boolean oldCanRotate = canRotate;
+        boolean oldCanExcavate = canExcavate;
+
+        // The blueprint only permits creative building if the architect-table author allowed it.
+        // The actual no-material mode still depends on the gamemode of the player who inserted the blueprint.
+        needMaterial = !(header.allowCreative && player != null && player.isCreative());
+        canRotate = header.canRotate;
+        canExcavate = header.canExcavate;
+
+        if (oldCanRotate != canRotate) {
+            reloadSnapshotFromItem(stack, false, true);
+        }
+        if (oldNeedMaterial != needMaterial) {
+            Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::resourcesChanged);
+        }
+        if (oldCanExcavate != canExcavate) {
+            Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::forceRecheckCurrentTask);
+            sendNetworkUpdate(NET_CAN_EXCAVATE);
+        }
+        if (oldNeedMaterial != needMaterial || oldCanRotate != canRotate || oldCanExcavate != canExcavate) {
+            setChanged();
+        }
     }
 
     private void restartSnapshotAfterLoad() {
@@ -321,15 +356,21 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::cancel);
         if (snapshot != null && getCurrentBasePos() != null) {
             snapshotType = snapshot.getType();
-            if (canGetFacing) {
+            if (canGetFacing && canRotate) {
                 rotation = Arrays.stream(Rotation.values()).filter(r -> r.rotate(snapshot.facing) == level
                     .getBlockState(worldPosition).getValue(BlockBCBase_Neptune.PROP_FACING)).findFirst().orElse(Rotation.NONE);
+            } else {
+                rotation = Rotation.NONE;
+            }
+            BlockPos buildBasePos = getCurrentBasePos();
+            if (!canRotate) {
+                buildBasePos = adjustBasePosIfOverlappingBuilder(buildBasePos, rotation);
             }
             if (snapshot.getType() == EnumSnapshotType.TEMPLATE) {
-                templateBuildingInfo = ((Template) snapshot).new BuildingInfo(getCurrentBasePos(), rotation);
+                templateBuildingInfo = ((Template) snapshot).new BuildingInfo(buildBasePos, rotation);
             }
             if (snapshot.getType() == EnumSnapshotType.BLUEPRINT) {
-                blueprintBuildingInfo = ((Blueprint) snapshot).new BuildingInfo(getCurrentBasePos(), rotation, level);
+                blueprintBuildingInfo = ((Blueprint) snapshot).new BuildingInfo(buildBasePos, rotation, level);
             }
             currentBox = Optional.ofNullable(getBuildingInfo()).map(buildingInfo -> buildingInfo.box).orElse(null);
             Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::updateSnapshot);
@@ -343,6 +384,38 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         if (currentBox == null) {
             currentBox = new Box();
         }
+    }
+
+    private BlockPos adjustBasePosIfOverlappingBuilder(BlockPos basePos, Rotation appliedRotation) {
+        Snapshot.BuildingInfo buildingInfo = createBuildingInfo(basePos, appliedRotation);
+        if (buildingInfo == null || !buildingInfo.box.contains(worldPosition)) {
+            return basePos;
+        }
+
+        Direction buildDirection = level.getBlockState(worldPosition).getValue(BlockBCBase_Neptune.PROP_FACING).getOpposite();
+        int maxShift = Math.max(1, Math.max(snapshot.size.getX(), snapshot.size.getZ())) + 1;
+        BlockPos shiftedBasePos = basePos;
+        for (int i = 0; i < maxShift; i++) {
+            shiftedBasePos = shiftedBasePos.offset(buildDirection.getNormal());
+            buildingInfo = createBuildingInfo(shiftedBasePos, appliedRotation);
+            if (buildingInfo == null || !buildingInfo.box.contains(worldPosition)) {
+                return shiftedBasePos;
+            }
+        }
+        return shiftedBasePos;
+    }
+
+    private Snapshot.BuildingInfo createBuildingInfo(BlockPos basePos, Rotation appliedRotation) {
+        if (snapshot == null || basePos == null) {
+            return null;
+        }
+        if (snapshot.getType() == EnumSnapshotType.TEMPLATE) {
+            return ((Template) snapshot).new BuildingInfo(basePos, appliedRotation);
+        }
+        if (snapshot.getType() == EnumSnapshotType.BLUEPRINT) {
+            return ((Blueprint) snapshot).new BuildingInfo(basePos, appliedRotation, level);
+        }
+        return null;
     }
 
     private void updateBasePoses() {

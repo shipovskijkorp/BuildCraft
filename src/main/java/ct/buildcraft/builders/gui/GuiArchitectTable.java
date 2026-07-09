@@ -74,14 +74,25 @@ public class GuiArchitectTable extends GuiBC8<ContainerArchitectTable> {
 		canRotate = (p&0b10) == 0b10;
 		canExcavate = (p&0b100) == 0b100;
 		
+        if (!canUseCreativeSetting()) {
+            isCreative = false;
+        }
+
 		this.isCreativeButton = this.addRenderableWidget(
 				CycleButton.booleanBuilder(Component.translatable("block.architect.allowCreative"), Component.translatable("block.architect.noallowCreative"))
+                    .withInitialValue(isCreative)
 					.displayOnlyValue().withTooltip((b) -> getFontRenderer().split(Component.translatable((b ? "block.architect.tooltip.allowCreative.1" : "block.architect.tooltip.allowCreative.2")), 60))
 					.create(leftPos + BUTTON_X, topPos + MODE_BUTTON_Y, BUTTON_W, BUTTON_H,
 						Component.empty(), (p_169727_, p_169728_) -> {
+                            if (!canUseCreativeSetting()) {
+                                this.isCreative = false;
+                                p_169727_.setValue(false);
+                                return;
+                            }
 							this.isCreative = p_169728_;
                             sendSettingsToServer();
 						}));
+        this.isCreativeButton.active = canUseCreativeSetting();
 		
 		this.enableRotateButton = this.addRenderableWidget(
 				CycleButton.onOffBuilder(canRotate).create(leftPos + BUTTON_X, topPos + ROTATE_BUTTON_Y, BUTTON_W, BUTTON_H,
@@ -100,8 +111,15 @@ public class GuiArchitectTable extends GuiBC8<ContainerArchitectTable> {
 		setInitialFocus(nameField);
 	}
 
+    private boolean canUseCreativeSetting() {
+        return container.creativePermission.get() != 0;
+    }
+
     private void sendSettingsToServer() {
-        container.setting.set((isCreative ? 1 : 0) | (canRotate ? 0b10 : 0) | (canExcavate ? 0b100 : 0));
+        if (!canUseCreativeSetting()) {
+            isCreative = false;
+        }
+        container.sendSettingsToServer((isCreative ? 1 : 0) | (canRotate ? 0b10 : 0) | (canExcavate ? 0b100 : 0));
     }
 
 	@Override
@@ -123,6 +141,27 @@ public class GuiArchitectTable extends GuiBC8<ContainerArchitectTable> {
         super.containerTick();
         if (nameField != null) {
 		    nameField.tick();
+        }
+        if (isCreativeButton != null) {
+            int settings = container.setting.get();
+            boolean allowed = canUseCreativeSetting();
+            boolean syncedCreative = allowed && (settings & 0b1) == 0b1;
+            boolean syncedRotate = (settings & 0b10) == 0b10;
+            boolean syncedExcavate = (settings & 0b100) == 0b100;
+
+            isCreativeButton.active = allowed;
+            if (syncedCreative != isCreative) {
+                isCreative = syncedCreative;
+                isCreativeButton.setValue(isCreative);
+            }
+            if (enableRotateButton != null && syncedRotate != canRotate) {
+                canRotate = syncedRotate;
+                enableRotateButton.setValue(canRotate);
+            }
+            if (canExcavateButton != null && syncedExcavate != canExcavate) {
+                canExcavate = syncedExcavate;
+                canExcavateButton.setValue(canExcavate);
+            }
         }
 	}
 

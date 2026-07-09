@@ -30,15 +30,18 @@ import net.minecraftforge.network.NetworkEvent;
 public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable> {
     private static final IdAllocator IDS = MenuBC_Neptune.IDS.makeChild("architect_table");
     private static final int ID_NAME = IDS.allocId("NAME");
+    private static final int ID_SETTINGS = IDS.allocId("SETTINGS");
     public String name = "";
     public final DataSlot setting;
+    public final DataSlot creativePermission;
    // public final ContainerData deltaProgress;
     
 	public ContainerArchitectTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-		this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(1), DataSlot.standalone(), createLevelAccess(playerInventory, buf));
+		this(containerId, playerInventory, new ItemHandlerSimple(1), new ItemHandlerSimple(1), DataSlot.standalone(), DataSlot.standalone(), createLevelAccess(playerInventory, buf));
 	}
 
-    public ContainerArchitectTable(int containerId, Inventory playerInventory, IItemHandlerAdv in, IItemHandlerAdv out, DataSlot setting, ContainerLevelAccess access) {
+    public ContainerArchitectTable(int containerId, Inventory playerInventory, IItemHandlerAdv in, IItemHandlerAdv out,
+        DataSlot setting, DataSlot creativePermission, ContainerLevelAccess access) {
 		super(BCBuildersGuis.MENU_ARCHITECT_TABLE.get(), playerInventory, containerId, access);
         addFullPlayerInventory(88, 84);
 
@@ -46,7 +49,9 @@ public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable>
         addSlot(new SlotOutput(out, 0, 194, 35));
         
         this.setting = setting;
+        this.creativePermission = creativePermission;
         addDataSlot(setting);
+        addDataSlot(creativePermission);
         
 //        this.deltaProgress = containerData;
        // addDataSlots(containerData);
@@ -65,6 +70,11 @@ public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable>
     	}
     }
 
+    public void sendSettingsToServer(int settings) {
+        sendMessage(ID_SETTINGS, buffer -> buffer.writeVarInt(settings));
+        this.setting.set(settings);
+    }
+
     @Override
     public void readMessage(int id, FriendlyByteBuf buffer, LogicalSide side, NetworkEvent.Context ctx) throws IOException {
         super.readMessage(id, buffer, side, ctx);
@@ -72,6 +82,9 @@ public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable>
             if (id == ID_NAME) {
                 tile.name = buffer.readUtf();
                 tile.sendNetworkUpdate(TileBC_Neptune.NET_RENDER_DATA);
+            } else if (id == ID_SETTINGS) {
+                Player sender = ctx.getSender() == null ? playerInventory.player : ctx.getSender();
+                tile.setSnapshotSettingsFromPlayer(buffer.readVarInt(), sender);
             }
         }
  /*       if (side == LogicalSide.CLIENT) {

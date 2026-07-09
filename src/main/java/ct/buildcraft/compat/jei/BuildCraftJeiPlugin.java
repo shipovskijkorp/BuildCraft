@@ -54,11 +54,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @JeiPlugin
@@ -175,11 +178,42 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static String formatMj(long microJoules) {
-        if (microJoules <= 0) {
-            return "0 MJ";
+        return MjAPI.formatMj(Math.max(0L, microJoules)) + " MJ";
+    }
+
+    private static ItemStack createFilledBucketStack(FluidStack fluidStack) {
+        if (fluidStack == null || fluidStack.isEmpty()) {
+            return ItemStack.EMPTY;
         }
-        long mj = microJoules / MjAPI.MJ;
-        return mj + " MJ";
+
+        FluidStack bucketFluid = fluidStack.copy();
+        bucketFluid.setAmount(FluidType.BUCKET_VOLUME);
+        ItemStack bucket = FluidUtil.getFilledBucket(bucketFluid);
+        if (bucket.isEmpty() && bucketFluid.getFluid().getBucket() != Items.AIR) {
+            bucket = new ItemStack(bucketFluid.getFluid().getBucket());
+        }
+        if (!bucket.isEmpty()) {
+            bucket.setCount(1);
+        }
+        return bucket;
+    }
+
+    private static void addFilledBucketFocus(IRecipeLayoutBuilder builder, RecipeIngredientRole role, FluidStack fluidStack) {
+        ItemStack bucket = createFilledBucketStack(fluidStack);
+        if (!bucket.isEmpty()) {
+            builder.addInvisibleIngredients(role).addItemStack(bucket);
+        }
+    }
+
+    private static IRecipeSlotBuilder addFluidSlot(IRecipeLayoutBuilder builder, RecipeIngredientRole role, int x, int y,
+            FluidStack fluidStack, IDrawable slotBackground) {
+        FluidStack shownFluid = fluidStack.copy();
+        IRecipeSlotBuilder slot = builder.addSlot(role, x, y)
+                .setBackground(slotBackground, -1, -1)
+                .setFluidRenderer(Math.max(1, shownFluid.getAmount()), false, 16, 16)
+                .addIngredient(ForgeTypes.FLUID_STACK, shownFluid);
+        addFilledBucketFocus(builder, role, shownFluid);
+        return slot;
     }
 
     public record ProgrammingRecipeView(BoardEntry board) {
@@ -631,18 +665,9 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             FluidStack outGas = recipe.outGas().copy();
             FluidStack outLiquid = recipe.outLiquid().copy();
 
-            builder.addSlot(RecipeIngredientRole.INPUT, 15, 18)
-                    .setBackground(slotBackground, -1, -1)
-                    .setFluidRenderer(Math.max(1, in.getAmount()), false, 16, 16)
-                    .addIngredient(ForgeTypes.FLUID_STACK, in);
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 8)
-                    .setBackground(slotBackground, -1, -1)
-                    .setFluidRenderer(Math.max(1, outGas.getAmount()), false, 16, 16)
-                    .addIngredient(ForgeTypes.FLUID_STACK, outGas);
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 30)
-                    .setBackground(slotBackground, -1, -1)
-                    .setFluidRenderer(Math.max(1, outLiquid.getAmount()), false, 16, 16)
-                    .addIngredient(ForgeTypes.FLUID_STACK, outLiquid);
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 15, 18, in, slotBackground);
+            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 8, outGas, slotBackground);
+            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 30, outLiquid, slotBackground);
         }
 
         @Override
@@ -653,12 +678,17 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class HeatExchangeCategory implements IRecipeCategory<HeatExchangeRecipeView> {
+        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
         private final IDrawable background;
         private final IDrawable icon;
+        private final IDrawable slotBackground;
+        private final IDrawable arrow;
 
         HeatExchangeCategory(IGuiHelper guiHelper) {
-            background = guiHelper.createBlankDrawable(150, 54);
+            background = guiHelper.createBlankDrawable(150, 58);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCFactoryItems.HEAT_EXCHANGE_BLOCK_ITEM.get()));
+            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
+            arrow = guiHelper.createDrawable(SLOT_TEXTURE, 28, 40, 12, 10);
         }
 
         @Override
@@ -683,18 +713,22 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, HeatExchangeRecipeView view, IFocusGroup focuses) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 18, 18).addIngredient(ForgeTypes.FLUID_STACK, view.recipe().in().copy());
+            FluidStack in = view.recipe().in().copy();
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 15, 18, in, slotBackground);
+
             FluidStack out = view.recipe().out();
             if (out != null && !out.isEmpty()) {
-                builder.addSlot(RecipeIngredientRole.OUTPUT, 108, 18).addIngredient(ForgeTypes.FLUID_STACK, out.copy());
+                FluidStack outCopy = out.copy();
+                addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 18, outCopy, slotBackground);
             }
         }
 
         @Override
         public void draw(HeatExchangeRecipeView recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+            arrow.draw(stack, 68, 22);
             String mode = recipe.heating() ? "Heat " : "Cool ";
             String text = mode + recipe.recipe().heatFrom() + " -> " + recipe.recipe().heatTo();
-            Minecraft.getInstance().font.draw(stack, text, 4, 42, 0xFF404040);
+            Minecraft.getInstance().font.draw(stack, text, 4, 48, 0xFF404040);
         }
     }
 }

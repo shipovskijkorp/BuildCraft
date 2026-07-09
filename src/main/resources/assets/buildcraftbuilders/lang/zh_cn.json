@@ -89,5 +89,7 @@
   "fillerpattern.sphere_eighth": "八分之一球",
   "fillerpattern.sphere_half": "半球",
   "fillerpattern.sphere_quarter": "四分之一球",
-  "fillerpattern.stairs": "楼梯"
+  "fillerpattern.stairs": "楼梯",
+  "block.buildcraftbuilders.marker_construction": "建筑标记",
+  "item.buildcraftbuilders.marker_construction": "建筑标记"
 }

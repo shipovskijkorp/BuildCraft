@@ -17,6 +17,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.cache.RemovalNotification;
 import com.google.common.collect.ImmutableMap;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -26,7 +27,9 @@ import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -69,6 +72,21 @@ public class LaserRenderer_BC8 {
 
     public static void clearModels() {
         COMPILED_LASER_TYPES.clear();
+    }
+
+    /**
+     * Marker/path lasers are rendered from RenderLevelStageEvent or custom block-entity buffers instead of the normal
+     * chunk model path. Optimized renderers such as Rubidium can leave a different GL state active for those hooks,
+     * so make the state explicit before drawing BuildCraft laser VBOs/immediate buffers.
+     */
+    public static void setupLaserRenderState() {
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(true);
+        RenderSystem.disableBlend();
+        RenderSystem.disableCull();
+        RenderSystem.setShader(GameRenderer::getBlockShader);
+        RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     private static CompiledLaserType compileType(LaserType laserType) {
@@ -157,6 +175,7 @@ public class LaserRenderer_BC8 {
 
     public static void renderLaserStatic(PoseStack pose, Matrix4f matrix, LaserData_BC8 data) {
         LaserCompiledList compiled = COMPILED_STATIC_LASERS.getUnchecked(data);//TODO
+        setupLaserRenderState();
         SpriteUtil.bindBlockTextureMap();
         compiled.render(pose, matrix);
     }

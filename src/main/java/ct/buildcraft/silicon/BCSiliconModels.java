@@ -131,11 +131,11 @@ public class BCSiliconModels {
     public static void onModelBake(BakingCompleted event) {
         putModel(event, "plug/gate#inventory", ModelGateItem.INSTANCE);
         putModel(event, "plug/lens#inventory", ModelLensItem.INSTANCE);
+        // The pulsar inventory model needs both the static base and the dynamic overlay. The plain JSON parent only
+        // renders pulsar_static, which leaves the item looking like a dark/empty square.
         PluggablePulsar.setModelVariablesForItem();
         putModel(event, "plug/pulsar#inventory",
             new ModelPluggableItem(PULSAR_STATIC.getCutoutQuads(), PULSAR_DYNAMIC.getCutoutQuads()));
-        putModel(event, "plug/light_sensor#inventory", new ModelPluggableItem(LIGHT_SENSOR.getCutoutQuads()));
-        putModel(event, "plug/timer#inventory", new ModelPluggableItem(TIMER.getCutoutQuads()));
         putModel(event, "plug/facade#inventory", ModelFacadeItem.INSTANCE);
 
         PlugGateBaker.onModelBake();

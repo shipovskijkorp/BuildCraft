@@ -1,1 +1,3 @@
-{"parent":"block/block"}
+{
+  "parent": "buildcrafttransport:plugs/power_adapter"
+}

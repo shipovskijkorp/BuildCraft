@@ -19,6 +19,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
+import ct.buildcraft.lib.client.render.laser.LaserRenderer_BC8;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -80,6 +81,7 @@ public enum DetachedRenderer {
     }
 
     public void renderWorldLastEvent(PoseStack pose, Matrix4f matrix, Player player, float partialTicks) {
+        LaserRenderer_BC8.setupLaserRenderState();
         RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
         for (RenderMatrixType type : RenderMatrixType.values()) {
             List<IDetachedRenderer> rendersForType = this.renders.get(type);

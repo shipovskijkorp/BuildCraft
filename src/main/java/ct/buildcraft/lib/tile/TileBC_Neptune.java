@@ -403,6 +403,15 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
         return owner != null;
     }
 
+    /**
+     * Returns the owner profile only if it is already known. Unlike {@link #getOwner()}, this does not create a
+     * fallback fake owner or log a warning, which makes it safe for passive tooltip/compat integrations.
+     */
+    @Nullable
+    public GameProfile getKnownOwner() {
+        return owner;
+    }
+
     @Override
     public GameProfile getOwner() {
         if (owner == null) {

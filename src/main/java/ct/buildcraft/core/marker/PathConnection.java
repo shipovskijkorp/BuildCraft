@@ -225,7 +225,7 @@ public class PathConnection extends MarkerConnection<PathConnection> {
     private static void renderLaser(PoseStack pose, Matrix4f matrix, Vec3 from, Vec3 to) {
         Vec3 one = offset(from, to);
         Vec3 two = offset(to, from);
-        LaserData_BC8 data = new LaserData_BC8(BuildCraftLaserManager.MARKER_PATH_CONNECTED, one, two, RENDER_SCALE);
+        LaserData_BC8 data = new LaserData_BC8(BuildCraftLaserManager.MARKER_PATH_CONNECTED, one, two, RENDER_SCALE, true, false, 0, false);
         LaserRenderer_BC8.renderLaserStatic(pose, matrix, data);
     }
 

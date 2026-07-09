@@ -13,10 +13,10 @@ import ct.buildcraft.lib.client.model.json.VariablePartLed;
 import ct.buildcraft.lib.client.reload.LibConfigChangeListener;
 import ct.buildcraft.lib.client.reload.ReloadManager;
 import ct.buildcraft.lib.client.render.DetachedRenderer;
+import ct.buildcraft.lib.client.render.laser.LaserRenderer_BC8;
 import ct.buildcraft.lib.client.render.DetachedRenderer.RenderMatrixType;
 import ct.buildcraft.lib.client.render.MarkerRenderer;
 import ct.buildcraft.lib.client.render.fluid.FluidRenderer;
-import ct.buildcraft.lib.client.render.laser.LaserRenderer_BC8;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import ct.buildcraft.lib.debug.BCAdvDebugging;
 import ct.buildcraft.lib.debug.ClientDebuggables;
@@ -140,7 +140,7 @@ public class BCLibEventDist {
 	@SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void renderWorldLast(RenderLevelStageEvent event) {
-    	if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_SOLID_BLOCKS) {
+    	if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
     		return ;
     	}
         Minecraft mc = Minecraft.getInstance();
@@ -150,6 +150,7 @@ public class BCLibEventDist {
         Matrix4f matrix = event.getProjectionMatrix();
         float partialTicks = event.getPartialTick();
         
+        LaserRenderer_BC8.setupLaserRenderState();
         DetachedRenderer.INSTANCE.renderWorldLastEvent(pose, matrix, player, partialTicks);
     }
 

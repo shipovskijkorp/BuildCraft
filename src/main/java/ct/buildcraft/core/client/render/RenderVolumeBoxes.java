@@ -20,6 +20,7 @@ import ct.buildcraft.core.marker.volume.IFastAddonRenderer;
 import ct.buildcraft.core.marker.volume.Lock;
 import ct.buildcraft.lib.client.render.DetachedRenderer;
 import ct.buildcraft.lib.client.render.laser.LaserBoxRenderer;
+import ct.buildcraft.lib.client.render.laser.LaserRenderer_BC8;
 import ct.buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
 import net.minecraft.world.entity.player.Player;
 
@@ -29,6 +30,7 @@ public enum RenderVolumeBoxes implements DetachedRenderer.IDetachedRenderer {
     @Override
 	public void render(PoseStack pose, Matrix4f matrix, Player player, float partialTicks) {
     	
+    	LaserRenderer_BC8.setupLaserRenderState();
     	BufferBuilder bb = Tesselator.getInstance().getBuilder();
     	bb.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
         ClientVolumeBoxes.INSTANCE.volumeBoxes.forEach(volumeBox -> {
@@ -50,6 +52,7 @@ public enum RenderVolumeBoxes implements DetachedRenderer.IDetachedRenderer {
                 ((IFastAddonRenderer<Addon>) addon.getRenderer()).renderAddonFast(addon, player, partialTicks, bb)
             );
         });
+        LaserRenderer_BC8.setupLaserRenderState();
         Tesselator.getInstance().end();
 		
 	}

@@ -11,8 +11,6 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector4f;
@@ -126,6 +124,10 @@ public class RenderTickListener {
     }
 
     public static void renderLast(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
+            return;
+        }
+        LaserRenderer_BC8.setupLaserRenderState();
         float partialTicks = event.getPartialTick();
         PoseStack poseStack = event.getPoseStack();
         Matrix4f matrix = event.getProjectionMatrix();
@@ -169,12 +171,14 @@ public class RenderTickListener {
             IBox box = ItemMapLocation.getPointBox(stack);
             if (box != null) {
                 Vec3[][] vectors = MAP_LOCATION_POINT[face.ordinal()];
-                GL11.glTranslated(box.min().getX(), box.min().getY(), box.min().getZ());
+                poseStack.pushPose();
+                poseStack.translate(box.min().getX(), box.min().getY(), box.min().getZ());
                 for (Vec3[] vec : vectors) {
                     LaserData_BC8 laser =
                         new LaserData_BC8(BuildCraftLaserManager.STRIPES_WRITE, vec[0], vec[1], 1 / 16.0);
                     LaserRenderer_BC8.renderLaserStatic(poseStack, matrix, laser);
                 }
+                poseStack.popPose();
             }
 
         } else if (type == MapLocationType.AREA) {

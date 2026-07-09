@@ -486,9 +486,8 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
             drawButton(pose, leftPos + FS_X, topPos + FS_Y, FS_W, FS_H, "FS",
                     insideRelativeButton(mouseX, mouseY, FS_X, FS_Y, FS_W, FS_H));
             if (container.tile != null) {
-                drawProgress(pose, RECT_PROGRESS, ICON_PROGRESS,
-                        1.0D,
-                        container.tile.deltaProgress.getDynamic(partialTicks) / (double) TileZonePlanner.CRAFT_TIME);
+                double progress = Mth.clamp(container.tile.deltaProgress.getDynamic(partialTicks), 0.0D, 1.0D);
+                drawProgress(pose, RECT_PROGRESS, ICON_PROGRESS, 1.0D, progress);
             }
         } else {
             GuiComponent.fill(pose, 0, 0, width, height, 0xFF_20_20_20);

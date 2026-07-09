@@ -113,7 +113,7 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
         DeltaManager.EnumNetworkVisibility.GUI_ONLY
     );
     
-    private boolean isCreative = true;
+    private boolean allowCreative = false;
     private boolean canRotate = true;
     private boolean canExcavate = true;
     
@@ -121,20 +121,57 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
 		
 		@Override
 		public void set(int p) {
-			isCreative = (p&0b1) == 1;
-			canRotate = (p&0b10) == 0b10;
-			canExcavate = (p&0b100) == 0b100;
+            setSnapshotSettings(p, true);
 		}
 		
 		@Override
 		public int get() {
-			return (isCreative ? 1 : 0) | (canRotate ? 0b10 : 0) | (canExcavate ? 0b100 : 0);
+            return getSnapshotSettings();
 		}
 	};
+
+    private static DataSlot createCreativePermissionSlot(Player player) {
+        return new DataSlot() {
+            @Override
+            public int get() {
+                return canPlayerUseCreativeBlueprintMode(player) ? 1 : 0;
+            }
+
+            @Override
+            public void set(int value) {
+            }
+        };
+    }
     
     public TileArchitectTable(BlockPos pos, BlockState state) {
 		super(BCBuildersBlocks.ARCHITECT_TILE_BC8.get(), pos, state);
 	}
+
+    public static boolean canPlayerUseCreativeBlueprintMode(Player player) {
+        return player != null && (player.isCreative() || player.hasPermissions(2));
+    }
+
+    public int getSnapshotSettings() {
+        return (allowCreative ? 1 : 0) | (canRotate ? 0b10 : 0) | (canExcavate ? 0b100 : 0);
+    }
+
+    public void setSnapshotSettingsFromPlayer(int settings, Player player) {
+        setSnapshotSettings(settings, canPlayerUseCreativeBlueprintMode(player));
+    }
+
+    private void setSnapshotSettings(int settings, boolean canUseCreativeMode) {
+        boolean oldAllowCreative = allowCreative;
+        boolean oldCanRotate = canRotate;
+        boolean oldCanExcavate = canExcavate;
+
+        allowCreative = canUseCreativeMode && (settings & 0b1) == 0b1;
+        canRotate = (settings & 0b10) == 0b10;
+        canExcavate = (settings & 0b100) == 0b100;
+
+        if (oldAllowCreative != allowCreative || oldCanRotate != canRotate || oldCanExcavate != canExcavate) {
+            setChanged();
+        }
+    }
 
     @Override
     public IdAllocator getIdAllocator() {
@@ -327,7 +364,10 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
                     snapshot.key,
                     getOwner().getId(),
                     new Date(),
-                    name
+                    name,
+                    allowCreative,
+                    canRotate,
+                    canExcavate
                 )
             )
         );
@@ -384,6 +424,9 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
         nbt.put("snapshotType", NBTUtilBC.writeEnum(snapshotType));
         nbt.putBoolean("isValid", isValid);
         nbt.putString("name", name);
+        nbt.putBoolean("allowCreative", allowCreative);
+        nbt.putBoolean("canRotate", canRotate);
+        nbt.putBoolean("canExcavate", canExcavate);
 	}
 
     @Override
@@ -398,6 +441,9 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
         snapshotType = NBTUtilBC.readEnum(nbt.get("snapshotType"), EnumSnapshotType.class);
         isValid = nbt.getBoolean("isValid");
         name = nbt.getString("name");
+        allowCreative = nbt.contains("allowCreative") && nbt.getBoolean("allowCreative");
+        canRotate = !nbt.contains("canRotate") || nbt.getBoolean("canRotate");
+        canExcavate = !nbt.contains("canExcavate") || nbt.getBoolean("canExcavate");
 	}
 
     @Override
@@ -426,7 +472,12 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
 
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-		return new ContainerArchitectTable(id, inventory, invSnapshotIn, invSnapshotOut, menuSetting, /* deltaProgress.getContainerData(), */ContainerLevelAccess.create(getLevel(), worldPosition));
+        if (!canPlayerUseCreativeBlueprintMode(player) && allowCreative) {
+            allowCreative = false;
+            setChanged();
+        }
+		return new ContainerArchitectTable(id, inventory, invSnapshotIn, invSnapshotOut, menuSetting,
+            createCreativePermissionSlot(player), /* deltaProgress.getContainerData(), */ContainerLevelAccess.create(getLevel(), worldPosition));
 	}
 
 	@Override

@@ -1,5 +1,3 @@
 {
-  "textures": {
-    "particle": "minecraft:missingno"
-  }
+  "parent": "buildcraftsilicon:plugs/light_sensor"
 }

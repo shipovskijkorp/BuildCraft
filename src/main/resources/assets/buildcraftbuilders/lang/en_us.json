@@ -89,5 +89,7 @@
   "fillerpattern.sphere_eighth": "Eighth-Sphere",
   "fillerpattern.sphere_half": "Hemisphere",
   "fillerpattern.sphere_quarter": "Quarter-sphere",
-  "fillerpattern.stairs": "Stairs"
+  "fillerpattern.stairs": "Stairs",
+  "block.buildcraftbuilders.marker_construction": "Construction Marker",
+  "item.buildcraftbuilders.marker_construction": "Construction Marker"
 }

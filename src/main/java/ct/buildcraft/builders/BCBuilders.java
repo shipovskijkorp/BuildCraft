@@ -14,6 +14,7 @@ import ct.buildcraft.builders.client.BlueprintTooltip;
 import ct.buildcraft.builders.client.BlueprintTooltipComponent;
 import ct.buildcraft.builders.client.render.RenderArchitectTable;
 import ct.buildcraft.builders.client.render.RenderBuilder;
+import ct.buildcraft.builders.client.render.RenderConstructionMarker;
 import ct.buildcraft.builders.client.render.RenderFiller;
 import ct.buildcraft.builders.client.render.RenderQuarry;
 import ct.buildcraft.builders.snapshot.MessageSnapshotRequest;
@@ -96,6 +97,7 @@ public class BCBuilders {
         	e.registerBlockEntityRenderer(BCBuildersBlocks.ARCHITECT_TILE_BC8.get(), RenderArchitectTable::new);
         	e.registerBlockEntityRenderer(BCBuildersBlocks.FILLER_TILE_BC8.get(), RenderFiller::new);
         	e.registerBlockEntityRenderer(BCBuildersBlocks.BUILDER_TILE_BC8.get(), RenderBuilder::new);
+            e.registerBlockEntityRenderer(BCBuildersBlocks.CONSTRUCTION_MARKER_TILE_BC8.get(), RenderConstructionMarker::new);
         }
         
         @SubscribeEvent

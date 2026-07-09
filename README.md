@@ -19,17 +19,10 @@ Why BC8 + BC7? BuildCraft 8 is the latest release with a fresh take on classic B
 
 ## Current Status
 
-Now in mod available > 95% of content from BC8 and BC7
+Now in mod available 100% of content from BC8 and BC7
 
-- Core: 100%
-- Transport 100%
-- Builders: 100%
-- Robotics: 100%
-- Factory 90%
-- Silicon 90%
-- Energy 90%
-
-
+- 1.19.2 - 100%
+- 1.20.1 - in progress
 
 ## Credits
 
@@ -51,3 +44,10 @@ Developed and ported by:
 
 *   CurativeTree
 *   ShipovskijKorp
+
+Thanks for the help in the development:
+
+* nightovl
+* pietruszka
+* Jimmy
+* DevMonnk

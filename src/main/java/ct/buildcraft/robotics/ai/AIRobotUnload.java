@@ -6,6 +6,7 @@ import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.api.transport.IInjectable;
 import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
+import ct.buildcraft.robotics.DockingStationPipe;
 import ct.buildcraft.robotics.statements.ActionRobotFilter;
 import ct.buildcraft.robotics.statements.ActionStationAcceptItems;
 import net.minecraft.core.Direction;
@@ -34,6 +35,11 @@ public class AIRobotUnload extends AIRobot {
             if (unload(robot, robot.getDockingStation(), true, requireAcceptAction)) {
                 waitedCycles = 0;
             } else {
+                DockingStation station = robot.getDockingStation();
+                if (robot.containsItems() && isTemporarilyBlocked(station)) {
+                    waitedCycles = 0;
+                    return;
+                }
                 setSuccess(!robot.containsItems());
                 terminate();
             }
@@ -81,6 +87,10 @@ public class AIRobotUnload extends AIRobot {
         return false;
     }
 
+    private static boolean isTemporarilyBlocked(DockingStation station) {
+        return station instanceof DockingStationPipe pipeStation && pipeStation.isItemOutputBusy();
+    }
+
     private static boolean canUnloadStack(DockingStation station, ItemStack stack, boolean requireAcceptAction) {
         if (station == null || stack.isEmpty()) {
             return false;
@@ -102,10 +112,15 @@ public class AIRobotUnload extends AIRobot {
             return false;
         }
 
-        // Classic gates can explicitly filter/allow unloading, but a plain robot station mounted on an item pipe should
-        // still be a valid unload point. Without this fallback picker robots come back with items and then fail forever
-        // unless the player has also installed a dedicated "station accepts items" gate action.
-        return station.getItemOutput() != null || station.getItemInput() != null;
+        // Classic gates can explicitly filter/allow unloading, but a plain robot station mounted on a normal item pipe
+        // is still a useful unload point. Do not use wooden item pipes as an implicit unload target though: in BC they
+        // are the loading/extraction side of a station, and treating them as automatic output makes picker robots dump
+        // cargo into the extraction line by accident. A wooden pipe can still be used for unloading when the player
+        // explicitly enables station.accept_items on its gate.
+        if (station instanceof DockingStationPipe pipeStation && pipeStation.isWoodenItemPipe()) {
+            return false;
+        }
+        return station.getItemOutput() != null;
     }
 
     private static ItemStack offer(DockingStation station, ItemStack stack, boolean doAdd) {

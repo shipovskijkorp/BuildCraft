@@ -209,7 +209,7 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
     @Override
     public void getDebugInfo(List<String> left, List<String> right, Direction side) {
         super.getDebugInfo(left, right, side);
-        left.add("esum = " + MjAPI.formatMj(esum) + " M");
+        left.add("esum = " + MjAPI.formatMj(esum) + " MJ");
         long e = 3 * getMaxPower() / 8 - power;
         left.add("output = " + MjAPI.formatMj(clamp(e + esum / 20, MIN_OUTPUT, MAX_OUTPUT)) + " MJ");
         left.add("burnTime = " + burnTime);

@@ -106,8 +106,10 @@ public class MutableVertex {
         // TEX_2F
         data[offset + 4] = Float.floatToRawIntBits(tex_u);
         data[offset + 5] = Float.floatToRawIntBits(tex_v);
-        // TEX_2S
+        // TEX_2S lightmap
         data[offset + 6] = lightc();
+        // NORMAL_3B
+        data[offset + 7] = normalToPackedInt();
     }
 
     public void toBakedItem(int[] data, int offset) {
@@ -120,8 +122,12 @@ public class MutableVertex {
         // TEX_2F
         data[offset + 4] = Float.floatToRawIntBits(tex_u);
         data[offset + 5] = Float.floatToRawIntBits(tex_v);
+        // TEX_2S lightmap. Keep item quads compatible with vanilla/Rubidium's expected BakedQuad layout.
+        // Item quads should be rendered with GUI/front lighting. A zero lightmap makes some renderers
+        // treat custom baked item quads as unlit/dark.
+        data[offset + 6] = 0x00F000F0;
         // NORMAL_3B
-        data[offset + 6] = normalToPackedInt();
+        data[offset + 7] = normalToPackedInt();
     }
 
     public void fromBakedBlock(int[] data, int offset) {
@@ -134,9 +140,10 @@ public class MutableVertex {
         // TEX_2F
         tex_u = Float.intBitsToFloat(data[offset + 4]);
         tex_v = Float.intBitsToFloat(data[offset + 5]);
-        // TEX_2S
+        // TEX_2S lightmap
         lighti(data[offset + 6]);
-        normalf(0, 1, 0);
+        // NORMAL_3B
+        normali(data[offset + 7]);
     }
 
     public void fromBakedItem(int[] data, int offset) {
@@ -149,9 +156,10 @@ public class MutableVertex {
         // TEX_2F
         tex_u = Float.intBitsToFloat(data[offset + 4]);
         tex_v = Float.intBitsToFloat(data[offset + 5]);
+        // TEX_2S lightmap
+        lighti(data[offset + 6]);
         // NORMAL_3B
-        normali(data[offset + 6]);
-        lightf(1, 1);
+        normali(data[offset + 7]);
     }
     
     // Rendering
@@ -409,7 +417,7 @@ public class MutableVertex {
     }
 
     public int lightc() {
-        return light_block << 4 + light_sky << 20;
+        return (light_block << 4) | (light_sky << 20);
     }
 
     public int[] lighti() {

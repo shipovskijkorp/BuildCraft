@@ -66,9 +66,7 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
     @PipeEventHandler
     public void configurePower(PipeEventPower.Configure event) {
         if (limitShift == MAX_SHIFT) {
-            event.setMaxPower(0);
-            event.setPowerLoss(0);
-            event.setPowerResistance(0);
+            event.disableTransfer();
         } else {
             event.setMaxPower(event.getMaxPower() >> limitShift);
         }

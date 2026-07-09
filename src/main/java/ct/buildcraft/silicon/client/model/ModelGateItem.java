@@ -46,7 +46,6 @@ public enum ModelGateItem implements BakedModel {
             List<BakedQuad> list = new ArrayList<>();
             MutableQuad[] quads = BCSiliconModels.getGateStaticQuads(Direction.WEST, variant);
             for (MutableQuad q : quads) {
-            	q.normald(0, 0, 0);//TODO check reason
                 list.add(q.toBakedItem());
             }
             for (MutableQuad q : BCSiliconModels.GATE_DYNAMIC.getCutoutQuads()) {
