@@ -152,9 +152,7 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
             }
         }
 
-        GuiHelpUtil.addRoot(mainGui, 8, 8, 160, 18, "buildcraft.help.list.name.title", 0xFF_66_AA_FF, "buildcraft.help.list.name.desc");
-        GuiHelpUtil.addRoot(mainGui, 8, 32, 160, 68, "buildcraft.help.list.entries.title", 0xFF_88_CC_88, "buildcraft.help.list.entries.desc");
-        GuiHelpUtil.addRoot(mainGui, 118, 50, 40, 34, "buildcraft.help.list.options.title", 0xFF_CC_AA_FF, "buildcraft.help.list.options.desc");
+        addHelpElements();
         mainGui.shownElements.add(new LedgerHelp(mainGui, false));
 
         textField = new EditBox(font, leftPos + 10, topPos + 10, 156, 12, Component.empty());
@@ -163,6 +161,31 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
         textField.setResponder(container::setLabel);
         addWidget(textField);
         setInitialFocus(textField);
+    }
+
+
+    private void addHelpElements() {
+        GuiHelpUtil.addRoot(mainGui, 8, 8, 160, 18, "buildcraft.help.list.name.title", 0xFF_66_AA_FF,
+            "buildcraft.help.list.name.desc");
+
+        for (int line = 0; line < ListHandler.HEIGHT; line++) {
+            int slotY = 32 + line * 34;
+            int buttonX = 8 + ListHandler.WIDTH * 18 - BUTTON_COUNT * 11;
+            int buttonY = slotY + 18;
+
+            GuiHelpUtil.addSlot(mainGui, 8, slotY, "buildcraft.help.list.reference.title", 0xFF_88_CC_88,
+                "buildcraft.help.list.reference.desc");
+            GuiHelpUtil.addRoot(mainGui, 25, slotY - 1, (ListHandler.WIDTH - 1) * 18, 18,
+                "buildcraft.help.list.extra_entries.title", 0xFF_77_BB_99,
+                "buildcraft.help.list.extra_entries.desc");
+
+            GuiHelpUtil.addRoot(mainGui, buttonX, buttonY, 11, 11, "buildcraft.help.list.precise.title",
+                0xFF_DD_CC_55, "buildcraft.help.list.precise.desc");
+            GuiHelpUtil.addRoot(mainGui, buttonX + 11, buttonY, 11, 11, "buildcraft.help.list.type.title",
+                0xFF_CC_AA_FF, "buildcraft.help.list.type.desc");
+            GuiHelpUtil.addRoot(mainGui, buttonX + 22, buttonY, 11, 11, "buildcraft.help.list.material.title",
+                0xFF_55_BB_DD, "buildcraft.help.list.material.desc");
+        }
     }
 
     @Override
