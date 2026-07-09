@@ -29,7 +29,7 @@ public final class InventoryWrapper extends AbstractInvItemTransactor {
             return stack;
         }
         if (current.isEmpty()) {
-            int max = Math.min(Container.getContainerSize(), stack.getMaxStackSize());
+            int max = Math.min(Container.getMaxStackSize(), stack.getMaxStackSize());
             ItemStack split = stack.split(max);
             if (!simulate) {
                 Container.setItem(slot, split);
@@ -41,22 +41,23 @@ public final class InventoryWrapper extends AbstractInvItemTransactor {
             }
         }
         if (StackUtil.canMerge(current, stack)) {
-            ItemStack merged = current.copy();
-            merged.setCount(merged.getCount() + stack.getCount());
-            int size = Math.min(Container.getContainerSize(), merged.getMaxStackSize());
-            if (merged.getCount() > size) {
-                stack.setCount(stack.getCount() - (merged.getCount() - size));
-                merged.setCount(size);
-                if (!simulate) {
-                    Container.setItem(slot, merged);
-                }
+            int max = Math.min(Container.getMaxStackSize(), current.getMaxStackSize());
+            int space = max - current.getCount();
+            if (space <= 0) {
                 return stack;
-            } else {
-                if (!simulate) {
-                    Container.setItem(slot, merged);
-                }
-                return StackUtil.EMPTY;
             }
+
+            int toMove = Math.min(space, stack.getCount());
+            ItemStack remaining = stack.copy();
+            remaining.shrink(toMove);
+
+            if (!simulate) {
+                ItemStack merged = current.copy();
+                merged.grow(toMove);
+                Container.setItem(slot, merged);
+            }
+
+            return remaining.isEmpty() ? StackUtil.EMPTY : remaining;
         }
         return stack;
     }

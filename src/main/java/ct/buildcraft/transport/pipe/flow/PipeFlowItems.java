@@ -543,8 +543,9 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         if (tryInsert.isCanceled() || tryInsert.accepted <= 0) {
             return stack;
         }
+        int accepted = getSingleTravellingStackCount(stack, tryInsert.accepted);
         ItemStack toSplit = stack.copy();
-        ItemStack toInsert = toSplit.split(tryInsert.accepted);
+        ItemStack toInsert = toSplit.split(accepted);
 
         if (doAdd) {
             insertItemEvents(toInsert, colour, speed, from);
@@ -569,58 +570,133 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         if (speed < 0.01) {
             speed = 0.01;
         }
-        long now = world.getGameTime();
-        TravellingItem item = new TravellingItem(stack);
+        ItemStack remaining = stack.copy();
+        while (!remaining.isEmpty()) {
+            ItemStack toInsert = splitSingleTravellingStack(remaining);
+            insertItemsForceSingle(toInsert, from, colour, speed);
+        }
+    }
+
+    /**
+     * Inserts an item from a robot station mounted on a pipe face. Robot stations are pluggables, not real pipe
+     * connections, so {@link #injectItem(ItemStack, boolean, Direction, DyeColor, double)} would reject the station
+     * side via {@link #canInjectItems(Direction)}. This method keeps the virtual station side but still goes through the
+     * normal TryInsert/OnInsert path so simulation and real insertion agree and pipe behaviours can clamp or reject the
+     * stack instead of the robot blindly deleting everything it carried.
+     */
+    public ItemStack injectItemFromRobotStation(@Nonnull ItemStack stack, boolean doAdd, Direction from,
+        DyeColor colour, double speed) {
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
+            throw new IllegalStateException("Cannot inject items on the client side!");
+        }
+        if (stack.isEmpty()) {
+            return StackUtil.EMPTY;
+        }
         if (from == null) {
-            // Find a reasonable alternative (as it's not allowed to be null)
-            for (Direction f : Direction.values()) {
-                if (!pipe.isConnected(f)) {
-                    item.side = f;
-                    break;
-                }
-            }
-            if (item.side == null) {
-                item.side = Direction.UP;
-            }
-        } else {
-            item.side = from;
+            return stack;
         }
-        item.toCenter = true;
-        item.speed = speed;
-        item.colour = colour;
-        item.genTimings(now, 0);
-        if (from != null) {
-            item.tried.add(from);
+        if (speed < 0.01) {
+            speed = 0.01;
         }
-        // Explicitly don't send this item to the client:
-        // There's little point in trying to render it
-        // seeing as it needs to travel 0 distance.
-        items.add(item.timeToDest, item);
+
+        PipeEventItem.TryInsert tryInsert = new PipeEventItem.TryInsert(pipe.getHolder(), this, colour, from, stack);
+        pipe.getHolder().fireEvent(tryInsert);
+        if (tryInsert.isCanceled() || tryInsert.accepted <= 0) {
+            return stack;
+        }
+
+        int accepted = getSingleTravellingStackCount(stack, tryInsert.accepted);
+        ItemStack toSplit = stack.copy();
+        ItemStack toInsert = toSplit.split(accepted);
+
+        if (doAdd) {
+            insertItemEvents(toInsert, colour, speed, from);
+        }
+
+        return toSplit.isEmpty() ? StackUtil.EMPTY : toSplit;
     }
 
     /** Used internally to split up manual insertions from controlled extractions. */
     private void insertItemEvents(@Nonnull ItemStack toInsert, DyeColor colour, double speed, Direction from) {
+        ItemStack remaining = toInsert.copy();
+        while (!remaining.isEmpty()) {
+            insertItemEventSingle(splitSingleTravellingStack(remaining), colour, speed, from);
+        }
+    }
+
+    private void insertItemEventSingle(@Nonnull ItemStack toInsert, DyeColor colour, double speed, Direction from) {
         IPipeHolder holder = pipe.getHolder();
 
         PipeEventItem.OnInsert onInsert = new PipeEventItem.OnInsert(holder, this, colour, toInsert, from);
         holder.fireEvent(onInsert);
 
-        if (onInsert.getStack().isEmpty()) {
+        ItemStack inserted = onInsert.getStack();
+        if (inserted.isEmpty()) {
+            return;
+        }
+
+        ItemStack remaining = inserted.copy();
+        while (!remaining.isEmpty()) {
+            addTravellingItem(splitSingleTravellingStack(remaining), onInsert.colour, speed, from, getPipeLength(from), true);
+        }
+    }
+
+    private void insertItemsForceSingle(@Nonnull ItemStack stack, Direction from, DyeColor colour, double speed) {
+        Direction side = from;
+        if (side == null) {
+            // Find a reasonable alternative (as it's not allowed to be null)
+            for (Direction f : Direction.values()) {
+                if (!pipe.isConnected(f)) {
+                    side = f;
+                    break;
+                }
+            }
+            if (side == null) {
+                side = Direction.UP;
+            }
+        }
+
+        // Explicitly don't send this item to the client:
+        // There's little point in trying to render it seeing as it needs to travel 0 distance.
+        addTravellingItem(stack, colour, speed, side, 0, false);
+    }
+
+    private void addTravellingItem(@Nonnull ItemStack stack, DyeColor colour, double speed, Direction from,
+        double distance, boolean sendToClient) {
+        if (stack.isEmpty()) {
             return;
         }
 
         Level world = pipe.getHolder().getPipeWorld();
         long now = world.getGameTime();
 
-        TravellingItem item = new TravellingItem(toInsert);
+        TravellingItem item = new TravellingItem(stack);
         item.side = from;
         item.toCenter = true;
         item.speed = speed;
-        item.colour = onInsert.colour;
-        item.stack = onInsert.getStack();
-        item.genTimings(now, getPipeLength(from));
-        item.tried.add(from);
-        addItemTryMerge(item);
+        item.colour = colour;
+        item.genTimings(now, distance);
+        if (from != null) {
+            item.tried.add(from);
+        }
+
+        if (sendToClient) {
+            addItemTryMerge(item);
+        } else {
+            items.add(item.timeToDest, item);
+        }
+    }
+
+    private static ItemStack splitSingleTravellingStack(ItemStack stack) {
+        return stack.split(getSingleTravellingStackCount(stack, stack.getCount()));
+    }
+
+    private static int getSingleTravellingStackCount(ItemStack stack, int accepted) {
+        if (stack.isEmpty() || accepted <= 0) {
+            return 0;
+        }
+        int max = Math.max(1, stack.getMaxStackSize());
+        return Math.min(Math.min(accepted, stack.getCount()), max);
     }
 
     private void addItemTryMerge(TravellingItem item) {

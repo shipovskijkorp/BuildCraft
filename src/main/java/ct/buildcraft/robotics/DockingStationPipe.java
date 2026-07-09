@@ -44,7 +44,8 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
         @Override
         public boolean canInjectItems(Direction from) {
             return getPipe() != null && getPipe().getPipe() != null
-                    && getPipe().getPipe().flow instanceof PipeFlowItems;
+                    && getPipe().getPipe().flow instanceof PipeFlowItems
+                    && normalizeOutputSide(from) != null;
         }
 
         @Override
@@ -55,15 +56,18 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
             if (getPipe() == null || !(getPipe().getPipe().flow instanceof PipeFlowItems items)) {
                 return stack;
             }
-            if (doAdd) {
-                // In PipeFlowItems the "from" side is the side the stack came from and it is excluded from routing
-                // when the item reaches the pipe centre. The robot station sits on side(), so use that side here. The
-                // old 1.7 transport used side().getOpposite(), but the 1.19 flow semantics are inverted compared to
-                // the old TravelingItem injection path; using the station side prevents picker output from instantly
-                // bouncing/dropping instead of travelling into the pipe network.
-                items.insertItemsForce(stack.copy(), normalizeOutputSide(from), color, speed);
+            Direction outputSide = normalizeOutputSide(from);
+            if (outputSide == null) {
+                return stack;
             }
-            return ItemStack.EMPTY;
+            if (doAdd && items.doesContainItems()) {
+                return stack;
+            }
+            // In PipeFlowItems the "from" side is the side the stack came from and it is excluded from routing when
+            // the item reaches the pipe centre. The robot station sits on side(), so use that side here. Unlike the
+            // old force-insert path this still fires the normal insertion events and returns the real remainder, so the
+            // robot only removes items that the pipe actually accepted.
+            return items.injectItemFromRobotStation(stack.copy(), doAdd, outputSide, color, speed);
         }
     };
 
@@ -227,6 +231,18 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     @Override
     public IInjectable getItemOutput() {
         return getPipe() != null && getPipe().getPipe().flow instanceof PipeFlowItems ? injectablePipe : null;
+    }
+
+    public boolean isWoodenItemPipe() {
+        return getPipe() != null && getPipe().getPipe() != null
+                && getPipe().getPipe().flow instanceof PipeFlowItems
+                && getPipe().getPipe().behaviour instanceof PipeBehaviourWood;
+    }
+
+    public boolean isItemOutputBusy() {
+        return getPipe() != null && getPipe().getPipe() != null
+                && getPipe().getPipe().flow instanceof PipeFlowItems items
+                && items.doesContainItems();
     }
 
     @Override

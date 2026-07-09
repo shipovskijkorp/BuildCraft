@@ -44,3 +44,10 @@ Developed and ported by:
 
 *   CurativeTree
 *   ShipovskijKorp
+
+Thanks for the help in the development:
+
+* nightovl
+* pietruszka
+* Jimmy
+* DevMonnk
