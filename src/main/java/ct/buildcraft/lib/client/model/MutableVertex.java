@@ -123,7 +123,9 @@ public class MutableVertex {
         data[offset + 4] = Float.floatToRawIntBits(tex_u);
         data[offset + 5] = Float.floatToRawIntBits(tex_v);
         // TEX_2S lightmap. Keep item quads compatible with vanilla/Rubidium's expected BakedQuad layout.
-        data[offset + 6] = 0;
+        // Item quads should be rendered with GUI/front lighting. A zero lightmap makes some renderers
+        // treat custom baked item quads as unlit/dark.
+        data[offset + 6] = 0x00F000F0;
         // NORMAL_3B
         data[offset + 7] = normalToPackedInt();
     }

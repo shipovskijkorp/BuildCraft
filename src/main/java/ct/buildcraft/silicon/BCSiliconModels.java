@@ -5,7 +5,6 @@ import ct.buildcraft.api.transport.pipe.PipeApiClient.IClientRegistry;
 import ct.buildcraft.api.transport.pluggable.IPluggableStaticBaker;
 import ct.buildcraft.lib.client.model.ModelHolderStatic;
 import ct.buildcraft.lib.client.model.ModelHolderVariable;
-import ct.buildcraft.lib.client.model.ModelPluggableItem;
 import ct.buildcraft.lib.client.model.MutableQuad;
 import ct.buildcraft.lib.client.model.plug.PlugBakerSimple;
 import ct.buildcraft.lib.expression.DefaultContexts;
@@ -131,11 +130,9 @@ public class BCSiliconModels {
     public static void onModelBake(BakingCompleted event) {
         putModel(event, "plug/gate#inventory", ModelGateItem.INSTANCE);
         putModel(event, "plug/lens#inventory", ModelLensItem.INSTANCE);
+        // These pluggable items use ordinary generated item icons. The dynamic/in-world pluggable baked models are
+        // intentionally not installed as inventory models because they render too dark in GUI slots.
         PluggablePulsar.setModelVariablesForItem();
-        putModel(event, "plug/pulsar#inventory",
-            new ModelPluggableItem(PULSAR_STATIC.getCutoutQuads(), PULSAR_DYNAMIC.getCutoutQuads()));
-        putModel(event, "plug/light_sensor#inventory", new ModelPluggableItem(LIGHT_SENSOR.getCutoutQuads()));
-        putModel(event, "plug/timer#inventory", new ModelPluggableItem(TIMER.getCutoutQuads()));
         putModel(event, "plug/facade#inventory", ModelFacadeItem.INSTANCE);
 
         PlugGateBaker.onModelBake();
