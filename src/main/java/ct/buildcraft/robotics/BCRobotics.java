@@ -83,6 +83,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
+import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
@@ -232,6 +233,11 @@ public class BCRobotics {
             event.registerEntityRenderer(BCRoboticsEntities.ROBOT.get(), RenderRobot::new);
         }
 
+
+        @SubscribeEvent
+        public static void onModelBakePre(RegisterAdditional event) {
+            BCRoboticsModels.onModelBakePre(event);
+        }
 
         @SubscribeEvent
         public static void onModelBake(BakingCompleted event) {

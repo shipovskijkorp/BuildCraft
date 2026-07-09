@@ -6,6 +6,7 @@ import ct.buildcraft.lib.client.model.ModelHolderStatic;
 import ct.buildcraft.robotics.client.model.plug.PlugBakerRobotStation;
 import ct.buildcraft.robotics.client.model.key.KeyRobotStation;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
+import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 
 public final class BCRoboticsModels {
     public static final ModelHolderStatic ROBOT_STATION_AVAILABLE = new ModelHolderStatic("buildcraftrobotics:pluggables/robot_station");
@@ -19,6 +20,16 @@ public final class BCRoboticsModels {
 
     public static void init() {
         PipeApiClient.registry.registerBaker(KeyRobotStation.class, BAKER_ROBOT_STATION);
+    }
+
+    /**
+     * Robot stations are rendered as pipe pluggables, so their models are not referenced from a normal blockstate.
+     * ModernFix's dynamic resource loading can skip such models unless the module explicitly marks them as required.
+     */
+    public static void onModelBakePre(RegisterAdditional event) {
+        event.register(ROBOT_STATION_AVAILABLE.modelLocation);
+        event.register(ROBOT_STATION_RESERVED.modelLocation);
+        event.register(ROBOT_STATION_LINKED.modelLocation);
     }
 
     public static void onModelBake(BakingCompleted event) {
