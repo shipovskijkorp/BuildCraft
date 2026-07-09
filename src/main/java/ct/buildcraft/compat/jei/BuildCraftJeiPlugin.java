@@ -175,11 +175,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static String formatMj(long microJoules) {
-        if (microJoules <= 0) {
-            return "0 MJ";
-        }
-        long mj = microJoules / MjAPI.MJ;
-        return mj + " MJ";
+        return MjAPI.formatMj(Math.max(0L, microJoules)) + " MJ";
     }
 
     public record ProgrammingRecipeView(BoardEntry board) {

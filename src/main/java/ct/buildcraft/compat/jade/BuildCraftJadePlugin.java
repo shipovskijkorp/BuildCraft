@@ -1,0 +1,803 @@
+/*
+ * Copyright (c) 2011-2018 SpaceToad and the BuildCraft team
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ */
+package ct.buildcraft.compat.jade;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import com.mojang.authlib.GameProfile;
+
+import ct.buildcraft.api.mj.IMjReadable;
+import ct.buildcraft.api.mj.MjAPI;
+import ct.buildcraft.api.robots.DockingStation;
+import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.api.transport.EnumWirePart;
+import ct.buildcraft.api.transport.pipe.IPipe.ConnectedType;
+import ct.buildcraft.api.transport.pluggable.PipePluggable;
+import ct.buildcraft.lib.block.BlockBCTile_Neptune;
+import ct.buildcraft.lib.engine.TileEngineBase_BC8;
+import ct.buildcraft.lib.fluid.Tank;
+import ct.buildcraft.lib.tile.TileBC_Neptune;
+import ct.buildcraft.robotics.entity.EntityRobot;
+import ct.buildcraft.robotics.tile.TileZonePlanner;
+import ct.buildcraft.silicon.tile.TileLaserTableBase;
+import ct.buildcraft.transport.pipe.Pipe;
+import ct.buildcraft.transport.tile.TilePipeHolder;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
+import snownee.jade.api.Accessor;
+import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.EntityAccessor;
+import snownee.jade.api.IBlockComponentProvider;
+import snownee.jade.api.IEntityComponentProvider;
+import snownee.jade.api.IServerDataProvider;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.IWailaClientRegistration;
+import snownee.jade.api.IWailaCommonRegistration;
+import snownee.jade.api.WailaPlugin;
+import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.view.ClientViewGroup;
+import snownee.jade.api.view.EnergyView;
+import snownee.jade.api.view.FluidView;
+import snownee.jade.api.view.IClientExtensionProvider;
+import snownee.jade.api.view.IServerExtensionProvider;
+import snownee.jade.api.view.ItemView;
+import snownee.jade.api.view.ProgressView;
+import snownee.jade.api.view.ViewGroup;
+
+@WailaPlugin
+public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin {
+    private static final String MODID = "buildcraftlib";
+    private static final String DATA_ROOT = "BuildCraft";
+
+    private static final ResourceLocation CONFIG_BLOCK = id("block_details");
+    private static final ResourceLocation CONFIG_OWNER = id("owner");
+    private static final ResourceLocation CONFIG_PIPE = id("pipe_details");
+    private static final ResourceLocation CONFIG_ROBOT = id("robot_details");
+
+    private static final ResourceLocation UID_BLOCK = id("block");
+    private static final ResourceLocation UID_ENTITY_ROBOT = id("robot");
+    private static final ResourceLocation UID_ITEMS = id("items");
+    private static final ResourceLocation UID_FLUIDS = id("fluids");
+    private static final ResourceLocation UID_MJ = id("mj");
+    private static final ResourceLocation UID_PROGRESS = id("progress");
+
+    private static final int PROVIDER_PRIORITY = -500;
+
+    private static ResourceLocation id(String path) {
+        return new ResourceLocation(MODID, "jade_" + path);
+    }
+
+    @Override
+    public void register(IWailaCommonRegistration registration) {
+        registration.registerBlockDataProvider(BlockProvider.INSTANCE, TileBC_Neptune.class);
+        registration.registerEntityDataProvider(RobotProvider.INSTANCE, EntityRobot.class);
+
+        registration.registerItemStorage(ItemStorageProvider.INSTANCE, TileBC_Neptune.class);
+        registration.registerItemStorage(ItemStorageProvider.INSTANCE, EntityRobotBase.class);
+
+        registration.registerFluidStorage(FluidStorageProvider.INSTANCE, TileBC_Neptune.class);
+        registration.registerFluidStorage(FluidStorageProvider.INSTANCE, EntityRobotBase.class);
+
+        registration.registerEnergyStorage(MjStorageProvider.INSTANCE, TileBC_Neptune.class);
+        registration.registerEnergyStorage(MjStorageProvider.INSTANCE, EntityRobotBase.class);
+
+        registration.registerProgress(ProgressProvider.INSTANCE, TileZonePlanner.class);
+        registration.registerProgress(ProgressProvider.INSTANCE, TileLaserTableBase.class);
+    }
+
+    @Override
+    public void registerClient(IWailaClientRegistration registration) {
+        registration.addConfig(CONFIG_BLOCK, true);
+        registration.addConfig(CONFIG_OWNER, false);
+        registration.addConfig(CONFIG_PIPE, true);
+        registration.addConfig(CONFIG_ROBOT, true);
+
+        registration.registerBlockComponent(BlockProvider.INSTANCE, BlockBCTile_Neptune.class);
+        registration.registerEntityComponent(RobotProvider.INSTANCE, EntityRobot.class);
+
+        registration.registerItemStorageClient(ItemStorageProvider.INSTANCE);
+        registration.registerFluidStorageClient(FluidStorageProvider.INSTANCE);
+        registration.registerEnergyStorageClient(MjStorageProvider.INSTANCE);
+        registration.registerProgressClient(ProgressProvider.INSTANCE);
+    }
+
+    private enum BlockProvider implements IBlockComponentProvider, IServerDataProvider<BlockEntity> {
+        INSTANCE;
+
+        @Override
+        public ResourceLocation getUid() {
+            return UID_BLOCK;
+        }
+
+        @Override
+        public int getDefaultPriority() {
+            return PROVIDER_PRIORITY;
+        }
+
+        @Override
+        public void appendServerData(CompoundTag data, ServerPlayer player, Level world, BlockEntity blockEntity, boolean showDetails) {
+            if (!(blockEntity instanceof TileBC_Neptune tile)) {
+                return;
+            }
+
+            CompoundTag root = new CompoundTag();
+            appendOwner(root, tile, showDetails);
+            appendEngine(root, tile);
+            appendPipe(root, tile, showDetails);
+            appendLaserTable(root, tile);
+            appendZonePlanner(root, tile);
+
+            if (!root.isEmpty()) {
+                data.put(DATA_ROOT, root);
+            }
+        }
+
+        @Override
+        public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+            if (!config.get(CONFIG_BLOCK, true)) {
+                return;
+            }
+            CompoundTag root = accessor.getServerData().getCompound(DATA_ROOT);
+            if (root.isEmpty()) {
+                return;
+            }
+
+            if (config.get(CONFIG_OWNER, false) && root.contains("Owner")) {
+                tooltip.add(line("owner", Component.literal(root.getString("Owner")).withStyle(ChatFormatting.WHITE)));
+            }
+
+            if (root.contains("Engine")) {
+                appendEngineTooltip(tooltip, root.getCompound("Engine"));
+            }
+            if (config.get(CONFIG_PIPE, true) && root.contains("Pipe")) {
+                appendPipeTooltip(tooltip, root.getCompound("Pipe"), accessor.showDetails());
+            }
+            if (root.contains("LaserTable")) {
+                appendLaserTooltip(tooltip, root.getCompound("LaserTable"));
+            }
+            if (root.contains("ZonePlanner")) {
+                appendZonePlannerTooltip(tooltip, root.getCompound("ZonePlanner"));
+            }
+        }
+    }
+
+    private enum RobotProvider implements IEntityComponentProvider, IServerDataProvider<Entity> {
+        INSTANCE;
+
+        @Override
+        public ResourceLocation getUid() {
+            return UID_ENTITY_ROBOT;
+        }
+
+        @Override
+        public int getDefaultPriority() {
+            return PROVIDER_PRIORITY;
+        }
+
+        @Override
+        public void appendServerData(CompoundTag data, ServerPlayer player, Level world, Entity entity, boolean showDetails) {
+            if (!(entity instanceof EntityRobot robot)) {
+                return;
+            }
+
+            CompoundTag root = new CompoundTag();
+            CompoundTag robotTag = new CompoundTag();
+            if (robot.getBoardEntry() != null) {
+                if (robot.getBoardEntry().id() != null) {
+                    robotTag.putString("Board", robot.getBoardEntry().id());
+                }
+                if (robot.getBoardEntry().key() != null) {
+                    robotTag.putString("BoardKey", robot.getBoardEntry().key());
+                }
+            }
+            robotTag.putBoolean("Sleeping", robot.isAsleepForRendering());
+            robotTag.putBoolean("Moving", robot.isMoving());
+            robotTag.putBoolean("Docked", robot.getDockingStation() != null);
+            robotTag.putBoolean("HasItems", robot.containsItems());
+            robotTag.putBoolean("HasFreeSlot", robot.hasFreeSlot());
+            robotTag.putInt("Energy", robot.getEnergy());
+            robotTag.putInt("EnergyMax", EntityRobotBase.MAX_ENERGY);
+
+            if (showDetails) {
+                DockingStation linked = robot.getLinkedStation();
+                DockingStation docked = robot.getDockingStation();
+                if (linked != null) {
+                    robotTag.putString("LinkedStation", stationToString(linked));
+                }
+                if (docked != null) {
+                    robotTag.putString("DockingStation", stationToString(docked));
+                }
+            }
+
+            root.put("Robot", robotTag);
+            data.put(DATA_ROOT, root);
+        }
+
+        @Override
+        public void appendTooltip(ITooltip tooltip, EntityAccessor accessor, IPluginConfig config) {
+            if (!config.get(CONFIG_ROBOT, true)) {
+                return;
+            }
+            CompoundTag root = accessor.getServerData().getCompound(DATA_ROOT);
+            CompoundTag robotTag = root.getCompound("Robot");
+            if (robotTag.isEmpty()) {
+                return;
+            }
+
+            if (robotTag.contains("BoardKey")) {
+                tooltip.add(line("robot.board", Component.translatable("buildcraft.boardRobot." + robotTag.getString("BoardKey")).withStyle(ChatFormatting.WHITE)));
+            } else if (robotTag.contains("Board")) {
+                tooltip.add(line("robot.board", Component.literal(robotTag.getString("Board")).withStyle(ChatFormatting.WHITE)));
+            }
+            tooltip.add(line("robot.state", robotState(robotTag)));
+            if (accessor.showDetails()) {
+                if (robotTag.contains("LinkedStation")) {
+                    tooltip.add(line("robot.linked_station", Component.literal(robotTag.getString("LinkedStation")).withStyle(ChatFormatting.WHITE)));
+                }
+                if (robotTag.contains("DockingStation")) {
+                    tooltip.add(line("robot.docking_station", Component.literal(robotTag.getString("DockingStation")).withStyle(ChatFormatting.WHITE)));
+                }
+            }
+        }
+    }
+
+    private enum ItemStorageProvider implements IServerExtensionProvider<Object, ItemStack>, IClientExtensionProvider<ItemStack, ItemView> {
+        INSTANCE;
+
+        @Override
+        public ResourceLocation getUid() {
+            return UID_ITEMS;
+        }
+
+        @Override
+        public int getDefaultPriority() {
+            return PROVIDER_PRIORITY;
+        }
+
+        @Override
+        public List<ViewGroup<ItemStack>> getGroups(ServerPlayer player, ServerLevel world, Object target, boolean showDetails) {
+            int maxSize = showDetails ? 54 : 9;
+            if (target instanceof EntityRobotBase robot) {
+                List<ItemStack> stacks = new ArrayList<>();
+                ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
+                if (!held.isEmpty()) {
+                    stacks.add(held.copy());
+                }
+                for (int i = 0; i < robot.getContainerSize(); i++) {
+                    ItemStack stack = robot.getItem(i);
+                    if (!stack.isEmpty()) {
+                        stacks.add(stack.copy());
+                    }
+                }
+                ViewGroup<ItemStack> group = ItemView.compacted(stacks.stream(), maxSize);
+                group.id = "robot";
+                return group.views.isEmpty() ? null : List.of(group);
+            }
+
+            if (target instanceof TileBC_Neptune tile) {
+                IItemHandler handler = firstItemHandler(tile);
+                if (handler == null || handler.getSlots() <= 0) {
+                    return null;
+                }
+                ViewGroup<ItemStack> group = ItemView.fromItemHandler(handler, maxSize, 0);
+                group.id = "inventory";
+                return group.views.isEmpty() ? null : List.of(group);
+            }
+            return null;
+        }
+
+        @Override
+        public List<ClientViewGroup<ItemView>> getClientGroups(Accessor<?> accessor, List<ViewGroup<ItemStack>> groups) {
+            return ClientViewGroup.map(groups, ItemView::new, BuildCraftJadePlugin::decorateGroupTitle);
+        }
+    }
+
+    private enum FluidStorageProvider implements IServerExtensionProvider<Object, CompoundTag>, IClientExtensionProvider<CompoundTag, FluidView> {
+        INSTANCE;
+
+        @Override
+        public ResourceLocation getUid() {
+            return UID_FLUIDS;
+        }
+
+        @Override
+        public int getDefaultPriority() {
+            return PROVIDER_PRIORITY;
+        }
+
+        @Override
+        public List<ViewGroup<CompoundTag>> getGroups(ServerPlayer player, ServerLevel world, Object target, boolean showDetails) {
+            if (target instanceof EntityRobotBase robot) {
+                List<ViewGroup<CompoundTag>> groups = FluidView.fromFluidHandler(robot);
+                if (groups == null || groups.isEmpty()) {
+                    return null;
+                }
+                groups.get(0).id = "robot_tank";
+                return groups;
+            }
+
+            if (target instanceof TileBC_Neptune tile) {
+                List<ViewGroup<CompoundTag>> groups = new ArrayList<>();
+                for (Tank tank : tile.tankManager) {
+                    int capacity = tank.getCapacity();
+                    if (capacity <= 0) {
+                        continue;
+                    }
+                    FluidStack fluid = tank.getFluid();
+                    if (fluid == null) {
+                        fluid = FluidStack.EMPTY;
+                    }
+                    ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(FluidView.fromFluidStack(fluid.copy(), capacity)));
+                    String tankName = tank.getTankName();
+                    group.id = tankName == null || tankName.isBlank() ? "tank" : tankName;
+                    groups.add(group);
+                }
+                if (!groups.isEmpty()) {
+                    return groups;
+                }
+
+                IFluidHandler handler = firstFluidHandler(tile);
+                if (handler == null || handler.getTanks() <= 0) {
+                    return null;
+                }
+                groups = FluidView.fromFluidHandler(handler);
+                if (groups == null || groups.isEmpty()) {
+                    return null;
+                }
+                groups.get(0).id = "tank";
+                return groups;
+            }
+            return null;
+        }
+
+        @Override
+        public List<ClientViewGroup<FluidView>> getClientGroups(Accessor<?> accessor, List<ViewGroup<CompoundTag>> groups) {
+            return ClientViewGroup.map(groups, FluidView::read, BuildCraftJadePlugin::decorateGroupTitle);
+        }
+    }
+
+    private enum MjStorageProvider implements IServerExtensionProvider<Object, CompoundTag>, IClientExtensionProvider<CompoundTag, EnergyView> {
+        INSTANCE;
+
+        @Override
+        public ResourceLocation getUid() {
+            return UID_MJ;
+        }
+
+        @Override
+        public int getDefaultPriority() {
+            return PROVIDER_PRIORITY;
+        }
+
+        @Override
+        public List<ViewGroup<CompoundTag>> getGroups(ServerPlayer player, ServerLevel world, Object target, boolean showDetails) {
+            if (target instanceof EntityRobotBase robot) {
+                CompoundTag tag = robotEnergyTag(robot.getBattery().getStored(), robot.getBattery().getCapacity());
+                ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
+                group.id = "robot_energy";
+                group.getExtraData().putString("Unit", "MJ");
+                return List.of(group);
+            }
+
+            if (target instanceof TileLaserTableBase table) {
+                long targetPower = Math.max(0L, table.getTarget());
+                if (targetPower > 0L) {
+                    CompoundTag tag = mjEnergyTag(table.power, targetPower);
+                    ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
+                    group.id = "mj";
+                    group.getExtraData().putString("Unit", "MJ");
+                    return List.of(group);
+                }
+            }
+
+            if (target instanceof TileEngineBase_BC8 engine) {
+                CompoundTag tag = mjEnergyTag(engine.getEnergyStored(), engine.getMaxPower());
+                ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
+                group.id = "mj";
+                group.getExtraData().putString("Unit", "MJ");
+                return List.of(group);
+            }
+
+            if (target instanceof TileBC_Neptune tile) {
+                List<ViewGroup<CompoundTag>> groups = mjReadableGroups(tile);
+                return groups.isEmpty() ? null : groups;
+            }
+            return null;
+        }
+
+        @Override
+        public List<ClientViewGroup<EnergyView>> getClientGroups(Accessor<?> accessor, List<ViewGroup<CompoundTag>> groups) {
+            return groups.stream().map(group -> {
+                String unit = group.getExtraData().getString("Unit");
+                ClientViewGroup<EnergyView> client = new ClientViewGroup<>(group.views.stream()
+                        .map(tag -> readEnergyView(tag, unit.isBlank() ? "MJ" : unit))
+                        .filter(view -> view != null)
+                        .toList());
+                decorateGroupTitle(group, client);
+                return client;
+            }).toList();
+        }
+    }
+
+    private enum ProgressProvider implements IServerExtensionProvider<Object, CompoundTag>, IClientExtensionProvider<CompoundTag, ProgressView> {
+        INSTANCE;
+
+        @Override
+        public ResourceLocation getUid() {
+            return UID_PROGRESS;
+        }
+
+        @Override
+        public int getDefaultPriority() {
+            return PROVIDER_PRIORITY;
+        }
+
+        @Override
+        public List<ViewGroup<CompoundTag>> getGroups(ServerPlayer player, ServerLevel world, Object target, boolean showDetails) {
+            if (target instanceof TileZonePlanner planner) {
+                if (planner.progress <= 0) {
+                    return null;
+                }
+                return progressGroup("zone_planner", clamp01(planner.progress / (float) TileZonePlanner.CRAFT_TIME));
+            }
+            if (target instanceof TileLaserTableBase table) {
+                long targetPower = table.getTarget();
+                if (targetPower <= 0L) {
+                    return null;
+                }
+                return progressGroup("laser", clamp01(table.power / (float) targetPower));
+            }
+            return null;
+        }
+
+        @Override
+        public List<ClientViewGroup<ProgressView>> getClientGroups(Accessor<?> accessor, List<ViewGroup<CompoundTag>> groups) {
+            return ClientViewGroup.map(groups, ProgressView::read, (serverGroup, clientGroup) -> {
+                decorateGroupTitle(serverGroup, clientGroup);
+                for (ProgressView view : clientGroup.views) {
+                    if (serverGroup.id != null) {
+                        view.text = Component.translatable("buildcraft.jade.progress." + safeTranslationPart(serverGroup.id));
+                    }
+                }
+            });
+        }
+    }
+
+    private static void appendOwner(CompoundTag root, TileBC_Neptune tile, boolean showDetails) {
+        if (!showDetails) {
+            return;
+        }
+        GameProfile owner = tile.getKnownOwner();
+        if (owner != null && owner.isComplete() && owner.getName() != null && !owner.getName().isBlank()) {
+            root.putString("Owner", owner.getName());
+        }
+    }
+
+    private static void appendEngine(CompoundTag root, TileBC_Neptune tile) {
+        if (!(tile instanceof TileEngineBase_BC8 engine)) {
+            return;
+        }
+        CompoundTag tag = new CompoundTag();
+        tag.putString("Stage", engine.getPowerStage().name().toLowerCase(Locale.ROOT));
+        tag.putDouble("Heat", engine.getHeat());
+        tag.putFloat("HeatLevel", (float) clamp01(engine.getHeatLevel()));
+        tag.putLong("Output", engine.currentOutput);
+        tag.putBoolean("Redstone", engine.isRedstonePowered);
+        tag.putBoolean("Burning", engine.isBurning());
+        root.put("Engine", tag);
+    }
+
+    private static void appendPipe(CompoundTag root, TileBC_Neptune tile, boolean showDetails) {
+        if (!(tile instanceof TilePipeHolder holder)) {
+            return;
+        }
+        Pipe pipe = holder.getPipe();
+        if (pipe == Pipe.EMPTY || pipe.definition == null) {
+            return;
+        }
+        CompoundTag tag = new CompoundTag();
+        tag.putString("Id", pipe.definition.identifier.toString());
+        DyeColor colour = pipe.getColour();
+        if (colour != null) {
+            tag.putString("Colour", colour.getName());
+        }
+
+        ListTag connections = new ListTag();
+        ListTag plugs = new ListTag();
+        for (Direction direction : Direction.values()) {
+            if (pipe.isConnected(direction)) {
+                ConnectedType type = pipe.getConnectedType(direction);
+                connections.add(StringTag.valueOf(direction.getName() + ":" + (type == null ? "unknown" : type.name().toLowerCase(Locale.ROOT))));
+            }
+            if (showDetails) {
+                PipePluggable plug = holder.getPluggable(direction);
+                if (plug != PipePluggable.EMPTY && plug.definition != null) {
+                    String plugText = direction.getName() + ":" + plug.definition.identifier;
+                    if (plug.isBlocking()) {
+                        plugText += ":blocking";
+                    }
+                    plugs.add(StringTag.valueOf(plugText));
+                }
+            }
+        }
+        if (!connections.isEmpty()) {
+            tag.put("Connections", connections);
+        }
+        if (!plugs.isEmpty()) {
+            tag.put("Plugs", plugs);
+        }
+
+        if (showDetails) {
+            ListTag wires = new ListTag();
+            for (var entry : holder.wireManager.parts.entrySet()) {
+                EnumWirePart part = entry.getKey();
+                DyeColor wireColour = entry.getValue();
+                String wire = part.name().toLowerCase(Locale.ROOT) + ":" + wireColour.getName();
+                if (holder.wireManager.isPowered(part)) {
+                    wire += ":powered";
+                }
+                wires.add(StringTag.valueOf(wire));
+            }
+            if (!wires.isEmpty()) {
+                tag.put("Wires", wires);
+            }
+        }
+        root.put("Pipe", tag);
+    }
+
+    private static void appendLaserTable(CompoundTag root, TileBC_Neptune tile) {
+        if (!(tile instanceof TileLaserTableBase table)) {
+            return;
+        }
+        long target = Math.max(0L, table.getTarget());
+        if (target <= 0L) {
+            return;
+        }
+        CompoundTag tag = new CompoundTag();
+        tag.putLong("Power", table.power);
+        tag.putLong("Target", target);
+        root.put("LaserTable", tag);
+    }
+
+    private static void appendZonePlanner(CompoundTag root, TileBC_Neptune tile) {
+        if (!(tile instanceof TileZonePlanner planner)) {
+            return;
+        }
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("Layer", planner.getCurrentSelectedArea() + 1);
+        if (planner.mapName != null && !planner.mapName.isBlank()) {
+            tag.putString("MapName", planner.mapName);
+        }
+        if (planner.progress > 0) {
+            tag.putFloat("Progress", clamp01(planner.progress / (float) TileZonePlanner.CRAFT_TIME));
+        }
+        root.put("ZonePlanner", tag);
+    }
+
+    private static void appendEngineTooltip(ITooltip tooltip, CompoundTag tag) {
+        tooltip.add(line("engine.stage", Component.translatable("buildcraft.jade.engine.stage." + safeTranslationPart(tag.getString("Stage"))).withStyle(ChatFormatting.WHITE)));
+        tooltip.add(line("engine.heat", Component.literal(String.format(Locale.ROOT, "%.1f C", tag.getDouble("Heat"))).withStyle(ChatFormatting.WHITE)));
+        long output = tag.getLong("Output");
+        if (output > 0L) {
+            tooltip.add(line("engine.output", Component.literal(MjAPI.formatMj(output) + " MJ/t").withStyle(ChatFormatting.WHITE)));
+        }
+        tooltip.add(line("engine.redstone", bool(tag.getBoolean("Redstone"))));
+    }
+
+    private static void appendPipeTooltip(ITooltip tooltip, CompoundTag tag, boolean showDetails) {
+        tooltip.add(line("pipe.id", Component.literal(tag.getString("Id")).withStyle(ChatFormatting.WHITE)));
+        if (tag.contains("Colour")) {
+            tooltip.add(line("pipe.colour", Component.translatable("color." + tag.getString("Colour").replace('_', '.')).withStyle(ChatFormatting.WHITE)));
+        }
+        int connectionCount = tag.getList("Connections", Tag.TAG_STRING).size();
+        tooltip.add(line("pipe.connections", Component.literal(Integer.toString(connectionCount)).withStyle(ChatFormatting.WHITE)));
+        if (showDetails) {
+            addStringList(tooltip, "pipe.connection", tag.getList("Connections", Tag.TAG_STRING));
+            addStringList(tooltip, "pipe.pluggable", tag.getList("Plugs", Tag.TAG_STRING));
+            addStringList(tooltip, "pipe.wire", tag.getList("Wires", Tag.TAG_STRING));
+        }
+    }
+
+    private static void appendLaserTooltip(ITooltip tooltip, CompoundTag tag) {
+        tooltip.add(line("laser.required", Component.literal(MjAPI.formatMj(Math.max(0L, tag.getLong("Target") - tag.getLong("Power"))) + " MJ").withStyle(ChatFormatting.WHITE)));
+    }
+
+    private static void appendZonePlannerTooltip(ITooltip tooltip, CompoundTag tag) {
+        tooltip.add(line("zone.layer", Component.literal(Integer.toString(tag.getInt("Layer"))).withStyle(ChatFormatting.WHITE)));
+        if (tag.contains("MapName")) {
+            tooltip.add(line("zone.name", Component.literal(tag.getString("MapName")).withStyle(ChatFormatting.WHITE)));
+        }
+    }
+
+    private static IItemHandler firstItemHandler(TileBC_Neptune tile) {
+        for (Direction side : nullableDirections()) {
+            LazyOptional<IItemHandler> optional = tile.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER, side);
+            IItemHandler handler = optional.orElse(null);
+            if (handler != null && handler.getSlots() > 0) {
+                return handler;
+            }
+        }
+        return null;
+    }
+
+    private static IFluidHandler firstFluidHandler(TileBC_Neptune tile) {
+        for (Direction side : nullableDirections()) {
+            LazyOptional<IFluidHandler> optional = tile.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER, side);
+            IFluidHandler handler = optional.orElse(null);
+            if (handler != null && handler.getTanks() > 0) {
+                return handler;
+            }
+        }
+        return null;
+    }
+
+    private static List<ViewGroup<CompoundTag>> mjReadableGroups(TileBC_Neptune tile) {
+        List<ViewGroup<CompoundTag>> groups = new ArrayList<>();
+        Set<IMjReadable> seen = Collections.newSetFromMap(new IdentityHashMap<>());
+        for (Direction side : nullableDirections()) {
+            IMjReadable readable = tile.getCapability(MjAPI.CAP_READABLE, side).orElse(null);
+            if (readable == null || !seen.add(readable)) {
+                continue;
+            }
+            if (readable.getCapacity() <= 0L) {
+                continue;
+            }
+            CompoundTag tag = mjEnergyTag(readable.getStored(), readable.getCapacity());
+            ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
+            group.id = "mj";
+            group.getExtraData().putString("Unit", "MJ");
+            groups.add(group);
+        }
+        return groups;
+    }
+
+    private static Direction[] nullableDirections() {
+        Direction[] values = Direction.values();
+        Direction[] sides = new Direction[values.length + 1];
+        sides[0] = null;
+        System.arraycopy(values, 0, sides, 1, values.length);
+        return sides;
+    }
+
+    private static CompoundTag robotEnergyTag(long currentRobotEnergy, long capacityRobotEnergy) {
+        return mjEnergyTag(EntityRobot.robotEnergyToMicroMj(currentRobotEnergy), EntityRobot.robotEnergyToMicroMj(capacityRobotEnergy));
+    }
+
+    private static CompoundTag mjEnergyTag(long current, long capacity) {
+        CompoundTag tag = energyTag(current, capacity, MjAPI.MJ);
+        tag.putString("Unit", "MJ");
+        tag.putLong("MicroCur", Math.max(0L, current));
+        tag.putLong("MicroCapacity", Math.max(0L, capacity));
+        return tag;
+    }
+
+    private static EnergyView readEnergyView(CompoundTag tag, String unit) {
+        String tagUnit = tag.getString("Unit");
+        if (("MJ".equals(unit) || "MJ".equals(tagUnit)) && tag.contains("MicroCapacity", Tag.TAG_LONG)) {
+            long capacity = tag.getLong("MicroCapacity");
+            if (capacity <= 0L) {
+                return null;
+            }
+            long current = Math.max(0L, Math.min(capacity, tag.getLong("MicroCur")));
+            EnergyView view = new EnergyView();
+            view.current = MjAPI.formatMj(current) + " MJ";
+            view.max = MjAPI.formatMj(capacity) + " MJ";
+            view.ratio = (float) (current / (double) capacity);
+            view.overrideText = Component.literal(view.current + " / " + view.max).withStyle(ChatFormatting.WHITE);
+            return view;
+        }
+        return EnergyView.read(tag, unit);
+    }
+
+    private static CompoundTag energyTag(long current, long capacity, long divisor) {
+        int max = toDisplayEnergy(capacity, divisor);
+        int cur = Math.min(max, toDisplayEnergy(current, divisor));
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("Capacity", max);
+        tag.putInt("Cur", Math.max(0, cur));
+        return tag;
+    }
+
+    private static int toDisplayEnergy(long value, long divisor) {
+        if (value <= 0L) {
+            return 0;
+        }
+        long safeDivisor = Math.max(1L, divisor);
+        long scaled = (value + safeDivisor - 1L) / safeDivisor;
+        return scaled > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) scaled;
+    }
+
+    private static List<ViewGroup<CompoundTag>> progressGroup(String id, float progress) {
+        ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(ProgressView.create(progress)));
+        group.id = id;
+        return List.of(group);
+    }
+
+    private static void decorateGroupTitle(ViewGroup<?> serverGroup, ClientViewGroup<?> clientGroup) {
+        if (serverGroup.id == null || serverGroup.id.isBlank()) {
+            return;
+        }
+        String id = safeTranslationPart(serverGroup.id);
+        switch (id) {
+            case "robot", "inventory", "tank", "robot_tank", "robot_energy", "mj", "zone_planner", "laser" ->
+                    clientGroup.title = Component.translatable("buildcraft.jade.group." + id);
+            default -> clientGroup.title = Component.translatable("buildcraft.jade.group.generic", Component.literal(serverGroup.id));
+        }
+    }
+
+    private static Component robotState(CompoundTag robotTag) {
+        String state;
+        if (robotTag.getBoolean("Sleeping")) {
+            state = "sleeping";
+        } else if (robotTag.getBoolean("Docked")) {
+            state = "docked";
+        } else if (robotTag.getBoolean("Moving")) {
+            state = "moving";
+        } else {
+            state = "idle";
+        }
+        return Component.translatable("buildcraft.jade.robot.state." + state).withStyle(ChatFormatting.WHITE);
+    }
+
+    private static Component bool(boolean value) {
+        return Component.translatable(value ? "buildcraft.jade.yes" : "buildcraft.jade.no").withStyle(value ? ChatFormatting.GREEN : ChatFormatting.RED);
+    }
+
+    private static Component line(String key, Component value) {
+        return Component.translatable("buildcraft.jade." + key, value).withStyle(ChatFormatting.GRAY);
+    }
+
+    private static void addStringList(ITooltip tooltip, String key, ListTag list) {
+        for (Tag entry : list) {
+            tooltip.add(line(key, Component.literal(entry.getAsString()).withStyle(ChatFormatting.WHITE)));
+        }
+    }
+
+    private static String stationToString(DockingStation station) {
+        Direction side = station.side();
+        return station.x() + ", " + station.y() + ", " + station.z() + (side == null ? "" : " / " + side.getName());
+    }
+
+    private static float clamp01(float value) {
+        if (Float.isNaN(value) || value <= 0.0F) {
+            return 0.0F;
+        }
+        return Math.min(1.0F, value);
+    }
+
+    private static double clamp01(double value) {
+        if (Double.isNaN(value) || value <= 0.0D) {
+            return 0.0D;
+        }
+        return Math.min(1.0D, value);
+    }
+
+    private static String safeTranslationPart(String id) {
+        return id.toLowerCase(Locale.ROOT).replace(':', '.').replace('/', '.').replace('-', '_');
+    }
+}

@@ -144,5 +144,6 @@
   "buildcraft.boardRobot.knight": "骑士",
   "buildcraft.boardRobot.bomber": "爆破",
   "buildcraft.boardRobot.stripes": "条纹",
-  "buildcraft.boardRobot.builder": "建筑"
+  "buildcraft.boardRobot.builder": "建筑",
+  "entity.buildcraftrobotics.robot": "机器人"
 }

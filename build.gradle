@@ -161,6 +161,11 @@ dependencies {
     compileOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
     runtimeOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
 
+    // Jade API/full jar for optional Jade compatibility.
+    // Put Jade-1.19.1-forge-8.9.2.jar into ./libs.
+    compileOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
+    runtimeOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
+
 	implementation fg.deobf("blank:ic2-1.19.2:1.0")
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

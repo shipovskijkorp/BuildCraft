@@ -86,7 +86,8 @@ public class ItemRobot extends Item {
             if (board.isInDev()) {
                 tooltip.add(Component.translatable("tooltip.buildcraftrobotics.in_dev").withStyle(ChatFormatting.RED));
             }
-            tooltip.add(Component.translatable("tooltip.buildcraftrobotics.robot.energy", getEnergy(stack), EntityRobotBase.MAX_ENERGY)
+            tooltip.add(Component.translatable("tooltip.buildcraftrobotics.robot.energy",
+                    EntityRobot.formatRobotEnergy(getEnergy(stack)), EntityRobot.formatRobotEnergy(EntityRobotBase.MAX_ENERGY))
                     .withStyle(ChatFormatting.GRAY));
         }
     }

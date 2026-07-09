@@ -63,7 +63,7 @@ public class ItemRedstoneBoard extends Item {
             if (board.isInDev()) {
                 tooltip.add(Component.translatable("tooltip.buildcraftrobotics.in_dev").withStyle(ChatFormatting.RED));
             }
-            tooltip.add(Component.translatable("tooltip.buildcraftrobotics.board.energy", board.energyCost()).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("tooltip.buildcraftrobotics.board.energy", BCRoboticsBoards.formatBoardEnergyCost(board.energyCost())).withStyle(ChatFormatting.GRAY));
         }
     }
 }

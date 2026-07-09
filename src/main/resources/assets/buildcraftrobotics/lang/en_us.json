@@ -144,5 +144,6 @@
   "buildcraft.boardRobot.knight": "Knight",
   "buildcraft.boardRobot.bomber": "Bomber",
   "buildcraft.boardRobot.stripes": "Stripes",
-  "buildcraft.boardRobot.builder": "Builder"
+  "buildcraft.boardRobot.builder": "Builder",
+  "entity.buildcraftrobotics.robot": "Robot"
 }

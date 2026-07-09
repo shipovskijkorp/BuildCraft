@@ -290,7 +290,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         left.add("GasOut = " + tankGasOut.getDebugString());
         left.add("LiquidOut = " + tankLiquidOut.getDebugString());
         left.add("Battery = " + mjBattery.getDebugString());
-        left.add("Progress = " + MjAPI.formatMj(distillPower));
+        left.add("Progress = " + MjAPI.formatMj(distillPower) + " MJ");
         left.add("Rate = " + LocaleUtil.localizeMjFlow(powerAvgClient));
         left.add("CurrRecipe = " + currentRecipe);
     }

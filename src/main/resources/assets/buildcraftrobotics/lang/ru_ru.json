@@ -144,5 +144,6 @@
   "buildcraft.boardRobot.knight": "Рыцарь",
   "buildcraft.boardRobot.bomber": "Бомбардировщик",
   "buildcraft.boardRobot.stripes": "Полосатый",
-  "buildcraft.boardRobot.builder": "Строитель"
+  "buildcraft.boardRobot.builder": "Строитель",
+  "entity.buildcraftrobotics.robot": "Робот"
 }

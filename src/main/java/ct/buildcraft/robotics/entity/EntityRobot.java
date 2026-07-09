@@ -83,8 +83,8 @@ import net.minecraftforge.network.NetworkHooks;
 public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpawnData {
     private static final Set<Item> BLACKLISTED_ITEMS_FOR_UPDATE = new HashSet<>();
     private static final double ROBOT_HALF_SIZE = 0.25D;
-    /** Number of old 1.7 robot-energy units gained per 1 MJ from the modern micro-MJ network. */
-    private static final long ROBOT_ENERGY_PER_MJ = 100L;
+    /** Number of internal robot charge units that represent one BuildCraft Minecraft Joule. */
+    public static final long ENERGY_UNITS_PER_MJ = 100L;
     private static final EntityDataAccessor<Boolean> ROBOT_ASLEEP = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> ROBOT_AIM_YAW = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> ROBOT_AIM_PITCH = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.FLOAT);
@@ -129,7 +129,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private boolean firstUpdateDone;
     private boolean convertingToItems;
     private int ticksCharging;
-    /** Fractional charge accumulator, stored as (microJoules * ROBOT_ENERGY_PER_MJ) % MjAPI.MJ. */
+    /** Fractional charge accumulator, stored as (microJoules * ENERGY_UNITS_PER_MJ) % MjAPI.MJ. */
     private long chargeRemainder;
 
     public EntityRobot(EntityType<? extends EntityRobot> type, Level level) {
@@ -148,6 +148,29 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 .add(Attributes.MAX_HEALTH, 1.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.0D)
                 .add(Attributes.FOLLOW_RANGE, 4.0D);
+    }
+
+    /**
+     * Converts the robotics internal charge unit into BuildCraft power units.
+     *
+     * <p>The robot battery intentionally stores old robotics charge units for AI costs and balancing. Display code and
+     * {@link ct.buildcraft.api.mj.IMjReadable} implementations must expose real BuildCraft micro-MJ instead.</p>
+     */
+    public static long robotEnergyToMicroMj(long robotEnergy) {
+        if (robotEnergy <= 0L) {
+            return 0L;
+        }
+        long maxBeforeMultiply = Long.MAX_VALUE / MjAPI.MJ;
+        if (robotEnergy > maxBeforeMultiply) {
+            return Long.MAX_VALUE;
+        }
+        return robotEnergy * MjAPI.MJ / ENERGY_UNITS_PER_MJ;
+    }
+
+    /** Formats internal robot charge as player-facing BuildCraft Minecraft Joules, without appending the MJ suffix. */
+    public static String formatRobotEnergy(long robotEnergy) {
+        long clamped = Math.max(0L, Math.min((long) MAX_ENERGY, robotEnergy));
+        return MjAPI.formatMj(robotEnergyToMicroMj(clamped));
     }
 
     public void setBoard(BoardEntry entry) {
@@ -205,7 +228,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             return 0;
         }
         long numeratorNeeded = requestedEnergy * MjAPI.MJ - Math.min(chargeRemainder, MjAPI.MJ - 1);
-        return ceilDiv(numeratorNeeded, ROBOT_ENERGY_PER_MJ);
+        return ceilDiv(numeratorNeeded, ENERGY_UNITS_PER_MJ);
     }
 
     public long receivePower(long maxReceive, FluidAction action) {
@@ -222,7 +245,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
         long accepted = Math.min(maxReceive, getMjPowerRequestedForCharging());
         if (accepted > 0 && action.execute()) {
-            long numerator = accepted * ROBOT_ENERGY_PER_MJ + chargeRemainder;
+            long numerator = accepted * ENERGY_UNITS_PER_MJ + chargeRemainder;
             long energyReceived = numerator / MjAPI.MJ;
             chargeRemainder = numerator % MjAPI.MJ;
 

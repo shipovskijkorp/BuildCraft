@@ -12,6 +12,7 @@ import ct.buildcraft.api.boards.RedstoneBoardNBT;
 import ct.buildcraft.api.boards.RedstoneBoardRegistry;
 import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.boards.RedstoneBoardRobotNBT;
+import ct.buildcraft.api.mj.MjAPI;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.boards.BoardRobotCarrier;
 import ct.buildcraft.robotics.boards.BoardRobotDelivery;
@@ -80,6 +81,17 @@ public final class BCRoboticsBoards {
         ENTRIES_BY_ID.put(legacyId, entry);
         ENTRIES_BY_KEY.put(key, entry);
         return entry;
+    }
+
+    /**
+     * Board programming costs are stored as whole BuildCraft MJ values for 1.7 compatibility and recipe balancing.
+     * Convert only when displaying them through the modern micro-MJ formatter.
+     */
+    public static String formatBoardEnergyCost(int energyCostMj) {
+        if (energyCostMj <= 0) {
+            return MjAPI.formatMj(0);
+        }
+        return MjAPI.formatMj((long) energyCostMj * MjAPI.MJ);
     }
 
     public static void init() {
@@ -217,7 +229,7 @@ public final class BCRoboticsBoards {
         public void addInformation(ItemStack stack, Player player, List<Component> list, boolean advanced) {
             BoardEntry entry = getById(id);
             if (entry.energyCost() > 0) {
-                list.add(Component.translatable("tooltip.buildcraftrobotics.board.energy", entry.energyCost()));
+                list.add(Component.translatable("tooltip.buildcraftrobotics.board.energy", formatBoardEnergyCost(entry.energyCost())));
             }
         }
 

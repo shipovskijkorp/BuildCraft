@@ -114,7 +114,7 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
             return switch (index) {
                 case 0 -> FLUIDS.getID(fluid.isEmpty() ? Fluids.EMPTY : fluid.getFluid());
                 case 1 -> fluid.getAmount();
-                case 2 -> tank.getTankCapacity(0);
+                case 2 -> tank.tank.getCapacity();
                 default -> 0;
             };
         }

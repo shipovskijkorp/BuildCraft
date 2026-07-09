@@ -151,13 +151,14 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
     @Override
     public long getStored() {
         EntityRobotBase robot = getDockedRobot();
-        return robot == null || robot.getBattery() == null ? 0 : robot.getBattery().getStored();
+        return robot == null || robot.getBattery() == null ? 0 : EntityRobot.robotEnergyToMicroMj(robot.getBattery().getStored());
     }
 
     @Override
     public long getCapacity() {
         EntityRobotBase robot = getDockedRobot();
-        return robot == null || robot.getBattery() == null ? EntityRobotBase.MAX_ENERGY : robot.getBattery().getCapacity();
+        long capacity = robot == null || robot.getBattery() == null ? EntityRobotBase.MAX_ENERGY : robot.getBattery().getCapacity();
+        return EntityRobot.robotEnergyToMicroMj(capacity);
     }
 
     private void validateStation() {
