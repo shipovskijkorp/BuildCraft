@@ -82,6 +82,7 @@ public abstract class LaserCompiledList {
 
         @Override
         public void render(PoseStack pose, Matrix4f matrix) {
+            LaserRenderer_BC8.setupLaserRenderState();
             vertexBuffer.bind();
             RenderSystem.setShader(useNormalColour ? GameRenderer::getBlockShader : GameRenderer::getPositionColorTexLightmapShader);
             RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);

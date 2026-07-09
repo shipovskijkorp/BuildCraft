@@ -66,7 +66,7 @@ public class RenderMarkerVolume implements BlockEntityRenderer<TileMarkerVolume>
     	 matrix.translate(0.5f, 0.5f, 0.5f);
     	 Matrix4f pose = matrix.last().pose();
     	 Matrix3f normal = matrix.last().normal();
-    	 VertexConsumer bb = buffer.getBuffer(RenderType.solid());
+    	 VertexConsumer bb = buffer.getBuffer(RenderType.cutout());
 
          mc.getProfiler().push("bc");
          mc.getProfiler().push("marker");
