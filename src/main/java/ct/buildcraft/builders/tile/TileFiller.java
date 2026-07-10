@@ -34,6 +34,7 @@ import ct.buildcraft.builders.addon.AddonFillerPlanner;
 import ct.buildcraft.builders.filler.FillerType;
 import ct.buildcraft.builders.filler.FillerUtil;
 import ct.buildcraft.builders.menu.ContainerFiller;
+import ct.buildcraft.builders.snapshot.FillerTemplateBuilder;
 import ct.buildcraft.builders.snapshot.ITileForTemplateBuilder;
 import ct.buildcraft.builders.snapshot.SnapshotBuilder;
 import ct.buildcraft.builders.snapshot.Template;
@@ -114,10 +115,11 @@ public class TileFiller extends TileBC_Neptune
         4,
         (statement, paramIndex) -> onStatementChange()
     );
-    private static final int RENDER_UPDATE_INTERVAL = 10;
+    /** Send task progress every tick so flying blocks are interpolated continuously instead of jumping every 0.5 s. */
+    private static final int RENDER_UPDATE_INTERVAL = 1;
     private int renderUpdateCooldown = RENDER_UPDATE_INTERVAL;
     private BuildingInfo buildingInfo;
-    public TemplateBuilder builder = new TemplateBuilder(this);
+    public TemplateBuilder builder = new FillerTemplateBuilder(this);
 
     public TileFiller(BlockPos pos, BlockState state) {
     	super(BCBuildersBlocks.FILLER_TILE_BC8.get(), pos, state);

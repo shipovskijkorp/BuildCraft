@@ -43,7 +43,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> implements INBTSerializable<CompoundTag> {
-    private static final int MAX_QUEUE_SIZE = 48;
+    private static final int MAX_QUEUE_SIZE = 64;
     protected static final byte CHECK_RESULT_UNKNOWN = 0;
     protected static final byte CHECK_RESULT_CORRECT = 1;
     protected static final byte CHECK_RESULT_TO_BREAK = 2;
@@ -111,6 +111,23 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
    
     protected SnapshotBuilder(T tile) {
         this.tile = tile;
+    }
+
+    /**
+     * Runtime limits are exposed through accessors so specialised machines can be tuned without changing the
+     * behaviour of every snapshot builder. The normal Builder keeps the original values, while machines such as the
+     * Filler may override only the limits that are relevant to them.
+     */
+    protected int getChecksPerTick() {
+        return CHECKS_PER_TICK;
+    }
+
+    protected int getFastChecksPerTick() {
+        return FAST_CHECKS_PER_TICK;
+    }
+
+    protected long getMaxPowerPerTick() {
+        return MAX_POWER_PER_TICK;
     }
 
     protected abstract Snapshot.BuildingInfo getBuildingInfo();
@@ -336,7 +353,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         boolean checkResultsChanged = false;
 
         tile.getWorldBC().getProfiler().push("scan");
-        int checksThisTick = unknownCheckResults > 0 ? FAST_CHECKS_PER_TICK : CHECKS_PER_TICK;
+        int checksThisTick = unknownCheckResults > 0 ? getFastChecksPerTick() : getChecksPerTick();
         for (int i = 0; i < checksThisTick; i++) {
             if (check(indexToPos(currentCheckIndex))) {
                 checkResultsChanged = true;
@@ -438,13 +455,14 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         tile.getWorldBC().getProfiler().pop();
 
         tile.getWorldBC().getProfiler().push("do tasks");
+        long maxPowerPerTick = getMaxPowerPerTick();
         long max = Math.min(
             (long) (
-                MAX_POWER_PER_TICK *
-                    (double) (tile.getBattery().getStored() + MAX_POWER_PER_TICK / 10) /
+                maxPowerPerTick *
+                    (double) (tile.getBattery().getStored() + maxPowerPerTick / 10) /
                     (tile.getBattery().getCapacity() * 2)
             ),
-            MAX_POWER_PER_TICK
+            maxPowerPerTick
         );
         tile.getWorldBC().getProfiler().push("break");
         if (!breakTasks.isEmpty()) {
