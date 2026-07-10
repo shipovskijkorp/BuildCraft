@@ -11,6 +11,7 @@ import java.util.Locale;
 import ct.buildcraft.api.statements.IStatement;
 import ct.buildcraft.api.statements.IStatementContainer;
 import ct.buildcraft.api.statements.IStatementParameter;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.api.statements.ITriggerExternal;
 import ct.buildcraft.api.statements.StatementParameterItemStack;
 import ct.buildcraft.core.BCCoreSprites;
@@ -78,7 +79,7 @@ public class TriggerFluidContainerLevel extends BCStatement implements ITriggerE
                 return searchedFluid.isEmpty() || handler.fill(searchedFluid, FluidAction.SIMULATE) > 0;
             }
 
-            if (searchedFluid.isEmpty() || searchedFluid.isFluidEqual(fluid)) {
+            if (searchedFluid.isEmpty() || FluidCompatRegistry.areEquivalent(searchedFluid, fluid)) {
                 float percentage = fluid.getAmount() / (float) handler.getTankCapacity(i);
                 return percentage < type.level;
             }

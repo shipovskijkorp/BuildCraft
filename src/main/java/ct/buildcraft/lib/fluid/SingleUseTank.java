@@ -23,7 +23,8 @@ public class SingleUseTank extends FluidTank {
 
     @Override
     public int fill(FluidStack resource, FluidAction doFill) {
-        if (resource == null) {
+        resource = FluidCompatRegistry.canonicalize(resource);
+        if (resource.isEmpty()) {
             return 0;
         }
 
@@ -32,7 +33,7 @@ public class SingleUseTank extends FluidTank {
             acceptedFluid.setAmount(1);
         }
 
-        if (acceptedFluid == null || acceptedFluid.isFluidEqual(resource)) {
+        if (acceptedFluid == null || FluidCompatRegistry.areEquivalent(acceptedFluid, resource)) {
             return super.fill(resource, doFill);
         }
 
@@ -47,7 +48,7 @@ public class SingleUseTank extends FluidTank {
         if (fluid == null) {
             this.acceptedFluid = null;
         } else {
-            this.acceptedFluid = new FluidStack(fluid, 1);
+            this.acceptedFluid = FluidCompatRegistry.canonicalize(new FluidStack(fluid, 1));
         }
     }
 
@@ -55,7 +56,7 @@ public class SingleUseTank extends FluidTank {
         if (fluid == null) {
             this.acceptedFluid = null;
         } else {
-            this.acceptedFluid = new FluidStack(fluid, 1);
+            this.acceptedFluid = FluidCompatRegistry.canonicalize(new FluidStack(fluid, 1));
         }
     }
 
@@ -64,10 +65,13 @@ public class SingleUseTank extends FluidTank {
     }
 
     @Override
-	public FluidTank readFromNBT(CompoundTag nbt) {
-    	acceptedFluid = FluidStack.loadFluidStackFromNBT(nbt.getCompound(NBT_ACCEPTED_FLUID));
-		return super.readFromNBT(nbt);
-	}
+    public FluidTank readFromNBT(CompoundTag nbt) {
+        FluidStack loaded = FluidCompatRegistry.canonicalize(
+            FluidStack.loadFluidStackFromNBT(nbt.getCompound(NBT_ACCEPTED_FLUID))
+        );
+        acceptedFluid = loaded.isEmpty() ? null : loaded;
+        return super.readFromNBT(nbt);
+    }
 
 	@Override
 	public CompoundTag writeToNBT(CompoundTag nbt) {

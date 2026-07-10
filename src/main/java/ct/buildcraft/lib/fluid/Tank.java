@@ -129,7 +129,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
     }
 
     public final void readFromNBT(CompoundTag nbt) {
-    	FluidStack fluid = FluidStack.loadFluidStackFromNBT(nbt);
+    	FluidStack fluid = FluidCompatRegistry.canonicalize(FluidStack.loadFluidStackFromNBT(nbt));
         if (nbt.contains(name)) {
             // Old style of saving + loading
             CompoundTag tankData = nbt.getCompound(name);
@@ -171,7 +171,9 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
 
     @Override
 	public boolean isFluidValid(FluidStack stack) {
-    	return validator.test(stack) && (fluid.isEmpty() || stack.isFluidEqual(fluid));
+        FluidStack normalized = FluidCompatRegistry.canonicalize(stack);
+    	return !normalized.isEmpty() && validator.test(normalized)
+            && (fluid.isEmpty() || FluidCompatRegistry.areEquivalent(normalized, fluid));
 	}
 
     @Override
@@ -182,6 +184,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
     }
     
     public int fillInternal(FluidStack resource, FluidAction doFill) {
+        resource = FluidCompatRegistry.canonicalize(resource);
     	if (resource.isEmpty() || !isFluidValid(resource))
         {
             return 0;
@@ -192,7 +195,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
             {
                 return Math.min(capacity, resource.getAmount());
             }
-            if (!fluid.isFluidEqual(resource))
+            if (!FluidCompatRegistry.areEquivalent(fluid, resource))
             {
                 return 0;
             }
@@ -205,7 +208,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
             onContentsChanged();
             return amount;
         }
-        if (!fluid.isFluidEqual(resource))
+        if (!FluidCompatRegistry.areEquivalent(fluid, resource))
         {
             return 0;
         }
@@ -254,7 +257,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
     }
     
 	public FluidStack drainInternal(FluidStack resource, FluidAction doDrain) {
-        if (resource.isEmpty() || !resource.isFluidEqual(fluid))
+        if (resource.isEmpty() || !FluidCompatRegistry.areEquivalent(resource, fluid))
         {
             return FluidStack.EMPTY;
         }
@@ -523,7 +526,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
 
 	@Override
 	public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-		return validator.test(stack);
+		return isFluidValid(stack);
 	}
 
 	public void setFilter(Predicate<FluidStack> filter) {
@@ -531,6 +534,6 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
 	}
 
 	public void setFluid(FluidStack residueFluid) {
-		this.fluid = residueFluid.copy();
+		this.fluid = FluidCompatRegistry.canonicalize(residueFluid);
 	}
 }

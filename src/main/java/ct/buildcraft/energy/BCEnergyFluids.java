@@ -7,6 +7,7 @@ import ct.buildcraft.core.BCCore;
 import ct.buildcraft.energy.fluid.BCFluidType;
 import ct.buildcraft.energy.fluid.BCLiquidBlock;
 import ct.buildcraft.lib.fluid.BCFluid;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -86,7 +87,7 @@ public class BCEnergyFluids {
     public static final TagKey<Fluid> IS_OIL = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(BCEnergy.MODID, "is_oil"));
     public static final TagKey<Fluid> IS_FUEL = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(BCEnergy.MODID, "is_fuel"));
 
-    static final String[] NAME = {"oil","oil_residue","oil_heavy","oil_dense","oil_distilled",
+    public static final String[] NAME = {"oil","oil_residue","oil_heavy","oil_dense","oil_distilled",
 			  "fuel_dense","fuel_mixed_heavy","fuel_light","fuel_mixed_light","fuel_gaseous"};
 
 
@@ -129,6 +130,25 @@ public class BCEnergyFluids {
     	fuelGaseous[0] = OIL_SOURCE.get(id++).get();
     	fuelGaseous[1] = OIL_SOURCE.get(id++).get();
     	fuelGaseous[2] = OIL_SOURCE.get(id++).get();
+
+        registerFluidCompatibility();
+    }
+
+    private static void registerFluidCompatibility() {
+        int index = 0;
+        for (String name : NAME) {
+            for (int heat = 0; heat < HEAT_NAMES.length; heat++) {
+                String fullName = name + (heat == 0 ? "" : "_heat_" + heat);
+                String commonName = heat == 0 ? name : HEAT_NAMES[heat] + "_" + name;
+                TagKey<Fluid> tag = TagKey.create(Registry.FLUID_REGISTRY,
+                    new ResourceLocation("forge", commonName));
+
+                FluidCompatRegistry.registerCanonical(tag, OIL_SOURCE.get(index++).get(),
+                    new ResourceLocation("ic2", fullName),
+                    new ResourceLocation("ic2", commonName),
+                    new ResourceLocation("ic2", name + "_" + HEAT_NAMES[heat]));
+            }
+        }
     }
     
     public static void registryFluid() {

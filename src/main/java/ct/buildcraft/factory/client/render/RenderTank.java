@@ -6,6 +6,7 @@ package ct.buildcraft.factory.client.render;
 import ct.buildcraft.factory.tile.TileTank;
 import ct.buildcraft.lib.client.render.fluid.FluidRenderer;
 import ct.buildcraft.lib.client.render.fluid.FluidSpriteType;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.fluid.FluidSmoother.FluidStackInterp;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -76,7 +77,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
             if (fluid == null || forRender.amount <= 0) {
                 return false;
             } else if (thisTank.getFluidForRender(partialTicks) == null
-                || !fluid.isFluidEqual(thisTank.getFluidForRender(partialTicks).fluid)) {
+                || !FluidCompatRegistry.areEquivalent(fluid, thisTank.getFluidForRender(partialTicks).fluid)) {
                 return false;
             }
             if (fluid.getFluid().getFluidType().isLighterThanAir()) {

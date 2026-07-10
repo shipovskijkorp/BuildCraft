@@ -25,6 +25,7 @@ import ct.buildcraft.api.robots.IRobotRegistry;
 import ct.buildcraft.api.robots.RobotManager;
 import ct.buildcraft.api.statements.StatementSlot;
 import ct.buildcraft.api.tools.IToolWrench;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.misc.FakePlayerProvider;
 import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.BCRoboticsBoards.BoardEntry;
@@ -1333,7 +1334,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public boolean isFluidValid(int tank, FluidStack stack) {
-        return tank == 0 && (this.tank.isEmpty() || this.tank.isFluidEqual(stack));
+        return tank == 0 && (this.tank.isEmpty() || FluidCompatRegistry.areEquivalent(this.tank, stack));
     }
 
     @Override
@@ -1354,7 +1355,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
-        if (resource == null || resource.isEmpty() || tank.isEmpty() || !tank.isFluidEqual(resource)) {
+        if (resource == null || resource.isEmpty() || tank.isEmpty() || !FluidCompatRegistry.areEquivalent(tank, resource)) {
             return FluidStack.EMPTY;
         }
         return drain(resource.getAmount(), action);

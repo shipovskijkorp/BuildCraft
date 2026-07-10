@@ -16,6 +16,7 @@ import ct.buildcraft.lib.net.cache.BuildCraftObjectCaches;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -112,6 +113,7 @@ public class BCLib {
     }
     
     public void postInit(FMLLoadCompleteEvent evt) {
+        initOptionalCompat("ic2", "ct.buildcraft.compat.ic2.Ic2Compat");
     	
 //        ReloadableRegistryManager.loadAll();
 
@@ -119,6 +121,17 @@ public class BCLib {
         MarkerCache.postInit();
     	BuildCraftObjectCaches.fmlPostInit();
     	MessageManager.fmlPostInit();
+    }
+
+    private static void initOptionalCompat(String modId, String className) {
+        if (!ModList.get().isLoaded(modId)) {
+            return;
+        }
+        try {
+            Class.forName(className).getMethod("init").invoke(null);
+        } catch (ReflectiveOperationException | LinkageError e) {
+            BCLog.logger.error("Failed to initialise optional compatibility for {}", modId, e);
+        }
     }
 
     public static Error throwBadClass(Error e, Class<?> cls) throws Error {

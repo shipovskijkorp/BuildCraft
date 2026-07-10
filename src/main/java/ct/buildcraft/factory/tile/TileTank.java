@@ -25,6 +25,7 @@ import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.factory.container.ContainerTank;
 import ct.buildcraft.lib.fluid.FluidSmoother;
 import ct.buildcraft.lib.fluid.FluidSmoother.FluidStackInterp;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.fluid.Tank;
 import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.misc.CapUtil;
@@ -166,7 +167,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
             }
             if (fluid.isEmpty()) {
                 fluid = held;
-            } else if (!fluid.isFluidEqual(held)) {
+            } else if (!FluidCompatRegistry.areEquivalent(fluid, held)) {
                 return;
             }
         }
@@ -392,6 +393,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
 
 	@Override
     public int fill(FluidStack resource, FluidAction doFill) {
+        resource = FluidCompatRegistry.canonicalize(resource);
         if (resource.isEmpty() || resource.getAmount() <= 0) {
             return 0;
         }
@@ -399,7 +401,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         List<TileTank> tanks = getConnectedTanks();
         for (TileTank t : tanks) {
             FluidStack current = t.tank.getFluid();
-            if (!current.isEmpty() && !current.isFluidEqual(resource)) {
+            if (!current.isEmpty() && !FluidCompatRegistry.areEquivalent(current, resource)) {
                 return 0;
             }
         }
@@ -434,7 +436,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         if (resource.isEmpty()) {
             return FluidStack.EMPTY;
         }
-        return drain(resource::isFluidEqual, resource.getAmount(), doDrain);
+        return drain(stack -> FluidCompatRegistry.areEquivalent(resource, stack), resource.getAmount(), doDrain);
     }
 
     // IFluidHandlerAdv

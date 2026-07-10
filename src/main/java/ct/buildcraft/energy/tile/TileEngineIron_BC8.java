@@ -28,6 +28,7 @@ import ct.buildcraft.energy.BCEnergyBlocks;
 import ct.buildcraft.energy.menu.ContainerEngineIron_BC8;
 import ct.buildcraft.lib.engine.EngineConnector;
 import ct.buildcraft.lib.engine.TileEngineBase_BC8;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.fluid.Tank;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.EntityUtil;
@@ -199,7 +200,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     @Override
     protected void burn() {
         final FluidStack fuel = this.tankFuel.getFluid();
-        if (currentFuel == null || !currentFuel.getFluid().isFluidEqual(fuel)) {
+        if (currentFuel == null || !FluidCompatRegistry.areEquivalent(currentFuel.getFluid(), fuel)) {
             currentFuel = BuildcraftFuelRegistry.fuel.getFuel(fuel);
         }
 
@@ -369,7 +370,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
             return true;
         }
         if (currentFuel instanceof IDirtyFuel) {
-            return fluid.isFluidEqual(((IDirtyFuel) currentFuel).getResidue());
+            return FluidCompatRegistry.areEquivalent(fluid, ((IDirtyFuel) currentFuel).getResidue());
         }
         return false;
     }

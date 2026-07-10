@@ -25,6 +25,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -62,6 +63,7 @@ public class BCEnergy {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
         BCEnergyFluids.registry(modEventBus);
+        registerOptionalCompatItems();
         BCEnergyBlocks.init(modEventBus);
         BCEnergyGuis.init();
         BCEnergyWorldGen.preInit(modEventBus);
@@ -77,6 +79,19 @@ public class BCEnergy {
 
  //       MinecraftForge.EVENT_BUS.register(EntityBlockPump::new);
     }
+    private static void registerOptionalCompatItems() {
+        if (!ModList.get().isLoaded("ic2")) {
+            return;
+        }
+        try {
+            Class.forName("ct.buildcraft.compat.ic2.Ic2Compat")
+                .getMethod("registerItems")
+                .invoke(null);
+        } catch (ReflectiveOperationException | LinkageError e) {
+            LOGGER.error("Failed to register optional IC2 Classic items", e);
+        }
+    }
+
     private void commonSetup(final FMLCommonSetupEvent event)
     {
     	BCCore.tabFluids.setItem(BCEnergyFluids.OIL_BUCKET.get(0).get());

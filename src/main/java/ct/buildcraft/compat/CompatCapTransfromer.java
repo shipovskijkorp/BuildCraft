@@ -1,6 +1,8 @@
 package ct.buildcraft.compat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -15,25 +17,45 @@ public enum CompatCapTransfromer {
     INSTANCE;
 
     private final Map<Class<?>, BiFunction<Object, Direction, IFluidHandler>> fluidCapRegistry = new HashMap<>();
+    private final List<BiFunction<Object, Direction, IFluidHandler>> fluidCapFallbacks = new ArrayList<>();
 
     public <T extends CapabilityProvider<?>> IFluidHandler transfromFluidCap(T provider, Direction face) {
         BiFunction<Object, Direction, IFluidHandler> function = fluidCapRegistry.get(provider.getClass());
-        return function == null ? null : function.apply(provider, face);
+        if (function != null) {
+            IFluidHandler handler = function.apply(provider, face);
+            if (handler != null) {
+                return handler;
+            }
+        }
+        for (BiFunction<Object, Direction, IFluidHandler> fallback : fluidCapFallbacks) {
+            IFluidHandler handler = fallback.apply(provider, face);
+            if (handler != null) {
+                return handler;
+            }
+        }
+        return null;
     }
 
     public void registryFluidCapTransform(Class<?> clazz, BiFunction<Object, Direction, IFluidHandler> function) {
         fluidCapRegistry.put(clazz, function);
     }
 
+    /** Registers a capability adapter that can inspect arbitrary optional-mod block entities. */
+    public void registerFluidCapFallback(BiFunction<Object, Direction, IFluidHandler> function) {
+        if (function != null && !fluidCapFallbacks.contains(function)) {
+            fluidCapFallbacks.add(function);
+        }
+    }
+
     public <T extends CapabilityProvider<?>, E> LazyOptional<E> getCap(T provider, Capability<E> capability, Direction face) {
-        LazyOptional<E> orginCap = provider.getCapability(capability, face);
-        if (orginCap.isPresent()) {
-            return orginCap;
-        }
         if (capability == CapUtil.CAP_FLUIDS) {
-            IFluidHandler transfromFluidCap = transfromFluidCap(provider, face);
-            return transfromFluidCap == null ? LazyOptional.empty() : LazyOptional.of(() -> transfromFluidCap).cast();
+            // Compatibility wrappers must get first chance: an optional mod may expose a native
+            // Forge handler but still require fluid-ID translation at the integration boundary.
+            IFluidHandler transformed = transfromFluidCap(provider, face);
+            if (transformed != null) {
+                return LazyOptional.of(() -> transformed).cast();
+            }
         }
-        return LazyOptional.empty();
+        return provider.getCapability(capability, face);
     }
 }

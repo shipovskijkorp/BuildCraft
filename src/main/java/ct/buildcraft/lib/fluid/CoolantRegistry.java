@@ -103,7 +103,7 @@ public enum CoolantRegistry implements ICoolantManager {
 
         @Override
         public boolean matchesFluid(FluidStack stack) {
-            return fluid.isFluidEqual(stack);
+            return FluidCompatRegistry.areEquivalent(fluid, stack);
         }
 
         @Override

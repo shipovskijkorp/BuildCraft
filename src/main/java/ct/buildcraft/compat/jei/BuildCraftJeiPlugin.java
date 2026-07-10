@@ -2,6 +2,7 @@ package ct.buildcraft.compat.jei;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import ct.buildcraft.factory.BCFactoryItems;
 import ct.buildcraft.lib.gui.GuiBC8;
 import ct.buildcraft.lib.gui.IGuiElement;
 import ct.buildcraft.lib.gui.ledger.Ledger_Neptune;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.misc.ItemStackKey;
 import ct.buildcraft.lib.recipe.AssemblyRecipeBasic;
 import ct.buildcraft.lib.recipe.ChangingItemStack;
@@ -53,6 +55,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
@@ -80,6 +83,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public static final RecipeType<IntegrationRecipeView> INTEGRATION = RecipeType.create("buildcraftsilicon", "integration", IntegrationRecipeView.class);
     public static final RecipeType<IRefineryRecipeManager.IDistillationRecipe> DISTILLATION = RecipeType.create("buildcraftfactory", "distillation", IRefineryRecipeManager.IDistillationRecipe.class);
     public static final RecipeType<HeatExchangeRecipeView> HEAT_EXCHANGE = RecipeType.create("buildcraftfactory", "heat_exchange", HeatExchangeRecipeView.class);
+
+    private static List<FluidContainerAlias> fluidContainerAliases = List.of();
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -132,6 +137,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        cacheFluidContainerAliases(registration.getIngredientManager());
+
         Level level = Minecraft.getInstance().level;
         if (level != null) {
             List<AssemblyRecipeBasic> assemblyRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(BCSiliconRecipes.ASSEMBLY_TYPE.get()));
@@ -231,23 +238,85 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         return bucket;
     }
 
-    private static void addFilledBucketFocus(IRecipeLayoutBuilder builder, RecipeIngredientRole role, FluidStack fluidStack) {
+    private static void cacheFluidContainerAliases(IIngredientManager ingredientManager) {
+        List<FluidContainerAlias> aliases = new ArrayList<>();
+        Set<ItemStackKey> seen = new HashSet<>();
+
+        for (ItemStack ingredient : ingredientManager.getAllIngredients(VanillaTypes.ITEM_STACK)) {
+            if (ingredient.isEmpty()) {
+                continue;
+            }
+
+            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(ingredient.getItem());
+            if (itemId == null || !(itemId.getNamespace().equals("ic2")
+                    || itemId.getPath().startsWith("ic2_cell/"))) {
+                continue;
+            }
+
+            ItemStack stack = ingredient.copy();
+            stack.setCount(1);
+            ItemStackKey key = new ItemStackKey(stack);
+            if (!seen.add(key)) {
+                continue;
+            }
+
+            FluidStack contained;
+            try {
+                contained = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+            } catch (RuntimeException | LinkageError ignored) {
+                // A broken third-party fluid capability must not prevent JEI from loading.
+                continue;
+            }
+            if (!contained.isEmpty()) {
+                aliases.add(new FluidContainerAlias(stack, contained.getFluid()));
+            }
+        }
+
+        fluidContainerAliases = List.copyOf(aliases);
+    }
+
+    private static void addFilledBucketFocus(IRecipeLayoutBuilder builder, RecipeIngredientRole role,
+            FluidStack fluidStack) {
         ItemStack bucket = createFilledBucketStack(fluidStack);
         if (!bucket.isEmpty()) {
             builder.addInvisibleIngredients(role).addItemStack(bucket);
         }
     }
 
+    private static void addFluidContainerFocus(IRecipeLayoutBuilder builder, RecipeIngredientRole role,
+            FluidStack fluidStack) {
+        List<ItemStack> matchingContainers = new ArrayList<>();
+        for (FluidContainerAlias alias : fluidContainerAliases) {
+            if (FluidCompatRegistry.areEquivalent(alias.fluid(), fluidStack.getFluid())) {
+                matchingContainers.add(alias.stack().copy());
+            }
+        }
+        if (!matchingContainers.isEmpty()) {
+            builder.addInvisibleIngredients(role).addItemStacks(matchingContainers);
+        }
+    }
+
     private static IRecipeSlotBuilder addFluidSlot(IRecipeLayoutBuilder builder, RecipeIngredientRole role, int x, int y,
             FluidStack fluidStack, IDrawable slotBackground) {
         FluidStack shownFluid = fluidStack.copy();
+        List<FluidStack> equivalentFluids = FluidCompatRegistry.getEquivalentStacks(shownFluid, "buildcraftenergy");
+        if (equivalentFluids.isEmpty()) {
+            equivalentFluids = List.of(shownFluid);
+        }
+
         IRecipeSlotBuilder slot = builder.addSlot(role, x, y)
                 .setBackground(slotBackground, -1, -1)
                 .setFluidRenderer(Math.max(1, shownFluid.getAmount()), false, 16, 16)
-                .addIngredient(ForgeTypes.FLUID_STACK, shownFluid);
-        addFilledBucketFocus(builder, role, shownFluid);
+                .addIngredients(ForgeTypes.FLUID_STACK, equivalentFluids);
+
+        for (FluidStack equivalentFluid : equivalentFluids) {
+            addFilledBucketFocus(builder, role, equivalentFluid);
+        }
+        addFluidContainerFocus(builder, role, shownFluid);
         return slot;
     }
+
+    private record FluidContainerAlias(ItemStack stack, net.minecraft.world.level.material.Fluid fluid) {}
 
     public record ProgrammingRecipeView(BoardEntry board) {
         public ItemStack input() {

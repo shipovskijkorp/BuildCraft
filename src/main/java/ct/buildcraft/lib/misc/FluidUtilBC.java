@@ -14,8 +14,10 @@ import javax.annotation.Nullable;
 import ct.buildcraft.api.core.BCLog;
 import ct.buildcraft.api.core.IFluidFilter;
 import ct.buildcraft.api.core.IFluidHandlerAdv;
+import ct.buildcraft.compat.CompatCapTransfromer;
 import ct.buildcraft.core.BCCoreItems;
 import ct.buildcraft.core.item.ItemFragileFluidContainer;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.fluid.Tank;
 
 import net.minecraft.core.BlockPos;
@@ -52,7 +54,7 @@ public class FluidUtilBC {
             if (target == null) {
                 continue;
             }
-            IFluidHandler handler = target.getCapability(CapUtil.CAP_FLUIDS, side.getOpposite()).orElse(null);
+            IFluidHandler handler = CompatCapTransfromer.INSTANCE.getCap(target, CapUtil.CAP_FLUIDS, side.getOpposite()).orElse(null);
             if (handler != null) {
                 int used = handler.fill(potential.copy(), FluidAction.EXECUTE);
 
@@ -78,7 +80,7 @@ public class FluidUtilBC {
         fluids.forEach(toAdd -> {
             boolean found = false;
             for (FluidStack stack : stacks) {
-                if (stack.isFluidEqual(toAdd)) {
+                if (FluidCompatRegistry.areEquivalent(stack, toAdd)) {
                     stack.setAmount(stack.getAmount() + toAdd.getAmount());
                     found = true;
                 }
@@ -91,14 +93,14 @@ public class FluidUtilBC {
     }
 
     public static boolean areFluidStackEqual(FluidStack a, FluidStack b) {
-        return (a == FluidStack.EMPTY && b == FluidStack.EMPTY) || (a != FluidStack.EMPTY && a.isFluidEqual(b) && a.getAmount() == b.getAmount());
+        return (a == FluidStack.EMPTY && b == FluidStack.EMPTY) || (a != FluidStack.EMPTY && FluidCompatRegistry.areEquivalent(a, b) && a.getAmount() == b.getAmount());
     }
 
     public static boolean areFluidsEqual(Fluid a, Fluid b) {
         if (a == Fluids.EMPTY || b == Fluids.EMPTY) {
             return a == b;
         }
-        return a.getFluidType() == b.getFluidType();
+        return FluidCompatRegistry.areEquivalent(a, b);
     }
 
     /** @return The fluidstack that was moved, or null if no fluid was moved. */
@@ -136,7 +138,7 @@ public class FluidUtilBC {
             }
         }
         FluidStack drained = from.drain(toDrain.copy(), FluidAction.EXECUTE);
-        if (drained == FluidStack.EMPTY || toDrain.getAmount() != drained.getAmount() || !toDrain.isFluidEqual(drained)) {
+        if (drained == FluidStack.EMPTY || toDrain.getAmount() != drained.getAmount() || !FluidCompatRegistry.areEquivalent(toDrain, drained)) {
             String detail = "(To Drain = " + StringUtilBC.fluidToString(toDrain);
             detail += ",\npotential drain = " + StringUtilBC.fluidToString(toDrainPotential) + ")";
             detail += ",\nactually drained = " + StringUtilBC.fluidToString(drained) + ")";

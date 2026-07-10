@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import ct.buildcraft.api.transport.pipe.IPipe;
 import ct.buildcraft.api.transport.pipe.PipeEventFluid;
 import ct.buildcraft.api.transport.pipe.PipeEventHandler;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 
 public class PipeBehaviourDiamondFluid extends PipeBehaviourDiamond {
     public PipeBehaviourDiamondFluid(IPipe pipe, CompoundTag nbt) {
@@ -42,7 +43,7 @@ public class PipeBehaviourDiamondFluid extends PipeBehaviourDiamond {
                         continue;
                     }
                     foundItem = true;
-                    if (target.isFluidEqual(toCompare)) {
+                    if (FluidCompatRegistry.areEquivalent(target, toCompare)) {
                         sideAllowed = true;
                         break;
                     }

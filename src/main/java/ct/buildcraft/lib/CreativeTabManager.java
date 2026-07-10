@@ -4,9 +4,13 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package ct.buildcraft.lib;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Supplier;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -245,6 +249,7 @@ public class CreativeTabManager {
 
     public static class CreativeTabBC extends CreativeModeTab {
         private final String name;
+        private final List<Supplier<? extends Collection<ItemStack>>> itemProviders = new CopyOnWriteArrayList<>();
         private ItemStack item = new ItemStack(Items.COMPARATOR); // Temp.
 
         private CreativeTabBC(String name) {
@@ -268,9 +273,43 @@ public class CreativeTabManager {
             return item;
         }
 
+        /** Adds lazily generated entries supplied by optional integrations. */
+        public void addItemProvider(Supplier<? extends Collection<ItemStack>> provider) {
+            if (provider != null && !itemProviders.contains(provider)) {
+                itemProviders.add(provider);
+            }
+        }
+
         @Override
         public void fillItemList(NonNullList<ItemStack> items) {
             super.fillItemList(items);
+
+            for (Supplier<? extends Collection<ItemStack>> provider : itemProviders) {
+                Collection<ItemStack> provided;
+                try {
+                    provided = provider.get();
+                } catch (RuntimeException ignored) {
+                    continue;
+                }
+                if (provided == null) {
+                    continue;
+                }
+                for (ItemStack stack : provided) {
+                    if (stack == null || stack.isEmpty()) {
+                        continue;
+                    }
+                    boolean duplicate = false;
+                    for (ItemStack existing : items) {
+                        if (ItemStack.isSameItemSameTags(existing, stack)) {
+                            duplicate = true;
+                            break;
+                        }
+                    }
+                    if (!duplicate) {
+                        items.add(stack.copy());
+                    }
+                }
+            }
 
             Map<String, Integer> order = ITEM_ORDERS.get(name);
             if (order != null) {

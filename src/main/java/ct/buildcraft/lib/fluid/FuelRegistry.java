@@ -46,7 +46,7 @@ public enum FuelRegistry implements IFuelManager {
             return null;
         }
         for (IFuel fuel : fuels) {
-            if (fuel.getFluid().isFluidEqual(fluid)) {
+            if (FluidCompatRegistry.areEquivalent(fuel.getFluid(), fluid)) {
                 return fuel;
             }
         }

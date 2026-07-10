@@ -22,6 +22,7 @@ import ct.buildcraft.core.BCCoreConfig;
 import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.lib.block.BlockBCBase_Neptune;
 import ct.buildcraft.lib.expression.DefaultContexts;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.fluid.FluidSmoother;
 import ct.buildcraft.lib.fluid.FluidSmoother.IFluidDataSender;
 import ct.buildcraft.lib.fluid.Tank;
@@ -242,7 +243,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
             FluidStack outGas = currentRecipe.outGas();
 
             FluidStack potentialIn = tankIn.drainInternal(reqIn, FluidAction.SIMULATE);
-            boolean canExtract = reqIn.isFluidStackIdentical(potentialIn);
+            boolean canExtract = FluidCompatRegistry.areEquivalent(reqIn, potentialIn) && reqIn.getAmount() == potentialIn.getAmount();
 
             boolean canFillLiquid = tankLiquidOut.fillInternal(outLiquid, FluidAction.SIMULATE) == outLiquid.getAmount();
             boolean canFillGas = tankGasOut.fillInternal(outGas, FluidAction.SIMULATE) == outGas.getAmount();
