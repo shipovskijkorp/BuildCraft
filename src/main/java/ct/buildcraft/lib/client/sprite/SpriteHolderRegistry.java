@@ -63,6 +63,9 @@ public class SpriteHolderRegistry {
     }
 
     public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
+        if (!InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+            return;
+        }
         for (SpriteHolder holder : HOLDER_MAP.values()) {
             holder.onTextureStitchPre(event);
         }
@@ -99,6 +102,9 @@ public class SpriteHolderRegistry {
     }
 
     public static void onTextureStitchPost(TextureStitchEvent.Post event) {
+        if (!InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+            return;
+        }
         List<ResourceLocation> locations = new ArrayList<>();
         locations.addAll(HOLDER_MAP.keySet());
         locations.sort(Comparator.comparing(ResourceLocation::toString));
@@ -145,7 +151,18 @@ public class SpriteHolderRegistry {
             this.spriteLocation = spriteLocation;
         }
 
-        protected void onTextureStitchPre(TextureStitchEvent.Pre event) {
+        /**
+         * Adds this holder to the atlas currently being stitched.
+         *
+         * This is public so every BuildCraft module can register its own holders on its own
+         * MOD event bus. Event priorities do not order listeners that belong to different
+         * mod containers, so relying on BCLib to discover holders created by another module
+         * is unsafe during early/additional resource reloads.
+         */
+        public void onTextureStitchPre(TextureStitchEvent.Pre event) {
+            // Never keep UVs from the previous atlas across a resource reload.
+            sprite = null;
+            hasCalled = false;
             event.addSprite(spriteLocation);
         }
 

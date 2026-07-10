@@ -143,7 +143,7 @@ public class BCTransportSprites {
 	}
 	
     public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
-    	if(InventoryMenu.BLOCK_ATLAS == (event.getAtlas().location())) {
+    	if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
 //    		PIPE_TEX.values().forEach(event::addSprite);
     		PipeBaseModelGenStandard.INSTANCE.onTextureStitchPre(event);
 /*    		event.addSprite(DIAWOOD_GUI);

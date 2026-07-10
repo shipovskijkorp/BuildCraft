@@ -56,6 +56,7 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
 
     private final SafeTimeTracker clientLaserMoveInterval = new SafeTimeTracker(5, 10);
     private final SafeTimeTracker serverTargetMoveInterval = new SafeTimeTracker(10, 20);
+    private final SafeTimeTracker serverRenderSyncInterval = new SafeTimeTracker(10);
 
     private final List<BlockPos> targetPositions = new ArrayList<>();
     private BlockPos targetPos;
@@ -64,6 +65,8 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
 
     private final AverageLong avgPower = new AverageLong(100);
     private long averageClient;
+    private long renderPower;
+    private boolean lastSentBeamActive;
     private final MjBattery battery;
 
     public TileLaser(BlockPos pos, BlockState state) {
@@ -197,6 +200,7 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
             randomlyChooseTargetPos();
         }
 
+        long transferredPower = 0;
         ILaserTarget target = getTarget();
         if (target != null) {
             long max = getMaxPowerPerTick();
@@ -208,13 +212,26 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
             if (excess > 0) {
                 battery.addPowerChecking(excess, FluidAction.EXECUTE);
             }
-            avgPower.push(power - excess);
+            transferredPower = power - excess;
+            avgPower.push(transferredPower);
         } else {
             avgPower.clear();
         }
 
-        if (!Objects.equals(previousTargetPos, targetPos)) {
+        // A target may be selected while the laser has no stored power. In that case the client
+        // initially receives a zero-power beam. Resynchronise when energy actually starts or stops
+        // flowing, while avoiding the old behaviour of sending a render packet every server tick.
+        renderPower = transferredPower > 0
+            ? Math.max(transferredPower, avgPower.getAverageLong())
+            : 0;
+        boolean beamActive = targetPos != null && renderPower > 0;
+        boolean targetChanged = !Objects.equals(previousTargetPos, targetPos);
+        boolean beamActivityChanged = beamActive != lastSentBeamActive;
+        boolean periodicPowerUpdate = beamActive && serverRenderSyncInterval.markTimeIfDelay(level);
+
+        if (targetChanged || beamActivityChanged || periodicPowerUpdate) {
             sendNetworkUpdate(NET_RENDER_DATA);
+            lastSentBeamActive = beamActive;
         }
 
         markChunkDirty();
@@ -256,7 +273,7 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
                 if (targetPos != null) {
                     MessageUtil.writeBlockPos(buffer, targetPos);
                 }
-                buffer.writeLong((long) avgPower.getAverage());
+                buffer.writeLong(renderPower);
             }
         }
     }
@@ -273,6 +290,7 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
                     targetPos = null;
                 }
                 averageClient = buffer.readLong();
+                updateLaser();
             }
         }
     }

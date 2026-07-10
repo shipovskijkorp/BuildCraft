@@ -38,6 +38,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -53,6 +54,7 @@ import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -85,9 +87,12 @@ public class BCLibEventDist {
         {
         }
 		
-	    @SubscribeEvent//(priority = EventPriority.HIGHEST)
+	    @SubscribeEvent(priority = EventPriority.LOWEST)
 	    public static void textureStitchPre(TextureStitchEvent.Pre event) {
-	    	if("textures/atlas/blocks.png".equals(event.getAtlas().location().getPath())) {
+	    	if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                // Some mods start an additional/earlier resource reload. Make sure the library sprites exist
+                // before the final holder-registration pass, instead of relying on FMLClientSetup ordering.
+                BCLibSprites.fmlPreInitClient();
 	    		ReloadManager.INSTANCE.preReloadResources();
 	    		SpriteHolderRegistry.onTextureStitchPre(event);
 	    		ModelHolderRegistry.onTextureStitchPre(event);
@@ -106,11 +111,15 @@ public class BCLibEventDist {
 
 	    @SubscribeEvent
 	    public static void textureStitchPost(TextureStitchEvent.Post event) {
-	    	if("textures/atlas/blocks.png".equals(event.getAtlas().location().getPath())) {
+	    	if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
 	            SpriteHolderRegistry.onTextureStitchPost(event);
+
+                // Laser vertex buffers contain absolute UV coordinates from the atlas.
+                // Rebuild them after every stitch, including extra reloads started by other mods.
+                LaserRenderer_BC8.clearModels();
 	            FluidRenderer.onTextureStitchPost(event);
+                VariablePartLed.onTextureStitchPost(event);
 	        }
-	    	VariablePartLed.onTextureStitchPost(event);
 	    }
 	    
 	    @SubscribeEvent

@@ -6,7 +6,9 @@
 
 package ct.buildcraft.core;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -19,7 +21,11 @@ import ct.buildcraft.core.statements.TriggerInventoryLevel;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import ct.buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraftforge.client.event.TextureStitchEvent;
+
 public class BCCoreSprites {
+    private static final List<SpriteHolder> ALL_SPRITES = new ArrayList<>();
     public static final SpriteHolder MARKER_VOLUME_CONNECTED;
     public static final SpriteHolder MARKER_VOLUME_POSSIBLE;
     public static final SpriteHolder MARKER_VOLUME_SIGNAL;
@@ -132,11 +138,30 @@ public class BCCoreSprites {
     }
 
     private static SpriteHolder getHolder(String suffix) {
-        return SpriteHolderRegistry.getHolder("buildcraftcore:" + suffix);
+        SpriteHolder holder = SpriteHolderRegistry.getHolder("buildcraftcore:" + suffix);
+        ALL_SPRITES.add(holder);
+        return holder;
     }
 
     public static void init() {
-        // Nothing, just to register the sprites
+        // Nothing, just force class initialisation and holder creation.
+    }
+
+    /**
+     * Registers core sprites from BCCore's own texture-stitch listener.
+     *
+     * BCLib and BCCore use separate MOD event buses. Consequently a LOWEST-priority
+     * listener in BCLib is not guaranteed to run after BCCore's listener. IC2 Classic /
+     * CarbonConfig can trigger a resource reload early enough for that ordering bug to
+     * leave every core laser sprite out of the block atlas.
+     */
+    public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
+        if (!InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+            return;
+        }
+        for (SpriteHolder holder : ALL_SPRITES) {
+            holder.onTextureStitchPre(event);
+        }
     }
 }
 

@@ -30,6 +30,7 @@ import ct.buildcraft.lib.net.MessageManager;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -139,8 +140,11 @@ public class BCCore {
         
         @SubscribeEvent
         public static void registrtTexture(Pre e){
-        	
-        	if("textures/atlas/blocks.png".equals(e.getAtlas().location().getPath())) {
+        	if (InventoryMenu.BLOCK_ATLAS.equals(e.getAtlas().location())) {
+                // IC2 Classic/CarbonConfig may cause texture stitching before FMLClientSetup.
+                // Create all core laser holders now so BCLib's LOWEST-priority registration sees them.
+                BCCoreSprites.init();
+                BCCoreSprites.onTextureStitchPre(e);
         		e.addSprite(TRUNK_LIGHT);
         		e.addSprite(CHAMBER);
         	}
