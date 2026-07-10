@@ -13,25 +13,13 @@
   },
   "parent": "buildcraftbuilders:diggy_diggy_hole",
   "criteria": {
-    "has_two_quarries": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "buildcraftbuilders:quarry"
-            ],
-            "count": {
-              "min": 2
-            }
-          }
-        ]
-      }
+    "code_trigger": {
+      "trigger": "minecraft:impossible"
     }
   },
   "requirements": [
     [
-      "has_two_quarries"
+      "code_trigger"
     ]
   ]
 }

@@ -64,7 +64,6 @@
   "block.architect.tooltip.allowCreative.1": "创造模式允许所有方块——仅限创造模式！",
   "block.architect.tooltip.allowCreative.2": "生存模式会忽略所有不支持的方块",
   "block.architect.excavate": "挖掘",
-  "gui.filler.no_area": "未选择区域：将填充机放在标记或区域框旁边",
   "fillerpattern.2d_arc": "圆弧",
   "fillerpattern.2d_circle": "圆形",
   "fillerpattern.2d_hexagon": "六边形",

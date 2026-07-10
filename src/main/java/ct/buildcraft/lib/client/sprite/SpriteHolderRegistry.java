@@ -13,8 +13,10 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -46,16 +48,57 @@ public class SpriteHolderRegistry {
 
     private static final Map<ResourceLocation, SpriteHolder> HOLDER_MAP = new HashMap<>();
 
+    /**
+     * Sprite holders are created by several BuildCraft modules that each have their own MOD event bus.
+     * Forge does not provide a stable ordering between those buses, so BCLib may receive the stitch event
+     * before another module has initialised its holder class. Keep the current event available until Post:
+     * a holder created by a later module listener can then register itself immediately.
+     */
+    private static TextureStitchEvent.Pre activeStitchEvent;
+    private static final Set<ResourceLocation> REGISTERED_THIS_STITCH = new HashSet<>();
+    private static int stitchGeneration;
+    private static boolean atlasHasBeenStitched;
+
+    /**
+     * Every class in the current project that creates {@link SpriteHolder}s. Initialising them at the start
+     * of a stitch prevents a holder from first being created when an obscure GUI or renderer is opened.
+     * Names are strings deliberately: BCLib can still run when an optional BuildCraft module is absent.
+     */
+    private static final String[] BUILTIN_HOLDER_CLASSES = {
+        "ct.buildcraft.lib.BCLibSprites",
+        "ct.buildcraft.core.BCCoreSprites",
+        "ct.buildcraft.builders.BCBuildersSprites",
+        "ct.buildcraft.factory.BCFactorySprites",
+        "ct.buildcraft.robotics.BCRoboticsSprites",
+        "ct.buildcraft.silicon.BCSiliconSprites",
+        "ct.buildcraft.transport.BCTransportSprites",
+        "ct.buildcraft.transport.client.render.PipeWireRenderer"
+    };
+
     public static SpriteHolder getHolder(ResourceLocation location) {
-        if (!HOLDER_MAP.containsKey(location)) {
-            HOLDER_MAP.put(location, new SpriteHolder(location));
+        SpriteHolder holder = HOLDER_MAP.get(location);
+        if (holder == null) {
+            holder = new SpriteHolder(location);
+            HOLDER_MAP.put(location, holder);
             if (DEBUG) {
                 BCLog.logger.info("[lib.sprite.holder] Created a new sprite holder for " + location);
             }
         } else if (DEBUG) {
             BCLog.logger.info("[lib.sprite.holder] Returned existing sprite holder for " + location);
         }
-        return HOLDER_MAP.get(location);
+
+        // Another BuildCraft module may create this holder after BCLib's Pre listener has run.
+        // Register it in the still-active event instead of silently leaving it as missingno.
+        if (activeStitchEvent != null) {
+            registerForStitch(holder, activeStitchEvent);
+        } else if (atlasHasBeenStitched && holder.lastRegisteredGeneration != stitchGeneration) {
+            BCLog.logger.error(
+                "[lib.sprite.holder] Sprite holder {} was created after the block atlas had already been stitched. " +
+                "It will be missing until resources are reloaded. Add its holder class to the sprite bootstrap.",
+                location
+            );
+        }
+        return holder;
     }
 
     public static SpriteHolder getHolder(String location) {
@@ -63,8 +106,49 @@ public class SpriteHolderRegistry {
     }
 
     public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
-        for (SpriteHolder holder : HOLDER_MAP.values()) {
-            holder.onTextureStitchPre(event);
+        if (!InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+            return;
+        }
+        beginStitch(event);
+        bootstrapBuiltinHolders();
+        for (SpriteHolder holder : new ArrayList<>(HOLDER_MAP.values())) {
+            registerForStitch(holder, event);
+        }
+    }
+
+    private static void beginStitch(TextureStitchEvent.Pre event) {
+        if (activeStitchEvent == event) {
+            return;
+        }
+        activeStitchEvent = event;
+        REGISTERED_THIS_STITCH.clear();
+        stitchGeneration++;
+        atlasHasBeenStitched = false;
+    }
+
+    private static void registerForStitch(SpriteHolder holder, TextureStitchEvent.Pre event) {
+        if (!InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+            return;
+        }
+        beginStitch(event);
+        holder.sprite = null;
+        holder.hasCalled = false;
+        if (REGISTERED_THIS_STITCH.add(holder.spriteLocation)) {
+            event.addSprite(holder.spriteLocation);
+        }
+        holder.lastRegisteredGeneration = stitchGeneration;
+    }
+
+    private static void bootstrapBuiltinHolders() {
+        ClassLoader loader = SpriteHolderRegistry.class.getClassLoader();
+        for (String className : BUILTIN_HOLDER_CLASSES) {
+            try {
+                Class.forName(className, true, loader);
+            } catch (ClassNotFoundException ignored) {
+                // Individual BuildCraft modules are optional.
+            } catch (LinkageError | RuntimeException error) {
+                BCLog.logger.error("[lib.sprite.holder] Failed to initialise sprite holder class " + className, error);
+            }
         }
     }
 
@@ -99,37 +183,69 @@ public class SpriteHolderRegistry {
     }
 
     public static void onTextureStitchPost(TextureStitchEvent.Post event) {
-        List<ResourceLocation> locations = new ArrayList<>();
-        locations.addAll(HOLDER_MAP.keySet());
+        if (!InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+            return;
+        }
+        List<ResourceLocation> locations = new ArrayList<>(HOLDER_MAP.keySet());
         locations.sort(Comparator.comparing(ResourceLocation::toString));
 
         TextureAtlas manager = event.getAtlas();
         TextureAtlasSprite missing = manager.getSprite(MissingTextureAtlasSprite.getLocation());
+        List<ResourceLocation> missingLocations = new ArrayList<>();
+        List<ResourceLocation> unregisteredLocations = new ArrayList<>();
 
         // Always refresh the cached atlas sprite after stitching/resource reload.
-        // Previously this only happened while debug logging was enabled, so a lazily-cached
-        // missing/stale sprite could keep using the wrong atlas UVs and therefore the wrong colour.
-        for (ResourceLocation r : locations) {
-            SpriteHolder sprite = HOLDER_MAP.get(r);
-            TextureAtlasSprite stitched = manager.getSprite(r);
-            sprite.sprite = stitched;
-            sprite.hasCalled = false;
-        }
+        for (ResourceLocation location : locations) {
+            SpriteHolder holder = HOLDER_MAP.get(location);
+            TextureAtlasSprite stitched = manager.getSprite(location);
+            holder.sprite = stitched;
+            holder.hasCalled = false;
 
-        if (DEBUG&&ModLoader.isLoadingStateValid()) {
-            BCLog.logger.info("[lib.sprite.holder] List of registered sprites:");
-            for (ResourceLocation r : locations) {
-                SpriteHolder sprite = HOLDER_MAP.get(r);
-                TextureAtlasSprite stitched = sprite.sprite;
-                String status = "  ";
-                if (missing.getU0() == stitched.getU0() && missing.getV0() == stitched.getV0()) {
-                    status += "fail to load sprite "+r +" ,using missingno instead";
-                }
-
-                BCLog.logger.info("  - " + r + status);
+            if (holder.lastRegisteredGeneration != stitchGeneration) {
+                unregisteredLocations.add(location);
             }
-            BCLog.logger.info("[lib.sprite.holder] Total of " + HOLDER_MAP.size() + " sprites");
+            if (isMissingSprite(stitched, missing)) {
+                missingLocations.add(location);
+            }
         }
+
+        activeStitchEvent = null;
+        REGISTERED_THIS_STITCH.clear();
+        atlasHasBeenStitched = true;
+
+        if (!unregisteredLocations.isEmpty()) {
+            BCLog.logger.error(
+                "[lib.sprite.holder] {} sprite holders were not registered during block-atlas stitching: {}",
+                unregisteredLocations.size(), unregisteredLocations
+            );
+        }
+        if (!missingLocations.isEmpty()) {
+            BCLog.logger.error(
+                "[lib.sprite.holder] {} BuildCraft sprites resolved to missingno. " +
+                "The exact missing resources are listed below:",
+                missingLocations.size()
+            );
+            for (ResourceLocation location : missingLocations) {
+                BCLog.logger.error(
+                    "[lib.sprite.holder]   {}  (expected assets/{}/textures/{}.png)",
+                    location, location.getNamespace(), location.getPath()
+                );
+            }
+
+            if (Boolean.getBoolean("buildcraft.failOnMissingSprites")) {
+                throw new IllegalStateException(
+                    "BuildCraft has " + missingLocations.size() + " missing stitched sprites: " + missingLocations
+                );
+            }
+        }
+
+        if (DEBUG && ModLoader.isLoadingStateValid()) {
+            BCLog.logger.info("[lib.sprite.holder] Successfully stitched {} sprite holders", locations.size());
+        }
+    }
+
+    private static boolean isMissingSprite(TextureAtlasSprite sprite, TextureAtlasSprite missing) {
+        return sprite == missing || (sprite.getU0() == missing.getU0() && sprite.getV0() == missing.getV0());
     }
 
     /** Holds a reference to a {@link TextureAtlasSprite} that is automatically refreshed when the resource packs are
@@ -140,13 +256,22 @@ public class SpriteHolderRegistry {
         public final ResourceLocation spriteLocation;
         private TextureAtlasSprite sprite;
         private boolean hasCalled = false;
+        private int lastRegisteredGeneration = -1;
 
         private SpriteHolder(ResourceLocation spriteLocation) {
             this.spriteLocation = spriteLocation;
         }
 
-        protected void onTextureStitchPre(TextureStitchEvent.Pre event) {
-            event.addSprite(spriteLocation);
+        /**
+         * Adds this holder to the atlas currently being stitched.
+         *
+         * This is public so every BuildCraft module can register its own holders on its own
+         * MOD event bus. Event priorities do not order listeners that belong to different
+         * mod containers, so relying on BCLib to discover holders created by another module
+         * is unsafe during early/additional resource reloads.
+         */
+        public void onTextureStitchPre(TextureStitchEvent.Pre event) {
+            SpriteHolderRegistry.registerForStitch(this, event);
         }
 
         private TextureAtlasSprite getSpriteChecking() {

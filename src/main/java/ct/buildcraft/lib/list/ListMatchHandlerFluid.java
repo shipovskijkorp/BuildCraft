@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import ct.buildcraft.api.lists.ListMatchHandler;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -63,7 +64,7 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
             FluidStack fStack = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
             FluidStack fTarget = FluidUtil.getFluidContained(target).orElse(FluidStack.EMPTY);
             if (!fStack.isEmpty() && !fTarget.isEmpty()) {
-                return fStack.isFluidEqual(fTarget);
+                return FluidCompatRegistry.areEquivalent(fStack, fTarget);
             }
         }
         return false;

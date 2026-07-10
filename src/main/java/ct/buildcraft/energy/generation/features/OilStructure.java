@@ -70,6 +70,10 @@ public abstract class OilStructure {
             @Override
             public boolean canReplace(WorldGenLevel world, BlockPos pos) {
                 BlockState state = world.getBlockState(pos);
+                // Oil deposits must never punch holes through the world's bedrock floor.
+                if (state.is(Blocks.BEDROCK)) {
+                    return false;
+                }
                 if (state.is(BlockTags.LOGS)) {
                     return false;
                 }
@@ -297,18 +301,31 @@ public abstract class OilStructure {
         }
 
         public void generate(WorldGenLevel world, int count) {
+            // The old generator placed the spring at minY, which is bedrock in
+            // modern worlds. Move it upward to the first non-bedrock block so the
+            // bedrock floor remains intact.
+            BlockPos springPos = pos;
+            int maxSpringY = Math.min(pos.getY() + 16, world.getMaxBuildHeight() - 1);
+            while (springPos.getY() < maxSpringY && world.getBlockState(springPos).is(Blocks.BEDROCK)) {
+                springPos = springPos.above();
+            }
+            if (world.getBlockState(springPos).is(Blocks.BEDROCK)) {
+                BCLog.logger.warn("[energy.gen.oil] Could not find a non-bedrock position for oil spring at " + pos);
+                return;
+            }
+
             BlockState state = BCCoreBlocks.SPRING.get().defaultBlockState();
             state = state.setValue(BlockSpring.SPRING_TYPE, EnumSpring.OIL);
-            //BCLog.logger.debug("OilGenStruecutre:1 generate spring for "+pos);
-            world.setBlock(pos, state, 2);
-            BlockEntity tile = world.getBlockEntity(pos);
+            //BCLog.logger.debug("OilGenStruecutre:1 generate spring for "+springPos);
+            world.setBlock(springPos, state, 2);
+            BlockEntity tile = world.getBlockEntity(springPos);
             TileSpringOil spring;
             if (tile instanceof TileSpringOil) {
                 spring = (TileSpringOil) tile;
                 spring.totalSources = count;
             } else {
-                BCLog.logger.warn("[energy.gen.oil] Setting the blockstate didn't also set the tile at " + pos);
-                spring = new TileSpringOil(pos, state);
+                BCLog.logger.warn("[energy.gen.oil] Setting the blockstate didn't also set the tile at " + springPos);
+                spring = new TileSpringOil(springPos, state);
                 ServerLevel level = world.getLevel();
                 spring.setLevel(level);
                 level.setBlockEntity(spring);

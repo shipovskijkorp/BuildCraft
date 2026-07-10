@@ -11,6 +11,7 @@ import java.util.Locale;
 import ct.buildcraft.api.statements.IStatement;
 import ct.buildcraft.api.statements.IStatementContainer;
 import ct.buildcraft.api.statements.IStatementParameter;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.api.statements.ITriggerExternal;
 import ct.buildcraft.api.statements.StatementParameterItemStack;
 import ct.buildcraft.core.BCCoreSprites;
@@ -82,7 +83,7 @@ public class TriggerFluidContainer extends BCStatement implements ITriggerExtern
                 case CONTAINS:
                     for (int i = 0; i < liquids ; i++) {
                         FluidStack fluid = handler.getFluidInTank(i);
-                        if (!fluid.isEmpty() && (searchedFluid.isEmpty()|| searchedFluid.isFluidEqual(fluid))) {
+                        if (!fluid.isEmpty() && (searchedFluid.isEmpty()|| FluidCompatRegistry.areEquivalent(searchedFluid, fluid))) {
                             return true;
                         }
                     }

@@ -17,6 +17,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import ct.buildcraft.api.IBuildCraftMod;
+import ct.buildcraft.api.core.BCDebugging;
 import ct.buildcraft.api.core.BCLog;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -34,7 +35,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class MessageManager {
-    public static final boolean DEBUG = true;//BCDebugging.shouldDebugLog("lib.messages");
+    public static final boolean DEBUG = BCDebugging.shouldDebugLog("lib.messages");
 
     private static final Map<IBuildCraftMod, PerModHandler> MOD_HANDLERS;
     private static final Map<Class<?>, PerMessageInfo<?>> MESSAGE_HANDLERS = new HashMap<>();

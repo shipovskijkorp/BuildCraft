@@ -1,234 +1,119 @@
 package ct.buildcraft.compat.ic2;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.material.Fluid;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class Ic2TankHandler implements IFluidHandler {
+/**
+ * Presents an IC2 fluid machine as a normal Forge fluid handler and converts
+ * equivalent fluids at the integration boundary when the machine only accepts
+ * its own registered fluid ID.
+ */
+public final class Ic2TankHandler implements IFluidHandler {
+    private final IFluidHandler delegate;
 
-    protected final Object tankComponent;
-    protected final List<Object> tanks;
-    private final Direction face;
-
-    public Ic2TankHandler(Object tankComponent, Direction face) {
-        this.tankComponent = tankComponent;
-        this.tanks = tankComponent == null ? Collections.emptyList() : getAllTanks(tankComponent);
-        this.face = face;
+    public Ic2TankHandler(IFluidHandler delegate) {
+        this.delegate = delegate;
     }
 
     @Override
     public int getTanks() {
-        return tanks.size();
+        return delegate.getTanks();
     }
 
     @Override
-    public @NotNull FluidStack getFluidInTank(int tankid) {
-        if (tankid < 0 || tankid >= tanks.size()) {
-            return FluidStack.EMPTY;
-        }
-        Object ic2FluidStack = invokeNoArgs(tanks.get(tankid), "getFluidStack");
-        return toForgeFluidStack(ic2FluidStack);
+    public @NotNull FluidStack getFluidInTank(int tank) {
+        return FluidCompatRegistry.canonicalize(delegate.getFluidInTank(tank));
     }
 
     @Override
-    public int getTankCapacity(int tankid) {
-        if (tankid < 0 || tankid >= tanks.size()) {
-            return 0;
-        }
-        Object result = invokeNoArgs(tanks.get(tankid), "getCapacity");
-        return result instanceof Number ? ((Number) result).intValue() : 0;
+    public int getTankCapacity(int tank) {
+        return delegate.getTankCapacity(tank);
     }
 
     @Override
-    public boolean isFluidValid(int tankid, @NotNull FluidStack stack) {
-        if (tankid < 0 || tankid >= tanks.size() || stack.isEmpty()) {
-            return false;
+    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+        if (delegate.isFluidValid(tank, stack)) {
+            return true;
         }
-        Object ic2FluidStack = createIc2FluidStack(stack);
-        if (ic2FluidStack == null) {
-            return false;
+        for (FluidStack equivalent : FluidCompatRegistry.getEquivalentStacks(stack, "ic2")) {
+            if (equivalent.getFluid() != stack.getFluid() && delegate.isFluidValid(tank, equivalent)) {
+                return true;
+            }
         }
-        Object result = invoke(tanks.get(tankid), "fillMb", ic2FluidStack, true);
-        return result instanceof Number && ((Number) result).intValue() > 0;
+        return false;
     }
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        if (tankComponent == null || resource.isEmpty()) {
+        if (resource == null || resource.isEmpty()) {
             return 0;
         }
-        Object ic2FluidStack = createIc2FluidStack(resource);
-        if (ic2FluidStack == null) {
+
+        FluidStack accepted = findFillVariant(resource);
+        if (accepted.isEmpty()) {
             return 0;
         }
-        Object result = invoke(tankComponent, "fillMb", face, ic2FluidStack, action.simulate());
-        return result instanceof Number ? ((Number) result).intValue() : 0;
+        if (action.simulate()) {
+            return delegate.fill(accepted, FluidAction.SIMULATE);
+        }
+        return delegate.fill(accepted, FluidAction.EXECUTE);
+    }
+
+    private FluidStack findFillVariant(FluidStack resource) {
+        int direct = delegate.fill(resource, FluidAction.SIMULATE);
+        if (direct > 0) {
+            FluidStack copy = resource.copy();
+            copy.setAmount(Math.min(copy.getAmount(), direct));
+            return copy;
+        }
+
+        List<FluidStack> equivalents = FluidCompatRegistry.getEquivalentStacks(resource, "ic2");
+        for (FluidStack equivalent : equivalents) {
+            if (equivalent.getFluid() == resource.getFluid()) {
+                continue;
+            }
+            int accepted = delegate.fill(equivalent, FluidAction.SIMULATE);
+            if (accepted > 0) {
+                equivalent.setAmount(Math.min(equivalent.getAmount(), accepted));
+                return equivalent;
+            }
+        }
+        return FluidStack.EMPTY;
     }
 
     @Override
     public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
-        if (tankComponent == null || resource.isEmpty()) {
+        if (resource == null || resource.isEmpty()) {
             return FluidStack.EMPTY;
         }
-        Object ic2FluidStack = createIc2FluidStack(resource);
-        if (ic2FluidStack == null) {
-            return FluidStack.EMPTY;
+
+        FluidStack direct = delegate.drain(resource, FluidAction.SIMULATE);
+        if (!direct.isEmpty()) {
+            FluidStack drained = action.simulate() ? direct : delegate.drain(resource, FluidAction.EXECUTE);
+            return FluidCompatRegistry.copyWithFluid(drained, resource.getFluid());
         }
-        Object result = invoke(tankComponent, "drainMb", face, ic2FluidStack, action.simulate());
-        if (result instanceof Number) {
-            int amount = ((Number) result).intValue();
-            return amount > 0 ? new FluidStack(resource.getFluid(), amount) : FluidStack.EMPTY;
+
+        for (FluidStack equivalent : FluidCompatRegistry.getEquivalentStacks(resource, "ic2")) {
+            if (equivalent.getFluid() == resource.getFluid()) {
+                continue;
+            }
+            FluidStack simulated = delegate.drain(equivalent, FluidAction.SIMULATE);
+            if (simulated.isEmpty()) {
+                continue;
+            }
+            FluidStack drained = action.simulate() ? simulated : delegate.drain(equivalent, FluidAction.EXECUTE);
+            return FluidCompatRegistry.copyWithFluid(drained, resource.getFluid());
         }
-        return toForgeFluidStack(result);
+        return FluidStack.EMPTY;
     }
 
     @Override
     public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
-        if (tankComponent == null || maxDrain <= 0) {
-            return FluidStack.EMPTY;
-        }
-        Object result = invoke(tankComponent, "drainMb", face, maxDrain, action.simulate());
-        return toForgeFluidStack(result);
-    }
-
-    private static List<Object> getAllTanks(Object tankComponent) {
-        Object result = invokeNoArgs(tankComponent, "getAllTanks");
-        if (result instanceof Collection<?>) {
-            return new ArrayList<>((Collection<?>) result);
-        }
-        if (result instanceof Object[]) {
-            Object[] array = (Object[]) result;
-            List<Object> list = new ArrayList<>(array.length);
-            Collections.addAll(list, array);
-            return list;
-        }
-        return Collections.emptyList();
-    }
-
-    private static Object createIc2FluidStack(FluidStack stack) {
-        try {
-            Class<?> stackClass = findIc2FluidStackClass();
-            for (Method method : stackClass.getMethods()) {
-                if (!Modifier.isStatic(method.getModifiers()) || !method.getName().equals("create") || method.getParameterCount() != 2) {
-                    continue;
-                }
-                Class<?>[] types = method.getParameterTypes();
-                if (types[0].isAssignableFrom(stack.getFluid().getClass()) || types[0].isAssignableFrom(Fluid.class)) {
-                    if (types[1] == int.class || types[1] == Integer.class) {
-                        return method.invoke(null, stack.getFluid(), stack.getAmount());
-                    }
-                    if (types[1] == long.class || types[1] == Long.class) {
-                        return method.invoke(null, stack.getFluid(), (long) stack.getAmount());
-                    }
-                }
-            }
-        } catch (Throwable ignored) {
-            // Optional compatibility: if IC2 changes internals, expose no converted fluid capability instead of crashing.
-        }
-        return null;
-    }
-
-    private static Class<?> findIc2FluidStackClass() throws ClassNotFoundException {
-        try {
-            return Class.forName("ic2.core.fluid.Ic2FluidStack");
-        } catch (ClassNotFoundException e) {
-            return Class.forName("ic2.core.block.comp.Fluids$Ic2FluidStack");
-        }
-    }
-
-    private static FluidStack toForgeFluidStack(Object ic2FluidStack) {
-        if (ic2FluidStack == null || isEmpty(ic2FluidStack)) {
-            return FluidStack.EMPTY;
-        }
-        Object fluidObject = invokeNoArgs(ic2FluidStack, "getFluid");
-        Object amountObject = invokeNoArgs(ic2FluidStack, "getAmountMb");
-        if (!(fluidObject instanceof Fluid)) {
-            return FluidStack.EMPTY;
-        }
-        int amount = amountObject instanceof Number ? ((Number) amountObject).intValue() : 0;
-        return amount > 0 ? new FluidStack((Fluid) fluidObject, amount) : FluidStack.EMPTY;
-    }
-
-    private static boolean isEmpty(Object stack) {
-        Object result = invokeNoArgs(stack, "isEmpty");
-        return result instanceof Boolean && (Boolean) result;
-    }
-
-    private static Object invokeNoArgs(Object target, String name) {
-        return invoke(target, name);
-    }
-
-    private static Object invoke(Object target, String name, Object... args) {
-        if (target == null) {
-            return null;
-        }
-        Class<?> current = target.getClass();
-        while (current != null && current != Object.class) {
-            for (Method method : current.getDeclaredMethods()) {
-                if (method.getName().equals(name) && method.getParameterCount() == args.length && canAccept(method.getParameterTypes(), args)) {
-                    try {
-                        method.setAccessible(true);
-                        return method.invoke(target, args);
-                    } catch (Throwable ignored) {
-                        return null;
-                    }
-                }
-            }
-            current = current.getSuperclass();
-        }
-        for (Method method : target.getClass().getMethods()) {
-            if (method.getName().equals(name) && method.getParameterCount() == args.length && canAccept(method.getParameterTypes(), args)) {
-                try {
-                    return method.invoke(target, args);
-                } catch (Throwable ignored) {
-                    return null;
-                }
-            }
-        }
-        return null;
-    }
-
-    private static boolean canAccept(Class<?>[] types, Object[] args) {
-        for (int i = 0; i < types.length; i++) {
-            if (!canAccept(types[i], args[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean canAccept(Class<?> type, Object arg) {
-        if (arg == null) {
-            return !type.isPrimitive();
-        }
-        if (type.isPrimitive()) {
-            if (type == boolean.class) {
-                return arg instanceof Boolean;
-            }
-            if (type == int.class) {
-                return arg instanceof Integer;
-            }
-            if (type == long.class) {
-                return arg instanceof Long || arg instanceof Integer;
-            }
-            if (type == float.class) {
-                return arg instanceof Float || arg instanceof Number;
-            }
-            if (type == double.class) {
-                return arg instanceof Double || arg instanceof Number;
-            }
-            return false;
-        }
-        return type.isAssignableFrom(arg.getClass());
+        return FluidCompatRegistry.canonicalize(delegate.drain(maxDrain, action));
     }
 }

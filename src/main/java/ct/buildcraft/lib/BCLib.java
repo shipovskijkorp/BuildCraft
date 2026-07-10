@@ -6,7 +6,6 @@ package ct.buildcraft.lib;
 
 import ct.buildcraft.api.BCModules;
 import ct.buildcraft.api.core.BCLog;
-import ct.buildcraft.compat.ic2.Ic2Compat;
 import ct.buildcraft.lib.block.VanillaRotationHandlers;
 import ct.buildcraft.lib.expression.ExpressionDebugManager;
 import ct.buildcraft.lib.list.VanillaListHandlers;
@@ -97,8 +96,6 @@ public class BCLib {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(BCLibEventDist.class);
         
-        if(ModList.get().isLoaded("ic2"))
-        	Ic2Compat.preInit();
     }
 
     public void gatherData(GatherDataEvent event) {
@@ -116,6 +113,7 @@ public class BCLib {
     }
     
     public void postInit(FMLLoadCompleteEvent evt) {
+        initOptionalCompat("ic2", "ct.buildcraft.compat.ic2.Ic2Compat");
     	
 //        ReloadableRegistryManager.loadAll();
 
@@ -123,8 +121,17 @@ public class BCLib {
         MarkerCache.postInit();
     	BuildCraftObjectCaches.fmlPostInit();
     	MessageManager.fmlPostInit();
-        if(ModList.get().isLoaded("ic2"))
-        	Ic2Compat.init();
+    }
+
+    private static void initOptionalCompat(String modId, String className) {
+        if (!ModList.get().isLoaded(modId)) {
+            return;
+        }
+        try {
+            Class.forName(className).getMethod("init").invoke(null);
+        } catch (ReflectiveOperationException | LinkageError e) {
+            BCLog.logger.error("Failed to initialise optional compatibility for {}", modId, e);
+        }
     }
 
     public static Error throwBadClass(Error e, Class<?> cls) throws Error {

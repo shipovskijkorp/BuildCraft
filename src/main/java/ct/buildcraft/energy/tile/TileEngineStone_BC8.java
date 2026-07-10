@@ -21,6 +21,7 @@ import ct.buildcraft.lib.delta.DeltaManager.EnumNetworkVisibility;
 import ct.buildcraft.lib.engine.EngineConnector;
 import ct.buildcraft.lib.engine.TileEngineBase_BC8;
 import ct.buildcraft.lib.misc.InventoryUtil;
+import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import ct.buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -28,6 +29,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -36,6 +38,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -44,6 +47,8 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkHooks;
 
 public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvider{
+    private static final ResourceLocation ADVANCEMENT_LAVA_POWER =
+        new ResourceLocation("buildcraftenergy:lava_power");
     private static final long MAX_OUTPUT = MjAPI.MJ;
     private static final long MIN_OUTPUT = MAX_OUTPUT / 3;
     // private static final long TARGET_OUTPUT = 0.375f;
@@ -126,6 +131,11 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
     }
 
     @Override
+    protected boolean canUnlockPoweringUpAdvancement() {
+        return true;
+    }
+
+    @Override
     protected void engineUpdate() {
         super.engineUpdate();
         if (burnTime > 0) {
@@ -149,6 +159,9 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
                 deltaFuelLeft.addDelta(0, totalBurnTime, -100);
 
                 ItemStack fuel = invFuel.extractItem(0, 1, false);
+                if (fuel.is(Items.LAVA_BUCKET) && getOwner() != null) {
+                    AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_LAVA_POWER);
+                }
                 ItemStack container = fuel.getItem().getCraftingRemainingItem(fuel);
                 if (!container.isEmpty()) {
                     if (invFuel.getStackInSlot(0).isEmpty()) {

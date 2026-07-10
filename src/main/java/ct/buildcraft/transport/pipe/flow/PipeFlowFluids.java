@@ -39,6 +39,7 @@ import ct.buildcraft.api.transport.pipe.PipeEventStatement;
 import ct.buildcraft.api.transport.pipe.PipeFlow;
 import ct.buildcraft.compat.CompatCapTransfromer;
 import ct.buildcraft.core.BCCoreItems;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.LocaleUtil;
 import ct.buildcraft.lib.misc.MathUtil;
@@ -124,7 +125,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                     if (currentFluid.isEmpty()) {
                         setFluid(stack);
                     }
-                    if (!stack.isEmpty() && stack.isFluidEqual(currentFluid)) {
+                    if (!stack.isEmpty() && FluidCompatRegistry.areEquivalent(stack, currentFluid)) {
                         sections.get(part).readFromNbt(compound);
                     }
                 } else {
@@ -197,7 +198,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     }
     
     public boolean doesContainFluid(@NotNull FluidStack fluid) {
-    	return (fluid.isEmpty() || fluid.isFluidEqual(currentFluid)) ? doesContainFluid() : false;
+    	return (fluid.isEmpty() || FluidCompatRegistry.areEquivalent(fluid, currentFluid)) ? doesContainFluid() : false;
     }
 
     @PipeEventHandler
@@ -306,7 +307,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         filter.setAmount(millibuckets);
         FluidStack drained = handler.drain(filter, simulate);
         if (!drained.isEmpty()) {
-            if (!filter.isFluidEqual(filter)) {
+            if (!FluidCompatRegistry.areEquivalent(filter, drained)) {
                 String detail = "(Filter = " + StringUtilBC.fluidToString(filter);
                 detail += ",\nactually drained = " + StringUtilBC.fluidToString(drained) + ")";
                 detail += ",\nIFluidHandler = " + handler.getClass() + "(" + handler + ")";
@@ -322,7 +323,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         if (fluid.isEmpty() || fluid.getAmount() == 0) {
             return 0;
         }
-        if (!currentFluid.isEmpty() && !currentFluid.isFluidEqual(fluid)) {
+        if (!currentFluid.isEmpty() && !FluidCompatRegistry.areEquivalent(currentFluid, fluid)) {
             return 0;
         }
         if (currentFluid.isEmpty() && simulate.execute()) {
@@ -452,7 +453,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     // Internal logic
 
     private void setFluid(FluidStack fluid) {
-        currentFluid = fluid;
+        currentFluid = FluidCompatRegistry.canonicalize(fluid);
+        fluid = currentFluid;
         if (fluid.isEmpty()) {
             currentDelay = (int) PipeApi.getFluidTransferInfo(pipe.getDefinition()).transferDelayMultiplier;
             // (int) (fluidTransferInfo.transferDelayMultiplier * fluid.getFluid().getViscosity(fluid) / 100);
@@ -979,7 +981,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 return 0;
             }
 
-            if (currentFluid.isEmpty() || currentFluid.isFluidEqual(resource)) {
+            if (currentFluid.isEmpty() || FluidCompatRegistry.areEquivalent(currentFluid, resource)) {
                 if (doFill.execute()) {
                     if (currentFluid.isEmpty()) {
                         setFluid(resource.copy());

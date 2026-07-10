@@ -71,6 +71,7 @@ import ct.buildcraft.robotics.zone.MessageZoneMapResponse;
 import ct.buildcraft.robotics.recipes.RobotIntegrationRecipe;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -83,6 +84,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -226,6 +228,13 @@ public class BCRobotics {
                         (stack, level, entity, seed) -> BCRoboticsBoards.getBoardModelValue(stack));
                 BCRoboticsModels.init();
             });
+        }
+
+        @SubscribeEvent
+        public static void textureStitchPre(TextureStitchEvent.Pre event) {
+            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                BCRoboticsSprites.preInit();
+            }
         }
 
         @SubscribeEvent

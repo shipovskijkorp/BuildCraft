@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import ct.buildcraft.api.items.IItemFluidShard;
 import ct.buildcraft.core.BCCore;
 import ct.buildcraft.lib.fluid.BCFluid;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.misc.LocaleUtil;
 import ct.buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.Direction;
@@ -166,7 +167,7 @@ public class ItemFragileFluidContainer extends Item implements IItemFluidShard {
             if (fluid == null || resource == null) {
                 return FluidStack.EMPTY;
             }
-            if (!fluid.isFluidEqual(resource)) {
+            if (!FluidCompatRegistry.areEquivalent(fluid, resource)) {
                 return FluidStack.EMPTY;
             }
             return drain(resource.getAmount(), doDrain);

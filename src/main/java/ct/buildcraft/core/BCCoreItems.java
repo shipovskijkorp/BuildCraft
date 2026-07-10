@@ -34,7 +34,7 @@ public class BCCoreItems {
     public static final RegistryObject<Item> GEAR_DIAMOND = ITEMS.register("gears/gear_diamond", () -> new Item(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB))); 
     public static final RegistryObject<ItemPaintbrush_BC8> PAINT_BRUSH = ITEMS.register("paintbrush/clean", () -> new ItemPaintbrush_BC8(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB), null));
     public static final RegistryObject<ItemMarkerConnector> MARKER_CONNECTOR = ITEMS.register("marker_connector", () -> new ItemMarkerConnector(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
-    public static final RegistryObject<ItemVolumeBox> VOLUME_BOX = ITEMS.register("volume_box", () -> new ItemVolumeBox(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
+    public static final RegistryObject<ItemVolumeBox> VOLUME_BOX = ITEMS.register("volume_box", () -> new ItemVolumeBox(new Item.Properties()));
     public static final RegistryObject<ItemMapLocation> MAP_LOCATION = ITEMS.register("map_location", () -> new ItemMapLocation(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<ItemList_BC8> LIST = ITEMS.register("list", () -> new ItemList_BC8(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB).stacksTo(1)));
 
@@ -52,8 +52,8 @@ public class BCCoreItems {
     public static final RegistryObject<MultiBlockItem<EnumEngineType>> ENGINE_RESTONE_ITEM_BC8 = ITEMS.register("engine_redstone", () -> new MultiBlockItem<EnumEngineType>(BCCoreBlocks.ENGINE_BC8.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB),EnumEngineType.WOOD, ENGINE_ITEM_MAP));
     public static final RegistryObject<MultiBlockItem<EnumEngineType>> ENGINE_CREATIVE_ITEM_BC8 = ITEMS.register("engine_creative", () -> new MultiBlockItem<EnumEngineType>(BCCoreBlocks.ENGINE_BC8.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB),EnumEngineType.CREATIVE, ENGINE_ITEM_MAP));
     
-    public static final RegistryObject<MultiBlockItem<EnumSpring>> SPRING_WATER = ITEMS.register("spring_water", () -> new MultiBlockItem<EnumSpring>(BCCoreBlocks.SPRING.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB), EnumSpring.WATER, SPRING_ITEM_MAP));
-    public static final RegistryObject<MultiBlockItem<EnumSpring>> SPRING_OIL = ITEMS.register("spring_oil", () -> new MultiBlockItem<EnumSpring>(BCCoreBlocks.SPRING.get(),new Item.Properties().tab(BCCore.BUILDCRAFT_TAB), EnumSpring.OIL, SPRING_ITEM_MAP));
+    public static final RegistryObject<MultiBlockItem<EnumSpring>> SPRING_WATER = ITEMS.register("spring_water", () -> new MultiBlockItem<EnumSpring>(BCCoreBlocks.SPRING.get(), new Item.Properties(), EnumSpring.WATER, SPRING_ITEM_MAP));
+    public static final RegistryObject<MultiBlockItem<EnumSpring>> SPRING_OIL = ITEMS.register("spring_oil", () -> new MultiBlockItem<EnumSpring>(BCCoreBlocks.SPRING.get(), new Item.Properties(), EnumSpring.OIL, SPRING_ITEM_MAP));
 
     public static final RegistryObject<BlockItem> MARKER_PATH = ITEMS.register("marker_path", () -> new BlockItem(BCCoreBlocks.MARKER_PATH.get(), new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<BlockItem> MARKER_VOLUME = ITEMS.register("marker_volume", () -> new BlockItem(BCCoreBlocks.MARKER_VOLUME.get(), new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));

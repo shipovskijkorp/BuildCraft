@@ -22,14 +22,14 @@ public abstract class ZonePlannerMapData {
     protected abstract ZonePlannerMapChunk loadChunk(Level world, ZonePlannerMapChunkKey key);
 
     public final ZonePlannerMapChunk getChunk(Level world, ZonePlannerMapChunkKey key) {
-        if (data.getIfPresent(key) != null) {
-            return data.getIfPresent(key);
-        } else {
-            ZonePlannerMapChunk zonePlannerMapChunk = loadChunk(world, key);
-            if (zonePlannerMapChunk != null) {
-                data.put(key, zonePlannerMapChunk);
-                return zonePlannerMapChunk;
-            }
+        ZonePlannerMapChunk cached = data.getIfPresent(key);
+        if (cached != null) {
+            return cached;
+        }
+        ZonePlannerMapChunk zonePlannerMapChunk = loadChunk(world, key);
+        if (zonePlannerMapChunk != null) {
+            data.put(key, zonePlannerMapChunk);
+            return zonePlannerMapChunk;
         }
         return null;
     }

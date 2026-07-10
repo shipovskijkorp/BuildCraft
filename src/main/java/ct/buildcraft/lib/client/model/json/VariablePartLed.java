@@ -41,7 +41,7 @@ public class VariablePartLed extends VariablePartCuboidBase {
     }
     
     public static void onTextureStitchPost(TextureStitchEvent.Post event) {
-    	if(InventoryMenu.BLOCK_ATLAS == (event.getAtlas().location())) {
+    	if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
             FACE_DATA.sprite = event.getAtlas()
             		.getSprite(ForgeRegistries.BLOCKS.getKey(Blocks.QUARTZ_BLOCK));//TEMP
     	}

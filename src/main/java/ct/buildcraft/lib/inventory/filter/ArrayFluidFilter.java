@@ -9,6 +9,7 @@ package ct.buildcraft.lib.inventory.filter;
 import java.util.Optional;
 
 import ct.buildcraft.api.core.IFluidFilter;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +55,7 @@ public class ArrayFluidFilter implements IFluidFilter {
     @Override
     public boolean matches(FluidStack fluid) {
         for (FluidStack filter : fluids) {
-            if (filter != null && filter.isFluidEqual(fluid)) {
+            if (filter != null && FluidCompatRegistry.areEquivalent(filter, fluid)) {
                 return true;
             }
         }

@@ -1,8 +1,8 @@
 package ct.buildcraft.lib.block.fluid;
 
-import org.jetbrains.annotations.NotNull;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 
-import com.mojang.logging.LogUtils;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.material.Fluid;
@@ -17,7 +17,7 @@ public class BCTank implements IFluidHandler,IFluidTank{
 	protected FluidStack fluid = FluidStack.EMPTY;
 	protected int capacity;
 	public BCTank(int capacity,Fluid flu,int amount) {
-		this.fluid = new FluidStack(flu,amount);
+		this.fluid = FluidCompatRegistry.canonicalize(new FluidStack(flu,amount));
 		this.capacity = capacity;
 		this.setTanks((int)(capacity/8000));
 	}
@@ -42,10 +42,10 @@ public class BCTank implements IFluidHandler,IFluidTank{
 		}
 		else if(fluid.isEmpty()) {
 			this.setCapacity(this.getCapacity() + subtank.getCapacity());
-			this.fluid = subtank.fluid.copy();
+			this.fluid = FluidCompatRegistry.canonicalize(subtank.fluid);
 			setTanks(getTanks() + subtank.getTanks());
 		}
-		else if(fluid.isFluidEqual(subtank.getFluid())) {
+		else if(FluidCompatRegistry.areEquivalent(fluid, subtank.getFluid())) {
 			this.setCapacity(this.getCapacity() + subtank.getCapacity());
 			fluid.setAmount(subtank.getFluidAmount() + fluid.getAmount());
 			setTanks(getTanks() + subtank.getTanks());
@@ -92,12 +92,13 @@ public class BCTank implements IFluidHandler,IFluidTank{
 		return capacity;
 	}
 	@Override
-	public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-		return stack.isFluidEqual(fluid);
-	}
+    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+        return fluid.isEmpty() || FluidCompatRegistry.areEquivalent(stack, fluid);
+    }
 	   @Override
 	    public int fill(FluidStack resource, FluidAction action)
 	    {
+            resource = FluidCompatRegistry.canonicalize(resource);
 	        if (resource.isEmpty() || !isFluidValid(resource))
 	        {
 	            return 0;
@@ -108,7 +109,7 @@ public class BCTank implements IFluidHandler,IFluidTank{
 	            {
 	                return Math.min(capacity, resource.getAmount());
 	            }
-	            if (!fluid.isFluidEqual(resource))
+	            if (!FluidCompatRegistry.areEquivalent(fluid, resource))
 	            {
 	                return 0;
 	            }
@@ -119,7 +120,7 @@ public class BCTank implements IFluidHandler,IFluidTank{
 	            fluid = new FluidStack(resource, Math.min(capacity, resource.getAmount()));
 	            return fluid.getAmount();
 	        }
-	        if (!fluid.isFluidEqual(resource))
+	        if (!FluidCompatRegistry.areEquivalent(fluid, resource))
 	        {
 	            return 0;
 	        }
@@ -140,13 +141,13 @@ public class BCTank implements IFluidHandler,IFluidTank{
 	@Override
 	public boolean isFluidValid(FluidStack resource) {
 		
-		return isEmpty()?true:resource.isFluidEqual(fluid);
+		return isEmpty()?true:FluidCompatRegistry.areEquivalent(resource, fluid);
 	}
     @NotNull
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action)
     {
-        if (resource.isEmpty() || !resource.isFluidEqual(fluid))
+        if (resource.isEmpty() || !FluidCompatRegistry.areEquivalent(resource, fluid))
         {
             return FluidStack.EMPTY;
         }
@@ -184,7 +185,7 @@ public class BCTank implements IFluidHandler,IFluidTank{
 	public void readFromNBT(CompoundTag tag) {
 		tanks = tag.getInt("tanks");
 		capacity = tag.getInt("capacity");
-		fluid = FluidStack.loadFluidStackFromNBT(tag);
+		fluid = FluidCompatRegistry.canonicalize(FluidStack.loadFluidStackFromNBT(tag));
 //		LogUtils.getLogger().info(Integer.toString(tag.getInt("tanks"))+"tanks");
 	}
 	

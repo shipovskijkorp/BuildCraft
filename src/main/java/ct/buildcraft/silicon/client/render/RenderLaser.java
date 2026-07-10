@@ -57,7 +57,7 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
 				Matrix3f normal = matrix.last().normal();
 				if (tile.laserPos != null) {
 					long avg = tile.getAverageClient();
-					if (avg > 200_000) {
+					if (avg > 0) {
 						avg += 200_000;
 						Vec3 offset = new Vec3(0.5, 0.5, 0.5).add(new Vec3(side.step()).scale(4 / 16D));
 						int index = (int) (avg * MAX_POWER / tile.getMaxPowerPerTick());

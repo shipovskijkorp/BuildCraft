@@ -28,14 +28,6 @@
             "colour": "0x40_40_40",
             "pos": [7,141]
         },
-        "no_area_warning": {
-            "type": "buildcraftlib:text",
-            "visible": "!filler.has_box",
-            "text": "gui.filler.no_area",
-            "colour": "0xFF_CC_33_33",
-            "pos": [88,64],
-            "centered": true
-        },
         "ledger_progress": {
             "type": "buildcraftlib:ledger",
             "title": "gui.progress",

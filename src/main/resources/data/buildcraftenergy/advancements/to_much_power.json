@@ -12,27 +12,13 @@
   },
   "parent": "buildcraftenergy:powering_up",
   "criteria": {
-    "has_combustion_and_wrench": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "buildcraftenergy:engine_iron"
-            ]
-          },
-          {
-            "items": [
-              "buildcraftcore:wrench"
-            ]
-          }
-        ]
-      }
+    "code_trigger": {
+      "trigger": "minecraft:impossible"
     }
   },
   "requirements": [
     [
-      "has_combustion_and_wrench"
+      "code_trigger"
     ]
   ]
 }

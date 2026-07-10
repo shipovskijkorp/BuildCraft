@@ -22,7 +22,7 @@
               "buildcrafttransport:wire/white"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -30,7 +30,7 @@
               "buildcrafttransport:wire/orange"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -38,7 +38,7 @@
               "buildcrafttransport:wire/magenta"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -46,7 +46,7 @@
               "buildcrafttransport:wire/light_blue"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -54,7 +54,7 @@
               "buildcrafttransport:wire/yellow"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -62,7 +62,7 @@
               "buildcrafttransport:wire/lime"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -70,7 +70,7 @@
               "buildcrafttransport:wire/pink"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -78,7 +78,7 @@
               "buildcrafttransport:wire/gray"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -86,7 +86,7 @@
               "buildcrafttransport:wire/light_gray"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -94,7 +94,7 @@
               "buildcrafttransport:wire/cyan"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -102,7 +102,7 @@
               "buildcrafttransport:wire/purple"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -110,7 +110,7 @@
               "buildcrafttransport:wire/blue"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -118,7 +118,7 @@
               "buildcrafttransport:wire/brown"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -126,7 +126,7 @@
               "buildcrafttransport:wire/green"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -134,7 +134,7 @@
               "buildcrafttransport:wire/red"
             ],
             "count": {
-              "min": 16
+              "min": 1
             }
           },
           {
@@ -142,7 +142,247 @@
               "buildcrafttransport:wire/black"
             ],
             "count": {
-              "min": 16
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_white": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/white"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_orange": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/orange"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_magenta": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/magenta"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_light_blue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/light_blue"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_yellow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/yellow"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_lime": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/lime"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_pink": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/pink"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_gray": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/gray"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_light_gray": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/light_gray"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_cyan": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/cyan"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_purple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/purple"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_blue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/blue"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_brown": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/brown"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_green": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/green"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_red": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/red"
+            ],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    "wire_black": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wire/black"
+            ],
+            "count": {
+              "min": 1
             }
           }
         ]
@@ -151,7 +391,68 @@
   },
   "requirements": [
     [
-      "has_all_wire_colors"
+      "has_all_wire_colors",
+      "wire_white"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_orange"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_magenta"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_light_blue"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_yellow"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_lime"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_pink"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_gray"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_light_gray"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_cyan"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_purple"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_blue"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_brown"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_green"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_red"
+    ],
+    [
+      "has_all_wire_colors",
+      "wire_black"
     ]
   ]
 }

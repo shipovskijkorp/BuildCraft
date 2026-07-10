@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import ct.buildcraft.api.recipes.IRefineryRecipeManager;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
@@ -77,7 +78,7 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
                 return null;
             }
             for (R recipe : allRecipes) {
-                if (recipe.in().isFluidEqual(fluid)) {
+                if (FluidCompatRegistry.areEquivalent(recipe.in(), fluid)) {
                     return recipe;
                 }
             }
@@ -104,7 +105,7 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
             ListIterator<R> iter = allRecipes.listIterator();
             while (iter.hasNext()) {
                 R existing = iter.next();
-                if (existing.in().isFluidEqual(recipe.in())) {
+                if (FluidCompatRegistry.areEquivalent(existing.in(), recipe.in())) {
                     iter.set(recipe);
                     return recipe;
                 }

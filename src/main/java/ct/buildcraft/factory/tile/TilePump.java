@@ -36,12 +36,10 @@ import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.misc.BlockUtil;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.FluidUtilBC;
-import ct.buildcraft.lib.misc.VecUtil;
 import ct.buildcraft.lib.mj.MjRedstoneBatteryReceiver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -123,6 +121,7 @@ public class TilePump extends TileMiner {
     private void buildQueue() {
         queue.clear();
         paths.clear();
+        oilSpringPos = null;
         Fluid queueFluid = Fluids.EMPTY;
         isInfiniteWaterSource = false;
         Set<BlockPos> checked = new HashSet<>();
@@ -212,12 +211,17 @@ public class TilePump extends TileMiner {
         }
         if (isOil(queueFluid)) {
             List<BlockPos> springPositions = new ArrayList<>();
-            BlockPos center = VecUtil.replaceValue(getBlockPos(), Axis.Y, 0);
-            for (BlockPos spring : BlockPos.betweenClosed(center.offset(-10, 0, -10), center.offset(10, 0, 10))) {
+            int minY = level.getMinBuildHeight();
+            int maxSpringY = Math.min(minY + 16, level.getMaxBuildHeight() - 1);
+            BlockPos center = new BlockPos(getBlockPos().getX(), minY, getBlockPos().getZ());
+            for (BlockPos spring : BlockPos.betweenClosed(
+                center.offset(-10, 0, -10),
+                center.offset(10, maxSpringY - minY, 10)
+            )) {
                 if (level.getBlockState(spring).getBlock() == BCCoreBlocks.SPRING.get()) {
                     BlockEntity tile = level.getBlockEntity(spring);
                     if (tile instanceof ITileOilSpring) {
-                        springPositions.add(spring);
+                        springPositions.add(spring.immutable());
                     }
                 }
             }
@@ -303,7 +307,7 @@ public class TilePump extends TileMiner {
             drain_attempt: {
 
                 if (drain == FluidStack.EMPTY) {
-                    if (true) {
+                    if (DEBUG_PUMP) {
                         BCLog.logger.info(
                             "Pump @ " + getBlockPos() + " tried to drain " + currentPos
                                 + " but couldn't because no fluid was drained!"
@@ -314,7 +318,7 @@ public class TilePump extends TileMiner {
 
                 BlockPos invalid = getFirstInvalidPointOnPath(currentPos);
                 if (invalid != null) {
-                    if (true) {
+                    if (DEBUG_PUMP) {
                         BCLog.logger.info(
                             "Pump @ " + getBlockPos() + " tried to drain " + currentPos
                                 + " but couldn't because the path stopped at " + invalid + "!"
@@ -322,7 +326,7 @@ public class TilePump extends TileMiner {
                     }
                     break drain_attempt;
                 } else if (!canDrain(currentPos)) {
-                    if (true) {
+                    if (DEBUG_PUMP) {
                         BCLog.logger.info(
                             "Pump @ " + getBlockPos() + " tried to drain " + currentPos
                                 + " but couldn't because it couldn't be drained!"
@@ -414,7 +418,7 @@ public class TilePump extends TileMiner {
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		oilSpringPos = BlockPos.of(nbt.getLong("oilSpringPos"));//nbt.get("oilSpringPos"));
+		oilSpringPos = nbt.contains("oilSpringPos") ? BlockPos.of(nbt.getLong("oilSpringPos")) : null;
         tank.readFromNBT(nbt.getCompound("tank"));
 	}
 

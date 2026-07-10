@@ -7,6 +7,7 @@
 package ct.buildcraft.lib.inventory.filter;
 
 import ct.buildcraft.api.core.IFluidFilter;
+import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 
 import net.minecraftforge.fluids.FluidStack;
 
@@ -23,7 +24,7 @@ public class SimpleFluidFilter implements IFluidFilter {
     @Override
     public boolean matches(FluidStack fluid) {
         if (fluidChecked != null) {
-            return fluidChecked.isFluidEqual(fluid);
+            return FluidCompatRegistry.areEquivalent(fluidChecked, fluid);
         } else {
             return fluid == null;
         }

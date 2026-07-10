@@ -70,8 +70,24 @@ public class LaserRenderer_BC8 {
 
     }
 
+    /**
+     * Invalidates every object that contains UV coordinates baked from the block atlas.
+     *
+     * SpriteHolder instances are refreshed after a texture stitch, but the compiled laser
+     * buffers already contain the old atlas UVs. Keeping those buffers after a resource
+     * reload makes every laser sample unrelated parts of the new atlas.
+     */
     public static void clearModels() {
         COMPILED_LASER_TYPES.clear();
+
+        // Static lasers own GPU vertex buffers. invalidateAll() followed by cleanUp()
+        // invokes the removal listener immediately, which closes those VBOs.
+        COMPILED_STATIC_LASERS.invalidateAll();
+        COMPILED_STATIC_LASERS.cleanUp();
+
+        // Dynamic lasers are CPU-side vertex arrays with the atlas UVs baked into them.
+        COMPILED_DYNAMIC_LASERS.invalidateAll();
+        COMPILED_DYNAMIC_LASERS.cleanUp();
     }
 
     /**

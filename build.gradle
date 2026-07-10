@@ -5,7 +5,7 @@ plugins {
 }
 
 
-version = '8.0.7+1.19.2'
+version = '8.0.8+1.19.2'
 group = 'ct.buildcraft.ce' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'BuildCraft-Community-Edition'
 
@@ -13,6 +13,18 @@ archivesBaseName = 'BuildCraft-Community-Edition'
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+// Optional IC2 Classic development dependency.
+// The API jar is compile-only and is never bundled into the BuildCraft jar.
+// Set enable_ic2_runtime=true in gradle.properties (or pass -Penable_ic2_runtime=true)
+// to add IC2 Classic and CarbonConfig to runClient/runServer.
+def ic2ClassicVersion = providers.gradleProperty('ic2_classic_version').getOrElse('2.1.3.3')
+def carbonConfigVersion = providers.gradleProperty('carbon_config_version').getOrElse('2.0.0')
+def enableIc2Runtime = providers.gradleProperty('enable_ic2_runtime')
+        .map { it.toBoolean() }
+        .getOrElse(false)
+def ic2ClassicJar = file("libs/IC2Classic-1.19.2-${ic2ClassicVersion}.jar")
+def carbonConfigJar = file("libs/CarbonConfig-1.19.2-${carbonConfigVersion}.jar")
 
 minecraft {
     // The mappings can be changed at any time and must be in the following format.
@@ -37,6 +49,11 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+
+            // Remap production SRG names from dependency mixin refmaps to the
+            // official mappings used by this ForgeGradle development workspace.
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
 
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
@@ -63,6 +80,11 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
+            // Remap production SRG names from dependency mixin refmaps to the
+            // official mappings used by this ForgeGradle development workspace.
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
+
             property 'forge.logging.markers', 'REGISTRIES'
 
             property 'forge.logging.console.level', 'debug'
@@ -82,6 +104,11 @@ minecraft {
         gameTestServer {
             workingDirectory project.file('run')
 
+            // Remap production SRG names from dependency mixin refmaps to the
+            // official mappings used by this ForgeGradle development workspace.
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
+
             property 'forge.logging.markers', 'REGISTRIES'
 
             property 'forge.logging.console.level', 'debug'
@@ -97,6 +124,11 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+
+            // Remap production SRG names from dependency mixin refmaps to the
+            // official mappings used by this ForgeGradle development workspace.
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
 
             property 'forge.logging.markers', 'REGISTRIES'
 
@@ -166,7 +198,28 @@ dependencies {
     compileOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
     runtimeOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
 
-	implementation fg.deobf("blank:ic2-1.19.2:1.0")
+    // IC2 Classic is optional at runtime, but its API is available while compiling compat code.
+    if (!ic2ClassicJar.exists()) {
+        throw new GradleException(
+                "Missing optional IC2 Classic development jar: ${ic2ClassicJar}. " +
+                "See libs/README.md for setup instructions."
+        )
+    }
+    compileOnly fg.deobf("blank:IC2Classic-1.19.2:${ic2ClassicVersion}")
+    if (carbonConfigJar.exists()) {
+        compileOnly fg.deobf("blank:CarbonConfig-1.19.2:${carbonConfigVersion}")
+    }
+
+    if (enableIc2Runtime) {
+        if (!carbonConfigJar.exists()) {
+            throw new GradleException(
+                    "IC2 runtime was enabled, but its mandatory CarbonConfig dependency is missing: " +
+                    "${carbonConfigJar}. See libs/README.md."
+            )
+        }
+        runtimeOnly fg.deobf("blank:IC2Classic-1.19.2:${ic2ClassicVersion}")
+        runtimeOnly fg.deobf("blank:CarbonConfig-1.19.2:${carbonConfigVersion}")
+    }
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

@@ -1,5 +1,6 @@
 package ct.buildcraft.robotics;
 
+import ct.buildcraft.core.BCCore;
 import ct.buildcraft.robotics.item.ItemRedstoneBoard;
 import ct.buildcraft.robotics.item.ItemRobot;
 import ct.buildcraft.robotics.item.ItemRobotStation;
@@ -23,10 +24,10 @@ public class BCRoboticsItems {
             () -> new ItemRedstoneBoard(new Item.Properties().tab(BCRobotics.TAB_ROBOTICS).stacksTo(16)));
 
     public static final RegistryObject<BlockItem> ZONE_PLANNER = ITEMS.register("zone_planner",
-            () -> new BlockItem(BCRoboticsBlocks.ZONE_PLANNER.get(), new Item.Properties().tab(BCRobotics.TAB_ROBOTICS)));
+            () -> new BlockItem(BCRoboticsBlocks.ZONE_PLANNER.get(), new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
 
     public static final RegistryObject<BlockItem> REQUESTER = ITEMS.register("requester",
-            () -> new BlockItem(BCRoboticsBlocks.REQUESTER.get(), new Item.Properties().tab(BCRobotics.TAB_ROBOTICS)));
+            () -> new BlockItem(BCRoboticsBlocks.REQUESTER.get(), new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
 
     public static void registry(IEventBus bus) {
         ITEMS.register(bus);

@@ -43,7 +43,6 @@ public class GuiFiller extends GuiBC8<ContainerFiller> {
         properties.put("controllable", container.tile);
         properties.put("controllable.sprite", SPRITE_CONTROL_MODE);
         context.put_o("controllable.mode", Mode.class, () -> container.tile == null ? Mode.OFF : container.tile.getControlMode());
-        context.put_b("filler.has_box", () -> container.tile != null && container.tile.hasBox());
         context.put_b("filler.is_finished", () -> container.tile != null && container.tile.isFinished());
         context.put_b("filler.is_locked", container::isLocked);
         context.put_l("filler.to_break", () -> container.tile == null ? 0 : container.tile.getCountToBreak());
