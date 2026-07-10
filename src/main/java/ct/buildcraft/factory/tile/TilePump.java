@@ -211,12 +211,17 @@ public class TilePump extends TileMiner {
         }
         if (isOil(queueFluid)) {
             List<BlockPos> springPositions = new ArrayList<>();
-            BlockPos center = new BlockPos(getBlockPos().getX(), level.getMinBuildHeight(), getBlockPos().getZ());
-            for (BlockPos spring : BlockPos.betweenClosed(center.offset(-10, 0, -10), center.offset(10, 0, 10))) {
+            int minY = level.getMinBuildHeight();
+            int maxSpringY = Math.min(minY + 16, level.getMaxBuildHeight() - 1);
+            BlockPos center = new BlockPos(getBlockPos().getX(), minY, getBlockPos().getZ());
+            for (BlockPos spring : BlockPos.betweenClosed(
+                center.offset(-10, 0, -10),
+                center.offset(10, maxSpringY - minY, 10)
+            )) {
                 if (level.getBlockState(spring).getBlock() == BCCoreBlocks.SPRING.get()) {
                     BlockEntity tile = level.getBlockEntity(spring);
                     if (tile instanceof ITileOilSpring) {
-                        springPositions.add(spring);
+                        springPositions.add(spring.immutable());
                     }
                 }
             }

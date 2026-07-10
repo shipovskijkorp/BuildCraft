@@ -231,11 +231,16 @@ public class OilGenerator {
                 structures.add(createSpout(new BlockPos(x, wellY, z), height, radius));
             }
 
-            // Generate a spring at the very bottom
+            // Generate a spring at the bottom. The old 1.12 code assumed
+            // minY == 0 and passed the absolute well Y as the tube length. With
+            // negative world heights that mirrored the tube below the world.
             if (type == GenType.LARGE) {
-                structures.add(createTube(new BlockPos(x, bottomY+1, z), wellY, radius, Axis.Y));
+                BlockPos springPos = new BlockPos(x, bottomY, z);
+                BlockPos tubeStart = springPos.above();
+                int tubeLength = Math.max(0, wellY - tubeStart.getY());
+                structures.add(createTube(tubeStart, tubeLength, radius, Axis.Y));
                 if (BCCoreBlocks.SPRING.isPresent()) {
-                    structures.add(createSpring(new BlockPos(x, bottomY, z)));
+                    structures.add(createSpring(springPos));
                 }
             }
         }
