@@ -6,7 +6,6 @@ import java.util.Map;
 import ct.buildcraft.api.properties.BuildCraftProperties;
 import ct.buildcraft.api.tools.IToolWrench;
 import ct.buildcraft.factory.BCFactoryBlocks;
-import ct.buildcraft.factory.tile.EntityBlockFloodGate;
 import ct.buildcraft.factory.tile.TileFloodGate;
 import ct.buildcraft.lib.block.BlockBCTile_Neptune;
 import ct.buildcraft.lib.tile.TileBC_Neptune;
