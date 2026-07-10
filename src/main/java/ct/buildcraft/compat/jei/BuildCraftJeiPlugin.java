@@ -14,6 +14,9 @@ import ct.buildcraft.api.recipes.IRefineryRecipeManager.IHeatExchangerRecipe;
 import ct.buildcraft.api.recipes.IngredientStack;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.factory.BCFactoryItems;
+import ct.buildcraft.lib.gui.GuiBC8;
+import ct.buildcraft.lib.gui.IGuiElement;
+import ct.buildcraft.lib.gui.ledger.Ledger_Neptune;
 import ct.buildcraft.lib.misc.ItemStackKey;
 import ct.buildcraft.lib.recipe.AssemblyRecipeBasic;
 import ct.buildcraft.lib.recipe.ChangingItemStack;
@@ -36,6 +39,7 @@ import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
@@ -44,15 +48,18 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -77,6 +84,32 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
         return UID;
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addGenericGuiContainerHandler(GuiBC8.class, new IGuiContainerHandler<GuiBC8<?>>() {
+            @Override
+            public List<Rect2i> getGuiExtraAreas(GuiBC8<?> screen) {
+                List<Rect2i> areas = new ArrayList<>();
+                for (IGuiElement element : screen.mainGui.shownElements) {
+                    if (!(element instanceof Ledger_Neptune ledger)) {
+                        continue;
+                    }
+
+                    int x = Mth.floor(ledger.getX()) - 1;
+                    int y = Mth.floor(ledger.getY()) - 1;
+                    int endX = Mth.ceil(ledger.getX() + ledger.getWidth()) + 1;
+                    int endY = Mth.ceil(ledger.getY() + ledger.getHeight()) + 1;
+                    int width = endX - x;
+                    int height = endY - y;
+                    if (width > 0 && height > 0) {
+                        areas.add(new Rect2i(x, y, width, height));
+                    }
+                }
+                return areas;
+            }
+        });
     }
 
     @Override
