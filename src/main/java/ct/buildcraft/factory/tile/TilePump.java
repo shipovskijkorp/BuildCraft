@@ -307,7 +307,7 @@ public class TilePump extends TileMiner {
             drain_attempt: {
 
                 if (drain == FluidStack.EMPTY) {
-                    if (true) {
+                    if (DEBUG_PUMP) {
                         BCLog.logger.info(
                             "Pump @ " + getBlockPos() + " tried to drain " + currentPos
                                 + " but couldn't because no fluid was drained!"
@@ -318,7 +318,7 @@ public class TilePump extends TileMiner {
 
                 BlockPos invalid = getFirstInvalidPointOnPath(currentPos);
                 if (invalid != null) {
-                    if (true) {
+                    if (DEBUG_PUMP) {
                         BCLog.logger.info(
                             "Pump @ " + getBlockPos() + " tried to drain " + currentPos
                                 + " but couldn't because the path stopped at " + invalid + "!"
@@ -326,7 +326,7 @@ public class TilePump extends TileMiner {
                     }
                     break drain_attempt;
                 } else if (!canDrain(currentPos)) {
-                    if (true) {
+                    if (DEBUG_PUMP) {
                         BCLog.logger.info(
                             "Pump @ " + getBlockPos() + " tried to drain " + currentPos
                                 + " but couldn't because it couldn't be drained!"

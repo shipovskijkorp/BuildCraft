@@ -169,7 +169,7 @@ public class OilGenerator {
             }
             return ImmutableList.of();
         }
-        if (/*DEBUG_OILGEN_BASIC & */true) {
+        if (DEBUG_OILGEN_BASIC && log) {
             BCLog.logger.info(
                 "[energy.oilgen] Generating an oil well (" + type.name().toLowerCase(Locale.ROOT)
                     + ") in " + toStr(world) + " chunk " + cx + ", " + cz + " at " + x + ", " + z
