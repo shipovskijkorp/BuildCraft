@@ -29,7 +29,6 @@
   "block.architect.tooltip.allowCreative.1": "Tryb kreatywny zapisuje wszystkie bloki - tylko tryb kreatywny!",
   "block.architect.tooltip.allowCreative.2": "Tryb przetrwania ignoruje wszystkie nieobsługiwane bloki",
   "block.architect.excavate": "Wykop",
-  "gui.filler.no_area": "Brak wybranego obszaru: postaw Wypełniacz obok znaczników albo pudełka obszaru",
   "item.buildcraftbuilders.snapshot.clean_hint": "Zapisz go w Stole architektonicznym, aby zachować obszar.",
   "item.buildcraftbuilders.blueprint.used_hint": "Zawiera typy bloków, stany bloków i obsługiwane dane bloków funkcyjnych.",
   "item.buildcraftbuilders.template.used_hint": "Zawiera tylko kształt konstrukcji.",
