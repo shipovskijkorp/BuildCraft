@@ -3,8 +3,11 @@
  */
 package ct.buildcraft.robotics.gui;
 
+import java.util.Map;
+
 import org.lwjgl.glfw.GLFW;
 
+import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -16,6 +19,7 @@ import ct.buildcraft.lib.gui.pos.GuiRectangle;
 import ct.buildcraft.core.BCCoreItems;
 import ct.buildcraft.robotics.container.ContainerZonePlanner;
 import ct.buildcraft.robotics.tile.TileZonePlanner;
+import ct.buildcraft.robotics.zone.ZoneChunk;
 import ct.buildcraft.robotics.zone.ZonePlan;
 import ct.buildcraft.robotics.zone.ZonePlannerMapChunk;
 import ct.buildcraft.robotics.zone.ZonePlannerMapChunk.MapColourData;
@@ -25,6 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -41,6 +46,10 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
     public static final int WINDOWED_MAP_HEIGHT = 100;
 
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftrobotics:textures/gui/zone_planner.png");
+    private static final ResourceLocation TEXTURE_MAP = new ResourceLocation("buildcraftrobotics", "dynamic/zone_planner_map");
+    private static final long MAP_TEXTURE_REFRESH_INTERVAL_MS = 100L;
+    private static final long MAP_CACHE_REVALIDATE_INTERVAL_MS = 2L * 60L * 1_000L;
+    private static final int MAP_BACKGROUND_COLOUR = 0xFF_80_80_80;
     private static final int SIZE_X = 256;
     private static final int SIZE_Y = 228;
 
@@ -77,13 +86,23 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
     private int selX2;
     private int selY2;
     private BlockPos selectionStartXZ;
-    private ZonePlan bufferLayer;
+    private BlockPos selectionEndXZ;
 
     private boolean addMode = true;
     private boolean fullscreen = false;
     private int selectedLayer = 0;
 
     private EditBox nameField;
+    private DynamicTexture mapTexture;
+    private int mapTextureWidth;
+    private int mapTextureHeight;
+    private boolean mapTextureDirty = true;
+    private boolean forceMapTextureRebuild = true;
+    private long renderedMapRevision = Long.MIN_VALUE;
+    private int renderedDimension = Integer.MIN_VALUE;
+    private int renderedMapLevel = Integer.MIN_VALUE;
+    private long lastMapTextureBuildTime;
+    private ZonePlan renderedZonePlan;
 
     public GuiZonePlanner(ContainerZonePlanner container, Inventory inv, Component title) {
         super(container, inv, title);
@@ -169,7 +188,7 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
         nameField.setResponder(container::sendNameToServer);
         addRenderableWidget(nameField);
         clearNameFocus();
-        ZonePlannerMapDataClient.INSTANCE.clearCache();
+        invalidateMapTexture(true);
         container.loadArea(selectedLayer);
     }
 
@@ -264,10 +283,6 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
         return container.currentAreaSelection;
     }
 
-    private ZonePlan getRenderedSelectedArea() {
-        return bufferLayer != null ? bufferLayer : getBaseSelectedArea();
-    }
-
     private int getColourSlotAt(double mouseX, double mouseY) {
         if (fullscreen) {
             return -1;
@@ -310,12 +325,14 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
                 centerZ = newCenter.getZ();
                 selecting = false;
                 selectionStartXZ = null;
-                bufferLayer = null;
+                selectionEndXZ = null;
+                invalidateMapTexture(true);
                 return true;
             }
 
             selecting = true;
             selectionStartXZ = screenToWorld(mouseX, mouseY);
+            selectionEndXZ = selectionStartXZ;
             selX1 = Mth.floor(mouseX);
             selY1 = Mth.floor(mouseY);
             selX2 = selX1;
@@ -357,12 +374,15 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (selecting && selectionStartXZ != null) {
             updateBufferedSelection(mouseX, mouseY);
-            if (bufferLayer != null) {
-                container.saveArea(selectedLayer, bufferLayer);
+            if (selectionEndXZ != null) {
+                ZonePlan updatedArea = new ZonePlan(getBaseSelectedArea());
+                applySelection(updatedArea, selectionStartXZ, selectionEndXZ, addMode);
+                container.saveArea(selectedLayer, updatedArea);
+                invalidateMapTexture(true);
             }
             selecting = false;
             selectionStartXZ = null;
-            bufferLayer = null;
+            selectionEndXZ = null;
             return true;
         }
         return super.mouseReleased(mouseX, mouseY, button);
@@ -385,16 +405,17 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
                 Mth.clamp(Mth.floor(mouseX), mapXScreen(), mapXScreen() + mapWidth() - 1),
                 Mth.clamp(Mth.floor(mouseY), mapYScreen(), mapYScreen() + mapHeight() - 1)
         );
-        bufferLayer = new ZonePlan(getBaseSelectedArea());
+        selectionEndXZ = end;
+    }
 
-        int minX = Math.min(selectionStartXZ.getX(), end.getX());
-        int maxX = Math.max(selectionStartXZ.getX(), end.getX());
-        int minZ = Math.min(selectionStartXZ.getZ(), end.getZ());
-        int maxZ = Math.max(selectionStartXZ.getZ(), end.getZ());
-
+    private static void applySelection(ZonePlan area, BlockPos start, BlockPos end, boolean value) {
+        int minX = Math.min(start.getX(), end.getX());
+        int maxX = Math.max(start.getX(), end.getX());
+        int minZ = Math.min(start.getZ(), end.getZ());
+        int maxZ = Math.max(start.getZ(), end.getZ());
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
-                bufferLayer.set(x, z, addMode);
+                area.set(x, z, value);
             }
         }
     }
@@ -404,12 +425,14 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
             return;
         }
         selectedLayer = index;
-        bufferLayer = null;
         selecting = false;
+        selectionStartXZ = null;
+        selectionEndXZ = null;
         if (container.tile != null) {
             container.currentAreaSelection = new ZonePlan(container.tile.selectArea(index));
         }
         container.loadArea(index);
+        invalidateMapTexture(true);
     }
 
     private boolean incBlocksPerPixel() {
@@ -419,6 +442,7 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
             } else {
                 blocksPerPixel -= 1.0F;
             }
+            invalidateMapTexture(true);
             return true;
         }
         return false;
@@ -432,6 +456,7 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
             } else {
                 blocksPerPixel *= 2.0F;
             }
+            invalidateMapTexture(true);
             return true;
         }
         return false;
@@ -449,6 +474,7 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
             nameField.visible = false;
             clearNameFocus();
         }
+        invalidateMapTexture(true);
     }
 
     private void toWindowed() {
@@ -459,6 +485,7 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
         if (nameField != null) {
             nameField.visible = true;
         }
+        invalidateMapTexture(true);
     }
 
 
@@ -543,59 +570,193 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
         int y0 = mapYDraw();
         int mapW = mapWidth();
         int mapH = mapHeight();
-        GuiComponent.fill(pose, x0, y0, x0 + mapW, y0 + mapH, 0xFF_80_80_80);
-
-        int step = fullscreen ? Math.max(1, Mth.ceil(blocksPerPixel)) : 1;
+        ZonePlan selected = getBaseSelectedArea();
+        long revision = ZonePlannerMapDataClient.INSTANCE.getRevision();
         int dimension = getDimensionId();
-        int level = getMapLevel();
-        for (int sx = 0; sx < mapW; sx += step) {
-            for (int sy = 0; sy < mapH; sy += step) {
-                int worldX = Mth.floor(centerX + (sx - mapW / 2.0F) * blocksPerPixel);
-                int worldZ = Mth.floor(centerZ + (sy - mapH / 2.0F) * blocksPerPixel);
-                int colour = getDisplayedMapColour(mc.level, dimension, level, worldX, worldZ);
-                if (colour != 0) {
-                    GuiComponent.fill(pose, x0 + sx, y0 + sy, x0 + Math.min(mapW, sx + step),
-                            y0 + Math.min(mapH, sy + step), colour);
-                }
-            }
+        int mapLevel = getMapLevel();
+
+        if (revision != renderedMapRevision) {
+            mapTextureDirty = true;
+        }
+        if (dimension != renderedDimension || mapLevel != renderedMapLevel) {
+            invalidateMapTexture(true);
+        }
+        if (selected != renderedZonePlan) {
+            invalidateMapTexture(true);
         }
 
-        drawZoneOverlay(pose, x0, y0, mapW, mapH, step);
+        long now = System.currentTimeMillis();
+        if (mapTexture != null && now - lastMapTextureBuildTime >= MAP_CACHE_REVALIDATE_INTERVAL_MS) {
+            invalidateMapTexture(true);
+        }
+        if (mapTextureDirty && (forceMapTextureRebuild || mapTexture == null
+                || now - lastMapTextureBuildTime >= MAP_TEXTURE_REFRESH_INTERVAL_MS)) {
+            rebuildMapTexture(mc.level, selected, mapW, mapH, revision, dimension, mapLevel, now);
+        }
+
+        if (mapTexture != null) {
+            RenderSystem.setShaderTexture(0, TEXTURE_MAP);
+            blit(pose, x0, y0, 0, 0, mapW, mapH, mapW, mapH);
+        } else {
+            GuiComponent.fill(pose, x0, y0, x0 + mapW, y0 + mapH, MAP_BACKGROUND_COLOUR);
+        }
+
         if (selecting) {
             drawSelectionRect(pose);
         }
     }
 
-    private MapColourData getMapData(Level level, int dimension, int mapLevel, int worldX, int worldZ) {
-        ZonePlannerMapChunk chunk = ZonePlannerMapDataClient.INSTANCE.getChunk(
-                level,
-                new ZonePlannerMapChunkKey(new ChunkPos(worldX >> 4, worldZ >> 4), dimension, mapLevel)
-        );
-        return chunk == null ? null : chunk.getData(worldX, worldZ);
-    }
-
-    private int getDisplayedMapColour(Level level, int dimension, int mapLevel, int worldX, int worldZ) {
-        MapColourData data = getMapData(level, dimension, mapLevel, worldX, worldZ);
-        return data == null ? 0 : data.colour;
-    }
-
-    private void drawZoneOverlay(PoseStack pose, int x0, int y0, int mapW, int mapH, int step) {
-        ZonePlan selected = getRenderedSelectedArea();
-        if (selected == null || selected.getChunkPoses().isEmpty()) {
+    private void rebuildMapTexture(Level level, ZonePlan selected, int mapW, int mapH, long revision,
+            int dimension, int mapLevel, long now) {
+        ensureMapTexture(mapW, mapH);
+        NativeImage pixels = mapTexture == null ? null : mapTexture.getPixels();
+        if (pixels == null) {
             return;
         }
-        int rgb = DyeColor.byId(selectedLayer).getTextColor() & 0x00_FF_FF_FF;
-        int argb = 0x88_00_00_00 | rgb;
-        for (int sx = 0; sx < mapW; sx += step) {
-            for (int sy = 0; sy < mapH; sy += step) {
-                int worldX = Mth.floor(centerX + (sx - mapW / 2.0F) * blocksPerPixel);
-                int worldZ = Mth.floor(centerZ + (sy - mapH / 2.0F) * blocksPerPixel);
-                if (selected.get(worldX, worldZ)) {
-                    GuiComponent.fill(pose, x0 + sx, y0 + sy, x0 + Math.min(mapW, sx + step),
-                            y0 + Math.min(mapH, sy + step), argb);
+
+        int step = fullscreen ? Math.max(1, Mth.ceil(blocksPerPixel)) : 1;
+        int cellsX = (mapW + step - 1) / step;
+        int cellsZ = (mapH + step - 1) / step;
+        int[] worldXs = new int[cellsX];
+        int[] worldZs = new int[cellsZ];
+        int minChunkX = Integer.MAX_VALUE;
+        int maxChunkX = Integer.MIN_VALUE;
+        int minChunkZ = Integer.MAX_VALUE;
+        int maxChunkZ = Integer.MIN_VALUE;
+
+        for (int cellX = 0; cellX < cellsX; cellX++) {
+            int screenX = cellX * step;
+            int worldX = Mth.floor(centerX + (screenX - mapW / 2.0F) * blocksPerPixel);
+            worldXs[cellX] = worldX;
+            int chunkX = worldX >> 4;
+            minChunkX = Math.min(minChunkX, chunkX);
+            maxChunkX = Math.max(maxChunkX, chunkX);
+        }
+        for (int cellZ = 0; cellZ < cellsZ; cellZ++) {
+            int screenZ = cellZ * step;
+            int worldZ = Mth.floor(centerZ + (screenZ - mapH / 2.0F) * blocksPerPixel);
+            worldZs[cellZ] = worldZ;
+            int chunkZ = worldZ >> 4;
+            minChunkZ = Math.min(minChunkZ, chunkZ);
+            maxChunkZ = Math.max(maxChunkZ, chunkZ);
+        }
+
+        int chunkWidth = maxChunkX - minChunkX + 1;
+        int chunkHeight = maxChunkZ - minChunkZ + 1;
+        ZonePlannerMapChunk[] mapChunks = new ZonePlannerMapChunk[chunkWidth * chunkHeight];
+        ZoneChunk[] zoneChunks = new ZoneChunk[chunkWidth * chunkHeight];
+        Map<ChunkPos, ZoneChunk> selectedChunks = selected == null ? null : selected.getChunkMapping();
+        for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++) {
+            for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ++) {
+                int index = (chunkX - minChunkX) * chunkHeight + chunkZ - minChunkZ;
+                ChunkPos chunkPos = new ChunkPos(chunkX, chunkZ);
+                mapChunks[index] = ZonePlannerMapDataClient.INSTANCE.getChunk(
+                        level,
+                        new ZonePlannerMapChunkKey(chunkPos, dimension, mapLevel)
+                );
+                if (selectedChunks != null) {
+                    zoneChunks[index] = selectedChunks.get(chunkPos);
                 }
             }
         }
+
+        int layerRgb = DyeColor.byId(selectedLayer).getTextColor() & 0x00_FF_FF_FF;
+        int overlayColour = 0xFF_00_00_00 | layerRgb;
+        for (int cellX = 0; cellX < cellsX; cellX++) {
+            int screenX = cellX * step;
+            int worldX = worldXs[cellX];
+            int chunkX = worldX >> 4;
+            for (int cellZ = 0; cellZ < cellsZ; cellZ++) {
+                int screenZ = cellZ * step;
+                int worldZ = worldZs[cellZ];
+                int chunkZ = worldZ >> 4;
+                int chunkIndex = (chunkX - minChunkX) * chunkHeight + chunkZ - minChunkZ;
+                int colour = MAP_BACKGROUND_COLOUR;
+                ZonePlannerMapChunk mapChunk = mapChunks[chunkIndex];
+                if (mapChunk != null) {
+                    MapColourData data = mapChunk.getData(worldX, worldZ);
+                    if (data != null) {
+                        colour = data.colour;
+                    }
+                }
+
+                ZoneChunk zoneChunk = zoneChunks[chunkIndex];
+                if (zoneChunk != null && zoneChunk.get(worldX & 15, worldZ & 15)) {
+                    colour = blendArgb(colour, overlayColour, 0x88);
+                }
+
+                fillNativeImage(
+                        pixels,
+                        screenX,
+                        screenZ,
+                        Math.min(step, mapW - screenX),
+                        Math.min(step, mapH - screenZ),
+                        argbToAbgr(colour)
+                );
+            }
+        }
+
+        mapTexture.upload();
+        renderedMapRevision = revision;
+        renderedDimension = dimension;
+        renderedMapLevel = mapLevel;
+        renderedZonePlan = selected;
+        lastMapTextureBuildTime = now;
+        mapTextureDirty = false;
+        forceMapTextureRebuild = false;
+    }
+
+    private void ensureMapTexture(int width, int height) {
+        if (mapTexture != null && mapTextureWidth == width && mapTextureHeight == height) {
+            return;
+        }
+        closeMapTexture();
+        mapTexture = new DynamicTexture(width, height, true);
+        mapTextureWidth = width;
+        mapTextureHeight = height;
+        if (minecraft != null) {
+            minecraft.getTextureManager().register(TEXTURE_MAP, mapTexture);
+        }
+    }
+
+    private void closeMapTexture() {
+        if (mapTexture != null) {
+            if (minecraft != null) {
+                minecraft.getTextureManager().release(TEXTURE_MAP);
+            } else {
+                mapTexture.close();
+            }
+            mapTexture = null;
+        }
+        mapTextureWidth = 0;
+        mapTextureHeight = 0;
+    }
+
+    private void invalidateMapTexture(boolean force) {
+        mapTextureDirty = true;
+        forceMapTextureRebuild |= force;
+    }
+
+    private static void fillNativeImage(NativeImage image, int x, int y, int width, int height, int colour) {
+        int maxX = x + width;
+        int maxY = y + height;
+        for (int py = y; py < maxY; py++) {
+            for (int px = x; px < maxX; px++) {
+                image.setPixelRGBA(px, py, colour);
+            }
+        }
+    }
+
+    private static int blendArgb(int base, int overlay, int alpha) {
+        int inverse = 255 - alpha;
+        int red = (((overlay >> 16) & 0xFF) * alpha + ((base >> 16) & 0xFF) * inverse) / 255;
+        int green = (((overlay >> 8) & 0xFF) * alpha + ((base >> 8) & 0xFF) * inverse) / 255;
+        int blue = ((overlay & 0xFF) * alpha + (base & 0xFF) * inverse) / 255;
+        return 0xFF_00_00_00 | red << 16 | green << 8 | blue;
+    }
+
+    private static int argbToAbgr(int argb) {
+        return argb & 0xFF_00_FF_00 | (argb & 0x00_FF_00_00) >> 16 | (argb & 0x00_00_00_FF) << 16;
     }
 
     private void drawSelectionRect(PoseStack pose) {
@@ -633,6 +794,8 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
         }
 
         if (keyCode == GLFW.GLFW_KEY_F5) {
+            ZonePlannerMapDataClient.INSTANCE.clearCache();
+            invalidateMapTexture(true);
             return true;
         }
         if (keyCode == GLFW.GLFW_KEY_EQUAL || keyCode == GLFW.GLFW_KEY_KP_ADD) {
@@ -681,6 +844,7 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
     @Override
     public void removed() {
         fullscreen = false;
+        closeMapTexture();
         super.removed();
     }
 }

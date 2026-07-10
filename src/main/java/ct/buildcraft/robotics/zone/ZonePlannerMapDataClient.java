@@ -6,8 +6,8 @@
 
 package ct.buildcraft.robotics.zone;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import ct.buildcraft.lib.net.MessageManager;
 import net.minecraft.world.level.Level;
@@ -15,12 +15,12 @@ import net.minecraft.world.level.Level;
 public class ZonePlannerMapDataClient extends ZonePlannerMapData {
     public static final ZonePlannerMapDataClient INSTANCE = new ZonePlannerMapDataClient();
 
-    private final List<ZonePlannerMapChunkKey> pending = new ArrayList<>();
+    private final Set<ZonePlannerMapChunkKey> pending = new HashSet<>();
+    private long revision;
 
     @Override
     public ZonePlannerMapChunk loadChunk(Level world, ZonePlannerMapChunkKey key) {
-        if (!pending.contains(key)) {
-            pending.add(key);
+        if (pending.add(key)) {
             MessageManager.sendToServer(new MessageZoneMapRequest(key));
         }
         return null;
@@ -30,10 +30,16 @@ public class ZonePlannerMapDataClient extends ZonePlannerMapData {
     public void clearCache() {
         pending.clear();
         data.invalidateAll();
+        revision++;
     }
 
     public void onChunkReceived(ZonePlannerMapChunkKey key, ZonePlannerMapChunk zonePlannerMapChunk) {
         pending.remove(key);
         data.put(key, zonePlannerMapChunk);
+        revision++;
+    }
+
+    public long getRevision() {
+        return revision;
     }
 }
