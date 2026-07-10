@@ -43,16 +43,17 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
 
         PoseStack.Pose pose = poseStack.last();
         renderRobotCube(buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(robot))),
-                pose.pose(), pose.normal(), packedLight, 1.0F);
+                pose.pose(), pose.normal(), packedLight, 1.0F, 1.0F);
 
         // Old BuildCraft rendered this overlay for non-sleeping robots. The inventory item renderer always used this
         // active overlay, but placed robots only show it while actually doing work.
         if (!robot.isAsleepForRendering()) {
-            float storagePercent = Math.max(0.0F, Math.min(1.0F, robot.getEnergy() / (float) EntityRobot.MAX_ENERGY));
+            float storagePercent = Math.max(0.0F, Math.min(1.0F,
+                    robot.getEnergyForRendering() / (float) EntityRobot.MAX_ENERGY));
             renderRobotCube(buffer.getBuffer(RenderType.entityTranslucent(OVERLAY_RED)),
-                    pose.pose(), pose.normal(), LightTexture.FULL_BRIGHT, storagePercent);
+                    pose.pose(), pose.normal(), LightTexture.FULL_BRIGHT, 1.0F, storagePercent);
             renderRobotCube(buffer.getBuffer(RenderType.entityTranslucent(OVERLAY_CYAN)),
-                    pose.pose(), pose.normal(), LightTexture.FULL_BRIGHT, 1.0F);
+                    pose.pose(), pose.normal(), LightTexture.FULL_BRIGHT, 1.0F, 1.0F);
         }
 
         poseStack.popPose();
@@ -64,29 +65,30 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
         return robot.getTexture();
     }
 
-    private static void renderRobotCube(VertexConsumer builder, Matrix4f pose, Matrix3f normal, int light, float alpha) {
+    private static void renderRobotCube(VertexConsumer builder, Matrix4f pose, Matrix3f normal, int light,
+                                        float alpha, float brightness) {
         // BuildCraft 7.1.x used ModelRenderer(model, 0, 0).addBox(-4, -4, -4, 8, 8, 8) with 32x32 robot
         // textures. That is the standard old entity-head layout: two 8x8 caps on the first row and four 8x8
         // side faces on the second row. The previous port used 4x4 block-model UVs, so half the faces sampled
         // transparent areas of the texture and looked untextured.
         quad(builder, pose, normal, light,
                 MIN, MAX, MIN, MAX, MAX, MIN, MAX, MAX, MAX, MIN, MAX, MAX,
-                16, 0, 24, 8, 0, 1, 0, alpha); // up
+                16, 0, 24, 8, 0, 1, 0, alpha, brightness); // up
         quad(builder, pose, normal, light,
                 MIN, MIN, MAX, MAX, MIN, MAX, MAX, MIN, MIN, MIN, MIN, MIN,
-                8, 0, 16, 8, 0, -1, 0, alpha); // down
+                8, 0, 16, 8, 0, -1, 0, alpha, brightness); // down
         quad(builder, pose, normal, light,
                 MIN, MIN, MIN, MAX, MIN, MIN, MAX, MAX, MIN, MIN, MAX, MIN,
-                8, 8, 16, 16, 0, 0, -1, alpha); // north/front
+                8, 8, 16, 16, 0, 0, -1, alpha, brightness); // north/front
         quad(builder, pose, normal, light,
                 MAX, MIN, MAX, MIN, MIN, MAX, MIN, MAX, MAX, MAX, MAX, MAX,
-                24, 8, 32, 16, 0, 0, 1, alpha); // south/back
+                24, 8, 32, 16, 0, 0, 1, alpha, brightness); // south/back
         quad(builder, pose, normal, light,
                 MIN, MIN, MAX, MIN, MIN, MIN, MIN, MAX, MIN, MIN, MAX, MAX,
-                0, 8, 8, 16, -1, 0, 0, alpha); // west/right side in the old texture layout
+                0, 8, 8, 16, -1, 0, 0, alpha, brightness); // west/right side in the old texture layout
         quad(builder, pose, normal, light,
                 MAX, MIN, MIN, MAX, MIN, MAX, MAX, MAX, MAX, MAX, MAX, MIN,
-                16, 8, 24, 16, 1, 0, 0, alpha); // east/left side in the old texture layout
+                16, 8, 24, 16, 1, 0, 0, alpha, brightness); // east/left side in the old texture layout
     }
 
     private static void quad(VertexConsumer builder, Matrix4f pose, Matrix3f normal, int light,
@@ -95,18 +97,18 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
                              float x3, float y3, float z3,
                              float x4, float y4, float z4,
                              float u1, float v1, float u2, float v2,
-                             float nx, float ny, float nz, float alpha) {
-        vertex(builder, pose, normal, light, x1, y1, z1, u1 / TEX_SIZE, v2 / TEX_SIZE, nx, ny, nz, alpha);
-        vertex(builder, pose, normal, light, x2, y2, z2, u2 / TEX_SIZE, v2 / TEX_SIZE, nx, ny, nz, alpha);
-        vertex(builder, pose, normal, light, x3, y3, z3, u2 / TEX_SIZE, v1 / TEX_SIZE, nx, ny, nz, alpha);
-        vertex(builder, pose, normal, light, x4, y4, z4, u1 / TEX_SIZE, v1 / TEX_SIZE, nx, ny, nz, alpha);
+                             float nx, float ny, float nz, float alpha, float brightness) {
+        vertex(builder, pose, normal, light, x1, y1, z1, u1 / TEX_SIZE, v2 / TEX_SIZE, nx, ny, nz, alpha, brightness);
+        vertex(builder, pose, normal, light, x2, y2, z2, u2 / TEX_SIZE, v2 / TEX_SIZE, nx, ny, nz, alpha, brightness);
+        vertex(builder, pose, normal, light, x3, y3, z3, u2 / TEX_SIZE, v1 / TEX_SIZE, nx, ny, nz, alpha, brightness);
+        vertex(builder, pose, normal, light, x4, y4, z4, u1 / TEX_SIZE, v1 / TEX_SIZE, nx, ny, nz, alpha, brightness);
     }
 
     private static void vertex(VertexConsumer builder, Matrix4f pose, Matrix3f normal, int light,
                                float x, float y, float z, float u, float v,
-                               float nx, float ny, float nz, float alpha) {
+                               float nx, float ny, float nz, float alpha, float brightness) {
         builder.vertex(pose, x, y, z)
-                .color(1.0F, 1.0F, 1.0F, alpha)
+                .color(brightness, brightness, brightness, alpha)
                 .uv(u, v)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(light)

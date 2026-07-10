@@ -247,6 +247,11 @@ public class CreativeTabManager {
         return id == null ? "" : id.toString();
     }
 
+    private static int getFluidTabGroup(ItemStack stack) {
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        return id != null && id.getPath().startsWith("ic2_cell/") ? 1 : 0;
+    }
+
     public static class CreativeTabBC extends CreativeModeTab {
         private final String name;
         private final List<Supplier<? extends Collection<ItemStack>>> itemProviders = new CopyOnWriteArrayList<>();
@@ -309,6 +314,11 @@ public class CreativeTabManager {
                         items.add(stack.copy());
                     }
                 }
+            }
+
+            if ("buildcraft.fluid".equals(name)) {
+                // Keep all BuildCraft buckets first and append the optional IC2 filled cells afterwards.
+                items.sort(Comparator.comparingInt(CreativeTabManager::getFluidTabGroup));
             }
 
             Map<String, Integer> order = ITEM_ORDERS.get(name);

@@ -26,6 +26,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
@@ -145,9 +147,11 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
             while (openQueue.size() > 0 && changeable.size() < 3 && tries < 10_000) {
                 BlockPos test = openQueue.removeFirst();
 
-                boolean water = isWater(world, test);
-                boolean spreadable = water || canSpread(world, test);
-                if (water && world.getBlockState(test).getValue(LiquidBlock.LEVEL) == 0) {
+                BlockState testState = world.getBlockState(test);
+                boolean water = isWater(testState);
+                boolean aquaticPlant = canBreakAquaticPlant(testState);
+                boolean spreadable = water || aquaticPlant || canSpread(world, test);
+                if ((water && testState.getValue(LiquidBlock.LEVEL) == 0) || aquaticPlant) {
                     changeable.add(test);
                 }
                 if (spreadable) {
@@ -164,6 +168,10 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
             final int time = next.spreading ? 200 : 400;
             if (changeable.size() == 3 || world.random.nextDouble() < 0.5) {
                 for (BlockPos p : changeable) {
+                    BlockState replacedState = world.getBlockState(p);
+                    if (canBreakAquaticPlant(replacedState)) {
+                        world.destroyBlock(p, true);
+                    }
                     world.setBlockAndUpdate(p, nextState);
                     world.scheduleTick(p, this, rand.nextInt(150) + time);
                 }
@@ -198,8 +206,19 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
     }
 
     private static boolean isWater(Level world, BlockPos pos) {
-        BlockState state = world.getBlockState(pos);
+        return isWater(world.getBlockState(pos));
+    }
+
+    private static boolean isWater(BlockState state) {
         return state.getBlock() == Blocks.WATER;
+    }
+
+    private static boolean canBreakAquaticPlant(BlockState state) {
+        Block block = state.getBlock();
+        boolean kelpOrSeagrass = block == Blocks.KELP || block == Blocks.KELP_PLANT
+            || block == Blocks.SEAGRASS || block == Blocks.TALL_SEAGRASS;
+        return state.getFluidState().is(FluidTags.WATER)
+            && (kelpOrSeagrass || state.is(BlockTags.CORALS) || state.is(BlockTags.WALL_CORALS));
     }
 
     private boolean canSpread(Level world, BlockPos pos) {

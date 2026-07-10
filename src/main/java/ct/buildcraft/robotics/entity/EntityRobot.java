@@ -94,6 +94,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private static final EntityDataAccessor<Integer> ROBOT_DOCK_Y = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ROBOT_DOCK_Z = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ROBOT_DOCK_SIDE = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ROBOT_ENERGY = SynchedEntityData.defineId(EntityRobot.class, EntityDataSerializers.INT);
     /**
      * The 1.7.10 robot position is the centre of the 0.5x0.5x0.5 cube. Modern LivingEntity positions are normally
      * feet-based, so the port keeps the old centre-based position and forces a centred bounding box after every snap
@@ -272,8 +273,17 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     public void setEnergy(int energy) {
+        int clampedEnergy = Math.max(0, Math.min(MAX_ENERGY, energy));
         battery.extractAll();
-        battery.addPower(Math.max(0, Math.min(MAX_ENERGY, energy)), IFluidHandler.FluidAction.EXECUTE);
+        battery.addPower(clampedEnergy, IFluidHandler.FluidAction.EXECUTE);
+        entityData.set(ROBOT_ENERGY, clampedEnergy);
+    }
+
+    public int getEnergyForRendering() {
+        if (level.isClientSide) {
+            return Mth.clamp(entityData.get(ROBOT_ENERGY), 0, MAX_ENERGY);
+        }
+        return getEnergy();
     }
 
     public void setUniqueRobotId(long id) {
@@ -341,6 +351,12 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             updateItem(inventory.get(i), i, false);
         }
         battery.tick(level, position());
+        if (!level.isClientSide) {
+            int energy = getEnergy();
+            if (entityData.get(ROBOT_ENERGY) != energy) {
+                entityData.set(ROBOT_ENERGY, energy);
+            }
+        }
 
         super.tick();
 
@@ -580,6 +596,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         entityData.define(ROBOT_DOCK_Y, 0);
         entityData.define(ROBOT_DOCK_Z, 0);
         entityData.define(ROBOT_DOCK_SIDE, -1);
+        entityData.define(ROBOT_ENERGY, 0);
     }
 
     @Override
