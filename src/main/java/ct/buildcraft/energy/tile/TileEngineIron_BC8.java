@@ -186,6 +186,11 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     }
 
     @Override
+    protected boolean canUnlockPoweringUpAdvancement() {
+        return true;
+    }
+
+    @Override
     public boolean isBurning() {
         FluidStack fuel = tankFuel.getFluid();
         return fuel != null && fuel.getAmount() > 0 && penaltyCooling == 0 && isRedstonePowered;

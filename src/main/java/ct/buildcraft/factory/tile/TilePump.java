@@ -36,12 +36,10 @@ import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.misc.BlockUtil;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.FluidUtilBC;
-import ct.buildcraft.lib.misc.VecUtil;
 import ct.buildcraft.lib.mj.MjRedstoneBatteryReceiver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -123,6 +121,7 @@ public class TilePump extends TileMiner {
     private void buildQueue() {
         queue.clear();
         paths.clear();
+        oilSpringPos = null;
         Fluid queueFluid = Fluids.EMPTY;
         isInfiniteWaterSource = false;
         Set<BlockPos> checked = new HashSet<>();
@@ -212,7 +211,7 @@ public class TilePump extends TileMiner {
         }
         if (isOil(queueFluid)) {
             List<BlockPos> springPositions = new ArrayList<>();
-            BlockPos center = VecUtil.replaceValue(getBlockPos(), Axis.Y, 0);
+            BlockPos center = new BlockPos(getBlockPos().getX(), level.getMinBuildHeight(), getBlockPos().getZ());
             for (BlockPos spring : BlockPos.betweenClosed(center.offset(-10, 0, -10), center.offset(10, 0, 10))) {
                 if (level.getBlockState(spring).getBlock() == BCCoreBlocks.SPRING.get()) {
                     BlockEntity tile = level.getBlockEntity(spring);
@@ -414,7 +413,7 @@ public class TilePump extends TileMiner {
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		oilSpringPos = BlockPos.of(nbt.getLong("oilSpringPos"));//nbt.get("oilSpringPos"));
+		oilSpringPos = nbt.contains("oilSpringPos") ? BlockPos.of(nbt.getLong("oilSpringPos")) : null;
         tank.readFromNBT(nbt.getCompound("tank"));
 	}
 

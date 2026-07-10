@@ -9,10 +9,14 @@ import ct.buildcraft.core.BCCoreItems;
 import ct.buildcraft.factory.BCFactoryBlocks;
 import ct.buildcraft.factory.tile.TileTank;
 import ct.buildcraft.lib.misc.BlockUtil;
+import ct.buildcraft.lib.misc.AdvancementUtil;
+import ct.buildcraft.lib.engine.TileEngineBase_BC8;
+import ct.buildcraft.api.enums.EnumPowerStage;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -29,6 +33,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.loading.FMLLoader;
 
 public class ItemWrench extends Item implements IToolWrench{
+    private static final ResourceLocation ADVANCEMENT_TOO_MUCH_POWER =
+        new ResourceLocation("buildcraftenergy:to_much_power");
 
 	public ItemWrench() {
 		super(new Item.Properties().stacksTo(1).tab(BCCore.BUILDCRAFT_TAB));
@@ -51,6 +57,10 @@ public class ItemWrench extends Item implements IToolWrench{
         BlockState state = world.getBlockState(pos);
 		//DEBUG
         var f = world.getBlockEntity(pos);
+        if (!world.isClientSide && f instanceof TileEngineBase_BC8 engine
+            && engine.getPowerStage() == EnumPowerStage.OVERHEAT) {
+            AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_TOO_MUCH_POWER);
+        }
       //  if(f!=null)
         BCLog.logger.info("isTile? :"+(f!=null));
 /*        ItemStack p_36055_ = new ItemStack(BCCoreItems.FRAGILE_FLUID_SHARD.get());

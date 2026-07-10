@@ -54,11 +54,120 @@
           }
         ]
       }
+    },
+    "plug_blocker": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:plug_blocker"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_power_adaptor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:plug_power_adaptor"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_gate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/gate"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_facade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/facade"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_lens": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/lens"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_light_sensor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/light_sensor"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_pulsar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/pulsar"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
     [
-      "has_all_pluggables"
+      "has_all_pluggables",
+      "plug_blocker"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_power_adaptor"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_gate"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_facade"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_lens"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_light_sensor"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_pulsar"
     ]
   ]
 }

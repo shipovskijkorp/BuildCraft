@@ -38,11 +38,72 @@
           }
         ]
       }
+    },
+    "wood_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wood_item"
+            ]
+          }
+        ]
+      }
+    },
+    "wood_fluid": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wood_fluid"
+            ]
+          }
+        ]
+      }
+    },
+    "wood_power": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:wood_power"
+            ]
+          }
+        ]
+      }
+    },
+    "structure": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:structure"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
     [
-      "has_each_pipe_category"
+      "has_each_pipe_category",
+      "wood_item"
+    ],
+    [
+      "has_each_pipe_category",
+      "wood_fluid"
+    ],
+    [
+      "has_each_pipe_category",
+      "wood_power"
+    ],
+    [
+      "has_each_pipe_category",
+      "structure"
     ]
   ]
 }

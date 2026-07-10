@@ -61,6 +61,7 @@ public class TileSpringOil extends BlockEntity implements IDebuggable, ITileOilS
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
+        totalSources = nbt.getInt("totalSources");
         ListTag list = nbt.getList("pumpProgress", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             PlayerPumpInfo info = new PlayerPumpInfo(list.getCompound(i));

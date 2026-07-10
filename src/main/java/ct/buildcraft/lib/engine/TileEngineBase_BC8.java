@@ -21,6 +21,7 @@ import ct.buildcraft.api.tiles.IDebuggable;
 import ct.buildcraft.core.client.model.ModelEngine;
 import ct.buildcraft.lib.block.VanillaRotationHandlers;
 import ct.buildcraft.lib.misc.NBTUtilBC;
+import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.misc.collect.OrderedEnumMap;
 import ct.buildcraft.lib.tile.TileBC_Neptune;
 
@@ -29,6 +30,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -47,6 +49,9 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
 public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebuggable {
+
+    private static final ResourceLocation ADVANCEMENT_POWERING_UP =
+        new ResourceLocation("buildcraftenergy:powering_up");
 
     /** Heat per {@link MjAPI#MJ}. */
     public static final double HEAT_PER_MJ = 0.0023;
@@ -76,6 +81,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     protected boolean isPumping = false;
 
     boolean movingState;
+    private boolean wasOperationalForAdvancement;
 
     // Needed: Power stored
 
@@ -384,6 +390,13 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
             burn();
         }
 
+        boolean operationalForAdvancement = canUnlockPoweringUpAdvancement()
+            && isRedstonePowered && isBurning();
+        if (operationalForAdvancement && !wasOperationalForAdvancement && getOwner() != null) {
+            AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_POWERING_UP);
+        }
+        wasOperationalForAdvancement = operationalForAdvancement;
+
         markChunkDirty();
     }
 
@@ -420,6 +433,11 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     // return getCurrentOutput() * heatLevel;
     // }
     protected void burn() {}
+
+    /** Only fuel-burning engines participate in the Powering Up advancement. */
+    protected boolean canUnlockPoweringUpAdvancement() {
+        return false;
+    }
 
     protected void engineUpdate() {
         if (!isRedstonePowered) {

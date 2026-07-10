@@ -21,6 +21,8 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
+import java.util.WeakHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -103,6 +105,10 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     private static final long MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
     private static final ResourceLocation ADVANCEMENT_COMPLETE
         = new ResourceLocation("buildcraftbuilders:diggy_diggy_hole");
+    private static final ResourceLocation ADVANCEMENT_DESTROYING_THE_WORLD
+        = new ResourceLocation("buildcraftbuilders:destroying_the_world");
+    private static final Map<ServerLevel, Map<UUID, Map<BlockPos, Long>>> FULL_SPEED_QUARRIES
+        = new WeakHashMap<>();
 
     private final MjBattery battery = new MjBattery(24000 * MjAPI.MJ);
     public final Box frameBox = new Box();
@@ -634,6 +640,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
             max = MathUtil.clamp(max, 0, MAX_POWER_PER_TICK);
         }
+        long initialPowerBudget = max;
         debugPowerRate = max;
         blockPercentSoFar = 0;
         moveDistanceSoFar = 0;
@@ -741,10 +748,36 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
         }
         debugPowerRate -= max;
+        if (initialPowerBudget == MAX_POWER_PER_TICK && debugPowerRate > 0) {
+            trackFullSpeedQuarry();
+        }
         if (sendUpdate) {
             sendNetworkUpdate(NET_RENDER_DATA);
         }
         updateQuarryCollisionBlocks();
+    }
+
+    private void trackFullSpeedQuarry() {
+        if (!(level instanceof ServerLevel serverLevel) || getOwner() == null || !frameBox.isInitialized()) {
+            return;
+        }
+        AABB box = frameBox.getBoundingBox();
+        if (box.maxX - box.minX != 63 || box.maxZ - box.minZ != 63) {
+            return;
+        }
+
+        long gameTime = serverLevel.getGameTime();
+        UUID ownerId = getOwner().getId();
+        Map<UUID, Map<BlockPos, Long>> byOwner = FULL_SPEED_QUARRIES.computeIfAbsent(
+            serverLevel, ignored -> new HashMap<>()
+        );
+        Map<BlockPos, Long> quarries = byOwner.computeIfAbsent(ownerId, ignored -> new HashMap<>());
+        quarries.entrySet().removeIf(entry -> gameTime - entry.getValue() > 1);
+        quarries.put(worldPosition.immutable(), gameTime);
+
+        if (quarries.size() >= 2) {
+            AdvancementUtil.unlockAdvancement(ownerId, ADVANCEMENT_DESTROYING_THE_WORLD);
+        }
     }
 
     public List<AABB> getCollisionBoxes() {

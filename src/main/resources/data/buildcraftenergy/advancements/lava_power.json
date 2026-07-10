@@ -12,27 +12,13 @@
   },
   "parent": "buildcraftenergy:engine",
   "criteria": {
-    "has_stirling_and_lava": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "buildcraftenergy:engine_stone"
-            ]
-          },
-          {
-            "items": [
-              "minecraft:lava_bucket"
-            ]
-          }
-        ]
-      }
+    "code_trigger": {
+      "trigger": "minecraft:impossible"
     }
   },
   "requirements": [
     [
-      "has_stirling_and_lava"
+      "code_trigger"
     ]
   ]
 }
