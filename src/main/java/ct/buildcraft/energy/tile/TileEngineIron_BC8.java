@@ -30,6 +30,7 @@ import ct.buildcraft.lib.engine.EngineConnector;
 import ct.buildcraft.lib.engine.TileEngineBase_BC8;
 import ct.buildcraft.lib.fluid.FluidCompatRegistry;
 import ct.buildcraft.lib.fluid.Tank;
+import ct.buildcraft.lib.misc.AdvancementUtil;
 import ct.buildcraft.lib.misc.CapUtil;
 import ct.buildcraft.lib.misc.EntityUtil;
 import ct.buildcraft.lib.misc.FluidUtilBC;
@@ -39,6 +40,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -49,6 +51,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -57,10 +60,15 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 
 public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvider{
+    private static final ResourceLocation ADVANCEMENT_ICE_COOL =
+        new ResourceLocation("buildcraftenergy:ice_cool");
+
     public static final int MAX_FLUID = 10_000;
 
     public static final double COOLDOWN_RATE = 0.05;
     public static final int MAX_COOLANT_PER_TICK = 40;
+
+    private boolean solidCoolantLoaded;
 
     public final Tank tankFuel = new Tank("fuel", MAX_FLUID, this, this::isValidFuel);
     public final Tank tankCoolant = new Tank("coolant", MAX_FLUID, this, this::isValidCoolant) {
@@ -75,6 +83,25 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                 return super.map(stack, space);
             }
             return new FluidGetResult(StackUtil.EMPTY, fluidCoolant);
+        }
+
+        @Override
+        public ItemStack transferStackToTank(Player player, ItemStack stack) {
+            boolean isSolidCoolant = BuildcraftFuelRegistry.coolant.getSolidCoolant(stack) != null;
+            int amountBefore = getFluidAmount();
+            ItemStack result = super.transferStackToTank(player, stack);
+            if (!player.level.isClientSide && isSolidCoolant && getFluidAmount() > amountBefore) {
+                solidCoolantLoaded = true;
+            }
+            return result;
+        }
+
+        @Override
+        protected void onContentsChanged() {
+            super.onContentsChanged();
+            if (getFluidAmount() <= 0) {
+                solidCoolantLoaded = false;
+            }
         }
     };
     public final Tank tankResidue = new Tank("residue", MAX_FLUID, this, this::isResidue);
@@ -112,6 +139,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         nbt.put("tank",tankManager.serializeNBT());
         nbt.putInt("penaltyCooling", penaltyCooling);
         nbt.putDouble("burnTime", burnTime);
+        nbt.putBoolean("solidCoolantLoaded", solidCoolantLoaded);
     }
 
     @Override
@@ -120,6 +148,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         tankManager.deserializeNBT(nbt.getCompound("tank"));
         penaltyCooling = nbt.getInt("penaltyCooling");
         burnTime = nbt.getDouble("burnTime");
+        solidCoolantLoaded = nbt.getBoolean("solidCoolantLoaded") && tankCoolant.getFluidAmount() > 0;
     }
 
     @Override
@@ -279,14 +308,19 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                     // fillCoolingBuffer();
                     {
                         if (tankCoolant.getFluidAmount() > 0) {
-                            float coolPerMb =
-                                BuildcraftFuelRegistry.coolant.getDegreesPerMb(tankCoolant.getFluid(), (float) heat);
+                            FluidStack coolant = tankCoolant.getFluid();
+                            float coolPerMb = BuildcraftFuelRegistry.coolant.getDegreesPerMb(coolant, (float) heat);
                             if (coolPerMb > 0) {
+                                boolean alternativeCoolant = solidCoolantLoaded
+                                    || !FluidCompatRegistry.areEquivalent(coolant.getFluid(), Fluids.WATER);
                                 int coolantAmount = Math.min(MAX_COOLANT_PER_TICK, tankCoolant.getFluidAmount());
                                 float cooling = coolPerMb;
                                 // cooling /= getBiomeTempScalar();
                                 coolingBuffer += coolantAmount * cooling;
                                 tankCoolant.drain(coolantAmount, FluidAction.EXECUTE);
+                                if (alternativeCoolant && getOwner() != null) {
+                                    AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_ICE_COOL);
+                                }
                             }
                         }
                     }

@@ -738,13 +738,12 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
                     if (found) {
                         sendUpdate = true;
-                    } else {
-                        AABB box = miningBox.getBoundingBox();
-                        if (box.maxX - box.minX == 63 && box.maxZ - box.minZ == 63) {
-                            AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_COMPLETE);
-                        }
                     }
                 }
+            }
+
+            if (boxIterator != null && !boxIterator.hasNext()) {
+                unlockCompletionAdvancement();
             }
         }
         debugPowerRate -= max;
@@ -761,8 +760,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (!(level instanceof ServerLevel serverLevel) || getOwner() == null || !frameBox.isInitialized()) {
             return;
         }
-        AABB box = frameBox.getBoundingBox();
-        if (box.maxX - box.minX != 63 || box.maxZ - box.minZ != 63) {
+        if (!is64By64Quarry()) {
             return;
         }
 
@@ -772,12 +770,26 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             serverLevel, ignored -> new HashMap<>()
         );
         Map<BlockPos, Long> quarries = byOwner.computeIfAbsent(ownerId, ignored -> new HashMap<>());
-        quarries.entrySet().removeIf(entry -> gameTime - entry.getValue() > 1);
+        quarries.entrySet().removeIf(entry -> entry.getValue() != gameTime);
         quarries.put(worldPosition.immutable(), gameTime);
 
         if (quarries.size() >= 2) {
             AdvancementUtil.unlockAdvancement(ownerId, ADVANCEMENT_DESTROYING_THE_WORLD);
         }
+    }
+
+    private void unlockCompletionAdvancement() {
+        if (getOwner() != null && is64By64Quarry()) {
+            AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_COMPLETE);
+        }
+    }
+
+    private boolean is64By64Quarry() {
+        if (!frameBox.isInitialized()) {
+            return false;
+        }
+        BlockPos size = frameBox.size();
+        return size.getX() == 64 && size.getZ() == 64;
     }
 
     public List<AABB> getCollisionBoxes() {
