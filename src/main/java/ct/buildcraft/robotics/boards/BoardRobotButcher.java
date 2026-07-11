@@ -12,7 +12,12 @@ import ct.buildcraft.robotics.ai.AIRobotGotoSleep;
 import ct.buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
 import ct.buildcraft.robotics.ai.AIRobotSearchEntity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
@@ -32,12 +37,16 @@ public class BoardRobotButcher extends RedstoneBoardRobot {
     @Override
     public final void update() {
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (!held.isEmpty() && !(held.getItem() instanceof SwordItem)) {
+            RobotBoardUtil.dropHeldItem(robot);
+            return;
+        }
         if (held.isEmpty()) {
             startDelegateAI(new AIRobotFetchAndEquipItemStack(robot, new SwordFilter()));
         } else if (held.isDamageableItem() && held.getDamageValue() >= held.getMaxDamage()) {
             startDelegateAI(new AIRobotGotoStationAndUnload(robot));
         } else {
-            startDelegateAI(new AIRobotSearchEntity(robot, entity -> entity instanceof Animal, SEARCH_RANGE, robot.getZoneToWork()));
+            startDelegateAI(new AIRobotSearchEntity(robot, BoardRobotButcher::isValidTarget, SEARCH_RANGE, robot.getZoneToWork()));
         }
     }
 
@@ -54,6 +63,21 @@ public class BoardRobotButcher extends RedstoneBoardRobot {
                 startDelegateAI(new AIRobotGotoSleep(robot));
             }
         }
+    }
+
+    private static boolean isValidTarget(net.minecraft.world.entity.Entity entity) {
+        if (!(entity instanceof Animal animal) || animal.hasCustomName()) {
+            return false;
+        }
+        // Cats and dogs are never valid butcher targets, even when they are wild.
+        if (animal instanceof Cat || animal instanceof Ocelot || animal instanceof Wolf) {
+            return false;
+        }
+        // Ignore all common tameable/owned passive animals.
+        if (animal instanceof TamableAnimal tameable && tameable.isTame()) {
+            return false;
+        }
+        return !(animal instanceof AbstractHorse horse) || !horse.isTamed();
     }
 
     private static final class SwordFilter implements IStackFilter {

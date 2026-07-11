@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
@@ -59,6 +61,7 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         @Nullable
         private Level level;
         private final Map<Long, EntityRobotBase> robots = new HashMap<>();
+        private final Set<Long> unloadedRobotIds = new HashSet<>();
         private final Map<ResourceId, Long> resources = new HashMap<>();
         private final Map<StationKey, DockingStation> stations = new LinkedHashMap<>();
         private long nextRobotId = 1;
@@ -111,6 +114,7 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
             }
 
             robots.put(robot.getRobotId(), robot);
+            unloadedRobotIds.remove(robot.getRobotId());
             registryMarkDirty();
         }
 
@@ -118,6 +122,7 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         public void killRobot(EntityRobotBase robot) {
             if (robot != null) {
                 releaseResources(robot, true, false);
+                unloadedRobotIds.remove(robot.getRobotId());
                 robots.remove(robot.getRobotId());
                 registryMarkDirty();
             }
@@ -126,7 +131,10 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         @Override
         public void unloadRobot(EntityRobotBase robot) {
             if (robot != null) {
-                releaseResources(robot, false, true);
+                // Keep generic block/task reservations while the entity is temporarily absent because its chunk
+                // unloaded. The same robot will reclaim the live entity slot when its chunk loads again.
+                unloadedRobotIds.add(robot.getRobotId());
+                releaseStations(robot, false, true);
                 robots.remove(robot.getRobotId());
                 registryMarkDirty();
             }
@@ -149,13 +157,20 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
                 return EntityRobotBase.NULL_ROBOT_ID;
             }
 
-            // Station reservations intentionally survive robot entity unloads. Generic resources do not.
+            // Station and generic work reservations intentionally survive temporary robot entity unloads.
             if (resourceId instanceof StationResourceId) {
                 return robotId;
             }
 
             EntityRobotBase robot = robots.get(robotId);
-            if (robot == null || !robot.isAlive()) {
+            if (robot == null) {
+                if (unloadedRobotIds.contains(robotId)) {
+                    return robotId;
+                }
+                release(resourceId);
+                return EntityRobotBase.NULL_ROBOT_ID;
+            }
+            if (!robot.isAlive()) {
                 release(resourceId);
                 return EntityRobotBase.NULL_ROBOT_ID;
             }
@@ -337,6 +352,7 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         @Override
         public void readFromNBT(CompoundTag nbt) {
             robots.clear();
+            unloadedRobotIds.clear();
             resources.clear();
             stations.clear();
 
@@ -353,7 +369,9 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
                 CompoundTag entryTag = resourceList.getCompound(i);
                 ResourceId resourceId = ResourceId.load(entryTag.getCompound("resourceId"));
                 if (resourceId != null) {
-                    resources.put(resourceId, entryTag.getLong("robotId"));
+                    long robotId = entryTag.getLong("robotId");
+                    resources.put(resourceId, robotId);
+                    unloadedRobotIds.add(robotId);
                 }
             }
 

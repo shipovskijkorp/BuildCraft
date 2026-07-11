@@ -1,11 +1,16 @@
 package ct.buildcraft.robotics.ai;
 
-import ct.buildcraft.api.core.IZone;
+import ct.buildcraft.api.core.IBox;
 import ct.buildcraft.api.core.IStackFilter;
+import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.api.robots.AIRobot;
+import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.lib.misc.data.Box;
 import ct.buildcraft.robotics.boards.BoardRobotPicker;
 import ct.buildcraft.robotics.entity.EntityRobot;
+import ct.buildcraft.robotics.statements.ActionRobotFilter;
+import ct.buildcraft.robotics.zone.ZonePlan;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -16,12 +21,19 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class AIRobotFetchItem extends AIRobot {
+    private static final String NBT_ZONE = "zone";
+    private static final String NBT_ZONE_TYPE = "type";
+    private static final String ZONE_TYPE_BOX = "box";
+    private static final String ZONE_TYPE_PLAN = "plan";
+
     private ItemEntity target;
     private int targetId = -1;
     private float maxRange = 250;
     private IStackFilter stackFilter;
     private int pickTime = -1;
     private IZone zone;
+    private boolean zoneRestricted;
+    private boolean refreshContextAfterLoad;
 
     public AIRobotFetchItem(EntityRobotBase robot) {
         super(robot);
@@ -36,63 +48,78 @@ public class AIRobotFetchItem extends AIRobot {
         this.maxRange = maxRange;
         this.stackFilter = stackFilter;
         this.zone = zone;
+        this.zoneRestricted = zone != null;
     }
 
     @Override
     public void preempt(AIRobot ai) {
-        if (target != null && (!target.isAlive() || target.getItem().isEmpty())) {
-            terminate();
+        if (target != null && (!isValidTarget(target) || !isInsideZone(target.position()))) {
+            failAndTerminate(false);
         }
     }
 
     @Override
     public void update() {
+        if (refreshContextAfterLoad && !restoreRuntimeContext()) {
+            return;
+        }
+
         if (target == null && targetId != -1) {
+            // Entity IDs are runtime-only and must never be trusted after a world/chunk reload. This branch only
+            // handles an ID selected during the current runtime.
             AABB lookup = robot.getBoundingBox().inflate(maxRange);
             for (ItemEntity item : robot.level.getEntitiesOfClass(ItemEntity.class, lookup)) {
-                if (item.getId() == targetId) {
+                if (item.getId() == targetId && isValidTarget(item) && isInsideZone(item.position())) {
                     target = item;
                     break;
                 }
             }
+            if (target == null) {
+                releaseTargetReservation();
+            }
         }
+
         if (target == null) {
             scanForItem();
-        } else {
-            if (!canPickTargetNow()) {
-                BlockPos pickupPos = findPickupTargetPos(target);
-                if (pickupPos == null) {
-                    robot.unreachableEntityDetected(target);
-                    setSuccess(false);
-                    terminate();
-                    return;
-                }
-                startDelegateAI(new AIRobotGotoBlock(robot, pickupPos.getX(), pickupPos.getY(), pickupPos.getZ(), maxRange));
+            return;
+        }
+
+        if (!isValidTarget(target) || !isInsideZone(target.position())) {
+            failAndTerminate(false);
+            return;
+        }
+
+        if (!canPickTargetNow()) {
+            BlockPos pickupPos = findPickupTargetPos(target);
+            if (pickupPos == null) {
+                robot.unreachableEntityDetected(target);
+                failAndTerminate(false);
                 return;
             }
-            pickTime++;
-            if (pickTime > 5) {
-                ItemStack stack = target.getItem();
-                ItemStack remaining = insert(stack, true);
-                target.setItem(remaining);
-                if (remaining.isEmpty()) {
-                    target.discard();
-                }
-                terminate();
+            startDelegateAI(new AIRobotGotoBlock(robot, pickupPos.getX(), pickupPos.getY(), pickupPos.getZ(), maxRange));
+            return;
+        }
+
+        pickTime++;
+        if (pickTime > 5) {
+            ItemStack stack = target.getItem();
+            ItemStack remaining = insert(stack, true);
+            target.setItem(remaining);
+            if (remaining.isEmpty()) {
+                target.discard();
             }
+            terminate();
         }
     }
 
     @Override
     public void delegateAIEnded(AIRobot ai) {
         if (ai instanceof AIRobotGotoBlock) {
-            if (target == null || !target.isAlive() || target.getItem().isEmpty()) {
-                setSuccess(false);
-                terminate();
+            if (target == null || !isValidTarget(target) || !isInsideZone(target.position())) {
+                failAndTerminate(false);
             } else if (!ai.success()) {
                 robot.unreachableEntityDetected(target);
-                setSuccess(false);
-                terminate();
+                failAndTerminate(false);
             } else {
                 pickTime = 0;
             }
@@ -101,9 +128,34 @@ public class AIRobotFetchItem extends AIRobot {
 
     @Override
     public void end() {
-        if (targetId != -1) {
-            BoardRobotPicker.targettedItems.remove(targetId);
+        releaseTargetReservation();
+    }
+
+    private boolean restoreRuntimeContext() {
+        refreshContextAfterLoad = false;
+
+        DockingStation station = robot.getLinkedStation();
+        if (station == null) {
+            // Never turn a collector into an unrestricted 250-block item vacuum just because its station is not
+            // available during the first tick after loading.
+            setSuccess(false);
+            terminate();
+            return false;
         }
+
+        IZone liveZone = robot.getZoneToWork();
+        if (liveZone != null) {
+            zone = liveZone;
+            zoneRestricted = true;
+        }
+        stackFilter = ActionRobotFilter.getGateFilter(station);
+
+        if (zoneRestricted && zone == null) {
+            setSuccess(false);
+            terminate();
+            return false;
+        }
+        return true;
     }
 
     private void scanForItem() {
@@ -111,11 +163,11 @@ public class AIRobotFetchItem extends AIRobot {
         ItemEntity best = null;
         AABB box = robot.getBoundingBox().inflate(maxRange);
         for (ItemEntity item : robot.level.getEntitiesOfClass(ItemEntity.class, box)) {
-            if (!item.isAlive() || item.getItem().isEmpty()) continue;
+            if (!isValidTarget(item)) continue;
             if (BoardRobotPicker.targettedItems.contains(item.getId())) continue;
             if (robot.isKnownUnreachable(item)) continue;
             if (stackFilter != null && !stackFilter.matches(item.getItem())) continue;
-            if (zone != null && !zone.contains(new Vec3(item.getX(), item.getY(), item.getZ()))) continue;
+            if (!isInsideZone(item.position())) continue;
             double sqrDistance = item.distanceToSqr(robot);
             if (sqrDistance >= maxRange * maxRange) continue;
             if (insert(item.getItem(), false).getCount() >= item.getItem().getCount()) continue;
@@ -132,8 +184,7 @@ public class AIRobotFetchItem extends AIRobot {
                 BlockPos pickupPos = findPickupTargetPos(target);
                 if (pickupPos == null) {
                     robot.unreachableEntityDetected(target);
-                    setSuccess(false);
-                    terminate();
+                    failAndTerminate(false);
                     return;
                 }
                 startDelegateAI(new AIRobotGotoBlock(robot, pickupPos.getX(), pickupPos.getY(), pickupPos.getZ(), maxRange));
@@ -144,8 +195,16 @@ public class AIRobotFetchItem extends AIRobot {
         }
     }
 
+    private boolean isValidTarget(ItemEntity item) {
+        return item != null && item.isAlive() && !item.getItem().isEmpty();
+    }
+
+    private boolean isInsideZone(Vec3 position) {
+        return zone == null || zone.contains(position);
+    }
+
     private boolean canPickTargetNow() {
-        if (target == null) {
+        if (target == null || !isInsideZone(target.position())) {
             return false;
         }
         if (Math.floor(target.getX()) == Math.floor(robot.getX())
@@ -157,6 +216,10 @@ public class AIRobotFetchItem extends AIRobot {
     }
 
     private BlockPos findPickupTargetPos(ItemEntity item) {
+        if (!isInsideZone(item.position())) {
+            return null;
+        }
+
         BlockPos itemPos = new BlockPos((int) Math.floor(item.getX()), (int) Math.floor(item.getY()), (int) Math.floor(item.getZ()));
         BlockPos[] candidates = new BlockPos[] {
                 itemPos,
@@ -174,7 +237,7 @@ public class AIRobotFetchItem extends AIRobot {
         BlockPos best = null;
         double bestDistance = Double.MAX_VALUE;
         for (BlockPos candidate : candidates) {
-            if (!isSoft(robot.level, candidate)) {
+            if (!isInsideZone(Vec3.atCenterOf(candidate)) || !isSoft(robot.level, candidate)) {
                 continue;
             }
             double distance = candidate.distToCenterSqr(item.getX(), item.getY(), item.getZ());
@@ -201,6 +264,22 @@ public class AIRobotFetchItem extends AIRobot {
         return stack;
     }
 
+    private void failAndTerminate(boolean markUnreachable) {
+        if (markUnreachable && target != null) {
+            robot.unreachableEntityDetected(target);
+        }
+        setSuccess(false);
+        terminate();
+    }
+
+    private void releaseTargetReservation() {
+        if (targetId != -1) {
+            BoardRobotPicker.targettedItems.remove(targetId);
+        }
+        targetId = -1;
+        target = null;
+    }
+
     @Override
     public int getEnergyCost() {
         return 15;
@@ -214,14 +293,66 @@ public class AIRobotFetchItem extends AIRobot {
     @Override
     public void writeSelfToNBT(CompoundTag nbt) {
         nbt.putFloat("maxRange", maxRange);
-        nbt.putInt("targetId", targetId);
-        nbt.putInt("pickTime", pickTime);
+        nbt.putBoolean("zoneRestricted", zoneRestricted);
+
+        CompoundTag zoneTag = writeZone(zone);
+        if (zoneTag != null) {
+            nbt.put(NBT_ZONE, zoneTag);
+        }
+
+        // targetId is deliberately not persisted: Minecraft entity IDs are only stable for the current runtime.
     }
 
     @Override
     public void loadSelfFromNBT(CompoundTag nbt) {
         maxRange = nbt.contains("maxRange") ? nbt.getFloat("maxRange") : 250;
-        targetId = nbt.getInt("targetId");
-        pickTime = nbt.getInt("pickTime");
+        zone = readZone(nbt.getCompound(NBT_ZONE));
+        zoneRestricted = nbt.getBoolean("zoneRestricted") || zone != null;
+
+        // Always reacquire a target after loading. A saved numeric entity ID may now refer to an unrelated entity.
+        target = null;
+        targetId = -1;
+        pickTime = -1;
+        stackFilter = null;
+        refreshContextAfterLoad = true;
+    }
+
+    private static CompoundTag writeZone(IZone zone) {
+        if (zone instanceof ZonePlan plan) {
+            CompoundTag tag = new CompoundTag();
+            tag.putString(NBT_ZONE_TYPE, ZONE_TYPE_PLAN);
+            plan.writeToNBT(tag);
+            return tag;
+        }
+        if (zone instanceof IBox box && box.min() != null && box.max() != null) {
+            CompoundTag tag = new CompoundTag();
+            tag.putString(NBT_ZONE_TYPE, ZONE_TYPE_BOX);
+            tag.putInt("minX", box.min().getX());
+            tag.putInt("minY", box.min().getY());
+            tag.putInt("minZ", box.min().getZ());
+            tag.putInt("maxX", box.max().getX());
+            tag.putInt("maxY", box.max().getY());
+            tag.putInt("maxZ", box.max().getZ());
+            return tag;
+        }
+        return null;
+    }
+
+    private static IZone readZone(CompoundTag tag) {
+        if (tag == null || tag.isEmpty()) {
+            return null;
+        }
+        String type = tag.getString(NBT_ZONE_TYPE);
+        if (ZONE_TYPE_PLAN.equals(type)) {
+            ZonePlan plan = new ZonePlan();
+            plan.readFromNBT(tag);
+            return plan;
+        }
+        if (ZONE_TYPE_BOX.equals(type)) {
+            BlockPos min = new BlockPos(tag.getInt("minX"), tag.getInt("minY"), tag.getInt("minZ"));
+            BlockPos max = new BlockPos(tag.getInt("maxX"), tag.getInt("maxY"), tag.getInt("maxZ"));
+            return new Box(min, max);
+        }
+        return null;
     }
 }

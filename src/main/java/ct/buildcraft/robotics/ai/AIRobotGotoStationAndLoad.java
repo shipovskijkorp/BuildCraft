@@ -7,20 +7,26 @@ import ct.buildcraft.api.robots.EntityRobotBase;
 public class AIRobotGotoStationAndLoad extends AIRobot {
     private IStackFilter filter;
     private int quantity;
+    private boolean ignoreStationZone;
 
     public AIRobotGotoStationAndLoad(EntityRobotBase robot) {
         super(robot);
     }
 
     public AIRobotGotoStationAndLoad(EntityRobotBase robot, IStackFilter filter, int quantity) {
+        this(robot, filter, quantity, false);
+    }
+
+    public AIRobotGotoStationAndLoad(EntityRobotBase robot, IStackFilter filter, int quantity, boolean ignoreStationZone) {
         this(robot);
         this.filter = filter;
         this.quantity = quantity;
+        this.ignoreStationZone = ignoreStationZone;
     }
 
     @Override
     public void start() {
-        startDelegateAI(new AIRobotGotoStationToLoad(robot, filter, quantity));
+        startDelegateAI(new AIRobotGotoStationToLoad(robot, filter, quantity, ignoreStationZone));
     }
 
     @Override

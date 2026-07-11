@@ -16,6 +16,7 @@ import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.robotics.zone.ZonePlan;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.api.robots.ResourceIdBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -86,9 +87,14 @@ public class AIRobotSearchBlock extends AIRobot {
 
         SearchResult result = continueSearch();
         if (result != null) {
-            blockFound = new BlockIndex(result.target());
-            path = result.path();
-            terminate();
+            ResourceIdBlock resource = new ResourceIdBlock(result.target());
+            if (robot.getRegistry() == null || robot.getRegistry().take(resource, robot)) {
+                blockFound = new BlockIndex(result.target());
+                path = result.path();
+                terminate();
+            }
+            // Another robot reserved this target during our path search. The scanner has already advanced past it,
+            // so resume from the next candidate on the following tick instead of failing the whole search.
         } else if (isSearchComplete()) {
             setSuccess(false);
             terminate();
@@ -662,17 +668,14 @@ public class AIRobotSearchBlock extends AIRobot {
     }
 
     private static final class AreaIterator {
-        private final int[] xs;
+        private final HorizontalPos[] horizontalPositions;
         private final int[] ys;
-        private final int[] zs;
-        private int xIndex;
+        private int horizontalIndex;
         private int yIndex;
-        private int zIndex;
 
         private AreaIterator(ScanArea area, BlockPos start, boolean random) {
-            this.xs = buildAxisOrder(area.minX(), area.maxX(), start.getX(), random);
+            this.horizontalPositions = buildHorizontalOrder(area, start, random);
             this.ys = buildAxisOrder(area.minY(), area.maxY(), start.getY(), random);
-            this.zs = buildAxisOrder(area.minZ(), area.maxZ(), start.getZ(), random);
         }
 
         private BlockPos next() {
@@ -680,17 +683,49 @@ public class AIRobotSearchBlock extends AIRobot {
                 return null;
             }
 
-            BlockPos pos = new BlockPos(xs[xIndex], ys[yIndex], zs[zIndex]);
-            zIndex++;
-            if (zIndex >= zs.length) {
-                zIndex = 0;
-                xIndex++;
-                if (xIndex >= xs.length) {
-                    xIndex = 0;
-                    yIndex++;
-                }
+            HorizontalPos horizontal = horizontalPositions[horizontalIndex++];
+            BlockPos pos = new BlockPos(horizontal.x(), ys[yIndex], horizontal.z());
+            if (horizontalIndex >= horizontalPositions.length) {
+                horizontalIndex = 0;
+                yIndex++;
             }
             return pos;
+        }
+
+        private static HorizontalPos[] buildHorizontalOrder(ScanArea area, BlockPos origin, boolean random) {
+            HorizontalPos[] values = new HorizontalPos[
+                    (area.maxX() - area.minX() + 1) * (area.maxZ() - area.minZ() + 1)
+            ];
+            int index = 0;
+            for (int x = area.minX(); x <= area.maxX(); x++) {
+                for (int z = area.minZ(); z <= area.maxZ(); z++) {
+                    values[index++] = new HorizontalPos(x, z);
+                }
+            }
+
+            if (random) {
+                shuffle(values);
+            } else {
+                java.util.Arrays.sort(values, (a, b) -> {
+                    long aDx = (long) a.x() - origin.getX();
+                    long aDz = (long) a.z() - origin.getZ();
+                    long bDx = (long) b.x() - origin.getX();
+                    long bDz = (long) b.z() - origin.getZ();
+                    long aDistance = aDx * aDx + aDz * aDz;
+                    long bDistance = bDx * bDx + bDz * bDz;
+                    int distanceCompare = Long.compare(aDistance, bDistance);
+                    if (distanceCompare != 0) {
+                        return distanceCompare;
+                    }
+                    int manhattanCompare = Long.compare(Math.abs(aDx) + Math.abs(aDz), Math.abs(bDx) + Math.abs(bDz));
+                    if (manhattanCompare != 0) {
+                        return manhattanCompare;
+                    }
+                    int xCompare = Integer.compare(a.x(), b.x());
+                    return xCompare != 0 ? xCompare : Integer.compare(a.z(), b.z());
+                });
+            }
+            return values;
         }
 
         private static int[] buildAxisOrder(int min, int max, int origin, boolean random) {
@@ -706,13 +741,13 @@ public class AIRobotSearchBlock extends AIRobot {
             int index = 0;
             int maxDelta = Math.max(Math.abs(origin - min), Math.abs(origin - max));
             for (int delta = 0; delta <= maxDelta; delta++) {
-                int left = origin - delta;
-                int right = origin + delta;
-                if (left >= min && left <= max) {
-                    values[index++] = left;
+                int lower = origin - delta;
+                int upper = origin + delta;
+                if (lower >= min && lower <= max) {
+                    values[index++] = lower;
                 }
-                if (delta != 0 && right >= min && right <= max) {
-                    values[index++] = right;
+                if (delta != 0 && upper >= min && upper <= max) {
+                    values[index++] = upper;
                 }
             }
             return values;
@@ -726,6 +761,18 @@ public class AIRobotSearchBlock extends AIRobot {
                 values[j] = tmp;
             }
         }
+
+        private static void shuffle(HorizontalPos[] values) {
+            for (int i = values.length - 1; i > 0; i--) {
+                int j = java.util.concurrent.ThreadLocalRandom.current().nextInt(i + 1);
+                HorizontalPos tmp = values[i];
+                values[i] = values[j];
+                values[j] = tmp;
+            }
+        }
+    }
+
+    private record HorizontalPos(int x, int z) {
     }
 
 }

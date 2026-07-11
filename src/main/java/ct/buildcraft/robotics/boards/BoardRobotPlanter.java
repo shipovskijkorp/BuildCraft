@@ -41,6 +41,10 @@ public class BoardRobotPlanter extends RedstoneBoardRobot {
     @Override
     public void update() {
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (!held.isEmpty() && !seedFilter.matches(held)) {
+            RobotBoardUtil.dropHeldItem(robot);
+            return;
+        }
         if (held.isEmpty()) {
             startDelegateAI(new AIRobotFetchAndEquipItemStack(robot,
                     new AggregateFilter(seedFilter, ActionRobotFilter.getGateFilter(robot.getLinkedStation())), MAX_SEED_BATCH_SIZE));
@@ -48,7 +52,7 @@ public class BoardRobotPlanter extends RedstoneBoardRobot {
         }
 
         final ItemStack seed = held.copy();
-        startDelegateAI(new AIRobotSearchAndGotoBlock(robot, true, (level, pos) -> isPlantable(level, seed, pos), 1));
+        startDelegateAI(new AIRobotSearchAndGotoBlock(robot, false, (level, pos) -> isPlantable(level, seed, pos), 1));
     }
 
     @Override

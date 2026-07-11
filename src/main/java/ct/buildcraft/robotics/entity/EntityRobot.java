@@ -31,6 +31,7 @@ import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import ct.buildcraft.robotics.BCRoboticsEntities;
 import ct.buildcraft.robotics.ai.AIRobotMain;
+import ct.buildcraft.robotics.ai.AIRobotReturnToLostStation;
 import ct.buildcraft.robotics.ai.AIRobotShutdown;
 import ct.buildcraft.robotics.ai.AIRobotSleep;
 import ct.buildcraft.robotics.statements.ActionRobotWorkInArea;
@@ -118,6 +119,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private DockingStation linkedStation;
     private BlockIndex linkedStationIndex;
     private Direction linkedStationSide;
+
+    // Kept independently from linkedStationIndex. Station objects can temporarily disappear while chunks or pipe
+    // pluggables are being reloaded, and an actually removed station is still the safest place to return a lost robot.
+    private BlockIndex lastMainStationIndex;
+    private Direction lastMainStationSide;
 
     private DockingStation dockingStation;
     private BlockIndex dockingStationIndex;
@@ -323,9 +329,10 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 mainAI.start();
             }
             validateLinkedStation();
-            if (linkedStation == null || linkedStation.isInitialized()) {
-                mainAI.cycle();
-            }
+            // Never freeze the AI merely because the station chunk unloaded. The old branch skipped cycle() while
+            // keeping the previous delta movement, so a working robot could continue flying in a straight line until
+            // it crossed several chunks and appeared to vanish. Lost-station recovery now owns this state explicitly.
+            mainAI.cycle();
             entityData.set(ROBOT_ASLEEP, isAsleepOrShutdownOnServer());
             entityData.set(ROBOT_AIM_YAW, aimYaw);
             entityData.set(ROBOT_AIM_PITCH, aimPitch);
@@ -395,24 +402,45 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     private void validateStationReferences() {
+        IRobotRegistry registry = getRegistry();
+
         DockingStation currentDockingStation = dockingStation;
         if (currentDockingStation != null && isStationGone(currentDockingStation)) {
+            BlockIndex oldIndex = copyIndex(dockingStationIndex != null ? dockingStationIndex : currentDockingStation.index());
+            Direction oldSide = dockingStationSide != null ? dockingStationSide : currentDockingStation.side();
             currentDockingStation.unsafeRelease(this);
-            if (dockingStation == currentDockingStation) {
+
+            DockingStation replacement = getStation(registry, oldIndex, oldSide);
+            if (replacement != null
+                    && (replacement.robotIdTaking() == NULL_ROBOT_ID || replacement.robotIdTaking() == robotId)
+                    && replacement.take(this)) {
+                dockingStation = replacement;
+                dockingStationIndex = copyIndex(replacement.index());
+                dockingStationSide = replacement.side();
+                syncDockingStationToClient(replacement);
+            } else if (dockingStation == currentDockingStation) {
                 dockingStation = null;
                 dockingStationIndex = null;
                 dockingStationSide = null;
+                clearDockingStationSync();
             }
-            clearDockingStationSync();
         }
 
         DockingStation currentLinkedStation = linkedStation;
         if (currentLinkedStation != null && isStationGone(currentLinkedStation)) {
+            BlockIndex oldIndex = copyIndex(linkedStationIndex != null ? linkedStationIndex : currentLinkedStation.index());
+            Direction oldSide = linkedStationSide != null ? linkedStationSide : currentLinkedStation.side();
+            rememberMainStation(oldIndex, oldSide);
             currentLinkedStation.unsafeRelease(this);
-            if (linkedStation == currentLinkedStation) {
-                linkedStation = null;
-                linkedStationIndex = null;
-                linkedStationSide = null;
+
+            linkedStation = null;
+            linkedStationIndex = null;
+            linkedStationSide = null;
+
+            DockingStation replacement = getStation(registry, oldIndex, oldSide);
+            if (replacement != null
+                    && (replacement.robotIdTaking() == NULL_ROBOT_ID || replacement.robotIdTaking() == robotId)) {
+                replacement.takeAsMain(this);
             }
         }
     }
@@ -439,30 +467,130 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     /**
-     * Mirrors the old BuildCraft safety check: a robot is only allowed to run if its main station can still
-     * resolve the same robot id. This prevents the AI from continuing forever after chunk unload/reload desyncs.
+     * Keeps the classic station ownership safety check, but no longer abandons a robot at its current work target.
+     * A missing/recreated station is first rebound by coordinates; if that fails, the emergency return AI sends the
+     * robot back to the last known home position and waits there for the station to become available again.
      */
     private void validateLinkedStation() {
-        if (linkedStation == null) {
-            if (linkedStationIndex != null && getRegistry() != null) {
-                linkedStation = getRegistry().getStation(linkedStationIndex.toBlockPos(), linkedStationSide);
+        if (linkedStation == null && linkedStationIndex != null) {
+            linkedStation = getStation(getRegistry(), linkedStationIndex, linkedStationSide);
+            if (linkedStation != null) {
+                rememberMainStation(linkedStationIndex, linkedStationSide);
             }
+        }
 
-            if (linkedStation == null) {
-                shutdownRobot("no docking station");
-                return;
-            }
+        if (linkedStation == null && !tryRecoverMainStation()) {
+            returnToLastKnownStation("no docking station");
+            return;
+        }
+
+        if (!linkedStation.isInitialized()) {
+            rememberMainStation(linkedStation.index(), linkedStation.side());
+            linkedStation = null;
+            linkedStationIndex = null;
+            linkedStationSide = null;
+            returnToLastKnownStation("docking station chunk is unavailable");
+            return;
         }
 
         if (linkedStation.robotTaking() != this) {
             if (linkedStation.robotIdTaking() == robotId) {
-                BCLog.logger.warn("A robot entity was not properly unloaded");
+                BCLog.logger.warn("Robot {} was detached from its station entity reference; rebinding it", robotId);
                 linkedStation.invalidateRobotTakingEntity();
             }
+
+            if (linkedStation.robotTaking() != this
+                    && (linkedStation.robotIdTaking() == NULL_ROBOT_ID || linkedStation.robotIdTaking() == robotId)) {
+                linkedStation.takeAsMain(this);
+            }
+
             if (linkedStation.robotTaking() != this) {
-                shutdownRobot("wrong docking station");
+                BlockIndex lostIndex = copyIndex(linkedStation.index());
+                Direction lostSide = linkedStation.side();
+                rememberMainStation(lostIndex, lostSide);
+                linkedStation = null;
+                linkedStationIndex = null;
+                linkedStationSide = null;
+                returnToLastKnownStation("wrong docking station owner");
+                return;
             }
         }
+
+        // Older builds could already have put a detached robot into the non-terminating shutdown AI. Once its station
+        // is visible again, replace that stale shutdown with the same emergency return path instead of leaving it where
+        // it happened to fall. A robot that is already docked may remain shut down normally.
+        if (mainAI != null
+                && mainAI.getDelegateAI() instanceof AIRobotShutdown
+                && dockingStation != linkedStation
+                && lastMainStationIndex != null) {
+            BCLog.logger.info("Robot {} recovered its main station; returning to dock", robotId);
+            mainAI.startDelegateAI(new AIRobotReturnToLostStation(this, lastMainStationIndex, lastMainStationSide));
+        }
+    }
+
+    private boolean tryRecoverMainStation() {
+        IRobotRegistry registry = getRegistry();
+        if (registry == null) {
+            return false;
+        }
+
+        // Backward compatibility for robots that were already stranded by an older build: their entity NBT may no
+        // longer contain the station coordinates, while the persistent registry still knows which main dock owns id.
+        if (lastMainStationIndex == null) {
+            DockingStation nearest = null;
+            double nearestDistance = Double.MAX_VALUE;
+            for (DockingStation candidate : registry.getStations()) {
+                if (candidate == null || !candidate.isMainStation() || candidate.robotIdTaking() != robotId) {
+                    continue;
+                }
+                double distance = distanceToSqr(candidate.x() + 0.5D, candidate.y() + 0.5D, candidate.z() + 0.5D);
+                if (distance < nearestDistance) {
+                    nearest = candidate;
+                    nearestDistance = distance;
+                }
+            }
+            if (nearest != null) {
+                rememberMainStation(nearest.index(), nearest.side());
+            }
+        }
+
+        if (lastMainStationIndex == null) {
+            return false;
+        }
+
+        DockingStation station = getStation(registry, lastMainStationIndex, lastMainStationSide);
+        if (station == null) {
+            return false;
+        }
+
+        long takingId = station.robotIdTaking();
+        if (takingId != NULL_ROBOT_ID && takingId != robotId) {
+            return false;
+        }
+        return station.takeAsMain(this);
+    }
+
+    private void returnToLastKnownStation(String reason) {
+        // Kill any movement left by the previous work AI immediately. This is the part that prevented robots from
+        // coasting out of their work area while their station chunk was unavailable.
+        setDeltaMovement(Vec3.ZERO);
+
+        if (lastMainStationIndex == null) {
+            shutdownRobot(reason + ", no last station coordinates");
+            return;
+        }
+        if (mainAI == null
+                || mainAI.getDelegateAI() instanceof AIRobotReturnToLostStation
+                || mainAI.getOverridingAI() != null) {
+            return;
+        }
+
+        BCLog.logger.warn(
+                "Robot {} lost its main station at {} side {} while at [{}, {}, {}] ({}). Returning within 5 blocks.",
+                robotId, lastMainStationIndex, lastMainStationSide,
+                Mth.floor(getX()), Mth.floor(getY()), Mth.floor(getZ()), reason
+        );
+        mainAI.startDelegateAI(new AIRobotReturnToLostStation(this, lastMainStationIndex, lastMainStationSide));
     }
 
     private void shutdownRobot(String reason) {
@@ -470,6 +598,28 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             BCLog.logger.info("Shutting down robot " + this + " - " + reason);
             mainAI.startDelegateAI(new AIRobotShutdown(this));
         }
+    }
+
+    @Nullable
+    private static DockingStation getStation(@Nullable IRobotRegistry registry, @Nullable BlockIndex index,
+                                             @Nullable Direction side) {
+        if (registry == null || index == null) {
+            return null;
+        }
+        return registry.getStation(index.toBlockPos(), side);
+    }
+
+    private void rememberMainStation(@Nullable BlockIndex index, @Nullable Direction side) {
+        if (index == null) {
+            return;
+        }
+        lastMainStationIndex = copyIndex(index);
+        lastMainStationSide = side;
+    }
+
+    @Nullable
+    private static BlockIndex copyIndex(@Nullable BlockIndex index) {
+        return index == null ? null : new BlockIndex(index.x, index.y, index.z);
     }
 
     public static Vec3 stationPosition(DockingStation station) {
@@ -617,6 +767,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         if (linkedStationIndex != null) {
             tag.put("linkedStation", writeStation(linkedStationIndex, linkedStationSide));
         }
+        if (lastMainStationIndex != null) {
+            tag.put("lastMainStation", writeStation(lastMainStationIndex, lastMainStationSide));
+        }
         if (dockingStationIndex != null) {
             tag.put("currentStation", writeStation(dockingStationIndex, dockingStationSide));
         }
@@ -660,6 +813,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         if (tag.contains("linkedStation")) {
             readLinkedStation(tag.getCompound("linkedStation"));
         }
+        if (tag.contains("lastMainStation")) {
+            readLastMainStation(tag.getCompound("lastMainStation"));
+        } else if (linkedStationIndex != null) {
+            rememberMainStation(linkedStationIndex, linkedStationSide);
+        }
         if (tag.contains("currentStation")) {
             readCurrentStation(tag.getCompound("currentStation"));
         }
@@ -699,6 +857,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private void readLinkedStation(CompoundTag tag) {
         linkedStationIndex = new BlockIndex(tag.getCompound("index"));
         linkedStationSide = readSide(tag);
+    }
+
+    private void readLastMainStation(CompoundTag tag) {
+        lastMainStationIndex = new BlockIndex(tag.getCompound("index"));
+        lastMainStationSide = readSide(tag);
     }
 
     private void readCurrentStation(CompoundTag tag) {
@@ -1285,9 +1448,12 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         linkedStation = station;
         if (station != null) {
             station.setLevel(level);
-            linkedStationIndex = station.index();
+            linkedStationIndex = copyIndex(station.index());
             linkedStationSide = station.side();
+            rememberMainStation(linkedStationIndex, linkedStationSide);
         } else {
+            // Deliberately keep lastMainStationIndex: a removed or temporarily missing station is exactly where a
+            // stranded robot should return so it can be found and automatically reconnect when the dock reappears.
             linkedStationIndex = null;
             linkedStationSide = null;
         }

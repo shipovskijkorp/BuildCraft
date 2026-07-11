@@ -37,8 +37,11 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import org.jetbrains.annotations.NotNull;
 
 public class DockingStationPipe extends DockingStation implements IRequestProvider {
+    private static final long INVALID_STATION_GRACE_TICKS = 20L;
+
     private TilePipeHolder pipe;
     private boolean removingInvalidStation;
+    private long invalidSinceTick = Long.MIN_VALUE;
 
     private final IInjectable injectablePipe = new IInjectable() {
         @Override
@@ -151,11 +154,20 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
                 && side() != null
                 && holder.getPluggable(side()) instanceof RobotStationPluggable) {
             pipe = holder;
+            invalidSinceTick = Long.MIN_VALUE;
             return pipe;
         }
 
+        // During chunk loading the block state may already be present while its TilePipeHolder/pluggables are not yet
+        // fully restored. Removing the persistent station immediately in that window is what detached some robots.
+        // Require a full second of continuously invalid loaded state before treating the station as actually removed.
         pipe = null;
-        removeInvalidStation(stationLevel);
+        long gameTime = stationLevel.getGameTime();
+        if (invalidSinceTick == Long.MIN_VALUE) {
+            invalidSinceTick = gameTime;
+        } else if (gameTime - invalidSinceTick >= INVALID_STATION_GRACE_TICKS) {
+            removeInvalidStation(stationLevel);
+        }
         return null;
     }
 
@@ -398,5 +410,6 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     @Override
     public void onChunkUnload() {
         pipe = null;
+        invalidSinceTick = Long.MIN_VALUE;
     }
 }

@@ -10,6 +10,7 @@ import ct.buildcraft.api.robots.ResourceIdBlock;
 import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.ai.AIRobotFetchAndEquipItemStack;
 import ct.buildcraft.robotics.ai.AIRobotGotoSleep;
+import ct.buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
 import ct.buildcraft.robotics.ai.AIRobotSearchAndGotoBlock;
 import ct.buildcraft.robotics.ai.AIRobotUseToolOnBlock;
 import net.minecraft.core.BlockPos;
@@ -37,8 +38,14 @@ public class BoardRobotFarmer extends RedstoneBoardRobot {
     @Override
     public void update() {
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
-        if (!isHoe(held)) {
+        if (!held.isEmpty() && !(held.getItem() instanceof HoeItem)) {
+            RobotBoardUtil.dropHeldItem(robot);
+            return;
+        }
+        if (held.isEmpty()) {
             startDelegateAI(new AIRobotFetchAndEquipItemStack(robot, new HoeFilter()));
+        } else if (held.isDamageableItem() && held.getDamageValue() >= held.getMaxDamage()) {
+            startDelegateAI(new AIRobotGotoStationAndUnload(robot));
         } else {
             startDelegateAI(new AIRobotSearchAndGotoBlock(robot, false, this::isExpectedBlock));
         }
@@ -53,7 +60,7 @@ public class BoardRobotFarmer extends RedstoneBoardRobot {
             } else {
                 startDelegateAI(new AIRobotGotoSleep(robot));
             }
-        } else if (ai instanceof AIRobotFetchAndEquipItemStack) {
+        } else if (ai instanceof AIRobotFetchAndEquipItemStack || ai instanceof AIRobotGotoStationAndUnload) {
             if (!ai.success()) {
                 startDelegateAI(new AIRobotGotoSleep(robot));
             }

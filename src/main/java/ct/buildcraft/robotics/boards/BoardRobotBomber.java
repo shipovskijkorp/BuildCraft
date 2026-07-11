@@ -38,7 +38,7 @@ public class BoardRobotBomber extends RedstoneBoardRobot {
     @Override
     public void update() {
         if (!hasTnt()) {
-            startDelegateAI(new AIRobotGotoStationAndLoad(robot, TNT_FILTER, 1));
+            startDelegateAI(new AIRobotGotoStationAndLoad(robot, TNT_FILTER, 1, true));
             return;
         }
 

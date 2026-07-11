@@ -35,6 +35,10 @@ public class BoardRobotKnight extends RedstoneBoardRobot {
     @Override
     public final void update() {
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (!held.isEmpty() && !(held.getItem() instanceof SwordItem)) {
+            RobotBoardUtil.dropHeldItem(robot);
+            return;
+        }
         if (held.isEmpty()) {
             startDelegateAI(new AIRobotFetchAndEquipItemStack(robot, new SwordFilter()));
         } else if (held.isDamageableItem() && held.getDamageValue() >= held.getMaxDamage()) {

@@ -1,13 +1,19 @@
 package ct.buildcraft.robotics.ai;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.api.robots.AIRobot;
+import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.api.robots.EntityRobotBase;
 import ct.buildcraft.robotics.IStationFilter;
 
 public class AIRobotSearchAndGotoStation extends AIRobot {
     private IStationFilter filter;
     private IZone zone;
+    private final Set<AIRobotSearchStation.StationKey> failedStations = new HashSet<>();
+    private DockingStation currentTarget;
 
     public AIRobotSearchAndGotoStation(EntityRobotBase robot) {
         super(robot);
@@ -21,21 +27,34 @@ public class AIRobotSearchAndGotoStation extends AIRobot {
 
     @Override
     public void start() {
-        startDelegateAI(new AIRobotSearchStation(robot, filter, zone));
+        searchNextStation();
+    }
+
+    private void searchNextStation() {
+        startDelegateAI(new AIRobotSearchStation(robot, filter, zone, failedStations));
     }
 
     @Override
     public void delegateAIEnded(AIRobot ai) {
         if (ai instanceof AIRobotSearchStation search) {
             if (ai.success()) {
-                startDelegateAI(new AIRobotGotoStation(robot, search.targetStation));
+                currentTarget = search.targetStation;
+                startDelegateAI(new AIRobotGotoStation(robot, currentTarget));
             } else {
                 setSuccess(false);
                 terminate();
             }
         } else if (ai instanceof AIRobotGotoStation) {
-            setSuccess(ai.success());
-            terminate();
+            if (ai.success()) {
+                setSuccess(true);
+                terminate();
+            } else {
+                if (currentTarget != null) {
+                    failedStations.add(AIRobotSearchStation.StationKey.of(currentTarget));
+                }
+                currentTarget = null;
+                searchNextStation();
+            }
         }
     }
 }
