@@ -6,50 +6,122 @@
 
 package ct.buildcraft.factory.container;
 
+import java.io.IOException;
+
 import ct.buildcraft.factory.BCFactoryGuis;
 import ct.buildcraft.factory.tile.TileTank;
 import ct.buildcraft.lib.fluid.Tank;
 import ct.buildcraft.lib.gui.ContainerBCTile;
+import ct.buildcraft.lib.gui.MenuBC_Neptune;
 import ct.buildcraft.lib.gui.widget.WidgetFluidTank;
+import ct.buildcraft.lib.misc.data.IdAllocator;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 
+/**
+ * Tank menu.
+ *
+ * <p>Fluid id, amount and capacity are synchronized with a BuildCraft container packet instead of vanilla
+ * {@link ContainerData} synchronization. Vanilla serializes menu data values as signed 16-bit shorts, even though
+ * the Java API exposes ints. That silently truncates addon tanks whose capacity is greater than 32767 mB.</p>
+ *
+ * <p>The public {@link #data} object remains available for the existing GUI components, but it is only a local view
+ * of the three full-width synchronized values. It is deliberately not passed to {@code addDataSlots}.</p>
+ */
 public class ContainerTank extends ContainerBCTile<TileTank> {
+    private static final IdAllocator IDS = MenuBC_Neptune.IDS.makeChild("tank");
+    private static final int NET_TANK_STATE = IDS.allocId("TANK_STATE");
+
     private static final ForgeRegistry<Fluid> FLUIDS = (ForgeRegistry<Fluid>) ForgeRegistries.FLUIDS;
 
-    public final ContainerData data;
+    public final ContainerData data = new SyncedTankData();
     public final WidgetFluidTank widgetTank;
 
+    private int syncedFluidId;
+    private int syncedFluidAmount;
+    private int syncedCapacity;
+
+    private int lastSentFluidId = Integer.MIN_VALUE;
+    private int lastSentFluidAmount = Integer.MIN_VALUE;
+    private int lastSentCapacity = Integer.MIN_VALUE;
+
     public ContainerTank(int containerId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(containerId, playerInventory, new SimpleContainerData(3), createLevelAccess(playerInventory, buffer));
+        this(containerId, playerInventory, null, createLevelAccess(playerInventory, buffer));
     }
 
     public ContainerTank(int containerId, Inventory playerInventory, TileTank tank, ContainerLevelAccess access) {
-        this(containerId, playerInventory, new TankData(tank), access);
-    }
-
-    private ContainerTank(int containerId, Inventory playerInventory, ContainerData data, ContainerLevelAccess access) {
         super(BCFactoryGuis.MENU_TANK.get(), playerInventory, containerId, access);
-        this.data = data;
 
         addFullPlayerInventory(8, 99);
-        addDataSlots(data);
 
-        Tank guiTank = tile != null ? tile.tank : new Tank("tank", 16 * FluidType.BUCKET_VOLUME, null);
+        TileTank actualTank = tile != null ? tile : tank;
+        if (actualTank != null) {
+            updateLocalState(actualTank);
+        }
+
+        Tank guiTank = actualTank != null
+            ? actualTank.tank
+            : new Tank("tank", 16 * FluidType.BUCKET_VOLUME, null);
         widgetTank = addWidget(new WidgetFluidTank(this, guiTank));
+    }
+
+    @Override
+    public IdAllocator getIdAllocator() {
+        return IDS;
+    }
+
+    @Override
+    public void broadcastChanges() {
+        super.broadcastChanges();
+
+        if (playerInventory.player.level.isClientSide || tile == null) {
+            return;
+        }
+
+        FluidStack fluid = tile.tank.getFluid();
+        int fluidId = FLUIDS.getID(fluid.isEmpty() ? Fluids.EMPTY : fluid.getFluid());
+        int amount = fluid.isEmpty() ? 0 : fluid.getAmount();
+        int capacity = tile.tank.getCapacity();
+
+        if (fluidId == lastSentFluidId && amount == lastSentFluidAmount && capacity == lastSentCapacity) {
+            return;
+        }
+
+        lastSentFluidId = fluidId;
+        lastSentFluidAmount = amount;
+        lastSentCapacity = capacity;
+        updateLocalState(fluidId, amount, capacity);
+
+        sendMessage(NET_TANK_STATE, buffer -> {
+            buffer.writeVarInt(fluidId);
+            buffer.writeInt(amount);
+            buffer.writeInt(capacity);
+        });
+    }
+
+    @Override
+    public void readMessage(int id, FriendlyByteBuf buffer, LogicalSide side, NetworkEvent.Context ctx) throws IOException {
+        if (side == LogicalSide.CLIENT && id == NET_TANK_STATE) {
+            updateLocalState(buffer.readVarInt(), buffer.readInt(), buffer.readInt());
+            return;
+        }
+        super.readMessage(id, buffer, side, ctx);
     }
 
     @Override
@@ -65,14 +137,14 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
 
         ItemStack before = slot.getItem().copy();
         ItemStack after = access.evaluate((level, pos) -> {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (!(be instanceof TileTank tile)) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (!(blockEntity instanceof TileTank tankTile)) {
                 return slot.getItem();
             }
 
-            ItemStack result = tile.tank.transferStackToTank(player, slot.getItem());
-            tile.balanceTankFluids();
-            tile.setChanged();
+            ItemStack result = tankTile.tank.transferStackToTank(player, slot.getItem());
+            tankTile.balanceTankFluids();
+            tankTile.setChanged();
             return result;
         }).orElse(slot.getItem());
 
@@ -89,11 +161,11 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
     @Override
     public boolean clickMenuButton(Player player, int index) {
         return access.evaluate((level, pos) -> {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof TileTank tile) {
-                tile.tank.onGuiClicked(this, player);
-                tile.balanceTankFluids();
-                tile.setChanged();
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof TileTank tankTile) {
+                tankTile.tank.onGuiClicked(this, player);
+                tankTile.balanceTankFluids();
+                tankTile.setChanged();
                 broadcastChanges();
                 return true;
             }
@@ -101,26 +173,69 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
         }).orElse(false);
     }
 
-    private static final class TankData implements ContainerData {
-        private final TileTank tank;
-
-        private TankData(TileTank tank) {
-            this.tank = tank;
+    @Override
+    public boolean stillValid(Player player) {
+        // A client can receive the open-screen packet one tick before the block entity is installed in the chunk.
+        // The server remains authoritative and performs the normal BuildCraft interaction-range validation.
+        if (player.level.isClientSide) {
+            return true;
         }
+        return tile != null && tile.canInteractWith(player);
+    }
 
+    public int getFluidId() {
+        return syncedFluidId;
+    }
+
+    public int getFluidAmount() {
+        return syncedFluidAmount;
+    }
+
+    public int getTankCapacity() {
+        return syncedCapacity;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public Fluid getFluid() {
+        Fluid fluid = FLUIDS.getValue(syncedFluidId);
+        return fluid == null ? Fluids.EMPTY : fluid;
+    }
+
+    private void updateLocalState(TileTank tankTile) {
+        FluidStack fluid = tankTile.tank.getFluid();
+        updateLocalState(
+            FLUIDS.getID(fluid.isEmpty() ? Fluids.EMPTY : fluid.getFluid()),
+            fluid.isEmpty() ? 0 : fluid.getAmount(),
+            tankTile.tank.getCapacity()
+        );
+    }
+
+    private void updateLocalState(int fluidId, int amount, int capacity) {
+        syncedFluidId = Math.max(0, fluidId);
+        syncedFluidAmount = Math.max(0, amount);
+        syncedCapacity = Math.max(0, capacity);
+    }
+
+    private final class SyncedTankData implements ContainerData {
         @Override
         public int get(int index) {
-            FluidStack fluid = tank.tank.getFluid();
             return switch (index) {
-                case 0 -> FLUIDS.getID(fluid.isEmpty() ? Fluids.EMPTY : fluid.getFluid());
-                case 1 -> fluid.getAmount();
-                case 2 -> tank.tank.getCapacity();
+                case 0 -> syncedFluidId;
+                case 1 -> syncedFluidAmount;
+                case 2 -> syncedCapacity;
                 default -> 0;
             };
         }
 
         @Override
         public void set(int index, int value) {
+            switch (index) {
+                case 0 -> syncedFluidId = Math.max(0, value);
+                case 1 -> syncedFluidAmount = Math.max(0, value);
+                case 2 -> syncedCapacity = Math.max(0, value);
+                default -> {
+                }
+            }
         }
 
         @Override
