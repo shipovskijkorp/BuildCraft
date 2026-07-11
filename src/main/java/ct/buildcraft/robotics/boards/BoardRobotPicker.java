@@ -7,6 +7,7 @@ import ct.buildcraft.api.boards.RedstoneBoardRobot;
 import ct.buildcraft.api.boards.RedstoneBoardRobotNBT;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.EntityRobotBase;
+import ct.buildcraft.api.robots.DockingStation;
 import ct.buildcraft.robotics.BCRoboticsBoards;
 import ct.buildcraft.robotics.ai.AIRobotFetchItem;
 import ct.buildcraft.robotics.ai.AIRobotGotoSleep;
@@ -26,7 +27,13 @@ public class BoardRobotPicker extends RedstoneBoardRobot {
     }
 
     private void fetchNewItem() {
-        startDelegateAI(new AIRobotFetchItem(robot, 250, ActionRobotFilter.getGateFilter(robot.getLinkedStation()), robot.getZoneToWork()));
+        DockingStation station = robot.getLinkedStation();
+        if (station == null) {
+            // A picker without its home station must not fall back to an unrestricted 250-block search.
+            startDelegateAI(new AIRobotGotoSleep(robot));
+            return;
+        }
+        startDelegateAI(new AIRobotFetchItem(robot, 250, ActionRobotFilter.getGateFilter(station), robot.getZoneToWork()));
     }
 
     @Override
