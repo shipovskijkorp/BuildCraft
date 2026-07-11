@@ -58,10 +58,11 @@ public class AIRobotPumpBlock extends AIRobot {
         FluidStack simulated = BlockUtil.drainBlock(robot.level, pos, false);
         if (!simulated.isEmpty()) {
             int accepted = robot.fill(simulated, FluidAction.SIMULATE);
-            if (accepted > 0) {
+            // A source block is indivisible here. If the robot cannot hold the complete simulated drain, leave the
+            // world block untouched and let the board choose another target or unload its current contents.
+            if (accepted >= simulated.getAmount()) {
                 FluidStack drained = BlockUtil.drainBlock(robot.level, pos, true);
-                if (!drained.isEmpty()) {
-                    drained.setAmount(Math.min(drained.getAmount(), accepted));
+                if (!drained.isEmpty() && robot.fill(drained, FluidAction.SIMULATE) >= drained.getAmount()) {
                     pumped = robot.fill(drained, FluidAction.EXECUTE);
                 }
             }

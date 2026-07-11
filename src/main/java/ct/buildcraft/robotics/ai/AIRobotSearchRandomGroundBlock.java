@@ -3,6 +3,7 @@ package ct.buildcraft.robotics.ai;
 import java.util.Random;
 
 import ct.buildcraft.api.core.BlockIndex;
+import ct.buildcraft.api.core.IBox;
 import ct.buildcraft.api.core.IZone;
 import ct.buildcraft.api.robots.AIRobot;
 import ct.buildcraft.api.robots.EntityRobotBase;
@@ -59,6 +60,13 @@ public class AIRobotSearchRandomGroundBlock extends AIRobot {
         Level level = robot.level;
         int minY = level.getMinBuildHeight();
         int maxY = level.getMaxBuildHeight() - 1;
+        if (zone instanceof IBox box && box.min() != null && box.max() != null) {
+            minY = Math.max(minY, box.min().getY());
+            maxY = Math.min(maxY, box.max().getY());
+        }
+        if (minY > maxY) {
+            return;
+        }
         int x = column.getX();
         int z = column.getZ();
 

@@ -98,7 +98,7 @@ public class BoardRobotPump extends RedstoneBoardRobot {
         if (fluid.isEmpty()) {
             return false;
         }
-        if (robot.fill(fluid, FluidAction.SIMULATE) <= 0) {
+        if (robot.fill(fluid, FluidAction.SIMULATE) < fluid.getAmount()) {
             return false;
         }
         return matchesGateFilter(fluid);
