@@ -18,7 +18,7 @@ public abstract class BoardRobotGenericBreakBlock extends BoardRobotGenericSearc
     public abstract boolean isExpectedTool(ItemStack stack);
 
     @Override
-    public final void update() {
+    public void update() {
         ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!isExpectedTool(ItemStack.EMPTY) && held.isEmpty()) {
             startDelegateAI(new AIRobotFetchAndEquipItemStack(robot, new ExpectedToolFilter()));
