@@ -48,7 +48,7 @@ public class BoardRobotPlanter extends RedstoneBoardRobot {
         }
 
         final ItemStack seed = held.copy();
-        startDelegateAI(new AIRobotSearchAndGotoBlock(robot, true, (level, pos) -> isPlantable(level, seed, pos), 1));
+        startDelegateAI(new AIRobotSearchAndGotoBlock(robot, false, (level, pos) -> isPlantable(level, seed, pos), 1));
     }
 
     @Override

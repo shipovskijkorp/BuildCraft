@@ -34,6 +34,7 @@ import ct.buildcraft.robotics.ai.AIRobotMain;
 import ct.buildcraft.robotics.ai.AIRobotPlant;
 import ct.buildcraft.robotics.ai.AIRobotPumpBlock;
 import ct.buildcraft.robotics.ai.AIRobotRecharge;
+import ct.buildcraft.robotics.ai.AIRobotReturnToLostStation;
 import ct.buildcraft.robotics.ai.AIRobotSearchAndGotoBlock;
 import ct.buildcraft.robotics.ai.AIRobotSearchAndGotoStation;
 import ct.buildcraft.robotics.ai.AIRobotSearchBlock;
@@ -209,6 +210,7 @@ public class BCRobotics {
         RobotManager.registerAIRobot(AIRobotGotoSleep.class, "gotoSleep", "buildcraft.robotics.ai.AIRobotGotoSleep");
         RobotManager.registerAIRobot(AIRobotSleep.class, "sleep", "buildcraft.robotics.ai.AIRobotSleep");
         RobotManager.registerAIRobot(AIRobotRecharge.class, "recharge", "buildcraft.robotics.ai.AIRobotRecharge");
+        RobotManager.registerAIRobot(AIRobotReturnToLostStation.class, "returnToLostStation");
         RobotManager.registerAIRobot(AIRobotShutdown.class, "shutdown", "buildcraft.robotics.ai.AIRobotShutdown");
     }
 

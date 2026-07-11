@@ -20,6 +20,15 @@ public class AIRobotMain extends AIRobot {
 
     @Override
     public void preempt(AIRobot ai) {
+        // Returning to a lost home station is a safety operation. It must not be replaced by recharge/shutdown,
+        // otherwise a discharged robot can remain stranded forever at its last work target.
+        if (ai instanceof AIRobotReturnToLostStation) {
+            if (overridingAI != null && ai != overridingAI) {
+                startDelegateAI(overridingAI);
+            }
+            return;
+        }
+
         if (robot.getEnergy() <= EntityRobotBase.SHUTDOWN_ENERGY
                 && (robot.getDockingStation() == null || !robot.getDockingStation().providesPower())) {
             if (!(ai instanceof AIRobotShutdown)) {
