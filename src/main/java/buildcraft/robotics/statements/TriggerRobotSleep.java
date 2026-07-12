@@ -1,0 +1,44 @@
+package buildcraft.robotics.statements;
+
+import buildcraft.api.robots.DockingStation;
+import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.api.statements.IStatementContainer;
+import buildcraft.api.statements.IStatementParameter;
+import buildcraft.api.statements.ITriggerInternal;
+import buildcraft.core.statements.BCStatement;
+import buildcraft.api.core.render.ISprite;
+import buildcraft.robotics.BCRoboticsSprites;
+import buildcraft.robotics.entity.EntityRobot;
+import net.minecraft.network.chat.Component;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+public class TriggerRobotSleep extends BCStatement implements ITriggerInternal {
+
+    public TriggerRobotSleep() {
+        super("buildcraft:robot.sleep");
+    }
+
+    @Override
+    public Component getDescription() {
+        return Component.translatable("gate.trigger.robot.sleep");
+    }
+
+    @Override
+    public boolean isTriggerActive(IStatementContainer container, IStatementParameter[] parameters) {
+        DockingStation station = RobotStatementUtils.getStation(container);
+        if (station == null) return false;
+        EntityRobotBase robot = station.robotTaking();
+        if (robot == null || robot.getDockingStation() != station) return false;
+        if (robot instanceof EntityRobot er) {
+            return er.isAsleepForRendering();
+        }
+        return false;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public ISprite getSprite() {
+        return BCRoboticsSprites.TRIGGER_ROBOT_SLEEP;
+    }
+}
