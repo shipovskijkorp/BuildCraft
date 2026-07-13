@@ -12,6 +12,7 @@ Why BC8 + BC7? BuildCraft 8 is the latest release with a fresh take on classic B
 *   Global project checkup (ready)
 *   Forge release for 1.19.2 (ready)
 *   Port to 1.20.1 (current task)
+*   Backport to 1.12.2 (current subtask)
 *   Port to NeoForge/Fabric
 *   Port to 1.21.1
 *   Port to 1.21.11
