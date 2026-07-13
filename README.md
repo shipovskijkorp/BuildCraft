@@ -23,7 +23,8 @@ Why BC8 + BC7? BuildCraft 8 is the latest release with a fresh take on classic B
 Now in mod available 100% of content from BC8 and BC7
 
 - 1.19.2 - 100%
-- 1.20.1 - in progress
+- 1.20.1 - beta > 99% functionality
+- 1.12.2 - work in progress
 
 ## Credits
 
