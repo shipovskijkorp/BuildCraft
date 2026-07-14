@@ -294,6 +294,7 @@ public class FluidRenderer {
         invertU = false;
         invertV = false;
         if (sideRender[Direction.UP.ordinal()]) {
+            vertex.normalf(0, 1, 0);
             vertex(xs, yb, zb);
             vertex(xb, yb, zb);
             vertex(xb, yb, zs);
@@ -301,6 +302,7 @@ public class FluidRenderer {
         }
 
         if (sideRender[Direction.DOWN.ordinal()]) {
+            vertex.normalf(0, -1, 0);
             vertex(xs, ys, zs);
             vertex(xb, ys, zs);
             vertex(xb, ys, zb);
@@ -309,6 +311,7 @@ public class FluidRenderer {
 
         texmap = TexMap.ZY;
         if (sideRender[Direction.WEST.ordinal()]) {
+            vertex.normalf(-1, 0, 0);
             vertex(xs, ys, zs);
             vertex(xs, ys, zb);
             vertex(xs, yb, zb);
@@ -316,6 +319,7 @@ public class FluidRenderer {
         }
 
         if (sideRender[Direction.EAST.ordinal()]) {
+            vertex.normalf(1, 0, 0);
             vertex(xb, yb, zs);
             vertex(xb, yb, zb);
             vertex(xb, ys, zb);
@@ -324,6 +328,7 @@ public class FluidRenderer {
 
         texmap = TexMap.XY;
         if (sideRender[Direction.NORTH.ordinal()]) {
+            vertex.normalf(0, 0, -1);
             vertex(xs, yb, zs);
             vertex(xb, yb, zs);
             vertex(xb, ys, zs);
@@ -331,6 +336,7 @@ public class FluidRenderer {
         }
 
         if (sideRender[Direction.SOUTH.ordinal()]) {
+            vertex.normalf(0, 0, 1);
             vertex(xs, ys, zb);
             vertex(xb, ys, zb);
             vertex(xb, yb, zb);
@@ -536,7 +542,7 @@ public class FluidRenderer {
             min = min > realv ? realv : min;
             if(realu > 1)
             BCLog.logger.debug(""+realu);*/
-            vertex.texf(sprite.getU(realu * 256/spriteW), sprite.getV(realv * 256/spriteH));
+            vertex.texf(sprite.getU(realu * 16.0), sprite.getV(realv * 16.0));
             
         }
     }

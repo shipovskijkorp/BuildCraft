@@ -32,9 +32,8 @@ public class BCFluidType extends FluidType{
     public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer)
     {
 		consumer.accept(new IClientFluidTypeExtensions() {
-           ResourceLocation 
-           UNDERWATER_LOCATION = new ResourceLocation("textures/misc/underwater.png"),
-           WATER_OVERLAY = new ResourceLocation("block/water_overlay");
+           ResourceLocation UNDERWATER_LOCATION =
+               new ResourceLocation("textures/misc/underwater.png");
             
 			@Override
 			public ResourceLocation getStillTexture() {
@@ -48,7 +47,9 @@ public class BCFluidType extends FluidType{
 			
 			@Override
 			public @Nullable ResourceLocation getOverlayTexture() {
-				return WATER_OVERLAY;//TODO
+				// This texture replaces side faces when a fluid touches a block. Using the vanilla water
+				// overlay here turns every BuildCraft fluid side into a white/grey water-overlay quad.
+				return null;
 			}
 			
             @Override

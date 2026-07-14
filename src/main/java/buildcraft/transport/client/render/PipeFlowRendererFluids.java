@@ -42,7 +42,6 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
 		VertexConsumer fluidBuffer = buffer.getBuffer(RenderType.cutoutMipped());
 
 		double[] amounts = flow.getAmountsForRender(partialTicks);
-		Vec3[] offsets = flow.getOffsetsForRender(partialTicks);
 
 		int blocklight = forRender.getFluid().getFluidType().getLightLevel();// to debug
 		IPipeHolder holder = flow.pipe.getHolder();
@@ -73,10 +72,6 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
 				radius = new Vec3(perc * 0.24, radius.y, perc * 0.24);
 			}
 
-			Vec3 offset = offsets[face.get3DDataValue()];
-			if (offset == null) offset = Vec3.ZERO;
-			center = center.add(offset);
-			matrix.translate(-offset.x, -offset.y, -offset.z);
 			Vec3 min = center.subtract(radius);
 			Vec3 max = center.add(radius);
 
@@ -84,24 +79,17 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
 				FluidRenderer.renderFluid(FluidSpriteType.FROZEN, forRender, 1, 1, min, max, fluidBuffer, matrix.last(), sides);
 			else 
 				FluidRenderer.renderFluid(FluidSpriteType.FROZEN, forRender, amount, flow.capacity, min, max, fluidBuffer, matrix.last(), sides);
-			matrix.translate(offset.x, offset.y, offset.z);
 		}
 
 		double amount = amounts[EnumPipePart.CENTER.getIndex()];
 
 		double horizPos = 0.26;
 
-		Vec3 offset = offsets[EnumPipePart.CENTER.getIndex()];
-		if (offset == null)
-			offset = Vec3.ZERO;
-		matrix.translate(-offset.x, -offset.y, -offset.z);
 
 		if (horizontal | !vertical) {
 			Vec3 min = new Vec3(0.26, 0.26, 0.26);
 			Vec3 max = new Vec3(0.74, 0.74, 0.74);
 
-			min = min.add(offset);
-			max = max.add(offset);
 			FluidRenderer.renderFluid(FluidSpriteType.FROZEN, forRender, amount, flow.capacity, min, max, fluidBuffer, matrix.last(), sides);
 			horizPos += (max.y - min.y) * amount / flow.capacity;
 		}
@@ -117,8 +105,6 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
 
 			Vec3 min = new Vec3(minXZ, yMin, minXZ);
 			Vec3 max = new Vec3(maxXZ, yMax, maxXZ);
-			min = min.add(offset);
-			max = max.add(offset);
 
 			FluidRenderer.renderFluid(FluidSpriteType.FROZEN, forRender, 1, 1, min, max, fluidBuffer, matrix.last(), sides);
 			
