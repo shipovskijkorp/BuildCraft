@@ -222,6 +222,7 @@ public class Blueprint extends Snapshot {
     @SuppressWarnings("WeakerAccess")
     public class BuildingInfo extends Snapshot.BuildingInfo {
         public final List<ItemStack>[] toPlaceRequiredItems;
+        public final List<ItemStack>[] toPlaceDeferredItems;
         public final List<FluidStack>[] toPlaceRequiredFluids;
         public final List<ISchematicBlock> rotatedPalette;
         public final Set<ISchematicEntity> entities;
@@ -236,6 +237,8 @@ public class Blueprint extends Snapshot {
             // noinspection unchecked
             toPlaceRequiredItems = (List<ItemStack>[]) new List<?>[getDataSize()];
             // noinspection unchecked
+            toPlaceDeferredItems = (List<ItemStack>[]) new List<?>[getDataSize()];
+            // noinspection unchecked
             toPlaceRequiredFluids = (List<FluidStack>[]) new List<?>[getDataSize()];
             rotatedPalette = ImmutableList.copyOf(
                 palette.stream()
@@ -247,8 +250,9 @@ public class Blueprint extends Snapshot {
                     for (int x = 0; x < getSnapshot().size.getX(); x++) {
                         ISchematicBlock schematicBlock = rotatedPalette.get(data[posToIndex(x, y, z)]);
                         if (!schematicBlock.isAir()) {
-                            List<ItemStack> requiredItems = schematicBlock.computeRequiredItems(level);
-							toPlaceRequiredItems[posToIndex(x, y, z)] = requiredItems;
+                            int index = posToIndex(x, y, z);
+                            toPlaceRequiredItems[index] = schematicBlock.computeRequiredItemsForPlacement(level);
+                            toPlaceDeferredItems[index] = schematicBlock.computeDeferredRequiredItems(level);
 							
 /*                        	List<FluidStack> requiredFluids = new ArrayList<FluidStack>();
                         	requiredItems.stream().map(FluidUtil::getFluidHandler)

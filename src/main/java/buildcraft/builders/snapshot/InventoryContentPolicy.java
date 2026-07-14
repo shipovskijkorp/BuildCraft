@@ -83,6 +83,11 @@ public final class InventoryContentPolicy {
         return domains;
     }
 
+    /** Generic capability inventories are copied unless the whole block is explicitly blacklisted. */
+    public static boolean canCopyGenericBlockItems(BlockState blockState) {
+        return BLACKLIST_BLOCK_RULES.stream().noneMatch(rule -> rule.matches(blockState));
+    }
+
     public static boolean canCopyBlockItems(BlockState blockState, NbtPath path) {
         if (path == null) {
             return false;
@@ -125,6 +130,17 @@ public final class InventoryContentPolicy {
         getBlockItemListPathsToCheck(blockState, rules).stream()
             .filter(path -> !canCopyBlockItems(blockState, path))
             .forEach(path -> path.remove(tileNbt));
+    }
+
+    /**
+     * Removes every known item-list path from block-entity NBT. Builder inventory contents are restored later through
+     * the item-handler capability, so leaving them in NBT would place a pre-filled inventory and duplicate items.
+     */
+    public static void stripCopiedBlockContent(BlockState blockState, CompoundTag tileNbt, Set<JsonRule> rules) {
+        if (tileNbt == null) {
+            return;
+        }
+        getBlockItemListPathsToCheck(blockState, rules).forEach(path -> path.remove(tileNbt));
     }
 
     public static boolean canCopyEntityItems(ResourceLocation entityId, NbtPath path) {

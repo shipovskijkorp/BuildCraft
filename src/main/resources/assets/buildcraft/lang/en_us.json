@@ -758,7 +758,7 @@
   "item.PipeStructureCobblestone": "Pipe Structure Cobblestone",
   "item.PipeStructureCobblestone.name": "Cobblestone Structure Pipe",
   "item.PipeWire": "Pipe Wire",
-  "item.blueprint.author": "by",
+  "item.blueprint.author": "by %s",
   "item.blueprint.blank": "Blank",
   "item.blueprint.creative_only": "Creative Only",
   "item.blueprint.incomplete": "Incomplete",

@@ -391,7 +391,7 @@
   "item.schematicSingle": "单方块图纸",
   "item.list": "列表",
   "item.blueprint.unnamed": "<未命名蓝图>",
-  "item.blueprint.author": "作者:",
+  "item.blueprint.author": "作者：%s",
   "item.blueprint.blank": "空白",
   "item.blueprint.creative_only": "仅限创造模式",
   "item.blueprint.no_build": "无建筑",

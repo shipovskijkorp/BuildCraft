@@ -118,17 +118,19 @@ public class ItemSchematicSingle extends Item {
             ISchematicBlock schematicBlock = getSchematic(stack);
             if (schematicBlock != null) {
                 if (!schematicBlock.isBuilt(world, placePos) && schematicBlock.canBuild(world, placePos)) {
-                    List<ItemStack> requiredItems = schematicBlock.computeRequiredItems(world);
+                    // Only the block itself is mandatory. Saved inventory contents are restored after
+                    // placement with as many matching items as the player currently has available.
+                    List<ItemStack> placementItems = schematicBlock.computeRequiredItemsForPlacement(world);
                     List<FluidStack> requiredFluids = new ArrayList<>();
-                    requiredItems.stream().map(FluidUtil::getFluidHandler)
+                    placementItems.stream().map(FluidUtil::getFluidHandler)
                         .map(opt -> opt.lazyMap(fluidHandler -> fluidHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE)))
                         .filter(LazyOptional::isPresent).map(opt -> opt.orElse(FluidStack.EMPTY)).forEach(requiredFluids::add);
                     requiredFluids.addAll(schematicBlock.computeRequiredFluids(world));
 
                     if (requiredFluids.isEmpty()) {
-                        List<ItemStack> mergedItems = StackUtil.mergeSameItems(requiredItems);
+                        List<ItemStack> mergedPlacementItems = StackUtil.mergeSameItems(placementItems);
                         InventoryWrapper itemTransactor = new InventoryWrapper(player.getInventory());
-                        boolean hasItems = player.isCreative() || mergedItems.stream().noneMatch(s ->
+                        boolean hasPlacementItems = player.isCreative() || mergedPlacementItems.stream().noneMatch(s ->
                             itemTransactor.extract(
                                 extracted -> StackUtil.canMerge(s, extracted),
                                 s.getCount(),
@@ -136,10 +138,10 @@ public class ItemSchematicSingle extends Item {
                                 true
                             ).isEmpty()
                         );
-                        if (hasItems) {
+                        if (hasPlacementItems) {
                             if (schematicBlock.build(world, placePos)) {
                                 if (!player.isCreative()) {
-                                    mergedItems.forEach(s ->
+                                    mergedPlacementItems.forEach(s ->
                                         itemTransactor.extract(
                                             extracted -> StackUtil.canMerge(s, extracted),
                                             s.getCount(),
@@ -148,6 +150,7 @@ public class ItemSchematicSingle extends Item {
                                         )
                                     );
                                 }
+                                fillDeferredInventory(schematicBlock, world, placePos, itemTransactor, player.isCreative());
                                 SoundUtil.playBlockPlace(world, placePos);
                                 player.swing(context.getHand());
                                 return InteractionResult.SUCCESS;
@@ -156,7 +159,7 @@ public class ItemSchematicSingle extends Item {
                             player.displayClientMessage(
                                 Component.translatable(
                                     "item.buildcraftbuilders.schematic_single.not_enough_items",
-                                    formatItemList(mergedItems)
+                                    formatItemList(mergedPlacementItems)
                                 ),
                                 true
                             );
@@ -177,6 +180,55 @@ public class ItemSchematicSingle extends Item {
             BCLog.logger.warn("Invalid single block schematic", e);
         }
         return InteractionResult.FAIL;
+    }
+
+    private static void fillDeferredInventory(
+        ISchematicBlock schematicBlock,
+        Level world,
+        BlockPos blockPos,
+        InventoryWrapper playerInventory,
+        boolean creative
+    ) {
+        List<ItemStack> missingItems = schematicBlock.computeMissingDeferredRequiredItems(world, blockPos);
+        for (ItemStack missing : missingItems) {
+            ItemStack stillNeeded = missing.copy();
+            while (!stillNeeded.isEmpty()) {
+                ItemStack wanted = stillNeeded.copy();
+                wanted.setCount(Math.min(wanted.getCount(), wanted.getMaxStackSize()));
+
+                ItemStack simulatedRemainder = schematicBlock.insertDeferredItem(world, blockPos, wanted, true);
+                int insertCapacity = wanted.getCount() - simulatedRemainder.getCount();
+                if (insertCapacity <= 0) {
+                    break;
+                }
+
+                ItemStack supplied;
+                if (creative) {
+                    supplied = wanted.copy();
+                    supplied.setCount(insertCapacity);
+                } else {
+                    supplied = playerInventory.extract(
+                        extracted -> StackUtil.canMerge(wanted, extracted),
+                        1,
+                        insertCapacity,
+                        false
+                    );
+                    if (supplied.isEmpty()) {
+                        break;
+                    }
+                }
+
+                ItemStack overflow = schematicBlock.insertDeferredItem(world, blockPos, supplied, false);
+                int inserted = supplied.getCount() - overflow.getCount();
+                if (!overflow.isEmpty() && !creative) {
+                    playerInventory.insert(overflow, false, false);
+                }
+                if (inserted <= 0) {
+                    break;
+                }
+                stillNeeded.shrink(inserted);
+            }
+        }
     }
 
     private static InteractionResult recordSingleSchematic(ItemStack stack, Player player, ISchematicBlock schematicBlock) {

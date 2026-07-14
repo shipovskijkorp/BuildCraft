@@ -17,9 +17,9 @@ import net.minecraft.resources.ResourceLocation;
 /**
  * API for mods that want BuildCraft builders to copy item contents from block entity inventories.
  * <p>
- * BuildCraft does not copy block inventory contents by default, because copying large or modded inventories can require
- * huge resource batches and can easily create duplication bugs if the NBT is restored without consuming the contents.
- * Mods that know their own block entity NBT layout can opt in by registering the exact item-list NBT paths here.
+ * BuildCraft copies ordinary Forge item-handler inventories generically and restores their contents after placing the
+ * empty block. Mods should register an exact NBT path here only for hidden/internal inventories that are not exposed
+ * through {@code ForgeCapabilities.ITEM_HANDLER}.
  * <p>
  * Server configuration in {@code config/buildcraft/blacklist_blocks_simple_inventories.json} always overrides these
  * registrations.

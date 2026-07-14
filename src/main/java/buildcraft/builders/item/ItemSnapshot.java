@@ -126,9 +126,15 @@ public class ItemSnapshot extends Item {
 
         tooltip.add(getDisplayName(header).withStyle(ChatFormatting.GRAY));
 
-        Player owner = world == null ? null : header.getOwnerPlayer(world);
-        if (owner != null) {
-            tooltip.add(Component.translatable("item.blueprint.author", owner.getDisplayName()).withStyle(ChatFormatting.DARK_GRAY));
+        String ownerName = header.ownerName;
+        if (ownerName == null || ownerName.isBlank()) {
+            Player owner = world == null ? null : header.getOwnerPlayer(world);
+            if (owner != null) {
+                ownerName = owner.getGameProfile().getName();
+            }
+        }
+        if (ownerName != null && !ownerName.isBlank()) {
+            tooltip.add(Component.translatable("item.blueprint.author", ownerName).withStyle(ChatFormatting.DARK_GRAY));
         }
 
         tooltip.add(Component.translatable(
