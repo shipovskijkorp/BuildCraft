@@ -502,7 +502,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
             message += "\n  Class = " + property.getClass();
             message += "\n  Method not overriden: Property.parseValue(String)";
             RuntimeException exception = new RuntimeException(message, error);
-            if (BCLib.DEV || !BCLib.MC_VERSION.equals("1.12.2")) {
+            if (BCLib.DEV) {
                 throw exception;
             } else {
                 BCLog.logger.error("[silicon.facade] Invalid property!", exception);
@@ -534,11 +534,10 @@ public enum FacadeStateManager implements IFacadeRegistry {
                     message += "\n  Property.parseValue() -> Null com.google.common.base.Optional!!";
                 }
                 message += "\n";
-                // This check *intentionally* crashes on a new MC version
-                // or in a dev environment
-                // as this really needs to be fixed
+                // Crash in a development environment so invalid properties are fixed early.
+                // Release builds log the problem and skip the malformed property.
                 RuntimeException exception = new RuntimeException(message);
-                if (BCLib.DEV || !BCLib.MC_VERSION.equals("1.19.2")) {
+                if (BCLib.DEV) {
                     throw exception;
                 } else {
                     BCLog.logger.error("[silicon.facade] Invalid property!", exception);

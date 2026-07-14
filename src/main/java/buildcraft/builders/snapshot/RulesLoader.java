@@ -29,7 +29,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 
-import buildcraft.lib.BCLib;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.JsonUtil;
 import net.minecraft.core.BlockPos;
@@ -119,9 +118,6 @@ public class RulesLoader {
         READ_DOMAINS.add("buildcraftrobotics");
         READ_DOMAINS.add("buildcraftsilicon");
         READ_DOMAINS.add("buildcrafttransport");
-        if (!BCLib.DEV) {
-            READ_DOMAINS.removeIf(domain -> domain.startsWith("buildcraft"));
-        }
         READ_DOMAINS.addAll(InventoryContentPolicy.getAllowedBlockDomains());
         BLOCK_RULES_CACHE.invalidateAll();
     }

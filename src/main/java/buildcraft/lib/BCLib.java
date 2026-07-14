@@ -32,7 +32,7 @@ public class BCLib {
     public static final String GIT_COMMIT_MSG = "${git_commit_msg}";
     public static final String GIT_COMMIT_AUTHOR = "${git_commit_author}";
 
-    public static final boolean DEV = true;// = VERSION.startsWith("$") || Boolean.getBoolean("buildcraft.dev");
+    public static final boolean DEV = VERSION.startsWith("$") || Boolean.getBoolean("buildcraft.dev");
 
     public BCLib() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
