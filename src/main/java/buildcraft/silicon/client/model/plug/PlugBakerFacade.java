@@ -90,7 +90,7 @@ public enum PlugBakerFacade implements IPluggableStaticBaker<KeyPlugFacade> {
                                                   Vec3 pos0, Vec3 pos1, Vec3 pos2, Vec3 pos3) {
         return model.getQuads(state, side, ramdom, ModelData.EMPTY, null).stream()
             .map(quad -> {
-                MutableQuad mutableQuad = new MutableQuad().fromBakedItem(quad);
+                MutableQuad mutableQuad = new MutableQuad().fromBakedBlock(quad);
                 boolean positive = side.getAxisDirection() == Direction.AxisDirection.POSITIVE;
                 Function<Vec3, Vec3> transformPosition = pos -> {
                     switch (side.getAxis()) {
@@ -314,7 +314,7 @@ public enum PlugBakerFacade implements IPluggableStaticBaker<KeyPlugFacade> {
         List<MutableQuad> mutableQuads = bakeForKey(key);
         List<BakedQuad> baked = new ArrayList<>();
         for (MutableQuad quad : mutableQuads) {
-            baked.add(quad.toBakedItem());
+            baked.add(quad.toBakedBlock());
         }
         if (BCModules.TRANSPORT.isLoaded() && key.state.isSolidRender(new SingleBlockAccess(key.state), BlockPos.ZERO) && !key.isHollow) {
             baked.addAll(TransportCompat.bakeBlocker(key.side));
