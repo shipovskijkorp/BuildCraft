@@ -201,7 +201,7 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
 
     @Override
     protected void drawForegroundLayer(PoseStack pose, int mouseX, int mouseY) {
-        textField.render(pose, mouseY, mouseY, 0);
+        textField.render(pose, mouseX, mouseY, 0);
     }
 
     private boolean isCarryingNonEmptyList() {
@@ -224,7 +224,7 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
     @Override
     public boolean mouseClicked(double x, double y, int b){
         return super.mouseClicked(x, y, b);
-        
+
     }
 
     @Override

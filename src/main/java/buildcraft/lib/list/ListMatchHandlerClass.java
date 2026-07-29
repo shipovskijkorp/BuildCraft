@@ -15,19 +15,26 @@ import net.minecraft.world.item.ItemStack;
 public class ListMatchHandlerClass extends ListMatchHandler {
     @Override
     public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
-        if (type == Type.TYPE) {
-            Class<?> kl = stack.getItem().getClass();
-            return ListRegistry.itemClassAsType.contains(kl) && kl.equals(target.getClass());
+        if (type != Type.TYPE) {
+            return false;
         }
-        return false;
+
+        // ItemFood no longer exists in modern Minecraft. Item#isEdible is the
+        // closest equivalent to the old "all food items are one type" rule.
+        if (stack.getItem().isEdible()) {
+            return target.getItem().isEdible();
+        }
+
+        Class<?> itemClass = stack.getItem().getClass();
+        return ListRegistry.itemClassAsType.contains(itemClass)
+            && itemClass.equals(target.getItem().getClass());
     }
 
     @Override
     public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
-        if (type == Type.TYPE) {
-            Class<?> kl = stack.getItem().getClass();
-            return ListRegistry.itemClassAsType.contains(kl);
+        if (type != Type.TYPE) {
+            return false;
         }
-        return false;
+        return stack.getItem().isEdible() || ListRegistry.itemClassAsType.contains(stack.getItem().getClass());
     }
 }

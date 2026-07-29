@@ -10,8 +10,6 @@ import com.mojang.logging.LogUtils;
 
 import buildcraft.builders.snapshot.RulesLoader;
 import buildcraft.api.BCModules;
-import buildcraft.builders.client.BlueprintTooltip;
-import buildcraft.builders.client.BlueprintTooltipComponent;
 import buildcraft.builders.client.render.RenderArchitectTable;
 import buildcraft.builders.client.render.RenderBuilder;
 import buildcraft.builders.client.render.RenderConstructionMarker;
@@ -24,7 +22,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
-import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -125,11 +122,5 @@ public class BCBuilders {
         	}*/
         }
         
-        @SubscribeEvent
-        public static void onGatherTooltipFactory(RegisterClientTooltipComponentFactoriesEvent event) {
-        	event.register(BlueprintTooltip.class, BlueprintTooltipComponent::new);
-        }
-        	
-        	
     }
 }

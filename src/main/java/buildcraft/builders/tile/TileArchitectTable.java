@@ -356,13 +356,15 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
             stackIn = ItemStack.EMPTY;
         }
         invSnapshotIn.setStackInSlot(0, stackIn);
+        var ownerProfile = getOwner();
         invSnapshotOut.setStackInSlot(
             0,
             ItemSnapshot.getUsed(
                 snapshotType,
                 new Header(
                     snapshot.key,
-                    getOwner().getId(),
+                    ownerProfile.getId(),
+                    ownerProfile.getName(),
                     new Date(),
                     name,
                     allowCreative,

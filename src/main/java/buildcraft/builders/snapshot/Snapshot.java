@@ -225,6 +225,7 @@ public abstract class Snapshot {
     public static class Header {
         public final Key key;
         public final UUID owner;
+        public final String ownerName;
         public final Date created;
         public final String name;
         /** If true, a creative inserter may make the builder work without consuming materials. */
@@ -233,13 +234,23 @@ public abstract class Snapshot {
         public final boolean canExcavate;
 
         public Header(Key key, UUID owner, Date created, String name) {
-            this(key, owner, created, name, true, true, true);
+            this(key, owner, "", created, name, true, true, true);
+        }
+
+        public Header(Key key, UUID owner, String ownerName, Date created, String name) {
+            this(key, owner, ownerName, created, name, true, true, true);
         }
 
         public Header(Key key, UUID owner, Date created, String name, boolean allowCreative, boolean canRotate,
             boolean canExcavate) {
+            this(key, owner, "", created, name, allowCreative, canRotate, canExcavate);
+        }
+
+        public Header(Key key, UUID owner, String ownerName, Date created, String name, boolean allowCreative,
+            boolean canRotate, boolean canExcavate) {
             this.key = key;
             this.owner = owner;
+            this.ownerName = ownerName == null ? "" : ownerName;
             this.created = created;
             this.name = name;
             this.allowCreative = allowCreative;
@@ -250,6 +261,7 @@ public abstract class Snapshot {
         public Header(CompoundTag nbt) {
             key = new Key(nbt.getCompound("key"));
             owner = nbt.getUUID("owner");
+            ownerName = nbt.contains("ownerName", Tag.TAG_STRING) ? nbt.getString("ownerName") : "";
             created = new Date(nbt.getLong("created"));
             name = nbt.getString("name");
             // Old blueprints/templates did not store these switches. Keep their old behaviour:
@@ -262,6 +274,7 @@ public abstract class Snapshot {
         public Header(FriendlyByteBuf buffer) {
             key = new Key(buffer);
             owner = buffer.readUUID();
+            ownerName = buffer.readUtf();
             created = new Date(buffer.readLong());
             name = buffer.readUtf();
             allowCreative = buffer.readBoolean();
@@ -273,6 +286,7 @@ public abstract class Snapshot {
             CompoundTag nbt = new CompoundTag();
             nbt.put("key", key.serializeNBT());
             nbt.putUUID("owner", owner);
+            nbt.putString("ownerName", ownerName);
             nbt.putLong("created", created.getTime());
             nbt.putString("name", name);
             nbt.putBoolean("allowCreative", allowCreative);
@@ -284,6 +298,7 @@ public abstract class Snapshot {
         public void writeToByteBuf(FriendlyByteBuf buffer) {
             key.writeToByteBuf(buffer);
             buffer.writeUUID(owner);
+            buffer.writeUtf(ownerName);
             buffer.writeLong(created.getTime());
             buffer.writeUtf(name);
             buffer.writeBoolean(allowCreative);
@@ -302,6 +317,7 @@ public abstract class Snapshot {
                     getClass() == o.getClass() &&
                     key.equals(((Header) o).key) &&
                     owner.equals(((Header) o).owner) &&
+                    ownerName.equals(((Header) o).ownerName) &&
                     created.equals(((Header) o).created) &&
                     name.equals(((Header) o).name) &&
                     allowCreative == ((Header) o).allowCreative &&
@@ -313,6 +329,7 @@ public abstract class Snapshot {
         public int hashCode() {
             int result = key.hashCode();
             result = 31 * result + owner.hashCode();
+            result = 31 * result + ownerName.hashCode();
             result = 31 * result + created.hashCode();
             result = 31 * result + name.hashCode();
             result = 31 * result + Boolean.hashCode(allowCreative);

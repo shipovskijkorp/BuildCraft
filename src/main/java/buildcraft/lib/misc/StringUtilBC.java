@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public final class StringUtilBC {
 
-    public static final Splitter newLineSplitter = Splitter.on("\\n");
+    public static final Splitter newLineSplitter = Splitter.on('\n');
 
     private static final DecimalFormat displayDecimalFormat = new DecimalFormat("#####0.00");
 
@@ -29,7 +29,11 @@ public final class StringUtilBC {
     private StringUtilBC() {}
 
     public static List<String> splitIntoLines(String string) {
-        return newLineSplitter.splitToList(string.replaceAll("\\n", "\n"));
+        // Legacy .lang files store line breaks as the two characters "\\n",
+        // while JSON translations decode "\n" into an actual newline. Support
+        // both forms so ported and newly written translations behave identically.
+        String normalized = string.replace("\\n", "\n").replace("\r\n", "\n").replace('\r', '\n');
+        return newLineSplitter.splitToList(normalized);
     }
 
     /** Formats a string to be displayed on a white background (for example a book background), replacing any

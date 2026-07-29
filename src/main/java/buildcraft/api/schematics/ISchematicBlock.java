@@ -32,6 +32,34 @@ public interface ISchematicBlock {
         return Collections.emptyList();
     }
 
+    /** Items required before the block itself can be placed. Inventory contents should not be returned here. */
+    @Nonnull
+    default List<ItemStack> computeRequiredItemsForPlacement(Level level) {
+        return computeRequiredItems(level);
+    }
+
+    /** Items that should be inserted into the block after it has been placed. */
+    @Nonnull
+    default List<ItemStack> computeDeferredRequiredItems(Level level) {
+        return Collections.emptyList();
+    }
+
+    /** Returns the deferred items that are still absent from an already placed block. */
+    @Nonnull
+    default List<ItemStack> computeMissingDeferredRequiredItems(Level level, BlockPos blockPos) {
+        return computeDeferredRequiredItems(level);
+    }
+
+    /**
+     * Attempts to insert a deferred item into an already placed block.
+     *
+     * @return the part of {@code stack} that was not accepted.
+     */
+    @Nonnull
+    default ItemStack insertDeferredItem(Level level, BlockPos blockPos, ItemStack stack, boolean simulate) {
+        return stack;
+    }
+
     @Nonnull
     default List<FluidStack> computeRequiredFluids(Level level) {
         return Collections.emptyList();

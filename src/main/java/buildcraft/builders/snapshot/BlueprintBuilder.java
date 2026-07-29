@@ -51,9 +51,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> {
     private static final double MAX_ENTITY_DISTANCE = 0.1D;
     private static final String FLUID_STACK_KEY = "BuilderFluidStack";
+    private static final int DEFERRED_INVENTORY_SCAN_BUDGET = 64;
+    private static final int DEFERRED_INVENTORY_INSERT_BUDGET = 8;
 
     private List<ItemStack>[] remainingDisplayRequiredBlocks;
     private List<ItemStack> remainingDisplayRequiredBlocksConcat = Collections.emptyList();
+    private List<ItemStack>[] remainingDeferredRequiredBlocks;
+    private List<ItemStack> remainingDeferredRequiredBlocksConcat = Collections.emptyList();
+    private int deferredInventoryCursor;
     public List<ItemStack> remainingDisplayRequired = new ArrayList<>();
     private final Map<Pair<List<ItemStack>, List<FluidStack>>, Optional<List<ItemStack>>> extractRequiredCache =
         new HashMap<>();
@@ -74,6 +79,10 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
             : null;
     }
 
+    private ISchematicBlock getSchematicBlock(int index) {
+        return getBuildingInfo().rotatedPalette.get(getBuildingInfo().getSnapshot().data[index]);
+    }
+
     @Override
     protected boolean isAir(BlockPos blockPos) {
         // noinspection ConstantConditions
@@ -90,9 +99,26 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         super.updateSnapshot();
         extractRequiredCache.clear();
         robotReservedBlocks.clear();
+        deferredInventoryCursor = 0;
+        int dataSize = getBuildingInfo().getSnapshot().getDataSize();
         // noinspection unchecked
-        remainingDisplayRequiredBlocks = (List<ItemStack>[]) new List<?>[getBuildingInfo().getSnapshot().getDataSize()];
+        remainingDisplayRequiredBlocks = (List<ItemStack>[]) new List<?>[dataSize];
         Arrays.fill(remainingDisplayRequiredBlocks, Collections.emptyList());
+        // noinspection unchecked
+        remainingDeferredRequiredBlocks = (List<ItemStack>[]) new List<?>[dataSize];
+        for (int index = 0; index < dataSize; index++) {
+            List<ItemStack> required = getBuildingInfo().toPlaceDeferredItems[index];
+            if (required == null || required.isEmpty()) {
+                remainingDeferredRequiredBlocks[index] = Collections.emptyList();
+                continue;
+            }
+            BlockPos blockPos = indexToPos(index);
+            ISchematicBlock schematicBlock = getSchematicBlock(index);
+            remainingDeferredRequiredBlocks[index] = schematicBlock.isBuilt(tile.getWorldBC(), blockPos)
+                ? copyStacks(schematicBlock.computeMissingDeferredRequiredItems(tile.getWorldBC(), blockPos))
+                : copyStacks(required);
+        }
+        updateDeferredRequiredConcat();
     }
 
     @Override
@@ -107,6 +133,9 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         super.cancel();
         remainingDisplayRequiredBlocks = null;
         remainingDisplayRequiredBlocksConcat = Collections.emptyList();
+        remainingDeferredRequiredBlocks = null;
+        remainingDeferredRequiredBlocksConcat = Collections.emptyList();
+        deferredInventoryCursor = 0;
         remainingDisplayRequired.clear();
         extractRequiredCache.clear();
         robotReservedBlocks.clear();
@@ -574,6 +603,172 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
             getSchematicBlock(placeTask.pos).build(tile.getWorldBC(), placeTask.pos);
     }
 
+    private boolean processDeferredInventoryContents() {
+        if (remainingDeferredRequiredBlocks == null || remainingDeferredRequiredBlocks.length == 0) {
+            return true;
+        }
+
+        Level level = tile.getWorldBC();
+        int scans = Math.min(DEFERRED_INVENTORY_SCAN_BUDGET, remainingDeferredRequiredBlocks.length);
+        int insertedStacks = 0;
+        boolean changed = false;
+
+        for (int scan = 0; scan < scans; scan++) {
+            int index = deferredInventoryCursor;
+            deferredInventoryCursor = (deferredInventoryCursor + 1) % remainingDeferredRequiredBlocks.length;
+
+            List<ItemStack> remaining = remainingDeferredRequiredBlocks[index];
+            if (remaining == null || remaining.isEmpty()) {
+                continue;
+            }
+
+            BlockPos blockPos = indexToPos(index);
+            ISchematicBlock schematicBlock = getSchematicBlock(index);
+            if (!schematicBlock.isBuilt(level, blockPos)) {
+                continue;
+            }
+
+            List<ItemStack> reconciled = retainStillMissing(
+                remaining,
+                schematicBlock.computeMissingDeferredRequiredItems(level, blockPos)
+            );
+            if (!sameStackCounts(remaining, reconciled)) {
+                remainingDeferredRequiredBlocks[index] = reconciled;
+                remaining = reconciled;
+                changed = true;
+            }
+            if (remaining.isEmpty() || insertedStacks >= DEFERRED_INVENTORY_INSERT_BUDGET) {
+                continue;
+            }
+
+            ItemStack wanted = remaining.get(0).copy();
+            wanted.setCount(Math.min(wanted.getCount(), wanted.getMaxStackSize()));
+            ItemStack simulatedRemainder = schematicBlock.insertDeferredItem(level, blockPos, wanted, true);
+            int accepted = wanted.getCount() - simulatedRemainder.getCount();
+            if (accepted <= 0) {
+                continue;
+            }
+
+            ItemStack toInsert;
+            if (tile.needMeterial()) {
+                toInsert = tile.getInvResources().extract(
+                    extracted -> StackUtil.canMerge(wanted, extracted),
+                    1,
+                    accepted,
+                    false
+                );
+                if (toInsert.isEmpty()) {
+                    continue;
+                }
+            } else {
+                toInsert = wanted.copy();
+                toInsert.setCount(accepted);
+            }
+
+            ItemStack overflow = schematicBlock.insertDeferredItem(level, blockPos, toInsert, false);
+            int inserted = toInsert.getCount() - overflow.getCount();
+            if (!overflow.isEmpty() && tile.needMeterial()) {
+                tile.getInvResources().insert(overflow, false, false);
+            }
+            if (inserted > 0) {
+                removeInserted(remaining, toInsert, inserted);
+                insertedStacks++;
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            updateDeferredRequiredConcat();
+        }
+        return !hasPendingDeferredItems();
+    }
+
+    private static List<ItemStack> copyStacks(List<ItemStack> stacks) {
+        if (stacks == null || stacks.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return stacks.stream()
+            .filter(Objects::nonNull)
+            .filter(stack -> !stack.isEmpty())
+            .map(ItemStack::copy)
+            .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    private static List<ItemStack> retainStillMissing(List<ItemStack> remaining, List<ItemStack> missing) {
+        List<ItemStack> availableMissing = copyStacks(missing);
+        List<ItemStack> reconciled = new ArrayList<>();
+        for (ItemStack pending : remaining) {
+            int count = pending.getCount();
+            int stillMissing = 0;
+            for (ItemStack candidate : availableMissing) {
+                if (count <= 0) {
+                    break;
+                }
+                if (ItemStack.isSameItemSameTags(pending, candidate)) {
+                    int used = Math.min(count, candidate.getCount());
+                    count -= used;
+                    stillMissing += used;
+                    candidate.shrink(used);
+                }
+            }
+            if (stillMissing > 0) {
+                ItemStack copy = pending.copy();
+                copy.setCount(stillMissing);
+                reconciled.add(copy);
+            }
+        }
+        return reconciled;
+    }
+
+    private static boolean sameStackCounts(List<ItemStack> first, List<ItemStack> second) {
+        if (first.size() != second.size()) {
+            return false;
+        }
+        for (int i = 0; i < first.size(); i++) {
+            ItemStack a = first.get(i);
+            ItemStack b = second.get(i);
+            if (a.getCount() != b.getCount() || !ItemStack.isSameItemSameTags(a, b)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static void removeInserted(List<ItemStack> remaining, ItemStack insertedStack, int inserted) {
+        for (java.util.Iterator<ItemStack> iterator = remaining.iterator(); iterator.hasNext() && inserted > 0; ) {
+            ItemStack pending = iterator.next();
+            if (!ItemStack.isSameItemSameTags(pending, insertedStack)) {
+                continue;
+            }
+            int used = Math.min(inserted, pending.getCount());
+            pending.shrink(used);
+            inserted -= used;
+            if (pending.isEmpty()) {
+                iterator.remove();
+            }
+        }
+    }
+
+    private boolean hasPendingDeferredItems() {
+        return remainingDeferredRequiredBlocks != null && Arrays.stream(remainingDeferredRequiredBlocks)
+            .filter(Objects::nonNull)
+            .anyMatch(stacks -> !stacks.isEmpty());
+    }
+
+    private void updateDeferredRequiredConcat() {
+        if (remainingDeferredRequiredBlocks == null) {
+            remainingDeferredRequiredBlocksConcat = Collections.emptyList();
+            return;
+        }
+        remainingDeferredRequiredBlocksConcat = StackUtil.mergeSameItems(
+            Arrays.stream(remainingDeferredRequiredBlocks)
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .map(ItemStack::copy)
+                .collect(Collectors.toList())
+        );
+    }
+
     @Override
 	public boolean tick() {
     	Level level = tile.getWorldBC();
@@ -606,7 +801,10 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         remainingDisplayRequired.clear();
         remainingDisplayRequired.addAll(StackUtil.mergeSameItems(
             Stream.concat(
-                remainingDisplayRequiredBlocksConcat.stream(),
+                Stream.concat(
+                    remainingDisplayRequiredBlocksConcat.stream(),
+                    remainingDeferredRequiredBlocksConcat.stream()
+                ),
                 toSpawn.stream()
                     .flatMap(schematicEntity ->
                         getDisplayRequired(
@@ -649,8 +847,11 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
             }
         }
         level.getProfiler().pop();
-        // Call superclass method
-        if (!super.tick()) {
+        // Build the structure and fill already placed inventories independently. Inventory contents must not block
+        // placement of the block itself, and may arrive over multiple ticks as resources become available.
+        boolean blocksDone = super.tick();
+        boolean inventoriesDone = processDeferredInventoryContents();
+        if (!blocksDone || !inventoriesDone) {
             return false;
         }
 

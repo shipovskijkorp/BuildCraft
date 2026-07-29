@@ -89,10 +89,14 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
                 NonNullList<ItemStack> examples = NonNullList.create();
 
                 for (ItemStack potentialHolder : clientExampleHolders) {
-                    potentialHolder = potentialHolder.copy();
-                    IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(potentialHolder).orElse(null);
-                    if (fluidHandler != null
-                        && (fluidHandler.fill(fStack, FluidAction.EXECUTE) > 0 || !fluidHandler.drain(fStack, FluidAction.SIMULATE).isEmpty())) {
+                    IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(potentialHolder.copy()).orElse(null);
+                    if (fluidHandler == null) {
+                        continue;
+                    }
+                    if (fluidHandler.fill(fStack, FluidAction.SIMULATE) > 0) {
+                        fluidHandler.fill(fStack, FluidAction.EXECUTE);
+                        examples.add(fluidHandler.getContainer());
+                    } else if (!fluidHandler.drain(fStack, FluidAction.SIMULATE).isEmpty()) {
                         examples.add(fluidHandler.getContainer());
                     }
                 }
@@ -105,11 +109,13 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
                 NonNullList<ItemStack> examples = NonNullList.create();
                 examples.add(stack);
                 FluidStack contained = fluidHandler.drain(Integer.MAX_VALUE, FluidAction.EXECUTE);
-                if (contained != null) {
-                    examples.add(fluidHandler.getContainer());
+                examples.add(fluidHandler.getContainer());
+                if (!contained.isEmpty()) {
                     for (ItemStack potential : clientExampleHolders) {
-                        IFluidHandlerItem potentialHolder = FluidUtil.getFluidHandler(potential).orElse(null);
-                        if (potentialHolder.fill(contained, FluidAction.EXECUTE) > 0) {
+                        IFluidHandlerItem potentialHolder = FluidUtil.getFluidHandler(potential.copy()).orElse(null);
+                        if (potentialHolder != null
+                            && potentialHolder.fill(contained, FluidAction.SIMULATE) > 0) {
+                            potentialHolder.fill(contained, FluidAction.EXECUTE);
                             examples.add(potentialHolder.getContainer());
                         }
                     }

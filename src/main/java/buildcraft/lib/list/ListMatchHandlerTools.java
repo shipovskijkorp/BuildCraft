@@ -6,23 +6,53 @@
 
 package buildcraft.lib.list;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 
 import buildcraft.api.lists.ListMatchHandler;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 public class ListMatchHandlerTools extends ListMatchHandler {
+    private static final ToolAction[] TOOL_TYPES = {
+        ToolActions.AXE_DIG,
+        ToolActions.PICKAXE_DIG,
+        ToolActions.SHOVEL_DIG,
+        ToolActions.HOE_DIG,
+        ToolActions.SWORD_DIG,
+        ToolActions.SHEARS_DIG
+    };
+
+    private static Set<ToolAction> getToolTypes(ItemStack stack) {
+        Set<ToolAction> actions = new HashSet<>();
+        for (ToolAction action : TOOL_TYPES) {
+            if (stack.canPerformAction(action)) {
+                actions.add(action);
+            }
+        }
+        return actions;
+    }
+
     @Override
     public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
-        if (type == Type.TYPE&& stack.getItem() instanceof DiggerItem diggerItem) {
-        	return false;//TODO
+        if (type != Type.TYPE) {
+            return false;
         }
-        return false;
+
+        Set<ToolAction> sourceTypes = getToolTypes(stack);
+        Set<ToolAction> targetTypes = getToolTypes(target);
+        if (sourceTypes.isEmpty() || targetTypes.isEmpty()) {
+            return false;
+        }
+
+        return precise ? sourceTypes.equals(targetTypes) : targetTypes.containsAll(sourceTypes);
     }
 
     @Override
     public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
-        return stack.getItem() instanceof DiggerItem;//TODO CHECK
+        return type == Type.TYPE && !getToolTypes(stack).isEmpty();
     }
 }

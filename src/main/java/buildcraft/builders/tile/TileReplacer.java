@@ -132,6 +132,7 @@ public class TileReplacer extends TileBC_Neptune implements MenuProvider {
                     new Header(
                         newBlueprint.key,
                         getOwnerId(header),
+                        getOwnerName(header),
                         new Date(),
                         header.name,
                         header.allowCreative,
@@ -178,6 +179,12 @@ public class TileReplacer extends TileBC_Neptune implements MenuProvider {
 
     private UUID getOwnerId(Header fallbackHeader) {
         return getOwner() != null && getOwner().getId() != null ? getOwner().getId() : fallbackHeader.owner;
+    }
+
+    private String getOwnerName(Header fallbackHeader) {
+        return getOwner() != null && getOwner().getName() != null && !getOwner().getName().isBlank()
+            ? getOwner().getName()
+            : fallbackHeader.ownerName;
     }
 
     @Override
