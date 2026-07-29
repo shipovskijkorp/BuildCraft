@@ -27,21 +27,27 @@ public class ToolTip extends ForwardingList<Component> implements RandomAccess {
      * split up into separate lines. */
     public static ToolTip createLocalized(Component... localeKeys) {
         List<Component> allLines = new ArrayList<>();
-        for (Component key : localeKeys) {
-            //String localized = LocaleUtil.localize(key);
-            allLines.addAll(key.toFlatList());
+        for (Component component : localeKeys) {
+            addLocalizedLines(allLines, component);
         }
         return new ToolTip(allLines);
     }
-    
+
     public static ToolTip createLocalized(String... localeKeys) {
         List<Component> allLines = new ArrayList<>();
         for (String key : localeKeys) {
-            //String localized = LocaleUtil.localize(key);
-        	for(String aString : StringUtilBC.splitIntoLines(key))
-        		allLines.add(Component.translatable(aString));
+            addLocalizedLines(allLines, Component.translatable(key));
         }
         return new ToolTip(allLines);
+    }
+
+    private static void addLocalizedLines(List<Component> lines, Component localizedComponent) {
+        // Resolve the translation before splitting it. Splitting the translation
+        // key itself (for example "gui.list.metadata") can never see the line
+        // breaks contained in the language file.
+        for (String line : StringUtilBC.splitIntoLines(localizedComponent.getString())) {
+            lines.add(Component.literal(line).withStyle(localizedComponent.getStyle()));
+        }
     }
 
     public ToolTip(Component... lines) {

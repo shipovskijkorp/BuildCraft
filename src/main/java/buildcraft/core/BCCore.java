@@ -25,6 +25,7 @@ import buildcraft.lib.CreativeTabManager;
 import buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import buildcraft.lib.client.render.DetachedRenderer;
 import buildcraft.lib.client.render.DetachedRenderer.RenderMatrixType;
+import buildcraft.lib.gui.BCContainerFactory;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.net.MessageManager;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -58,11 +59,11 @@ public class BCCore {
 	public static final String MODID = "buildcraftcore";
     public static final CreativeTabBC BUILDCRAFT_TAB = CreativeTabManager.createTab("buildcraft.main");
     public static final CreativeTabBC tabFluids = CreativeTabManager.createTab("buildcraft.fluid");
-	
+
     public static final Map<String,Object> ENGINE_MAP = new HashMap<>();
 	public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, BCCore.MODID);
-    public static final RegistryObject<MenuType<ContainerList>> LIST_MENU = MENUS.register("list_menu", () -> new MenuType<>(ContainerList::new));
-    
+    public static final RegistryObject<MenuType<ContainerList>> LIST_MENU = MENUS.register("list_menu", () -> BCContainerFactory.create(ContainerList::new));
+
     public BCCore() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::init);
@@ -92,7 +93,7 @@ public class BCCore {
             new BCCoreRecipes(event.getGenerator())
         );
     }
-    
+
     public void init(final FMLCommonSetupEvent event)
     {
         MarkerCache.registerCache(VolumeCache.INSTANCE);
@@ -103,8 +104,8 @@ public class BCCore {
         BUILDCRAFT_TAB.setItem(BCCoreItems.WRENCH.get());
         FluidItemDrops.item = BCCoreItems.FRAGILE_FLUID_SHARD.get();
     }
-    
-    
+
+
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
@@ -112,11 +113,11 @@ public class BCCore {
     	public static final ResourceLocation CHAMBER = new ResourceLocation("buildcraftlib:blocks/engine/chamber_base");
     	public static final ResourceLocation TRUNK = new ResourceLocation("buildcraftcore:blocks/engine/trunk");
     	public static final ResourceLocation ENGINE_MODEL = new ResourceLocation("buildcraftlib:block/engine_base");
-    	
+
     	public ClientModEvents() {
 
 		}
-    	
+
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
@@ -129,7 +130,7 @@ public class BCCore {
                     }
             );
         }
-    	
+
         @SubscribeEvent
         public static void registryRender(EntityRenderersEvent.RegisterRenderers e) {
 
@@ -137,7 +138,7 @@ public class BCCore {
         	e.registerBlockEntityRenderer(BCCoreBlocks.ENGINE_CREATIVE_TILE_BC8.get(), RenderEngine_BC8::new);
         	e.registerBlockEntityRenderer(BCCoreBlocks.MARKER_VOLUME_TILE_BC8.get(), RenderMarkerVolume::new);
         }
-        
+
         @SubscribeEvent
         public static void registrtTexture(Pre e){
         	if (InventoryMenu.BLOCK_ATLAS.equals(e.getAtlas().location())) {
@@ -149,12 +150,12 @@ public class BCCore {
         		e.addSprite(CHAMBER);
         	}
         }
-        
+
         @SubscribeEvent
         public static void onModelBakePre(RegisterAdditional event) {
         	event.register(ENGINE_MODEL);
         }
-        
+
         @SubscribeEvent
         public static void onModelBake(BakingCompleted event) {
         	ModelEngine.init(event.getModels().get(ENGINE_MODEL));
@@ -164,12 +165,12 @@ public class BCCore {
         	event.getModels().put(new ModelResourceLocation("buildcraftcore:engine#type=iron"), new ModelEngine(RenderEngine_BC8.IRON_BACK, RenderEngine_BC8.IRON_SIDE));
         	ModelEngine.release();
         }
-        
+
         @SubscribeEvent
         public static void RegisterItemColor(RegisterColorHandlersEvent.Item event) {
         	event.register(new DynamicFluidContainerModel.Colors(), BCCoreItems.FRAGILE_FLUID_SHARD.get());
         }
-        
+
     }
 
 

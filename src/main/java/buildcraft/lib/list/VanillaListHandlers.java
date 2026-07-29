@@ -8,20 +8,17 @@ package buildcraft.lib.list;
 
 import buildcraft.api.lists.ListRegistry;
 
-//TODO
 public class VanillaListHandlers {
     public static void fmlInit() {
         ListRegistry.registerHandler(new ListMatchHandlerClass());
         ListRegistry.registerHandler(new ListMatchHandlerFluid());
         ListRegistry.registerHandler(new ListMatchHandlerTools());
         ListRegistry.registerHandler(new ListMatchHandlerArmor());
-        //ListRegistry.itemClassAsType.add(ItemFood.class);
+        ListRegistry.registerHandler(new ListMatchHandlerOreDictionary());
     }
 
     public static void fmlPostInit() {
-/*        for (String s : OreDictionary.getOreNames()) {
-            ListOreDictionaryCache.INSTANCE.registerName(s);
-        }*/
-        ListRegistry.registerHandler(new ListMatchHandlerOreDictionary());
+        // Kept for API compatibility. Modern Forge tags do not need the old
+        // OreDictionary post-init name cache.
     }
 }

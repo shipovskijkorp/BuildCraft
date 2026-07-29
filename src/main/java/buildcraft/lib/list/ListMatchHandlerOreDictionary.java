@@ -6,7 +6,9 @@
 
 package buildcraft.lib.list;
 
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -18,125 +20,108 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Modern replacement for the 1.12 Ore Dictionary matcher.
+ *
+ * Forge item tags normally use paths such as {@code ingots/iron},
+ * {@code dusts/iron}, or {@code storage_blocks/iron}. The parent path is the
+ * old ore-dictionary "type", while the final path component is its material.
+ */
 public class ListMatchHandlerOreDictionary extends ListMatchHandler {
-    private static int getUppercaseCount(String s) {
-        int j = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (Character.isUpperCase(s.codePointAt(i))) {
-                j++;
-            }
+    private static final class TagParts {
+        final String type;
+        final String material;
+
+        TagParts(String type, String material) {
+            this.type = type;
+            this.material = material;
         }
-        return j;
+    }
+
+    private static List<TagKey<Item>> getTags(ItemStack stack) {
+        return stack.getTags().collect(Collectors.toList());
+    }
+
+    private static TagParts getParts(TagKey<Item> tag) {
+        String path = tag.location().getPath();
+        int split = path.lastIndexOf('/');
+        if (split <= 0 || split >= path.length() - 1) {
+            return null;
+        }
+
+        String type = path.substring(0, split);
+        String material = path.substring(split + 1);
+
+        // These Forge tags describe a category, tool class, armour slot, or
+        // world-generation property rather than an item form/material pair.
+        // Treating them as old Ore Dictionary names creates very broad false
+        // matches (for example every axe becoming the same "material").
+        if (type.contains("ores_in_ground") || type.contains("ore_rates")
+            || type.equals("tools") || type.startsWith("tools/")
+            || type.equals("armors") || type.startsWith("armors/")) {
+            return null;
+        }
+        return new TagParts(type, material);
     }
 
     @Override
     public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
-        Stream<TagKey<Item>> oreIds = stack.getTags().filter((tag) -> tag.location().getPath().startsWith("ores/"));
-        Stream<TagKey<Item>> matchesIds = target.getTags();
-
+        List<TagKey<Item>> sourceTags = getTags(stack);
+        if (sourceTags.isEmpty()) {
+            return false;
+        }
+        List<TagKey<Item>> targetTags = getTags(target);
 
         if (type == Type.CLASS) {
-        	if(oreIds.anyMatch(target::is))
-        		return true;
- /*       } else {
-            // Always pick only the longest OreDictionary string for matching.
-            // It's ugly, but should give us the most precise result for the
-            // cases in which a given stone is also used for crafting equivalents.
-            String s = getBestOreString(oreNames);
-            if (s != null) {
-                Set<Integer> stackIds = ListOreDictionaryCache.INSTANCE.getListOfPartialMatches(
-                    type == Type.MATERIAL ? ListOreDictionaryCache.getMaterial(s) : ListOreDictionaryCache.getType(s));
-                if (stackIds != null) {
-                    for (int j : stackIds) {
-                        for (int k : matchesIds) {
-                            if (j == k) {
-                                return true;
-                            }
-                        }
-                    }
+            for (TagKey<Item> source : sourceTags) {
+                if (targetTags.contains(source)) {
+                    return true;
                 }
-            }*/
+            }
+            return false;
         }
 
+        for (TagKey<Item> source : sourceTags) {
+            TagParts sourceParts = getParts(source);
+            if (sourceParts == null) {
+                continue;
+            }
+            for (TagKey<Item> targetTag : targetTags) {
+                TagParts targetParts = getParts(targetTag);
+                if (targetParts == null) {
+                    continue;
+                }
+                if (type == Type.TYPE && Objects.equals(sourceParts.type, targetParts.type)) {
+                    return true;
+                }
+                if (type == Type.MATERIAL && Objects.equals(sourceParts.material, targetParts.material)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     @Override
     public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
-        return !stack.getTags().findFirst().isEmpty();
-    }
-
-    private static String getBestOreString(String[] oreIds) {
-        String s = null;
-        int suc = 0, suct;
-        for (String st : oreIds) {
-            suct = getUppercaseCount(st);
-            if (s == null || suct > suc) {
-                s = st;
-                suc = suct;
+        List<TagKey<Item>> tags = getTags(stack);
+        if (type == Type.CLASS) {
+            return !tags.isEmpty();
+        }
+        for (TagKey<Item> tag : tags) {
+            if (getParts(tag) != null) {
+                return true;
             }
         }
-        return s;
+        return false;
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public NonNullList<ItemStack> getClientExamples(Type type, @Nonnull ItemStack stack) {
-        Stream<TagKey<Item>> oreIds = stack.getTags();
-        NonNullList<ItemStack> stacks = NonNullList.create();
-
-/*        if (oreIds.length == 0) {
-            // No ore IDs? Time for the best effort plan of METADATA!
-            if (type == Type.TYPE) {
-                NonNullList<ItemStack> tempStack = NonNullList.create();
-                stack.getItem().getSubItems(CreativeTabs.SEARCH, tempStack);
-                for (ItemStack is : tempStack) {
-                    if (is.getItem() == stack.getItem()) {
-                        stacks.add(is);
-                    }
-                }
-            }
-            return stacks;
-        }*/
-/*
-        String[] oreNames = new String[oreIds.length];
-        for (int i = 0; i < oreIds.length; i++) {
-            oreNames[i] = OreDictionary.getOreName(oreIds[i]);
-        }
-
-        if (type == Type.CLASS) {
-            for (String s : oreNames) {
-                stacks.addAll(OreDictionary.getOres(s));Blocks
-            }
-        } else {
-            String s = getBestOreString(oreNames);
-            if (s != null) {
-                Set<Integer> stackIds = ListOreDictionaryCache.INSTANCE.getListOfPartialMatches(
-                    type == Type.MATERIAL ? ListOreDictionaryCache.getMaterial(s) : ListOreDictionaryCache.getType(s));
-                if (stackIds != null) {
-                    for (int j : stackIds) {
-                        stacks.addAll(OreDictionary.getOres(OreDictionary.getOreName(j)));
-                    }
-                }
-            }
-        }
-
-        NonNullList<ItemStack> wildcard = NonNullList.create();
-
-        for (ItemStack is : stacks) {
-            if (is != null && is.getItemDamage() == OreDictionary.WILDCARD_VALUE && is.getHasSubtypes()) {
-                wildcard.add(is);
-            }
-        }
-        for (ItemStack is : wildcard) {
-            NonNullList<ItemStack> wll = NonNullList.create();
-            is.getItem().getSubItems(CreativeTabs.MISC, wll);
-            if (wll.size() > 0) {
-                stacks.remove(is);
-                stacks.addAll(wll);
-            }
-        }
-*/
-        return stacks;
+        // Returning null asks ListHandler to enumerate creative-search stacks
+        // and test them with matches(). Returning an empty list here made the
+        // preview look as if there were no matching tag equivalents at all.
+        return null;
     }
 }

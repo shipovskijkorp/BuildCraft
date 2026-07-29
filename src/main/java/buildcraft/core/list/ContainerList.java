@@ -23,7 +23,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
@@ -60,17 +59,22 @@ public class ContainerList extends MenuBC_Neptune {
             ContainerList.this.setStack(lineIndex, slotIndex, getStack());
         }
     }
-    
-    final ContainerLevelAccess access; 
-    
-	public ContainerList(int containerId, Inventory playerInventory) {
-		this(containerId, playerInventory, ContainerLevelAccess.NULL);
-	}
 
-    public ContainerList(int containerId, Inventory playerInventory, ContainerLevelAccess access) {
+    private final InteractionHand hand;
+
+    public ContainerList(int containerId, Inventory playerInventory) {
+        this(containerId, playerInventory, findListHand(playerInventory.player));
+    }
+
+    public ContainerList(int containerId, Inventory playerInventory, FriendlyByteBuf data) {
+        this(containerId, playerInventory, data != null && data.isReadable()
+            ? data.readEnum(InteractionHand.class)
+            : findListHand(playerInventory.player));
+    }
+
+    public ContainerList(int containerId, Inventory playerInventory, InteractionHand hand) {
         super(playerInventory, BCCore.LIST_MENU.get(), containerId);
-        this.access = access;
-
+        this.hand = hand;
         lines = ListHandler.getLines(getListItemStack());
 
         slots = new WidgetListSlot[lines.length][ListHandler.WIDTH];
@@ -90,29 +94,35 @@ public class ContainerList extends MenuBC_Neptune {
         return !getListItemStack().isEmpty();
     }
 
+    private static InteractionHand findListHand(Player player) {
+        ItemStack mainHand = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (!mainHand.isEmpty() && mainHand.getItem() instanceof ItemList_BC8) {
+            return InteractionHand.MAIN_HAND;
+        }
+        return InteractionHand.OFF_HAND;
+    }
+
     @Nonnull
     public ItemStack getListItemStack() {
-        ItemStack toTry = playerInventory.player.getItemInHand(InteractionHand.MAIN_HAND);
-        if (!toTry.isEmpty() && toTry.getItem() instanceof ItemList_BC8) {
-            return toTry;
-        }
-
-        toTry = playerInventory.player.getItemInHand(InteractionHand.OFF_HAND);
-        if (!toTry.isEmpty() && toTry.getItem() instanceof ItemList_BC8) {
-            return toTry;
-        }
-        return StackUtil.EMPTY;
+        ItemStack stack = playerInventory.player.getItemInHand(hand);
+        return !stack.isEmpty() && stack.getItem() instanceof ItemList_BC8 ? stack : StackUtil.EMPTY;
     }
 
     void setStack(final int lineIndex, final int slotIndex, @Nonnull final ItemStack stack) {
+        if (lineIndex < 0 || lineIndex >= lines.length || slotIndex < 0 || slotIndex >= ListHandler.WIDTH) {
+            return;
+        }
         lines[lineIndex].setStack(slotIndex, stack);
         ListHandler.saveLines(getListItemStack(), lines);
     }
 
     public void switchButton(final int lineIndex, final int button) {
+        if (lineIndex < 0 || lineIndex >= lines.length || button < 0 || button >= 3) {
+            return;
+        }
         lines[lineIndex].toggleOption(button);
 
-        if (access == ContainerLevelAccess.NULL) {
+        if (playerInventory.player.level.isClientSide) {
             sendMessage(ID_BUTTON, (buffer) -> {
                 buffer.writeByte(lineIndex);
                 buffer.writeByte(button);
@@ -131,10 +141,11 @@ public class ContainerList extends MenuBC_Neptune {
     }
 
     public void setLabel(final String text) {
-        BCCoreItems.LIST.get().setLabelName(getListItemStack(), text);
+        String label = text.length() > 32 ? text.substring(0, 32) : text;
+        BCCoreItems.LIST.get().setLabelName(getListItemStack(), label);
 
-        if (access == ContainerLevelAccess.NULL) {
-            sendMessage(ID_LABEL, (buffer) -> buffer.writeUtf(text));
+        if (playerInventory.player.level.isClientSide) {
+            sendMessage(ID_LABEL, (buffer) -> buffer.writeUtf(label));
         }
     }
 
@@ -147,7 +158,7 @@ public class ContainerList extends MenuBC_Neptune {
                 int button = buffer.readUnsignedByte();
                 switchButton(lineIndex, button);
             } else if (id == ID_LABEL) {
-                setLabel(buffer.readUtf(1024));
+                setLabel(buffer.readUtf(32));
             }
         }
     }

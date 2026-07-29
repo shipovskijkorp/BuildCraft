@@ -9,6 +9,7 @@ package buildcraft.lib.list;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
@@ -91,24 +92,30 @@ public final class ListHandler {
                 ListMatchHandler.Type type = getSortingType();
                 boolean anyHandled = false;
                 for (ListMatchHandler h : handlers) {
+                    if (!h.isValidSource(type, compare)) {
+                        continue;
+                    }
+                    anyHandled = true;
                     if (h.matches(type, compare, target, precise)) {
                         return true;
-                    } else if (h.isValidSource(type, target)) {
-                        anyHandled = true;
                     }
                 }
-                if (!anyHandled) {
-                    if (type == Type.TYPE/* && target.getHasSubtypes()*/) {
-                        return StackUtil.isMatchingItem(compare, target, false, false);
-                    }
+                if (!anyHandled && type == Type.TYPE) {
+                    // Modern item variants are generally separate Item instances.
+                    // For an otherwise unhandled item, variation mode therefore
+                    // falls back to the same item while ignoring damage and NBT.
+                    return StackUtil.isMatchingItem(compare, target, false, false);
                 }
             } else {
                 for (ItemStack s : stacks) {
-                    if (s != null && StackUtil.isMatchingItem(s, target, true, precise)) {
-                        // If precise, re-check damage
-                        if (!precise || s.getDamageValue() == target.getDamageValue()) {
-                            return true;
-                        }
+                    if (s.isEmpty() || !StackUtil.isMatchingItem(s, target, precise, false)) {
+                        continue;
+                    }
+                    // StackUtil's legacy NBT comparison is asymmetric when the
+                    // reference has no tag. Exact list matching must reject NBT
+                    // present on either side unless both tags are identical.
+                    if (!precise || Objects.equals(s.getTag(), target.getTag())) {
+                        return true;
                     }
                 }
             }
@@ -125,7 +132,8 @@ public final class ListHandler {
 
             if (data != null && data.contains("st")) {
                 ListTag l = data.getList("st", 10);
-                for (int i = 0; i < l.size(); i++) {
+                int count = Math.min(l.size(), WIDTH);
+                for (int i = 0; i < count; i++) {
                     line.stacks.set(i, ItemStack.of(l.getCompound(i)));
                 }
 
@@ -235,21 +243,23 @@ public final class ListHandler {
     }
 
     public static Line[] getLines(@Nonnull ItemStack item) {
-        CompoundTag data = NBTUtilBC.getItemData(item);
-        if (data.contains("written") && data.contains("lines")) {
-            ListTag list = data.getList("lines", 10);
-            Line[] lines = new Line[list.size()];
-            for (int i = 0; i < lines.length; i++) {
-                lines[i] = Line.fromNBT(list.getCompound(i));
-            }
-            return lines;
-        } else {
-            Line[] lines = new Line[HEIGHT];
-            for (int i = 0; i < lines.length; i++) {
-                lines[i] = new Line();
-            }
+        Line[] lines = new Line[HEIGHT];
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = new Line();
+        }
+
+        if (!item.hasTag()) {
             return lines;
         }
+        CompoundTag data = item.getTag();
+        if (data != null && data.contains("written") && data.contains("lines")) {
+            ListTag list = data.getList("lines", 10);
+            int count = Math.min(list.size(), HEIGHT);
+            for (int i = 0; i < count; i++) {
+                lines[i] = Line.fromNBT(list.getCompound(i));
+            }
+        }
+        return lines;
     }
 
     public static void saveLines(@Nonnull ItemStack stackList, Line[] lines) {
@@ -266,7 +276,8 @@ public final class ListHandler {
             CompoundTag data = NBTUtilBC.getItemData(stackList);
             data.putBoolean("written", true);
             ListTag lineList = new ListTag();
-            for (Line saving : lines) {
+            for (int i = 0; i < HEIGHT; i++) {
+                Line saving = i < lines.length && lines[i] != null ? lines[i] : new Line();
                 lineList.add(saving.toNBT());
             }
             data.put("lines", lineList);
@@ -283,10 +294,11 @@ public final class ListHandler {
     }
 
     public static boolean matches(@Nonnull ItemStack stackList, @Nonnull ItemStack item) {
-        CompoundTag data = NBTUtilBC.getItemData(stackList);
-        if (data.contains("written") && data.contains("lines")) {
+        CompoundTag data = stackList.getTag();
+        if (data != null && data.contains("written") && data.contains("lines")) {
             ListTag list = data.getList("lines", 10);
-            for (int i = 0; i < list.size(); i++) {
+            int count = Math.min(list.size(), HEIGHT);
+            for (int i = 0; i < count; i++) {
                 Line line = Line.fromNBT(list.getCompound(i));
                 if (line.matches(item)) {
                     return true;
