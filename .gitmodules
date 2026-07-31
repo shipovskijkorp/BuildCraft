@@ -1,0 +1,16 @@
+[submodule "1.12.2-forge"]
+	path = 1.12.2-forge
+	url = https://github.com/CurativeTree/BuildCraft.git
+	branch = 1.12.2-forge
+[submodule "1.19.2-forge"]
+	path = 1.19.2-forge
+	url = https://github.com/CurativeTree/BuildCraft.git
+	branch = 1.19.2-forge
+[submodule "1.20.1-forge"]
+	path = 1.20.1-forge
+	url = https://github.com/CurativeTree/BuildCraft.git
+	branch = 1.20.1-forge
+[submodule "1.21.1-forge"]
+	path = 1.21.1-forge
+	url = https://github.com/CurativeTree/BuildCraft.git
+	branch = 1.21.1-forge
