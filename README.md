@@ -8,12 +8,13 @@
 
 ## Available versions
 
-| Minecraft | Mod loader | Source branch |
-|---|---|---|
-| 1.12.2 | Forge | [`1.12.2-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.12.2-forge) |
-| 1.19.2 | Forge | [`1.19.2-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.19.2-forge) |
-| 1.20.1 | Forge | [`1.20.1-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.20.1-forge) |
-| 1.21.1 | Forge | [`1.21.1-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.21.1-forge) |
+| Minecraft | Mod loader | Source branch                                                                        |
+|---|------------|--------------------------------------------------------------------------------------|
+| 1.12.2 | Forge      | [`1.12.2-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.12.2-forge)       |
+| 1.19.2 | Forge      | [`1.19.2-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.19.2-forge)       |
+| 1.20.1 | Forge      | [`1.20.1-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.20.1-forge)       |
+| 1.21.1 | Forge      | [`1.21.1-forge`](https://github.com/CurativeTree/BuildCraft/tree/1.21.1-forge)       |
+| 1.21.1 | NeoForge   | [`1.21.1-neoforge`](https://github.com/CurativeTree/BuildCraft/tree/1.21.1-neoforge) |
 
 Each version branch is maintained independently and contains its own source code, build configuration, documentation, compatibility information, and development status.
 
