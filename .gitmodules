@@ -18,3 +18,8 @@
 	url = https://github.com/CurativeTree/BuildCraft.git
 	branch = 1.21.1-forge
 	router = true
+[submodule "1.21.1-neoforge"]
+	path = 1.21.1-neoforge
+	url = https://github.com/CurativeTree/BuildCraft.git
+	branch = 1.21.1-neoforge
+	router = true
