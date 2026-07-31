@@ -10,10 +10,10 @@ Why BC8 + BC7? BuildCraft 8 is the latest release with a fresh take on classic B
 *   Port builders (ready)
 *   Move from alpha to beta (ready)
 *   Global project checkup (ready)
-*   Forge release for 1.19.2 (ready)
-*   Port to 1.20.1 (ready)
+*   Forge release for 1.19.2 Forge (ready)
+*   Port to 1.20.1 Forge (ready)
 *   Backport to 1.12.2 (current subtask)
-*   Port to 1.21.1 (beta)
+*   Port to 1.21.1 Forge (beta)
 *   Port to NeoForge/Fabric
 *   Port to 1.21.11
 
@@ -21,10 +21,11 @@ Why BC8 + BC7? BuildCraft 8 is the latest release with a fresh take on classic B
 
 Now in mod available 100% of content from BC8 and BC7
 
-- 1.19.2 - 100%
-- 1.20.1 - 100%
-- 1.21.1 - beta > 99% functionality
-- 1.12.2 - work in progress
+- 1.19.2 Forge - 100%
+- 1.20.1 Forge - 100%
+- 1.21.1 Forge - beta > 99% functionality
+- 1.21.1 NeoForge - work in progress
+- 1.12.2 Forge - work in progress (low priority)
 
 ## Credits
 
