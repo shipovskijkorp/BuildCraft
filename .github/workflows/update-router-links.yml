@@ -1,0 +1,81 @@
+name: Update version branch links
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Optional branch to add before updating all links"
+        required: false
+        type: string
+  schedule:
+    - cron: "11,26,41,56 * * * *"
+  create:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-version-branch-links
+  cancel-in-progress: false
+
+jobs:
+  update-links:
+    if: >-
+      github.event_name != 'create' ||
+      github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          submodules: false
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add and update branch links
+        env:
+          REMOTE_NAME: origin
+          MAIN_BRANCH: main
+          VERSION_BRANCH_REGEX: '^[0-9]+\.[0-9]+(\.[0-9]+)?-(forge|neoforge|fabric|quilt)$'
+          ROUTER_REPOSITORY_URL: 'https://github.com/${{ github.repository }}.git'
+          CREATED_REF: '${{ github.event.ref }}'
+          CREATED_REF_TYPE: '${{ github.event.ref_type }}'
+          MANUAL_BRANCH: '${{ inputs.branch }}'
+        run: |
+          set -euo pipefail
+          git pull --ff-only origin main
+
+          if [[ "$GITHUB_EVENT_NAME" == "create" ]]; then
+            if [[ "$CREATED_REF_TYPE" == "branch" && "$CREATED_REF" =~ $VERSION_BRANCH_REGEX ]]; then
+              bash scripts/router-links.sh add "$CREATED_REF"
+            else
+              echo "Created ref is not a supported version branch; nothing to add."
+              exit 0
+            fi
+          elif [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" && -n "$MANUAL_BRANCH" ]]; then
+            bash scripts/router-links.sh add "$MANUAL_BRANCH"
+          else
+            bash scripts/router-links.sh init
+          fi
+
+          bash scripts/router-links.sh update
+
+          if git diff --cached --quiet; then
+            echo "All branch links are already current."
+            exit 0
+          fi
+
+          git commit -m "Update version branch links"
+
+          if ! git push origin HEAD:main; then
+            echo "Main changed during the run; rebasing once and retrying."
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
