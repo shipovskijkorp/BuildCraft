@@ -36,6 +36,29 @@ When reporting a problem, always include:
 
 Issues are tracked for the whole repository, so clearly identifying the affected branch helps avoid confusion between ports.
 
+## Roadmap
+
+*   Port robotics (ready)
+*   Port builders (ready)
+*   Move from alpha to beta (ready)
+*   Global project checkup (ready)
+*   Forge release for 1.19.2 Forge (ready)
+*   Port to 1.20.1 Forge (ready)
+*   Backport to 1.12.2 (current subtask)
+*   Port to 1.21.1 Forge (beta)
+*   Port to NeoForge/Fabric
+*   Port to 1.21.11
+
+## Current Status
+
+Now in mod available 100% of content from BC8 and BC7
+
+- 1.19.2 Forge - 100%
+- 1.20.1 Forge - 100%
+- 1.21.1 Forge - beta > 99% functionality
+- 1.21.1 NeoForge - work in progress
+- 1.12.2 Forge - work in progress (low priority)
+
 ## Credits
 
 ### Original BuildCraft
