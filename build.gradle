@@ -5,7 +5,7 @@ plugins {
 }
 
 
-version = '8.0.11+1.19.2'
+version = '8.0.12+1.19.2'
 group = 'ct.buildcraft.ce' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'BuildCraft-Community-Edition'
 
@@ -31,12 +31,12 @@ sourceSets {
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
-// Optional IC2 Classic development dependency.
-// The API jar is compile-only and is never bundled into the BuildCraft jar.
-// Set enable_ic2_runtime=true in gradle.properties (or pass -Penable_ic2_runtime=true)
-// to add IC2 Classic and CarbonConfig to runClient/runServer.
-def ic2ClassicVersion = providers.gradleProperty('ic2_classic_version').getOrElse('2.1.3.3')
-def carbonConfigVersion = providers.gradleProperty('carbon_config_version').getOrElse('2.0.0')
+// Optional compatibility dependencies are downloaded from Modrinth Maven.
+// They remain compile-only unless their runtime switch is enabled, and are never
+// bundled into the BuildCraft jar. Version IDs pin the exact Forge files.
+def jadeModrinthVersion = providers.gradleProperty('jade_modrinth_version').getOrElse('kp0HjPre')
+def ic2ClassicModrinthVersion = providers.gradleProperty('ic2_classic_modrinth_version').getOrElse('2.1.3.3')
+def carbonConfigModrinthVersion = providers.gradleProperty('carbon_config_modrinth_version').getOrElse('8U1HA7TK')
 def enableIc2Runtime = providers.gradleProperty('enable_ic2_runtime')
         .map { it.toBoolean() }
         .getOrElse(false)
@@ -45,8 +45,9 @@ def enableIc2Runtime = providers.gradleProperty('enable_ic2_runtime')
 def gameTestRequested = gradle.startParameter.taskNames.any {
     it.toLowerCase().contains('gametest')
 }
-def ic2ClassicJar = file("libs/IC2Classic-1.19.2-${ic2ClassicVersion}.jar")
-def carbonConfigJar = file("libs/CarbonConfig-1.19.2-${carbonConfigVersion}.jar")
+def jadeDependency = "maven.modrinth:nvQzSEkH:${jadeModrinthVersion}"
+def ic2ClassicDependency = "maven.modrinth:nIaMQHTd:${ic2ClassicModrinthVersion}"
+def carbonConfigDependency = "maven.modrinth:1jDdpgcc:${carbonConfigModrinthVersion}"
 
 minecraft {
     // The mappings can be changed at any time and must be in the following format.
@@ -202,10 +203,6 @@ repositories {
         }
     }
 
-    // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
-     flatDir {
-        dir 'libs'
-     }
     maven { name="sponge"; url 'https://repo.spongepowered.org/repository/maven-public/' }
 }
 
@@ -222,8 +219,6 @@ dependencies {
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
-    // Examples using mod jars from ./libs
-    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
     // JEI from Modrinth Maven. Modrinth does not publish a separate API artifact here,
     // so the full mod jar is used as compileOnly and runtimeOnly.
     compileOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
@@ -232,33 +227,19 @@ dependencies {
     }
 
     // Jade API/full jar for optional Jade compatibility.
-    // Put Jade-1.19.1-forge-8.9.2.jar into ./libs.
-    compileOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
+    compileOnly fg.deobf(jadeDependency)
     if (!gameTestRequested) {
-        runtimeOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
+        runtimeOnly fg.deobf(jadeDependency)
     }
 
     // IC2 Classic is optional at runtime, but its API is available while compiling compat code.
-    if (!ic2ClassicJar.exists()) {
-        throw new GradleException(
-                "Missing optional IC2 Classic development jar: ${ic2ClassicJar}. " +
-                "See libs/README.md for setup instructions."
-        )
-    }
-    compileOnly fg.deobf("blank:IC2Classic-1.19.2:${ic2ClassicVersion}")
-    if (carbonConfigJar.exists()) {
-        compileOnly fg.deobf("blank:CarbonConfig-1.19.2:${carbonConfigVersion}")
-    }
+    // Carbon Config is declared separately because Modrinth Maven has no transitive metadata.
+    compileOnly fg.deobf(ic2ClassicDependency)
+    compileOnly fg.deobf(carbonConfigDependency)
 
     if (enableIc2Runtime && !gameTestRequested) {
-        if (!carbonConfigJar.exists()) {
-            throw new GradleException(
-                    "IC2 runtime was enabled, but its mandatory CarbonConfig dependency is missing: " +
-                    "${carbonConfigJar}. See libs/README.md."
-            )
-        }
-        runtimeOnly fg.deobf("blank:IC2Classic-1.19.2:${ic2ClassicVersion}")
-        runtimeOnly fg.deobf("blank:CarbonConfig-1.19.2:${carbonConfigVersion}")
+        runtimeOnly fg.deobf(ic2ClassicDependency)
+        runtimeOnly fg.deobf(carbonConfigDependency)
     }
     // JUnit tests cover deterministic logic without launching Minecraft.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
