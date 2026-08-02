@@ -34,6 +34,10 @@ public enum DebugRenderHelper implements IDetachedRenderer {
     
     private static TextureAtlasSprite s;
 
+    public static void clearTextureCache() {
+        s = null;
+    }
+
     static {
         smallCuboid = new MutableQuad[6];
         Vector3f center = new Vector3f(0.5f, 0.5f, 0.5f);

@@ -54,6 +54,10 @@ public enum ModelPipe implements IDynamicBakedModel {
 	protected static final EnumMap<Direction, BakedQuad[]> facesCacheCombine = new EnumMap<>(Direction.class);*/
 
 	protected static final HashMap<ResourceLocation, TextureAtlasSprite> particleIcon = new HashMap<>();
+
+	public static void clearTextureCache() {
+		particleIcon.clear();
+	}
 //	protected static final B
 	@Override
 	public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,

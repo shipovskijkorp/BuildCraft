@@ -125,6 +125,10 @@ public class SpriteUtil {
         return new SpriteRaw(loc, 40, 8, 8, 8, 64);
     }
 
+    public static void clearAtlasCache() {
+        MISSING_TEX = null;
+    }
+
     public static TextureAtlasSprite missingSprite() {
         if(MISSING_TEX == null)
         	MISSING_TEX = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());

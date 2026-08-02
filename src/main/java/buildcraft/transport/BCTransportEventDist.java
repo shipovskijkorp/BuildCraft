@@ -8,7 +8,10 @@ package buildcraft.transport;
 
 import buildcraft.api.transport.pipe.PipeApiClient;
 import buildcraft.transport.client.PipeRegistryClient;
+import buildcraft.transport.client.model.ModelPipe;
 import buildcraft.transport.client.model.PipeBaseModelGenStandard;
+import buildcraft.transport.client.model.PipeModelCacheAll;
+import buildcraft.transport.client.render.PipeFlowRendererPower;
 import buildcraft.transport.client.render.PipeWireRenderer;
 import buildcraft.transport.net.PipeItemMessageQueue;
 import buildcraft.transport.wire.WorldSavedDataWireSystems;
@@ -67,10 +70,14 @@ public class BCTransportEventDist {
         
         @SubscribeEvent
         public static void onModelBake(BakingCompleted event) {
-        	BCTransportModels.onModelBake(event);
-        	PipeBaseModelGenStandard.loadSpritesCache();
-        }
-        
+            // TextureAtlasSprite instances and baked quads belong to a single atlas generation.
+            // Rebuild all pipe caches after every resource reload instead of retaining old UVs.
+            PipeBaseModelGenStandard.loadSpritesCache();
+            PipeModelCacheAll.clearModels();
+            ModelPipe.clearTextureCache();
+            PipeFlowRendererPower.clearTextureCache();
+            BCTransportModels.onModelBake(event);
+        }        
         @SubscribeEvent
         public static void registryTexture(TextureStitchEvent.Pre e){ 
         	BCTransportSprites.onTextureStitchPre(e);

@@ -28,10 +28,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class RenderProgrammingTable implements BlockEntityRenderer<TileProgrammingTable_Neptune> {
 	
-	private static TextureAtlasSprite WHITE_STAINED_GLASS_TEX;
+	private static final ResourceLocation WHITE_STAINED_GLASS = new ResourceLocation("block/white_stained_glass");
 	
 	public RenderProgrammingTable(BlockEntityRendererProvider.Context bpc) {
-		WHITE_STAINED_GLASS_TEX = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("block/white_stained_glass"));
 	}
 	
     @Override
@@ -43,12 +42,13 @@ public class RenderProgrammingTable implements BlockEntityRenderer<TileProgrammi
         int light1 = combinedLight >> 16 & 65535;
         int light2 = combinedLight & 65535;
         VertexConsumer bb = buffer.getBuffer(RenderType.translucent());
+        TextureAtlasSprite whiteStainedGlass = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(WHITE_STAINED_GLASS);
         Matrix4f pose = matrix.last().pose();
         Matrix3f normal = matrix.last().normal();
-        bb.vertex(4 / 16D, 9 / 16D, 4 / 16D).color(255, 255, 255, 255).uv(WHITE_STAINED_GLASS_TEX.getU(4), WHITE_STAINED_GLASS_TEX.getV(4)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
-        bb.vertex(2 / 16D, 9 / 16D, 4 / 16D).color(255, 255, 255, 255).uv(WHITE_STAINED_GLASS_TEX.getU(12), WHITE_STAINED_GLASS_TEX.getV(4)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
-        bb.vertex(12 / 16D, 9 / 16D, 12 / 16D).color(255, 255, 255, 255).uv(WHITE_STAINED_GLASS_TEX.getU(12), WHITE_STAINED_GLASS_TEX.getV(12)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
-        bb.vertex(4 / 16D, 9 / 16D, 12 / 16D).color(255, 255, 255, 255).uv(WHITE_STAINED_GLASS_TEX.getU(4), WHITE_STAINED_GLASS_TEX.getV(12)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
+        bb.vertex(4 / 16D, 9 / 16D, 4 / 16D).color(255, 255, 255, 255).uv(whiteStainedGlass.getU(4), whiteStainedGlass.getV(4)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
+        bb.vertex(2 / 16D, 9 / 16D, 4 / 16D).color(255, 255, 255, 255).uv(whiteStainedGlass.getU(12), whiteStainedGlass.getV(4)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
+        bb.vertex(12 / 16D, 9 / 16D, 12 / 16D).color(255, 255, 255, 255).uv(whiteStainedGlass.getU(12), whiteStainedGlass.getV(12)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
+        bb.vertex(4 / 16D, 9 / 16D, 12 / 16D).color(255, 255, 255, 255).uv(whiteStainedGlass.getU(4), whiteStainedGlass.getV(12)).overlayCoords(overlay).uv2(light1, light2).normal(normal, 0, 0, 1).endVertex();
 
         Minecraft.getInstance().getProfiler().pop();
         Minecraft.getInstance().getProfiler().pop();

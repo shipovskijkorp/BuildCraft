@@ -43,6 +43,11 @@ public enum PipeFlowRendererPower implements IPipeFlowRenderer<PipeFlowPower> {
 
 	public static TextureAtlasSprite POWER_FLOW_OVERLOAD;
 	public static TextureAtlasSprite POWER_FLOW;
+
+	public static void clearTextureCache() {
+		POWER_FLOW_OVERLOAD = null;
+		POWER_FLOW = null;
+	}
 	
     @Override
 	public void render(PipeFlowPower flow, float partialTicks, PoseStack matrix, MultiBufferSource buffer,

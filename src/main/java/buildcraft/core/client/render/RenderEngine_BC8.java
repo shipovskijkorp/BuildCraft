@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -25,23 +26,53 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 	public RenderEngine_BC8(BlockEntityRendererProvider.Context bpc) {
 	}
 	
-	private static final TextureAtlasSprite LIGHT = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(BCCore.ClientModEvents.TRUNK_LIGHT);
-	private static final TextureAtlasSprite TRUNK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(BCCore.ClientModEvents.TRUNK);
-//	private static final TextureAtlasSprite BASE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(BCCore.TRUNK_BLUE);
-	private static final TextureAtlasSprite CHAMBER = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(BCCore.ClientModEvents.CHAMBER);
-	public static final TextureAtlasSprite REDSTONE_BACK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftcore:blocks/engine/wood/back"));
-	public static final TextureAtlasSprite REDSTONE_SIDE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftcore:blocks/engine/wood/side")); 
-	public static final TextureAtlasSprite CREATIVE_BACK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftcore:blocks/engine/creative/back")); 
-	public static final TextureAtlasSprite CREATIVE_SIDE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftcore:blocks/engine/creative/side"));
-	public static final TextureAtlasSprite IRON_BACK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftenergy:blocks/engine/iron/back"));
-	public static final TextureAtlasSprite IRON_SIDE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftenergy:blocks/engine/iron/side"));
-	public static final TextureAtlasSprite STONE_BACK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftenergy:blocks/engine/stone/back"));
-	public static final TextureAtlasSprite STONE_SIDE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation("buildcraftenergy:blocks/engine/stone/side"));
+	private static final ResourceLocation REDSTONE_BACK_LOCATION = new ResourceLocation("buildcraftcore:blocks/engine/wood/back");
+	private static final ResourceLocation REDSTONE_SIDE_LOCATION = new ResourceLocation("buildcraftcore:blocks/engine/wood/side");
+	private static final ResourceLocation CREATIVE_BACK_LOCATION = new ResourceLocation("buildcraftcore:blocks/engine/creative/back");
+	private static final ResourceLocation CREATIVE_SIDE_LOCATION = new ResourceLocation("buildcraftcore:blocks/engine/creative/side");
+	private static final ResourceLocation IRON_BACK_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/iron/back");
+	private static final ResourceLocation IRON_SIDE_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/iron/side");
+	private static final ResourceLocation STONE_BACK_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/stone/back");
+	private static final ResourceLocation STONE_SIDE_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/stone/side");
+
+	private static TextureAtlasSprite LIGHT;
+	private static TextureAtlasSprite TRUNK;
+	private static TextureAtlasSprite CHAMBER;
+	public static TextureAtlasSprite REDSTONE_BACK;
+	public static TextureAtlasSprite REDSTONE_SIDE;
+	public static TextureAtlasSprite CREATIVE_BACK;
+	public static TextureAtlasSprite CREATIVE_SIDE;
+	public static TextureAtlasSprite IRON_BACK;
+	public static TextureAtlasSprite IRON_SIDE;
+	public static TextureAtlasSprite STONE_BACK;
+	public static TextureAtlasSprite STONE_SIDE;
+
+	/** Refreshes every cached atlas sprite after a resource-pack reload. */
+	public static void reloadSprites(TextureAtlas atlas) {
+		LIGHT = atlas.getSprite(BCCore.ClientModEvents.TRUNK_LIGHT);
+		TRUNK = atlas.getSprite(BCCore.ClientModEvents.TRUNK);
+		CHAMBER = atlas.getSprite(BCCore.ClientModEvents.CHAMBER);
+		REDSTONE_BACK = atlas.getSprite(REDSTONE_BACK_LOCATION);
+		REDSTONE_SIDE = atlas.getSprite(REDSTONE_SIDE_LOCATION);
+		CREATIVE_BACK = atlas.getSprite(CREATIVE_BACK_LOCATION);
+		CREATIVE_SIDE = atlas.getSprite(CREATIVE_SIDE_LOCATION);
+		IRON_BACK = atlas.getSprite(IRON_BACK_LOCATION);
+		IRON_SIDE = atlas.getSprite(IRON_SIDE_LOCATION);
+		STONE_BACK = atlas.getSprite(STONE_BACK_LOCATION);
+		STONE_SIDE = atlas.getSprite(STONE_SIDE_LOCATION);
+	}
+
+	private static void ensureSprites() {
+		if (LIGHT == null || CHAMBER == null || REDSTONE_BACK == null) {
+			reloadSprites(Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS));
+		}
+	}
 	
 
 	
 	@Override
 	public void render(TileEngineBase_BC8 tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
+		ensureSprites();
 		matrix.pushPose();
 		matrix.translate(0.5f, 0.5f, 0.5f);
         Matrix4f matrix4f = matrix.last().pose();

@@ -28,6 +28,7 @@ import buildcraft.lib.client.render.DetachedRenderer.RenderMatrixType;
 import buildcraft.lib.gui.BCContainerFactory;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.net.MessageManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -38,7 +39,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent.Pre;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.DynamicFluidContainerModel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -140,7 +141,7 @@ public class BCCore {
         }
 
         @SubscribeEvent
-        public static void registrtTexture(Pre e){
+        public static void registrtTexture(TextureStitchEvent.Pre e){
         	if (InventoryMenu.BLOCK_ATLAS.equals(e.getAtlas().location())) {
                 // IC2 Classic/CarbonConfig may cause texture stitching before FMLClientSetup.
                 // Create all core laser holders now so BCLib's LOWEST-priority registration sees them.
@@ -152,12 +153,21 @@ public class BCCore {
         }
 
         @SubscribeEvent
+        public static void onTextureStitchPost(TextureStitchEvent.Post event) {
+            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                RenderEngine_BC8.reloadSprites(event.getAtlas());
+            }
+        }
+
+        @SubscribeEvent
         public static void onModelBakePre(RegisterAdditional event) {
         	event.register(ENGINE_MODEL);
         }
 
         @SubscribeEvent
         public static void onModelBake(BakingCompleted event) {
+            // Baking runs for every resource reload. Ensure the model uses sprites from the new atlas.
+            RenderEngine_BC8.reloadSprites(Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS));
         	ModelEngine.init(event.getModels().get(ENGINE_MODEL));
         	event.getModels().put(new ModelResourceLocation("buildcraftcore:engine#type=wood"), new ModelEngine(RenderEngine_BC8.REDSTONE_BACK, RenderEngine_BC8.REDSTONE_SIDE));
         	event.getModels().put(new ModelResourceLocation("buildcraftcore:engine#type=creative"), new ModelEngine(RenderEngine_BC8.CREATIVE_BACK, RenderEngine_BC8.CREATIVE_SIDE));
