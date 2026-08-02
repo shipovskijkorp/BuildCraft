@@ -49,6 +49,13 @@ Shared library code and runtime helpers used by the BuildCraft Community Edition
     ordering="AFTER"
     side="BOTH"
 
+[[dependencies.buildcraftlib]]
+    modId="forestry"
+    mandatory=false
+    versionRange="[1.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
 [[mods]]
     modId="buildcraftcore"
     version="${file.jarVersion}"

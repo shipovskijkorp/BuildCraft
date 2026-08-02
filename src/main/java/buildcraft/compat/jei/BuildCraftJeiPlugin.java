@@ -3,17 +3,23 @@ package buildcraft.compat.jei;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import buildcraft.api.fuels.BuildcraftFuelRegistry;
+import buildcraft.api.fuels.IFuel;
+import buildcraft.api.fuels.IFuelManager;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.recipes.BuildcraftRecipeRegistry;
 import buildcraft.api.recipes.IRefineryRecipeManager;
 import buildcraft.api.recipes.IRefineryRecipeManager.IHeatExchangerRecipe;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.factory.BCFactoryItems;
 import buildcraft.lib.gui.GuiBC8;
 import buildcraft.lib.gui.IGuiElement;
@@ -27,8 +33,10 @@ import buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import buildcraft.robotics.BCRoboticsItems;
 import buildcraft.robotics.item.ItemRedstoneBoard;
 import buildcraft.robotics.item.ItemRobot;
+import buildcraft.silicon.BCSiliconGuis;
 import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.BCSiliconRecipes;
+import buildcraft.silicon.container.ContainerAssemblyTable;
 import buildcraft.silicon.item.ItemPluggableFacade;
 import buildcraft.silicon.recipe.FacadeAssemblyRecipes;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
@@ -36,6 +44,7 @@ import buildcraft.silicon.plug.FacadeStateManager;
 import buildcraft.transport.BCTransportItems;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -54,6 +63,7 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
@@ -83,7 +93,9 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public static final RecipeType<IntegrationRecipeView> INTEGRATION = RecipeType.create("buildcraftsilicon", "integration", IntegrationRecipeView.class);
     public static final RecipeType<IRefineryRecipeManager.IDistillationRecipe> DISTILLATION = RecipeType.create("buildcraftfactory", "distillation", IRefineryRecipeManager.IDistillationRecipe.class);
     public static final RecipeType<HeatExchangeRecipeView> HEAT_EXCHANGE = RecipeType.create("buildcraftfactory", "heat_exchange", HeatExchangeRecipeView.class);
+    public static final RecipeType<CombustionFuelRecipeView> COMBUSTION_FUEL = RecipeType.create("buildcraftenergy", "combustion_fuel", CombustionFuelRecipeView.class);
 
+    private static final Map<ResourceLocation, List<AssemblyRecipeBasic>> GROUPED_ASSEMBLY_RECIPES = new LinkedHashMap<>();
     private static List<FluidContainerAlias> fluidContainerAliases = List.of();
 
     @Override
@@ -131,7 +143,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
                 new ProgrammingCategory(guiHelper),
                 new IntegrationCategory(guiHelper),
                 new DistillationCategory(guiHelper),
-                new HeatExchangeCategory(guiHelper)
+                new HeatExchangeCategory(guiHelper),
+                new CombustionFuelCategory(guiHelper)
         );
     }
 
@@ -146,6 +159,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             if (hadFacadeRecipe) {
                 assemblyRecipes.add(FacadeAssemblyJeiRecipe.create());
             }
+            assemblyRecipes = groupLensAndFilterRecipes(assemblyRecipes);
             registration.addRecipes(ASSEMBLY, assemblyRecipes);
         }
 
@@ -175,6 +189,13 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             }
             registration.addRecipes(HEAT_EXCHANGE, heatExchange);
         }
+
+        if (BuildcraftFuelRegistry.fuel != null) {
+            List<CombustionFuelRecipeView> fuels = BuildcraftFuelRegistry.fuel.getFuels().stream()
+                    .map(CombustionFuelRecipeView::new)
+                    .toList();
+            registration.addRecipes(COMBUSTION_FUEL, fuels);
+        }
     }
 
     @Override
@@ -184,6 +205,94 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(BCSiliconItems.INTERGRATION_TABLE_ITEM.get()), INTEGRATION);
         registration.addRecipeCatalyst(new ItemStack(BCFactoryItems.DISTILLER_BLOCK_ITEM.get()), DISTILLATION);
         registration.addRecipeCatalyst(new ItemStack(BCFactoryItems.HEAT_EXCHANGE_BLOCK_ITEM.get()), HEAT_EXCHANGE);
+        registration.addRecipeCatalyst(new ItemStack(BCEnergyBlocks.ENGINE_IRON_ITEM.get()), COMBUSTION_FUEL);
+
+        // Original BuildCraftCompat behaviour: both automated crafting tables
+        // expose vanilla crafting recipes, and the steam engine is a fuel catalyst.
+        registration.addRecipeCatalyst(new ItemStack(BCFactoryItems.AUTO_BENCH_ITEM.get()), RecipeTypes.CRAFTING);
+        registration.addRecipeCatalyst(new ItemStack(BCSiliconItems.ADVANCED_CRAFTING_TABLE_ITEM.get()), RecipeTypes.CRAFTING);
+        registration.addRecipeCatalyst(new ItemStack(BCEnergyBlocks.ENGINE_STONE_ITEM.get()), RecipeTypes.FUELING);
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(new AutoWorkbenchRecipeTransferHandler(), RecipeTypes.CRAFTING);
+        registration.addRecipeTransferHandler(new AdvancedCraftingRecipeTransferHandler(), RecipeTypes.CRAFTING);
+        registration.addRecipeTransferHandler(
+                ContainerAssemblyTable.class,
+                BCSiliconGuis.MENU_ASSEMBLY_TABLE.get(),
+                ASSEMBLY,
+                36, 12,
+                0, 36
+        );
+    }
+
+    private static List<AssemblyRecipeBasic> groupLensAndFilterRecipes(List<AssemblyRecipeBasic> recipes) {
+        GROUPED_ASSEMBLY_RECIPES.clear();
+        List<AssemblyRecipeBasic> regularLenses = new ArrayList<>();
+        List<AssemblyRecipeBasic> filters = new ArrayList<>();
+        List<AssemblyRecipeBasic> result = new ArrayList<>();
+
+        for (AssemblyRecipeBasic recipe : recipes) {
+            ItemStack output = recipe.getResultItem();
+            if (output.getItem() != BCSiliconItems.PLUG_LENS_ITEM.get()) {
+                result.add(recipe);
+                continue;
+            }
+            boolean filter = recipe.getInputsFor(output).stream()
+                    .anyMatch(input -> input.ingredient.test(new ItemStack(Items.IRON_BARS)));
+            (filter ? filters : regularLenses).add(recipe);
+        }
+
+        addGroupedAssemblyRecipe(result, regularLenses);
+        addGroupedAssemblyRecipe(result, filters);
+        return result;
+    }
+
+    private static void addGroupedAssemblyRecipe(List<AssemblyRecipeBasic> target, List<AssemblyRecipeBasic> variants) {
+        if (variants.isEmpty()) {
+            return;
+        }
+        variants.sort(Comparator.comparingInt(recipe -> recipe.getResultItem().getDamageValue()));
+        AssemblyRecipeBasic representative = variants.get(0);
+        GROUPED_ASSEMBLY_RECIPES.put(representative.getId(), List.copyOf(variants));
+        target.add(representative);
+    }
+
+    private static List<AssemblyRecipeBasic> getFocusedAssemblyVariants(List<AssemblyRecipeBasic> variants, IFocusGroup focuses) {
+        List<ItemStack> focused = focuses.getAllFocuses().stream()
+                .map(BuildCraftJeiPlugin::getFocusedItemStack)
+                .filter(stack -> !stack.isEmpty())
+                .toList();
+        if (focused.isEmpty()) {
+            return variants;
+        }
+        List<AssemblyRecipeBasic> matches = variants.stream().filter(recipe -> {
+            ItemStack output = recipe.getResultItem();
+            for (ItemStack stack : focused) {
+                if (ItemStack.isSameItemSameTags(output, stack)) {
+                    return true;
+                }
+                for (IngredientStack input : recipe.getInputsFor(output)) {
+                    if (input.ingredient.test(stack)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }).toList();
+        return matches.isEmpty() ? variants : matches;
+    }
+
+    private static List<ItemStack> deduplicateStacks(List<ItemStack> stacks) {
+        LinkedHashMap<ItemStackKey, ItemStack> unique = new LinkedHashMap<>();
+        for (ItemStack stack : stacks) {
+            if (!stack.isEmpty()) {
+                ItemStack copy = stack.copy();
+                unique.putIfAbsent(new ItemStackKey(copy), copy);
+            }
+        }
+        return new ArrayList<>(unique.values());
     }
 
     private static List<ItemStack> expandIngredient(IngredientStack ingredientStack) {
@@ -351,6 +460,21 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     public record HeatExchangeRecipeView(IHeatExchangerRecipe recipe, boolean heating) {
+    }
+
+    public record CombustionFuelRecipeView(IFuel fuel) {
+        public FluidStack input() {
+            FluidStack stack = fuel.getFluid().copy();
+            stack.setAmount(FluidType.BUCKET_VOLUME);
+            return stack;
+        }
+
+        public FluidStack residue() {
+            if (fuel instanceof IFuelManager.IDirtyFuel dirtyFuel) {
+                return dirtyFuel.getResidue().copy();
+            }
+            return FluidStack.EMPTY;
+        }
     }
 
     private static List<FacadeBlockStateInfo> getVisibleFacadeInfos() {
@@ -532,6 +656,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, AssemblyRecipeBasic recipe, IFocusGroup focuses) {
+            List<AssemblyRecipeBasic> grouped = GROUPED_ASSEMBLY_RECIPES.get(recipe.getId());
+            if (grouped != null) {
+                setGroupedLensRecipe(builder, grouped, focuses);
+                return;
+            }
             if (recipe instanceof FacadeAssemblyRecipes facadeRecipe) {
                 setFacadeRecipe(builder, facadeRecipe, focuses);
                 return;
@@ -563,6 +692,40 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
                     .setBackground(slotBackground, -1, -1)
                     .addItemStack(result);
+        }
+
+        private void setGroupedLensRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> allVariants, IFocusGroup focuses) {
+            List<AssemblyRecipeBasic> variants = getFocusedAssemblyVariants(allVariants, focuses);
+            List<ItemStack> mainInputs = new ArrayList<>();
+            List<ItemStack> secondaryInputs = new ArrayList<>();
+            List<ItemStack> outputs = new ArrayList<>();
+
+            for (AssemblyRecipeBasic variant : variants) {
+                ItemStack output = variant.getResultItem();
+                outputs.add(output);
+                for (IngredientStack input : variant.getInputsFor(output)) {
+                    if (input.ingredient.test(new ItemStack(Items.IRON_BARS))) {
+                        secondaryInputs.addAll(expandIngredient(input));
+                    } else {
+                        mainInputs.addAll(expandIngredient(input));
+                    }
+                }
+            }
+
+            IRecipeSlotBuilder mainSlot = builder.addSlot(RecipeIngredientRole.INPUT, 22, 22)
+                    .setBackground(slotBackground, -1, -1)
+                    .addItemStacks(deduplicateStacks(mainInputs));
+            IRecipeSlotBuilder outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
+                    .setBackground(slotBackground, -1, -1)
+                    .addItemStacks(deduplicateStacks(outputs));
+            if (secondaryInputs.isEmpty()) {
+                builder.createFocusLink(mainSlot, outputSlot);
+            } else {
+                builder.addSlot(RecipeIngredientRole.INPUT, 40, 22)
+                        .setBackground(slotBackground, -1, -1)
+                        .addItemStacks(deduplicateStacks(secondaryInputs));
+                builder.createFocusLink(mainSlot, outputSlot);
+            }
         }
 
         private void setFacadeRecipe(IRecipeLayoutBuilder builder, FacadeAssemblyRecipes recipe, IFocusGroup focuses) {
@@ -831,6 +994,61 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             String mode = recipe.heating() ? "Heat " : "Cool ";
             String text = mode + recipe.recipe().heatFrom() + " -> " + recipe.recipe().heatTo();
             Minecraft.getInstance().font.draw(stack, text, 4, 48, 0xFF404040);
+        }
+    }
+
+    private static class CombustionFuelCategory implements IRecipeCategory<CombustionFuelRecipeView> {
+        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
+        private final IDrawable background;
+        private final IDrawable icon;
+        private final IDrawable slotBackground;
+        private final IDrawable arrow;
+
+        CombustionFuelCategory(IGuiHelper guiHelper) {
+            background = guiHelper.createBlankDrawable(150, 76);
+            icon = guiHelper.createDrawableItemStack(new ItemStack(BCEnergyBlocks.ENGINE_IRON_ITEM.get()));
+            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
+            arrow = guiHelper.createDrawable(SLOT_TEXTURE, 28, 40, 12, 10);
+        }
+
+        @Override
+        public RecipeType<CombustionFuelRecipeView> getRecipeType() {
+            return COMBUSTION_FUEL;
+        }
+
+        @Override
+        public Component getTitle() {
+            return Component.translatable("jei.buildcraftenergy.combustion_fuels");
+        }
+
+        @Override
+        public IDrawable getBackground() {
+            return background;
+        }
+
+        @Override
+        public IDrawable getIcon() {
+            return icon;
+        }
+
+        @Override
+        public void setRecipe(IRecipeLayoutBuilder builder, CombustionFuelRecipeView recipe, IFocusGroup focuses) {
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 15, 18, recipe.input(), slotBackground);
+            FluidStack residue = recipe.residue();
+            if (!residue.isEmpty()) {
+                addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 18, residue, slotBackground);
+            }
+        }
+
+        @Override
+        public void draw(CombustionFuelRecipeView recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+            arrow.draw(stack, 68, 22);
+            IFuel fuel = recipe.fuel();
+            long total = fuel.getPowerPerCycle() * (long) fuel.getTotalBurningTime();
+            int seconds = fuel.getTotalBurningTime() / 20;
+            Minecraft.getInstance().font.draw(stack, Component.translatable("jei.buildcraftenergy.burn_time", seconds), 4, 44, 0xFF404040);
+            Minecraft.getInstance().font.draw(stack, Component.translatable("jei.buildcraftenergy.power_per_tick", formatMj(fuel.getPowerPerCycle())), 4, 54, 0xFF404040);
+            Minecraft.getInstance().font.draw(stack, Component.translatable("jei.buildcraftenergy.total_energy", formatMj(total)), 4, 64, 0xFF404040);
         }
     }
 }

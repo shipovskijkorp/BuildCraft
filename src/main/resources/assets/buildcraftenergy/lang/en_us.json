@@ -262,5 +262,9 @@
   "item.buildcraftenergy.ic2_cell.fuel_mixed_light_heat_2": "Mixed Light Fuel (§cSearing§r) Cell",
   "item.buildcraftenergy.ic2_cell.fuel_gaseous": "Gaseous Fuel (§bCool§r) Cell",
   "item.buildcraftenergy.ic2_cell.fuel_gaseous_heat_1": "Gaseous Fuel (§6Hot§r) Cell",
-  "item.buildcraftenergy.ic2_cell.fuel_gaseous_heat_2": "Gaseous Fuel (§cSearing§r) Cell"
+  "item.buildcraftenergy.ic2_cell.fuel_gaseous_heat_2": "Gaseous Fuel (§cSearing§r) Cell",
+  "jei.buildcraftenergy.combustion_fuels": "Combustion Engine Fuels",
+  "jei.buildcraftenergy.power_per_tick": "Output: %s/t",
+  "jei.buildcraftenergy.total_energy": "Total: %s per bucket",
+  "jei.buildcraftenergy.burn_time": "Burns for %s s"
 }

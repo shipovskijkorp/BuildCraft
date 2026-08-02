@@ -38,6 +38,7 @@ import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.silicon.plug.FilterEventHandler;
+import buildcraft.transport.item.ItemPipeHolder;
 import buildcraft.transport.BCTransportBlocks;
 import buildcraft.transport.client.model.ModelPipe;
 import buildcraft.transport.pipe.Pipe;
@@ -202,7 +203,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
             if (pipe.flow instanceof IFlowItems && BCModules.SILICON.isLoaded()) {
                 eventBus.registerHandler(FilterEventHandler.class);
             }
-            int meta = ((IItemPipe) item).getcolorID();
+            int meta = ItemPipeHolder.getPipeColorId(stack);
             if (meta > 0 && meta <= 16) {
                 pipe.setColour(DyeColor.byId(meta - 1));
             }

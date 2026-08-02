@@ -19,12 +19,14 @@ import buildcraft.transport.BCTransportBlocks;
 import buildcraft.lib.misc.LocaleUtil;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -32,6 +34,39 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class ItemPipeHolder extends BlockItem implements IItemPipe {
+    public static final String PIPE_COLOR_TAG = "color";
+
+    public static int getPipeColorId(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        if (tag == null || !tag.contains(PIPE_COLOR_TAG)) {
+            return 0;
+        }
+        int colorId = tag.getInt(PIPE_COLOR_TAG);
+        return colorId >= 1 && colorId <= 16 ? colorId : 0;
+    }
+
+    public static DyeColor getPipeColor(ItemStack stack) {
+        int colorId = getPipeColorId(stack);
+        return colorId == 0 ? null : DyeColor.byId(colorId - 1);
+    }
+
+    public static void setPipeColor(ItemStack stack, DyeColor color) {
+        if (color == null) {
+            CompoundTag tag = stack.getTag();
+            if (tag != null) {
+                tag.remove(PIPE_COLOR_TAG);
+                if (tag.isEmpty()) {
+                    stack.setTag(null);
+                }
+            }
+        } else {
+            stack.getOrCreateTag().putInt(PIPE_COLOR_TAG, color.getId() + 1);
+        }
+    }
+
+    public static void copyPipeColor(ItemStack source, ItemStack target) {
+        setPipeColor(target, getPipeColor(source));
+    }
     public final PipeDefinition definition;
 //    private final String id;
     private String unlocalizedName;

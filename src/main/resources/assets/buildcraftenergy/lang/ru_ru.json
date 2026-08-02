@@ -262,5 +262,9 @@
   "item.buildcraftenergy.ic2_cell.fuel_mixed_light_heat_2": "Смешанное лёгкое топливо (§cРаскалённая§r) — капсула",
   "item.buildcraftenergy.ic2_cell.fuel_gaseous": "Газообразное топливо (§bХолодная§r) — капсула",
   "item.buildcraftenergy.ic2_cell.fuel_gaseous_heat_1": "Газообразное топливо (§6Горячая§r) — капсула",
-  "item.buildcraftenergy.ic2_cell.fuel_gaseous_heat_2": "Газообразное топливо (§cРаскалённая§r) — капсула"
+  "item.buildcraftenergy.ic2_cell.fuel_gaseous_heat_2": "Газообразное топливо (§cРаскалённая§r) — капсула",
+  "jei.buildcraftenergy.combustion_fuels": "Топливо двигателя внутреннего сгорания",
+  "jei.buildcraftenergy.power_per_tick": "Мощность: %s/т",
+  "jei.buildcraftenergy.total_energy": "Всего: %s на ведро",
+  "jei.buildcraftenergy.burn_time": "Горит %s с"
 }

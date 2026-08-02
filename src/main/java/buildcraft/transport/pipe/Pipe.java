@@ -31,6 +31,7 @@ import buildcraft.api.transport.pipe.PipeFlow;
 import buildcraft.api.transport.pluggable.PipePluggable;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;
+import buildcraft.transport.item.ItemPipeHolder;
 import buildcraft.transport.client.model.key.PipeModelKey;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -330,8 +331,9 @@ public final class Pipe implements IPipe, IDebuggable {
     public void addDrops(NonNullList<ItemStack> toDrop, int fortune) {
         Item item = (Item) PipeApi.pipeRegistry.getItemForPipe(definition);
         if (item != null) {
-//            toDrop.add(new ItemStack(item, 1, colour == null ? 0 : 1 + colour.ordinal()));
-        	toDrop.add(new ItemStack(item, 1));
+            ItemStack drop = new ItemStack(item, 1);
+            ItemPipeHolder.setPipeColor(drop, colour);
+            toDrop.add(drop);
         }
         flow.addDrops(toDrop, fortune);
         behaviour.addDrops(toDrop, fortune);

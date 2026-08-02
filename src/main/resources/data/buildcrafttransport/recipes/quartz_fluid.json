@@ -1,13 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "buildcrafttransport:quartz_item"
-    },
-    {
-      "item": "buildcrafttransport:waterproof"
-    }
-  ],
+  "type": "buildcrafttransport:pipe",
+  "mode": "upgrade",
+  "group": "buildcrafttransport:pipe_upgrades",
+  "from": {
+    "item": "buildcrafttransport:quartz_item"
+  },
+  "additional": {
+    "item": "buildcrafttransport:waterproof"
+  },
   "result": {
     "item": "buildcrafttransport:quartz_fluid"
   }

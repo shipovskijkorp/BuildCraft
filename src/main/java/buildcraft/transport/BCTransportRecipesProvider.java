@@ -34,23 +34,9 @@ public class BCTransportRecipesProvider extends RecipeProvider{
 	}
 
 	@Override
-	protected void buildCraftingRecipes(Consumer<FinishedRecipe> writer) {                
-		creatPipeRecipes(writer, ItemTags.PLANKS, BCTransportItems.PIPE_ITEM_WOOD.get(), BCTransportItems.PIPE_FLUID_WOOD.get(), BCTransportItems.PIPE_POWER_WOOD.get());
-		creatPipeRecipes(writer, ItemTags.STONE_TOOL_MATERIALS, BCTransportItems.PIPE_ITEM_COBBLE.get(), BCTransportItems.PIPE_FLUID_COBBLE.get(), BCTransportItems.PIPE_POWER_COBBLE.get());
-		creatPipeRecipes(writer, Items.STONE, BCTransportItems.PIPE_ITEM_STONE.get(), BCTransportItems.PIPE_FLUID_STONE.get(), BCTransportItems.PIPE_POWER_STONE.get());
-        creatPipeRecipes(writer, Items.IRON_INGOT, BCTransportItems.PIPE_ITEM_IRON.get(), BCTransportItems.PIPE_FLUID_IRON.get(), null);
-        creatPipeRecipes(writer, Items.GOLD_INGOT, BCTransportItems.PIPE_ITEM_GOLD.get(), BCTransportItems.PIPE_FLUID_GOLD.get(), BCTransportItems.PIPE_POWER_GOLD.get());
-        creatPipeRecipes(writer, Items.DIAMOND, BCTransportItems.PIPE_ITEM_DIAMOND.get(), BCTransportItems.PIPE_FLUID_DIAMOND.get(), null);
-        creatPipeRecipes(writer, Items.SANDSTONE, BCTransportItems.PIPE_ITEM_SAND_STONE.get(), BCTransportItems.PIPE_FLUID_SAND_STONE.get(), BCTransportItems.PIPE_POWER_SAND_STONE.get());
-        creatPipeRecipes(writer, Items.QUARTZ_BLOCK, BCTransportItems.PIPE_ITEM_QUARTZ.get(), BCTransportItems.PIPE_FLUID_QUARTZ.get(), BCTransportItems.PIPE_POWER_QUARTZ.get());
-        creatPipeRecipes(writer, Items.CLAY, BCTransportItems.PIPE_ITEM_CLAY.get(), BCTransportItems.PIPE_FLUID_CLAY.get(), null);
-        creatPipeRecipes(writer, Items.LAPIS_BLOCK, BCTransportItems.PIPE_ITEM_LAPIS.get(), null, null);
-        creatPipeRecipes(writer, Items.OBSIDIAN, BCTransportItems.PIPE_ITEM_OBSIDIAN.get(), null, null);
-        creatPipeRecipes(writer, Items.EMERALD, BCTransportItems.PIPE_ITEM_DIAWOOD.get(), BCTransportItems.PIPE_FLUID_DIAWOOD.get(), null);
-        creatPipeRecipes(writer, BCCoreItems.GEAR_GOLD.get(), BCTransportItems.PIPE_ITEM_STRIPES.get(), null, null);
-        creatSpecPipeRecipes(writer, Items.LAPIS_BLOCK, Items.EMERALD, BCTransportItems.PIPE_ITEM_EMZULI.get(), null, null);
-        creatSpecPipeRecipes(writer, Items.LAPIS_BLOCK, Items.DIAMOND, BCTransportItems.PIPE_ITEM_DAIZULI.get(), null, null);
-        creatSpecPipeRecipes(writer, Items.INK_SAC, Items.REDSTONE, BCTransportItems.PIPE_ITEM_VOID.get(), BCTransportItems.PIPE_FLUID_VOID.get(), null);
+	protected void buildCraftingRecipes(Consumer<FinishedRecipe> writer) {
+        // Coloured base pipe recipes and colour-preserving upgrades are hand-authored
+        // with BCTransport's custom pipe recipe serializer.
         creatStructurePipeRecipes(writer, Items.COBBLESTONE, Items.GRAVEL, BCTransportItems.PIPE_STRUCTURE.get());
         creatPowerAdapterRecipes(writer);
         creatPlugBlockerRecipes(writer);
@@ -136,7 +122,7 @@ public class BCTransportRecipesProvider extends RecipeProvider{
 	}
 	
 	private void creatPowerAdapterRecipes(Consumer<FinishedRecipe> writer) {
-    	ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(BCTransportItems.plugPowerAdaptor.get(), 1);
+        ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(BCTransportItems.plugPowerAdaptor.get(), 4);
         builder
         .pattern("sgs")
         .pattern("ses")

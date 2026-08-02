@@ -49,6 +49,7 @@ public class BCTransport {
         BCTransportPlugs.preInit();
         BCTransportBlocks.registry(modEventBus);
         BCTransportItems.registry(modEventBus);
+        BCTransportRecipes.preInit(modEventBus);
         BCTransportGuis.preInit(modEventBus);
         BCTransportStatements.preInit();
 

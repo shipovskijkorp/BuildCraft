@@ -114,6 +114,7 @@ public class BCLib {
     
     public void postInit(FMLLoadCompleteEvent evt) {
         initOptionalCompat("ic2", "buildcraft.compat.ic2.Ic2Compat");
+        initOptionalCompat("forestry", "buildcraft.compat.forestry.ForestryCompat");
     	
 //        ReloadableRegistryManager.loadAll();
 

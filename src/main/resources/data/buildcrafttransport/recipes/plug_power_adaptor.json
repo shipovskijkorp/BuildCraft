@@ -20,6 +20,7 @@
     "srs"
   ],
   "result": {
-    "item": "buildcrafttransport:plug_power_adaptor"
+    "item": "buildcrafttransport:plug_power_adaptor",
+    "count": 4
   }
 }

@@ -1,21 +1,14 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "g": {
-      "item": "minecraft:glass"
-    },
-    "m": {
-      "item": "minecraft:lapis_block"
-    },
-    "n": {
-      "item": "minecraft:emerald"
-    }
+  "type": "buildcrafttransport:pipe",
+  "mode": "upgrade",
+  "group": "buildcrafttransport:pipe_upgrades",
+  "from": {
+    "item": "buildcrafttransport:diamond_wood_item"
   },
-  "pattern": [
-    "mgn"
-  ],
+  "additional": {
+    "item": "minecraft:lapis_block"
+  },
   "result": {
-    "count": 8,
     "item": "buildcrafttransport:emzuli_item"
   }
 }

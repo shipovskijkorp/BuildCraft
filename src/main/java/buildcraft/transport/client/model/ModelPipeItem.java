@@ -19,6 +19,7 @@ import buildcraft.lib.client.model.ModelUtil.UvFaceData;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.lib.misc.ColourUtil;
 import buildcraft.lib.misc.SpriteUtil;
+import buildcraft.transport.item.ItemPipeHolder;
 import buildcraft.transport.BCTransportSprites;
 import com.google.common.collect.ImmutableList;
 import com.mojang.math.Vector3f;
@@ -215,7 +216,7 @@ public enum ModelPipeItem implements BakedModel {
                 type = EnumPipeColourType.TRANSLUCENT;
             }
             List<BakedQuad> quads = getQuads(center, top, bottom, sprites,
-            		stack.hasTag() ? (stack.getTag().contains("color")? stack.getTag().getInt("color") : 0) : 0, type);
+                    ItemPipeHolder.getPipeColorId(stack), type);
             return new ModelItemSimple(quads, ModelItemSimple.TRANSFORM_BLOCK, true);
         }
     }
