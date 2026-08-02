@@ -17,6 +17,12 @@ public class AIRobotSleep extends AIRobot {
 
     @Override
     public void preempt(AIRobot ai) {
+        // A wake-up signal must not bounce a discharged robot back into work. Stay parked until the station has
+        // restored the normal safety reserve.
+        if (robot.getEnergy() < EntityRobotBase.SAFETY_ENERGY) {
+            return;
+        }
+
         DockingStation station = robot.getLinkedStation();
         if (station == null) {
             return;
@@ -32,6 +38,11 @@ public class AIRobotSleep extends AIRobot {
 
     @Override
     public void update() {
+        if (robot.getEnergy() < EntityRobotBase.SAFETY_ENERGY) {
+            sleptTime = 0;
+            return;
+        }
+
         sleptTime++;
         if (sleptTime > SLEEPING_TIME) {
             terminate();
@@ -40,6 +51,9 @@ public class AIRobotSleep extends AIRobot {
 
     @Override
     public int getEnergyCost() {
+        if (robot.getEnergy() < EntityRobotBase.SAFETY_ENERGY) {
+            return 0;
+        }
         return sleptTime % 10 == 0 ? 1 : 0;
     }
 

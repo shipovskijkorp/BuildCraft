@@ -31,6 +31,8 @@ public abstract class DockingStation {
     private long robotTakingId = EntityRobotBase.NULL_ROBOT_ID;
     private EntityRobotBase robotTaking;
     private boolean linkIsMain = false;
+    /** Robot id explicitly detached by a player; prevents an unloaded robot from reclaiming the station on load. */
+    private long manuallyReleasedRobotId = EntityRobotBase.NULL_ROBOT_ID;
     private BlockIndex index;
 
     public DockingStation(BlockIndex index, @Nullable Direction side) {
@@ -100,6 +102,7 @@ public abstract class DockingStation {
         if (robotTakingId == EntityRobotBase.NULL_ROBOT_ID || robotTakingId == robot.getRobotId()) {
             IRobotRegistry registry = RobotManager.registryProvider.getRegistry(robot.level);
             linkIsMain = true;
+            manuallyReleasedRobotId = EntityRobotBase.NULL_ROBOT_ID;
             robotTaking = robot;
             robotTakingId = robot.getRobotId();
             registry.registryMarkDirty();
@@ -148,6 +151,33 @@ public abstract class DockingStation {
         }
     }
 
+    /**
+     * Unconditionally frees this station, including a main/home link. Intended for explicit player actions such as
+     * shift-wrenching a robot station.
+     *
+     * @return the id of the robot that owned the station, or {@link EntityRobotBase#NULL_ROBOT_ID} when it was free
+     */
+    public long forceRelease() {
+        long releasedRobotId = robotTakingId;
+        manuallyReleasedRobotId = releasedRobotId;
+        linkIsMain = false;
+        robotTaking = null;
+        robotTakingId = EntityRobotBase.NULL_ROBOT_ID;
+
+        if (releasedRobotId != EntityRobotBase.NULL_ROBOT_ID
+                && RobotManager.registryProvider != null
+                && level() != null) {
+            IRobotRegistry registry = RobotManager.registryProvider.getRegistry(level());
+            registry.release(this, releasedRobotId);
+            registry.registryMarkDirty();
+        }
+        return releasedRobotId;
+    }
+
+    public boolean wasManuallyReleased(long robotId) {
+        return robotId != EntityRobotBase.NULL_ROBOT_ID && manuallyReleasedRobotId == robotId;
+    }
+
     /** Same as release, but does not update the registry. Intended to be called by the registry itself. */
     public void unsafeRelease(EntityRobotBase robot) {
         if (robotTaking == robot || robotTakingId == robot.getRobotId()) {
@@ -164,6 +194,9 @@ public abstract class DockingStation {
         nbt.putByte("side", (byte) (side == null ? -1 : side.ordinal()));
         nbt.putBoolean("isMain", linkIsMain);
         nbt.putLong("robotId", robotTakingId);
+        if (manuallyReleasedRobotId != EntityRobotBase.NULL_ROBOT_ID) {
+            nbt.putLong("manuallyReleasedRobotId", manuallyReleasedRobotId);
+        }
     }
 
     public void readFromNBT(CompoundTag nbt) {
@@ -172,6 +205,9 @@ public abstract class DockingStation {
         side = sideId >= 0 && sideId < Direction.values().length ? Direction.values()[sideId] : null;
         linkIsMain = nbt.getBoolean("isMain");
         robotTakingId = nbt.getLong("robotId");
+        manuallyReleasedRobotId = nbt.contains("manuallyReleasedRobotId")
+                ? nbt.getLong("manuallyReleasedRobotId")
+                : EntityRobotBase.NULL_ROBOT_ID;
     }
 
     public boolean isTaken() {

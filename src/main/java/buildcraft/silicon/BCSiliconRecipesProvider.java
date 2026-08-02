@@ -80,7 +80,7 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
                 ImmutableSet.Builder<IngredientStack> input = ImmutableSet.builder();
                 input.add(new IngredientStack(Ingredient.of(redstoneEngine)));
                 input.add(new IngredientStack(Ingredient.of(Tags.Items.INGOTS_IRON), 2));
-                AssemblyRecipeBuilder assemblyBuilder = new AssemblyRecipeBuilder(1000 * MjAPI.MJ, input.build(), output);
+                AssemblyRecipeBuilder assemblyBuilder = new AssemblyRecipeBuilder(assemblyCost(1000), input.build(), output);
                 assemblyBuilder.unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
                 .save(writer, new ResourceLocation("buildcraftsilicon", "assembly/plug_pulsar"));
                 //AssemblyRecipeRegistry.register(recipe);
@@ -112,14 +112,14 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
             }
 		}
 		if (BCSiliconItems.PLUG_LIGHT_SENSOR_ITEM.get() != null) {
-           new AssemblyRecipeBuilder(500 * MjAPI.MJ, ImmutableSet.of(IngredientStack.of(Blocks.DAYLIGHT_DETECTOR)),
+           new AssemblyRecipeBuilder(assemblyCost(500), ImmutableSet.of(IngredientStack.of(Blocks.DAYLIGHT_DETECTOR)),
                 new ItemStack(BCSiliconItems.PLUG_LIGHT_SENSOR_ITEM.get()))
            .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
            .save(writer, new ResourceLocation("buildcraftsilicon", "assembly/light_sensor"));
         }
 
         if (BCSiliconItems.PLUG_TIMER_ITEM.get() != null) {
-           new AssemblyRecipeBuilder(500 * MjAPI.MJ, ImmutableSet.of(IngredientStack.of(net.minecraft.world.item.Items.CLOCK)),
+           new AssemblyRecipeBuilder(assemblyCost(500), ImmutableSet.of(IngredientStack.of(net.minecraft.world.item.Items.CLOCK)),
                 new ItemStack(BCSiliconItems.PLUG_TIMER_ITEM.get()))
            .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
            .save(writer, new ResourceLocation("buildcraftsilicon", "assembly/plug_timer"));
@@ -136,7 +136,7 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
                 IngredientStack stainedGlass = IngredientStack.of(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(colour.getName()+"_stained_glass")));
                 ImmutableSet<IngredientStack> input = ImmutableSet.of(stainedGlass);
                 ItemStack output = BCSiliconItems.PLUG_LENS_ITEM.get().getStack(colour, false);
-                new AssemblyRecipeBuilder(500 * MjAPI.MJ, input, output)
+                new AssemblyRecipeBuilder(assemblyCost(500), input, output)
                 .group("buildcraftsilicon:lens_regulars")
                 .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
                 .save(writer, new ResourceLocation("buildcraftsilicon",name));
@@ -144,7 +144,7 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
                 name = String.format("assembly/lens/filter/%s", colour.getSerializedName());
                 output = BCSiliconItems.PLUG_LENS_ITEM.get().getStack(colour, true);
                 input = ImmutableSet.of(stainedGlass, IngredientStack.of(Blocks.IRON_BARS));
-                new AssemblyRecipeBuilder(500 * MjAPI.MJ, input, output)
+                new AssemblyRecipeBuilder(assemblyCost(500), input, output)
                 .group("buildcraftsilicon:lens_filters")
                 .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
                 .save(writer, new ResourceLocation("buildcraftsilicon",name));
@@ -153,14 +153,14 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
             IngredientStack glass = IngredientStack.of(Tags.Blocks.GLASS);
             ImmutableSet<IngredientStack> input = ImmutableSet.of(glass);
             ItemStack output = BCSiliconItems.PLUG_LENS_ITEM.get().getStack(null, false);
-            new AssemblyRecipeBuilder(500 * MjAPI.MJ, input, output)
+            new AssemblyRecipeBuilder(assemblyCost(500), input, output)
             .group("buildcraftsilicon:lens_regulars")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon", "assembly/lens/lens_regular"));
 
             output = BCSiliconItems.PLUG_LENS_ITEM.get().getStack(null, true);
             input = ImmutableSet.of(glass, IngredientStack.of(Blocks.IRON_BARS));
-            new AssemblyRecipeBuilder(500 * MjAPI.MJ, input, output)
+            new AssemblyRecipeBuilder(assemblyCost(500), input, output)
             .group("buildcraftsilicon:lens_regulars")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon", "assembly/lens/lens_filter"));
@@ -169,35 +169,35 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
         if (!BCSiliconItems.REDSTONE_CHIPSET_ITEMS.isEmpty()) {
             ImmutableSet<IngredientStack> input = ImmutableSet.of(IngredientStack.of(Tags.Items.DUSTS_REDSTONE));
             ItemStack output = EnumRedstoneChipset.RED.getStack(1);//TODO
-            new AssemblyRecipeBuilder(10000 * MjAPI.MJ, input, output)
+            new AssemblyRecipeBuilder(assemblyCost(10_000), input, output)
             .group("buildcraftsilicon:chipsets")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon","assembly/redstone_chipset"));
 
             input = ImmutableSet.of(IngredientStack.of(Tags.Items.DUSTS_REDSTONE), IngredientStack.of(Tags.Items.INGOTS_IRON));
             output = EnumRedstoneChipset.IRON.getStack(1);
-            new AssemblyRecipeBuilder(20000 * MjAPI.MJ, input, output)
+            new AssemblyRecipeBuilder(assemblyCost(20_000), input, output)
             .group("buildcraftsilicon:chipsets")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon","assembly/iron_chipset"));
 
             input = ImmutableSet.of(IngredientStack.of(Tags.Items.DUSTS_REDSTONE), IngredientStack.of(Tags.Items.INGOTS_GOLD));
             output = EnumRedstoneChipset.GOLD.getStack(1);
-            new AssemblyRecipeBuilder(40000 * MjAPI.MJ, input, output)
+            new AssemblyRecipeBuilder(assemblyCost(40_000), input, output)
             .group("buildcraftsilicon:chipsets")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon","assembly/gold_chipset"));
 
             input = ImmutableSet.of(IngredientStack.of(Tags.Items.DUSTS_REDSTONE), IngredientStack.of(Tags.Items.GEMS_QUARTZ));
             output = EnumRedstoneChipset.QUARTZ.getStack(1);
-            new AssemblyRecipeBuilder(60000 * MjAPI.MJ, input, output)
+            new AssemblyRecipeBuilder(assemblyCost(60_000), input, output)
             .group("buildcraftsilicon:chipsets")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon","assembly/quartz_chipset"));
 
             input = ImmutableSet.of(IngredientStack.of(Tags.Items.DUSTS_REDSTONE), IngredientStack.of(Tags.Items.GEMS_DIAMOND));
             output = EnumRedstoneChipset.DIAMOND.getStack(1);
-            new AssemblyRecipeBuilder(80000 * MjAPI.MJ, input, output)
+            new AssemblyRecipeBuilder(assemblyCost(80_000), input, output)
             .group("buildcraftsilicon:chipsets")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon","assembly/diamond_chipset"));
@@ -220,12 +220,17 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
                 input.add(IngredientStack.of(Tags.Items.INGOTS_GOLD));
             }
 
-            new AssemblyRecipeBuilder(500 * MjAPI.MJ, input.build(), new ItemStack(BCSiliconItems.GATE_COPIER_ITEM.get()))
+            new AssemblyRecipeBuilder(assemblyCost(500), input.build(), new ItemStack(BCSiliconItems.GATE_COPIER_ITEM.get()))
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon","assembly/gate_copier"));
         }
 	}
 	
+    /** Keeps generated assembly-table recipes in sync with the 50% energy rebalance. */
+    private static long assemblyCost(long wholeMj) {
+        return wholeMj * MjAPI.MJ / 2L;
+    }
+
 	private void makeGateRecipe0(Consumer<FinishedRecipe> writer, Ingredient m, EnumGateMaterial material,
 			EnumGateModifier modifier) {
         GateVariant variant = new GateVariant(EnumGateLogic.AND, EnumGateMaterial.IRON, EnumGateModifier.NO_MODIFIER);
@@ -271,14 +276,14 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
 
             String name = String.format("assembly/gate/and_%s_%s", material.toString().toLowerCase(), modifier.toString().toLowerCase());
             ItemStack output = BCSiliconItems.PLUG_GATE_ITEM.get().getStack(new GateVariant(EnumGateLogic.AND, material, modifier));
-            AssemblyRecipeBuilder andBuilder = new AssemblyRecipeBuilder(MjAPI.MJ * multiplier, input, output);
+            AssemblyRecipeBuilder andBuilder = new AssemblyRecipeBuilder(assemblyCost(multiplier), input, output);
             andBuilder.group("buildcraftsilicon:gate_and")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon", name));
 
             name = String.format("assembly/gate/or_%s_%s", material.toString().toLowerCase(), modifier.toString().toLowerCase());
             output = BCSiliconItems.PLUG_GATE_ITEM.get().getStack(new GateVariant(EnumGateLogic.OR, material, modifier));
-            AssemblyRecipeBuilder orBuilder = new AssemblyRecipeBuilder(MjAPI.MJ * multiplier, input, output);
+            AssemblyRecipeBuilder orBuilder = new AssemblyRecipeBuilder(assemblyCost(multiplier), input, output);
             orBuilder.group("buildcraftsilicon:gate_or")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon", name));
@@ -295,7 +300,7 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
 			inputBuilder.add(new IngredientStack(StrictNBTIngredient.of(toUpgrade)));
 			inputBuilder.add(mods);
 			ImmutableSet<IngredientStack> input = inputBuilder.build();
-			AssemblyRecipeBuilder builder = new AssemblyRecipeBuilder(MjAPI.MJ * multiplier, input, output);
+			AssemblyRecipeBuilder builder = new AssemblyRecipeBuilder(assemblyCost(multiplier), input, output);
 			builder.group("buildcraftsilicon:gate_modifier")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
             .save(writer, new ResourceLocation("buildcraftsilicon", name));

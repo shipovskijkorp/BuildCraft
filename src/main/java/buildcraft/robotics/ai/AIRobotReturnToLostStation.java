@@ -44,6 +44,7 @@ public class AIRobotReturnToLostStation extends AIRobot {
     private boolean parked;
     private boolean initialized;
     private boolean finishPending;
+    private boolean allowStationRebind = true;
 
     public AIRobotReturnToLostStation(EntityRobotBase robot) {
         super(robot);
@@ -51,15 +52,21 @@ public class AIRobotReturnToLostStation extends AIRobot {
     }
 
     public AIRobotReturnToLostStation(EntityRobotBase robot, BlockIndex stationIndex, @Nullable Direction stationSide) {
+        this(robot, stationIndex, stationSide, true);
+    }
+
+    public AIRobotReturnToLostStation(EntityRobotBase robot, BlockIndex stationIndex, @Nullable Direction stationSide,
+            boolean allowStationRebind) {
         this(robot);
         this.stationIndex = copy(stationIndex);
         this.stationSide = stationSide;
+        this.allowStationRebind = allowStationRebind;
     }
 
     @Override
     public void start() {
         initialize();
-        if (!tryStartDocking()) {
+        if (!allowStationRebind || !tryStartDocking()) {
             rebuildParkingCandidates();
             startNextParkingPath();
         }
@@ -72,14 +79,16 @@ public class AIRobotReturnToLostStation extends AIRobot {
             return;
         }
 
-        if (stationRetry > 0) {
-            stationRetry--;
-        } else {
-            stationRetry = STATION_RETRY_TICKS;
-            // Do not restart an in-progress docking route every second. Parking routes may be interrupted as soon as
-            // the station reappears, but AIRobotGotoStation must be allowed to finish its own path.
-            if (!(ai instanceof AIRobotGotoStation) && tryStartDocking()) {
-                return;
+        if (allowStationRebind) {
+            if (stationRetry > 0) {
+                stationRetry--;
+            } else {
+                stationRetry = STATION_RETRY_TICKS;
+                // Do not restart an in-progress docking route every second. Parking routes may be interrupted as soon
+                // as the station reappears, but AIRobotGotoStation must be allowed to finish its own path.
+                if (!(ai instanceof AIRobotGotoStation) && tryStartDocking()) {
+                    return;
+                }
             }
         }
 
@@ -306,6 +315,7 @@ public class AIRobotReturnToLostStation extends AIRobot {
             nbt.putByte("stationSide", (byte) (stationSide == null ? -1 : stationSide.ordinal()));
         }
         nbt.putBoolean("parked", parked);
+        nbt.putBoolean("allowStationRebind", allowStationRebind);
     }
 
     @Override
@@ -316,6 +326,7 @@ public class AIRobotReturnToLostStation extends AIRobot {
             stationSide = sideId >= 0 && sideId < Direction.values().length ? Direction.values()[sideId] : null;
         }
         parked = nbt.getBoolean("parked");
+        allowStationRebind = !nbt.contains("allowStationRebind") || nbt.getBoolean("allowStationRebind");
         initialized = false;
         finishPending = false;
         stationRetry = 0;

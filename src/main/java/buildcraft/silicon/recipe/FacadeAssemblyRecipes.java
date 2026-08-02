@@ -52,8 +52,9 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
     private static final ChangingObject<Long> MJ_COSTS = new ChangingObject<>(new Long[] { MJ_COST });
     
     public static FacadeAssemblyRecipes getInstance(ResourceLocation location) {
-    	//if(ID.equals(location))
-    	return INSTANCE;
+        // RecipeManager indexes recipes by the JSON id supplied to the serializer. Returning the legacy singleton
+        // gave this recipe a different getId(), so Assembly Table GUI packets could not resolve it on the other side.
+        return new FacadeAssemblyRecipes(location);
     }
 
     public static ItemStack createFacadeStack(FacadeBlockStateInfo info, boolean isHollow) {
@@ -152,10 +153,14 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 		return true;//TODO
 	}
 
-	@Override
-	public ItemStack getResultItem() {//TODO:CACHE THIS 
-		return createFacadeStack(FacadeStateManager.validFacadeStates.values().toArray(FacadeBlockStateInfo[]::new)[0], false);
-	}
+    @Override
+    public ItemStack getResultItem() {
+        return FacadeStateManager.validFacadeStates.values().stream()
+                .filter(info -> info.isVisible && !info.requiredStack.isEmpty())
+                .findFirst()
+                .map(info -> createFacadeStack(info, false))
+                .orElse(ItemStack.EMPTY);
+    }
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {

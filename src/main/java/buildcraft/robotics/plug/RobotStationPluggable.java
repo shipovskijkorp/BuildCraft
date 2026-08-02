@@ -18,6 +18,7 @@ import buildcraft.api.transport.pipe.IPipeHolder;
 import buildcraft.api.transport.pluggable.PipePluggable;
 import buildcraft.api.transport.pluggable.PluggableDefinition;
 import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.lib.misc.EntityUtil;
 import buildcraft.robotics.BCRoboticsItems;
 import buildcraft.robotics.DockingStationPipe;
 import buildcraft.robotics.client.model.key.KeyRobotStation;
@@ -233,6 +234,32 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
 
     @Override
     public InteractionResult onPluggableActivate(Player player, BlockHitResult trace, Level level) {
+        if (player.isShiftKeyDown() && EntityUtil.getWrenchHand(player) != null) {
+            validateStation();
+            if (station == null || !station.isMainStation()) {
+                return InteractionResult.PASS;
+            }
+            if (level.isClientSide) {
+                return InteractionResult.SUCCESS;
+            }
+
+            EntityRobotBase releasedRobot = station.robotTaking();
+            station.forceRelease();
+            if (releasedRobot instanceof EntityRobot robot) {
+                robot.releaseMainStationForPlayer(station);
+            } else if (releasedRobot != null) {
+                releasedRobot.setMainStation(null);
+            }
+
+            EntityUtil.activateWrench(player, trace);
+            refreshRenderState();
+            scheduleNetworkUpdate();
+            if (holder != null) {
+                holder.scheduleRenderUpdate();
+            }
+            return InteractionResult.CONSUME;
+        }
+
         ItemStack held = player.getMainHandItem();
         if (!(held.getItem() instanceof ItemRobot)) {
             held = player.getOffhandItem();

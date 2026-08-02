@@ -124,6 +124,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     // pluggables are being reloaded, and an actually removed station is still the safest place to return a lost robot.
     private BlockIndex lastMainStationIndex;
     private Direction lastMainStationSide;
+    /** True when a player explicitly freed the home station; prevents automatic re-taking of that same station. */
+    private boolean mainStationReleasedManually;
 
     private DockingStation dockingStation;
     private BlockIndex dockingStationIndex;
@@ -472,11 +474,26 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
      * robot back to the last known home position and waits there for the station to become available again.
      */
     private void validateLinkedStation() {
+        if (mainStationReleasedManually) {
+            ensureManualStationReturnAI();
+            return;
+        }
+
         if (linkedStation == null && linkedStationIndex != null) {
             linkedStation = getStation(getRegistry(), linkedStationIndex, linkedStationSide);
             if (linkedStation != null) {
                 rememberMainStation(linkedStationIndex, linkedStationSide);
             }
+        }
+
+        if (linkedStation != null && linkedStation.wasManuallyReleased(robotId)) {
+            rememberMainStation(linkedStation.index(), linkedStation.side());
+            mainStationReleasedManually = true;
+            linkedStation = null;
+            linkedStationIndex = null;
+            linkedStationSide = null;
+            ensureManualStationReturnAI();
+            return;
         }
 
         if (linkedStation == null && !tryRecoverMainStation()) {
@@ -525,6 +542,18 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 && lastMainStationIndex != null) {
             BCLog.logger.info("Robot {} recovered its main station; returning to dock", robotId);
             mainAI.startDelegateAI(new AIRobotReturnToLostStation(this, lastMainStationIndex, lastMainStationSide));
+        }
+    }
+
+    private void ensureManualStationReturnAI() {
+        setDeltaMovement(Vec3.ZERO);
+        if (lastMainStationIndex == null || mainAI == null) {
+            return;
+        }
+        if (!(mainAI.getDelegateAI() instanceof AIRobotReturnToLostStation)) {
+            mainAI.setOverridingAI(null);
+            mainAI.startDelegateAI(new AIRobotReturnToLostStation(
+                    this, lastMainStationIndex, lastMainStationSide, false));
         }
     }
 
@@ -758,6 +787,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         tag.putBoolean("asleep", isAsleepForRendering());
         tag.putInt("ticksCharging", ticksCharging);
         tag.putLong("chargeRemainder", chargeRemainder);
+        tag.putBoolean("mainStationReleasedManually", mainStationReleasedManually);
         tag.putFloat("aimYaw", aimYaw);
         tag.putFloat("aimPitch", aimPitch);
         if (!itemInUse.isEmpty()) {
@@ -803,6 +833,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         itemActive = tag.getBoolean("itemActive");
         ticksCharging = tag.getInt("ticksCharging");
         chargeRemainder = tag.getLong("chargeRemainder");
+        mainStationReleasedManually = tag.getBoolean("mainStationReleasedManually");
         if (tag.contains("asleep")) {
             entityData.set(ROBOT_ASLEEP, tag.getBoolean("asleep"));
         }
@@ -1440,6 +1471,29 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         return remaining;
     }
 
+    /** Called after a player shift-wrenches the robot's home station. */
+    public void releaseMainStationForPlayer(DockingStation station) {
+        if (level.isClientSide || station == null) {
+            return;
+        }
+
+        rememberMainStation(station.index(), station.side());
+        mainStationReleasedManually = true;
+        linkedStation = null;
+        linkedStationIndex = null;
+        linkedStationSide = null;
+        releaseResources();
+        setDeltaMovement(Vec3.ZERO);
+
+        if (mainAI == null) {
+            mainAI = new AIRobotMain(this);
+            mainAI.start();
+        }
+        mainAI.setOverridingAI(null);
+        mainAI.startDelegateAI(new AIRobotReturnToLostStation(
+                this, lastMainStationIndex, lastMainStationSide, false));
+    }
+
     @Override
     public void setMainStation(DockingStation station) {
         if (linkedStation != null && linkedStation != station) {
@@ -1447,6 +1501,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         }
         linkedStation = station;
         if (station != null) {
+            mainStationReleasedManually = false;
             station.setLevel(level);
             linkedStationIndex = copyIndex(station.index());
             linkedStationSide = station.side();

@@ -2,10 +2,16 @@ package buildcraft.robotics.ai;
 
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.robots.AIRobot;
+import buildcraft.api.robots.DockingStation;
 import buildcraft.api.robots.EntityRobotBase;
+import net.minecraft.core.Direction;
 
 /** Main robotics AI loop, ported from BuildCraft 7.1.x. */
 public class AIRobotMain extends AIRobot {
+    private static final double MOVE_SPEED_PER_TICK = 0.15D;
+    private static final int MOVE_ENERGY_PER_TICK = 3;
+    private static final int RETURN_FIXED_RESERVE = 2_000;
+
     private AIRobot overridingAI;
     private int rechargeCooldown;
 
@@ -23,9 +29,20 @@ public class AIRobotMain extends AIRobot {
         // Returning to a lost home station is a safety operation. It must not be replaced by recharge/shutdown,
         // otherwise a discharged robot can remain stranded forever at its last work target.
         if (ai instanceof AIRobotReturnToLostStation) {
-            if (overridingAI != null && ai != overridingAI) {
-                startDelegateAI(overridingAI);
-            }
+            return;
+        }
+
+        // Once a low-power return has started, never replace it with shutdown/recharge. AIRobotGotoSleep is allowed
+        // to finish even if the battery reaches zero, and AIRobotSleep then remains stable until the dock recharges it.
+        if (ai instanceof AIRobotGotoSleep || ai instanceof AIRobotSleep) {
+            return;
+        }
+
+        DockingStation home = robot.getLinkedStation();
+        if (home != null && robot.getEnergy() <= getReturnEnergyThreshold(home)) {
+            // Low-power return is an abort, not a pause: do not resume a stale player/board override after charging.
+            overridingAI = null;
+            startDelegateAI(new AIRobotGotoSleep(robot));
             return;
         }
 
@@ -45,6 +62,26 @@ public class AIRobotMain extends AIRobot {
                 startDelegateAI(overridingAI);
             }
         }
+    }
+
+    private int getReturnEnergyThreshold(DockingStation station) {
+        Direction side = station.side();
+        int dx = side == null ? 0 : side.getStepX();
+        int dy = side == null ? 0 : side.getStepY();
+        int dz = side == null ? 0 : side.getStepZ();
+
+        double targetX = station.x() + 0.5D + dx * 0.5D;
+        double targetY = station.y() + 0.5D + dy * 0.5D;
+        double targetZ = station.z() + 0.5D + dz * 0.5D;
+        double pathBlocks = Math.abs(robot.getX() - targetX)
+                + Math.abs(robot.getY() - targetY)
+                + Math.abs(robot.getZ() - targetZ);
+
+        long movementTicks = (long) Math.ceil(pathBlocks / MOVE_SPEED_PER_TICK);
+        long estimatedMovement = movementTicks * MOVE_ENERGY_PER_TICK;
+        long withMargin = estimatedMovement + estimatedMovement / 2L + RETURN_FIXED_RESERVE;
+        long threshold = Math.max(EntityRobotBase.SAFETY_ENERGY, withMargin);
+        return (int) Math.min(EntityRobotBase.MAX_ENERGY - 1L, threshold);
     }
 
     @Override

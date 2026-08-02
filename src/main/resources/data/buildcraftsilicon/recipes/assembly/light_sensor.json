@@ -1,6 +1,6 @@
 {
   "type": "buildcraftsilicon:assembly",
-  "MJ": 500000000,
+  "MJ": 250000000,
   "ingredient_counts": [
     1
   ],

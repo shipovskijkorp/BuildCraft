@@ -2,6 +2,7 @@ package buildcraft.compat.jei;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,8 +38,13 @@ import buildcraft.silicon.BCSiliconGuis;
 import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.BCSiliconRecipes;
 import buildcraft.silicon.container.ContainerAssemblyTable;
+import buildcraft.silicon.gate.EnumGateMaterial;
+import buildcraft.silicon.gate.EnumGateModifier;
+import buildcraft.silicon.gate.GateVariant;
 import buildcraft.silicon.item.ItemPluggableFacade;
+import buildcraft.silicon.item.ItemPluggableGate;
 import buildcraft.silicon.recipe.FacadeAssemblyRecipes;
+import buildcraft.silicon.tile.TileProgrammingTable_Neptune;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeStateManager;
 import buildcraft.transport.BCTransportItems;
@@ -50,6 +56,8 @@ import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -95,7 +103,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public static final RecipeType<HeatExchangeRecipeView> HEAT_EXCHANGE = RecipeType.create("buildcraftfactory", "heat_exchange", HeatExchangeRecipeView.class);
     public static final RecipeType<CombustionFuelRecipeView> COMBUSTION_FUEL = RecipeType.create("buildcraftenergy", "combustion_fuel", CombustionFuelRecipeView.class);
 
-    private static final Map<ResourceLocation, List<AssemblyRecipeBasic>> GROUPED_ASSEMBLY_RECIPES = new LinkedHashMap<>();
+    private static final Map<ResourceLocation, GroupedAssemblyRecipe> GROUPED_ASSEMBLY_RECIPES = new LinkedHashMap<>();
     private static List<FluidContainerAlias> fluidContainerAliases = List.of();
 
     @Override
@@ -133,6 +141,16 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public void registerItemSubtypes(ISubtypeRegistration registration) {
         registration.registerSubtypeInterpreter(BCSiliconItems.PLUG_FACADE_ITEM.get(),
                 (stack, context) -> getFacadeSubtype(stack));
+
+        // Gates share one item id. Grouping the subtype by material keeps JEI's use lookup useful:
+        // pressing U on a gold gate shows only the gold base/modifier pages instead of every gate recipe.
+        registration.registerSubtypeInterpreter(BCSiliconItems.PLUG_GATE_ITEM.get(),
+                (stack, context) -> ItemPluggableGate.getVariant(stack).material.tag);
+
+        // Lens colour/filter state is stored in Damage NBT on a single item. Expose it to JEI so focused
+        // recipe lookups can select the matching variant inside the grouped lens pages.
+        registration.registerSubtypeInterpreter(BCSiliconItems.PLUG_LENS_ITEM.get(),
+                (stack, context) -> Integer.toString(stack.getDamageValue()));
     }
 
     @Override
@@ -159,14 +177,14 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             if (hadFacadeRecipe) {
                 assemblyRecipes.add(FacadeAssemblyJeiRecipe.create());
             }
-            assemblyRecipes = groupLensAndFilterRecipes(assemblyRecipes);
+            assemblyRecipes = groupAssemblyRecipes(assemblyRecipes);
             registration.addRecipes(ASSEMBLY, assemblyRecipes);
         }
 
         BCRoboticsBoards.init();
         List<ProgrammingRecipeView> programming = new ArrayList<>();
         List<IntegrationRecipeView> integration = new ArrayList<>();
-        for (BoardEntry board : BCRoboticsBoards.robotEntries()) {
+        for (BoardEntry board : getSortedProgrammingBoards()) {
             programming.add(new ProgrammingRecipeView(board));
             integration.add(new IntegrationRecipeView(board));
         }
@@ -227,43 +245,101 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         );
     }
 
-    private static List<AssemblyRecipeBasic> groupLensAndFilterRecipes(List<AssemblyRecipeBasic> recipes) {
+    private static List<AssemblyRecipeBasic> groupAssemblyRecipes(List<AssemblyRecipeBasic> recipes) {
         GROUPED_ASSEMBLY_RECIPES.clear();
-        List<AssemblyRecipeBasic> regularLenses = new ArrayList<>();
-        List<AssemblyRecipeBasic> filters = new ArrayList<>();
+        Map<GroupedAssemblyKey, List<AssemblyRecipeBasic>> grouped = new LinkedHashMap<>();
         List<AssemblyRecipeBasic> result = new ArrayList<>();
 
         for (AssemblyRecipeBasic recipe : recipes) {
-            ItemStack output = recipe.getResultItem();
-            if (output.getItem() != BCSiliconItems.PLUG_LENS_ITEM.get()) {
+            GroupedAssemblyKey key = getGroupedAssemblyKey(recipe);
+            if (key == null) {
                 result.add(recipe);
-                continue;
+            } else {
+                grouped.computeIfAbsent(key, ignored -> new ArrayList<>()).add(recipe);
             }
-            boolean filter = recipe.getInputsFor(output).stream()
-                    .anyMatch(input -> input.ingredient.test(new ItemStack(Items.IRON_BARS)));
-            (filter ? filters : regularLenses).add(recipe);
         }
 
-        addGroupedAssemblyRecipe(result, regularLenses);
-        addGroupedAssemblyRecipe(result, filters);
+        for (Map.Entry<GroupedAssemblyKey, List<AssemblyRecipeBasic>> entry : grouped.entrySet()) {
+            addGroupedAssemblyRecipe(result, entry.getKey(), entry.getValue());
+        }
         return result;
     }
 
-    private static void addGroupedAssemblyRecipe(List<AssemblyRecipeBasic> target, List<AssemblyRecipeBasic> variants) {
+    private static GroupedAssemblyKey getGroupedAssemblyKey(AssemblyRecipeBasic recipe) {
+        ItemStack output = recipe.getResultItem();
+        if (output.getItem() == BCSiliconItems.PLUG_LENS_ITEM.get()) {
+            boolean filter = recipe.getInputsFor(output).stream()
+                    .anyMatch(input -> input.ingredient.test(new ItemStack(Items.IRON_BARS)));
+            return new GroupedAssemblyKey(filter ? GroupedAssemblyKind.LENS_FILTER : GroupedAssemblyKind.LENS, null);
+        }
+
+        ResourceLocation outputId = ForgeRegistries.ITEMS.getKey(output.getItem());
+        if (outputId != null
+                && outputId.getNamespace().equals("buildcrafttransport")
+                && outputId.getPath().startsWith("wire/")) {
+            return new GroupedAssemblyKey(GroupedAssemblyKind.WIRE, null);
+        }
+
+        if (output.getItem() == BCSiliconItems.PLUG_GATE_ITEM.get()) {
+            GateVariant variant = ItemPluggableGate.getVariant(output);
+            if (variant.material.canBeModified) {
+                GroupedAssemblyKind kind = variant.modifier == EnumGateModifier.NO_MODIFIER
+                        ? GroupedAssemblyKind.GATE_BASE
+                        : GroupedAssemblyKind.GATE_MODIFIER;
+                return new GroupedAssemblyKey(kind, variant.material);
+            }
+        }
+        return null;
+    }
+
+    private static void addGroupedAssemblyRecipe(List<AssemblyRecipeBasic> target, GroupedAssemblyKey key,
+            List<AssemblyRecipeBasic> variants) {
         if (variants.isEmpty()) {
             return;
         }
-        variants.sort(Comparator.comparingInt(recipe -> recipe.getResultItem().getDamageValue()));
+        variants.sort(groupedAssemblyComparator(key));
         AssemblyRecipeBasic representative = variants.get(0);
-        GROUPED_ASSEMBLY_RECIPES.put(representative.getId(), List.copyOf(variants));
+        GROUPED_ASSEMBLY_RECIPES.put(
+                representative.getId(),
+                new GroupedAssemblyRecipe(key, List.copyOf(variants))
+        );
         target.add(representative);
     }
 
+    private static Comparator<AssemblyRecipeBasic> groupedAssemblyComparator(GroupedAssemblyKey key) {
+        return switch (key.kind()) {
+            case LENS, LENS_FILTER -> Comparator.comparingInt(recipe -> recipe.getResultItem().getDamageValue());
+            case WIRE -> Comparator.comparing(recipe -> String.valueOf(ForgeRegistries.ITEMS.getKey(recipe.getResultItem().getItem())));
+            case GATE_BASE, GATE_MODIFIER -> Comparator
+                    .comparingInt((AssemblyRecipeBasic recipe) -> ItemPluggableGate.getVariant(recipe.getResultItem()).logic.ordinal())
+                    .thenComparingInt(recipe -> ItemPluggableGate.getVariant(recipe.getResultItem()).modifier.ordinal());
+        };
+    }
+
+    private enum GroupedAssemblyKind {
+        LENS,
+        LENS_FILTER,
+        WIRE,
+        GATE_BASE,
+        GATE_MODIFIER
+    }
+
+    private record GroupedAssemblyKey(GroupedAssemblyKind kind, EnumGateMaterial gateMaterial) {
+    }
+
+    private record GroupedAssemblyRecipe(GroupedAssemblyKey key, List<AssemblyRecipeBasic> variants) {
+    }
+
     private static List<AssemblyRecipeBasic> getFocusedAssemblyVariants(List<AssemblyRecipeBasic> variants, IFocusGroup focuses) {
-        List<ItemStack> focused = focuses.getAllFocuses().stream()
+        List<ItemStack> focused = new ArrayList<>();
+        focuses.getFocuses(RecipeIngredientRole.INPUT)
                 .map(BuildCraftJeiPlugin::getFocusedItemStack)
                 .filter(stack -> !stack.isEmpty())
-                .toList();
+                .forEach(focused::add);
+        focuses.getFocuses(RecipeIngredientRole.OUTPUT)
+                .map(BuildCraftJeiPlugin::getFocusedItemStack)
+                .filter(stack -> !stack.isEmpty())
+                .forEach(focused::add);
         if (focused.isEmpty()) {
             return variants;
         }
@@ -282,17 +358,6 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             return false;
         }).toList();
         return matches.isEmpty() ? variants : matches;
-    }
-
-    private static List<ItemStack> deduplicateStacks(List<ItemStack> stacks) {
-        LinkedHashMap<ItemStackKey, ItemStack> unique = new LinkedHashMap<>();
-        for (ItemStack stack : stacks) {
-            if (!stack.isEmpty()) {
-                ItemStack copy = stack.copy();
-                unique.putIfAbsent(new ItemStackKey(copy), copy);
-            }
-        }
-        return new ArrayList<>(unique.values());
     }
 
     private static List<ItemStack> expandIngredient(IngredientStack ingredientStack) {
@@ -326,8 +391,45 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         return stacks;
     }
 
+    private static List<BoardEntry> getSortedProgrammingBoards() {
+        BCRoboticsBoards.init();
+        List<BoardEntry> boards = new ArrayList<>(BCRoboticsBoards.robotEntries());
+        boards.sort(Comparator
+                .comparingInt(BoardEntry::energyCost)
+                .thenComparing(BoardEntry::id));
+        return boards;
+    }
+
     private static String formatMj(long microJoules) {
-        return MjAPI.formatMj(Math.max(0L, microJoules)) + " MJ";
+        return sanitizeJeiText(MjAPI.formatMj(Math.max(0L, microJoules)) + " MJ");
+    }
+
+    private static String sanitizeJeiText(String text) {
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
+        return text
+                .replace('\u00A0', ' ')
+                .replace('\u202F', ' ')
+                .replace('\u2009', ' ')
+                .replace('\u2007', ' ')
+                .replace("\u00B5", "u")
+                .replace("\u03BC", "u")
+                .replace("\u2192", "->")
+                .replace("\u2013", "-")
+                .replace("\u2014", "-");
+    }
+
+    private static Component sanitizeJeiComponent(Component component) {
+        String original = component.getString();
+        String sanitized = sanitizeJeiText(original);
+        return original.equals(sanitized) ? component : Component.literal(sanitized).withStyle(component.getStyle());
+    }
+
+    private static void sanitizeFluidTooltip(List<Component> tooltip) {
+        for (int i = 0; i < tooltip.size(); i++) {
+            tooltip.set(i, sanitizeJeiComponent(tooltip.get(i)));
+        }
     }
 
     private static ItemStack createFilledBucketStack(FluidStack fluidStack) {
@@ -413,10 +515,13 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             equivalentFluids = List.of(shownFluid);
         }
 
-        IRecipeSlotBuilder slot = builder.addSlot(role, x, y)
-                .setBackground(slotBackground, -1, -1)
-                .setFluidRenderer(Math.max(1, shownFluid.getAmount()), false, 16, 16)
-                .addIngredients(ForgeTypes.FLUID_STACK, equivalentFluids);
+        IRecipeSlotBuilder slot = builder.addSlot(role, x, y);
+        if (slotBackground != null) {
+            slot.setBackground(slotBackground, -1, -1);
+        }
+        slot.setFluidRenderer(Math.max(1, shownFluid.getAmount()), false, 16, 16)
+                .addIngredients(ForgeTypes.FLUID_STACK, equivalentFluids)
+                .addTooltipCallback((recipeSlotView, tooltip) -> sanitizeFluidTooltip(tooltip));
 
         for (FluidStack equivalentFluid : equivalentFluids) {
             addFilledBucketFocus(builder, role, equivalentFluid);
@@ -455,7 +560,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         public long requiredMicroJoules() {
-            return 50_000L * MjAPI.MJ;
+            return 10_000L * MjAPI.MJ;
         }
     }
 
@@ -623,15 +728,22 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class AssemblyCategory implements IRecipeCategory<AssemblyRecipeBasic> {
-        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/assembly_table.png");
+        private static final ResourceLocation JEI_BACKGROUND = new ResourceLocation(
+                "buildcraftsilicon", "textures/gui/jei/assembly_table_bc8.png");
+        private final IGuiHelper guiHelper;
         private final IDrawable background;
         private final IDrawable icon;
-        private final IDrawable slotBackground;
+        private final IDrawableStatic progressDrawable;
+        private final Map<Integer, IDrawableAnimated> progressBars = new HashMap<>();
 
         AssemblyCategory(IGuiHelper guiHelper) {
-            background = guiHelper.createBlankDrawable(150, 64);
+            this.guiHelper = guiHelper;
+            // BuildCraft 8's JEI category had 10 transparent pixels above the machine crop for the MJ label.
+            // Baking that padding into a dedicated texture keeps the modern JEI layout pixel-identical.
+            background = guiHelper.createDrawable(JEI_BACKGROUND, 0, 0, 166, 86);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()));
-            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
+            progressDrawable = guiHelper.createDrawable(TEXTURE, 176, 48, 4, 70);
         }
 
         @Override
@@ -656,9 +768,9 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, AssemblyRecipeBasic recipe, IFocusGroup focuses) {
-            List<AssemblyRecipeBasic> grouped = GROUPED_ASSEMBLY_RECIPES.get(recipe.getId());
+            GroupedAssemblyRecipe grouped = GROUPED_ASSEMBLY_RECIPES.get(recipe.getId());
             if (grouped != null) {
-                setGroupedLensRecipe(builder, grouped, focuses);
+                setGroupedAssemblyRecipe(builder, grouped, focuses);
                 return;
             }
             if (recipe instanceof FacadeAssemblyRecipes facadeRecipe) {
@@ -668,64 +780,142 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
             ItemStack result = recipe.getResultItem();
             Set<IngredientStack> inputs = recipe.getInputsFor(result);
-            int inputCount = !inputs.isEmpty() ? inputs.size() : recipe.getIngredients().size();
             int index = 0;
             for (IngredientStack input : inputs) {
-                int x = 4 + (index % 4) * 18;
-                int y = inputCount <= 2 ? 22 : 4 + (index / 4) * 18;
+                int x = 3 + (index % 3) * 18;
+                int y = 12 + (index / 3) * 18;
                 builder.addSlot(RecipeIngredientRole.INPUT, x, y)
-                        .setBackground(slotBackground, -1, -1)
                         .addItemStacks(expandIngredient(input));
                 index++;
             }
             if (inputs.isEmpty()) {
-                List<Ingredient> vanillaInputs = recipe.getIngredients();
-                for (Ingredient input : vanillaInputs) {
-                    int x = 4 + (index % 4) * 18;
-                    int y = inputCount <= 2 ? 22 : 4 + (index / 4) * 18;
+                for (Ingredient input : recipe.getIngredients()) {
+                    int x = 3 + (index % 3) * 18;
+                    int y = 12 + (index / 3) * 18;
                     builder.addSlot(RecipeIngredientRole.INPUT, x, y)
-                            .setBackground(slotBackground, -1, -1)
                             .addItemStacks(expandIngredient(input, 1));
                     index++;
                 }
             }
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
-                    .setBackground(slotBackground, -1, -1)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 111, 12)
                     .addItemStack(result);
         }
 
-        private void setGroupedLensRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> allVariants, IFocusGroup focuses) {
-            List<AssemblyRecipeBasic> variants = getFocusedAssemblyVariants(allVariants, focuses);
-            List<ItemStack> mainInputs = new ArrayList<>();
-            List<ItemStack> secondaryInputs = new ArrayList<>();
-            List<ItemStack> outputs = new ArrayList<>();
+        private void setGroupedAssemblyRecipe(IRecipeLayoutBuilder builder, GroupedAssemblyRecipe grouped,
+                IFocusGroup focuses) {
+            List<AssemblyRecipeBasic> variants = getFocusedAssemblyVariants(grouped.variants(), focuses);
+            switch (grouped.key().kind()) {
+                case LENS, LENS_FILTER -> setGroupedLensRecipe(builder, variants, grouped.key().kind() == GroupedAssemblyKind.LENS_FILTER);
+                case WIRE -> setGroupedWireRecipe(builder, variants);
+                case GATE_BASE -> setGroupedGateBaseRecipe(builder, variants);
+                case GATE_MODIFIER -> setGroupedGateModifierRecipe(builder, variants);
+            }
+        }
 
+        private void setGroupedLensRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants, boolean filter) {
+            List<ItemStack> glassInputs = new ArrayList<>();
+            List<ItemStack> outputs = new ArrayList<>();
             for (AssemblyRecipeBasic variant : variants) {
                 ItemStack output = variant.getResultItem();
                 outputs.add(output);
                 for (IngredientStack input : variant.getInputsFor(output)) {
-                    if (input.ingredient.test(new ItemStack(Items.IRON_BARS))) {
-                        secondaryInputs.addAll(expandIngredient(input));
-                    } else {
-                        mainInputs.addAll(expandIngredient(input));
+                    if (!input.ingredient.test(new ItemStack(Items.IRON_BARS))) {
+                        List<ItemStack> expanded = expandIngredient(input);
+                        if (!expanded.isEmpty()) {
+                            glassInputs.add(expanded.get(0));
+                            builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(expanded);
+                        }
                     }
                 }
             }
 
-            IRecipeSlotBuilder mainSlot = builder.addSlot(RecipeIngredientRole.INPUT, 22, 22)
-                    .setBackground(slotBackground, -1, -1)
-                    .addItemStacks(deduplicateStacks(mainInputs));
-            IRecipeSlotBuilder outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
-                    .setBackground(slotBackground, -1, -1)
-                    .addItemStacks(deduplicateStacks(outputs));
-            if (secondaryInputs.isEmpty()) {
-                builder.createFocusLink(mainSlot, outputSlot);
-            } else {
-                builder.addSlot(RecipeIngredientRole.INPUT, 40, 22)
-                        .setBackground(slotBackground, -1, -1)
-                        .addItemStacks(deduplicateStacks(secondaryInputs));
-                builder.createFocusLink(mainSlot, outputSlot);
+            IRecipeSlotBuilder glassSlot = builder.addSlot(RecipeIngredientRole.INPUT, 3, 12)
+                    .addItemStacks(glassInputs);
+            if (filter) {
+                builder.addSlot(RecipeIngredientRole.INPUT, 21, 12)
+                        .addItemStack(new ItemStack(Items.IRON_BARS));
             }
+            IRecipeSlotBuilder outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 111, 12)
+                    .addItemStacks(outputs);
+            builder.createFocusLink(glassSlot, outputSlot);
+        }
+
+        private void setGroupedWireRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {
+            List<ItemStack> dyes = new ArrayList<>();
+            List<ItemStack> outputs = new ArrayList<>();
+            for (AssemblyRecipeBasic variant : variants) {
+                ItemStack output = variant.getResultItem();
+                outputs.add(output);
+                for (IngredientStack input : variant.getInputsFor(output)) {
+                    List<ItemStack> expanded = expandIngredient(input);
+                    if (input.ingredient.test(new ItemStack(Items.REDSTONE))) {
+                        continue;
+                    }
+                    if (!expanded.isEmpty()) {
+                        dyes.add(expanded.get(0));
+                        builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(expanded);
+                    }
+                }
+            }
+
+            builder.addSlot(RecipeIngredientRole.INPUT, 3, 12)
+                    .addItemStack(new ItemStack(Items.REDSTONE));
+            IRecipeSlotBuilder dyeSlot = builder.addSlot(RecipeIngredientRole.INPUT, 21, 12)
+                    .addItemStacks(dyes);
+            IRecipeSlotBuilder outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 111, 12)
+                    .addItemStacks(outputs);
+            builder.createFocusLink(dyeSlot, outputSlot);
+        }
+
+        private void setGroupedGateBaseRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {
+            List<ItemStack> chipsets = new ArrayList<>();
+            List<ItemStack> outputs = new ArrayList<>();
+            for (AssemblyRecipeBasic variant : variants) {
+                ItemStack output = variant.getResultItem();
+                outputs.add(output);
+                for (IngredientStack input : variant.getInputsFor(output)) {
+                    List<ItemStack> expanded = expandIngredient(input);
+                    if (!expanded.isEmpty()) {
+                        chipsets.add(expanded.get(0));
+                        builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(expanded);
+                    }
+                }
+            }
+            IRecipeSlotBuilder inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 3, 12)
+                    .addItemStacks(chipsets);
+            IRecipeSlotBuilder outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 111, 12)
+                    .addItemStacks(outputs);
+            builder.createFocusLink(inputSlot, outputSlot);
+        }
+
+        private void setGroupedGateModifierRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {
+            List<ItemStack> gates = new ArrayList<>();
+            List<ItemStack> modifiers = new ArrayList<>();
+            List<ItemStack> outputs = new ArrayList<>();
+            for (AssemblyRecipeBasic variant : variants) {
+                ItemStack output = variant.getResultItem();
+                outputs.add(output);
+                for (IngredientStack input : variant.getInputsFor(output)) {
+                    List<ItemStack> expanded = expandIngredient(input);
+                    if (expanded.isEmpty()) {
+                        continue;
+                    }
+                    ItemStack visible = expanded.get(0);
+                    if (visible.getItem() == BCSiliconItems.PLUG_GATE_ITEM.get()) {
+                        gates.add(visible);
+                    } else {
+                        modifiers.add(visible);
+                    }
+                    builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(expanded);
+                }
+            }
+            IRecipeSlotBuilder gateSlot = builder.addSlot(RecipeIngredientRole.INPUT, 3, 12)
+                    .addItemStacks(gates);
+            IRecipeSlotBuilder modifierSlot = builder.addSlot(RecipeIngredientRole.INPUT, 21, 12)
+                    .addItemStacks(modifiers);
+            IRecipeSlotBuilder outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 111, 12)
+                    .addItemStacks(outputs);
+            builder.createFocusLink(gateSlot, modifierSlot, outputSlot);
         }
 
         private void setFacadeRecipe(IRecipeLayoutBuilder builder, FacadeAssemblyRecipes recipe, IFocusGroup focuses) {
@@ -741,61 +931,88 @@ public class BuildCraftJeiPlugin implements IModPlugin {
                 }
             }
 
-            if (infos.isEmpty()) {
-                ChangingItemStack[] inputs = recipe.getRecipeInputs();
-                if (inputs.length > 0) {
-                    builder.addSlot(RecipeIngredientRole.INPUT, 4, 22)
-                            .setBackground(slotBackground, -1, -1)
-                            .addItemStacks(expandChangingStack(inputs[0]));
-                }
-                if (inputs.length > 1) {
-                    builder.addSlot(RecipeIngredientRole.INPUT, 22, 22)
-                            .setBackground(slotBackground, -1, -1)
-                            .addItemStacks(expandChangingStack(inputs[1]));
-                }
-                builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
-                        .setBackground(slotBackground, -1, -1)
-                        .addItemStacks(expandChangingStack(recipe.getRecipeOutputs()));
-                return;
-            }
-
-            builder.addSlot(RecipeIngredientRole.INPUT, 4, 22)
-                    .setBackground(slotBackground, -1, -1)
+            builder.addSlot(RecipeIngredientRole.INPUT, 3, 12)
                     .addItemStack(createFacadeBaseRequirementStack());
 
-            IRecipeSlotBuilder facadeInputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 22, 22)
-                    .setBackground(slotBackground, -1, -1)
-                    .addItemStacks(createFacadeRequirementStacks(infos));
+            List<ItemStack> facadeInputs;
+            List<ItemStack> solidOutputs;
+            List<ItemStack> hollowOutputs;
+            if (infos.isEmpty()) {
+                ChangingItemStack[] inputs = recipe.getRecipeInputs();
+                facadeInputs = inputs.length > 1 ? expandChangingStack(inputs[1]) : List.of();
 
-            IRecipeSlotBuilder solidOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 108, 22)
-                    .setBackground(slotBackground, -1, -1)
-                    .addItemStacks(createFacadeOutputStacks(infos, false));
+                List<ItemStack> allOutputs = expandChangingStack(recipe.getRecipeOutputs());
+                solidOutputs = new ArrayList<>();
+                hollowOutputs = new ArrayList<>();
+                for (int index = 0; index < allOutputs.size(); index++) {
+                    (index % 2 == 0 ? solidOutputs : hollowOutputs).add(allOutputs.get(index));
+                }
+            } else {
+                facadeInputs = createFacadeRequirementStacks(infos);
+                solidOutputs = createFacadeOutputStacks(infos, false);
+                hollowOutputs = createFacadeOutputStacks(infos, true);
+            }
 
-            IRecipeSlotBuilder hollowOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 126, 22)
-                    .setBackground(slotBackground, -1, -1)
-                    .addItemStacks(createFacadeOutputStacks(infos, true));
-
+            IRecipeSlotBuilder facadeInputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 21, 12)
+                    .addItemStacks(facadeInputs);
+            IRecipeSlotBuilder solidOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 111, 12)
+                    .addItemStacks(solidOutputs);
+            IRecipeSlotBuilder hollowOutputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 129, 12)
+                    .addItemStacks(hollowOutputs);
             builder.createFocusLink(facadeInputSlot, solidOutputSlot, hollowOutputSlot);
         }
 
         @Override
         public void draw(AssemblyRecipeBasic recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-            Minecraft.getInstance().font.draw(stack, formatMj(recipe.getRequiredMicroJoulesFor(recipe.getResultItem())), 4, 52, 0xFF404040);
+            GroupedAssemblyRecipe grouped = GROUPED_ASSEMBLY_RECIPES.get(recipe.getId());
+            String energyText;
+            long animationEnergy;
+            if (grouped == null) {
+                animationEnergy = recipe.getRequiredMicroJoulesFor(recipe.getResultItem());
+                energyText = formatMj(animationEnergy);
+            } else {
+                long min = Long.MAX_VALUE;
+                long max = Long.MIN_VALUE;
+                for (AssemblyRecipeBasic variant : grouped.variants()) {
+                    long value = variant.getRequiredMicroJoulesFor(variant.getResultItem());
+                    min = Math.min(min, value);
+                    max = Math.max(max, value);
+                }
+                animationEnergy = max;
+                energyText = min == max ? formatMj(min) : formatMj(min) + " - " + formatMj(max);
+            }
+            getProgressBar(animationEnergy).draw(stack, 81, 12);
+            Minecraft.getInstance().font.draw(stack, energyText, 4, 0, 0xFF707070);
+        }
+
+        private IDrawableAnimated getProgressBar(long microJoules) {
+            int ticks = getProgressTicks(microJoules);
+            return progressBars.computeIfAbsent(ticks, value -> guiHelper.createAnimatedDrawable(
+                    progressDrawable, value, IDrawableAnimated.StartDirection.BOTTOM, false));
         }
     }
 
     private static class ProgrammingCategory implements IRecipeCategory<ProgrammingRecipeView> {
         private static final ResourceLocation TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation JEI_BACKGROUND = new ResourceLocation(
+                "buildcraftsilicon", "textures/gui/jei/programming_table_bc7.png");
+        private final IGuiHelper guiHelper;
         private final IDrawable background;
         private final IDrawable icon;
-        private final IDrawable slotBackground;
-        private final IDrawable arrow;
+        private final IDrawableStatic progressDrawable;
+        private final IDrawable selectedDrawable;
+        private final Map<Integer, IDrawableAnimated> progressBars = new HashMap<>();
+        private final List<BoardEntry> optionBoards;
 
         ProgrammingCategory(IGuiHelper guiHelper) {
-            background = guiHelper.createBlankDrawable(150, 54);
+            this.guiHelper = guiHelper;
+            // Classic programming-table work area. The first ten pixels are intentionally transparent,
+            // matching the original recipe-view layout and leaving room for the MJ label in the grid.
+            background = guiHelper.createDrawable(JEI_BACKGROUND, 0, 0, 176, 100);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCSiliconItems.PROGRAMMING_TABLE_ITEM.get()));
-            slotBackground = guiHelper.createDrawable(TEXTURE, 7, 35, 18, 18);
-            arrow = guiHelper.createDrawable(TEXTURE, 28, 40, 12, 10);
+            progressDrawable = guiHelper.createDrawable(TEXTURE, 176, 18, 4, 70);
+            selectedDrawable = guiHelper.createDrawable(TEXTURE, 196, 1, 16, 16);
+            optionBoards = List.copyOf(getSortedProgrammingBoards());
         }
 
         @Override
@@ -820,34 +1037,54 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, ProgrammingRecipeView recipe, IFocusGroup focuses) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 21, 18)
-                    .setBackground(slotBackground, -1, -1)
+            builder.addSlot(RecipeIngredientRole.INPUT, 8, 28)
                     .addItemStack(recipe.input());
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 18)
-                    .setBackground(slotBackground, -1, -1)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 8, 82)
                     .addItemStack(recipe.output());
+
+            int count = Math.min(optionBoards.size(), TileProgrammingTable_Neptune.OPTION_COUNT);
+            for (int index = 0; index < count; index++) {
+                int x = 43 + (index % TileProgrammingTable_Neptune.WIDTH) * 18;
+                int y = 28 + (index / TileProgrammingTable_Neptune.WIDTH) * 18;
+                builder.addSlot(RecipeIngredientRole.RENDER_ONLY, x, y)
+                        .addItemStack(ItemRedstoneBoard.createStack(optionBoards.get(index)));
+            }
         }
 
         @Override
         public void draw(ProgrammingRecipeView recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-            arrow.draw(stack, 68, 22);
-            Minecraft.getInstance().font.draw(stack, formatMj(recipe.requiredMicroJoules()), 4, 42, 0xFF404040);
+            int selected = optionBoards.indexOf(recipe.board());
+            if (selected >= 0 && selected < TileProgrammingTable_Neptune.OPTION_COUNT) {
+                int x = 43 + (selected % TileProgrammingTable_Neptune.WIDTH) * 18;
+                int y = 28 + (selected / TileProgrammingTable_Neptune.WIDTH) * 18;
+                selectedDrawable.draw(stack, x, y);
+            }
+            getProgressBar(recipe.requiredMicroJoules()).draw(stack, 164, 28);
+            Minecraft.getInstance().font.draw(stack, formatMj(recipe.requiredMicroJoules()), 80, 76, 0xFF707070);
+        }
+
+        private IDrawableAnimated getProgressBar(long microJoules) {
+            int ticks = getProgressTicks(microJoules);
+            return progressBars.computeIfAbsent(ticks, value -> guiHelper.createAnimatedDrawable(
+                    progressDrawable, value, IDrawableAnimated.StartDirection.BOTTOM, false));
         }
     }
 
     private static class IntegrationCategory implements IRecipeCategory<IntegrationRecipeView> {
-        private static final ResourceLocation TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/integration_table.png");
-        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = new ResourceLocation(
+                "buildcraftsilicon", "textures/gui/jei/integration_table_bc7.png");
+        private final IGuiHelper guiHelper;
         private final IDrawable background;
         private final IDrawable icon;
-        private final IDrawable slotBackground;
-        private final IDrawable arrow;
+        private final IDrawableStatic progressDrawable;
+        private final Map<Integer, IDrawableAnimated> progressBars = new HashMap<>();
 
         IntegrationCategory(IGuiHelper guiHelper) {
-            background = guiHelper.createBlankDrawable(150, 54);
+            this.guiHelper = guiHelper;
+            // Exact BuildCraft 7 integration-table JEI crop requested for the classic layout.
+            background = guiHelper.createDrawable(TEXTURE, 17, 22, 153, 71);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCSiliconItems.INTERGRATION_TABLE_ITEM.get()));
-            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
-            arrow = guiHelper.createDrawable(SLOT_TEXTURE, 28, 40, 12, 10);
+            progressDrawable = guiHelper.createDrawable(TEXTURE, 176, 17, 4, 69);
         }
 
         @Override
@@ -872,36 +1109,43 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, IntegrationRecipeView recipe, IFocusGroup focuses) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 15, 18)
-                    .setBackground(slotBackground, -1, -1)
+            builder.addSlot(RecipeIngredientRole.INPUT, 27, 27)
                     .addItemStack(recipe.robotInput());
-            builder.addSlot(RecipeIngredientRole.INPUT, 41, 18)
-                    .setBackground(slotBackground, -1, -1)
+            builder.addSlot(RecipeIngredientRole.INPUT, 52, 27)
                     .addItemStack(recipe.boardInput());
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 18)
-                    .setBackground(slotBackground, -1, -1)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 121, 27)
                     .addItemStack(recipe.output());
         }
 
         @Override
         public void draw(IntegrationRecipeView recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-            arrow.draw(stack, 68, 22);
-            Minecraft.getInstance().font.draw(stack, formatMj(recipe.requiredMicroJoules()), 4, 42, 0xFF404040);
+            getProgressBar(recipe.requiredMicroJoules()).draw(stack, 147, 1);
+            Minecraft.getInstance().font.draw(stack, formatMj(recipe.requiredMicroJoules()), 80, 52, 0xFF707070);
+        }
+
+        private IDrawableAnimated getProgressBar(long microJoules) {
+            int ticks = getProgressTicks(microJoules);
+            return progressBars.computeIfAbsent(ticks, value -> guiHelper.createAnimatedDrawable(
+                    progressDrawable, value, IDrawableAnimated.StartDirection.BOTTOM, false));
         }
     }
 
     private static class DistillationCategory implements IRecipeCategory<IRefineryRecipeManager.IDistillationRecipe> {
-        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = new ResourceLocation("buildcraftfactory", "textures/gui/distiller.png");
         private final IDrawable background;
         private final IDrawable icon;
-        private final IDrawable slotBackground;
-        private final IDrawable arrow;
+        private final IDrawable machineBody;
+        private final IDrawableAnimated processAnimation;
+        private final IDrawable slot;
 
         DistillationCategory(IGuiHelper guiHelper) {
-            background = guiHelper.createBlankDrawable(150, 58);
+            background = guiHelper.createBlankDrawable(118, 65);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCFactoryItems.DISTILLER_BLOCK_ITEM.get()));
-            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
-            arrow = guiHelper.createDrawable(SLOT_TEXTURE, 28, 40, 12, 10);
+            machineBody = guiHelper.createDrawable(TEXTURE, 61, 12, 36, 57);
+            IDrawableStatic processOverlay = guiHelper.createDrawable(TEXTURE, 212, 0, 36, 57);
+            processAnimation = guiHelper.createAnimatedDrawable(
+                    processOverlay, 40, IDrawableAnimated.StartDirection.LEFT, false);
+            slot = guiHelper.createDrawable(TEXTURE, 7, 34, 18, 18);
         }
 
         @Override
@@ -926,34 +1170,34 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, IRefineryRecipeManager.IDistillationRecipe recipe, IFocusGroup focuses) {
-            FluidStack in = recipe.in().copy();
-            FluidStack outGas = recipe.outGas().copy();
-            FluidStack outLiquid = recipe.outLiquid().copy();
-
-            addFluidSlot(builder, RecipeIngredientRole.INPUT, 15, 18, in, slotBackground);
-            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 8, outGas, slotBackground);
-            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 30, outLiquid, slotBackground);
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 1, 26, recipe.in().copy(), null);
+            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 57, 1, recipe.outGas().copy(), null);
+            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 57, 46, recipe.outLiquid().copy(), null);
         }
 
         @Override
         public void draw(IRefineryRecipeManager.IDistillationRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-            arrow.draw(stack, 68, 22);
-            Minecraft.getInstance().font.draw(stack, formatMj(recipe.powerRequired()), 4, 48, 0xFF404040);
+            machineBody.draw(stack, 20, 4);
+            processAnimation.draw(stack, 20, 4);
+            slot.draw(stack, 0, 25);
+            slot.draw(stack, 56, 0);
+            slot.draw(stack, 56, 45);
+            Minecraft.getInstance().font.draw(stack, formatMj(recipe.powerRequired()), 78, 28, 0xFF55FFFF);
         }
     }
 
     private static class HeatExchangeCategory implements IRecipeCategory<HeatExchangeRecipeView> {
-        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = new ResourceLocation("buildcraftfactory", "textures/gui/heat_exchanger.png");
         private final IDrawable background;
         private final IDrawable icon;
-        private final IDrawable slotBackground;
-        private final IDrawable arrow;
+        private final IDrawable exchanger;
+        private final IDrawable slot;
 
         HeatExchangeCategory(IGuiHelper guiHelper) {
-            background = guiHelper.createBlankDrawable(150, 58);
+            background = guiHelper.createBlankDrawable(90, 32);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCFactoryItems.HEAT_EXCHANGE_BLOCK_ITEM.get()));
-            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
-            arrow = guiHelper.createDrawable(SLOT_TEXTURE, 28, 40, 12, 10);
+            exchanger = guiHelper.createDrawable(TEXTURE, 61, 38, 54, 17);
+            slot = guiHelper.createDrawable(TEXTURE, 7, 22, 18, 18);
         }
 
         @Override
@@ -978,37 +1222,34 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, HeatExchangeRecipeView view, IFocusGroup focuses) {
-            FluidStack in = view.recipe().in().copy();
-            addFluidSlot(builder, RecipeIngredientRole.INPUT, 15, 18, in, slotBackground);
-
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 1, 1, view.recipe().in().copy(), null);
             FluidStack out = view.recipe().out();
             if (out != null && !out.isEmpty()) {
-                FluidStack outCopy = out.copy();
-                addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 18, outCopy, slotBackground);
+                addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 73, 1, out.copy(), null);
             }
         }
 
         @Override
         public void draw(HeatExchangeRecipeView recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-            arrow.draw(stack, 68, 22);
+            slot.draw(stack, 0, 0);
+            exchanger.draw(stack, 18, 0);
+            slot.draw(stack, 72, 0);
             String mode = recipe.heating() ? "Heat " : "Cool ";
-            String text = mode + recipe.recipe().heatFrom() + " -> " + recipe.recipe().heatTo();
-            Minecraft.getInstance().font.draw(stack, text, 4, 48, 0xFF404040);
+            Minecraft.getInstance().font.draw(stack, sanitizeJeiText(mode + recipe.recipe().heatFrom() + " -> " + recipe.recipe().heatTo()),
+                    1, 21, 0xFF707070);
         }
     }
 
     private static class CombustionFuelCategory implements IRecipeCategory<CombustionFuelRecipeView> {
-        private static final ResourceLocation SLOT_TEXTURE = new ResourceLocation("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation FURNACE_TEXTURE = new ResourceLocation("minecraft", "textures/gui/container/furnace.png");
         private final IDrawable background;
         private final IDrawable icon;
-        private final IDrawable slotBackground;
-        private final IDrawable arrow;
+        private final IDrawable furnace;
 
         CombustionFuelCategory(IGuiHelper guiHelper) {
-            background = guiHelper.createBlankDrawable(150, 76);
+            background = guiHelper.createBlankDrawable(116, 76);
             icon = guiHelper.createDrawableItemStack(new ItemStack(BCEnergyBlocks.ENGINE_IRON_ITEM.get()));
-            slotBackground = guiHelper.createDrawable(SLOT_TEXTURE, 7, 35, 18, 18);
-            arrow = guiHelper.createDrawable(SLOT_TEXTURE, 28, 40, 12, 10);
+            furnace = guiHelper.createDrawable(FURNACE_TEXTURE, 55, 38, 18, 32);
         }
 
         @Override
@@ -1033,22 +1274,32 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, CombustionFuelRecipeView recipe, IFocusGroup focuses) {
-            addFluidSlot(builder, RecipeIngredientRole.INPUT, 15, 18, recipe.input(), slotBackground);
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 1, 15, recipe.input(), null);
             FluidStack residue = recipe.residue();
             if (!residue.isEmpty()) {
-                addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 109, 18, residue, slotBackground);
+                addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 95, 15, residue, null);
             }
         }
 
         @Override
         public void draw(CombustionFuelRecipeView recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-            arrow.draw(stack, 68, 22);
+            furnace.draw(stack, 0, 0);
             IFuel fuel = recipe.fuel();
             long total = fuel.getPowerPerCycle() * (long) fuel.getTotalBurningTime();
             int seconds = fuel.getTotalBurningTime() / 20;
-            Minecraft.getInstance().font.draw(stack, Component.translatable("jei.buildcraftenergy.burn_time", seconds), 4, 44, 0xFF404040);
-            Minecraft.getInstance().font.draw(stack, Component.translatable("jei.buildcraftenergy.power_per_tick", formatMj(fuel.getPowerPerCycle())), 4, 54, 0xFF404040);
-            Minecraft.getInstance().font.draw(stack, Component.translatable("jei.buildcraftenergy.total_energy", formatMj(total)), 4, 64, 0xFF404040);
+            drawSanitizedComponent(stack, Component.translatable("jei.buildcraftenergy.burn_time", seconds), 24, 8, 0xFF404040);
+            drawSanitizedComponent(stack, Component.translatable("jei.buildcraftenergy.power_per_tick", formatMj(fuel.getPowerPerCycle())), 24, 20, 0xFF404040);
+            drawSanitizedComponent(stack, Component.translatable("jei.buildcraftenergy.total_energy", formatMj(total)), 24, 32, 0xFF707070);
         }
     }
+
+    private static int getProgressTicks(long microJoules) {
+        long ticks = Math.max(10L, microJoules / MjAPI.MJ / 50L);
+        return (int) Math.min(Integer.MAX_VALUE, ticks);
+    }
+
+    private static void drawSanitizedComponent(PoseStack stack, Component component, float x, float y, int colour) {
+        Minecraft.getInstance().font.draw(stack, sanitizeJeiComponent(component), x, y, colour);
+    }
+
 }
