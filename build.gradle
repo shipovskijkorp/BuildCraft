@@ -12,6 +12,23 @@ archivesBaseName = 'BuildCraft-Community-Edition'
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+
+// Keep world-dependent Forge GameTests separate from fast JUnit tests.
+sourceSets {
+    gameTest {
+        // A source set named gameTest already gets default src/gameTest paths.
+        // On Windows that path is the same as src/gametest, so srcDir() adds
+        // the same directory twice and processGameTestResources sees duplicates.
+        java.setSrcDirs(['src/gametest/java'])
+        resources.setSrcDirs(['src/gametest/resources'])
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        // Do not put main.compileClasspath on the runtime path: it contains
+        // compileOnly compatibility mods such as IC2 Classic. ForgeGradle supplies
+        // the Minecraft/Forge launch classpath; the tests only need both outputs.
+        runtimeClasspath += output + sourceSets.main.output
+    }
+}
+
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
 // Optional IC2 Classic development dependency.
@@ -23,6 +40,11 @@ def carbonConfigVersion = providers.gradleProperty('carbon_config_version').getO
 def enableIc2Runtime = providers.gradleProperty('enable_ic2_runtime')
         .map { it.toBoolean() }
         .getOrElse(false)
+// Keep optional compatibility mods out of the dedicated GameTest server.
+// Several of them assume a normal client/server lifecycle during construction.
+def gameTestRequested = gradle.startParameter.taskNames.any {
+    it.toLowerCase().contains('gametest')
+}
 def ic2ClassicJar = file("libs/IC2Classic-1.19.2-${ic2ClassicVersion}.jar")
 def carbonConfigJar = file("libs/CarbonConfig-1.19.2-${carbonConfigVersion}.jar")
 
@@ -68,7 +90,11 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'buildcraft'
+            // Every BuildCraft test currently reuses Forge's empty3x3x3 structure,
+            // so Forge filters it by the template namespace "forge", not by
+            // the @GameTestHolder namespace. Keep buildcraftlib enabled as well
+            // for future tests with BuildCraft-owned templates.
+            property 'forge.enabledGameTestNamespaces', 'forge,buildcraftlib'
 
             mods {
                 buildcraft {
@@ -89,7 +115,11 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'buildcraft'
+            // Every BuildCraft test currently reuses Forge's empty3x3x3 structure,
+            // so Forge filters it by the template namespace "forge", not by
+            // the @GameTestHolder namespace. Keep buildcraftlib enabled as well
+            // for future tests with BuildCraft-owned templates.
+            property 'forge.enabledGameTestNamespaces', 'forge,buildcraftlib'
 
             mods {
                 buildcraft {
@@ -103,6 +133,7 @@ minecraft {
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             workingDirectory project.file('run')
+            setForceExit false
 
             // Remap production SRG names from dependency mixin refmaps to the
             // official mappings used by this ForgeGradle development workspace.
@@ -113,11 +144,16 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'buildcraft'
+            // Every BuildCraft test currently reuses Forge's empty3x3x3 structure,
+            // so Forge filters it by the template namespace "forge", not by
+            // the @GameTestHolder namespace. Keep buildcraftlib enabled as well
+            // for future tests with BuildCraft-owned templates.
+            property 'forge.enabledGameTestNamespaces', 'forge,buildcraftlib'
 
             mods {
                 buildcraft {
                     source sourceSets.main
+                    source sourceSets.gameTest
                 }
             }
         }
@@ -178,9 +214,9 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.19.2-43.5.0'
-    
+
 //    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-     
+
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
@@ -191,12 +227,16 @@ dependencies {
     // JEI from Modrinth Maven. Modrinth does not publish a separate API artifact here,
     // so the full mod jar is used as compileOnly and runtimeOnly.
     compileOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
-    runtimeOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
+    if (!gameTestRequested) {
+        runtimeOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
+    }
 
     // Jade API/full jar for optional Jade compatibility.
     // Put Jade-1.19.1-forge-8.9.2.jar into ./libs.
     compileOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
-    runtimeOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
+    if (!gameTestRequested) {
+        runtimeOnly fg.deobf("blank:Jade-1.19.1-forge:8.9.2")
+    }
 
     // IC2 Classic is optional at runtime, but its API is available while compiling compat code.
     if (!ic2ClassicJar.exists()) {
@@ -210,7 +250,7 @@ dependencies {
         compileOnly fg.deobf("blank:CarbonConfig-1.19.2:${carbonConfigVersion}")
     }
 
-    if (enableIc2Runtime) {
+    if (enableIc2Runtime && !gameTestRequested) {
         if (!carbonConfigJar.exists()) {
             throw new GradleException(
                     "IC2 runtime was enabled, but its mandatory CarbonConfig dependency is missing: " +
@@ -220,9 +260,22 @@ dependencies {
         runtimeOnly fg.deobf("blank:IC2Classic-1.19.2:${ic2ClassicVersion}")
         runtimeOnly fg.deobf("blank:CarbonConfig-1.19.2:${carbonConfigVersion}")
     }
+    // JUnit tests cover deterministic logic without launching Minecraft.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events 'failed', 'skipped'
+        exceptionFormat 'full'
+    }
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
@@ -262,5 +315,5 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
     options.compilerArgs.add('-Xlint:none')
-    
+
 }

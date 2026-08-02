@@ -121,22 +121,30 @@ public class TankManager extends ForwardingList<Tank> implements IFluidHandlerAd
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction doDrain) {
-        if (resource == FluidStack.EMPTY) {
-            return resource;
+        if (resource == null || resource.isEmpty()) {
+            return FluidStack.EMPTY;
         }
-        FluidStack draining = new FluidStack(resource, 0);
+        FluidStack draining = FluidStack.EMPTY;
         int left = resource.getAmount();
         for (Tank tank : getDrainOrderTanks()) {
-            if (!FluidCompatRegistry.areEquivalent(draining, tank.getFluid())) {
+            if (left <= 0) {
+                break;
+            }
+            if (!FluidCompatRegistry.areEquivalent(resource, tank.getFluid())) {
                 continue;
             }
             FluidStack drained = tank.drain(left, doDrain);
-            if (drained != null && drained.getAmount() > 0) {
-                draining.setAmount(draining.getAmount() + drained.getAmount());
-                left -= drained.getAmount();
+            if (drained == null || drained.isEmpty()) {
+                continue;
             }
+            if (draining.isEmpty()) {
+                draining = new FluidStack(resource, drained.getAmount());
+            } else {
+                draining.grow(drained.getAmount());
+            }
+            left -= drained.getAmount();
         }
-        return draining.getAmount() <= 0 ? FluidStack.EMPTY : draining;
+        return draining;
     }
 
     @Override
@@ -223,17 +231,23 @@ public class TankManager extends ForwardingList<Tank> implements IFluidHandlerAd
 
 	@Override
 	public @NotNull FluidStack getFluidInTank(int tank) {
-		return null;
+		if (tank < 0 || tank >= tanks.size()) {
+			return FluidStack.EMPTY;
+		}
+		return tanks.get(tank).getFluid().copy();
 	}
 
 	@Override
 	public int getTankCapacity(int tank) {
-		return tanks.size();
+		if (tank < 0 || tank >= tanks.size()) {
+			return 0;
+		}
+		return tanks.get(tank).getCapacity();
 	}
 
 	@Override
 	public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-		return tanks.size() > tank && tanks.get(tank).isFluidValid(stack);
+		return tank >= 0 && tank < tanks.size() && tanks.get(tank).isFluidValid(stack);
 	}
 
 	@Override
