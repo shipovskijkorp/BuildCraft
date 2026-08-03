@@ -39,7 +39,6 @@ public class BCLib {
 
         modEventBus.addListener(this::init);
         modEventBus.addListener(this::postInit);
-//        modEventBus.addListener(this::gatherData);//DataGenerator
 
         try {
             BCLog.logger.info("");
@@ -73,25 +72,7 @@ public class BCLib {
 
         ExpressionDebugManager.logger = BCLog.logger::info;
         ExpressionCompat.setup();
-
-        
-        
-        
-//        BCLibItems.fmlPreInit();
-
         BuildCraftObjectCaches.fmlPreInit();
-//        NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, BCLibProxy.getProxy());
-
-//        MinecraftForge.EVENT_BUS.register(MigrationManager.INSTANCE);
-  //      MinecraftForge.EVENT_BUS.register(FluidManager);
-        //TODO
-        // Set max chunk limit for quarries: 1 chunk for quarry itself and 5 * 5 chunks square for working area
-//        ForgeChunkManager.getConfig().get(MODID, "maximumChunksPerTicket", 26);
- //       ForgeChunkManager.syncConfigDefaults();
- //      ForgeChunkManager.setForcedChunkLoadingCallback(BCLib.MODID, ChunkLoaderManager::rebindTickets);
-
-        ExpressionDebugManager.logger = BCLog.logger::info;
-        ExpressionCompat.setup();
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(BCLibEventDist.class);
@@ -107,21 +88,16 @@ public class BCLib {
     public void init(final FMLCommonSetupEvent event) {
     	BCLibRegistries.fmlInit();
     	BCLibProxy.MessageRegistry();
-    	VanillaListHandlers.fmlInit();
-  //  	VanillaPaintHandlers.fmlInit();
+        VanillaListHandlers.fmlInit();
         VanillaRotationHandlers.fmlInit();
     }
     
     public void postInit(FMLLoadCompleteEvent evt) {
         initOptionalCompat("ic2", "buildcraft.compat.ic2.Ic2Compat");
         initOptionalCompat("forestry", "buildcraft.compat.forestry.ForestryCompat");
-    	
-//        ReloadableRegistryManager.loadAll();
-
-//        VanillaListHandlers.fmlPostInit();
         MarkerCache.postInit();
-    	BuildCraftObjectCaches.fmlPostInit();
-    	MessageManager.fmlPostInit();
+        BuildCraftObjectCaches.fmlPostInit();
+        MessageManager.fmlPostInit();
     }
 
     private static void initOptionalCompat(String modId, String className) {

@@ -7,11 +7,6 @@ import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 public class GuiButtonRecipePhantom extends RecipeButton {
     @Override
     public void init(RecipeCollection list, RecipeBookPage page) {
-//        try {
-            list = new RecipeListPhantom(list);
-//        } catch (ReflectiveOperationException e) {
- //           throw new IllegalStateException(e);
-//        }
-        super.init(list, page);
+        super.init(new RecipeListPhantom(list), page);
     }
 }
