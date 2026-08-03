@@ -23,6 +23,7 @@
   "color.white": "Biały",
   "color.yellow": "Żółty",
   "buildcraft.fluid.empty": "Pusto",
+  "buildcraft.value.hidden": "Ukryto",
   "buildcraft.fluid.static.milli.short": "%s mB",
   "buildcraft.fluid.static.bucket.short": "%s B",
   "buildcraft.fluid.static.milli.long": "%s milibucketów",

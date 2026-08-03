@@ -22,11 +22,13 @@ import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.factory.BCFactoryItems;
+import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.gui.GuiBC8;
 import buildcraft.lib.gui.IGuiElement;
 import buildcraft.lib.gui.ledger.Ledger_Neptune;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.ItemStackKey;
+import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.recipe.AssemblyRecipeBasic;
 import buildcraft.lib.recipe.ChangingItemStack;
 import buildcraft.robotics.BCRoboticsBoards;
@@ -401,6 +403,9 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static String formatMj(long microJoules) {
+        if (BCLibConfig.hidePowerValues) {
+            return sanitizeJeiText(LocaleUtil.localize("buildcraft.value.hidden"));
+        }
         return sanitizeJeiText(MjAPI.formatMj(Math.max(0L, microJoules)) + " MJ");
     }
 
@@ -427,6 +432,15 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static void sanitizeFluidTooltip(List<Component> tooltip) {
+        if (BCLibConfig.hideFluidValues) {
+            Component fluidName = tooltip.isEmpty() ? null : tooltip.get(0);
+            tooltip.clear();
+            if (fluidName != null) {
+                tooltip.add(sanitizeJeiComponent(fluidName));
+            }
+            tooltip.add(Component.translatable("buildcraft.value.hidden"));
+            return;
+        }
         for (int i = 0; i < tooltip.size(); i++) {
             tooltip.set(i, sanitizeJeiComponent(tooltip.get(i)));
         }
@@ -1060,7 +1074,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
                 selectedDrawable.draw(stack, x, y);
             }
             getProgressBar(recipe.requiredMicroJoules()).draw(stack, 164, 28);
-            Minecraft.getInstance().font.draw(stack, formatMj(recipe.requiredMicroJoules()), 80, 76, 0xFF707070);
+            Minecraft.getInstance().font.draw(stack, formatMj(recipe.requiredMicroJoules()), 10, 17, 0xFF707070);
         }
 
         private IDrawableAnimated getProgressBar(long microJoules) {

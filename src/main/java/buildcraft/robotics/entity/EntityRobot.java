@@ -25,8 +25,10 @@ import buildcraft.api.robots.IRobotRegistry;
 import buildcraft.api.robots.RobotManager;
 import buildcraft.api.statements.StatementSlot;
 import buildcraft.api.tools.IToolWrench;
+import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import buildcraft.robotics.BCRoboticsEntities;
@@ -179,6 +181,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     /** Formats internal robot charge as player-facing BuildCraft Minecraft Joules, without appending the MJ suffix. */
     public static String formatRobotEnergy(long robotEnergy) {
+        if (BCLibConfig.hidePowerValues) {
+            return LocaleUtil.localize("buildcraft.value.hidden");
+        }
         long clamped = Math.max(0L, Math.min((long) MAX_ENERGY, robotEnergy));
         return MjAPI.formatMj(robotEnergyToMicroMj(clamped));
     }

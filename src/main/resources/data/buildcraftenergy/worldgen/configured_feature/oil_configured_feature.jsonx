@@ -40,11 +40,6 @@
 				"genOilState": {
 				  "Name": "buildcraftenergy:oil/oil_cool"
 				},
-				"enableOilSpouts" : true,
-				"smallSpoutMinHeight" : 6,
-				"smallSpoutMaxHeight" : 12,
-				"largeSpoutMinHeight" : 10,
-				"largeSpoutMinHeight" : 20,
 				"smallOilGenProb" : 2.0,
 				"mediumOilGenProb" : 0.1,
 				"largeOilGenProb" : 0.04

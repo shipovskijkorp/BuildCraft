@@ -68,6 +68,8 @@ public class BCCore {
     public BCCore() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::init);
+        modEventBus.addListener(BCCoreConfig::onLoadConfig);
+        modEventBus.addListener(BCCoreConfig::onReloadConfig);
 //        modEventBus.addListener(this::gatherData);//DataGenerator
 
         BCCoreBlocks.registry(modEventBus);

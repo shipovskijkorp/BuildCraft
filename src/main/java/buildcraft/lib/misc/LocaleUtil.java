@@ -56,8 +56,8 @@ public class LocaleUtil {
         localeKeyFluidStatic = "buildcraft.fluid.static." + (bucketStatic ? "bucket." : "milli.") + longName;
         localeKeyFluidFlow = "buildcraft.fluid.flow." + (bucketFlow ? "bucket." : "milli.") + longName;
         localeKeyFluidStaticCap = "buildcraft.fluid.static.cap." + (bucketStatic ? "bucket." : "milli.") + longName;
-        localeKeyFluidStaticEmpty = "buildcraft.fluid.empty." + (bucketFlow ? "bucket." : "milli.") + longName;
-        localeKeyFluidStaticFull = "buildcraft.fluid.full." + (bucketFlow ? "bucket." : "milli.") + longName;
+        localeKeyFluidStaticEmpty = "buildcraft.fluid.empty." + (bucketStatic ? "bucket." : "milli.") + longName;
+        localeKeyFluidStaticFull = "buildcraft.fluid.full." + (bucketStatic ? "bucket." : "milli.") + longName;
         localeKeyMjStatic = "buildcraft.mj.static." + longName;
         localeKeyMjFlow = "buildcraft.mj.flow." + timeGap + longName;
     }
@@ -132,6 +132,9 @@ public class LocaleUtil {
 
     /** Localizes the given fluid amount, out of a given capacity */
     public static MutableComponent localizeFluidStaticAmount(int fluidAmount, int capacity) {
+        if (BCLibConfig.hideFluidValues) {
+            return hiddenValue();
+        }
         if (fluidAmount <= 0) {
             if (capacity > 0) {
                 String cap;
@@ -161,6 +164,9 @@ public class LocaleUtil {
     }
 
     public static MutableComponent localizeFluidFlow(int milliBucketsPerTick) {
+        if (BCLibConfig.hideFluidValues) {
+            return hiddenValue();
+        }
         String amount;
         if (BCLibConfig.useBucketsFlow) {
             amount = FORMAT_FLUID.format(milliBucketsPerTick / 50.0);
@@ -171,12 +177,22 @@ public class LocaleUtil {
     }
 
     public static MutableComponent localizeMj(long mj) {
+        if (BCLibConfig.hidePowerValues) {
+            return hiddenValue();
+        }
         return Component.translatable(localeKeyMjStatic, MjAPI.formatMj(mj));
     }
 
     public static MutableComponent localizeMjFlow(long mj) {
+        if (BCLibConfig.hidePowerValues) {
+            return hiddenValue();
+        }
         mj = BCLibConfig.displayTimeGap.convertTicksToGap(mj);
         return Component.translatable(localeKeyMjFlow, MjAPI.formatMj(mj));
+    }
+
+    private static MutableComponent hiddenValue() {
+        return Component.translatable("buildcraft.value.hidden");
     }
 
     public static MutableComponent localizeHeat(double heat) {

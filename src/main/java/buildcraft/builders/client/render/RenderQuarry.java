@@ -68,7 +68,11 @@ public class RenderQuarry implements BlockEntityRenderer<TileQuarry>{
 	@Override
 	public void render(TileQuarry tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
 		matrix.pushPose();
-		VertexConsumer bb = buffer.getBuffer(RenderType.cutout());
+		// The quarry frame texture contains one-pixel lattice lines repeated over long beams.
+		// RenderType.cutout() disables mipmapping, which makes those lines alias and shimmer when
+		// viewed at a distance or oblique angle. The mipped cutout layer preserves hard alpha
+		// edges while using the block atlas mip levels for stable minification.
+		VertexConsumer bb = buffer.getBuffer(RenderType.cutoutMipped());
 //		matrix.translate(0.5f, 0.5f, 0.5f);
 		Matrix4f pose = matrix.last().pose();
 		Matrix3f normal = matrix.last().normal();
@@ -114,32 +118,35 @@ public class RenderQuarry implements BlockEntityRenderer<TileQuarry>{
             if (tile.clientDrillPos != null && tile.prevClientDrillPos != null) {
                 Vec3 interpolatedPos = tile.prevClientDrillPos.add(tile.clientDrillPos.subtract(tile.prevClientDrillPos).scale(partialTicks));
                 matrix.translate(interpolatedPos.x - pos.getX()+0.5f, max.getY()- pos.getY()+0.5f, interpolatedPos.z - pos.getZ()+0.5f);
+                // These beams are closed prisms, so every exterior face already has the correct winding.
+                // Emitting a second coplanar winding makes the differently lit copies z-fight, producing
+                // the angle-dependent striped shimmer visible on the quarry drill assembly.
                 LaserRenderer_BC8.renderLaserDynamic(pose, normal, LaserData_BC8.of(FRAME,//
                         new Vec3(interpolatedPos.x + 0.5, max.getY() + 0.5, interpolatedPos.z + 1),//
                         new Vec3(interpolatedPos.x + 0.5, max.getY() + 0.5, max.getZ() + 12 / 16D),//
-                        1 / 16D, true, true, 0, ID), bb);
+                        1 / 16D, true, false, 0, ID), bb);
                 LaserRenderer_BC8.renderLaserDynamic(pose, normal, LaserData_BC8.of(FRAME,//
                         new Vec3(interpolatedPos.x + 0.5, max.getY() + 0.5, interpolatedPos.z ),//
                         new Vec3(interpolatedPos.x + 0.5, max.getY() + 0.5, min.getZ() + 4 / 16D),//
-                        1 / 16D, true, true, 0, ID+1), bb);
+                        1 / 16D, true, false, 0, ID+1), bb);
                 LaserRenderer_BC8.renderLaserDynamic(pose, normal, LaserData_BC8.of(FRAME,//
                         new Vec3(interpolatedPos.x+1, max.getY() + 0.5, interpolatedPos.z + 0.5),//
                         new Vec3(max.getX() + 12 / 16D, max.getY() + 0.5, interpolatedPos.z + 0.5),//
-                        1 / 16D, true, true, 0, ID+2), bb);
+                        1 / 16D, true, false, 0, ID+2), bb);
                 LaserRenderer_BC8.renderLaserDynamic(pose, normal, LaserData_BC8.of(FRAME,//
                         new Vec3(interpolatedPos.x, max.getY() + 0.5, interpolatedPos.z + 0.5),//
                         new Vec3(min.getX() + 4 / 16D, max.getY() + 0.5, interpolatedPos.z + 0.5),//
-                        1 / 16D, true, true, 0, ID+3), bb);
+                        1 / 16D, true, false, 0, ID+3), bb);
                 matrix.translate(0, interpolatedPos.y + 1 - max.getY() - 4/16D, 0);
                 LaserRenderer_BC8.renderLaserDynamic(pose, normal, LaserData_BC8.of(FRAME_BOTTOM,//
                         new Vec3(interpolatedPos.x + 0.5, interpolatedPos.y + 1 + 4 / 16D, interpolatedPos.z + 0.5),//
                         new Vec3(interpolatedPos.x + 0.5, max.getY() + 0.5, interpolatedPos.z + 0.5),//
-                        1 / 16D, true, true, 0, ID+4), bb);
+                        1 / 16D, true, false, 0, ID+4), bb);
                 matrix.translate(0, - 4/16D + yOffset, 0);
                 LaserRenderer_BC8.renderLaserDynamic(pose, normal, LaserData_BC8.of(DRILL,//
                         new Vec3(interpolatedPos.x + 0.5, interpolatedPos.y + 1 + yOffset, interpolatedPos.z + 0.5),//
                         new Vec3(interpolatedPos.x + 0.5, interpolatedPos.y + yOffset, interpolatedPos.z + 0.5),//
-                        1 / 16D, true, true, 0, ID+5), bb);
+                        1 / 16D, true, false, 0, ID+5), bb);
             } else {
             	matrix.translate(-pos.getX(), -pos.getY(), -pos.getZ());
                 LaserBoxRenderer.renderLaserBoxDynamic(tile.frameBox, BuildCraftLaserManager.STRIPES_WRITE, pose, normal, bb, true);

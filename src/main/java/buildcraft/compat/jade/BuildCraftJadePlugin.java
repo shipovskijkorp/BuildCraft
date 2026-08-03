@@ -24,6 +24,7 @@ import buildcraft.api.transport.pluggable.PipePluggable;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.blockEntity.TileEngineCreative;
 import buildcraft.energy.BCEnergyFluids;
+import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 import buildcraft.lib.fluid.Tank;
@@ -355,6 +356,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
 
         @Override
         public List<ViewGroup<CompoundTag>> getGroups(ServerPlayer player, ServerLevel world, Object target, boolean showDetails) {
+            if (BCLibConfig.hideFluidValues) {
+                return null;
+            }
             if (target instanceof EntityRobotBase robot) {
                 List<ViewGroup<CompoundTag>> groups = FluidView.fromFluidHandler(robot);
                 if (groups == null || groups.isEmpty()) {
@@ -400,6 +404,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
 
         @Override
         public List<ClientViewGroup<FluidView>> getClientGroups(Accessor<?> accessor, List<ViewGroup<CompoundTag>> groups) {
+            if (BCLibConfig.hideFluidValues) {
+                return Collections.emptyList();
+            }
             return ClientViewGroup.map(groups, FluidView::read, BuildCraftJadePlugin::decorateGroupTitle);
         }
     }
@@ -419,6 +426,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
 
         @Override
         public List<ViewGroup<CompoundTag>> getGroups(ServerPlayer player, ServerLevel world, Object target, boolean showDetails) {
+            if (BCLibConfig.hidePowerValues) {
+                return null;
+            }
             if (target instanceof EntityRobotBase robot) {
                 CompoundTag tag = robotEnergyTag(robot.getBattery().getStored(), robot.getBattery().getCapacity());
                 ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
@@ -455,6 +465,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
 
         @Override
         public List<ClientViewGroup<EnergyView>> getClientGroups(Accessor<?> accessor, List<ViewGroup<CompoundTag>> groups) {
+            if (BCLibConfig.hidePowerValues) {
+                return Collections.emptyList();
+            }
             return groups.stream().map(group -> {
                 String unit = group.getExtraData().getString("Unit");
                 ClientViewGroup<EnergyView> client = new ClientViewGroup<>(group.views.stream()
@@ -632,7 +645,10 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         tooltip.add(line("engine.heat", Component.literal(String.format(Locale.ROOT, "%.1f C", tag.getDouble("Heat"))).withStyle(ChatFormatting.WHITE)));
         long output = tag.getLong("Output");
         if (output > 0L) {
-            tooltip.add(line("engine.output", Component.literal(MjAPI.formatMj(output) + " MJ/t").withStyle(ChatFormatting.WHITE)));
+            MutableComponent value = BCLibConfig.hidePowerValues
+                ? Component.translatable("buildcraft.value.hidden")
+                : Component.literal(MjAPI.formatMj(output) + " MJ/t");
+            tooltip.add(line("engine.output", value.withStyle(ChatFormatting.WHITE)));
         }
         tooltip.add(line("engine.redstone", bool(tag.getBoolean("Redstone"))));
     }
@@ -652,7 +668,10 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
     }
 
     private static void appendLaserTooltip(ITooltip tooltip, CompoundTag tag) {
-        tooltip.add(line("laser.required", Component.literal(MjAPI.formatMj(Math.max(0L, tag.getLong("Target") - tag.getLong("Power"))) + " MJ").withStyle(ChatFormatting.WHITE)));
+        MutableComponent value = BCLibConfig.hidePowerValues
+            ? Component.translatable("buildcraft.value.hidden")
+            : Component.literal(MjAPI.formatMj(Math.max(0L, tag.getLong("Target") - tag.getLong("Power"))) + " MJ");
+        tooltip.add(line("laser.required", value.withStyle(ChatFormatting.WHITE)));
     }
 
     private static void appendZonePlannerTooltip(ITooltip tooltip, CompoundTag tag) {
@@ -725,6 +744,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
     }
 
     private static EnergyView readEnergyView(CompoundTag tag, String unit) {
+        if (BCLibConfig.hidePowerValues) {
+            return null;
+        }
         String tagUnit = tag.getString("Unit");
         if (("MJ".equals(unit) || "MJ".equals(tagUnit)) && tag.contains("MicroCapacity", Tag.TAG_LONG)) {
             long capacity = tag.getLong("MicroCapacity");

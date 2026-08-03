@@ -38,6 +38,7 @@ import buildcraft.api.transport.pipe.PipeEventHandler;
 import buildcraft.api.transport.pipe.PipeEventStatement;
 import buildcraft.api.transport.pipe.PipeFlow;
 import buildcraft.compat.CompatCapTransfromer;
+import buildcraft.core.BCCoreConfig;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.CapUtil;
@@ -92,7 +93,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     private final Map<EnumPipePart, Section> sections = new EnumMap<>(EnumPipePart.class);
     private FluidStack currentFluid = FluidStack.EMPTY;
     private int currentDelay;
-    private final SafeTimeTracker tracker = new SafeTimeTracker(10,4);//new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 4);
+    private final SafeTimeTracker tracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 4);
 
     // Client fields for interpolating amounts
     private long lastMessage, lastMessageMinus1;

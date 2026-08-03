@@ -14,6 +14,8 @@ import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.lib.BCLibConfig;
+import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.robotics.boards.BoardRobotCarrier;
 import buildcraft.robotics.boards.BoardRobotDelivery;
 import buildcraft.robotics.boards.BoardRobotFluidCarrier;
@@ -88,6 +90,9 @@ public final class BCRoboticsBoards {
      * Convert only when displaying them through the modern micro-MJ formatter.
      */
     public static String formatBoardEnergyCost(int energyCostMj) {
+        if (BCLibConfig.hidePowerValues) {
+            return LocaleUtil.localize("buildcraft.value.hidden");
+        }
         if (energyCostMj <= 0) {
             return MjAPI.formatMj(0);
         }

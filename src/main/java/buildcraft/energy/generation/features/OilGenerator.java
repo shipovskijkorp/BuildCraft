@@ -68,6 +68,7 @@ public class OilGenerator {
     
     public static List<OilStructure> getStructures(WorldGenLevel world, int cx, int cz) {
     	if(level != world) {
+			structureCache.invalidateAll();
     		level = world;
         	Random rand = new Random(world.getSeed());
             int OFFSET_RANGE = 500000;
@@ -80,6 +81,10 @@ public class OilGenerator {
         	bottomY = dimensionType.minY();
     	}
     	return structureCache.getUnchecked((((long)(cz))<<32)|(cx&0xFFFFFFFFL));
+    }
+
+    public static void clearCache() {
+        structureCache.invalidateAll();
     }
 
     /*this will not use the cache, only use for testing*/
@@ -99,9 +104,9 @@ public class OilGenerator {
 //        	return ImmutableList.of();
 //        }
 
-        // Do nsot generate oil in excluded biomes
-        boolean isExcludedBiome = config.excludedBiomes().contains(key);
-        if (isExcludedBiome/* == BCEnergyConfig.excludedBiomesIsBlackList*/) {
+        // The user blacklist/whitelist is checked before the datapack-level exclusions.
+        boolean isExcludedBiome = !BCEnergyConfig.isBiomeAllowed(key) || config.excludedBiomes().contains(key);
+        if (isExcludedBiome) {
             if (DEBUG_OILGEN_BASIC & log){//log) {
                 BCLog.logger.info(
                     "[energy.oilgen] Not generating oil in " + toStr(world) + " chunk " + cx + ", " + cz
@@ -209,12 +214,12 @@ public class OilGenerator {
                 int maxHeight, minHeight;
 
                 if (type == GenType.LARGE) {
-                    minHeight = genSetting.largeSpoutMinHeight();
-                    maxHeight = genSetting.largeSpoutMaxHeight();
+                    minHeight = BCEnergyConfig.largeSpoutMinHeight;
+                    maxHeight = BCEnergyConfig.largeSpoutMaxHeight;
                     radius = 1;
                 } else {
-                    minHeight = genSetting.smallSpoutMinHeight();
-                    maxHeight = genSetting.smallSpoutMaxHeight();
+                    minHeight = BCEnergyConfig.smallSpoutMinHeight;
+                    maxHeight = BCEnergyConfig.smallSpoutMaxHeight;
                     radius = 0;
                 }
                 final int height;
@@ -226,7 +231,7 @@ public class OilGenerator {
                         maxHeight = minHeight;
                         minHeight = t;
                     }
-                    height = minHeight + rand.nextInt(maxHeight - minHeight);
+                    height = minHeight + rand.nextInt(maxHeight - minHeight + 1);
                 }
                 structures.add(createSpout(new BlockPos(x, wellY, z), height, radius));
             }

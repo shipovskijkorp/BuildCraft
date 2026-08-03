@@ -41,6 +41,8 @@ public class BCTransport {
     	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::init);
     	modEventBus.addListener(this::gatherData);//DataGenerator
+        modEventBus.addListener(BCTransportConfig::onConfigLoad);
+        modEventBus.addListener(BCTransportConfig::onConfigReload);
 
         BCLibRegistries.initApiRegistries();
         BCTransportRegistries.preInit();

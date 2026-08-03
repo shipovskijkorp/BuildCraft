@@ -33,6 +33,12 @@ public class BCLibConfig {
      * will be used. Useful if you can't read dark-gray on black (for example) */
     public static boolean useHighContrastLabelColours = false;
 
+    /** If true then user-facing power values are replaced with a hidden-value label. */
+    public static boolean hidePowerValues = false;
+
+    /** If true then user-facing fluid amounts and flow rates are replaced with a hidden-value label. */
+    public static boolean hideFluidValues = false;
+
     /** If true then applicable visual elements will be displayed in more colourblind friendly way. */
     public static boolean colourBlindMode = false;
 

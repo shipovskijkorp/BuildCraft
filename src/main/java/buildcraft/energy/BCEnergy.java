@@ -62,6 +62,8 @@ public class BCEnergy {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
+        modEventBus.addListener(BCEnergyConfig::onLoadConfig);
+        modEventBus.addListener(BCEnergyConfig::onReloadConfig);
         BCEnergyFluids.registry(modEventBus);
         registerOptionalCompatItems();
         BCEnergyBlocks.init(modEventBus);

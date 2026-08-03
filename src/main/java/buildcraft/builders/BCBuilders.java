@@ -44,6 +44,8 @@ public class BCBuilders {
     public BCBuilders() {
     	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     	modEventBus.addListener(BCBuilders::commonSetup);
+        modEventBus.addListener(BCBuildersConfig::onLoadConfig);
+        modEventBus.addListener(BCBuildersConfig::onReloadConfig);
 //    	modEventBus.addListener(this::gatherData);//DataGenerator
     	BCBuildersBlocks.registry(modEventBus);
     	BCBuildersItems.registry(modEventBus);
@@ -57,7 +59,6 @@ public class BCBuilders {
         MessageManager.registerMessageClass(BCModules.BUILDERS, MessageSnapshotResponse.class, MessageSnapshotResponse.HANDLER, MessageSnapshotResponse::toBytes, MessageSnapshotResponse::new);
     	
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(BCBuildersConfig.class);
         MinecraftForge.EVENT_BUS.register(BCBuildersEventDist.class);
         BCBuildersStatements.preInit();
 

@@ -8,7 +8,6 @@ package buildcraft.silicon;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.facades.FacadeAPI;
-import buildcraft.builders.BCBuildersConfig;
 import buildcraft.lib.CreativeTabManager;
 import buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
@@ -23,9 +22,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -47,7 +44,6 @@ public class BCSilicon {
     	modEventBus.addListener(BCSilicon::gatherData);
         FacadeAPI.registry = FacadeStateManager.INSTANCE;
 
-        BCSiliconConfig.preInit();
         BCSiliconStatements.preInit();
         BCSiliconPlugs.preInit();
         BCSiliconBlocks.registry(modEventBus);
@@ -57,7 +53,6 @@ public class BCSilicon {
         
 
 
-        ModLoadingContext.get().registerConfig(Type.COMMON, BCSiliconConfig.config);
         MinecraftForge.EVENT_BUS.register(this);
  //       NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, BCSiliconProxy.getProxy());
 
@@ -68,7 +63,6 @@ public class BCSilicon {
             FacadeAPI.facadeItem = BCSiliconItems.PLUG_FACADE_ITEM.get();
         }
         FacadeStateManager.init();
-        BCBuildersConfig.reloadConfig(MODID);
     }
 
     public static void postInit(FMLLoadCompleteEvent evt) {

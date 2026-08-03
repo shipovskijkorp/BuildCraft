@@ -216,6 +216,7 @@
   "color.white": "Белый",
   "color.yellow": "Жёлтый",
   "buildcraft.fluid.empty": "Пусто",
+  "buildcraft.value.hidden": "Скрыто",
   "buildcraft.fluid.static.milli.short": "%s mB",
   "buildcraft.fluid.static.bucket.short": "%s вёд.",
   "buildcraft.fluid.static.milli.long": "%s милливёдер",

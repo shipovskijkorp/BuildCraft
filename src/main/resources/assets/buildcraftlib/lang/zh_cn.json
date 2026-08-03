@@ -23,6 +23,7 @@
   "color.white": "白色",
   "color.yellow": "黄色",
   "buildcraft.fluid.empty": "空",
+  "buildcraft.value.hidden": "已隐藏",
   "buildcraft.fluid.static.milli.short": "%s mB",
   "buildcraft.fluid.static.bucket.short": "%s B",
   "buildcraft.fluid.static.milli.long": "%s 毫桶",

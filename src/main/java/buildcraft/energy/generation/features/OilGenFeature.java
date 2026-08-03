@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.mojang.serialization.Codec;
 
+import buildcraft.energy.BCEnergyConfig;
 import buildcraft.lib.misc.data.Box;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -26,6 +28,15 @@ public class OilGenFeature extends Feature<OilFeatureConfiguration>{
 	@Override
 	public boolean place(FeaturePlaceContext<OilFeatureConfiguration> pfc) {
         WorldGenLevel world = pfc.level();
+        if (!BCEnergyConfig.enableOilGeneration) {
+            return false;
+        }
+
+        ResourceLocation dimension = world.getLevel().dimension().location();
+        if (!BCEnergyConfig.isDimensionAllowed(dimension)) {
+            return false;
+        }
+
         BlockPos orginPos = pfc.origin();
         ChunkPos chunkPos = world.getChunk(orginPos).getPos();
         int chunkX = chunkPos.x;
@@ -42,17 +53,6 @@ public class OilGenFeature extends Feature<OilFeatureConfiguration>{
             }
             return;
         }*/
-/*        boolean isExcludedDimension = BCEnergyConfig.excludedDimensions.contains(world.dimensionTypeId().location());
-        if (isExcludedDimension == BCEnergyConfig.excludedDimensionsIsBlackList) {
-            if (DEBUG_OILGEN_BASIC) {
-                BCLog.logger.info(
-                    "[energy.oilgen] Not generating oil in " + world + " chunk " + chunkX + ", " + chunkZ
-                        + " because it's dimension is disabled."
-                );
-            }
-            return;
-        }
-*/
 //        world.profiler.startSection("bc_oil");
         int count = 0;
         int x = chunkX * 16 + 8;
