@@ -126,6 +126,11 @@ public class BCSiliconModels {
             new ModelPluggableItem(PULSAR_STATIC.getCutoutQuads(), PULSAR_DYNAMIC.getCutoutQuads()));
         putModel(event, "plug/facade#inventory", ModelFacadeItem.INSTANCE);
 
+        clearAtlasDependentCaches();
+    }
+
+    /** Clears baked quads whose UV coordinates belong to the previous block-atlas generation. */
+    public static void clearAtlasDependentCaches() {
         PlugGateBaker.onModelBake();
         PlugBakerLens.onModelBake();
         ModelGateItem.onModelBake();

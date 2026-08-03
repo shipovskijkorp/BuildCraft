@@ -309,31 +309,34 @@ public final class BlockUtil {
     //Only get Source or WaterLogged block
     public static Fluid getFluid(Level world, BlockPos pos) {
         FluidStack fluid = drainBlock(world, pos, false);
-        return fluid != FluidStack.EMPTY ? fluid.getFluid() : Fluids.EMPTY;
+        return fluid != null && !fluid.isEmpty() ? fluid.getFluid() : Fluids.EMPTY;
     }
 
-    //check for Source block
+    /** Returns the fluid represented by this position, including flowing and waterlogged states. */
     public static Fluid getFluidWithFlowing(Level world, BlockPos pos) {
-    	BlockState state = world.getBlockState(pos);
-        FluidState fs = state.getFluidState();
-        if(state.getBlock() instanceof LiquidBlock liquidBlock)
-        	return liquidBlock.getFluid();
-        if(!fs.isEmpty())
-        	return Fluids.EMPTY;
-        return fs.getType();
+        BlockState state = world.getBlockState(pos);
+
+        // Keep the BC8 behaviour for fluid blocks, including Forge IFluidBlock implementations.
+        Fluid blockFluid = getFluid(state.getBlock());
+        if (blockFluid != Fluids.EMPTY) {
+            return blockFluid;
+        }
+
+        FluidState fluidState = state.getFluidState();
+        return fluidState.isEmpty() ? Fluids.EMPTY : fluidState.getType();
     }
 
     /**
      * check is block is FluidBlock
      * */
     public static Fluid getFluid(Block block) {
-    	if(block instanceof IFluidBlock lb) {
-    		return lb.getFluid();
-    	}
-    	if(block instanceof LiquidBlock lb) {
-      		return lb.getFluid();
-    	}
-    	return Fluids.EMPTY;
+        Fluid fluid = Fluids.EMPTY;
+        if (block instanceof IFluidBlock fluidBlock) {
+            fluid = fluidBlock.getFluid();
+        } else if (block instanceof LiquidBlock liquidBlock) {
+            fluid = liquidBlock.getFluid();
+        }
+        return fluid == null ? Fluids.EMPTY : fluid;
     }
     
     public static Fluid getFluidWithoutFlowing(BlockState state) {
@@ -346,10 +349,7 @@ public final class BlockUtil {
     }
 
     public static Fluid getFluidWithFlowing(Block block) {
-        if (block instanceof LiquidBlock) {
-            return ((LiquidBlock)block).getFluid();
-        }
-        return Fluids.EMPTY;
+        return getFluid(block);
     }
 
     public static FluidStack drainBlock(Level world, BlockPos pos, boolean doDrain) {

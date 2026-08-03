@@ -25,6 +25,7 @@ import buildcraft.lib.item.ItemDebugger;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.lib.misc.MessageUtil;
+import buildcraft.lib.misc.data.ModelVariableData;
 import buildcraft.lib.misc.SpriteUtil;
 import buildcraft.lib.net.MessageDebugRequest;
 import buildcraft.lib.net.MessageDebugResponse;
@@ -96,6 +97,8 @@ public class BCLibEventDist {
                 // before the final holder-registration pass, instead of relying on FMLClientSetup ordering.
                 BCLibSprites.fmlPreInitClient();
 	    		ReloadManager.INSTANCE.preReloadResources();
+                // Variable models are reparsed in this pass, so old expression-node arrays are no longer valid.
+                ModelVariableData.onModelBake();
 	    		SpriteHolderRegistry.onTextureStitchPre(event);
 	    		ModelHolderRegistry.onTextureStitchPre(event);
 	    		FluidRenderer.onTextureStitchPre(event);

@@ -311,6 +311,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         return ItemRobot.createRobotStack(boardEntry, getEnergy());
     }
 
+    /** Read-only view used by gate robot filters, matching the BC7/BC8 wearable-filter behaviour. */
+    public List<ItemStack> getWearables() {
+        return Collections.unmodifiableList(wearables);
+    }
+
     @Override
     public void tick() {
         if (!firstUpdateDone) {

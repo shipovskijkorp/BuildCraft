@@ -25,7 +25,9 @@ public class ModelVariableData {
     }
 
     public boolean hasNoNodes() {
-        return tickableNodes == null;
+        // Resource reloads replace the parsed expression tree. Nodes from an older model generation must be
+        // discarded before the first post-reload bake, otherwise missing/garbled quads may be cached.
+        return !checkModelBake();
     }
 
     public void setNodes(ITickableNode[] nodes) {

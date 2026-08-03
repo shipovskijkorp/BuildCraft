@@ -8,7 +8,6 @@ package buildcraft.builders.snapshot;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,6 +25,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
@@ -36,15 +36,16 @@ public class SchematicBlockFluid implements ISchematicBlock {
 
     @SuppressWarnings("unused")
     public static boolean predicate(SchematicBlockContext context) {
-        return BlockUtil.getFluidWithFlowing(context.world, context.pos) != Fluids.EMPTY &&
-            (BlockUtil.getFluid(context.world, context.pos) == Fluids.EMPTY ||
-                BlockUtil.getFluidWithoutFlowing(context.world.getBlockState(context.pos)) != Fluids.EMPTY);
+        // Waterlogged ordinary blocks must stay default block schematics so their block state is rebuilt.
+        // This schematic is only for actual fluid blocks, matching the BC7/BC8 split.
+        return BlockUtil.getFluidWithFlowing(context.world, context.pos) != Fluids.EMPTY
+            && BlockUtil.getFluid(context.block) != Fluids.EMPTY;
     }
 
     @Override
     public void init(SchematicBlockContext context) {
         blockState = context.blockState;
-        isFlowing = BlockUtil.getFluid(context.world, context.pos) == null;
+        isFlowing = BlockUtil.getFluid(context.world, context.pos) == Fluids.EMPTY;
     }
 
     @Nonnull
@@ -59,10 +60,11 @@ public class SchematicBlockFluid implements ISchematicBlock {
     @Nonnull
     @Override
     public List<FluidStack> computeRequiredFluids(Level level) {
-        return Optional.ofNullable(BlockUtil.getFluidWithoutFlowing(blockState))
-            .map(fluid -> new FluidStack(fluid, FluidType.BUCKET_VOLUME))
-            .map(Collections::singletonList)
-            .orElseGet(Collections::emptyList);
+        Fluid fluid = BlockUtil.getFluidWithoutFlowing(blockState);
+        if (fluid == Fluids.EMPTY) {
+            return Collections.emptyList();
+        }
+        return Collections.singletonList(new FluidStack(fluid, FluidType.BUCKET_VOLUME));
     }
 
     @Override

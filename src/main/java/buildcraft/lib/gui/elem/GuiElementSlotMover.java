@@ -9,8 +9,10 @@ import buildcraft.lib.gui.pos.IGuiArea;
 import buildcraft.lib.gui.pos.IGuiPosition;
 import net.minecraft.world.inventory.Slot;
 
-/**Use accessTransforme*/@Deprecated //Useless
+/** Moves and hides a menu slot according to a JSON GUI element. */
 public class GuiElementSlotMover extends GuiElementSimple {
+
+    private static final int HIDDEN_SLOT_POSITION = -10_000;
 
     public final INodeBoolean visible;
     public final Slot toMove;
@@ -23,13 +25,12 @@ public class GuiElementSlotMover extends GuiElementSimple {
 
     @Override
     public void drawBackground(PoseStack pose, float partialTicks) {
-    	//throw new UnsupportedOperationException("buildcraft.lib.gui.elem.GuiElementSlotMover : Should not use this class");
-/*        if (visible.evaluate()) {
+        if (visible.evaluate()) {
             toMove.x = 1 + (int) Math.round(getX());
             toMove.y = 1 + (int) Math.round(getY());
         } else {
-            toMove.x = -10000;
-            toMove.y = -10000;
-        }*/
+            toMove.x = HIDDEN_SLOT_POSITION;
+            toMove.y = HIDDEN_SLOT_POSITION;
+        }
     }
 }

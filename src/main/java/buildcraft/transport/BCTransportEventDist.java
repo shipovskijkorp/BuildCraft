@@ -16,6 +16,7 @@ import buildcraft.transport.net.PipeItemMessageQueue;
 import buildcraft.transport.wire.WorldSavedDataWireSystems;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -67,17 +68,31 @@ public class BCTransportEventDist {
         
         @SubscribeEvent
         public static void onModelBake(BakingCompleted event) {
-            // TextureAtlasSprite instances and baked quads belong to a single atlas generation.
-            // Rebuild all pipe caches after every resource reload instead of retaining old UVs.
-            PipeBaseModelGenStandard.loadSpritesCache();
+            // BakingCompleted may run before Minecraft's global ModelManager exposes the new atlas.
+            // Only invalidate baked data here; sprites are refreshed from TextureStitchEvent.Post.
+            clearAtlasDependentPipeCaches();
+            BCTransportModels.onModelBake(event);
+        }
+        @SubscribeEvent
+        public static void registryTexture(TextureStitchEvent.Pre e) {
+            BCTransportSprites.onTextureStitchPre(e);
+        }
+
+        @SubscribeEvent
+        public static void registryTexturePost(TextureStitchEvent.Post event) {
+            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                // Post supplies the atlas that has just finished stitching and uploading. Using it directly avoids
+                // querying Minecraft's global ModelManager while it is still swapping reload generations.
+                PipeBaseModelGenStandard.loadSpritesCache(event.getAtlas());
+                clearAtlasDependentPipeCaches();
+            }
+        }
+
+        private static void clearAtlasDependentPipeCaches() {
+            // Baked quads store atlas-relative UV coordinates and must not survive a resource reload.
             PipeModelCacheAll.clearModels();
             ModelPipe.clearTextureCache();
             PipeFlowRendererPower.clearTextureCache();
-            BCTransportModels.onModelBake(event);
-        }        
-        @SubscribeEvent
-        public static void registryTexture(TextureStitchEvent.Pre e){ 
-        	BCTransportSprites.onTextureStitchPre(e);
         }
         
     }

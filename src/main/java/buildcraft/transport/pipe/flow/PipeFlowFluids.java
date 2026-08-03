@@ -210,10 +210,12 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     // IFlowFluid
 
     @Override
-    public FluidStack tryExtractFluid(int millibuckets, Direction from, FluidStack filter, FluidAction simulate) {
+    public FluidStack tryExtractFluid(int millibuckets, Direction from, @Nullable FluidStack filter, FluidAction simulate) {
         FluidExtractor extractor = (mb, c, handler) -> {
-            FluidStack f = !filter.isEmpty() ? c : filter;
-            return extractSimple(mb, f, handler, simulate);
+            // No explicit filter means "keep the pipe's current fluid if it has one, otherwise drain anything".
+            // An explicit filter must be passed through unchanged.
+            FluidStack selectedFilter = filter == null || filter.isEmpty() ? c : filter;
+            return extractSimple(mb, selectedFilter, handler, simulate);
         };
         return tryExtractFluidInternal(millibuckets, from, extractor, simulate.simulate()).getObject();
     }

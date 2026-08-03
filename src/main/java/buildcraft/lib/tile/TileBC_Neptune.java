@@ -423,7 +423,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     }
 
     public PermissionUtil.PermissionBlock getPermBlock() {
-        return new PermissionBlock(this, worldPosition);
+        return new PermissionBlock(this, worldPosition, level);
     }
 
     public boolean canEditOther(BlockPos other) {

@@ -34,7 +34,7 @@ public class BCCoreItems {
     public static final RegistryObject<Item> GEAR_GOLD = ITEMS.register("gears/gear_gold", () -> new Item(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<Item> GEAR_DIAMOND = ITEMS.register("gears/gear_diamond", () -> new Item(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<ItemPaintbrush_BC8> PAINT_BRUSH = ITEMS.register("paintbrush/clean", () -> new ItemPaintbrush_BC8(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB), null));
-    public static final RegistryObject<ItemMarkerConnector> MARKER_CONNECTOR = ITEMS.register("marker_connector", () -> new ItemMarkerConnector(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
+    public static final RegistryObject<ItemMarkerConnector> MARKER_CONNECTOR = ITEMS.register("marker_connector", () -> new ItemMarkerConnector(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB).stacksTo(1)));
     public static final RegistryObject<ItemVolumeBox> VOLUME_BOX = ITEMS.register("volume_box", () -> new ItemVolumeBox(new Item.Properties()));
     public static final RegistryObject<ItemMapLocation> MAP_LOCATION = ITEMS.register("map_location", () -> new ItemMapLocation(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
     public static final RegistryObject<ItemList_BC8> LIST = ITEMS.register("list", () -> new ItemList_BC8(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB).stacksTo(1)));

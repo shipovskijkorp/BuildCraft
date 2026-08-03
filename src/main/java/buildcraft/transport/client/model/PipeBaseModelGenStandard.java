@@ -32,6 +32,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -70,15 +71,13 @@ public enum PipeBaseModelGenStandard implements IPipeBaseModelGen {
         }
     }
     
-    public static void loadSpritesCache() {
-    	SPRITES.clear();
-        var texAtlas = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS);
+    public static void loadSpritesCache(TextureAtlas atlas) {
+        SPRITES.clear();
         for (PipeDefinition def : PipeApi.pipeRegistry.getAllRegisteredPipes()) {
             TextureAtlasSprite[] array = new TextureAtlasSprite[def.textures.length];
             for (int i = 0; i < array.length; i++) {
                 ResourceLocation name = def.textures[i];
-                TextureAtlasSprite sprite = texAtlas.getSprite(name);
-                array[i] = sprite;
+                array[i] = atlas.getSprite(name);
             }
             SPRITES.put(def, array);
         }

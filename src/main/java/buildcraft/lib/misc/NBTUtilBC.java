@@ -117,10 +117,16 @@ public final class NBTUtilBC {
                     int j = nbt.getInt("j");
                     int k = nbt.getInt("k");
                     pos = new BlockPos(i, j, k);
-                } else if (nbt.contains("x")) {
+                } else if (nbt.contains("x") && nbt.contains("y") && nbt.contains("z")) {
                     int x = nbt.getInt("x");
                     int y = nbt.getInt("y");
                     int z = nbt.getInt("z");
+                    pos = new BlockPos(x, y, z);
+                } else if (nbt.contains("X") && nbt.contains("Y") && nbt.contains("Z")) {
+                    // NbtUtils.writeBlockPos uses upper-case coordinate keys in modern Minecraft.
+                    int x = nbt.getInt("X");
+                    int y = nbt.getInt("Y");
+                    int z = nbt.getInt("Z");
                     pos = new BlockPos(x, y, z);
                 } else if (nbt.contains("pos")) {
                     return readBlockPos(nbt.get("pos"));

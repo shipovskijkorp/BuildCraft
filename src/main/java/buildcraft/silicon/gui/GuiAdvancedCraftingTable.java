@@ -31,7 +31,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import buildcraft.lib.gui.help.GuiHelpUtil;
 
-public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTable> {
+public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTable> implements RecipeUpdateListener {
     private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftsilicon:textures/gui/advanced_crafting_table.png");
     private static final ResourceLocation VANILLA_CRAFTING_TABLE = new ResourceLocation("textures/gui/container/crafting_table.png");
     private static final int SIZE_X = 176, SIZE_Y = 241;
@@ -55,7 +55,7 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
             BCLog.logger.warn("[silicon.gui] An exception was thrown while creating the recipe book gui!", e);
             book = null;
         }
-        recipeBook = null;//= book; TODO
+        recipeBook = book;
         mainGui.shownElements.add(new LedgerHelp(mainGui, true));
         mainGui.shownElements.add(new LedgerTablePower(mainGui, container.tile, true));
         GuiHelpUtil.addSlots(mainGui, 33, 16, 3, 3, "buildcraft.help.advanced_crafting.recipe.title", 0xFF_66_AA_FF, "buildcraft.help.advanced_crafting.recipe.desc");
@@ -176,7 +176,6 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
 
     protected void onPress(Button button){
         if (button == recipeButton && recipeBook != null) {
-            recipeBook.initVisuals();
             recipeBook.toggleVisibility();
             leftPos = recipeBook.updateScreenPosition(width, imageWidth);
             recipeButton.setPosition(this.leftPos + 5, this.height / 2 - 90);
@@ -207,6 +206,14 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
         }
         return true;
 	}
+
+    @Override
+    public boolean charTyped(char codePoint, int modifiers) {
+        if (recipeBook != null && recipeBook.charTyped(codePoint, modifiers)) {
+            return true;
+        }
+        return super.charTyped(codePoint, modifiers);
+    }
 
 	@Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
@@ -245,12 +252,14 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
 
     // RecipeUpdateListener
 
+    @Override
     public void recipesUpdated() {
         if (recipeBook != null) {
             recipeBook.recipesUpdated();
         }
     }
 
+    @Override
 	public RecipeBookComponent getRecipeBookComponent() {
 		return recipeBook;
 	}

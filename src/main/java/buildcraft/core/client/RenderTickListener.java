@@ -7,6 +7,7 @@ package buildcraft.core.client;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -16,6 +17,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector4f;
 
 import buildcraft.api.core.IBox;
+import buildcraft.api.core.IZone;
 import buildcraft.api.items.IMapLocation.MapLocationType;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.core.BCCoreItems;
@@ -32,6 +34,8 @@ import buildcraft.lib.marker.MarkerSubCache;
 import buildcraft.lib.misc.MatrixUtil;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.lib.misc.data.Box;
+import buildcraft.robotics.zone.ZoneChunk;
+import buildcraft.robotics.zone.ZonePlan;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -42,6 +46,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
@@ -51,6 +58,8 @@ public class RenderTickListener {
     private static final String DIFF_START, DIFF_HEADER_FORMATTING;
 
     private static final Box LAST_RENDERED_MAP_LOC = new Box();
+    private static final double MAP_LOCATION_RENDER_DISTANCE_SQ = 128.0 * 128.0;
+    private static final int MAX_ZONE_RENDER_EDGES = 4096;
 
     static {
         double[][][] upFace = { // Comments for formatting
@@ -153,7 +162,7 @@ public class RenderTickListener {
         Item offHandItem = offHand.getItem();
 
         if (mainHandItem == BCCoreItems.MAP_LOCATION.get()) {
-            renderMapLocation(poseStack, matrix, mainHand);
+            renderMapLocation(poseStack, matrix, world, player, mainHand);
         } else if (mainHandItem == BCCoreItems.MARKER_CONNECTOR.get() || offHandItem == BCCoreItems.MARKER_CONNECTOR.get()) {
             renderMarkerConnector(poseStack, matrix, world, player);
         }
@@ -164,7 +173,8 @@ public class RenderTickListener {
         mc.getProfiler().pop();
     }
 
-    private static void renderMapLocation(PoseStack poseStack, Matrix4f matrix, @Nonnull ItemStack stack) {
+    private static void renderMapLocation(PoseStack poseStack, Matrix4f matrix, ClientLevel world, Player player,
+        @Nonnull ItemStack stack) {
         MapLocationType type = MapLocationType.getFromStack(stack);
         if (type == MapLocationType.SPOT) {
             Direction face = ItemMapLocation.getPointFace(stack);
@@ -180,29 +190,143 @@ public class RenderTickListener {
                 }
                 poseStack.popPose();
             }
-
         } else if (type == MapLocationType.AREA) {
-
             IBox box = ItemMapLocation.getAreaBox(stack);
             LAST_RENDERED_MAP_LOC.reset();
             LAST_RENDERED_MAP_LOC.initialize(box);
-            LaserBoxRenderer.renderLaserBoxStatic(poseStack, matrix, LAST_RENDERED_MAP_LOC, BuildCraftLaserManager.STRIPES_WRITE, true);
+            LaserBoxRenderer.renderLaserBoxStatic(
+                poseStack, matrix, LAST_RENDERED_MAP_LOC, BuildCraftLaserManager.STRIPES_WRITE, true
+            );
+        } else if (type == MapLocationType.PATH || type == MapLocationType.PATH_REPEATING) {
+            renderMapPath(poseStack, matrix, player, BCCoreItems.MAP_LOCATION.get().getPath(stack),
+                type == MapLocationType.PATH_REPEATING);
+        } else if (type == MapLocationType.ZONE) {
+            IZone zone = BCCoreItems.MAP_LOCATION.get().getZone(stack);
+            if (zone instanceof ZonePlan zonePlan) {
+                renderMapZone(poseStack, matrix, world, player, zonePlan);
+            }
+        }
+    }
 
-        } else if (type == MapLocationType.PATH) {
-            List<BlockPos> path = BCCoreItems.MAP_LOCATION.get().getPath(stack);
-            if (path != null && path.size() > 1) {
-                BlockPos last = null;
-                for (BlockPos p : path) {
-                    if (last == null) {
-                        last = p;
-                    }
+    private static void renderMapPath(PoseStack poseStack, Matrix4f matrix, Player player, List<BlockPos> path,
+        boolean repeating) {
+        if (path == null || path.size() < 2) {
+            return;
+        }
+        BlockPos previous = path.get(0);
+        for (int i = 1; i < path.size(); i++) {
+            BlockPos current = path.get(i);
+            renderMapPathSegment(poseStack, matrix, player, previous, current);
+            previous = current;
+        }
+
+        // Old path providers normally repeated the first point as the final point, but explicitly close repeating
+        // paths as well so imported or manually edited map-location data still renders as a loop.
+        BlockPos first = path.get(0);
+        BlockPos last = path.get(path.size() - 1);
+        if (repeating && !first.equals(last)) {
+            renderMapPathSegment(poseStack, matrix, player, last, first);
+        }
+    }
+
+    private static void renderMapPathSegment(PoseStack poseStack, Matrix4f matrix, Player player,
+        BlockPos start, BlockPos end) {
+        if (start.equals(end) || !isNearPlayer(start, player) && !isNearPlayer(end, player)) {
+            return;
+        }
+        LaserData_BC8 laser = new LaserData_BC8(
+            BuildCraftLaserManager.STRIPES_WRITE_DIRECTION,
+            VecUtil.convertCenter(start),
+            VecUtil.convertCenter(end),
+            1 / 16.0
+        );
+        LaserRenderer_BC8.renderLaserStatic(poseStack, matrix, laser);
+    }
+
+    private static void renderMapZone(PoseStack poseStack, Matrix4f matrix, ClientLevel world, Player player,
+        ZonePlan zonePlan) {
+        int radius = (int) Math.sqrt(MAP_LOCATION_RENDER_DISTANCE_SQ);
+        int minX = (int) Math.floor(player.getX()) - radius - 1;
+        int maxX = (int) Math.floor(player.getX()) + radius + 1;
+        int minZ = (int) Math.floor(player.getZ()) - radius - 1;
+        int maxZ = (int) Math.floor(player.getZ()) + radius + 1;
+
+        // Do not flatten the entire saved zone every frame. Only collect chunks intersecting the render radius,
+        // including a one-block border so cells at the cutoff do not acquire false outer edges.
+        Set<Long> cells = new HashSet<>();
+        for (Map.Entry<ChunkPos, ZoneChunk> entry : zonePlan.getChunkMapping().entrySet()) {
+            ChunkPos chunk = entry.getKey();
+            int chunkMinX = chunk.getMinBlockX();
+            int chunkMinZ = chunk.getMinBlockZ();
+            if (chunkMinX > maxX || chunkMinX + 15 < minX || chunkMinZ > maxZ || chunkMinZ + 15 < minZ) {
+                continue;
+            }
+            for (Vec2 local : entry.getValue().getAll()) {
+                int x = chunkMinX + (int) local.x;
+                int z = chunkMinZ + (int) local.y;
+                if (x >= minX && x <= maxX && z >= minZ && z <= maxZ) {
+                    cells.add(zoneKey(x, z));
                 }
             }
-
-            // TODO!
-        } else if (type == MapLocationType.ZONE) {
-            // TODO!
         }
+        if (cells.isEmpty()) {
+            return;
+        }
+
+        int renderedEdges = 0;
+        for (long cell : cells) {
+            int x = (int) (cell >> 32);
+            int z = (int) cell;
+            double dx = x + 0.5D - player.getX();
+            double dz = z + 0.5D - player.getZ();
+            if (dx * dx + dz * dz > MAP_LOCATION_RENDER_DISTANCE_SQ
+                || !world.hasChunkAt(new BlockPos(x, world.getMinBuildHeight(), z))) {
+                continue;
+            }
+
+            if (!cells.contains(zoneKey(x, z - 1))) {
+                renderZoneEdge(poseStack, matrix, world, x, z, x + 1, z);
+                if (++renderedEdges >= MAX_ZONE_RENDER_EDGES) return;
+            }
+            if (!cells.contains(zoneKey(x + 1, z))) {
+                renderZoneEdge(poseStack, matrix, world, x + 1, z, x + 1, z + 1);
+                if (++renderedEdges >= MAX_ZONE_RENDER_EDGES) return;
+            }
+            if (!cells.contains(zoneKey(x, z + 1))) {
+                renderZoneEdge(poseStack, matrix, world, x + 1, z + 1, x, z + 1);
+                if (++renderedEdges >= MAX_ZONE_RENDER_EDGES) return;
+            }
+            if (!cells.contains(zoneKey(x - 1, z))) {
+                renderZoneEdge(poseStack, matrix, world, x, z + 1, x, z);
+                if (++renderedEdges >= MAX_ZONE_RENDER_EDGES) return;
+            }
+        }
+    }
+
+    private static void renderZoneEdge(PoseStack poseStack, Matrix4f matrix, ClientLevel world,
+        int x1, int z1, int x2, int z2) {
+        BlockPos firstColumn = new BlockPos(x1, world.getMinBuildHeight(), z1);
+        BlockPos secondColumn = new BlockPos(x2, world.getMinBuildHeight(), z2);
+        if (!world.hasChunkAt(firstColumn) || !world.hasChunkAt(secondColumn)) {
+            return;
+        }
+        double y1 = world.getHeight(Heightmap.Types.WORLD_SURFACE, x1, z1) + 0.05D;
+        double y2 = world.getHeight(Heightmap.Types.WORLD_SURFACE, x2, z2) + 0.05D;
+        LaserData_BC8 laser = new LaserData_BC8(
+            BuildCraftLaserManager.STRIPES_WRITE,
+            new Vec3(x1, y1, z1),
+            new Vec3(x2, y2, z2),
+            1 / 32.0
+        );
+        LaserRenderer_BC8.renderLaserStatic(poseStack, matrix, laser);
+    }
+
+    private static boolean isNearPlayer(BlockPos pos, Player player) {
+        return pos.distToCenterSqr(player.getX(), player.getY(), player.getZ()) <= MAP_LOCATION_RENDER_DISTANCE_SQ;
+    }
+
+    private static long zoneKey(int x, int z) {
+        return ((long) x << 32) ^ (z & 0xFFFF_FFFFL);
     }
 
     private static void renderMarkerConnector(PoseStack poseStack, Matrix4f matrix, ClientLevel world, Player player) {

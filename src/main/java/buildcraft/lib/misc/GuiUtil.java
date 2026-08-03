@@ -223,10 +223,7 @@ public class GuiUtil {
             startX = endX;
             endX = i;
         }
-        RenderSystem.disableTexture();
-        RenderSystem.setShaderColor(color&0xFF000000, color&0x00FF0000, color&0x0000FF00, color&0x000000FF);//TODO: check
-        mc.gui.blit(pose, startX, y, endX-startX, 1, 0, 0);
-        RenderSystem.enableTexture();
+        Screen.fill(pose, startX, y, endX + 1, y + 1, color);
     }
 
     public static void drawVerticalLine(PoseStack pose, int x, int startY, int endY, int color) {

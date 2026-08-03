@@ -14,10 +14,12 @@ import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeInstance;
 import buildcraft.silicon.plug.FacadeStateManager;
 import buildcraft.transport.BCTransport;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -114,6 +116,13 @@ public class BCSilicon {
         @SubscribeEvent
         public static void onModelBake(BakingCompleted event) {
         	BCSiliconModels.onModelBake(event);
+        }
+
+        @SubscribeEvent
+        public static void onTextureStitchPost(TextureStitchEvent.Post event) {
+            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                BCSiliconModels.clearAtlasDependentCaches();
+            }
         }
         	
     }

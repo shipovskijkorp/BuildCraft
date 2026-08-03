@@ -35,7 +35,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import buildcraft.lib.gui.help.GuiHelpUtil;
 
-public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> {
+public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implements RecipeUpdateListener {
     private static final ResourceLocation TEXTURE_BASE =
         new ResourceLocation("buildcraftfactory:textures/gui/autobench_item.png");
     private static final ResourceLocation TEXTURE_MISC =
@@ -66,7 +66,7 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> {
             BCLog.logger.warn("[factory.gui] An exception was thrown while creating the recipe book gui!", e);
             book = null;
         }
-        recipeBook =null;//= book;
+        recipeBook = book;
         mainGui.shownElements.add(new LedgerHelp(mainGui, true));
         GuiHelpUtil.addSlots(mainGui, 30, 17, 3, 3, "buildcraft.help.autoworkbench.recipe.title", 0xFF_66_AA_FF, "buildcraft.help.autoworkbench.recipe.desc");
         GuiHelpUtil.addSlots(mainGui, 8, 84, 9, 1, "buildcraft.help.autoworkbench.materials.title", 0xFF_88_CC_88, "buildcraft.help.autoworkbench.materials.desc");
@@ -139,24 +139,22 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> {
 
     @Override
     public void render(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
-    	super.render(pose, mouseX, mouseY, partialTicks);
-//e    	BCLog.d("aa : "+container.getCarried());
-/*        if (recipeBook == null) {
+        if (recipeBook == null) {
             super.render(pose, mouseX, mouseY, partialTicks);
             return;
         }
-        if (recipeBook.isVisible() && this.widthTooNarrow) {
+        if (recipeBook.isVisible() && widthTooNarrow) {
             renderBackground(pose);
-            this.drawBackgroundLayer(pose, mouseX, mouseY, partialTicks);
+            drawBackgroundLayer(pose, mouseX, mouseY, partialTicks);
             recipeBook.render(pose, mouseX, mouseY, partialTicks);
             renderTooltip(pose, mouseX, mouseY);
         } else {
             super.render(pose, mouseX, mouseY, partialTicks);
- //           recipeBook.render(pose, mouseX, mouseY, partialTicks);
-            recipeBook.renderGhostRecipe(pose, this.leftPos, this.topPos, true, partialTicks);
+            recipeBook.render(pose, mouseX, mouseY, partialTicks);
+            recipeBook.renderGhostRecipe(pose, leftPos, topPos, true, partialTicks);
         }
 
-        recipeBook.renderTooltip(pose, this.leftPos, this.topPos, mouseX, mouseY);*/
+        recipeBook.renderTooltip(pose, leftPos, topPos, mouseX, mouseY);
     }
 
     @Override
@@ -222,7 +220,6 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> {
 
     protected void onPress(Button button){
         if (button == recipeButton && recipeBook != null) {
-            recipeBook.initVisuals();
             recipeBook.toggleVisibility();
             leftPos = recipeBook.updateScreenPosition(width, imageWidth);
             recipeButton.setPosition(this.leftPos + 5, this.height / 2 - 66);
@@ -253,6 +250,14 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> {
         }
         return true;
 	}
+
+    @Override
+    public boolean charTyped(char codePoint, int modifiers) {
+        if (recipeBook != null && recipeBook.charTyped(codePoint, modifiers)) {
+            return true;
+        }
+        return super.charTyped(codePoint, modifiers);
+    }
 
 	@Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
@@ -291,12 +296,14 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> {
 
     // IRecipeShownListener
 
+    @Override
     public void recipesUpdated() {
         if (recipeBook != null) {
             recipeBook.recipesUpdated();
         }
     }
 
+    @Override
     public RecipeBookComponent getRecipeBookComponent() {
         return recipeBook;
     }

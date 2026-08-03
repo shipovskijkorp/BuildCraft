@@ -1,6 +1,5 @@
 package buildcraft.api.transport.pipe;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.IFluidFilter;
@@ -17,16 +16,16 @@ public interface IFlowFluid {
     /** @deprecated use the version below with a simulate paramater. */
     @Nullable
     @Deprecated
-    default FluidStack tryExtractFluid(int millibuckets, Direction from, FluidStack filter) {
+    default FluidStack tryExtractFluid(int millibuckets, Direction from, @Nullable FluidStack filter) {
         return tryExtractFluid(millibuckets, from, filter, FluidAction.SIMULATE);
     }
 
     /** @param millibuckets
      * @param from
-     * @param filter The fluidstack that the extracted fluid must match, or null for any fluid.
+     * @param filter The fluid stack that the extracted fluid must match, or null/empty for any fluid.
      * @return The fluidstack extracted and inserted into the pipe. */
     @Nullable
-    FluidStack tryExtractFluid(int millibuckets, Direction from, @Nonnull FluidStack filter, FluidAction simulate);
+    FluidStack tryExtractFluid(int millibuckets, Direction from, @Nullable FluidStack filter, FluidAction simulate);
 
     /** @deprecated use the version below with a simulate paramater. */
     @Deprecated
