@@ -31,6 +31,15 @@ public class ItemWrench extends Item implements IToolWrench{
 	}
 
 	@Override
+	public boolean doesSneakBypassUse(ItemStack stack, net.minecraft.world.level.LevelReader world,
+			BlockPos pos, Player player) {
+		// Allow the targeted block to handle shift-right-click before the wrench item.
+		// Otherwise Forge skips BlockPipeHolder.use() while sneaking, so pluggables such
+		// as robot stations never receive the interaction.
+		return true;
+	}
+
+	@Override
 	public InteractionResult useOn(UseOnContext coc) {
 		Level world = coc.getLevel();
 		BlockPos pos = coc.getClickedPos();

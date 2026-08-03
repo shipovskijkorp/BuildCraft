@@ -99,7 +99,7 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
             }
         }
 
-        container.sendSetPhantomSlots(container.tile.invBlueprint, stacks);
+        container.sendSetPhantomSlots(container.blueprintInv, stacks);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
         super.init();
         widthTooNarrow = this.width < SIZE_X + 176;
         if (recipeBook != null) {
-            recipeBook.init(width, height, minecraft, widthTooNarrow, container.tile.getWorkbenchCrafting().getCraftingMenu(menu));
+            recipeBook.init(width, height, minecraft, widthTooNarrow, container.tile.getWorkbenchCrafting().getCraftingMenu(menu, container.materialInv));
             leftPos = recipeBook.updateScreenPosition(width, imageWidth);
             recipeButton =
                 new ImageButton(leftPos + 5, height / 2 - 90, 20, 18, 0, 168, 19, VANILLA_CRAFTING_TABLE, this::onPress);

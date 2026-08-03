@@ -21,6 +21,10 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraftforge.items.IItemHandler;
 
 public class ContainerAdvancedCraftingTable extends ContainerBCTile<TileAdvancedCraftingTable> {
+
+    /** The exact handlers backing this menu's synced slots (client and server instances differ). */
+    public final IItemHandlerAdv blueprintInv;
+    public final IItemHandlerAdv materialInv;
 	
 	public ContainerAdvancedCraftingTable(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
 		this(containerId, playerInventory, new ItemHandlerSimple(15), new ItemHandlerSimple(9), new ItemHandlerSimple(9), new ItemHandlerSimple(1), createLevelAccess(playerInventory, buf));
@@ -29,6 +33,8 @@ public class ContainerAdvancedCraftingTable extends ContainerBCTile<TileAdvanced
     public ContainerAdvancedCraftingTable(int containerId, Inventory playerInventory, IItemHandlerAdv invMaterials, 
     		IItemHandlerAdv invResults, IItemHandlerAdv invBlueprint, IItemHandler clientResult, ContainerLevelAccess access) {
         super(BCSiliconGuis.MENU_AD_CRAFTING_TABLE.get(), playerInventory, containerId, access);
+        blueprintInv = invBlueprint;
+        materialInv = invMaterials;
 
         addSlot(new SlotDisplay(clientResult, 0, 127, 33));
 

@@ -373,15 +373,18 @@ public class WorkbenchCrafting extends CraftingContainer {
         return true;
     }
     
-    public RecipeBookMenu<WorkbenchCrafting> getCraftingMenu(AbstractContainerMenu menu) {
-    	return new InnerRecipeBookMenu(menu);
+    public RecipeBookMenu<WorkbenchCrafting> getCraftingMenu(AbstractContainerMenu menu, IItemHandler materials) {
+        return new InnerRecipeBookMenu(menu, materials);
     }
 
     protected class InnerRecipeBookMenu extends RecipeBookMenu<WorkbenchCrafting> {
-    	public final AbstractContainerMenu menu;
-        protected InnerRecipeBookMenu(AbstractContainerMenu menu) {
-			super(menu.getType(), menu.containerId);
-			this.menu = menu;
+        public final AbstractContainerMenu menu;
+        private final IItemHandler recipeBookMaterials;
+
+        protected InnerRecipeBookMenu(AbstractContainerMenu menu, IItemHandler materials) {
+            super(menu.getType(), menu.containerId);
+            this.menu = menu;
+            this.recipeBookMaterials = materials;
 			for(int i=0;i<menu.slots.size();i++)
 				this.slots.add(i, menu.slots.get(i));
 		}
@@ -398,7 +401,14 @@ public class WorkbenchCrafting extends CraftingContainer {
 
 		@Override
 		public void fillCraftSlotsStackedContents(StackedContents stackedContents) {
-			WorkbenchCrafting.this.fillStackedContents(stackedContents);
+            // The blueprint is a phantom recipe and must not make recipes appear craftable. Count only the actual
+            // material inventory here; RecipeBookComponent adds the player's inventory separately.
+            for (int slot = 0; slot < recipeBookMaterials.getSlots(); slot++) {
+                ItemStack stack = recipeBookMaterials.getStackInSlot(slot);
+                if (!stack.isEmpty()) {
+                    stackedContents.accountStack(stack);
+                }
+            }
 		}
 
 		@Override

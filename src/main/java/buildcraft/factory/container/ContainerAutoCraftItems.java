@@ -22,6 +22,9 @@ public class ContainerAutoCraftItems extends ContainerBCTile<TileAutoWorkbenchIt
 
     public final SlotBase[] materialSlots;
     public final SlotBase[] filtterSlots;;
+    /** The exact handlers backing this menu's synced slots (client and server instances differ). */
+    public final IItemHandlerAdv blueprintInv;
+    public final IItemHandlerAdv materialInv;
     
 	public static ContainerAutoCraftItems create(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
 		return new ContainerAutoCraftItems(containerId, playerInventory, buf.readInt(), createLevelAccess(playerInventory, buf));
@@ -35,6 +38,8 @@ public class ContainerAutoCraftItems extends ContainerBCTile<TileAutoWorkbenchIt
     public ContainerAutoCraftItems(int containerId, Inventory player, IItemHandlerAdv invResult, IItemHandlerAdv invBlueprint, 
     		IItemHandlerAdv invMaterialFilter, IItemHandlerAdv invMaterials, IItemHandler resultClient, ContainerLevelAccess access) {
         super(BCFactoryGuis.MENU_AUTOWORK_BENCH_ITEM.get(), player, containerId, access);
+        blueprintInv = invBlueprint;
+        materialInv = invMaterials;
 
         addSlot(new SlotOutput(invResult, 0, 124, 35));
         for (int y = 0; y < 3; y++) {

@@ -36,8 +36,8 @@ final class AdvancedCraftingRecipeTransferHandler
     @Override
     public IRecipeTransferError transferRecipe(ContainerAdvancedCraftingTable container, CraftingRecipe recipe,
             IRecipeSlotsView recipeSlots, Player player, boolean maxTransfer, boolean doTransfer) {
-        if (doTransfer && container.tile != null) {
-            container.sendSetPhantomSlots(container.tile.invBlueprint,
+        if (doTransfer) {
+            container.sendSetPhantomSlots(container.blueprintInv,
                     CraftingPhantomTransfer.getCraftingGrid(recipeSlots));
         }
         return null;

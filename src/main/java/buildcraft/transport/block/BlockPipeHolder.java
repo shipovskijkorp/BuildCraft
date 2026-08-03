@@ -19,7 +19,6 @@ import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.transport.EnumWirePart;
 import buildcraft.api.transport.IItemPluggable;
 import buildcraft.api.transport.WireNode;
-import buildcraft.api.transport.pipe.IItemPipe;
 import buildcraft.api.transport.pipe.IPipeHolder;
 import buildcraft.api.transport.pipe.PipeApi;
 import buildcraft.api.transport.pipe.PipeDefinition;
@@ -44,7 +43,6 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
@@ -626,24 +624,36 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		return voxelShape;
 	}
 
-	// @Override//TODO
-	public ItemStack getPickBlock(BlockState state, BlockHitResult target, Level world, BlockPos pos, Player player) {
+	@Override
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos,
+			Player player) {
 		TilePipeHolder tile = getPipe(world, pos, false);
-		if (tile == null || target == null) {
+		if (tile == null) {
 			return ItemStack.EMPTY;
 		}
-		Vec3 location = target.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
-		int subHit = computSubhit(tile, location, computHitOctant(location));
+
+		// Forge calls this overload for pick-block. The old port left the actual sub-part picker in a
+		// getPickBlock method, which is no longer an override in 1.19.2, so vanilla always fell back to
+		// the three-argument getCloneItemStack method and selected the pipe itself.
+		int subHit = 0;
+		if (player != null) {
+			BCBlockHitResult trace = rayTrace(world, pos, player);
+			if (trace != null) {
+				subHit = trace.subHit;
+			}
+		}
+		if (subHit == 0 && target != null) {
+			Vec3 location = target.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+			subHit = computSubhit(tile, location, computHitOctant(location));
+		}
 		if (subHit <= 6) {
 			Pipe pipe = tile.getPipe();
 			if (pipe != Pipe.EMPTY) {
 				PipeDefinition def = pipe.getDefinition();
 				Item item = (Item) PipeApi.pipeRegistry.getItemForPipe(def);
 				if (item != null) {
-					CompoundTag tag = new CompoundTag();
-					tag.putInt("color", pipe.getColour() == null ? 0 : pipe.getColour().getId() + 1);
 					ItemStack stack = new ItemStack(item, 1);
-					stack.setTag(tag);
+					ItemPipeHolder.setPipeColor(stack, pipe.getColour());
 					return stack;
 				}
 			}
@@ -1027,25 +1037,8 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {//TODO return pluggable
-		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (!(blockEntity instanceof TilePipeHolder tile)) {
-			return ItemStack.EMPTY;
-		}
-
-		Pipe pipe = tile.getPipe();
-		if (pipe == null || pipe == Pipe.EMPTY || pipe.definition == null || PipeApi.pipeRegistry == null) {
-			return ItemStack.EMPTY;
-		}
-
-		IItemPipe registeredItem = PipeApi.pipeRegistry.getItemForPipe(pipe.definition);
-		if (!(registeredItem instanceof Item item)) {
-			return ItemStack.EMPTY;
-		}
-
-		ItemStack stack = new ItemStack(item);
-		ItemPipeHolder.setPipeColor(stack, pipe.getColour());
-		return stack;
+	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+		return getCloneItemStack(state, null, level, pos, null);
 	}
 
 	@Override

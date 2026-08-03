@@ -235,12 +235,16 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
     @Override
     public InteractionResult onPluggableActivate(Player player, BlockHitResult trace, Level level) {
         if (player.isShiftKeyDown() && EntityUtil.getWrenchHand(player) != null) {
+            // Do not validate the server-side station object on the client. The previous code did that before
+            // returning SUCCESS, so the client always saw station == null and never sent the interaction.
+            if (level.isClientSide) {
+                return getRenderState() == RobotStationState.Linked
+                        ? InteractionResult.SUCCESS
+                        : InteractionResult.PASS;
+            }
             validateStation();
             if (station == null || !station.isMainStation()) {
                 return InteractionResult.PASS;
-            }
-            if (level.isClientSide) {
-                return InteractionResult.SUCCESS;
             }
 
             EntityRobotBase releasedRobot = station.robotTaking();

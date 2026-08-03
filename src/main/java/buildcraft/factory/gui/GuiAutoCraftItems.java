@@ -106,7 +106,7 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
             }
         }
 
-        container.sendSetPhantomSlots(container.tile.invBlueprint, stacks);
+        container.sendSetPhantomSlots(container.blueprintInv, stacks);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
         widthTooNarrow = this.width < SIZE_X + 176;
         if (recipeBook != null) {
         	WorkbenchCrafting invCraft = container.tile.getWorkbenchCrafting();
-            recipeBook.init(width, height, minecraft, widthTooNarrow, invCraft.getCraftingMenu(menu));
+            recipeBook.init(width, height, minecraft, widthTooNarrow, invCraft.getCraftingMenu(menu, container.materialInv));
             leftPos = recipeBook.updateScreenPosition(width, imageWidth);
             recipeButton =
                 new ImageButton(leftPos + 5, height / 2 - 66, 20, 18, 0, 168, 19, VANILLA_CRAFTING_TABLE, this::onPress);
