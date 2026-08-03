@@ -19,6 +19,7 @@ import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.transport.EnumWirePart;
 import buildcraft.api.transport.IItemPluggable;
 import buildcraft.api.transport.WireNode;
+import buildcraft.api.transport.pipe.IItemPipe;
 import buildcraft.api.transport.pipe.IPipeHolder;
 import buildcraft.api.transport.pipe.PipeApi;
 import buildcraft.api.transport.pipe.PipeDefinition;
@@ -31,6 +32,7 @@ import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.transport.BCTransportBlocks;
 import buildcraft.transport.BCTransportItems;
+import buildcraft.transport.item.ItemPipeHolder;
 import buildcraft.transport.item.ItemWire;
 import buildcraft.transport.pipe.Pipe;
 import buildcraft.transport.tile.TilePipeHolder;
@@ -1026,8 +1028,24 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 
 	@Override
 	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {//TODO return pluggable
-		return new ItemStack(
-				BCTransportItems.PIPE_MAP.get(((TilePipeHolder) level.getBlockEntity(pos)).getPipe().definition).get());
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		if (!(blockEntity instanceof TilePipeHolder tile)) {
+			return ItemStack.EMPTY;
+		}
+
+		Pipe pipe = tile.getPipe();
+		if (pipe == null || pipe == Pipe.EMPTY || pipe.definition == null || PipeApi.pipeRegistry == null) {
+			return ItemStack.EMPTY;
+		}
+
+		IItemPipe registeredItem = PipeApi.pipeRegistry.getItemForPipe(pipe.definition);
+		if (!(registeredItem instanceof Item item)) {
+			return ItemStack.EMPTY;
+		}
+
+		ItemStack stack = new ItemStack(item);
+		ItemPipeHolder.setPipeColor(stack, pipe.getColour());
+		return stack;
 	}
 
 	@Override

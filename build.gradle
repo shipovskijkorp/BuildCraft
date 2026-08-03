@@ -38,6 +38,7 @@ def jadeModrinthVersion = providers.gradleProperty('jade_modrinth_version').getO
 def ic2ClassicModrinthVersion = providers.gradleProperty('ic2_classic_modrinth_version').getOrElse('2.1.3.3')
 def carbonConfigModrinthVersion = providers.gradleProperty('carbon_config_modrinth_version').getOrElse('8U1HA7TK')
 def forestryModrinthVersion = providers.gradleProperty('forestry_modrinth_version').getOrElse('q98RKZEA')
+def patchouliModrinthVersion = providers.gradleProperty('patchouli_modrinth_version').getOrElse('62ztr7HA')
 def enableIc2Runtime = providers.gradleProperty('enable_ic2_runtime')
         .map { it.toBoolean() }
         .getOrElse(false)
@@ -50,6 +51,7 @@ def jadeDependency = "maven.modrinth:nvQzSEkH:${jadeModrinthVersion}"
 def ic2ClassicDependency = "maven.modrinth:nIaMQHTd:${ic2ClassicModrinthVersion}"
 def carbonConfigDependency = "maven.modrinth:1jDdpgcc:${carbonConfigModrinthVersion}"
 def forestryDependency = "maven.modrinth:2oORTOi2:${forestryModrinthVersion}"
+def patchouliDependency = "maven.modrinth:patchouli:${patchouliModrinthVersion}"
 
 minecraft {
     // The mappings can be changed at any time and must be in the following format.
@@ -239,13 +241,22 @@ dependencies {
     compileOnly fg.deobf(ic2ClassicDependency)
     compileOnly fg.deobf(carbonConfigDependency)
 
-    // Forestry Community Edition API for optional genome-aware list matching.
-    compileOnly fg.deobf(forestryDependency)
-
     if (enableIc2Runtime && !gameTestRequested) {
         runtimeOnly fg.deobf(ic2ClassicDependency)
         runtimeOnly fg.deobf(carbonConfigDependency)
     }
+
+    // Forestry Community Edition API for optional genome-aware list matching.
+    compileOnly fg.deobf(forestryDependency)
+    runtimeOnly fg.deobf(forestryDependency)
+
+    // Patchouli API/full jar for guidebook integration. Modrinth does not publish
+    // a separate API classifier, so the same jar is used for compilation and dev runtime.
+    compileOnly fg.deobf(patchouliDependency)
+    if (!gameTestRequested) {
+        runtimeOnly fg.deobf(patchouliDependency)
+    }
+
     // JUnit tests cover deterministic logic without launching Minecraft.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.3'

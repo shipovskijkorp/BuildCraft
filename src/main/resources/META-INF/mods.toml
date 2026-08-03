@@ -335,3 +335,56 @@ Robots, docking stations, redstone boards, zones and robotic automation.
     versionRange="[8.0.0.0,)"
     ordering="AFTER"
     side="BOTH"
+
+[[mods]]
+    modId="buildcraftcompat"
+    version="${file.jarVersion}"
+    displayName="BuildCraft Community Edition - Compat"
+    credits="Special thanks to the original BuildCraft and Forestry teams and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Optional cross-mod content for BuildCraft Community Edition, including the Forestry Apiarist's Pipe.
+    '''
+    displayTest="MATCH_VERSION"
+
+[[dependencies.buildcraftcompat]]
+    modId="forge"
+    mandatory=true
+    versionRange="[43.2.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2,1.20)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="buildcraftlib"
+    mandatory=true
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="buildcraftcore"
+    mandatory=true
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="buildcrafttransport"
+    mandatory=true
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="forestry"
+    mandatory=false
+    versionRange="[1.0.0,)"
+    ordering="AFTER"
+    side="BOTH"

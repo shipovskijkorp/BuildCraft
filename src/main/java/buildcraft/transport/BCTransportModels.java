@@ -25,6 +25,7 @@ import buildcraft.transport.client.render.PipeFlowRendererFluids;
 import buildcraft.transport.client.render.PipeFlowRendererItems;
 import buildcraft.transport.client.render.PipeFlowRendererPower;
 import buildcraft.transport.client.render.RenderPipeHolder;
+import buildcraft.transport.pipe.PipeRegistry;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourStripes;
 import buildcraft.transport.pipe.flow.PipeFlowFluids;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
@@ -33,11 +34,14 @@ import buildcraft.transport.pipe.flow.PipeFlowPower;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent.Pre;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BCTransportModels {
    // public static final ResourceLocation BLOCKER_LOCATIOn = new ResourceLocation("buildcrafttransport:plugs/blocker");
@@ -105,8 +109,16 @@ public class BCTransportModels {
     	putModel(event, "pipe_item#inventory", ModelPipeItem.INSTANCE);
 //      putModel(event, "obsidian_item#inventory", ModelPipeItem.INSTANCE);
 
-    	for(var item : BCTransportItems.PIPE_MAP.values()) 
-    		putModel(event, item.getId().getPath() + "#inventory", ModelPipeItem.INSTANCE);
+        // Replace the inventory model for every pipe registered through the public pipe registry,
+        // including pipes owned by compatibility modules or third-party mods.
+        for (var pipeItem : PipeRegistry.INSTANCE.getPipeItemsMap().values()) {
+            if (pipeItem instanceof Item item) {
+                ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
+                if (id != null) {
+                    event.getModels().put(new ModelResourceLocation(id, "inventory"), ModelPipeItem.INSTANCE);
+                }
+            }
+        }
     	
   //  	BakedModel blocker = event.getModels().get(BLOCKER_LOCATIOn);
     //	BakedModel adaptor = event.getModels().get(POWER_ADAPTER_LOCATION);
