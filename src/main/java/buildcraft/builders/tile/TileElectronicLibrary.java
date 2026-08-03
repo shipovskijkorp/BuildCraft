@@ -34,7 +34,6 @@ import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.lib.tile.item.StackInsertionFunction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -348,14 +347,6 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
             }
         }
     }
-    
-    
-
-	@Override
-	public void saveAdditional(CompoundTag nbt) {
-		// TODO Auto-generated method stub
-		super.saveAdditional(nbt);
-	}
 
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {

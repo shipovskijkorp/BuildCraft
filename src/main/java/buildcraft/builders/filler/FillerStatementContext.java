@@ -27,7 +27,6 @@ public enum FillerStatementContext implements StatementContext<IFillerPattern> {
             group.patterns.clear();
         }
         for (IFillerPattern pattern : FillerManager.registry.getPatterns()) {
-            // TODO (AlexIIL): 8.1.x: add support for other groups
             if (pattern instanceof PatternShape2d) {
                 Group.SHAPES_2D.patterns.add(pattern);
             } else {

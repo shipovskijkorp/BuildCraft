@@ -29,7 +29,6 @@ public class FrozenTextureGenPackResources implements PackResources{
 	private static final Logger logger = BCLog.logger;
 	private static final int SIZE = 2;//2
 
-	//public final Map<ResourceLocation, Function<ResourceLocation, InputStream>> resources = new HashMap<>();
 	private final HashBiMap<ResourceLocation, ResourceLocation> transLocations = HashBiMap.create();//<transformed, src>
 	
 	protected InputStream load(ResourceLocation srcLocation) {
@@ -44,7 +43,6 @@ public class FrozenTextureGenPackResources implements PackResources{
 		try {
 			NativeImage srcimage = NativeImage.read(resource.open());
             int widthOld = srcimage.getWidth();
-//            int heightOld = srcimage.getHeight();
 	        try {
 	        	var animationmetadatasection = resource.metadata().getSection(AnimationMetadataSection.SERIALIZER);
 	            if (animationmetadatasection.isEmpty() && widthOld != srcimage.getWidth()) {
@@ -59,8 +57,8 @@ public class FrozenTextureGenPackResources implements PackResources{
 	        	logger.error("Unable to parse metadata from {} : {}", srcLocation, exception);
 	        }
 
-            int width = widthOld * SIZE;//2 is too small, when 4 maybe too big
-            int height = width;//heightOld * 2;
+            int width = widthOld * SIZE;
+            int height = width;
 
             NativeImage outImage = new NativeImage(width, height, false);
 			for (int x = 0; x < width; x++) {
@@ -71,7 +69,6 @@ public class FrozenTextureGenPackResources implements PackResources{
 				}
 			}
 			ByteArrayInputStream data = new ByteArrayInputStream(outImage.asByteArray());
-//			outImage.writeToFile(srcLocation.getPath().replace('/', '_'));
 			if(outImage!=null)
 				outImage.close();
 			if(srcimage!=null)
@@ -84,9 +81,6 @@ public class FrozenTextureGenPackResources implements PackResources{
 		return null;
 	}
 	
-	protected InputStream dynamicLoad(ResourceLocation srcLocation) {//TODO
-		return null;
-	}
 	
 	public ResourceLocation registry(ResourceLocation srcLocation) {
 		String path = "fluid_" + srcLocation.toString().replace(':', '_') + "_convert_frozen";

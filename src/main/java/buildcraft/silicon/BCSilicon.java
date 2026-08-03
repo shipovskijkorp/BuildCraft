@@ -36,8 +36,6 @@ public class BCSilicon {
     public static CreativeTabBC tabFacades = (CreativeTabBC) CreativeTabManager.createTab("buildcraft.facades").setRecipeFolderName("facades");
     
     public BCSilicon() {
- //       RegistryConfig.useOtherModConfigFor(MODID, BCCore.MODID);
-
     	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     	modEventBus.addListener(BCSilicon::commonSetup);
     	modEventBus.addListener(BCSilicon::postInit);
@@ -54,7 +52,6 @@ public class BCSilicon {
 
 
         MinecraftForge.EVENT_BUS.register(this);
- //       NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, BCSiliconProxy.getProxy());
 
     }
 
@@ -93,7 +90,6 @@ public class BCSilicon {
             // The subscriber class is loaded by Forge, but its constructor is never guaranteed to run.
             // Previously timer trigger icons were created too late, so the atlas stitched missing-texture squares.
             BCSiliconSprites.fmlPreInit();
-            BCSiliconModels.fmlPreInit();
         }
         
     	@SubscribeEvent

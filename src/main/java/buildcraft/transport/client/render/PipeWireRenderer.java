@@ -22,7 +22,6 @@ import buildcraft.lib.client.model.ModelUtil.UvFaceData;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.lib.client.model.MutableVertex;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry;
-import buildcraft.lib.misc.ColourUtil;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.transport.tile.TilePipeHolder;
 import buildcraft.transport.wire.EnumWireBetween;
@@ -44,14 +43,7 @@ public class PipeWireRenderer {
 
     private static final Map<DyeColor, SpriteHolderRegistry.SpriteHolder> wireSprites =
         new EnumMap<>(DyeColor.class);
-/*    private static final int[] wireRenderingCache =
-        new int[(EnumWireBetween.VALUES.length + EnumWirePart.VALUES.length) * ColourUtil.COLOURS.length * 2];*/
-
-    final static int WIRE_COUNT = EnumWirePart.VALUES.length * ColourUtil.COLOURS.length * 2;
-
     static {
-//        Arrays.fill(wireRenderingCache, -1);
-
         for (DyeColor color : DyeColor.values()) {
             wireSprites.put(color, SpriteHolderRegistry.getHolder("buildcrafttransport:wires/" + color.getName()));
         }
@@ -64,12 +56,6 @@ public class PipeWireRenderer {
         }
     }
 
-/*    public static void clearWireCache() {
-        Arrays.fill(wireRenderingCache, -1);
-    }*/
-    
-    public static void onTextureStitchPre() {
-	}
 
     public static SpriteHolderRegistry.SpriteHolder getWireSprite(DyeColor colour) {
         return wireSprites.get(colour);
@@ -200,11 +186,6 @@ public class PipeWireRenderer {
 
     private static void renderQuads(Matrix4f pose, Matrix3f normal, VertexConsumer bb, MutableQuad[] quads,
     		ISprite sprite, int level, int blockLight, int skyLight, int combinedOverlay) {
-/*        VertexFormat vf = DefaultVertexFormat.POSITION_TEX_COLOR;
-        Tesselator tesselator = new Tesselator(quads.length * vf.getVertexSize());
-        BufferBuilder bb = tesselator.getBuilder();
-        bb.begin(VertexFormat.Mode.QUADS, vf);*/
-
         float vOffset = (level & 0xF) / 16f;
         MutableQuad newQuad = new MutableQuad();
         for (MutableQuad q : quads) {
@@ -221,7 +202,6 @@ public class PipeWireRenderer {
             renderVertex(pose, normal, bb, q.vertex_2, sprite, vOffset, combinedOverlay);
             renderVertex(pose, normal, bb, q.vertex_3, sprite, vOffset, combinedOverlay);
         }
-//        tesselator.end();
     }
 
     private static void renderVertex(Matrix4f pose, Matrix3f normal, VertexConsumer bb, MutableVertex vertex, ISprite sprite, float vOffset, int combinedOverlay) {
@@ -232,50 +212,15 @@ public class PipeWireRenderer {
         bb.uv(u, v)
         .overlayCoords(combinedOverlay);
         vertex.renderLightMap(bb);
- //       bb.uv2(15728640);
         vertex.renderNormal(normal, bb);
         bb.endVertex();
     }
 
-/*    private static int compileQuads(MutableQuad[] quads, DyeColor colour, boolean isOn) {
-        int index = RenderSystem.glGenBuffers(1);
-        VertexBuffer vbo = new VertexBuffer();
-        
-//TODO
-        ISprite sprite = wireSprites.get(colour);
-        /*
-         * Currently pipe wire only supports two states - on or off. However all the textures supply 16 different
-         * states, which could (possibly) be used for making pipe wire use all 16 states that normal redstone does. This
-         * just opens up the possibility in the future.
-         */
-/*        renderQuads(quads, sprite, isOn ? 15 : 0);
-
-        GL11.glEndList();
-        return index;
-    }*/
-
-    private static int getIndex(EnumWirePart part, DyeColor colour, boolean isOn) {
-        return part.ordinal() * 32 + colour.ordinal() * 2 + (isOn ? 1 : 0);
-    }
-
-    private static int getIndex(EnumWireBetween bet, DyeColor colour, boolean isOn) {
-        return WIRE_COUNT + bet.ordinal() * 32 + colour.ordinal() * 2 + (isOn ? 1 : 0);
-    }
-
-/*    private static int compileWire(EnumWirePart part, DyeColor colour, boolean isOn) {
-        return compileQuads(getQuads(part), colour, isOn);
-    }
-
-    private static int compileWire(EnumWireBetween between, DyeColor colour, boolean isOn) {
-        return compileQuads(getQuads(between), colour, isOn);
-    }*/
 
     public static void renderWires(TilePipeHolder pipe, float conSize, PoseStack matrix, MultiBufferSource buffer,
 			int combinedLight, int combinedOverlay) {
         int skyLight = combinedLight >> 16 & 0xFFFF;
         int blockLight = combinedLight & 0xFFFF;
-//        RenderSystem.disa();
-//        matrix.pushPose();
         VertexConsumer bb = buffer.getBuffer(RenderType.cutout());
         Matrix4f pose = matrix.last().pose();
         Matrix3f normal = matrix.last().normal();
@@ -283,35 +228,14 @@ public class PipeWireRenderer {
             EnumWirePart part = partColor.getKey();
             DyeColor color = partColor.getValue();
             boolean isOn = pipe.wireManager.isPowered(part);
-            //int idx = getIndex(part, color, isOn);
             renderQuads(pose, normal, bb, partQuads.get(part), wireSprites.get(color), isOn ? 15 : 0, isOn ? 240 : blockLight, skyLight, combinedOverlay);
-/*            if (wireRenderingCache[idx] == -1) {
-                wireRenderingCache[idx] = compileWire(part, color, isOn);
-            }
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, isOn ? 240 : blockLight, skyLight);
-            Render.callList(wireRenderingCache[idx]);*/
         }
         for (Map.Entry<EnumWireBetween, DyeColor> betweenColor : pipe.getWireManager().betweens.entrySet()) {
             EnumWireBetween between = betweenColor.getKey();
             DyeColor color = betweenColor.getValue();
             boolean isOn = pipe.wireManager.isPowered(between.parts[0]);
-            //int idx = getIndex(between, color, isOn);
             renderQuads(pose, normal, bb, betweenQuads.get(between), wireSprites.get(color), isOn ? 15 : 0, isOn ? 240 : blockLight, skyLight, combinedOverlay);
-/*            if (wireRenderingCache[idx] == -1) {
-                wireRenderingCache[idx] = compileWire(between, color, isOn);
-            }
-            bb.uv2(isOn ? 240 : blockLight, skyLight);
-            //OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, );
-            GlStateManager.callList(wireRenderingCache[idx]);*/
         }
-//        matrix.popPose();
-//        GlStateManager.enableLighting();
-        /*
-         * Directly rendering (like with a gllist) changes the colour directly, so we need to change the opengl state
-         * directly
-         */
-//        GL11.glColor3f(1, 1, 1);
-//        GlStateManager.color(1, 1, 1, 1);
     }
 
     public static void init() {

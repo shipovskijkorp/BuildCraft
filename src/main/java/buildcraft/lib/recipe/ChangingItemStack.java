@@ -12,7 +12,6 @@ import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -52,7 +51,6 @@ public final class ChangingItemStack extends ChangingObject<ItemStackKey> {
         }
         if (stack.is(Tags.Items.ORES)) {
             NonNullList<ItemStack> subs = NonNullList.create();
-            //stack.getItem().getSubItems(CreativeModeTab.TAB_SEARCH, subs);//TODO
             return makeListArray(subs);
         } else {
             return new ItemStackKey[] { new ItemStackKey(stack) };

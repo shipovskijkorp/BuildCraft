@@ -51,14 +51,6 @@ public class BCEnergy {
     public BCEnergy() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        //TEST_CODE_START
-        try {
-//			test();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			buildcraft.api.core.BCLog.logger.warn("Failed to initialise BuildCraft Energy integration", e);
-		} 
-        //TEST_CODE_END
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
@@ -79,7 +71,6 @@ public class BCEnergy {
 
         // Register ourselves for server and other game events we are interested in
 
- //       MinecraftForge.EVENT_BUS.register(EntityBlockPump::new);
     }
     private static void registerOptionalCompatItems() {
         if (!ModList.get().isLoaded("ic2")) {
@@ -100,13 +91,7 @@ public class BCEnergy {
     	BCEnergyFluids.init();
     	BCEnergyRecipes.init();
     	BCEnergyConfig.reloadConfig(MODID);
-//    	event.enqueueWork(() -> 
-//    	if(BCEnergyWorldGen.isTerraBlenderLoaded) {
-//	    	Regions.register(new BCOverWorldRegion(40));
-//  	  	SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MODID, BCSurfaceRuleData.oilDesertRule());
-//    	});
-    	//event.enqueueWork(BCEnergyWorldGen::registryFeature);
-        
+
     }
     public void gatherData(GatherDataEvent event) {
         event.getGenerator().addProvider(event.includeServer(),

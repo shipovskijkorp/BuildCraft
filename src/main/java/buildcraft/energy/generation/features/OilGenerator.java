@@ -99,11 +99,6 @@ public class OilGenerator {
         
         Holder<Biome> biome = world.getBiome(new BlockPos(x, seaLevel, z));//TODO
         ResourceLocation key = biome.unwrapKey().get().location();
-//        if(!"buildcraftenergy:oil_desert".equals(key.location().toString())) {
-//        	BCLog.logger.debug("OilGenFeature:fail");
-//        	return ImmutableList.of();
-//        }
-
         // The user blacklist/whitelist is checked before the datapack-level exclusions.
         boolean isExcludedBiome = !BCEnergyConfig.isBiomeAllowed(key) || config.excludedBiomes().contains(key);
         if (isExcludedBiome) {
@@ -116,35 +111,10 @@ public class OilGenerator {
             return ImmutableList.of();
         }
 
-/*        if (isEndBiome(key) && (Math.abs(x) < 1200 || Math.abs(z) < 1200)) {
-            if (DEBUG_OILGEN_BASIC & log) {
-                BCLog.logger.info(
-                    "[energy.oilgen] Not generating oil in " + toStr(world) + " chunk " + cx + ", " + cz
-                        + " because it's the end biome and we're within 1200 blocks of the ender dragon fight"
-                );
-            }
-            return ImmutableList.of();
-        }*/
-        
-
         boolean oilBiome = config.surfaceDepositBiomes().contains(key);
 
         double bonus = oilBiome ? 3.0 : 1.0;
         bonus *= config.oilWellGenerationRate();
-/*        if (BCEnergyWorldGen.isTerraBlenderLoaded) {
-	        if (BCEnergyConfig.excessiveBiomes.contains(key)) 
-	            bonus *= 30.0;
-	        if (sampler == null) {
-	            ServerChunkCache serverchunkcache = serverlevel.getChunkSource();
-	            RandomState randomstate = serverchunkcache.randomState();
-	            sampler = randomstate.sampler();
-	        }
-	        DensityFunction.SinglePointContext densityfunction$singlepointcontext = new DensityFunction.SinglePointContext(x&0xFFFFFFFC, seaLevel&0xFFFFFFFC, z&0xFFFFFFFC);
-	        double compute = sampler.weirdness().compute(densityfunction$singlepointcontext);
-	        if(BCEnergyConfig.excessiveBiomes.contains(key) != compute > 0)
-	        BCLog.d("missmatch oil gen");
-	        
-        }*/
         Optional<ExcessiveBiome> excessiveBiome = config.excessiveBiomes().stream().filter((a) -> a.biome().equals(key)).findAny();
 	    if(excessiveBiome.isPresent()){
 	    	ExcessiveBiome excessiveBiome0 = excessiveBiome.get();
@@ -336,7 +306,4 @@ public class OilGenerator {
         return pattern[x][z];
     }
     
-    private static boolean isEndBiome(ResourceLocation key) {
-    	return false;//TODO
-    }
 }

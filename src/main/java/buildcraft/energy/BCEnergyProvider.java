@@ -30,7 +30,6 @@ public class BCEnergyProvider{
 				        	//.texture("particle", "buildcraftenergy:blocks/fluids/"+name+"/"+BCEnergyFluids.HEAT_NAMES[h]+"_still");
 				    }
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				buildcraft.api.core.BCLog.logger.warn("Failed to register energy provider item", e);
 			}
 			

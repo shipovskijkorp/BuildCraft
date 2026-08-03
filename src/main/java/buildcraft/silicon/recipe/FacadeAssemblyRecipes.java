@@ -150,7 +150,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
 	@Override
 	public boolean canCraftInDimensions(int p_43999_, int p_44000_) {
-		return true;//TODO
+		return true;
 	}
 
     @Override

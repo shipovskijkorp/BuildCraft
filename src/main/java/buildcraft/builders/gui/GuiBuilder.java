@@ -18,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import buildcraft.lib.gui.help.GuiHelpUtil;
 
-// TODO: Convert this gui into JSON!
 public class GuiBuilder extends GuiBC8<ContainerBuilder> {
     private static final ResourceLocation TEXTURE_BASE =
             new ResourceLocation("buildcraftbuilders:textures/gui/builder.png");

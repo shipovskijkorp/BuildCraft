@@ -33,7 +33,6 @@ import buildcraft.silicon.client.render.RenderProgrammingTable;
 import buildcraft.silicon.gate.GateVariant;
 import buildcraft.silicon.plug.PluggableGate;
 import buildcraft.silicon.plug.PluggablePulsar;
-import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
@@ -41,10 +40,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.model.DynamicFluidContainerModel;
-import net.minecraftforge.client.model.geometry.IGeometryLoader;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class BCSiliconModels {
     public static final ModelHolderStatic LIGHT_SENSOR;
@@ -96,14 +91,8 @@ public class BCSiliconModels {
         return new ModelHolderVariable("buildcraftsilicon:models/" + str, fnCtx);
     }
 
-    public static void fmlPreInit() {
-      //  MinecraftForge.EVENT_BUS.register(BCSiliconModels.class);
-    }
 
     public static void init() {
- //       Minecraft.getInstance().getItemRenderer().getItemModelShaper().register(BCSiliconItems.PLUG_GATE_ITEM.get(),
-   //         GateMeshDefinition.INSTANCE);//TODO
-
         IClientRegistry pipeRegistryClient = PipeApiClient.registry;
         if (pipeRegistryClient != null) {
             pipeRegistryClient.registerBaker(KeyPlugGate.class, PlugGateBaker.INSTANCE);
@@ -125,7 +114,6 @@ public class BCSiliconModels {
 
     public static void RegisterItemColor(RegisterColorHandlersEvent.Item event) {
     	event.register(FacadeItemColours.INSTANCE, BCSiliconItems.PLUG_FACADE_ITEM.get());
-//    	event.register(new DynamicFluidContainerModel.Colors(), BCSiliconItems.PLUG_LENS_ITEM.get());
     }
     
     public static void onModelBake(BakingCompleted event) {

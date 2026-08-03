@@ -504,7 +504,6 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     @Override
     public void clearRemoved() {
         super.clearRemoved();
-//        BCBuildersEventDist.INSTANCE.validateQuarry(this);//TODO
     }
 
     @Override

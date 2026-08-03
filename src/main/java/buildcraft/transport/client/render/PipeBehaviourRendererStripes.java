@@ -34,7 +34,6 @@ public enum PipeBehaviourRendererStripes implements IPipeBehaviourRenderer<PipeB
         poseStack.translate(-0.5, -0.5, -0.5);
         VertexConsumer cutout = buffer.getBuffer(RenderType.cutout());
         MutableQuad[] quads = BCTransportModels.getStripesDynQuads(dir);
-//        int light = stripes.pipe.getHolder().getPipeWorld().getLightEngine().getRawBrightness(stripes.pipe.getHolder().getPipePos(), 0);//TODO
         Pose pose = poseStack.last();
         Matrix4f trans = pose.pose();
         Matrix3f normal = pose.normal();

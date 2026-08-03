@@ -35,12 +35,7 @@ public class GuiConfigManager {
 
     static {
         properties = new TreeMap<>((a, b) -> a.toString().compareTo(b.toString()));
-        // TODO (AlexIIL, post 1.12 move): Flesh this system out more! Add settings that can be loaded from json GUI's
-        // TODO (AlexIIL, post 1.12 move): Move config file loading from core -> lib
         customGuiProperties.put(NodeTypes.getName(boolean.class), GuiPropertyBoolean::new);
-        // customGuiProperties.put(NodeTypes.getName(long.class), GuiPropertyLong::new);
-        // customGuiProperties.put(NodeTypes.getName(double.class), GuiPropertyDouble::new);
-        // customGuiProperties.put(NodeTypes.getName(String.class), GuiPropertyString::new);
     }
 
     public static IVariableNode getOrAddProperty(ResourceLocation gui, String name, IExpressionNode value) {

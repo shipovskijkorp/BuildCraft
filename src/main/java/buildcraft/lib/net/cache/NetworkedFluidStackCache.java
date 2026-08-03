@@ -9,8 +9,6 @@ package buildcraft.lib.net.cache;
 import java.io.IOException;
 import java.util.Objects;
 
-import com.mojang.logging.LogUtils;
-
 import it.unimi.dsi.fastutil.Hash;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenCustomHashMap;
@@ -70,14 +68,7 @@ public class NetworkedFluidStackCache extends NetworkedObjectCache<FluidStack> {
 
     @Override
     protected FluidStack readObject(FriendlyByteBuf buffer) throws IOException {
-
-        //Debug start
-        String temp = buffer.readUtf(64);
-        LogUtils.getLogger().info("trying to deserialize packet, result : " + temp);
-        Fluid fluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(temp));
-        //Debug end
-        
-        //Fluid fluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(buffer.readUtf(64)));
+        Fluid fluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(buffer.readUtf(64)));
         FluidStack stack = new FluidStack(fluid, FLUID_AMOUNT);
         if (buffer.readBoolean()) {
             stack.setTag(buffer.readNbt());

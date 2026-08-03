@@ -60,7 +60,6 @@ public final class WireSystem {
     /** Checks to see if the given holder could connect a wire across the specified side even if a matching wire wasn't
      * there. */
     public static boolean canWireConnect(IPipeHolder holder, Direction side) {
-        // TODO: Expand to pipeless wires (8.1.x)
         IPipe pipe = holder.getPipe();
         if (pipe == Pipe.EMPTY) {
             return false;

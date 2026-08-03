@@ -63,7 +63,7 @@ public class GuiRecipeBookPhantom  extends RecipeBookComponent {
         FIELD_GUI_BOOK.set(this, new RecipeBookPagePhantom(this));
         // Filtering craftable is really strange with phantom inventories
         RecipeBook recipeBook = Minecraft.getInstance().player.getRecipeBook();
-        wasFilteringCraftable = recipeBook.isFiltering(RecipeBookType.CRAFTING);//TODO
+        wasFilteringCraftable = recipeBook.isFiltering(RecipeBookType.CRAFTING);
         recipeBook.setFiltering(RecipeBookType.CRAFTING, false);
     }
 

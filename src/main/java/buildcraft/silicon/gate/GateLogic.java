@@ -465,11 +465,9 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
             IWireManager wires = getPipeHolder().getWireManager();
             EnumSet<DyeColor> turnedOff = EnumSet.copyOf(previousBroadcasts);
             turnedOff.removeAll(wireBroadcasts);
-            // FIXME: add call to "wires.stopEmittingColour(turnedOff)"
 
             EnumSet<DyeColor> turnedOn = EnumSet.copyOf(wireBroadcasts);
             turnedOn.removeAll(previousBroadcasts);
-            // FIXME: add call to "wires.emittingColour(turnedOff)"
 
             if (BCModules.TRANSPORT.isLoaded() && !getPipeHolder().getPipeWorld().isClientSide) {
                 WorldSavedDataWireSystems.get(getPipeHolder().getPipeWorld()).gatesChanged = true;

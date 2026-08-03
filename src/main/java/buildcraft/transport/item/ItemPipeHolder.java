@@ -30,7 +30,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class ItemPipeHolder extends BlockItem implements IItemPipe {
@@ -68,7 +67,6 @@ public class ItemPipeHolder extends BlockItem implements IItemPipe {
         setPipeColor(target, getPipeColor(source));
     }
     public final PipeDefinition definition;
-//    private final String id;
     private String unlocalizedName;
 
     public ItemPipeHolder(PipeDefinition definition) {
@@ -84,13 +82,6 @@ public class ItemPipeHolder extends BlockItem implements IItemPipe {
         return definition;
     }
     
-    // BlockItem overrides these to point to the block
-
-	@Override
-	public UseAnim getUseAnimation(ItemStack p_41452_) {
-		// TODO Auto-generated method stub
-		return super.getUseAnimation(p_41452_);
-	}
 
 	@Override
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {

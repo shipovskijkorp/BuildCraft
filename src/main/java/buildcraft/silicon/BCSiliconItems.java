@@ -23,7 +23,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class BCSiliconItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BCSilicon.MODID);
-	public static final RegistryObject<Item> REDSTONE_CRYSTAL = ITEMS.register("redstone_crystal", () -> new Item(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));//TODO check
+	public static final RegistryObject<Item> REDSTONE_CRYSTAL = ITEMS.register("redstone_crystal", () -> new Item(new Item.Properties().tab(BCCore.BUILDCRAFT_TAB)));
 	public static final EnumMap<EnumRedstoneChipset, ItemRedstoneChipset> REDSTONE_CHIPSET_ITEMS = ItemByEnum.creatItems(ItemRedstoneChipset::new
     		, new Item.Properties().stacksTo(16).tab(BCCore.BUILDCRAFT_TAB), EnumRedstoneChipset.values(), EnumRedstoneChipset.class, "redstone_chipset", ITEMS);
     public static final RegistryObject<ItemPluggableGate> PLUG_GATE_ITEM = ITEMS.register("plug/gate", ItemPluggableGate::new); 

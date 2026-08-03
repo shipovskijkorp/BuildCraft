@@ -1,7 +1,6 @@
 package buildcraft.silicon.item;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
@@ -13,7 +12,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -28,12 +26,6 @@ public class ItemGateCopier extends Item {
         super(new Item.Properties().stacksTo(1).tab(BCCore.BUILDCRAFT_TAB));
     }
 
-/*    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void addModelVariants(Int2ObjectMap<ModelResourceLocation> variants) {
-        addVariant(variants, 0, "empty");
-        addVariant(variants, 1, "full");
-    }*/
 
     @Override
     @OnlyIn(Dist.CLIENT)
@@ -44,11 +36,6 @@ public class ItemGateCopier extends Item {
         }
 	}
 
-	@Override
-	public Optional<TooltipComponent> getTooltipImage(ItemStack p_150902_) {
-		// TODO Auto-generated method stub
-		return super.getTooltipImage(p_150902_);
-	}
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {

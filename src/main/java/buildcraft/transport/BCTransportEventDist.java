@@ -12,7 +12,6 @@ import buildcraft.transport.client.model.ModelPipe;
 import buildcraft.transport.client.model.PipeBaseModelGenStandard;
 import buildcraft.transport.client.model.PipeModelCacheAll;
 import buildcraft.transport.client.render.PipeFlowRendererPower;
-import buildcraft.transport.client.render.PipeWireRenderer;
 import buildcraft.transport.net.PipeItemMessageQueue;
 import buildcraft.transport.wire.WorldSavedDataWireSystems;
 
@@ -24,8 +23,6 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.level.BlockEvent.EntityPlaceEvent;
 import net.minecraftforge.event.level.ChunkWatchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -81,7 +78,6 @@ public class BCTransportEventDist {
         @SubscribeEvent
         public static void registryTexture(TextureStitchEvent.Pre e){ 
         	BCTransportSprites.onTextureStitchPre(e);
-        	PipeWireRenderer.onTextureStitchPre();
         }
         
     }
@@ -100,16 +96,5 @@ public class BCTransportEventDist {
     @SubscribeEvent
     public static void onChunkWatch(ChunkWatchEvent event) {
         WorldSavedDataWireSystems.get(event.getPlayer().level).changedPlayers.add(event.getPlayer());
-    }
-
-
-    @SubscribeEvent
-    public static void onBlockPlace(EntityPlaceEvent event) {
-        // event.setCanceled(true);
-    }
-
-    @SubscribeEvent
-    public static void onBlockBreak(BlockEvent.BreakEvent event) {
-        // event.setCanceled(true);
     }
 }
