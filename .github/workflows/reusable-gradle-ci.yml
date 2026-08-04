@@ -1,0 +1,94 @@
+name: Reusable Gradle CI
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gradle-ci-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-server:
+    name: Build, tests and dedicated server
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
+
+    steps:
+      - name: Check out tested revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: false
+
+      - name: Detect required Java version
+        id: java
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if grep -Eq 'JavaLanguageVersion\.of\(21\)|VERSION_21' build.gradle 2>/dev/null; then
+            version=21
+          elif grep -Eq 'VERSION_1_8|sourceCompatibility[[:space:]]*=[[:space:]].*1[._]8|targetCompatibility[[:space:]]*=[[:space:]].*1[._]8' build.gradle 2>/dev/null; then
+            version=8
+          else
+            version=17
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Using Java $version"
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.java.outputs.version }}
+
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make Gradle wrapper executable
+        shell: bash
+        run: chmod +x gradlew
+
+      - name: Build and run JUnit tests
+        shell: bash
+        run: ./gradlew --no-daemon --console=plain --stacktrace build
+
+      - name: Run Forge or NeoForge GameTests
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if grep -R -q -E --include='*.java' '@GameTest|GameTestHolder' src 2>/dev/null; then
+            echo "GameTest sources detected; starting runGameTestServer."
+            timeout 15m ./gradlew --no-daemon --console=plain --stacktrace runGameTestServer
+          else
+            echo "No GameTest classes detected; skipping GameTest server."
+          fi
+
+      - name: Smoke-test dedicated server startup
+        shell: bash
+        env:
+          SERVER_STARTUP_TIMEOUT: '360'
+        run: bash scripts/ci-server-smoke.sh
+
+      - name: Upload build products and diagnostic logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildcraft-ci-${{ github.run_number }}-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            build/libs/**
+            build/reports/tests/**
+            build/test-results/**
+            run/logs/**
+            run/crash-reports/**
+            ci-server.log
