@@ -1,0 +1,13 @@
+name: BuildCraft CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: CurativeTree/BuildCraft/.github/workflows/reusable-gradle-ci.yml@main
