@@ -177,6 +177,49 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         renderWork = false;
     }
 
+    /**
+     * Fingerprint of the non-interpolated part of {@link #writeToByteBuf(FriendlyByteBuf)}. A change here must be sent
+     * immediately: it means that a task appeared/disappeared, its target changed, or rendering was stopped.
+     */
+    public int getRenderStructureFingerprint() {
+        int result = Boolean.hashCode(renderWork);
+        if (!renderWork) {
+            return result;
+        }
+        result = 31 * result + breakTasks.size();
+        for (BreakTask task : breakTasks) {
+            result = 31 * result + task.pos.hashCode();
+        }
+        result = 31 * result + placeTasks.size();
+        for (PlaceTask task : placeTasks) {
+            result = 31 * result + task.pos.hashCode();
+            result = 31 * result + task.items.size();
+            for (ItemStack stack : task.items) {
+                result = 31 * result + stack.getItem().hashCode();
+                result = 31 * result + stack.getCount();
+                result = 31 * result + (stack.getTag() == null ? 0 : stack.getTag().hashCode());
+            }
+        }
+        return result;
+    }
+
+    /** Fingerprint of all render data, including task progress that may be rate-limited for network transmission. */
+    public int getRenderDataFingerprint() {
+        int result = getRenderStructureFingerprint();
+        result = 31 * result + leftToBreak;
+        result = 31 * result + leftToPlace;
+        if (!renderWork) {
+            return result;
+        }
+        for (BreakTask task : breakTasks) {
+            result = 31 * result + Long.hashCode(task.power);
+        }
+        for (PlaceTask task : placeTasks) {
+            result = 31 * result + Long.hashCode(task.power);
+        }
+        return result;
+    }
+
     protected abstract boolean isAir(BlockPos blockPos);
 
     protected abstract boolean canPlace(BlockPos blockPos);

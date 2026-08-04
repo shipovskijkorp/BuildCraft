@@ -65,7 +65,7 @@ public class ItemWrench extends Item implements IToolWrench{
 
 	@Override
 	public boolean canWrench(Player player, InteractionHand hand, ItemStack wrench, HitResult rayTrace) {
-		return false;
+		return true;
 	}
 
 	@Override

@@ -172,20 +172,47 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
     @Override
     public long tryExtractPower(long maxExtracted, Direction from) {
-        if (!isReceiver || disabled) {
+        if (maxPower < 0) {
+            reconfigure();
+        }
+        if (!isReceiver || disabled || from == null || maxExtracted <= 0) {
             return 0;
         }
+
         BlockEntity tile = pipe.getConnectedTile(from);
         if (tile == null) {
             return 0;
         }
-        LazyOptional<IMjPassiveProvider> receiver = tile.getCapability(MjAPI.CAP_PASSIVE_PROVIDER, from.getOpposite());
-        if (!receiver.isPresent()) {
+        IMjPassiveProvider provider = tile.getCapability(MjAPI.CAP_PASSIVE_PROVIDER, from.getOpposite()).orElse(null);
+        if (provider == null) {
             return 0;
         }
 
-        // TODO!
-        return 0;
+        step();
+        long requested = Math.min(Math.min(maxExtracted, maxPower), getPowerRequested(from));
+        if (requested <= 0) {
+            return 0;
+        }
+
+        // Existing BuildCraft providers use false for a dry run and true for the actual extraction.
+        long simulated = Math.max(0, Math.min(requested, provider.extractPower(0, requested, false)));
+        if (simulated <= 0) {
+            return 0;
+        }
+        long extracted = Math.max(0, Math.min(simulated, provider.extractPower(0, simulated, true)));
+        if (extracted <= 0) {
+            return 0;
+        }
+
+        Section section = sections.get(from);
+        long leftover = section.receivePowerInternal(extracted);
+        long accepted = extracted - leftover;
+        if (accepted > 0) {
+            section.debugPowerInput += accepted;
+            section.displayFlow = EnumFlow.IN;
+            section.powerAverage.push((int) Math.min(Integer.MAX_VALUE, accepted));
+        }
+        return accepted;
     }
 
     @Override
@@ -373,6 +400,17 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             PipeFlowPower oFlow = (PipeFlowPower) oPipe.getFlow();
             oFlow.requestPower(face.getOpposite(), transferQueryTemp[face.ordinal()]);
         }
+        // Powered wooden/diamond-wood pipes actively pull from passive providers. The extracted power is queued in
+        // this side's section and becomes available to the network on the next power step.
+        if (isReceiver && !disabled) {
+            for (Direction face : Direction.values()) {
+                long requested = transferQueryTemp[face.ordinal()];
+                if (requested > 0 && pipe.getConnectedType(face) == ConnectedType.TILE) {
+                    tryExtractPower(requested, face);
+                }
+            }
+        }
+
         // Networking
         boolean didChange = false;
         for (Direction face : Direction.values()) {

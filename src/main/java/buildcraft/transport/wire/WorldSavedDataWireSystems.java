@@ -141,7 +141,11 @@ public class WorldSavedDataWireSystems extends SavedData {
     }
 
     public void tick() {
-        if(gatesChanged) {
+        // Consume the current dirty flag before recalculating. If an update itself marks gates dirty again, that new
+        // change remains set for the next tick instead of being accidentally cleared at the end of this one.
+        boolean updateGates = gatesChanged;
+        gatesChanged = false;
+        if(updateGates) {
             wireSystems.replaceAll((wireSystem, oldPowered) -> {
                 boolean newPowered = wireSystem.update(this);
                 if (oldPowered != newPowered) {

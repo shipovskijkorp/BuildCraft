@@ -26,6 +26,7 @@ import com.google.common.collect.ImmutableList;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IPathProvider;
+import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.enums.EnumOptionalSnapshotType;
 import buildcraft.api.enums.EnumSnapshotType;
 import buildcraft.api.inventory.IItemTransactor;
@@ -36,6 +37,7 @@ import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.builders.BCBuildersBlocks;
+import buildcraft.core.BCCoreConfig;
 import buildcraft.builders.item.ItemSnapshot;
 import buildcraft.builders.menu.ContainerBuilder;
 import buildcraft.builders.snapshot.Blueprint;
@@ -133,7 +135,11 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     private Rotation rotation = Rotation.NONE;
     
     private boolean isDone = false;
-    
+
+    private final SafeTimeTracker renderSyncTracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate);
+    private int lastRenderStructureFingerprint = Integer.MIN_VALUE;
+    private int lastRenderDataFingerprint = Integer.MIN_VALUE;
+
     private boolean shouldInit = false;
     
     //TODO
@@ -494,10 +500,41 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             }
         }
         if (!level.isClientSide) {
-            sendNetworkUpdate(NET_RENDER_DATA); // FIXME
+            syncRenderDataIfNeeded();
         }
         level.getProfiler().pop();
         level.getProfiler().pop();
+    }
+
+    private void syncRenderDataIfNeeded() {
+        int structureFingerprint = getRenderStructureFingerprint();
+        int dataFingerprint = getRenderDataFingerprint(structureFingerprint);
+        if (dataFingerprint == lastRenderDataFingerprint) {
+            return;
+        }
+
+        boolean structureChanged = structureFingerprint != lastRenderStructureFingerprint;
+        if (structureChanged || renderSyncTracker.markTimeIfDelay(level)) {
+            sendNetworkUpdate(NET_RENDER_DATA);
+            lastRenderStructureFingerprint = structureFingerprint;
+            lastRenderDataFingerprint = dataFingerprint;
+            renderSyncTracker.markTime(level);
+        }
+    }
+
+    private int getRenderStructureFingerprint() {
+        int result = path == null ? 0 : path.hashCode();
+        result = 31 * result + (snapshotType == null ? 0 : snapshotType.hashCode());
+        result = 31 * result + currentBox.hashCode();
+        result = 31 * result + Boolean.hashCode(canExcavate);
+        SnapshotBuilder<?> builder = getBuilder();
+        result = 31 * result + (builder == null ? 0 : builder.getRenderStructureFingerprint());
+        return result;
+    }
+
+    private int getRenderDataFingerprint(int structureFingerprint) {
+        SnapshotBuilder<?> builder = getBuilder();
+        return 31 * structureFingerprint + (builder == null ? 0 : builder.getRenderDataFingerprint());
     }
 
     private int findNextBasePosIndex() {

@@ -249,7 +249,11 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
 
         @Override
         public Collection<DockingStation> getStations() {
-            return Collections.unmodifiableCollection(stations.values());
+            // Station validation may remove stale entries (for example while a builder replaces a pipe containing a
+            // robot station). Returning a live values view lets that removal invalidate an AI search iterator and
+            // produce a ConcurrentModificationException every robot tick. A snapshot keeps one search cycle stable;
+            // registry changes are visible to the next cycle.
+            return Collections.unmodifiableList(new ArrayList<>(stations.values()));
         }
 
         @Override

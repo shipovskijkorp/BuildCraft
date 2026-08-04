@@ -250,44 +250,49 @@ public abstract class PatternShape2d extends Pattern implements IFillerPatternSh
             if (rb <= 0) {
                 throw new IllegalArgumentException("'rb' was less than or equal to 0! (Was " + rb + ")");
             }
-            double ra2 = ra * ra;
-            double rb2 = rb * rb;
 
-            // TODO: Fix (or replace) this algorithm with one that doesn't miss ends
+            /*
+             * Rasterise one quarter of the ellipse parametrically and connect every pair of rounded samples with the
+             * same super-cover line routine used by lineTo(). The old midpoint implementation used two independent
+             * loops whose termination conditions could both skip an axis end. That left one-block gaps at the ends of
+             * arcs and allowed the filler flood-fill to leak through otherwise closed circles.
+             *
+             * Keep the historical integer radii and da/db centre offsets: they are what let even and odd sized areas
+             * share the same shape code without producing coordinates outside the template bounds.
+             */
+            int radiusA = (int) ra;
+            int radiusB = (int) rb;
+            int steps = Math.max(1, (int) Math.ceil(Math.PI * Math.max(ra, rb)));
 
-            double sigma = 2 * rb2 + ra2 * (1 - 2 * rb);
-            for (int a = 0, b = (int) rb; rb2 * a <= ra2 * b; a++) {
-                iterator.iterate(ca - a, cb - b);
-                if (type.shouldDrawSecondQuadrant()) {
-                    iterator.iterate(ca + a + da, cb - b);
-                    if (type.shouldDrawAllQuadrants()) {
-                        iterator.iterate(ca - a, cb + b + db);
-                        iterator.iterate(ca + a + da, cb + b + db);
-                    }
+            drawQuarter(ca, cb, radiusA, radiusB, da, db, steps, false, false);
+            if (type.shouldDrawSecondQuadrant()) {
+                drawQuarter(ca, cb, radiusA, radiusB, da, db, steps, true, false);
+                if (type.shouldDrawAllQuadrants()) {
+                    drawQuarter(ca, cb, radiusA, radiusB, da, db, steps, false, true);
+                    drawQuarter(ca, cb, radiusA, radiusB, da, db, steps, true, true);
                 }
-                if (sigma >= 0) {
-                    sigma += 4 * ra2 * (1 - b);
-                    b--;
-                }
-                sigma += rb2 * ((4 * a) + 6);
             }
+        }
 
-            sigma = 2 * ra2 + rb2 * (1 - 2 * ra);
-            for (int a = (int) ra, b = 0; ra2 * b <= rb2 * a; b++) {
-                iterator.iterate(ca - a, cb - b);
-                if (type.shouldDrawSecondQuadrant()) {
-                    iterator.iterate(ca + a + da, cb - b);
-                    if (type.shouldDrawAllQuadrants()) {
-                        iterator.iterate(ca - a, cb + b + db);
-                        iterator.iterate(ca + a + da, cb + b + db);
-                    }
-                }
-                if (sigma >= 0) {
-                    sigma += 4 * rb2 * (1 - a);
-                    a--;
-                }
-                sigma += ra2 * ((4 * b) + 6);
+        private void drawQuarter(int ca, int cb, int radiusA, int radiusB, int da, int db, int steps,
+            boolean positiveA, boolean positiveB) {
+            Point previous = ellipsePoint(ca, cb, radiusA, radiusB, da, db, 0, steps, positiveA, positiveB);
+            iterator.iterate(previous.a, previous.b);
+            for (int step = 1; step <= steps; step++) {
+                Point current = ellipsePoint(ca, cb, radiusA, radiusB, da, db, step, steps, positiveA, positiveB);
+                PositionUtil.forAllOnPath2d(previous.a, previous.b, current.a, current.b, iterator);
+                previous = current;
             }
+        }
+
+        private static Point ellipsePoint(int ca, int cb, int radiusA, int radiusB, int da, int db,
+            int step, int steps, boolean positiveA, boolean positiveB) {
+            double angle = Math.PI * step / (2.0 * steps);
+            int a = (int) Math.round(radiusA * Math.sin(angle));
+            int b = (int) Math.round(radiusB * Math.cos(angle));
+            int worldA = positiveA ? ca + a + da : ca - a;
+            int worldB = positiveB ? cb + b + db : cb - b;
+            return new Point(worldA, worldB);
         }
     }
 

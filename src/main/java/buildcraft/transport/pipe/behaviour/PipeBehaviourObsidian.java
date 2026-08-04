@@ -28,7 +28,9 @@ import buildcraft.api.transport.pipe.PipeFlow;
 import buildcraft.lib.inventory.ItemTransactorHelper;
 import buildcraft.lib.inventory.filter.StackFilter;
 import buildcraft.lib.misc.BoundingBoxUtil;
+import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.VecUtil;
+import buildcraft.transport.BCTransportConfig;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -39,7 +41,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneReceiver {
     private static final long POWER_PER_ITEM = MjAPI.MJ / 2;
@@ -175,9 +181,118 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
             }
         }
         if (flowFluid != null) {
-            // TODO: Fluid extraction!
+            IFluidHandler entityHandler = entity.getCapability(CapUtil.CAP_FLUIDS, faceFrom.getOpposite()).orElse(null);
+            if (entityHandler == null) {
+                entityHandler = entity.getCapability(CapUtil.CAP_FLUIDS, null).orElse(null);
+            }
+            if (entityHandler != null) {
+                long leftOver = trySuckFluid(flowFluid, entityHandler, entity, faceFrom, power, simulate);
+                if (leftOver < power) {
+                    return leftOver;
+                }
+            }
+
+            // Item entities do not normally expose the contained stack's fluid capability as an entity capability.
+            // Drain one container at a time and put the resulting empty/partially drained container back in the world.
+            if (entity instanceof ItemEntity itemEntity) {
+                ItemStack original = itemEntity.getItem();
+                ItemStack single = original.copy();
+                single.setCount(1);
+                ItemStack singleBefore = single.copy();
+                IFluidHandlerItem itemHandler = FluidUtil.getFluidHandler(single).orElse(null);
+                if (itemHandler != null) {
+                    long leftOver = trySuckFluid(flowFluid, itemHandler, entity, faceFrom, power, simulate);
+                    if (simulate.execute()) {
+                        replaceDrainedContainer(itemEntity, original, singleBefore, itemHandler.getContainer());
+                    }
+                    if (leftOver < power) {
+                        return leftOver;
+                    }
+                }
+            }
         }
         return power;
+    }
+
+    private long trySuckFluid(IFlowFluid flow, IFluidHandler source, Entity entity, Direction faceFrom, long power,
+        FluidAction action) {
+        long powerPerMillibucket;
+        int maxAmount;
+        if (power == Long.MAX_VALUE) {
+            powerPerMillibucket = 0;
+            maxAmount = Integer.MAX_VALUE;
+        } else {
+            double distance = Math.sqrt(entity.getOnPos().distSqr(pipe.getHolder().getPipePos()));
+            long distanceCostPerBucket = (long) (Math.max(1, distance) * POWER_PER_METRE);
+            powerPerMillibucket = BCTransportConfig.mjPerMillibucket + Math.max(1, distanceCostPerBucket / 1000);
+            maxAmount = (int) Math.min(Integer.MAX_VALUE, power / powerPerMillibucket);
+        }
+        if (maxAmount <= 0) {
+            return power;
+        }
+
+        FluidStack available = source.drain(maxAmount, FluidAction.SIMULATE);
+        if (available.isEmpty()) {
+            return power;
+        }
+        int accepted = flow.insertFluidsForce(available, faceFrom, FluidAction.SIMULATE);
+        int amount = Math.min(available.getAmount(), accepted);
+        if (amount <= 0) {
+            return power;
+        }
+        if (action.simulate()) {
+            return power - powerPerMillibucket * amount;
+        }
+
+        FluidStack drained = source.drain(amount, FluidAction.EXECUTE);
+        if (drained.isEmpty()) {
+            return power;
+        }
+        int inserted = flow.insertFluidsForce(drained, faceFrom, FluidAction.EXECUTE);
+        inserted = Math.max(0, Math.min(inserted, drained.getAmount()));
+        if (inserted < drained.getAmount()) {
+            FluidStack remainder = drained.copy();
+            remainder.setAmount(drained.getAmount() - inserted);
+            source.fill(remainder, FluidAction.EXECUTE);
+        }
+        return power - powerPerMillibucket * inserted;
+    }
+
+    private void replaceDrainedContainer(ItemEntity entity, ItemStack original, ItemStack singleBefore,
+        ItemStack containerAfter) {
+        if (ItemStack.isSameItemSameTags(singleBefore, containerAfter)) {
+            return;
+        }
+
+        if (original.getCount() <= 1) {
+            if (containerAfter.isEmpty()) {
+                entity.discard();
+            } else {
+                ItemStack replacement = containerAfter.copy();
+                replacement.setCount(1);
+                entity.setItem(replacement);
+            }
+            return;
+        }
+
+        ItemStack remaining = original.copy();
+        remaining.shrink(1);
+        entity.setItem(remaining);
+        if (containerAfter.isEmpty()) {
+            return;
+        }
+
+        ItemStack replacement = containerAfter.copy();
+        replacement.setCount(1);
+        ItemEntity containerEntity = new ItemEntity(
+            entity.level,
+            entity.getX(),
+            entity.getY(),
+            entity.getZ(),
+            replacement
+        );
+        entity.level.addFreshEntity(containerEntity);
+        entityDropTime.put(containerEntity, pipe.getHolder().getPipeWorld().getGameTime() + DROP_GAP);
     }
 
     @PipeEventHandler

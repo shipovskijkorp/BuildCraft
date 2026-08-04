@@ -22,6 +22,8 @@ import buildcraft.transport.block.BlockPipeHolder;
 import buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -35,6 +37,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class SchematicBlockPipe implements ISchematicBlock {
     private CompoundTag tileNbt;
@@ -50,10 +53,12 @@ public class SchematicBlockPipe implements ISchematicBlock {
     @Override
     public void init(SchematicBlockContext context) {
         BlockEntity tileEntity = context.world.getBlockEntity(context.pos);
-        if (tileEntity == null) {
-            throw new IllegalStateException();
+        if (!(tileEntity instanceof TilePipeHolder)) {
+            throw new IllegalStateException("Pipe schematic was created without a pipe block entity at " + context.pos);
         }
-        tileNbt = tileEntity.serializeNBT();//TODO change to saveWithId()
+        tileNbt = ensurePipeBlockEntityId(tileEntity.saveWithId());
+        requiredItems = null;
+        requFluidStacks = null;
     }
 
     @Nonnull
@@ -77,7 +82,12 @@ public class SchematicBlockPipe implements ISchematicBlock {
     	if(level instanceof ServerLevel serverLevel) {
 			BlockPipeHolder pipeBlock = BCTransportBlocks.pipeHolder.get();
 			BlockState defaultBlockState = pipeBlock.defaultBlockState();
-			BlockEntity tile = BlockEntity.loadStatic(BlockPos.ZERO, defaultBlockState, tileNbt);
+			BlockEntity tile = BlockEntity.loadStatic(BlockPos.ZERO, defaultBlockState, ensurePipeBlockEntityId(tileNbt));
+            if (tile == null) {
+                requiredItems = List.of();
+                requFluidStacks = List.of();
+                return;
+            }
 			tile.setLevel(serverLevel);
 	    	List<ItemStack> require = pipeBlock.getDrops(defaultBlockState, new Builder(serverLevel)
 	    			.withOptionalParameter(LootContextParams.ORIGIN, Vec3.ZERO)
@@ -105,7 +115,7 @@ public class SchematicBlockPipe implements ISchematicBlock {
 	@Override
     public SchematicBlockPipe getRotated(Rotation rotation) {
         SchematicBlockPipe schematicBlock = new SchematicBlockPipe();
-        schematicBlock.tileNbt = tileNbt;
+        schematicBlock.tileNbt = tileNbt == null ? null : tileNbt.copy();
         schematicBlock.tileRotation = tileRotation.getRotated(rotation);
         return schematicBlock;
     }
@@ -119,7 +129,7 @@ public class SchematicBlockPipe implements ISchematicBlock {
     @Override
     public boolean build(Level world, BlockPos blockPos) {
         if (world.setBlock(blockPos, BCTransportBlocks.pipeHolder.get().defaultBlockState(), 11)) {
-            BlockEntity tileEntity = BlockEntity.loadStatic(blockPos, BCTransportBlocks.pipeHolder.get().defaultBlockState(),tileNbt);
+            BlockEntity tileEntity = BlockEntity.loadStatic(blockPos, BCTransportBlocks.pipeHolder.get().defaultBlockState(), ensurePipeBlockEntityId(tileNbt));
             if (tileEntity != null) {
                 tileEntity.setLevel(world);
                 world.setBlockEntity(tileEntity);
@@ -136,7 +146,7 @@ public class SchematicBlockPipe implements ISchematicBlock {
     @Override
     public boolean buildWithoutChecks(Level world, BlockPos blockPos) {
         if (world.setBlock(blockPos, BCTransportBlocks.pipeHolder.get().defaultBlockState(), 0)) {
-            BlockEntity tileEntity = BlockEntity.loadStatic(blockPos, BCTransportBlocks.pipeHolder.get().defaultBlockState(),tileNbt);
+            BlockEntity tileEntity = BlockEntity.loadStatic(blockPos, BCTransportBlocks.pipeHolder.get().defaultBlockState(), ensurePipeBlockEntityId(tileNbt));
             if (tileEntity != null) {
                 tileEntity.setLevel(world);
                 world.setBlockEntity(tileEntity);
@@ -152,23 +162,36 @@ public class SchematicBlockPipe implements ISchematicBlock {
 
     @Override
     public boolean isBuilt(Level world, BlockPos blockPos) {
-    	CompoundTag copy = tileNbt.copy();
-    	CompoundTag tileTag = null;
-    	BlockEntity worldTile = world.getBlockEntity(blockPos);
-		if(worldTile instanceof TilePipeHolder tile) {
-	    	copy.putInt("x", blockPos.getX());
-	    	copy.putInt("y", blockPos.getY());
-	    	copy.putInt("z", blockPos.getZ());
-	    	int ordinal = tileRotation.ordinal();
-	    	int inverseId = ordinal ^ ((ordinal&1) << 1);
-			tile.rotate(Rotation.values()[inverseId]);
-	    	tileTag = tile.serializeNBT();
-	    	tile.rotate(tileRotation);
-    	}
-//		if(worldTile == null)
-			
-		boolean flag2 = tileTag != null && copy.equals(tileTag);
-		return flag2;
+        if (world.getBlockState(blockPos).getBlock() != BCTransportBlocks.pipeHolder.get()) {
+            return false;
+        }
+
+        BlockEntity worldTile = world.getBlockEntity(blockPos);
+        if (!(worldTile instanceof TilePipeHolder tile)) {
+            return false;
+        }
+
+        Pipe worldPipe = tile.getPipe();
+        if (worldPipe == null || worldPipe == Pipe.EMPTY || worldPipe.getDefinition() == null) {
+            return false;
+        }
+
+        // Pipe NBT contains live connection, flow and behaviour state. Comparing the complete tag makes a correctly
+        // placed pipe become "wrong" as soon as it connects or ticks, causing the builder to break and place it
+        // forever. The old BuildCraft implementations only compared the pipe block/type. Keep the useful static
+        // distinction (definition and paint colour), but deliberately ignore runtime contents and connections.
+        CompoundTag expectedPipe = tileNbt == null ? new CompoundTag() : tileNbt.getCompound("pipe");
+        String expectedDefinition = expectedPipe.getString("def");
+        if (!expectedDefinition.isEmpty()
+                && !expectedDefinition.equals(worldPipe.getDefinition().identifier.toString())) {
+            return false;
+        }
+
+        Tag expectedColour = expectedPipe.get("col");
+        if (expectedColour == null) {
+            expectedColour = NBTUtilBC.writeEnum(null);
+        }
+        return expectedColour.equals(NBTUtilBC.writeEnum(worldPipe.getColour()));
     }
 
     @Override
@@ -189,24 +212,37 @@ public class SchematicBlockPipe implements ISchematicBlock {
     }
 
     private static CompoundTag normalizeTileNbt(CompoundTag tag) {
-        CompoundTag copy = tag == null ? new CompoundTag() : tag.copy();
+        CompoundTag copy = ensurePipeBlockEntityId(tag);
         copy.remove("x");
         copy.remove("y");
         copy.remove("z");
         return copy;
     }
 
+    private static CompoundTag ensurePipeBlockEntityId(CompoundTag tag) {
+        CompoundTag copy = tag == null ? new CompoundTag() : tag.copy();
+        if (!copy.contains("id", Tag.TAG_STRING)) {
+            ResourceLocation id = ForgeRegistries.BLOCK_ENTITY_TYPES.getKey(BCTransportBlocks.PIPE_HOLDER_BE.get());
+            if (id != null) {
+                copy.putString("id", id.toString());
+            }
+        }
+        return copy;
+    }
+
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        nbt.put("tileNbt", tileNbt);
+        nbt.put("tileNbt", ensurePipeBlockEntityId(tileNbt));
         nbt.put("tileRotation", NBTUtilBC.writeEnum(tileRotation));
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) throws InvalidInputDataException {
-        tileNbt = nbt.getCompound("tileNbt");
+        tileNbt = ensurePipeBlockEntityId(nbt.getCompound("tileNbt"));
         tileRotation = NBTUtilBC.readEnum(nbt.get("tileRotation"), Rotation.class);
+        requiredItems = null;
+        requFluidStacks = null;
     }
 }

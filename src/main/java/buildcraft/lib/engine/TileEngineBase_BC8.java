@@ -246,15 +246,13 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 
     protected Biome getBiome() {
         // TODO: Cache this!
-        return level.getBiome(worldPosition).get();
+        return level.getBiome(worldPosition).value();
     }
 
     /** @return The heat of the current biome, in celsius. */
     protected float getBiomeHeat() {
-//        Biome biome = getBiome();
-//        float temp = biome.getTemperature(worldPosition);
-    	float temp = 20f;
-        return Math.max(0, Math.min(30, temp * 15f));
+        float temperature = getBiome().getBaseTemperature();
+        return Math.max(0, Math.min(30, temperature * 15f));
     }
 
     public double getPowerLevel() {
