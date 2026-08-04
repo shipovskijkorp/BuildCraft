@@ -31,3 +31,4 @@ mcmodsrepo
 src/main/resources/.cache/
 src/generated/resources/.cache/
 sub_projects/
+logs/
