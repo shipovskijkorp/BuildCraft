@@ -247,8 +247,12 @@ dependencies {
     }
 
     // Forestry Community Edition API for optional genome-aware list matching.
+    // Keep Forestry out of GameTest runtime together with its mandatory Patchouli
+    // dependency; both remain available in normal client/server development runs.
     compileOnly fg.deobf(forestryDependency)
-    runtimeOnly fg.deobf(forestryDependency)
+    if (!gameTestRequested) {
+        runtimeOnly fg.deobf(forestryDependency)
+    }
 
     // Patchouli API/full jar for guidebook integration. Modrinth does not publish
     // a separate API classifier, so the same jar is used for compilation and dev runtime.

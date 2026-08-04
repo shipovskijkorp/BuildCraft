@@ -19,6 +19,9 @@ max-tick-time=-1
 PROPERTIES
 
 : > "$server_log"
+# The previous GameTest invocation uses the same run directory. Remove its log so
+# a stale fatal message cannot be mistaken for a failure of this runServer process.
+rm -f "$latest_log"
 
 echo "Starting dedicated server smoke test (timeout: ${startup_timeout}s)."
 setsid ./gradlew --no-daemon --console=plain --stacktrace runServer > "$server_log" 2>&1 &
