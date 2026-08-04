@@ -1,0 +1,274 @@
+package buildcraft.gametest;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.mojang.authlib.GameProfile;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+
+import buildcraft.api.transport.IWireManager;
+import buildcraft.api.transport.pipe.IItemPipe;
+import buildcraft.api.transport.pipe.IPipe;
+import buildcraft.api.transport.pipe.IPipe.ConnectedType;
+import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.api.transport.pipe.PipeBehaviour;
+import buildcraft.api.transport.pipe.PipeDefinition;
+import buildcraft.api.transport.pipe.PipeEvent;
+import buildcraft.api.transport.pipe.PipeFlow;
+import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.transport.BCTransportBlocks;
+import buildcraft.transport.pipe.Pipe;
+import buildcraft.transport.tile.TilePipeHolder;
+
+public final class PipeGameTestSupport {
+    public static final String LARGE_EMPTY_TEMPLATE = "empty7x3x7";
+
+    private PipeGameTestSupport() {
+    }
+
+    public static TilePipeHolder placePipe(GameTestHelper helper, BlockPos pos, PipeDefinition definition) {
+        helper.setBlock(pos, BCTransportBlocks.pipeHolder.get().defaultBlockState());
+        BlockEntity blockEntity = helper.getBlockEntity(pos);
+        if (!(blockEntity instanceof TilePipeHolder holder)) {
+            helper.fail("pipe holder block did not create TilePipeHolder at " + pos);
+            throw new IllegalStateException("missing TilePipeHolder");
+        }
+
+        IItemPipe itemPipe = PipeApi.pipeRegistry.getItemForPipe(definition);
+        if (!(itemPipe instanceof Item item)) {
+            helper.fail("pipe definition has no registered item: " + definition.identifier);
+            throw new IllegalStateException("missing pipe item");
+        }
+        holder.onPlacedBy(null, new ItemStack(item));
+        if (holder.getPipe() == Pipe.EMPTY) {
+            helper.fail("placing pipe item did not initialise pipe at " + pos);
+            throw new IllegalStateException("pipe was not initialised");
+        }
+        return holder;
+    }
+
+    public static int countItem(net.minecraft.world.Container container, Item item) {
+        int count = 0;
+        for (int slot = 0; slot < container.getContainerSize(); slot++) {
+            ItemStack stack = container.getItem(slot);
+            if (stack.is(item)) {
+                count += stack.getCount();
+            }
+        }
+        return count;
+    }
+
+    /** Minimal pipe implementation for behaviour-only GameTests. */
+    public static final class TestPipe implements IPipe {
+        private final TestHolder holder;
+        private final Map<Direction, ConnectedType> connections = new EnumMap<>(Direction.class);
+        private PipeBehaviour behaviour;
+        private PipeFlow flow;
+        private net.minecraft.world.item.DyeColor colour;
+
+        public TestPipe(Level level) {
+            this.holder = new TestHolder(level, this);
+        }
+
+        public TestPipe connect(Direction side, ConnectedType type) {
+            connections.put(side, type);
+            return this;
+        }
+
+        public void setBehaviour(PipeBehaviour behaviour) {
+            this.behaviour = behaviour;
+        }
+
+        public void setFlow(PipeFlow flow) {
+            this.flow = flow;
+        }
+
+        @Override
+        public IPipeHolder getHolder() {
+            return holder;
+        }
+
+        @Override
+        public PipeDefinition getDefinition() {
+            return null;
+        }
+
+        @Override
+        public PipeBehaviour getBehaviour() {
+            return behaviour;
+        }
+
+        @Override
+        public PipeFlow getFlow() {
+            return flow;
+        }
+
+        @Override
+        public net.minecraft.world.item.DyeColor getColour() {
+            return colour;
+        }
+
+        @Override
+        public void setColour(net.minecraft.world.item.DyeColor colour) {
+            this.colour = colour;
+        }
+
+        @Override
+        public void markForUpdate() {
+        }
+
+        @Override
+        public BlockEntity getConnectedTile(Direction side) {
+            return null;
+        }
+
+        @Override
+        public IPipe getConnectedPipe(Direction side) {
+            return Pipe.EMPTY;
+        }
+
+        @Override
+        public boolean isConnected(Direction side) {
+            return connections.containsKey(side);
+        }
+
+        @Override
+        public ConnectedType getConnectedType(Direction side) {
+            return connections.get(side);
+        }
+
+        @Override
+        public void rotate(net.minecraft.world.level.block.Rotation rotation) {
+        }
+
+        @Override
+        public <T> @Nonnull LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
+            return LazyOptional.empty();
+        }
+    }
+
+    private static final class TestHolder implements IPipeHolder {
+        private static final GameProfile OWNER = new GameProfile(new UUID(0L, 1L), "BuildCraftGameTest");
+
+        private final Level level;
+        private final IPipe pipe;
+
+        private TestHolder(Level level, IPipe pipe) {
+            this.level = level;
+            this.pipe = pipe;
+        }
+
+        @Override
+        public Level getPipeWorld() {
+            return level;
+        }
+
+        @Override
+        public BlockPos getPipePos() {
+            return BlockPos.ZERO;
+        }
+
+        @Override
+        public BlockEntity getPipeTile() {
+            return null;
+        }
+
+        @Override
+        public IPipe getPipe() {
+            return pipe;
+        }
+
+        @Override
+        public boolean canPlayerInteract(Player player) {
+            return false;
+        }
+
+        @Override
+        public PipePluggable getPluggable(Direction side) {
+            return PipePluggable.EMPTY;
+        }
+
+        @Override
+        public BlockEntity getNeighbourTile(Direction side) {
+            return null;
+        }
+
+        @Override
+        public IPipe getNeighbourPipe(Direction side) {
+            return Pipe.EMPTY;
+        }
+
+        @Override
+        public <T> LazyOptional<T> getCapabilityFromPipe(Direction side, @Nonnull Capability<T> capability) {
+            return LazyOptional.empty();
+        }
+
+        @Override
+        public IWireManager getWireManager() {
+            return null;
+        }
+
+        @Override
+        public GameProfile getOwner() {
+            return OWNER;
+        }
+
+        @Override
+        public boolean fireEvent(PipeEvent event) {
+            return false;
+        }
+
+        @Override
+        public void scheduleRenderUpdate() {
+        }
+
+        @Override
+        public void scheduleNetworkUpdate(PipeMessageReceiver... parts) {
+        }
+
+        @Override
+        public void scheduleNetworkGuiUpdate(PipeMessageReceiver... parts) {
+        }
+
+        @Override
+        public void sendMessage(PipeMessageReceiver to, IWriter writer) {
+        }
+
+        @Override
+        public void sendGuiMessage(PipeMessageReceiver to, IWriter writer) {
+        }
+
+        @Override
+        public void onPlayerOpen(Player player) {
+        }
+
+        @Override
+        public void onPlayerClose(Player player) {
+        }
+
+        @Override
+        public int getRedstoneInput(Direction side) {
+            return 0;
+        }
+
+        @Override
+        public boolean setRedstoneOutput(Direction side, int value) {
+            return false;
+        }
+    }
+}
