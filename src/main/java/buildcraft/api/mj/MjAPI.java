@@ -21,8 +21,11 @@ public class MjAPI {
     //
     // ################################
 
-    /** A single minecraft joule, in micro joules (the power system base unit) */
-    public static final long ONE_MINECRAFT_JOULE = getMjValue();
+    /**
+     * A single minecraft joule, in micro joules (the power system base unit).
+     * This must remain a compile-time constant so reading the unit does not initialise Forge capabilities.
+     */
+    public static final long ONE_MINECRAFT_JOULE = 1_000_000L;
     /** The same as {@link #ONE_MINECRAFT_JOULE}, but a shorter field name */
     public static final long MJ = ONE_MINECRAFT_JOULE;
 
@@ -94,7 +97,4 @@ public class MjAPI {
         CAP_PASSIVE_PROVIDER = CapabilityManager.get(new CapabilityToken<>(){});
     }
 
-    private static long getMjValue() {
-        return 1_000_000L;
-    }
 }
