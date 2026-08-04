@@ -50,4 +50,9 @@ public interface ICropHandler {
      * @return true if the block was successfully harvested. */
     boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops);
 
+    /** Player-aware harvest hook used by automation that must participate in server protection checks. */
+    default boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops, Player actor) {
+        return harvestCrop(world, pos, drops);
+    }
+
 }

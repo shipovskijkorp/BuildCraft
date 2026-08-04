@@ -5,6 +5,8 @@ import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.robotics.entity.EntityRobot;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -71,8 +73,11 @@ public class AIRobotBreak extends AIRobot {
             serverLevel.destroyBlockProgress(robot.getId(), pos, -1);
             blockDamage = 0.0F;
             ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
-            Player fakePlayer = BlockUtil.getFakePlayerWithTool(serverLevel, held, FakePlayerProvider.NULL_PROFILE);
-            boolean harvested = BlockUtil.harvestBlock(serverLevel, pos, held, FakePlayerProvider.NULL_PROFILE);
+            GameProfile owner = robot instanceof EntityRobot entityRobot
+                    ? entityRobot.getOwnerProfile()
+                    : FakePlayerProvider.NULL_PROFILE;
+            Player fakePlayer = BlockUtil.getFakePlayerWithTool(serverLevel, held, owner, pos);
+            boolean harvested = BlockUtil.harvestBlock(serverLevel, pos, held, owner);
             if (harvested) {
                 serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
                 if (!held.isEmpty()) {

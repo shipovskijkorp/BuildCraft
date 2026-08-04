@@ -83,13 +83,17 @@ public final class CropManager {
     }
 
     public static boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops) {
+        return harvestCrop(world, pos, drops, null);
+    }
+
+    public static boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops, Player actor) {
         BlockState state = world.getBlockState(pos);
         for (ICropHandler cropHandler : handlers) {
             if (cropHandler.isMature(world, state, pos)) {
-                return cropHandler.harvestCrop(world, pos, drops);
+                return cropHandler.harvestCrop(world, pos, drops, actor);
             }
         }
-        return defaultHandler != null && defaultHandler.isMature(world, state, pos) && defaultHandler.harvestCrop(world, pos, drops);
+        return defaultHandler != null && defaultHandler.isMature(world, state, pos) && defaultHandler.harvestCrop(world, pos, drops, actor);
     }
 
 }

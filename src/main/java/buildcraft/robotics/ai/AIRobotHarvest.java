@@ -5,6 +5,9 @@ import buildcraft.api.crops.CropManager;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.misc.BlockUtil;
+import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.robotics.entity.EntityRobot;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -53,8 +56,18 @@ public class AIRobotHarvest extends AIRobot {
             return;
         }
 
+        GameProfile owner = robot instanceof EntityRobot entityRobot
+                ? entityRobot.getOwnerProfile()
+                : FakePlayerProvider.NULL_PROFILE;
+        var fakePlayer = FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, robot.blockPosition());
+        if (!BlockUtil.canBreakBlock(serverLevel, pos, fakePlayer)) {
+            setSuccess(false);
+            terminate();
+            return;
+        }
+
         NonNullList<ItemStack> drops = NonNullList.create();
-        if (!CropManager.harvestCrop(serverLevel, pos, drops)) {
+        if (!CropManager.harvestCrop(serverLevel, pos, drops, fakePlayer)) {
             setSuccess(false);
             terminate();
             return;

@@ -10,9 +10,11 @@ import java.util.List;
 
 import buildcraft.api.transport.IStripesActivator;
 import buildcraft.api.transport.IStripesHandlerItem;
+import buildcraft.lib.misc.BlockUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +46,10 @@ public enum StripesHandlerShears implements IStripesHandlerItem {
         if (block instanceof IForgeShearable) {
         	IForgeShearable shearableBlock = (IForgeShearable) block;
             if (shearableBlock.isShearable(stack, world, pos)) {
-                List<ItemStack> drops = shearableBlock.onSheared(null, stack, world, pos, 0);
+                if (!(world instanceof ServerLevel serverLevel) || !BlockUtil.canBreakBlock(serverLevel, pos, player)) {
+                    return false;
+                }
+                List<ItemStack> drops = shearableBlock.onSheared(player, stack, world, pos, 0);
                 if (stack.hurt(1, player.getRandom(), player instanceof ServerPlayer ? (ServerPlayer) player : null)) {
                     stack.shrink(1);
                 }

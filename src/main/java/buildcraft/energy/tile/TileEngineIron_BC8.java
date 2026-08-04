@@ -220,6 +220,15 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         return true;
     }
 
+    /**
+     * Restores the BC7 combustion-engine climate modifier. Hot biomes make fuel heat the engine faster and reduce
+     * coolant efficiency; cold biomes do the opposite. A biome temperature of 1.0 keeps the original 1.0 scalar.
+     */
+    private float getBiomeTempScalar() {
+        float temperature = getBiome().getBaseTemperature();
+        return ((temperature - 1.0F) * 0.5F) + 1.0F;
+    }
+
     @Override
     public boolean isBurning() {
         FluidStack fuel = tankFuel.getFluid();
@@ -272,7 +281,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                     }
                     currentOutput = currentFuel.getPowerPerCycle(); // Comment out for constant power
                     addPower(currentFuel.getPowerPerCycle());
-                    heat += currentFuel.getPowerPerCycle() * HEAT_PER_MJ / MjAPI.MJ;// * getBiomeTempScalar();
+                    heat += currentFuel.getPowerPerCycle() * HEAT_PER_MJ / MjAPI.MJ * getBiomeTempScalar();
                 }
             } else if (lastPowered) {
                 lastPowered = false;
@@ -314,8 +323,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                                 boolean alternativeCoolant = solidCoolantLoaded
                                     || !FluidCompatRegistry.areEquivalent(coolant.getFluid(), Fluids.WATER);
                                 int coolantAmount = Math.min(MAX_COOLANT_PER_TICK, tankCoolant.getFluidAmount());
-                                float cooling = coolPerMb;
-                                // cooling /= getBiomeTempScalar();
+                                float cooling = coolPerMb / getBiomeTempScalar();
                                 coolingBuffer += coolantAmount * cooling;
                                 tankCoolant.drain(coolantAmount, FluidAction.EXECUTE);
                                 if (alternativeCoolant && getOwner() != null) {

@@ -5,6 +5,8 @@ import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.robotics.entity.EntityRobot;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -61,8 +63,10 @@ public class AIRobotUseToolOnBlock extends AIRobot {
         }
 
         BlockPos pos = useToBlock.toBlockPos();
-        Player player = FakePlayerProvider.INSTANCE.getBuildCraftPlayer(serverLevel);
-        player.setPos(robot.getX(), robot.getY(), robot.getZ());
+        GameProfile owner = robot instanceof EntityRobot entityRobot
+                ? entityRobot.getOwnerProfile()
+                : FakePlayerProvider.NULL_PROFILE;
+        Player player = FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, robot.blockPosition());
 
         ItemStack before = held.copy();
         boolean used = BlockUtil.useItemOnBlock(serverLevel, player, held, pos, Direction.UP);

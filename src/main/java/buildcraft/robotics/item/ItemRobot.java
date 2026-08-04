@@ -141,6 +141,7 @@ public class ItemRobot extends Item {
         if (robot == null || robot.getRegistry() == null) {
             return InteractionResult.SUCCESS;
         }
+        robot.setOwner(player.getGameProfile());
         RobotEvent.Place robotEvent = new RobotEvent.Place(robot, player);
         MinecraftForge.EVENT_BUS.post(robotEvent);
         if (robotEvent.isCanceled()) {

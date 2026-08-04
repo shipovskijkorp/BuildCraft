@@ -10,6 +10,7 @@ import java.util.WeakHashMap;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
+import com.mojang.authlib.GameProfile;
 
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.core.BCLog;
@@ -32,6 +33,7 @@ import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import buildcraft.robotics.BCRoboticsEntities;
+import buildcraft.robotics.DockingStationPipe;
 import buildcraft.robotics.ai.AIRobotMain;
 import buildcraft.robotics.ai.AIRobotReturnToLostStation;
 import buildcraft.robotics.ai.AIRobotShutdown;
@@ -41,6 +43,7 @@ import buildcraft.robotics.item.ItemRobot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -117,6 +120,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private RedstoneBoardRobot board;
     private AIRobotMain mainAI;
     private long robotId = NULL_ROBOT_ID;
+    /** Player whose identity this robot uses for Forge protection events. */
+    @Nullable
+    private GameProfile owner;
 
     private DockingStation linkedStation;
     private BlockIndex linkedStationIndex;
@@ -305,6 +311,33 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         if (registry != null) {
             registry.registerRobot(this);
         }
+    }
+
+    public void setOwner(@Nullable GameProfile profile) {
+        owner = isRealOwner(profile) ? profile : null;
+    }
+
+    /**
+     * Returns the identity used by this robot for block/tool/entity interaction events. Old robots without a saved
+     * owner inherit the owner of their main robot-station pipe when possible.
+     */
+    public GameProfile getOwnerProfile() {
+        if (!isRealOwner(owner)) {
+            DockingStation station = getLinkedStation();
+            if (station instanceof DockingStationPipe pipeStation && pipeStation.getPipe() != null) {
+                GameProfile stationOwner = pipeStation.getPipe().getKnownOwner();
+                if (isRealOwner(stationOwner)) {
+                    owner = stationOwner;
+                }
+            }
+        }
+        return isRealOwner(owner) ? owner : FakePlayerProvider.NULL_PROFILE;
+    }
+
+    private static boolean isRealOwner(@Nullable GameProfile profile) {
+        return profile != null
+                && !FakePlayerProvider.NULL_PROFILE.getId().equals(profile.getId())
+                && (profile.getId() != null || profile.getName() != null && !profile.getName().isBlank());
     }
 
     public ItemStack asItemStack() {
@@ -792,6 +825,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void addAdditionalSaveData(CompoundTag tag) {
         tag.putString("boardId", boardEntry.id());
         tag.putLong("robotId", robotId);
+        if (isRealOwner(owner)) {
+            tag.put("owner", NbtUtils.writeGameProfile(new CompoundTag(), owner));
+        }
         tag.put("battery", battery.serializeNBT());
         tag.putBoolean("itemActive", itemActive);
         tag.putBoolean("asleep", isAsleepForRendering());
@@ -839,6 +875,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void readAdditionalSaveData(CompoundTag tag) {
         setBoard(BCRoboticsBoards.getById(tag.getString("boardId")));
         robotId = tag.contains("robotId") ? tag.getLong("robotId") : NULL_ROBOT_ID;
+        owner = tag.contains("owner") ? NbtUtils.readGameProfile(tag.getCompound("owner")) : null;
         battery.deserializeNBT(tag.getCompound("battery"));
         itemActive = tag.getBoolean("itemActive");
         ticksCharging = tag.getInt("ticksCharging");
@@ -1045,8 +1082,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             return;
         }
         if (level instanceof ServerLevel serverLevel) {
-            Player fakePlayer = FakePlayerProvider.INSTANCE.getBuildCraftPlayer(serverLevel);
-            fakePlayer.setPos(getX(), getY(), getZ());
+            Player fakePlayer = FakePlayerProvider.INSTANCE.getFakePlayer(
+                    serverLevel, getOwnerProfile(), blockPosition());
             if (MinecraftForge.EVENT_BUS.post(new AttackEntityEvent(fakePlayer, target))) {
                 return;
             }

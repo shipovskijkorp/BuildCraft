@@ -114,12 +114,21 @@ public final class BlockUtil {
         return false;
     }
 
-    public static boolean harvestBlock(ServerLevel world, BlockPos pos, @Nonnull ItemStack tool, GameProfile owner) {
-        FakePlayer fakePlayer = getFakePlayerWithTool(world, tool, owner);
-        BreakEvent breakEvent = new BreakEvent(world, pos, world.getBlockState(pos), fakePlayer);
-        MinecraftForge.EVENT_BUS.post(breakEvent);
+    /**
+     * Posts Forge's block break event for the supplied actor. Protection mods use this event to decide whether the
+     * owner's fake player may alter the target position.
+     */
+    public static boolean canBreakBlock(ServerLevel world, BlockPos pos, Player actor) {
+        if (actor == null || world.getBlockState(pos).isAir()) {
+            return false;
+        }
+        BreakEvent breakEvent = new BreakEvent(world, pos, world.getBlockState(pos), actor);
+        return !MinecraftForge.EVENT_BUS.post(breakEvent);
+    }
 
-        if (breakEvent.isCanceled()) {
+    public static boolean harvestBlock(ServerLevel world, BlockPos pos, @Nonnull ItemStack tool, GameProfile owner) {
+        FakePlayer fakePlayer = getFakePlayerWithTool(world, tool, owner, pos);
+        if (!canBreakBlock(world, pos, fakePlayer)) {
             return false;
         }
 
@@ -138,11 +147,8 @@ public final class BlockUtil {
     }
 
     public static boolean destroyBlock(ServerLevel world, BlockPos pos, @Nonnull ItemStack tool, GameProfile owner) {
-        FakePlayer fakePlayer = getFakePlayerWithTool(world, tool, owner);
-        BreakEvent breakEvent = new BreakEvent(world, pos, world.getBlockState(pos), fakePlayer);
-        MinecraftForge.EVENT_BUS.post(breakEvent);
-
-        if (breakEvent.isCanceled()) {
+        FakePlayer fakePlayer = getFakePlayerWithTool(world, tool, owner, pos);
+        if (!canBreakBlock(world, pos, fakePlayer)) {
             return false;
         }
 
@@ -152,7 +158,12 @@ public final class BlockUtil {
     }
 
     public static FakePlayer getFakePlayerWithTool(ServerLevel world, @Nonnull ItemStack tool, GameProfile owner) {
-        FakePlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer(world, owner);
+        return getFakePlayerWithTool(world, tool, owner, BlockPos.ZERO);
+    }
+
+    public static FakePlayer getFakePlayerWithTool(ServerLevel world, @Nonnull ItemStack tool, GameProfile owner,
+        BlockPos pos) {
+        FakePlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer(world, owner, pos);
         int i = 0;
 
         while (player.getItemInHand(InteractionHand.MAIN_HAND) != tool && i < 9) {
@@ -170,10 +181,7 @@ public final class BlockUtil {
     public static boolean breakBlock(ServerLevel world, BlockPos pos, NonNullList<ItemStack> drops, BlockPos ownerPos,
         GameProfile owner) {
         FakePlayer fakePlayer = BuildCraftAPI.fakePlayerProvider.getFakePlayer(world, owner, ownerPos);
-        BreakEvent breakEvent = new BreakEvent(world, pos, world.getBlockState(pos), fakePlayer);
-        MinecraftForge.EVENT_BUS.post(breakEvent);
-
-        if (breakEvent.isCanceled()) {
+        if (!canBreakBlock(world, pos, fakePlayer)) {
             return false;
         }
 
@@ -181,7 +189,6 @@ public final class BlockUtil {
             drops.addAll(getItemStackFromBlock(world, pos, owner));
         }
         world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        fakePlayer.kill();
         return true;
     }
 
@@ -215,14 +222,11 @@ public final class BlockUtil {
             entities = Sets.newIdentityHashSet();
             entities.addAll(world.getEntitiesOfClass(ItemEntity.class, aabb));
         }
-        FakePlayer p = getFakePlayerWithTool(world, tool, owner);
         if (!harvestBlock(world, pos, tool, owner)) {
             if (!destroyBlock(world, pos, tool, owner)) {
-            	p.kill();
                 return Optional.empty();
             }
         }
-        p.kill();
         List<ItemStack> stacks = new ArrayList<>();
         for (ItemEntity entity : world.getEntitiesOfClass(ItemEntity.class, aabb)) {
             if (entities.contains(entity)) {

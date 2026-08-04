@@ -87,6 +87,21 @@ public enum CropHandlerPlantable implements ICropHandler {
     }
 
     @Override
+    public boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops, Player actor) {
+        if (!(world instanceof ServerLevel serverLevel)) {
+            return false;
+        }
+        BlockState state = serverLevel.getBlockState(pos);
+        if (state.isAir()) {
+            return false;
+        }
+        drops.addAll(Block.getDrops(state, serverLevel, pos, serverLevel.getBlockEntity(pos), actor, ItemStack.EMPTY));
+        serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
+        return true;
+    }
+
+    @Override
     public boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops) {
         if (!(world instanceof ServerLevel serverLevel)) {
             return false;
