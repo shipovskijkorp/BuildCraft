@@ -1004,25 +1004,34 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             return 0;
         }
 
-		@Override
-		public int getTanks() {
-			return 0;
-		}
+        @Override
+        public int getTanks() {
+            return 1;
+        }
 
-		@Override
-		public @NotNull FluidStack getFluidInTank(int tank) {
-			return FluidStack.EMPTY;
-		}
+        @Override
+        public @NotNull FluidStack getFluidInTank(int tank) {
+            if (tank != 0 || amount <= 0 || currentFluid.isEmpty()) {
+                return FluidStack.EMPTY;
+            }
+            return new FluidStack(currentFluid, amount);
+        }
 
-		@Override
-		public int getTankCapacity(int tank) {
-			return 0;
-		}
+        @Override
+        public int getTankCapacity(int tank) {
+            return tank == 0 ? capacity : 0;
+        }
 
-		@Override
-		public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-			return false;
-		}
+        @Override
+        public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+            if (tank != 0 || stack.isEmpty() || part.face == null) {
+                return false;
+            }
+            if (!getCurrentDirection().canInput() || !pipe.isConnected(part.face)) {
+                return false;
+            }
+            return currentFluid.isEmpty() || FluidCompatRegistry.areEquivalent(currentFluid, stack);
+        }
     }
 
     /** Enum used for the current direction that a fluid is flowing. */
