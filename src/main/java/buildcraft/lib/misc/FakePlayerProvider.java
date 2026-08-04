@@ -8,6 +8,7 @@ package buildcraft.lib.misc;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,7 +33,8 @@ public enum FakePlayerProvider implements IFakePlayerProvider {
         NULL_PROFILE = new GameProfile(id, "[BuildCraft]");
     }
 
-    private final Map<GameProfile, FakePlayer> players = new HashMap<>();
+    /** Fake players are world-bound entities; never move the same mutable instance between dimensions. */
+    private final Map<ServerLevel, Map<GameProfile, FakePlayer>> playersByWorld = new IdentityHashMap<>();
 
     @Override
     public FakePlayer getBuildCraftPlayer(ServerLevel world) {
@@ -50,13 +52,13 @@ public enum FakePlayerProvider implements IFakePlayerProvider {
             BCLog.logger.warn("[lib.fake] Null GameProfile! This is a bug!", new IllegalArgumentException());
             profile = NULL_PROFILE;
         }
-        FakePlayer player = players.computeIfAbsent(profile, p -> new FakePlayer(world, p));
-        player.level = world;
+        Map<GameProfile, FakePlayer> worldPlayers = playersByWorld.computeIfAbsent(world, ignored -> new HashMap<>());
+        FakePlayer player = worldPlayers.computeIfAbsent(profile, p -> new FakePlayer(world, p));
         player.setPos(pos.getX(), pos.getY(), pos.getZ());
         return player;
     }
 
     public void unloadWorld(ServerLevel world) {
-        players.values().removeIf(entry -> entry.level == world);
+        playersByWorld.remove(world);
     }
 }

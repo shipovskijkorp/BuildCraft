@@ -857,16 +857,10 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 
 		if (side != null) {
 			removePluggable(side, tile, toDrop);
-			if (!player.isCreative()) {
-				InventoryUtil.dropAll(world, pos, toDrop);
-			}
 		} else if (part != null) {
 			ItemStack stack = new ItemStack(BCTransportItems.wires.get(tile.wireManager.getColorOfPart(part)), 1);
 			toDrop.add(stack);
 			tile.wireManager.removePart(part);
-			if (!player.isCreative()) {
-				InventoryUtil.dropAll(world, pos, toDrop);
-			}
 			tile.scheduleNetworkUpdate(IPipeHolder.PipeMessageReceiver.WIRES);
 		} else if (between != null) {
 			ItemStack stack = new ItemStack(BCTransportItems.wires.get(tile.wireManager.getColorOfPart(between.parts[0])), between.to == null ? 2 : 1);
@@ -875,9 +869,6 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 				tile.wireManager.removeParts(Arrays.asList(between.parts));
 			} else {
 				tile.wireManager.removePart(between.parts[0]);
-			}
-			if (!player.getAbilities().instabuild) {
-				InventoryUtil.dropAll(world, pos, toDrop);
 			}
 			tile.scheduleNetworkUpdate(IPipeHolder.PipeMessageReceiver.WIRES);
 		} else {

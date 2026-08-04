@@ -22,6 +22,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -84,10 +85,22 @@ public class SchematicBlockFluid implements ISchematicBlock {
 
     @Override
     public boolean build(Level world, BlockPos blockPos) {
+        return buildInternal(world, blockPos, null, false);
+    }
+
+    @Override
+    public boolean build(Level world, BlockPos blockPos, Player actor) {
+        return buildInternal(world, blockPos, actor, true);
+    }
+
+    private boolean buildInternal(Level world, BlockPos blockPos, Player actor, boolean firePlaceEvent) {
         if (isFlowing) {
             return true;
         }
-        if (world.setBlock(blockPos, blockState, 11)) {
+        boolean placed = firePlaceEvent
+            ? BlockUtil.placeBlock(world, blockPos, blockState, actor, Direction.UP, 11)
+            : world.setBlock(blockPos, blockState, 11);
+        if (placed) {
             Stream.concat(
                 Stream.of(Direction.values())
                     .map(Direction::getNormal)

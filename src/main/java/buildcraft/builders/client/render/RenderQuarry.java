@@ -5,12 +5,12 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 
+import buildcraft.builders.BCBuildersSprites;
 import buildcraft.builders.tile.TileQuarry;
 import buildcraft.core.client.BuildCraftLaserManager;
 import buildcraft.lib.client.render.laser.LaserBoxRenderer;
 import buildcraft.lib.client.render.laser.LaserData_BC8;
 import buildcraft.lib.client.render.laser.LaserRenderer_BC8;
-import buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import buildcraft.lib.misc.VecUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -31,7 +31,7 @@ public class RenderQuarry implements BlockEntityRenderer<TileQuarry>{
 
     static {
         {
-            SpriteHolderRegistry.SpriteHolder sprite = SpriteHolderRegistry.getHolder("buildcraftbuilders:blocks/frame/default");
+            var sprite = BCBuildersSprites.QUARRY_FRAME;
             LaserData_BC8.LaserRow capStart = new LaserData_BC8.LaserRow(sprite, 0, 0, 0, 0);
             LaserData_BC8.LaserRow start = null;
             LaserData_BC8.LaserRow[] middle = { new LaserData_BC8.LaserRow(sprite, 0, 4, 16, 12) };
@@ -40,7 +40,7 @@ public class RenderQuarry implements BlockEntityRenderer<TileQuarry>{
             FRAME = new LaserData_BC8.LaserType(capStart, start, middle, end, capEnd);
         }
         {
-            SpriteHolderRegistry.SpriteHolder sprite = SpriteHolderRegistry.getHolder("buildcraftbuilders:blocks/frame/default");
+            var sprite = BCBuildersSprites.QUARRY_FRAME;
             LaserData_BC8.LaserRow capStart = new LaserData_BC8.LaserRow(sprite, 0, 0, 0, 0);
             LaserData_BC8.LaserRow start = null;
             LaserData_BC8.LaserRow[] middle = { new LaserData_BC8.LaserRow(sprite, 0, 4, 16, 12) };
@@ -49,7 +49,7 @@ public class RenderQuarry implements BlockEntityRenderer<TileQuarry>{
             FRAME_BOTTOM = new LaserData_BC8.LaserType(capStart, start, middle, end, capEnd);
         }
         {
-            SpriteHolderRegistry.SpriteHolder sprite = SpriteHolderRegistry.getHolder("buildcraftbuilders:blocks/quarry/drill");
+            var sprite = BCBuildersSprites.QUARRY_DRILL;
             LaserData_BC8.LaserRow capStart = new LaserData_BC8.LaserRow(sprite, 6, 0, 10, 4);
             LaserData_BC8.LaserRow start = null;
             LaserData_BC8.LaserRow[] middle = { new LaserData_BC8.LaserRow(sprite, 0, 0, 16, 4) };

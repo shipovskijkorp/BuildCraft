@@ -7,6 +7,8 @@ import buildcraft.api.transport.IStripesActivator;
 import buildcraft.api.transport.pipe.IItemPipe;
 import buildcraft.api.transport.pipe.PipeApi;
 import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.robotics.entity.EntityRobot;
+import com.mojang.authlib.GameProfile;
 import buildcraft.lib.misc.InventoryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -70,7 +72,10 @@ public class AIRobotStripesHandler extends AIRobot implements IStripesActivator 
         }
 
         Direction direction = chooseDirection(useToBlock.toBlockPos());
-        Player player = FakePlayerProvider.INSTANCE.getBuildCraftPlayer(serverLevel);
+        GameProfile owner = robot instanceof EntityRobot entityRobot
+            ? entityRobot.getOwnerProfile()
+            : FakePlayerProvider.NULL_PROFILE;
+        Player player = FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, robot.blockPosition());
         player.getInventory().clearContent();
         player.setPos(robot.getX(), robot.getY(), robot.getZ());
 

@@ -5,6 +5,8 @@ import buildcraft.api.crops.CropManager;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.robotics.entity.EntityRobot;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -59,7 +61,10 @@ public class AIRobotPlant extends AIRobot {
         }
 
         BlockPos pos = blockFound.toBlockPos();
-        Player player = FakePlayerProvider.INSTANCE.getBuildCraftPlayer(serverLevel);
+        GameProfile owner = robot instanceof EntityRobot entityRobot
+            ? entityRobot.getOwnerProfile()
+            : FakePlayerProvider.NULL_PROFILE;
+        Player player = FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, robot.blockPosition());
         player.setPos(robot.getX(), robot.getY(), robot.getZ());
 
         ItemStack before = held.copy();

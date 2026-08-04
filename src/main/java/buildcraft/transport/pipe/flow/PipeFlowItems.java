@@ -716,6 +716,11 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         event.triggers.add(BCTransportStatements.TRIGGER_ITEMS_TRAVERSING);
     }
 
+    @Override
+    public boolean requiresPeriodicSave() {
+        return doesContainItems();
+    }
+
     public boolean doesContainItems() {
         // Note that this counts all items
         // (including phantom items, which is fine)

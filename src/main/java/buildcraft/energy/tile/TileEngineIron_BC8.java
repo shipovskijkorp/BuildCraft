@@ -139,6 +139,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         nbt.put("tank",tankManager.serializeNBT());
         nbt.putInt("penaltyCooling", penaltyCooling);
         nbt.putDouble("burnTime", burnTime);
+        nbt.putDouble("residueAmount", residueAmount);
         nbt.putBoolean("solidCoolantLoaded", solidCoolantLoaded);
     }
 
@@ -148,6 +149,10 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         tankManager.deserializeNBT(nbt.getCompound("tank"));
         penaltyCooling = nbt.getInt("penaltyCooling");
         burnTime = nbt.getDouble("burnTime");
+        residueAmount = nbt.getDouble("residueAmount");
+        if (!Double.isFinite(residueAmount) || residueAmount < 0) {
+            residueAmount = 0;
+        }
         solidCoolantLoaded = nbt.getBoolean("solidCoolantLoaded") && tankCoolant.getFluidAmount() > 0;
     }
 

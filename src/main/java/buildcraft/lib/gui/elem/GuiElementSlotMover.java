@@ -27,7 +27,8 @@ public class GuiElementSlotMover extends GuiElementSimple {
     public void drawBackground(PoseStack pose, float partialTicks) {
         if (visible.evaluate()) {
             toMove.x = 1 + (int) Math.round(getX());
-            toMove.y = 1 + (int) Math.round(getY());
+            // Slot JSON uses the interior Y coordinate directly.
+            toMove.y = (int) Math.round(getY());
         } else {
             toMove.x = HIDDEN_SLOT_POSITION;
             toMove.y = HIDDEN_SLOT_POSITION;

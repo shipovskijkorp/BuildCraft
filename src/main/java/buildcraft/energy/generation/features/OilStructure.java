@@ -250,9 +250,11 @@ public abstract class OilStructure {
         @Override
         protected void generateWithin(WorldGenLevel world, Box intersect) {
             count = 0;
-            int segment = world.getChunk(start).getHighestSectionPosition();
-            BlockPos worldTop = new BlockPos(start.getX(), segment + 16, start.getZ());
-            for (int y = segment; y >= start.getY(); y--) {
+            // Query the heightmap already available to the current worldgen region. Calling getChunk(start) here
+            // could request a neighbouring chunk while this chunk was still generating and form a dependency cycle.
+            int surfaceY = world.getHeight(Heightmap.Types.WORLD_SURFACE, start.getX(), start.getZ());
+            BlockPos worldTop = new BlockPos(start.getX(), surfaceY, start.getZ());
+            for (int y = surfaceY; y >= start.getY(); y--) {
                 worldTop = worldTop.below();
                 BlockState state = world.getBlockState(worldTop);
                 if (state.isAir()) {

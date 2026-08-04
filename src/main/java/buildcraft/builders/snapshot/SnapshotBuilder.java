@@ -32,6 +32,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.gameevent.BlockPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEvent.Message;
@@ -107,6 +108,8 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     public int leftToBreak = 0;
     public int leftToPlace = 0;
     private boolean renderWork = false;
+    /** Energy removed for active tasks that could not yet be returned because the machine buffer was full. */
+    private long pendingPowerRefund;
 
    
     protected SnapshotBuilder(T tile) {
@@ -239,20 +242,42 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
      * Executed if break task failed
      */
     private void cancelBreakTask(BreakTask breakTask) {
-        tile.getBattery().addPower(
-            Math.min(breakTask.power, tile.getBattery().getCapacity() - tile.getBattery().getStored()),
-            FluidAction.EXECUTE
-        );
+        queuePowerRefund(breakTask.power);
     }
 
     /**
      * Executed if {@link #doPlaceTask} failed
      */
     protected void cancelPlaceTask(PlaceTask placeTask) {
-        tile.getBattery().addPower(
-            Math.min(placeTask.power, tile.getBattery().getCapacity() - tile.getBattery().getStored()),
-            FluidAction.EXECUTE
-        );
+        queuePowerRefund(placeTask.power);
+    }
+
+    private void queuePowerRefund(long power) {
+        if (power <= 0) {
+            return;
+        }
+        pendingPowerRefund += Math.min(power, Long.MAX_VALUE - pendingPowerRefund);
+        markTileDirty();
+        flushPendingPowerRefund();
+    }
+
+    private void flushPendingPowerRefund() {
+        if (pendingPowerRefund <= 0) {
+            return;
+        }
+        long free = Math.max(0, tile.getBattery().getCapacity() - tile.getBattery().getStored());
+        long refunded = Math.min(free, pendingPowerRefund);
+        if (refunded > 0) {
+            tile.getBattery().addPower(refunded, FluidAction.EXECUTE);
+            pendingPowerRefund -= refunded;
+            markTileDirty();
+        }
+    }
+
+    protected void markTileDirty() {
+        if (tile instanceof BlockEntity blockEntity) {
+            blockEntity.setChanged();
+        }
     }
 
     /**
@@ -354,6 +379,8 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     }
 
     private void clearActiveTasks() {
+        breakTasks.forEach(this::cancelBreakTask);
+        placeTasks.forEach(this::cancelPlaceTask);
         breakTasks.clear();
         clientBreakTasks.clear();
         prevClientBreakTasks.clear();
@@ -382,6 +409,8 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             clientPlaceTasks.addAll(placeTasks);
             return false;
         }
+
+        flushPendingPowerRefund();
 
         if (!isInitialized()) {
             if (getBuildingInfo() == null) {
@@ -710,6 +739,9 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
+        if (pendingPowerRefund > 0) {
+            nbt.putLong("pendingPowerRefund", pendingPowerRefund);
+        }
         if (!isInitialized()) {
             return nbt;
         }
@@ -722,10 +754,17 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        // Never trust saved per-block state after a world/chunk reload. The blocks in the current
-        // area may have changed while the builder was not ticking, so keep the restored path/base
-        // position but force this current build area to be scanned again.
+        // Per-block completion state is intentionally rechecked against the live world, but resources already
+        // reserved by saved tasks must be returned rather than silently discarded.
+        pendingPowerRefund = Math.max(0, nbt.getLong("pendingPowerRefund"));
+        NBTUtilBC.readCompoundList(nbt.get("breakTasks"))
+            .map(BreakTask::new)
+            .forEach(this::cancelBreakTask);
+        NBTUtilBC.readCompoundList(nbt.get("placeTasks"))
+            .map(PlaceTask::new)
+            .forEach(this::cancelPlaceTask);
         forceRecheckCurrentTask();
+        flushPendingPowerRefund();
     }
 
     public class BreakTask {

@@ -37,12 +37,20 @@ public class OilGenFeature extends Feature<OilFeatureConfiguration>{
             return false;
         }
 
-        BlockPos orginPos = pfc.origin();
-        ChunkPos chunkPos = world.getChunk(orginPos).getPos();
+        BlockPos originPos = pfc.origin();
+        ChunkPos chunkPos = new ChunkPos(originPos);
         int chunkX = chunkPos.x;
         int chunkZ = chunkPos.z;
-        
-        OilGenerator.config = pfc.config();
+
+        // OilGenerator still mirrors BC8's short-lived shared cache. Worldgen may run dimensions in parallel, so
+        // protect the complete cache/config transaction instead of allowing one worker to replace another's world.
+        synchronized (OilGenerator.class) {
+            return placeLocked(world, chunkX, chunkZ, pfc.config());
+        }
+    }
+
+    private boolean placeLocked(WorldGenLevel world, int chunkX, int chunkZ, OilFeatureConfiguration configuration) {
+        OilGenerator.config = configuration;
 
 /*        if (world.getLevelType() == LevelType.FLAT) {
             if (DEBUG_OILGEN_BASIC) {
@@ -55,10 +63,9 @@ public class OilGenFeature extends Feature<OilFeatureConfiguration>{
         }*/
 //        world.profiler.startSection("bc_oil");
         int count = 0;
-        int x = chunkX * 16 + 8;
-        int z = chunkZ * 16 + 8;
-        BlockPos min = new BlockPos(x, world.dimensionType().minY(), z);
-        Box box = new Box(min, min.offset(15, world.getHeight(), 15));
+        BlockPos min = new BlockPos(chunkX << 4, world.getMinBuildHeight(), chunkZ << 4);
+        BlockPos max = new BlockPos((chunkX << 4) + 15, world.getMaxBuildHeight() - 1, (chunkZ << 4) + 15);
+        Box box = new Box(min, max);
 
         for (int cdx = -MAX_CHUNK_RADIUS; cdx <= MAX_CHUNK_RADIUS; cdx++) {
             for (int cdz = -MAX_CHUNK_RADIUS; cdz <= MAX_CHUNK_RADIUS; cdz++) {

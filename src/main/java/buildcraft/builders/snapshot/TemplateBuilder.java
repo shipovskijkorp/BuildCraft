@@ -14,6 +14,7 @@ import buildcraft.api.core.IStackFilter;
 import buildcraft.api.core.BuildCraftAPI;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.FakePlayer;
@@ -78,7 +79,15 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
     @Override
     protected void cancelPlaceTask(PlaceTask placeTask) {
         super.cancelPlaceTask(placeTask);
-        tile.getInvResources().insert(placeTask.items.get(0), false, false);
+        if (placeTask.items == null || placeTask.items.isEmpty()) {
+            return;
+        }
+        ItemStack remainder = tile.getInvResources().insert(placeTask.items.get(0).copy(), false, false);
+        if (!remainder.isEmpty() && !tile.getWorldBC().isClientSide) {
+            BlockPos pos = tile.getBuilderPos();
+            Containers.dropItemStack(tile.getWorldBC(), pos.getX() + 0.5, pos.getY() + 1.0,
+                pos.getZ() + 0.5, remainder);
+        }
     }
 
     @Override

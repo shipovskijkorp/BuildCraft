@@ -64,7 +64,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     private long powerResistance = -1;
     private boolean disabled = false;
 
-    private long currentWorldTime;
+    private long currentWorldTime = Long.MIN_VALUE;
 
     private boolean isReceiver = false;
     private final EnumMap<Direction, Section> sections;
@@ -141,6 +141,12 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         return receiver != null && receiver.canConnect(sections.get(face));
     }
 
+    private void ensureConfigured() {
+        if (maxPower < 0) {
+            reconfigure();
+        }
+    }
+
     @Override
     public void reconfigure() {
         PipeEventPower.Configure configure = new PipeEventPower.Configure(pipe.getHolder(), this);
@@ -189,15 +195,14 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         }
 
         step();
-        long requested = Math.min(Math.min(maxExtracted, maxPower), getPowerRequested(from));
         Section section = sections.get(from);
-        requested = section.getAcceptedPower(requested);
+        long freeCapacity = Math.max(0, maxPower - section.internalNextPower);
+        long requested = Math.min(Math.min(Math.min(maxExtracted, maxPower), getPowerRequested(from)), freeCapacity);
         if (requested <= 0) {
             return 0;
         }
 
-        // Existing BuildCraft providers use false for a dry run and true for the actual extraction. Never execute a
-        // larger extraction than this section can buffer, because passive providers have no rollback operation.
+        // Existing BuildCraft providers use false for a dry run and true for the actual extraction.
         long simulated = Math.max(0, Math.min(requested, provider.extractPower(0, requested, false)));
         if (simulated <= 0) {
             return 0;
@@ -302,27 +307,31 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         for (Direction face : Direction.values()) {
             Section s = sections.get(face);
             if (s.internalPower > 0) {
-                long totalPowerQuery = 0;
+                BigInteger totalPowerQuery = BigInteger.ZERO;
                 for (Direction face2 : Direction.values()) {
                     if (face != face2) {
-                        totalPowerQuery += sections.get(face2).powerQuery;
+                        long powerQuery = sections.get(face2).powerQuery;
+                        if (powerQuery > 0) {
+                            totalPowerQuery = totalPowerQuery.add(BigInteger.valueOf(powerQuery));
+                        }
                     }
                 }
 
-                if (totalPowerQuery > 0) {
-                    long unusedPowerQuery = totalPowerQuery;
+                if (totalPowerQuery.signum() > 0) {
+                    BigInteger unusedPowerQuery = totalPowerQuery;
                     for (Direction face2 : Direction.values()) {
                         if (face == face2) {
                             continue;
                         }
                         Section s2 = sections.get(face2);
                         if (s2.powerQuery > 0) {
+                            BigInteger sidePowerQuery = BigInteger.valueOf(s2.powerQuery);
                             long watts = Math.min(
-                                BigInteger.valueOf(s.internalPower).multiply(BigInteger.valueOf(s2.powerQuery)).divide(
-                                    BigInteger.valueOf(unusedPowerQuery)
+                                BigInteger.valueOf(s.internalPower).multiply(sidePowerQuery).divide(
+                                    unusedPowerQuery
                                 ).longValue(), s.internalPower
                             );
-                            unusedPowerQuery -= s2.powerQuery;
+                            unusedPowerQuery = unusedPowerQuery.subtract(sidePowerQuery);
                             IPipe neighbour = pipe.getConnectedPipe(face2);
                             long leftover = watts;
                             if (
@@ -381,7 +390,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             long query = 0;
             for (Direction face2 : Direction.values()) {
                 if (face != face2) {
-                    query += sections.get(face2).powerQuery;
+                    query = Math.min(maxPower, saturatingAdd(query, sections.get(face2).powerQuery));
                 }
             }
             transferQueryTemp[face.ordinal()] = query;
@@ -434,6 +443,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     }
 
     private void step() {
+        ensureConfigured();
         long now = pipe.getHolder().getPipeWorld().getGameTime();
         if (currentWorldTime != now) {
             currentWorldTime = now;
@@ -452,12 +462,10 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         step();
 
         Section s = sections.get(from);
-        if (pipe.getBehaviour() instanceof IPipeTransportPowerHook) {
-            s.nextPowerQuery += ((IPipeTransportPowerHook) pipe.getBehaviour()).requestPower(from, amount);
-        } else {
-            s.nextPowerQuery += amount;
-        }
-        s.nextPowerQuery = Math.min(s.nextPowerQuery, maxPower);
+        long requested = pipe.getBehaviour() instanceof IPipeTransportPowerHook
+            ? ((IPipeTransportPowerHook) pipe.getBehaviour()).requestPower(from, amount)
+            : amount;
+        s.nextPowerQuery = Math.min(maxPower, saturatingAdd(s.nextPowerQuery, Math.max(0, requested)));
     }
 
     @Nullable
@@ -482,17 +490,24 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     }
 
     public long getPowerRequested(@Nullable Direction side) {
+        ensureConfigured();
         if (disabled) {
             return 0;
         }
         long req = 0;
         for (Direction face : Direction.values()) {
             if (side == null || face != side) {
-                long query = Math.max(0, sections.get(face).powerQuery);
-                req = query > Long.MAX_VALUE - req ? Long.MAX_VALUE : req + query;
+                req = saturatingAdd(req, sections.get(face).getEffectivePowerQuery());
             }
         }
-        return Math.min(req, Math.max(0, maxPower));
+        return Math.min(req, maxPower);
+    }
+
+    private static long saturatingAdd(long a, long b) {
+        if (b <= 0) {
+            return a;
+        }
+        return a > Long.MAX_VALUE - b ? Long.MAX_VALUE : a + b;
     }
 
     public double getMaxTransferForRender(float partialTicks) {
@@ -531,12 +546,22 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         }
 
         void step() {
-            powerQuery = nextPowerQuery;
+            powerQuery = Math.min(maxPower, Math.max(0, nextPowerQuery));
             nextPowerQuery = 0;
 
-            long next = internalPower;
-            internalPower = internalNextPower;
+            long next = Math.min(maxPower, Math.max(0, internalPower));
+            internalPower = Math.min(maxPower, Math.max(0, internalNextPower));
             internalNextPower = next;
+        }
+
+        long getEffectivePowerQuery() {
+            long now = pipe.getHolder().getPipeWorld().getGameTime();
+            return currentWorldTime == now ? powerQuery : nextPowerQuery;
+        }
+
+        long getEffectivePendingPower() {
+            long now = pipe.getHolder().getPipeWorld().getGameTime();
+            return currentWorldTime == now ? internalNextPower : internalPower;
         }
 
         @Override
@@ -549,29 +574,14 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             return PipeFlowPower.this.getPowerRequested(side);
         }
 
-        private long getAcceptedPower(long offered) {
-            // isReceiver only controls whether this section may accept power directly from an external provider.
-            // Power arriving from another power pipe must also be accepted, otherwise every non-wood transport pipe
-            // rejects the network transfer and a wooden pipe can never feed stone/cobble/gold/etc. power pipes.
-            if (disabled || offered <= 0) {
-                return 0;
-            }
-            long requested = Math.max(0, getPowerRequested());
-            long buffered = internalPower > Long.MAX_VALUE - internalNextPower
-                ? Long.MAX_VALUE
-                : Math.max(0, internalPower + internalNextPower);
-            long free = Math.max(0, maxPower - Math.min(maxPower, buffered));
-            return Math.min(offered, Math.min(requested, free));
-        }
-
         long receivePowerInternal(long sent) {
-            long accepted = getAcceptedPower(sent);
-            if (accepted <= 0) {
+            ensureConfigured();
+            if (disabled || sent <= 0) {
                 return sent;
             }
-            debugPowerOffered = accepted > Long.MAX_VALUE - debugPowerOffered
-                ? Long.MAX_VALUE
-                : debugPowerOffered + accepted;
+            debugPowerOffered = saturatingAdd(debugPowerOffered, sent);
+            long free = Math.max(0, maxPower - internalNextPower);
+            long accepted = Math.min(sent, free);
             internalNextPower += accepted;
             return sent - accepted;
         }
@@ -581,14 +591,23 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             if (!isReceiver || disabled || microJoules <= 0) {
                 return microJoules;
             }
-            long accepted = getAcceptedPower(microJoules);
-            if (action == FluidAction.EXECUTE && accepted > 0) {
-                debugPowerOffered = accepted > Long.MAX_VALUE - debugPowerOffered
-                    ? Long.MAX_VALUE
-                    : debugPowerOffered + accepted;
-                internalNextPower += accepted;
+
+            long requested = Math.min(maxPower, getPowerRequested());
+            long free = Math.max(0, maxPower - getEffectivePendingPower());
+            long accepted = Math.min(microJoules, Math.min(requested, free));
+            if (action == FluidAction.SIMULATE) {
+                return microJoules - accepted;
             }
-            return microJoules - accepted;
+
+            PipeFlowPower.this.step();
+            // Recalculate after stepping because another nested transfer may have changed this section.
+            requested = Math.min(maxPower, getPowerRequested());
+            free = Math.max(0, maxPower - internalNextPower);
+            accepted = Math.min(microJoules, Math.min(requested, free));
+            if (accepted <= 0) {
+                return microJoules;
+            }
+            return microJoules - accepted + receivePowerInternal(accepted);
         }
 
         @Override

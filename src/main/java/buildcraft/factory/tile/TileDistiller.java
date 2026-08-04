@@ -79,6 +79,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
 
     private IDistillationRecipe currentRecipe;
     private long distillPower = 0;
+    private long pendingPowerRefund = 0;
     private boolean isActive = false;
     private final AverageLong powerAvg = new AverageLong(100);
     private final SafeTimeTracker updateTracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 2);
@@ -124,6 +125,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         nbt.put("tanks", tankManager.serializeNBT());
         nbt.put("battery", mjBattery.serializeNBT());
         nbt.putLong("distillPower", distillPower);
+        nbt.putLong("pendingPowerRefund", pendingPowerRefund);
         powerAvg.writeToNbt(nbt, "powerAvg");
 	}
 
@@ -133,7 +135,8 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
 		super.load(nbt);
         tankManager.deserializeNBT(nbt.getCompound("tanks"));
         mjBattery.deserializeNBT(nbt.getCompound("battery"));
-        distillPower = nbt.getLong("distillPower");
+        distillPower = Math.max(0, nbt.getLong("distillPower"));
+        pendingPowerRefund = Math.max(0, nbt.getLong("pendingPowerRefund"));
         powerAvg.readFromNbt(nbt, "powerAvg");
 	}
 
@@ -218,12 +221,23 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         }
         powerAvg.tick();
         changedSinceNetUpdate |= powerAvgClient != powerAvg.getAverageLong();
+        boolean wasActive = isActive;
+
+        if (!refundPendingPower()) {
+            isActive = false;
+            changedSinceNetUpdate |= wasActive;
+            if (changedSinceNetUpdate && updateTracker.markTimeIfDelay(level)) {
+                powerAvgClient = powerAvg.getAverageLong();
+                sendNetworkUpdate(NET_RENDER_DATA);
+                changedSinceNetUpdate = false;
+            }
+            return;
+        }
 
         currentRecipe =
             BuildcraftRecipeRegistry.refineryRecipes.getDistillationRegistry().getRecipeForInput(tankIn.getFluid());
         if (currentRecipe == null) {
-            mjBattery.addPowerChecking(distillPower, FluidAction.SIMULATE);
-            distillPower = 0;
+            queueProgressRefund();
             isActive = false;
         } else {
             FluidStack reqIn = currentRecipe.in();
@@ -254,11 +268,15 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
                     tankLiquidOut.fillInternal(outLiquid, FluidAction.EXECUTE);
                 }
             } else {
-                mjBattery.addPowerChecking(distillPower, FluidAction.SIMULATE);
-                distillPower = 0;
+                queueProgressRefund();
                 isActive = false;
             }
         }
+
+        if (distillPower > 0 || pendingPowerRefund > 0 || isActive) {
+            setChanged();
+        }
+        changedSinceNetUpdate |= wasActive != isActive;
 
         if (changedSinceNetUpdate && updateTracker.markTimeIfDelay(level)) {
             powerAvgClient = powerAvg.getAverageLong();
@@ -267,6 +285,30 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         }
     }
     
+
+    private void queueProgressRefund() {
+        if (distillPower <= 0) {
+            return;
+        }
+        pendingPowerRefund += Math.min(distillPower, Long.MAX_VALUE - pendingPowerRefund);
+        distillPower = 0;
+        refundPendingPower();
+    }
+
+    /** Returns false while some cancelled progress still waits for room in the battery. */
+    private boolean refundPendingPower() {
+        if (pendingPowerRefund <= 0) {
+            return true;
+        }
+        long free = Math.max(0, mjBattery.getCapacity() - mjBattery.getStored());
+        long refunded = Math.min(free, pendingPowerRefund);
+        if (refunded > 0) {
+            mjBattery.addPower(refunded, FluidAction.EXECUTE);
+            pendingPowerRefund -= refunded;
+            setChanged();
+        }
+        return pendingPowerRefund == 0;
+    }
 
     @Override
 	public InteractionResult onActivated(Player player, InteractionHand hand, BlockHitResult hit) {

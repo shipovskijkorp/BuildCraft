@@ -882,24 +882,56 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         private void setGroupedGateBaseRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {
-            List<ItemStack> chipsets = new ArrayList<>();
+            List<List<ItemStack>> inputsBySlot = new ArrayList<>();
             List<ItemStack> outputs = new ArrayList<>();
+
             for (AssemblyRecipeBasic variant : variants) {
                 ItemStack output = variant.getResultItem();
                 outputs.add(output);
-                for (IngredientStack input : variant.getInputsFor(output)) {
-                    List<ItemStack> expanded = expandIngredient(input);
+
+                List<IngredientStack> orderedInputs = new ArrayList<>(variant.getInputsFor(output));
+                orderedInputs.sort(Comparator.comparing(AssemblyCategory::getGateBaseInputSortKey));
+                for (int inputIndex = 0; inputIndex < orderedInputs.size(); inputIndex++) {
+                    while (inputsBySlot.size() <= inputIndex) {
+                        inputsBySlot.add(new ArrayList<>());
+                    }
+
+                    List<ItemStack> expanded = expandIngredient(orderedInputs.get(inputIndex));
                     if (!expanded.isEmpty()) {
-                        chipsets.add(expanded.get(0));
+                        // One visible stack per recipe variant keeps JEI's focus-link columns aligned.
+                        // All accepted alternatives remain searchable through the invisible ingredient list.
+                        inputsBySlot.get(inputIndex).add(expanded.get(0));
                         builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(expanded);
                     }
                 }
             }
-            IRecipeSlotBuilder inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 3, 12)
-                    .addItemStacks(chipsets);
+
+            List<IRecipeSlotBuilder> linkedSlots = new ArrayList<>();
+            for (int inputIndex = 0; inputIndex < inputsBySlot.size(); inputIndex++) {
+                List<ItemStack> inputStacks = inputsBySlot.get(inputIndex);
+                IRecipeSlotBuilder inputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 3 + inputIndex * 18, 12)
+                        .addItemStacks(inputStacks);
+                if (inputStacks.size() == outputs.size()) {
+                    linkedSlots.add(inputSlot);
+                }
+            }
+
             IRecipeSlotBuilder outputSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 111, 12)
                     .addItemStacks(outputs);
-            builder.createFocusLink(inputSlot, outputSlot);
+            if (!outputs.isEmpty() && !inputsBySlot.isEmpty() && linkedSlots.size() == inputsBySlot.size()) {
+                linkedSlots.add(outputSlot);
+                builder.createFocusLink(linkedSlots.toArray(IRecipeSlotBuilder[]::new));
+            }
+        }
+
+        private static String getGateBaseInputSortKey(IngredientStack input) {
+            ItemStack[] stacks = input.ingredient.getItems();
+            if (stacks.length == 0) {
+                return "";
+            }
+            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(stacks[0].getItem());
+            String id = itemId == null ? stacks[0].getDescriptionId() : itemId.toString();
+            return id + "#" + input.count;
         }
 
         private void setGroupedGateModifierRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {

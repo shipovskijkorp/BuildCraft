@@ -8,7 +8,7 @@
       "predicate": {
         "buildcraftbuilders:recording": 1.0
       },
-      "model": "buildcraftbuilders:blocks/marker/construction_recording"
+      "model": "buildcraftbuilders:item/marker_construction_recording"
     }
   ]
 }

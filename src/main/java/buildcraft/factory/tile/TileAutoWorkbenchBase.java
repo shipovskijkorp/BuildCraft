@@ -29,6 +29,7 @@ import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -83,6 +84,19 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
     }
 
     @Override
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        nbt.putLong("powerStored", powerStored);
+    }
+
+    @Override
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        powerStored = Math.max(0, Math.min(POWER_REQUIRED, nbt.getLong("powerStored")));
+        powerStoredLast = powerStored;
+    }
+
+    @Override
     protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before,
         @Nonnull ItemStack after) {
         super.onSlotChange(handler, slot, before, after);
@@ -97,6 +111,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             return;
         }
         boolean didChange = crafting.tick();
+        long oldPowerStored = powerStored;
         if (crafting.canCraft()) {
             if (powerStored >= POWER_REQUIRED) {
                 if (crafting.craft()) {
@@ -112,6 +127,9 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             powerStored -= POWER_LOST;
         } else {
             powerStored = 0;
+        }
+        if (powerStored != oldPowerStored) {
+            setChanged();
         }
         if (didChange) {
             resultClient = crafting.getAssumedResult().copy();

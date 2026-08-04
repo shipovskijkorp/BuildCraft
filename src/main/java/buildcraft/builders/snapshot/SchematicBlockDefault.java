@@ -33,6 +33,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -624,6 +625,16 @@ public class SchematicBlockDefault implements ISchematicBlock {
     @Override
     @SuppressWarnings("Duplicates")
     public boolean build(Level level, BlockPos blockPos) {
+        return buildInternal(level, blockPos, null, false);
+    }
+
+    @Override
+    @SuppressWarnings("Duplicates")
+    public boolean build(Level level, BlockPos blockPos, Player actor) {
+        return buildInternal(level, blockPos, actor, true);
+    }
+
+    private boolean buildInternal(Level level, BlockPos blockPos, Player actor, boolean firePlaceEvent) {
         if (placeBlock == Blocks.AIR) {
             return true;
         }
@@ -651,17 +662,20 @@ public class SchematicBlockDefault implements ISchematicBlock {
         level.getProfiler().pop();
         level.getProfiler().push("place block");
         if (tileRotation != Rotation.NONE) {
-        	newBlockState.rotate(level, blockPos, tileRotation);
+            newBlockState = newBlockState.rotate(level, blockPos, tileRotation);
         }
-        boolean b = level.setBlock(blockPos, newBlockState, 11);
+        boolean b = firePlaceEvent
+            ? BlockUtil.placeBlock(level, blockPos, newBlockState, actor, Direction.UP, 11)
+            : level.setBlock(blockPos, newBlockState, 11);
         level.getProfiler().pop();
         if (b) {
+            BlockState placedBlockState = level.getBlockState(blockPos);
             level.getProfiler().push("notify");
             updateBlockOffsets.stream()
                 .map(blockPos::offset)
                 .forEach(updatePos -> level.updateNeighborsAt(updatePos, placeBlock));//TODO : check
             level.getProfiler().pop();
-            if (tileNbt != null && blockState.hasBlockEntity()) {
+            if (tileNbt != null && placedBlockState.hasBlockEntity()) {
                 level.getProfiler().push("prepare tile");
                 Set<JsonRule> rules = RulesLoader.getRules(blockState, tileNbt);
                 CompoundTag replaceNbt = rules.stream()
@@ -690,7 +704,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
                 }
                 BlockEntity tileEntity = BlockEntity.loadStatic(
                     blockPos,
-                    blockState,
+                    placedBlockState,
                     finalTileNbt
                 );
                 if (tileEntity != null) {

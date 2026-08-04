@@ -114,6 +114,8 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     private final Map<Direction, PluggableHolder> pluggables = new EnumMap<>(Direction.class);
     private Pipe pipe = Pipe.EMPTY;
     private boolean scheduleRenderUpdate = true;
+    private long lastPeriodicSaveTick = Long.MIN_VALUE;
+    private boolean wasFlowPersistentlyActive;
     private final Set<PipeMessageReceiver> networkUpdates = EnumSet.noneOf(PipeMessageReceiver.class);
     private final Set<PipeMessageReceiver> networkGuiUpdates = EnumSet.noneOf(PipeMessageReceiver.class);
     
@@ -324,9 +326,20 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
             oldRedstoneValues = redstoneValues;
         }
 
-        /* It's difficult to check to see if we actually have changed at all. So let's just always mark the chunk as
-         * dirty instead of making every component do it individually. */
-        markChunkDirty();//TODO
+        if (!level.isClientSide && pipe != Pipe.EMPTY) {
+            boolean flowActive = pipe.flow.requiresPeriodicSave();
+            long now = level.getGameTime();
+            if (flowActive && (lastPeriodicSaveTick == Long.MIN_VALUE || now - lastPeriodicSaveTick >= 20)) {
+                markChunkDirty();
+                lastPeriodicSaveTick = now;
+            } else if (!flowActive && wasFlowPersistentlyActive) {
+                // Persist the transition to empty as well, otherwise the last saved travelling item/fluid could
+                // reappear after a reload.
+                markChunkDirty();
+                lastPeriodicSaveTick = now;
+            }
+            wasFlowPersistentlyActive = flowActive;
+        }
     }
 
     // Network
@@ -480,6 +493,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         if (!level.isClientSide()) {
             if (old != with) {
                 wireManager.getWireSystems().rebuildWireSystemsAround(this);
+                markChunkDirty();
             }
             holder.sendNewPluggableData();
         }
@@ -531,6 +545,9 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     @Override
     public void scheduleNetworkUpdate(PipeMessageReceiver... parts) {
         Collections.addAll(networkUpdates, parts);
+        if (level != null && !level.isClientSide) {
+            markChunkDirty();
+        }
     }
 
     @Override
@@ -601,6 +618,9 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         	newRedstione[axis.rotate(face).ordinal()] = redstoneValues[face.ordinal()];
         redstoneValues = newRedstione;
         pipe.rotate(axis);
+        if (level != null && !level.isClientSide) {
+            markChunkDirty();
+        }
 	}
 
     // Caps

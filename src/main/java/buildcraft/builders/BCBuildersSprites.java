@@ -22,6 +22,8 @@ public class BCBuildersSprites {
 	
     public static final SpriteHolder FILLER_PLANNER;
     public static final SpriteHolder ROBOT;
+    public static final SpriteHolder QUARRY_FRAME;
+    public static final SpriteHolder QUARRY_DRILL;
 
     public static final SpriteHolder FILLER_NONE;
     public static final SpriteHolder FILLER_CLEAR;
@@ -61,6 +63,8 @@ public class BCBuildersSprites {
     static {
         FILLER_PLANNER = getHolder("addons/filler_planner");
         ROBOT = getHolder("robot");
+        QUARRY_FRAME = getHolder("blocks/frame/default");
+        QUARRY_DRILL = getHolder("blocks/quarry/drill");
 
         FILLER_NONE = getHolder("filler/patterns/none");
         FILLER_CLEAR = getHolder("filler/patterns/clear");
@@ -120,7 +124,6 @@ public class BCBuildersSprites {
             FILLER_SPHERE_PART.put(type, getHolder("filler/patterns/sphere_" + type.lowerCaseName));
         }
         
-        SpriteHolderRegistry.getHolder("buildcraftbuilders:blocks/quarry/drill");
     }
 
     private static SpriteHolder getHolder(String suffix) {

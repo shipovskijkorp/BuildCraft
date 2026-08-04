@@ -82,6 +82,13 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 
     boolean movingState;
     private boolean wasOperationalForAdvancement;
+    private long lastPersistenceMarkTick = Long.MIN_VALUE;
+    private double persistedHeat = Double.NaN;
+    private long persistedPower = Long.MIN_VALUE;
+    private float persistedProgress = Float.NaN;
+    private int persistedProgressPart = Integer.MIN_VALUE;
+    private Direction persistedDirection;
+    private boolean persistedRedstonePowered;
 
     // Needed: Power stored
 
@@ -128,6 +135,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         progress = nbt.getFloat("progress");
         progressPart = nbt.getInt("progressPart");
         syncRenderProgressFromProgress();
+        capturePersistedState();
     }
 
     @Override
@@ -205,6 +213,8 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
                     // makeTileCache();
                     sendNetworkUpdate(NET_RENDER_DATA);
                     redrawBlock();
+                    markChunkDirty();
+                    capturePersistedState();
 //                    world.notifyNeighborsRespectDebug(getPos(), getBlockType(), true);
                     return InteractionResult.SUCCESS;
                 }
@@ -395,7 +405,37 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         }
         wasOperationalForAdvancement = operationalForAdvancement;
 
-        markChunkDirty();
+        markPersistentStateIfNeeded();
+    }
+
+    private void markPersistentStateIfNeeded() {
+        if (level == null || level.isClientSide || !hasPersistentStateChanged()) {
+            return;
+        }
+        long now = level.getGameTime();
+        if (lastPersistenceMarkTick == Long.MIN_VALUE || now - lastPersistenceMarkTick >= 20) {
+            markChunkDirty();
+            lastPersistenceMarkTick = now;
+            capturePersistedState();
+        }
+    }
+
+    private boolean hasPersistentStateChanged() {
+        return Double.doubleToLongBits(heat) != Double.doubleToLongBits(persistedHeat)
+            || power != persistedPower
+            || Float.floatToIntBits(progress) != Float.floatToIntBits(persistedProgress)
+            || progressPart != persistedProgressPart
+            || currentDirection != persistedDirection
+            || isRedstonePowered != persistedRedstonePowered;
+    }
+
+    private void capturePersistedState() {
+        persistedHeat = heat;
+        persistedPower = power;
+        persistedProgress = progress;
+        persistedProgressPart = progressPart;
+        persistedDirection = currentDirection;
+        persistedRedstonePowered = isRedstonePowered;
     }
 
     private long getPowerToExtract(boolean doExtract) {
@@ -415,13 +455,24 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 
     private void sendPower() {
         IMjReceiver receiver = getReceiverToPower(currentDirection);
-        if (receiver != null) {
-            long extracted = getPowerToExtract(true);
-            if (extracted > 0) {
-                long excess = receiver.receivePower(extracted, FluidAction.EXECUTE);
-                extractPower(extracted - excess, extracted - excess, true); // Comment out for constant power
-                // currentOutput = extractEnergy(0, needed, true); // Uncomment for constant power
-            }
+        if (receiver == null) {
+            return;
+        }
+
+        // Work out the offer without mutating the engine buffer. The old code extracted here and then
+        // extracted the accepted amount a second time after the receiver call.
+        long offered = getPowerToExtract(false);
+        if (offered <= 0) {
+            return;
+        }
+
+        long excess = receiver.receivePower(offered, FluidAction.EXECUTE);
+        // A third-party receiver must not be able to make us add or over-extract power by returning an
+        // invalid remainder. Treat the return value strictly as the unaccepted part of this offer.
+        excess = Math.max(0, Math.min(offered, excess));
+        long accepted = offered - excess;
+        if (accepted > 0) {
+            extractPower(accepted, accepted, true);
         }
     }
 

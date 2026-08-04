@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import buildcraft.api.core.InvalidInputDataException;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
@@ -74,6 +76,14 @@ public interface ISchematicBlock {
     }
 
     boolean build(Level world, BlockPos blockPos);
+
+    /**
+     * Places this schematic block as an automated player action. Implementations that do not need an actor keep
+     * their historical behaviour through the default bridge.
+     */
+    default boolean build(Level world, BlockPos blockPos, @Nullable Player actor) {
+        return build(world, blockPos);
+    }
 
     boolean buildWithoutChecks(Level world, BlockPos blockPos);
 

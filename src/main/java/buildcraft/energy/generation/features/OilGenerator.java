@@ -28,6 +28,7 @@ import buildcraft.lib.misc.data.Box;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Holder;
+import net.minecraft.core.QuartPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.WorldGenLevel;
@@ -81,7 +82,7 @@ public class OilGenerator {
         return structureCache.getUnchecked((((long) (cz)) << 32) | (cx & 0xFFFFFFFFL));
     }
 
-    public static void clearCache() {
+    public static synchronized void clearCache() {
         structureCache.invalidateAll();
     }
 
@@ -95,7 +96,11 @@ public class OilGenerator {
 
 
         
-        Holder<Biome> biome = world.getBiome(new BlockPos(x, seaLevel, z));//TODO
+        // Read the generator's noise biome directly. Asking WorldGenLevel#getBiome for a candidate up to five
+        // chunks away can pull another chunk into generation and create a dependency cycle.
+        Holder<Biome> biome = world.getUncachedNoiseBiome(
+            QuartPos.fromBlock(x), QuartPos.fromBlock(seaLevel), QuartPos.fromBlock(z)
+        );
         ResourceLocation key = biome.unwrapKey().get().location();
         // The user blacklist/whitelist is checked before the datapack-level exclusions.
         boolean isExcludedBiome = !BCEnergyConfig.isBiomeAllowed(key) || config.excludedBiomes().contains(key);

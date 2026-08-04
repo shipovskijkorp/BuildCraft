@@ -130,6 +130,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     public TemplateBuilder templateBuilder = new TemplateBuilder(this);
     public BlueprintBuilder blueprintBuilder = new BlueprintBuilder(this);
     private boolean needsRestartAfterLoad = false;
+    private CompoundTag pendingBuilderState;
     private Box currentBox = new Box();
     @NotNull
     private Rotation rotation = Rotation.NONE;
@@ -327,14 +328,22 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
             return;
         }
 
-        // After a world/chunk reload, do the same thing as manually taking the blueprint out and
-        // putting it back in: forget the saved builder progress, return to the first path position,
-        // and rebuild the SnapshotBuilder from the item in the blueprint slot.
+        // Recreate the runtime builder from the blueprint item, but retain the saved path position. Saved
+        // active tasks are not trusted as world state; deserializeNBT returns their reserved resources and then
+        // performs a fresh scan of the current area.
         needsRestartAfterLoad = false;
         isDone = false;
         updateBasePoses();
-        reloadSnapshotFromItem(stack, true, true);
-        Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::forceRecheckCurrentTask);
+        reloadSnapshotFromItem(stack, false, true);
+        SnapshotBuilder<?> restoredBuilder = getBuilder();
+        if (restoredBuilder != null) {
+            if (pendingBuilderState != null) {
+                restoredBuilder.deserializeNBT(pendingBuilderState);
+            } else {
+                restoredBuilder.forceRecheckCurrentTask();
+            }
+        }
+        pendingBuilderState = null;
         sendNetworkUpdate(NET_SNAPSHOT_TYPE);
     }
 
@@ -667,6 +676,10 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         nbt.putBoolean("canRotate", canRotate);
         nbt.putBoolean("canExcavate", canExcavate);
         nbt.put("rotation", NBTUtilBC.writeEnum(rotation));
+        SnapshotBuilder<?> activeBuilder = getBuilder();
+        if (activeBuilder != null) {
+            nbt.put("builderState", activeBuilder.serializeNBT());
+        }
 	}
 
 	@Override
@@ -693,9 +706,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         canRotate = !nbt.contains("canRotate") || nbt.getBoolean("canRotate");
         canExcavate = !nbt.contains("canExcavate") || nbt.getBoolean("canExcavate");
         rotation = NBTUtilBC.readEnum(nbt.get("rotation"), Rotation.class);
-        // A loaded builder intentionally restarts instead of restoring in-progress tasks.
-        // This mirrors the stable manual workaround: reinsert the blueprint after joining.
-        currentBasePosIndex = 0;
+        pendingBuilderState = nbt.contains("builderState") ? nbt.getCompound("builderState") : null;
         needsRestartAfterLoad = true;
 	}
 	

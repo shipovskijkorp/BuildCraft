@@ -23,6 +23,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.authlib.GameProfile;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.lib.misc.*;
 import org.apache.commons.lang3.tuple.Pair;
@@ -31,6 +32,7 @@ import buildcraft.api.core.BCLog;
 import buildcraft.api.schematics.ISchematicBlock;
 import buildcraft.api.schematics.ISchematicEntity;
 import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.api.robots.ResourceIdBlock;
 import buildcraft.api.schematics.SchematicEntityContext;
 import net.minecraft.core.BlockPos;
@@ -38,6 +40,8 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -63,6 +67,8 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     private final Map<Pair<List<ItemStack>, List<FluidStack>>, Optional<List<ItemStack>>> extractRequiredCache =
         new HashMap<>();
     private final Set<BlockPos> robotReservedBlocks = new HashSet<>();
+    /** Fluids reserved by cancelled tasks that are waiting for room in the builder tanks. */
+    private final List<FluidStack> pendingFluidRefunds = new ArrayList<>();
 
     public BlueprintBuilder(ITileForBlueprintBuilder tile) {
         super(tile);
@@ -395,7 +401,8 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 return false;
             }
 
-            boolean built = schematicBlock.build(tile.getWorldBC(), blockPos);
+            Player actor = getAutomationPlayer(robot, blockPos);
+            boolean built = schematicBlock.build(tile.getWorldBC(), blockPos, actor);
             if (built) {
                 consumeRobotRequirements(robot, task.requirements());
                 if (check(blockPos)) {
@@ -569,11 +576,19 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     @Override
     protected void cancelPlaceTask(PlaceTask placeTask) {
         super.cancelPlaceTask(placeTask);
-        // noinspection ConstantConditions
+        if (placeTask.items == null) {
+            return;
+        }
         placeTask.items.stream()
             .filter(stack -> !stack.hasTag() || !stack.getTag().contains(FLUID_STACK_KEY))
-            .forEach(stack -> tile.getInvResources().insert(stack, false, false));
-        // noinspection ConstantConditions
+            .forEach(stack -> {
+                ItemStack remainder = tile.getInvResources().insert(stack.copy(), false, false);
+                if (!remainder.isEmpty() && !tile.getWorldBC().isClientSide) {
+                    BlockPos pos = tile.getBuilderPos();
+                    Containers.dropItemStack(tile.getWorldBC(), pos.getX() + 0.5, pos.getY() + 1.0,
+                        pos.getZ() + 0.5, remainder);
+                }
+            });
         placeTask.items.stream()
             .filter(stack -> stack.hasTag() && stack.getTag().contains(FLUID_STACK_KEY))
             .map(stack -> Pair.of(stack.getCount(), stack.getTag().getCompound(FLUID_STACK_KEY)))
@@ -584,7 +599,54 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 }
                 return fluidStack;
             })
-            .forEach(fluidStack -> tile.getTankManager().fill(fluidStack, FluidAction.EXECUTE));
+            .filter(Objects::nonNull)
+            .filter(fluidStack -> !fluidStack.isEmpty())
+            .forEach(this::queueFluidRefund);
+    }
+
+    private void queueFluidRefund(FluidStack fluidStack) {
+        FluidStack remainder = fluidStack.copy();
+        int accepted = tile.getTankManager().fill(remainder, FluidAction.EXECUTE);
+        remainder.shrink(accepted);
+        if (!remainder.isEmpty()) {
+            pendingFluidRefunds.add(remainder);
+            markTileDirty();
+        }
+    }
+
+    private boolean flushPendingFluidRefunds() {
+        for (java.util.Iterator<FluidStack> iterator = pendingFluidRefunds.iterator(); iterator.hasNext();) {
+            FluidStack pending = iterator.next();
+            int accepted = tile.getTankManager().fill(pending, FluidAction.EXECUTE);
+            pending.shrink(accepted);
+            if (accepted > 0) {
+                markTileDirty();
+            }
+            if (pending.isEmpty()) {
+                iterator.remove();
+            }
+        }
+        return pendingFluidRefunds.isEmpty();
+    }
+
+    @Override
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = super.serializeNBT();
+        nbt.put("pendingFluidRefunds", NBTUtilBC.writeObjectList(
+            pendingFluidRefunds.stream().map(stack -> stack.writeToNBT(new CompoundTag()))
+        ));
+        return nbt;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        pendingFluidRefunds.clear();
+        NBTUtilBC.readCompoundList(nbt.get("pendingFluidRefunds"))
+            .map(FluidStack::loadFluidStackFromNBT)
+            .filter(Objects::nonNull)
+            .filter(stack -> !stack.isEmpty())
+            .forEach(pendingFluidRefunds::add);
+        super.deserializeNBT(nbt);
     }
 
     @Override
@@ -597,10 +659,22 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
 
     @Override
     protected boolean doPlaceTask(PlaceTask placeTask) {
-        // noinspection ConstantConditions
-        return getBuildingInfo() != null &&
-            getSchematicBlock(placeTask.pos) != null &&
-            getSchematicBlock(placeTask.pos).build(tile.getWorldBC(), placeTask.pos);
+        if (getBuildingInfo() == null || getSchematicBlock(placeTask.pos) == null) {
+            return false;
+        }
+        Player actor = getAutomationPlayer(null, placeTask.pos);
+        return getSchematicBlock(placeTask.pos).build(tile.getWorldBC(), placeTask.pos, actor);
+    }
+
+    private Player getAutomationPlayer(EntityRobotBase robot, BlockPos pos) {
+        if (!(tile.getWorldBC() instanceof ServerLevel serverLevel)) {
+            return null;
+        }
+        GameProfile owner = tile.getOwner();
+        if (robot instanceof EntityRobot entityRobot) {
+            owner = entityRobot.getOwnerProfile();
+        }
+        return FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, pos);
     }
 
     private boolean processDeferredInventoryContents() {
@@ -775,6 +849,9 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     	
         if (level.isClientSide) {
             return super.tick();
+        }
+        if (!flushPendingFluidRefunds()) {
+            return false;
         }
         level.getProfiler().push("entitiesWithinBox");
         List<Entity> entitiesWithinBox = level.getEntitiesOfClass(

@@ -97,6 +97,14 @@ public class TilePump extends TileMiner {
     private final Deque<BlockPos> queue = new ArrayDeque<>();
     private boolean isInfiniteWaterSource;
     private final SafeTimeTracker rebuildDelay = new SafeTimeTracker(30);
+    private static final int QUEUE_SCAN_BUDGET = 512;
+    private final Deque<BlockPos> scanFrontier = new ArrayDeque<>();
+    private final Set<BlockPos> scanChecked = new HashSet<>();
+    private Fluid scanFluid = Fluids.EMPTY;
+    private Direction[] scanDirections = SEARCH_NORMAL;
+    private boolean scanForInfiniteWater;
+    private int scanMaxLengthSquared;
+    private boolean scanInProgress;
 
     /** The position just below the bottom of the pump tube. */
     private BlockPos targetPos;
@@ -118,125 +126,96 @@ public class TilePump extends TileMiner {
         return new MjRedstoneBatteryReceiver(battery);
     }
 
-    private void buildQueue() {
+    private void beginQueueBuild() {
         queue.clear();
         paths.clear();
+        scanFrontier.clear();
+        scanChecked.clear();
         oilSpringPos = null;
-        Fluid queueFluid = Fluids.EMPTY;
+        fluidConnection = null;
+        scanFluid = Fluids.EMPTY;
         isInfiniteWaterSource = false;
-        Set<BlockPos> checked = new HashSet<>();
-        List<BlockPos> nextPosesToCheck = new ArrayList<>();
+        scanInProgress = true;
+
         for (targetPos = worldPosition.below(); !level.isOutsideBuildHeight(targetPos); targetPos = targetPos.below()) {
-            if (worldPosition.getY() - targetPos.getY() > BCCoreConfig.miningMaxDepth) {
-                break;
-            }
-            Fluid t = BlockUtil.getFluidWithFlowing(level, targetPos);//TODO check
-            if (t != Fluids.EMPTY) {
-                queueFluid = t;
-                nextPosesToCheck.add(targetPos);
+            if (worldPosition.getY() - targetPos.getY() > BCCoreConfig.miningMaxDepth) break;
+            Fluid fluid = BlockUtil.getFluidWithFlowing(level, targetPos);
+            if (fluid != Fluids.EMPTY) {
+                scanFluid = fluid;
+                scanFrontier.add(targetPos);
+                scanChecked.add(targetPos);
                 paths.put(targetPos, new FluidPath(targetPos, null));
-                checked.add(targetPos);
-                if (BlockUtil.getFluid(level, targetPos) != Fluids.EMPTY) {
-                    queue.add(targetPos);
-                }
+                if (BlockUtil.getFluid(level, targetPos) != Fluids.EMPTY) queue.add(targetPos);
                 fluidConnection = targetPos;
                 break;
             }
-            if (!level.getBlockState(targetPos).isAir() && level.getBlockState(targetPos).getBlock() != BCFactoryBlocks.TUBE_BLOCK.get()) {
-                break;
-            }
+            BlockState state = level.getBlockState(targetPos);
+            if (!state.isAir() && state.getBlock() != BCFactoryBlocks.TUBE_BLOCK.get()) break;
         }
-        if (nextPosesToCheck.isEmpty() || queueFluid == Fluids.EMPTY) {
+        if (scanFrontier.isEmpty() || scanFluid == Fluids.EMPTY) {
+            finishQueueBuild();
             return;
         }
-
-//        Stopwatch watch = Stopwatch.createStarted();
-        buildQueue0(queueFluid, nextPosesToCheck, checked);
-//        watch.stop();
+        scanDirections = scanFluid.getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
+        scanForInfiniteWater = !BCCoreConfig.pumpsConsumeWater && FluidUtilBC.areFluidsEqual(scanFluid, Fluids.WATER);
+        scanMaxLengthSquared = BCCoreConfig.pumpMaxDistance * BCCoreConfig.pumpMaxDistance;
     }
 
-    private void buildQueue0(Fluid queueFluid, List<BlockPos> nextPosesToCheck, Set<BlockPos> checked) {
-        Direction[] directions = queueFluid.getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
-        boolean isWater
-            = !BCCoreConfig.pumpsConsumeWater && FluidUtilBC.areFluidsEqual(queueFluid, Fluids.WATER);
-        final int maxLengthSquared = BCCoreConfig.pumpMaxDistance * BCCoreConfig.pumpMaxDistance;
-        List<BlockPos> nextPosesToCheckCopy = new ArrayList<>();
-        outer: while (!nextPosesToCheck.isEmpty()) {
-        	nextPosesToCheckCopy.clear();
-            nextPosesToCheckCopy.addAll(nextPosesToCheck);
-            nextPosesToCheck.clear();
-            for (BlockPos posToCheck : nextPosesToCheckCopy) {
-                int count = 0;
-                for (Direction side : directions) {
-                    BlockPos offsetPos = posToCheck.offset(side.getNormal());
-                    if (offsetPos.distSqr(targetPos) > maxLengthSquared) {
-                        continue;
-                    }
-                    boolean isNew = checked.add(offsetPos);
-                    if (isNew) {
-                    	FluidState fluidsAt = level.getFluidState(offsetPos);
-                        boolean eq = fluidsAt.getFluidType() == queueFluid.getFluidType();
-                        if (eq) {
-                            FluidPath oldPath = paths.get(posToCheck);
-                            FluidPath path = new FluidPath(offsetPos, oldPath);
-                            paths.put(offsetPos, path);
-                            if (fluidsAt.isSource()) {
-                                queue.add(offsetPos);
-                                count++;
-                            }
-                            nextPosesToCheck.add(offsetPos);
-                            
-                        }
-                    }/* else {
-                        // We've already tested this block: it *must* be a valid water source
-                        count++;
-                    }*/
+    /** Processes a bounded part of the fluid graph so an ocean cannot monopolise one server tick. */
+    private void continueQueueBuild() {
+        int budget = QUEUE_SCAN_BUDGET;
+        while (budget-- > 0 && !scanFrontier.isEmpty() && !isInfiniteWaterSource) {
+            BlockPos posToCheck = scanFrontier.removeFirst();
+            int adjacentSources = 0;
+            for (Direction side : scanDirections) {
+                BlockPos offsetPos = posToCheck.relative(side);
+                if (offsetPos.distSqr(targetPos) > scanMaxLengthSquared || !scanChecked.add(offsetPos)) continue;
+                FluidState fluidState = level.getFluidState(offsetPos);
+                if (fluidState.getFluidType() != scanFluid.getFluidType()) continue;
+                paths.put(offsetPos, new FluidPath(offsetPos, paths.get(posToCheck)));
+                if (fluidState.isSource()) {
+                    queue.add(offsetPos);
+                    adjacentSources++;
                 }
-                if (isWater) {
-                    if (count >= 2) {
-                        BlockState below = level.getBlockState(posToCheck.below());
-                        // Same check as in BlockDynamicLiquid.updateTick:
-                        // if that method changes how it checks for adjacent
-                        // water sources then this also needs updating
-                        Fluid fluidBelow = BlockUtil.getFluidWithoutFlowing(below);
-                        if (
-                            FluidUtilBC.areFluidsEqual(fluidBelow, Fluids.WATER) || below.getMaterial().isSolid()
-                        ) {
-                            isInfiniteWaterSource = true;
-                            break outer;
-                        }
-                    }
+                scanFrontier.addLast(offsetPos);
+            }
+            if (scanForInfiniteWater && adjacentSources >= 2) {
+                BlockState below = level.getBlockState(posToCheck.below());
+                Fluid fluidBelow = BlockUtil.getFluidWithoutFlowing(below);
+                if (FluidUtilBC.areFluidsEqual(fluidBelow, Fluids.WATER) || below.getMaterial().isSolid()) {
+                    isInfiniteWaterSource = true;
                 }
             }
         }
-        if (isOil(queueFluid)) {
+        if (scanFrontier.isEmpty() || isInfiniteWaterSource) finishQueueBuild();
+    }
+
+    private void finishQueueBuild() {
+        if (isOil(scanFluid)) {
             List<BlockPos> springPositions = new ArrayList<>();
             int minY = level.getMinBuildHeight();
             int maxSpringY = Math.min(minY + 16, level.getMaxBuildHeight() - 1);
             BlockPos center = new BlockPos(getBlockPos().getX(), minY, getBlockPos().getZ());
-            for (BlockPos spring : BlockPos.betweenClosed(
-                center.offset(-10, 0, -10),
-                center.offset(10, maxSpringY - minY, 10)
-            )) {
-                if (level.getBlockState(spring).getBlock() == BCCoreBlocks.SPRING.get()) {
-                    BlockEntity tile = level.getBlockEntity(spring);
-                    if (tile instanceof ITileOilSpring) {
-                        springPositions.add(spring.immutable());
-                    }
+            for (BlockPos spring : BlockPos.betweenClosed(center.offset(-10, 0, -10),
+                    center.offset(10, maxSpringY - minY, 10))) {
+                if (level.getBlockState(spring).getBlock() == BCCoreBlocks.SPRING.get()
+                        && level.getBlockEntity(spring) instanceof ITileOilSpring) {
+                    springPositions.add(spring.immutable());
                 }
             }
-            switch (springPositions.size()) {
-                case 0:
-                    break;
-                case 1:
-                    oilSpringPos = springPositions.get(0);
-                    break;
-                default:
-                    springPositions.sort(Comparator.comparingDouble(worldPosition::distSqr));
-                    oilSpringPos = springPositions.get(0);
-            }
-
+            springPositions.stream().min(Comparator.comparingDouble(worldPosition::distSqr))
+                .ifPresent(pos -> oilSpringPos = pos);
         }
+        scanInProgress = false;
+        queueBuilt = true;
+        nextPos();
+    }
+
+    private void scheduleQueueRebuild() {
+        queueBuilt = false;
+        scanInProgress = false;
+        scanFrontier.clear();
+        scanChecked.clear();
     }
 
     private static boolean isOil(Fluid queueFluid) {
@@ -276,16 +255,16 @@ public class TilePump extends TileMiner {
 
     @Override
     public void update() {
-        if (!queueBuilt && !level.isClientSide) {
-            buildQueue();
-            queueBuilt = true;
+        if (!level.isClientSide && !queueBuilt) {
+            if (!scanInProgress) beginQueueBuild();
+            if (scanInProgress) continueQueueBuild();
+            if (!queueBuilt) {
+                FluidUtilBC.pushFluidAround(level, worldPosition, tank);
+                return;
+            }
         }
-
         super.update();
-
-        if (!level.isClientSide) {
-            FluidUtilBC.pushFluidAround(level, worldPosition, tank);
-        }
+        if (!level.isClientSide) FluidUtilBC.pushFluidAround(level, worldPosition, tank);
     }
 
     @Override
@@ -375,8 +354,7 @@ public class TilePump extends TileMiner {
                 }
             }
         }
-        buildQueue();
-        nextPos();
+        scheduleQueueRebuild();
     }
     
     public Fluid getFluidInTank() {
@@ -463,10 +441,8 @@ public class TilePump extends TileMiner {
 
 	@Override
 	public void neighbourBlockChanged(BlockState state, BlockPos neighbor, boolean harvest) {
-		if(harvest) {
-	        buildQueue();
-	        nextPos();
-	        BCLog.logger.debug("a");
+		if (harvest) {
+            scheduleQueueRebuild();
 		}
 		super.neighbourBlockChanged(state, neighbor, harvest);
 	}

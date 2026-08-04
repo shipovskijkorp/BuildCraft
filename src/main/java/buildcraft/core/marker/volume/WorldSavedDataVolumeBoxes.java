@@ -7,7 +7,9 @@
 package buildcraft.core.marker.volume;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -34,6 +36,9 @@ public class WorldSavedDataVolumeBoxes extends SavedData {
     private static Level currentLevel;
     public final Level world = currentLevel;
     public final List<VolumeBox> volumeBoxes = new ArrayList<>();
+    private final Map<UUID, CompoundTag> lastSyncedState = new HashMap<>();
+    private long lastFullSyncTick = Long.MIN_VALUE;
+    private int lastPlayerCount = -1;
     
     public final String mapName;
 
@@ -105,7 +110,37 @@ public class WorldSavedDataVolumeBoxes extends SavedData {
     @Override
     public void setDirty() {
         super.setDirty();
-        MessageManager.sendToDimension(new MessageVolumeBoxes(volumeBoxes), world.dimension());
+        if (!(world instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        Map<UUID, CompoundTag> currentState = new HashMap<>();
+        List<VolumeBox> changed = new ArrayList<>();
+        for (VolumeBox volumeBox : volumeBoxes) {
+            CompoundTag state = volumeBox.writeToNBT();
+            currentState.put(volumeBox.id, state.copy());
+            if (!state.equals(lastSyncedState.get(volumeBox.id))) {
+                changed.add(volumeBox);
+            }
+        }
+        List<UUID> removed = lastSyncedState.keySet().stream()
+            .filter(id -> !currentState.containsKey(id))
+            .collect(Collectors.toList());
+
+        long now = serverLevel.getGameTime();
+        int playerCount = serverLevel.players().size();
+        boolean fullSync = lastSyncedState.isEmpty() || playerCount != lastPlayerCount
+            || lastFullSyncTick == Long.MIN_VALUE || now - lastFullSyncTick >= 100;
+        if (fullSync) {
+            MessageManager.sendToDimension(new MessageVolumeBoxes(volumeBoxes), world.dimension());
+            lastFullSyncTick = now;
+        } else if (!changed.isEmpty() || !removed.isEmpty()) {
+            MessageManager.sendToDimension(MessageVolumeBoxes.delta(changed, removed), world.dimension());
+        }
+
+        lastSyncedState.clear();
+        lastSyncedState.putAll(currentState);
+        lastPlayerCount = playerCount;
     }
 
     @Override

@@ -364,6 +364,43 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
+    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
+    public static void powerDistributionAbovePipeLimitDoesNotDivideByZero(GameTestHelper helper) {
+        long maxPower = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower).transferPerTick;
+        FakeReceiver up = new FakeReceiver(maxPower);
+        FakeReceiver south = new FakeReceiver(maxPower);
+        FakeReceiver east = new FakeReceiver(maxPower);
+        TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.woodPower)
+            .connect(Direction.WEST, ConnectedType.TILE)
+            .connect(Direction.UP, ConnectedType.TILE)
+            .connect(Direction.SOUTH, ConnectedType.TILE)
+            .connect(Direction.EAST, ConnectedType.TILE)
+            .exposeCapability(Direction.UP, MjAPI.CAP_RECEIVER, up)
+            .exposeCapability(Direction.SOUTH, MjAPI.CAP_RECEIVER, south)
+            .exposeCapability(Direction.EAST, MjAPI.CAP_RECEIVER, east);
+        PipeFlowPower flow = new PipeFlowPower(pipe);
+        pipe.setFlow(flow);
+        flow.reconfigure();
+
+        helper.runAfterDelay(1, flow::onTick);
+        helper.runAfterDelay(2, () -> {
+            flow.onTick();
+            long leftover = flow.getSection(Direction.WEST).receivePower(maxPower, FluidAction.EXECUTE);
+            require(helper, leftover == 0, "power pipe rejected power despite three downstream requests");
+        });
+        helper.runAfterDelay(3, () -> {
+            flow.onTick();
+            long accepted = up.accepted + south.accepted + east.accepted;
+            require(helper, accepted == maxPower,
+                "oversubscribed power distribution transferred " + accepted + " of " + maxPower + " microjoules");
+            require(helper, up.accepted > 0 && south.accepted > 0 && east.accepted > 0,
+                "oversubscribed power distribution starved one of the requested outputs");
+            require(helper, flow.getSection(Direction.WEST).internalPower == 0,
+                "input section retained power after oversubscribed distribution");
+            helper.succeed();
+        });
+    }
+
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 40)
     public static void powerTraversesNonReceiverPipeAndReachesSink(GameTestHelper helper) {
         long requested = 8 * MjAPI.MJ;

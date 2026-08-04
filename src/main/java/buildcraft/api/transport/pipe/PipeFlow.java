@@ -77,6 +77,11 @@ public abstract class PipeFlow implements ICapabilityProvider {
 
     public void onTick() {}
 
+    /** Whether this flow has transient state that should be persisted periodically while active. */
+    public boolean requiresPeriodicSave() {
+        return false;
+    }
+
     public void addDrops(NonNullList<ItemStack> toDrop, int fortune) {}
 
     public boolean onFlowActivate(Player player, BlockHitResult trace, Level level,
