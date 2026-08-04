@@ -52,9 +52,11 @@ jobs:
       - name: Set up Gradle cache
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Make Gradle wrapper executable
+      - name: Make scripts executable
         shell: bash
-        run: chmod +x gradlew
+        run: |
+          chmod +x gradlew
+          chmod +x scripts/ci-server-smoke.sh
 
       - name: Build and run JUnit tests
         shell: bash
@@ -72,17 +74,18 @@ jobs:
             echo "No GameTest classes detected; skipping GameTest server."
           fi
 
-      - name: Smoke-test dedicated server startup
+      - name: Smoke-test base dedicated server startup
         shell: bash
         env:
           SERVER_STARTUP_TIMEOUT: '360'
+          SERVER_RUNTIME_PROFILE: base
         run: bash scripts/ci-server-smoke.sh
 
       - name: Upload build products and diagnostic logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: buildcraft-ci-${{ github.run_number }}-${{ github.run_attempt }}
+          name: buildcraft-base-ci-${{ github.run_number }}-${{ github.run_attempt }}
           if-no-files-found: ignore
           retention-days: 7
           path: |
@@ -91,4 +94,127 @@ jobs:
             build/test-results/**
             run/logs/**
             run/crash-reports/**
-            ci-server.log
+            ci-server-*.log
+
+  compatibility-server:
+    name: Optional server compatibility (${{ matrix.profile }})
+    needs: build-test-server
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - forestry
+          - ic2
+
+    env:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
+
+    steps:
+      - name: Check out tested revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: false
+
+      - name: Detect compatibility profile support
+        id: support
+        shell: bash
+        env:
+          PROFILE: ${{ matrix.profile }}
+        run: |
+          set -euo pipefail
+
+          supported=false
+          if [[ -f build.gradle && -f scripts/ci-server-smoke.sh ]] \
+            && grep -q "ci_runtime_profile" build.gradle \
+            && grep -q "SERVER_RUNTIME_PROFILE" scripts/ci-server-smoke.sh; then
+            case "$PROFILE" in
+              forestry)
+                grep -q "forestryDependency" build.gradle && supported=true
+                ;;
+              ic2)
+                grep -q "ic2ClassicDependency" build.gradle && supported=true
+                ;;
+            esac
+          fi
+
+          echo "supported=$supported" >> "$GITHUB_OUTPUT"
+          if [[ "$supported" != true ]]; then
+            echo "Compatibility profile '$PROFILE' is not configured in this branch; skipping."
+          fi
+
+      - name: Detect required Java version
+        if: steps.support.outputs.supported == 'true'
+        id: java
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if grep -Eq 'JavaLanguageVersion\.of\(21\)|VERSION_21' build.gradle 2>/dev/null; then
+            version=21
+          elif grep -Eq 'VERSION_1_8|sourceCompatibility[[:space:]]*=[[:space:]].*1[._]8|targetCompatibility[[:space:]]*=[[:space:]].*1[._]8' build.gradle 2>/dev/null; then
+            version=8
+          else
+            version=17
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Using Java $version"
+
+      - name: Set up Java
+        if: steps.support.outputs.supported == 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.java.outputs.version }}
+
+      - name: Set up Gradle cache
+        if: steps.support.outputs.supported == 'true'
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make scripts executable
+        if: steps.support.outputs.supported == 'true'
+        shell: bash
+        run: |
+          chmod +x gradlew
+          chmod +x scripts/ci-server-smoke.sh
+
+      - name: Smoke-test compatibility server
+        if: steps.support.outputs.supported == 'true'
+        id: smoke
+        continue-on-error: true
+        shell: bash
+        env:
+          SERVER_STARTUP_TIMEOUT: '360'
+          SERVER_RUNTIME_PROFILE: ${{ matrix.profile }}
+        run: bash scripts/ci-server-smoke.sh
+
+      - name: Report compatibility result
+        if: steps.support.outputs.supported == 'true' && always()
+        shell: bash
+        env:
+          PROFILE: ${{ matrix.profile }}
+          OUTCOME: ${{ steps.smoke.outcome }}
+        run: |
+          if [[ "$OUTCOME" == success ]]; then
+            echo "### $PROFILE compatibility: passed" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning title=$PROFILE compatibility failed::The optional $PROFILE server stack did not reach the ready state. The required base BuildCraft server check is unaffected."
+            echo "### $PROFILE compatibility: failed (advisory)" >> "$GITHUB_STEP_SUMMARY"
+            echo "See the uploaded logs for the external-mod failure." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload compatibility diagnostic logs
+        if: steps.support.outputs.supported == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildcraft-compat-${{ matrix.profile }}-${{ github.run_number }}-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            run/logs/**
+            run/crash-reports/**
+            ci-server-${{ matrix.profile }}.log
