@@ -7,6 +7,7 @@ package buildcraft.lib;
 import buildcraft.api.BCModules;
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.block.VanillaRotationHandlers;
+import buildcraft.lib.chunkload.ChunkLoaderManager;
 import buildcraft.lib.expression.ExpressionDebugManager;
 import buildcraft.lib.list.VanillaListHandlers;
 import buildcraft.lib.marker.MarkerCache;
@@ -86,6 +87,7 @@ public class BCLib {
     }
 
     public void init(final FMLCommonSetupEvent event) {
+        event.enqueueWork(ChunkLoaderManager::init);
     	BCLibRegistries.fmlInit();
     	BCLibProxy.MessageRegistry();
         VanillaListHandlers.fmlInit();

@@ -8,6 +8,7 @@ package buildcraft.core;
 
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.BCLibConfig.ChunkLoaderLevel;
+import buildcraft.lib.BCLibConfig.ChunkLoaderType;
 import buildcraft.lib.BCLibConfig.RenderRotation;
 import buildcraft.lib.BCLibConfig.TimeGap;
 import net.minecraft.util.Mth;
@@ -56,6 +57,7 @@ public class BCCoreConfig {
 
     private static EnumValue<TimeGap> propDisplayTimeGap;
     private static EnumValue<ChunkLoaderLevel> propChunkLoadLevel;
+    private static EnumValue<ChunkLoaderType> propChunkLoadType;
     private static EnumValue<RenderRotation> propItemRenderRotation;
     private static DoubleValue propMiningMultiplier;
 
@@ -107,8 +109,14 @@ public class BCCoreConfig {
         propMinePlayerProtected = builder.comment("Should BuildCraft miners be allowed to break blocks using player-specific protection?")
             .define("miningBreaksPlayerProtectedBlocks", false);
 
-        propChunkLoadLevel = builder.comment("").worldRestart()
-            .defineEnum("chunkLoadLevel", ChunkLoaderLevel.SELF_TILES, ChunkLoaderLevel.values());
+        propChunkLoadType = builder.comment(
+            "Controls whether BuildCraft machines may keep chunks loaded.",
+            "AUTO enables chunk loading in singleplayer/LAN and disables it on dedicated servers."
+        ).worldRestart().defineEnum("chunkLoading", ChunkLoaderType.AUTO, ChunkLoaderType.values());
+
+        propChunkLoadLevel = builder.comment(
+            "Selects which BuildCraft chunk-loading tiles are allowed to request tickets."
+        ).worldRestart().defineEnum("chunkLoadLevel", ChunkLoaderLevel.SELF_TILES, ChunkLoaderLevel.values());
 
         propItemLifespan = builder.comment("How long, in seconds, should items stay on the ground? (Vanilla = 300, default = 60)")
             .defineInRange("itemLifespan", 60, 5, 600);
@@ -186,6 +194,7 @@ public class BCCoreConfig {
         BCLibConfig.enableAnimatedSprites = propEnableAnimatedSprites.get();
         miningMultiplier = Mth.clamp(propMiningMultiplier.get(), 1, 200);
         miningMaxDepth = propMiningMaxDepth.get();
+        BCLibConfig.chunkLoadingType = propChunkLoadType.get();
         BCLibConfig.chunkLoadingLevel = propChunkLoadLevel.get();
         BCLibConfig.useSwappableSprites = propUseSwappableSprites.get();
 

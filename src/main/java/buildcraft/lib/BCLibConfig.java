@@ -148,7 +148,7 @@ public class BCLibConfig {
         ON,
 
         /** Automatic chunkloading is ENABLED when using the integrated server (singleplayer + LAN), and DISABLED when
-         * using a dedicated server. Currently NOT implemented */
+         * using a dedicated server. */
         AUTO,
 
         /** Automatic chunkloading is DISABLED. Even for strict tiles (like the quarry) */

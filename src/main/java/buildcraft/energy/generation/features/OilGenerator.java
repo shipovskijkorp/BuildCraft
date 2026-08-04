@@ -32,7 +32,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.dimension.DimensionType;
 
 public class OilGenerator {
     /** Random number, used to differentiate generators */
@@ -67,20 +66,19 @@ public class OilGenerator {
     }
     
     public static List<OilStructure> getStructures(WorldGenLevel world, int cx, int cz) {
-    	if(level != world) {
-			structureCache.invalidateAll();
-    		level = world;
-        	Random rand = new Random(world.getSeed());
+        if (level != world) {
+            structureCache.invalidateAll();
+            level = world;
+            Random rand = new Random(world.getSeed());
             int OFFSET_RANGE = 500000;
-        	OilGenerator.xOffset = rand.nextInt(OFFSET_RANGE) - (OFFSET_RANGE / 2);
-        	OilGenerator.zOffset = rand.nextInt(OFFSET_RANGE) - (OFFSET_RANGE / 2);
-        	ServerLevel serverLevel = world.getLevel();
-        	DimensionType dimensionType = serverLevel.dimensionType();
-        	worldHeight = dimensionType.height();
-        	seaLevel = serverLevel.getSeaLevel();  
-        	bottomY = dimensionType.minY();
-    	}
-    	return structureCache.getUnchecked((((long)(cz))<<32)|(cx&0xFFFFFFFFL));
+            OilGenerator.xOffset = rand.nextInt(OFFSET_RANGE) - (OFFSET_RANGE / 2);
+            OilGenerator.zOffset = rand.nextInt(OFFSET_RANGE) - (OFFSET_RANGE / 2);
+            ServerLevel serverLevel = world.getLevel();
+            worldHeight = serverLevel.getHeight();
+            seaLevel = serverLevel.getSeaLevel();
+            bottomY = serverLevel.getMinBuildHeight();
+        }
+        return structureCache.getUnchecked((((long) (cz)) << 32) | (cx & 0xFFFFFFFFL));
     }
 
     public static void clearCache() {

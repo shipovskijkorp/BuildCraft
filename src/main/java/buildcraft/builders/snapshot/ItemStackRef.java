@@ -6,7 +6,6 @@
 
 package buildcraft.builders.snapshot;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +13,9 @@ import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemStackRef {
@@ -22,39 +23,45 @@ public class ItemStackRef {
     private final NbtRef<IntTag> amount;
     private final NbtRef<CompoundTag> tagCompound;
 
-    public ItemStackRef(NbtRef<StringTag> item,
-                        NbtRef<IntTag> amount,
-                        //NbtRef<IntTag> meta,
-                        NbtRef<CompoundTag> tagCompound) {
+    public ItemStackRef(NbtRef<StringTag> item, NbtRef<IntTag> amount, NbtRef<CompoundTag> tagCompound) {
         this.item = item;
         this.amount = amount;
-        //this.meta = meta;
         this.tagCompound = tagCompound;
     }
 
     public ItemStack get(Tag nbt) {
-        ItemStack itemStack = new ItemStack(
-            Objects.requireNonNull(
-            		
-            		ForgeRegistries.ITEMS.getValue(new ResourceLocation(//TODO Check!
-                    item
-                        .get(nbt)
-                        .orElseThrow(NullPointerException::new)
-                        .getAsString()
-                ))
-            ),
-            Optional.ofNullable(amount)
-                .flatMap(ref -> ref.get(nbt))
-                .map(IntTag::getAsInt)
-                .orElse(1)/*,
-            Optional.ofNullable(meta)
-                .flatMap(ref -> ref.get(nbt))
-                .map(IntTag::getAsInt)
-                .orElse(0)*/
-        );
+        String id = item.get(nbt)
+            .map(StringTag::getAsString)
+            .orElseThrow(() -> new IllegalArgumentException("Missing item registry ID for " + item));
+        ResourceLocation key = parseRegistryId("item", id);
+        if (!ForgeRegistries.ITEMS.containsKey(key)) {
+            throw new IllegalArgumentException("Unknown item registry ID '" + key + "'");
+        }
+        Item value = ForgeRegistries.ITEMS.getValue(key);
+        if (value == null) {
+            throw new IllegalArgumentException("Registry returned no item for ID '" + key + "'");
+        }
+        int resolvedAmount = Optional.ofNullable(amount)
+            .flatMap(ref -> ref.get(nbt))
+            .map(IntTag::getAsInt)
+            .orElse(1);
+        if (resolvedAmount < 0) {
+            throw new IllegalArgumentException("Negative item amount " + resolvedAmount + " for registry ID '" + key + "'");
+        }
+
+        ItemStack itemStack = new ItemStack(value, resolvedAmount);
         Optional.ofNullable(tagCompound)
             .flatMap(ref -> ref.get(nbt))
+            .map(CompoundTag::copy)
             .ifPresent(itemStack::setTag);
         return itemStack;
+    }
+
+    private static ResourceLocation parseRegistryId(String type, String id) {
+        try {
+            return new ResourceLocation(id);
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("Invalid " + type + " registry ID '" + id + "'", e);
+        }
     }
 }

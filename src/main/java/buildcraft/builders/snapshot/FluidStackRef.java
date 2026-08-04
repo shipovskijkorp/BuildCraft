@@ -6,13 +6,14 @@
 
 package buildcraft.builders.snapshot;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,19 +28,32 @@ public class FluidStackRef {
     }
 
     public FluidStack get(Tag nbt) {
-        return new FluidStack(
-            Objects.requireNonNull(
-                ForgeRegistries.FLUIDS.getValue(new ResourceLocation(//TODO check!
-                    fluid
-                        .get(nbt)
-                        .orElseThrow(NullPointerException::new)
-                        .getAsString()
-                ))
-            ),
-            Optional.ofNullable(amount)
-                .flatMap(ref -> ref.get(nbt))
-                .map(IntTag::getAsInt)
-                .orElse(FluidType.BUCKET_VOLUME)
-        );
+        String id = fluid.get(nbt)
+            .map(StringTag::getAsString)
+            .orElseThrow(() -> new IllegalArgumentException("Missing fluid registry ID for " + fluid));
+        ResourceLocation key = parseRegistryId("fluid", id);
+        if (!ForgeRegistries.FLUIDS.containsKey(key)) {
+            throw new IllegalArgumentException("Unknown fluid registry ID '" + key + "'");
+        }
+        Fluid value = ForgeRegistries.FLUIDS.getValue(key);
+        if (value == null) {
+            throw new IllegalArgumentException("Registry returned no fluid for ID '" + key + "'");
+        }
+        int resolvedAmount = Optional.ofNullable(amount)
+            .flatMap(ref -> ref.get(nbt))
+            .map(IntTag::getAsInt)
+            .orElse(FluidType.BUCKET_VOLUME);
+        if (resolvedAmount < 0) {
+            throw new IllegalArgumentException("Negative fluid amount " + resolvedAmount + " for registry ID '" + key + "'");
+        }
+        return new FluidStack(value, resolvedAmount);
+    }
+
+    private static ResourceLocation parseRegistryId(String type, String id) {
+        try {
+            return new ResourceLocation(id);
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("Invalid " + type + " registry ID '" + id + "'", e);
+        }
     }
 }

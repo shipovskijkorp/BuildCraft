@@ -177,8 +177,12 @@ public abstract class OilStructure {
 
         public static PatternTerrainHeight create(BlockPos.MutableBlockPos start, ReplaceType replaceType, boolean[][] pattern,
             int depth) {
-            BlockPos min = start.setY(1).immutable();
-            BlockPos max = start.move(pattern.length - 1, 255, pattern.length == 0 ? 0 : pattern[0].length - 1).immutable();
+            int minY = OilGenerator.bottomY;
+            int maxY = minY + OilGenerator.worldHeight - 1;
+            int maxX = start.getX() + Math.max(0, pattern.length - 1);
+            int maxZ = start.getZ() + (pattern.length == 0 ? 0 : Math.max(0, pattern[0].length - 1));
+            BlockPos min = new BlockPos(start.getX(), minY, start.getZ());
+            BlockPos max = new BlockPos(maxX, maxY, maxZ);
             Box box = new Box(min, max);
             return new PatternTerrainHeight(box, replaceType, pattern, depth);
         }
@@ -238,8 +242,9 @@ public abstract class OilStructure {
         }
 
         private static Box createBox(BlockPos start) {
-            // Only a block 1 x level.getHeight()(default 384) x 1 -- that way we area only called once.
-            return new Box(start, VecUtil.replaceValue(start, Axis.Y, OilGenerator.worldHeight));
+            // One column from the underground deposit to the world's actual top build coordinate.
+            int maxY = OilGenerator.bottomY + OilGenerator.worldHeight - 1;
+            return new Box(start, VecUtil.replaceValue(start, Axis.Y, maxY));
         }
 
         @Override

@@ -50,6 +50,7 @@ import buildcraft.core.marker.VolumeCache;
 import buildcraft.core.marker.VolumeConnection;
 import buildcraft.core.marker.VolumeSubCache;
 import buildcraft.lib.block.BlockBCBase_Neptune;
+import buildcraft.lib.chunkload.ChunkLoaderManager;
 import buildcraft.lib.chunkload.IChunkLoadingTile;
 import buildcraft.lib.inventory.AutomaticProvidingTransactor;
 import buildcraft.lib.misc.AdvancementUtil;
@@ -128,6 +129,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     public Vec3 clientDrillPos;
     public Vec3 prevClientDrillPos;
     private long debugPowerRate = 0;
+    private boolean chunkLoadingDirty = true;
     private double blockPercentSoFar;
     private double moveDistanceSoFar;
     /** Rotating index for fast frame-edge rescans, so broken frames are repaired quickly. */
@@ -498,6 +500,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     public void onLoad() {
         if (!level.isClientSide) {
             updatePoses();
+            chunkLoadingDirty = true;
         }
     }
 
@@ -508,6 +511,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
     @Override
     public void onRemove(boolean dropSelf) {
+        if (level instanceof ServerLevel) {
+            ChunkLoaderManager.releaseChunksFor(this);
+        }
         clearQuarryCollisionBlocks();
         super.onRemove(dropSelf);
     }
@@ -515,11 +521,6 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     @Override
     public void setRemoved() {
         super.setRemoved();
-//        BCBuildersEventDist.INSTANCE.invalidateQuarry(this);
-/*        if (!level.isClientSide) {
-            level.removeEventListener(worldEventListener);
-            ChunkLoaderManager.releaseChunksFor(this);
-        }*/
     }
 
     @Nullable
@@ -574,8 +575,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 toCheck.clear();
                 sendNetworkUpdate(NET_RENDER_DATA);
             }
-//            ChunkLoaderManager.loadChunksForTile(this);
         }
+        chunkLoadingDirty = true;
     }
 
     @Override
@@ -595,6 +596,15 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 currentTask.clientTick();
             }
             return;
+        }
+
+        if (chunkLoadingDirty) {
+            chunkLoadingDirty = false;
+            if (frameBox.isInitialized() && miningBox.isInitialized()) {
+                ChunkLoaderManager.loadChunksForTile(this);
+            } else {
+                ChunkLoaderManager.releaseChunksFor(this);
+            }
         }
 
         if (!frameBox.isInitialized() || !miningBox.isInitialized()) {
