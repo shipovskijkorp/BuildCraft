@@ -42,10 +42,29 @@ def patchouliModrinthVersion = providers.gradleProperty('patchouli_modrinth_vers
 def enableIc2Runtime = providers.gradleProperty('enable_ic2_runtime')
         .map { it.toBoolean() }
         .getOrElse(false)
+// CI can launch a minimal server or one selected compatibility stack without
+// changing the normal development runtime. Supported values are:
+// default, base, forestry, ic2, jei, jade and all.
+def ciRuntimeProfile = providers.gradleProperty('ci_runtime_profile')
+        .map { it.trim().toLowerCase() }
+        .getOrElse('default')
+def knownCiRuntimeProfiles = ['default', 'base', 'forestry', 'ic2', 'jei', 'jade', 'all']
+if (!knownCiRuntimeProfiles.contains(ciRuntimeProfile)) {
+    throw new GradleException("Unsupported ci_runtime_profile '${ciRuntimeProfile}'. Expected one of: ${knownCiRuntimeProfiles.sort().join(', ')}")
+}
 // Keep optional compatibility mods out of the dedicated GameTest server.
 // Several of them assume a normal client/server lifecycle during construction.
 def gameTestRequested = gradle.startParameter.taskNames.any {
     it.toLowerCase().contains('gametest')
+}
+def runtimeEnabled = { String profile, boolean defaultEnabled ->
+    if (gameTestRequested) {
+        return false
+    }
+    if (ciRuntimeProfile == 'default') {
+        return defaultEnabled
+    }
+    return ciRuntimeProfile == 'all' || ciRuntimeProfile == profile
 }
 def jadeDependency = "maven.modrinth:nvQzSEkH:${jadeModrinthVersion}"
 def ic2ClassicDependency = "maven.modrinth:nIaMQHTd:${ic2ClassicModrinthVersion}"
@@ -226,13 +245,13 @@ dependencies {
     // JEI from Modrinth Maven. Modrinth does not publish a separate API artifact here,
     // so the full mod jar is used as compileOnly and runtimeOnly.
     compileOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
-    if (!gameTestRequested) {
+    if (runtimeEnabled('jei', true)) {
         runtimeOnly fg.deobf("maven.modrinth:u6dRKJwZ:qMHEoNl6")
     }
 
     // Jade API/full jar for optional Jade compatibility.
     compileOnly fg.deobf(jadeDependency)
-    if (!gameTestRequested) {
+    if (runtimeEnabled('jade', true)) {
         runtimeOnly fg.deobf(jadeDependency)
     }
 
@@ -241,23 +260,22 @@ dependencies {
     compileOnly fg.deobf(ic2ClassicDependency)
     compileOnly fg.deobf(carbonConfigDependency)
 
-    if (enableIc2Runtime && !gameTestRequested) {
+    if (runtimeEnabled('ic2', enableIc2Runtime)) {
         runtimeOnly fg.deobf(ic2ClassicDependency)
         runtimeOnly fg.deobf(carbonConfigDependency)
     }
 
     // Forestry Community Edition API for optional genome-aware list matching.
-    // Keep Forestry out of GameTest runtime together with its mandatory Patchouli
-    // dependency; both remain available in normal client/server development runs.
+    // Its mandatory Patchouli dependency is enabled as part of the same CI profile.
     compileOnly fg.deobf(forestryDependency)
-    if (!gameTestRequested) {
+    if (runtimeEnabled('forestry', true)) {
         runtimeOnly fg.deobf(forestryDependency)
     }
 
     // Patchouli API/full jar for guidebook integration. Modrinth does not publish
     // a separate API classifier, so the same jar is used for compilation and dev runtime.
     compileOnly fg.deobf(patchouliDependency)
-    if (!gameTestRequested) {
+    if (runtimeEnabled('forestry', true)) {
         runtimeOnly fg.deobf(patchouliDependency)
     }
 

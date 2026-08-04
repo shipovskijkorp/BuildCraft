@@ -2,7 +2,8 @@
 set -Eeuo pipefail
 
 startup_timeout="${SERVER_STARTUP_TIMEOUT:-360}"
-server_log="ci-server.log"
+runtime_profile="${SERVER_RUNTIME_PROFILE:-base}"
+server_log="${SERVER_LOG_FILE:-ci-server-${runtime_profile}.log}"
 latest_log="run/logs/latest.log"
 
 mkdir -p run
@@ -23,8 +24,9 @@ PROPERTIES
 # a stale fatal message cannot be mistaken for a failure of this runServer process.
 rm -f "$latest_log"
 
-echo "Starting dedicated server smoke test (timeout: ${startup_timeout}s)."
-setsid ./gradlew --no-daemon --console=plain --stacktrace runServer > "$server_log" 2>&1 &
+echo "Starting dedicated server smoke test (profile: ${runtime_profile}, timeout: ${startup_timeout}s)."
+setsid ./gradlew --no-daemon --console=plain --stacktrace \
+  -Pci_runtime_profile="${runtime_profile}" runServer > "$server_log" 2>&1 &
 server_pid=$!
 
 cleanup() {
@@ -45,7 +47,7 @@ cleanup() {
 trap cleanup EXIT
 
 show_log_tail() {
-  echo '--- ci-server.log (last 200 lines) ---'
+  echo "--- ${server_log} (last 200 lines) ---"
   tail -n 200 "$server_log" 2>/dev/null || true
 
   if [[ -f "$latest_log" ]]; then
