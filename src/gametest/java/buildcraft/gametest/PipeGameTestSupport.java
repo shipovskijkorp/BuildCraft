@@ -1,6 +1,7 @@
 package buildcraft.gametest;
 
 import java.util.EnumMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -77,16 +78,48 @@ public final class PipeGameTestSupport {
     public static final class TestPipe implements IPipe {
         private final TestHolder holder;
         private final Map<Direction, ConnectedType> connections = new EnumMap<>(Direction.class);
+        private final Map<Direction, IPipe> connectedPipes = new EnumMap<>(Direction.class);
+        private final Map<Direction, BlockEntity> connectedTiles = new EnumMap<>(Direction.class);
+        private PipeDefinition definition;
         private PipeBehaviour behaviour;
         private PipeFlow flow;
         private net.minecraft.world.item.DyeColor colour;
 
         public TestPipe(Level level) {
+            this(level, null);
+        }
+
+        public TestPipe(Level level, @Nullable PipeDefinition definition) {
+            this.definition = definition;
             this.holder = new TestHolder(level, this);
         }
 
         public TestPipe connect(Direction side, ConnectedType type) {
             connections.put(side, type);
+            return this;
+        }
+
+        public TestPipe connectPipe(Direction side, IPipe other) {
+            connections.put(side, ConnectedType.PIPE);
+            connectedPipes.put(side, other);
+            return this;
+        }
+
+        public TestPipe connectTile(Direction side, @Nullable BlockEntity tile) {
+            connections.put(side, ConnectedType.TILE);
+            if (tile != null) {
+                connectedTiles.put(side, tile);
+            }
+            return this;
+        }
+
+        public TestPipe setDefinition(@Nullable PipeDefinition definition) {
+            this.definition = definition;
+            return this;
+        }
+
+        public <T> TestPipe exposeCapability(Direction side, Capability<T> capability, T value) {
+            holder.exposeCapability(side, capability, value);
             return this;
         }
 
@@ -105,7 +138,7 @@ public final class PipeGameTestSupport {
 
         @Override
         public PipeDefinition getDefinition() {
-            return null;
+            return definition;
         }
 
         @Override
@@ -134,12 +167,12 @@ public final class PipeGameTestSupport {
 
         @Override
         public BlockEntity getConnectedTile(Direction side) {
-            return null;
+            return connectedTiles.get(side);
         }
 
         @Override
         public IPipe getConnectedPipe(Direction side) {
-            return Pipe.EMPTY;
+            return connectedPipes.getOrDefault(side, Pipe.EMPTY);
         }
 
         @Override
@@ -167,6 +200,7 @@ public final class PipeGameTestSupport {
 
         private final Level level;
         private final IPipe pipe;
+        private final Map<Direction, Map<Capability<?>, LazyOptional<?>>> capabilities = new EnumMap<>(Direction.class);
 
         private TestHolder(Level level, IPipe pipe) {
             this.level = level;
@@ -205,17 +239,28 @@ public final class PipeGameTestSupport {
 
         @Override
         public BlockEntity getNeighbourTile(Direction side) {
-            return null;
+            return pipe.getConnectedTile(side);
         }
 
         @Override
         public IPipe getNeighbourPipe(Direction side) {
-            return Pipe.EMPTY;
+            return pipe.getConnectedPipe(side);
+        }
+
+        private <T> void exposeCapability(Direction side, Capability<T> capability, T value) {
+            capabilities.computeIfAbsent(side, ignored -> new IdentityHashMap<>())
+                .put(capability, LazyOptional.of(() -> value));
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public <T> LazyOptional<T> getCapabilityFromPipe(Direction side, @Nonnull Capability<T> capability) {
-            return LazyOptional.empty();
+            Map<Capability<?>, LazyOptional<?>> byCapability = capabilities.get(side);
+            if (byCapability == null) {
+                return LazyOptional.empty();
+            }
+            LazyOptional<?> optional = byCapability.get(capability);
+            return optional == null ? LazyOptional.empty() : (LazyOptional<T>) optional;
         }
 
         @Override

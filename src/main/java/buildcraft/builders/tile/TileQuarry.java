@@ -14,10 +14,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -33,6 +33,7 @@ import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
+import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IAreaProvider;
 import buildcraft.api.mj.MjAPI;
@@ -117,8 +118,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     private BoxIterator boxIterator;
     public final List<BlockPos> framePoses = new ArrayList<>();
     private int frameBoxPosesCount = 0;
-    private final LinkedList<BlockPos> toCheck = new LinkedList<>();
-    private final Set<BlockPos> firstCheckedPoses = new HashSet<>();
+    private BoxIterator initialFrameScan;
+    private int initialFrameScannedCount;
     private boolean firstChecked = false;
     private final Set<BlockPos> frameBreakBlockPoses = new TreeSet<>(
         BlockUtil.uniqueBlockPosComparator(Comparator.comparingDouble(p -> getBlockPos().distSqr(p)))
@@ -130,13 +131,17 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     public Vec3 prevClientDrillPos;
     private long debugPowerRate = 0;
     private boolean chunkLoadingDirty = true;
+    private int chunkLoadingStartupDelay;
     private double blockPercentSoFar;
     private double moveDistanceSoFar;
     /** Rotating index for fast frame-edge rescans, so broken frames are repaired quickly. */
     private int frameEdgeScanIndex;
+    private long nextFrameWatchdogTick;
+    private final Map<BlockPos, Long> deniedBreakUntil = new HashMap<>();
 
     private List<AABB> collisionBoxes = ImmutableList.of();
     private Vec3 collisionDrillPos;
+    private Vec3 lastCollisionBlocksDrillPos;
     private final Set<BlockPos> collisionBlockPoses = new HashSet<>();
 
 	private final BlockPositionSource blockPosSource = new BlockPositionSource(this.worldPosition);
@@ -193,7 +198,22 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     public TileQuarry(BlockPos pos, BlockState state) {
     	super(BCBuildersBlocks.QUARRY_TILE_BC8.get(), pos, state);
         caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, this, EnumPipePart.VALUES);
-        caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery)));
+        caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery) {
+            @Override
+            public long getPowerRequested() {
+                return hasWork() ? super.getPowerRequested() : 0;
+            }
+
+            @Override
+            public long receivePower(long microJoules, FluidAction action) {
+                return hasWork() ? super.receivePower(microJoules, action) : microJoules;
+            }
+
+            @Override
+            public boolean canReceive() {
+                return hasWork();
+            }
+        }));
         caps.addCapabilityInstance(
             CapUtil.CAP_ITEM_TRANSACTOR, AutomaticProvidingTransactor.INSTANCE, EnumPipePart.VALUES
         );
@@ -468,8 +488,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     public boolean hasWork() {
         if (!frameBox.isInitialized() || !miningBox.isInitialized()) return false;
         if (!firstChecked || currentTask != null) return true;
-        if (!frameBreakBlockPoses.isEmpty() || !framePlaceFramePoses.isEmpty()) return true;
-        return boxIterator == null || boxIterator.hasNext();
+        if (getRetryableFramePlace() != null || getRetryableFrameBreak() != null) return true;
+        if (boxIterator == null || boxIterator.hasNext()) return true;
+        return getRetryableDeniedMiningPosition() != null;
     }
 
     private void check(BlockPos blockPos) {
@@ -488,12 +509,6 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 frameBreakBlockPoses.add(blockPos);
             }
         }
-        if (!firstChecked) {
-            firstCheckedPoses.add(blockPos);
-            if (firstCheckedPoses.size() >= frameBoxPosesCount) {
-                firstChecked = true;
-            }
-        }
     }
 
     @Override
@@ -501,6 +516,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (!level.isClientSide) {
             updatePoses();
             chunkLoadingDirty = true;
+            // Do not call ForgeChunkManager while the owner chunk is still completing its load future.
+            chunkLoadingStartupDelay = 40;
         }
     }
 
@@ -549,18 +566,21 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     private void updatePoses() {
         framePoses.clear();
         frameBoxPosesCount = 0;
-        toCheck.clear();
-        firstCheckedPoses.clear();
+        initialFrameScan = null;
+        initialFrameScannedCount = 0;
         firstChecked = false;
         frameBreakBlockPoses.clear();
         framePlaceFramePoses.clear();
         frameEdgeScanIndex = 0;
+        nextFrameWatchdogTick = 0;
+        lastCollisionBlocksDrillPos = null;
+        deniedBreakUntil.clear();
         BlockState state = level.getBlockState(worldPosition);
         if (state.getBlock() == BCBuildersBlocks.QUARRY.get() && frameBox.isInitialized()) {
-            List<BlockPos> blocksInArea = frameBox.getBlocksInArea();
-            blocksInArea.sort(BlockUtil.uniqueBlockPosComparator(Comparator.comparingDouble(worldPosition::distSqr)));
-            frameBoxPosesCount = blocksInArea.size();
-            toCheck.addAll(blocksInArea);
+            BlockPos size = frameBox.size();
+            long volume = (long) size.getX() * size.getY() * size.getZ();
+            frameBoxPosesCount = (int) Math.min(Integer.MAX_VALUE, Math.max(0, volume));
+            initialFrameScan = new BoxIterator(frameBox, EnumAxisOrder.XZY.getMinToMaxOrder(), false);
             try {
                 framePoses.addAll(getFramePositions());
             } catch (IllegalStateException e) {
@@ -570,13 +590,88 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 drillPos = null;
                 currentTask = null;
                 boxIterator = null;
+                initialFrameScan = null;
                 framePoses.clear();
                 frameBoxPosesCount = 0;
-                toCheck.clear();
                 sendNetworkUpdate(NET_RENDER_DATA);
             }
         }
         chunkLoadingDirty = true;
+    }
+
+    private void updateInitialFrameScan() {
+        int budget = 500;
+        while (budget-- > 0 && initialFrameScan != null && initialFrameScan.getCurrent() != null) {
+            check(initialFrameScan.getCurrent());
+            initialFrameScannedCount++;
+            initialFrameScan.advance();
+        }
+        if (initialFrameScan == null || initialFrameScan.getCurrent() == null) {
+            initialFrameScan = null;
+            firstChecked = true;
+        }
+    }
+
+    private void updateCollisionBlocksIfNeeded() {
+        if (!Objects.equals(lastCollisionBlocksDrillPos, drillPos)) {
+            updateQuarryCollisionBlocks();
+            lastCollisionBlocksDrillPos = drillPos;
+        }
+    }
+
+    private boolean mayStartBreakTask(BlockPos pos) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return false;
+        }
+        long now = serverLevel.getGameTime();
+        long retryAt = deniedBreakUntil.getOrDefault(pos, 0L);
+        if (retryAt > now) {
+            return false;
+        }
+        Player actor = BuildCraftAPI.fakePlayerProvider.getFakePlayer(serverLevel, getOwner(), pos);
+        if (!BlockUtil.canBreakBlock(serverLevel, pos, actor)) {
+            deniedBreakUntil.put(pos.immutable(), now + 200);
+            return false;
+        }
+        deniedBreakUntil.remove(pos);
+        return true;
+    }
+
+    private boolean retryIsDue(BlockPos pos) {
+        return level != null && deniedBreakUntil.getOrDefault(pos, 0L) <= level.getGameTime();
+    }
+
+    private BlockPos getRetryableFrameBreak() {
+        return frameBreakBlockPoses.stream().filter(this::retryIsDue).findFirst().orElse(null);
+    }
+
+    private BlockPos getRetryableFramePlace() {
+        return framePoses.stream()
+            .filter(framePlaceFramePoses::contains)
+            .filter(this::retryIsDue)
+            .findFirst()
+            .orElse(null);
+    }
+
+    private boolean isMiningDeniedPosition(BlockPos pos) {
+        return miningBox.isInitialized() && miningBox.contains(pos) && !framePoses.contains(pos);
+    }
+
+    private void cleanStaleDeniedMiningPositions() {
+        deniedBreakUntil.keySet().removeIf(pos -> isMiningDeniedPosition(pos) && !canMine(pos));
+    }
+
+    private boolean hasPendingDeniedMiningPosition() {
+        return deniedBreakUntil.keySet().stream().anyMatch(this::isMiningDeniedPosition);
+    }
+
+    private BlockPos getRetryableDeniedMiningPosition() {
+        cleanStaleDeniedMiningPositions();
+        return deniedBreakUntil.keySet().stream()
+            .filter(this::isMiningDeniedPosition)
+            .filter(this::retryIsDue)
+            .findFirst()
+            .orElse(null);
     }
 
     @Override
@@ -599,11 +694,15 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         }
 
         if (chunkLoadingDirty) {
-            chunkLoadingDirty = false;
-            if (frameBox.isInitialized() && miningBox.isInitialized()) {
-                ChunkLoaderManager.loadChunksForTile(this);
+            if (chunkLoadingStartupDelay > 0) {
+                chunkLoadingStartupDelay--;
             } else {
-                ChunkLoaderManager.releaseChunksFor(this);
+                chunkLoadingDirty = false;
+                if (frameBox.isInitialized() && miningBox.isInitialized()) {
+                    ChunkLoaderManager.loadChunksForTile(this);
+                } else {
+                    ChunkLoaderManager.releaseChunksFor(this);
+                }
             }
         }
 
@@ -612,20 +711,15 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             return;
         }
 
-        if (!toCheck.isEmpty()) {
-            for (int i = 0; i < (firstChecked ? 10 : 500); i++) {
-                BlockPos blockPos = toCheck.pollFirst();
-                check(blockPos);
-                toCheck.addLast(blockPos);
-            }
-        }
-
         if (!firstChecked) {
-            updateQuarryCollisionBlocks();
+            updateInitialFrameScan();
+            updateCollisionBlocksIfNeeded();
             return;
         }
 
-        if (!framePoses.isEmpty()) {
+        long gameTime = level.getGameTime();
+        if (!framePoses.isEmpty() && gameTime >= nextFrameWatchdogTick) {
+            nextFrameWatchdogTick = gameTime + 20;
             int scans = Math.min(8, framePoses.size());
             for (int i = 0; i < scans; i++) {
                 if (frameEdgeScanIndex >= framePoses.size()) {
@@ -633,6 +727,11 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 }
                 check(framePoses.get(frameEdgeScanIndex++));
             }
+        }
+
+        if (!hasWork()) {
+            updateCollisionBlocksIfNeeded();
+            return;
         }
 
         long max;
@@ -685,8 +784,14 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
 
             if (!frameBreakBlockPoses.isEmpty()) {
-                BlockPos blockPos = frameBreakBlockPoses.iterator().next();
+                BlockPos blockPos = getRetryableFrameBreak();
+                if (blockPos == null) {
+                    break power_loop;
+                }
                 if (canMine(blockPos)) {
+                    if (!mayStartBreakTask(blockPos)) {
+                        continue power_loop;
+                    }
                     drillPos = null;
                     currentTask = new TaskBreakBlock(blockPos);
                     sendUpdate = true;
@@ -696,19 +801,18 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
 
             if (!framePlaceFramePoses.isEmpty()) {
-                for (BlockPos blockPos : framePoses) {
-                    if (!framePlaceFramePoses.contains(blockPos)) {
-                        continue;
-                    }
-                    check(blockPos);
-                    if (!framePlaceFramePoses.contains(blockPos)) {
-                        continue;
-                    }
-                    drillPos = null;
-                    currentTask = new TaskAddFrame(blockPos);
-                    sendUpdate = true;
+                BlockPos blockPos = getRetryableFramePlace();
+                if (blockPos == null) {
+                    break power_loop;
+                }
+                check(blockPos);
+                if (!framePlaceFramePoses.contains(blockPos)) {
                     continue power_loop;
                 }
+                drillPos = null;
+                currentTask = new TaskAddFrame(blockPos);
+                sendUpdate = true;
+                continue power_loop;
             }
 
             if (boxIterator == null || drillPos == null) {
@@ -741,7 +845,12 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                         currentTask = new TaskMoveDrill(drillPos, Vec3.atLowerCornerOf(boxIterator.getCurrent()));
                         found = true;
                     } else if (canMine(boxIterator.getCurrent())) {
-                        currentTask = new TaskBreakBlock(boxIterator.getCurrent());
+                        BlockPos breakPos = boxIterator.getCurrent();
+                        if (!mayStartBreakTask(breakPos)) {
+                            boxIterator.advance();
+                            continue power_loop;
+                        }
+                        currentTask = new TaskBreakBlock(breakPos);
                         found = true;
                     }
 
@@ -752,6 +861,26 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
 
             if (boxIterator != null && !boxIterator.hasNext()) {
+                BlockPos retryPos = getRetryableDeniedMiningPosition();
+                if (retryPos != null) {
+                    if (drillPos == null || drillPos.distanceTo(Vec3.atLowerCornerOf(retryPos)) >= 1) {
+                        Vec3 from = drillPos == null
+                            ? Vec3.atLowerCornerOf(miningBox.closestInsideTo(worldPosition))
+                            : drillPos;
+                        currentTask = new TaskMoveDrill(from, Vec3.atLowerCornerOf(retryPos));
+                        sendUpdate = true;
+                        continue power_loop;
+                    }
+                    if (mayStartBreakTask(retryPos)) {
+                        currentTask = new TaskBreakBlock(retryPos);
+                        sendUpdate = true;
+                        continue power_loop;
+                    }
+                    break power_loop;
+                }
+                if (hasPendingDeniedMiningPosition()) {
+                    break power_loop;
+                }
                 unlockCompletionAdvancement();
             }
         }
@@ -762,7 +891,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (sendUpdate) {
             sendNetworkUpdate(NET_RENDER_DATA);
         }
-        updateQuarryCollisionBlocks();
+        updateCollisionBlocksIfNeeded();
     }
 
     private void trackFullSpeedQuarry() {
@@ -802,7 +931,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     public List<AABB> getCollisionBoxes() {
-        if (drillPos != null && drillPos != collisionDrillPos && frameBox.isInitialized()) {
+        if (drillPos != null && !drillPos.equals(collisionDrillPos) && frameBox.isInitialized()) {
             Vec3 max = VecUtil.convertCenter(frameBox.max());
             Vec3 min = VecUtil.replaceValue(VecUtil.convertCenter(frameBox.min()), Axis.Y, max.y);
             collisionBoxes = ImmutableList.of(
@@ -1108,7 +1237,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         left.add(" - min = " + miningBox.min());
         left.add(" - max = " + miningBox.max());
 
-        left.add("firstCheckedPoses = " + firstCheckedPoses.size());
+        left.add("initialFrameScanned = " + initialFrameScannedCount);
         left.add("frameBoxPosesCount = " + frameBoxPosesCount);
         left.add("firstChecked = " + firstChecked);
 
@@ -1304,6 +1433,11 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                     stacks.get().forEach(stack -> InventoryUtil.addToBestAcceptor(level, worldPosition, null, stack));
                 }
             }
+            if (stacks.isEmpty() && level instanceof ServerLevel serverLevel) {
+                deniedBreakUntil.put(breakPos.immutable(), serverLevel.getGameTime() + 200);
+            } else {
+                deniedBreakUntil.remove(breakPos);
+            }
             check(breakPos);
             return stacks.isPresent();
         }
@@ -1374,8 +1508,19 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             if (canIgnoreInFrameBox(framePos)) {
                 return false;
             }
-            level.setBlockAndUpdate(framePos, BCBuildersBlocks.FRAME.get().defaultBlockState());
-            return true;
+            if (!(level instanceof ServerLevel serverLevel)) {
+                return false;
+            }
+            Player actor = BuildCraftAPI.fakePlayerProvider.getFakePlayer(serverLevel, getOwner(), framePos);
+            boolean placed = BlockUtil.placeBlock(
+                serverLevel, framePos, BCBuildersBlocks.FRAME.get().defaultBlockState(), actor, Direction.UP, 3
+            );
+            if (placed) {
+                deniedBreakUntil.remove(framePos);
+            } else {
+                deniedBreakUntil.put(framePos.immutable(), serverLevel.getGameTime() + 200);
+            }
+            return placed;
         }
 
         @Override

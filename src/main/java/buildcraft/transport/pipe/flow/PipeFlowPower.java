@@ -190,11 +190,14 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
         step();
         long requested = Math.min(Math.min(maxExtracted, maxPower), getPowerRequested(from));
+        Section section = sections.get(from);
+        requested = section.getAcceptedPower(requested);
         if (requested <= 0) {
             return 0;
         }
 
-        // Existing BuildCraft providers use false for a dry run and true for the actual extraction.
+        // Existing BuildCraft providers use false for a dry run and true for the actual extraction. Never execute a
+        // larger extraction than this section can buffer, because passive providers have no rollback operation.
         long simulated = Math.max(0, Math.min(requested, provider.extractPower(0, requested, false)));
         if (simulated <= 0) {
             return 0;
@@ -204,7 +207,6 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             return 0;
         }
 
-        Section section = sections.get(from);
         long leftover = section.receivePowerInternal(extracted);
         long accepted = extracted - leftover;
         if (accepted > 0) {
@@ -486,10 +488,11 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         long req = 0;
         for (Direction face : Direction.values()) {
             if (side == null || face != side) {
-                req += sections.get(face).powerQuery;
+                long query = Math.max(0, sections.get(face).powerQuery);
+                req = query > Long.MAX_VALUE - req ? Long.MAX_VALUE : req + query;
             }
         }
-        return req;
+        return Math.min(req, Math.max(0, maxPower));
     }
 
     public double getMaxTransferForRender(float partialTicks) {
@@ -546,28 +549,46 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             return PipeFlowPower.this.getPowerRequested(side);
         }
 
-        long receivePowerInternal(long sent) {
-            if (disabled) {
-                return sent;
-            }
-            if (sent > 0) {
-                debugPowerOffered += sent;
-                internalNextPower += sent;
+        private long getAcceptedPower(long offered) {
+            // isReceiver only controls whether this section may accept power directly from an external provider.
+            // Power arriving from another power pipe must also be accepted, otherwise every non-wood transport pipe
+            // rejects the network transfer and a wooden pipe can never feed stone/cobble/gold/etc. power pipes.
+            if (disabled || offered <= 0) {
                 return 0;
             }
-            return sent;
+            long requested = Math.max(0, getPowerRequested());
+            long buffered = internalPower > Long.MAX_VALUE - internalNextPower
+                ? Long.MAX_VALUE
+                : Math.max(0, internalPower + internalNextPower);
+            long free = Math.max(0, maxPower - Math.min(maxPower, buffered));
+            return Math.min(offered, Math.min(requested, free));
+        }
+
+        long receivePowerInternal(long sent) {
+            long accepted = getAcceptedPower(sent);
+            if (accepted <= 0) {
+                return sent;
+            }
+            debugPowerOffered = accepted > Long.MAX_VALUE - debugPowerOffered
+                ? Long.MAX_VALUE
+                : debugPowerOffered + accepted;
+            internalNextPower += accepted;
+            return sent - accepted;
         }
 
         @Override
-        public long receivePower(long microJoules, FluidAction simulate) {
-            if (isReceiver && !disabled) {
-                PipeFlowPower.this.step();
-                if (simulate == FluidAction.EXECUTE) {
-                    return this.receivePowerInternal(microJoules);
-                }
-                return 0;
+        public long receivePower(long microJoules, FluidAction action) {
+            if (!isReceiver || disabled || microJoules <= 0) {
+                return microJoules;
             }
-            return microJoules;
+            long accepted = getAcceptedPower(microJoules);
+            if (action == FluidAction.EXECUTE && accepted > 0) {
+                debugPowerOffered = accepted > Long.MAX_VALUE - debugPowerOffered
+                    ? Long.MAX_VALUE
+                    : debugPowerOffered + accepted;
+                internalNextPower += accepted;
+            }
+            return microJoules - accepted;
         }
 
         @Override
