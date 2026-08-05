@@ -1932,5 +1932,13 @@
   "buildcraft.guide.chapter.subtype.robot_station": "Robot Stations",
   "buildcraft.guide.chapter.subtype.robot_control": "Robot Control",
   "buildcraft.guide.chapter.subtype.component": "Components",
-  "buildcraft.guide.chapter.subtype.pipe_power": "Power Transport"
+  "buildcraft.guide.chapter.subtype.pipe_power": "Power Transport",
+  "buildcraft.guide.contents.search": "Search",
+  "buildcraft.guide.contents.no_results": "No results",
+  "buildcraft.guide.contents.community_edition": "Community Edition",
+  "buildcraft.guide.contents.options": "Options",
+  "buildcraft.guide.contents.show_lore": "Show Lore",
+  "buildcraft.guide.contents.show_hints": "Show Hints",
+  "buildcraft.guide.contents.missing_item": "Missing item",
+  "buildcraft.guide.contents.missing_link": "Missing link"
 }

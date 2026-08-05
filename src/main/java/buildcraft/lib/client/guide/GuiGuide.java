@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -180,6 +181,11 @@ public final class GuiGuide extends Screen {
         ALPHABETICAL
     }
 
+    private enum HorizontalAlignment {
+        LEFT,
+        CENTRE
+    }
+
     private GuiGuide(ItemStack guideStack, InteractionHand guideHand) {
         super(Component.translatable("item.buildcraft.guide.name"));
         this.guideHand = guideHand;
@@ -210,7 +216,7 @@ public final class GuiGuide extends Screen {
         String oldSearch = searchBox == null ? "" : searchBox.getValue();
         searchX = left + 46;
         searchY = top + 9;
-        searchBox = new EditBox(font, searchX, searchY, 80, 13, Component.literal("Search"));
+        searchBox = new EditBox(font, searchX, searchY, 80, 13, Component.translatable("buildcraft.guide.contents.search"));
         searchBox.setMaxLength(80);
         searchBox.setBordered(false);
         searchBox.setTextColor(TEXT_COLOUR);
@@ -358,7 +364,7 @@ public final class GuiGuide extends Screen {
         }
 
         if (lines.isEmpty()) {
-            lines.add(ContentsLine.message(Component.literal("No results")));
+            lines.add(ContentsLine.message(Component.translatable("buildcraft.guide.contents.no_results")));
         }
 
         ContentsPage page = new ContentsPage();
@@ -370,7 +376,14 @@ public final class GuiGuide extends Screen {
             if (line.kind != ContentsLineKind.ENTRY && index + 1 < lines.size()) {
                 required += lines.get(index + 1).height;
             }
-            if (!page.lines.isEmpty() && usedHeight + required > PAGE_TEXT_HEIGHT) {
+
+            // Top-level chapters in the contents are visual page dividers. Starting one below entries from the
+            // previous chapter makes the module/type list look merged, especially in translated languages. This
+            // rule applies only to the contents paginator; chapter blocks inside an opened guide article keep their
+            // original flowing layout.
+            boolean startChapterOnFreshPage = line.kind == ContentsLineKind.CHAPTER && !page.lines.isEmpty();
+            boolean pageOverflow = !page.lines.isEmpty() && usedHeight + required > PAGE_TEXT_HEIGHT;
+            if (startChapterOnFreshPage || pageOverflow) {
                 page = new ContentsPage();
                 contentsPages.add(page);
                 usedHeight = 0;
@@ -528,7 +541,7 @@ public final class GuiGuide extends Screen {
 
         ResourceLocation rightTexture;
         if (firstPage + 1 >= pageCount) {
-            rightTexture = RIGHT_PAGE_BACK;
+            rightTexture = RIGHT_PAGE;
         } else if (firstPage + 1 == pageCount - 1) {
             rightTexture = RIGHT_PAGE_LAST;
         } else {
@@ -562,28 +575,28 @@ public final class GuiGuide extends Screen {
         drawScaledCentred(pose, "BuildCraft", pageX, top + PAGE_TEXT_TOP, PAGE_TEXT_WIDTH, titleScale, 0x17120E);
         drawScaledCentred(pose, "Guide Book", pageX, top + PAGE_TEXT_TOP + titleLineHeight,
             PAGE_TEXT_WIDTH, titleScale, 0x17120E);
-        drawCentred(pose, Component.literal("Community Edition"), pageX,
+        drawCentred(pose, Component.translatable("buildcraft.guide.contents.community_edition"), pageX,
             top + PAGE_TEXT_TOP + titleLineHeight * 2,
             PAGE_TEXT_WIDTH, TEXT_COLOUR);
 
-        drawScaledCentred(pose, "Options", pageX, top + PAGE_TEXT_TOP + PAGE_TEXT_HEIGHT - 80,
+        drawScaledCentred(pose, GuideContent.translateOrLiteral("buildcraft.guide.contents.options"), pageX, top + PAGE_TEXT_TOP + PAGE_TEXT_HEIGHT - 80,
             PAGE_TEXT_WIDTH, 2.0F, 0x17120E);
-        String lore = "Show Lore " + (showLore ? "[x]" : "[ ]");
-        String hints = "Show Hints " + (showHints ? "[x]" : "[ ]");
-        int loreX = pageX + (PAGE_TEXT_WIDTH - font.width(lore)) / 2;
-        int hintX = pageX + (PAGE_TEXT_WIDTH - font.width(hints)) / 2;
+        String lore = GuideContent.translateOrLiteral("buildcraft.guide.contents.show_lore") + " " + (showLore ? "[x]" : "[ ]");
+        String hints = GuideContent.translateOrLiteral("buildcraft.guide.contents.show_hints") + " " + (showHints ? "[x]" : "[ ]");
         int loreY = top + PAGE_TEXT_TOP + PAGE_TEXT_HEIGHT - 52;
         int hintY = top + PAGE_TEXT_TOP + PAGE_TEXT_HEIGHT - 38;
-        font.draw(pose, lore, loreX, loreY, isInside(mouseX, mouseY, loreX, loreY, font.width(lore), 10)
-            ? LINK_COLOUR : TEXT_COLOUR);
-        font.draw(pose, hints, hintX, hintY, isInside(mouseX, mouseY, hintX, hintY, font.width(hints), 10)
-            ? LINK_COLOUR : TEXT_COLOUR);
-        clickRegions.add(new ClickRegion(loreX, loreY, font.width(lore), 11, () -> {
+        boolean loreHovered = isInside(mouseX, mouseY, pageX, loreY, PAGE_TEXT_WIDTH, 10);
+        boolean hintsHovered = isInside(mouseX, mouseY, pageX, hintY, PAGE_TEXT_WIDTH, 10);
+        drawCentred(pose, Component.literal(lore), pageX, loreY, PAGE_TEXT_WIDTH,
+            loreHovered ? LINK_COLOUR : TEXT_COLOUR);
+        drawCentred(pose, Component.literal(hints), pageX, hintY, PAGE_TEXT_WIDTH,
+            hintsHovered ? LINK_COLOUR : TEXT_COLOUR);
+        clickRegions.add(new ClickRegion(pageX, loreY, PAGE_TEXT_WIDTH, 11, () -> {
             showLore = !showLore;
             rebuildOpenDocument();
             persistGuideState();
         }));
-        clickRegions.add(new ClickRegion(hintX, hintY, font.width(hints), 11, () -> {
+        clickRegions.add(new ClickRegion(pageX, hintY, PAGE_TEXT_WIDTH, 11, () -> {
             showHints = !showHints;
             rebuildOpenDocument();
             persistGuideState();
@@ -605,7 +618,7 @@ public final class GuiGuide extends Screen {
         int perLineHeight = font.lineHeight + 3;
         int blockHeight = (modules.size() + 1) * perLineHeight;
         int y = top + PAGE_TEXT_TOP + (PAGE_TEXT_HEIGHT - blockHeight) / 2;
-        Component heading = Component.literal("Loaded Mods:").withStyle(ChatFormatting.BOLD);
+        Component heading = Component.translatable("buildcraft.guide.contents.loaded_modules").withStyle(ChatFormatting.BOLD);
         drawCentred(pose, heading, pageX, y, PAGE_TEXT_WIDTH, 0x17120E);
         y += perLineHeight;
         for (String module : modules) {
@@ -686,13 +699,15 @@ public final class GuiGuide extends Screen {
             case CHAPTER: {
                 drawTintedNineSlice(pose, CHAPTER_BAR, x + 7, y - 4, PAGE_TEXT_WIDTH - 24, 16, line.colour);
                 Component text = line.component.copy().withStyle(ChatFormatting.UNDERLINE);
-                font.draw(pose, text, x + 16, y, TEXT_COLOUR);
+                drawOverflowText(pose, text, x + 16, y, PAGE_TEXT_WIDTH - 34, TEXT_COLOUR,
+                    HorizontalAlignment.LEFT, line.component.getString().hashCode());
                 break;
             }
             case SUBHEADING: {
                 int textX = x + 32;
                 Component text = line.component.copy().withStyle(ChatFormatting.UNDERLINE);
-                font.draw(pose, text, textX, y, TEXT_COLOUR);
+                drawOverflowText(pose, text, textX, y, PAGE_TEXT_WIDTH - 32, TEXT_COLOUR,
+                    HorizontalAlignment.LEFT, line.component.getString().hashCode());
                 break;
             }
             case ENTRY: {
@@ -703,12 +718,11 @@ public final class GuiGuide extends Screen {
                 int textX = x + 32;
                 boolean hovered = isInside(mouseX, mouseY, x + 12, y - 5, PAGE_TEXT_WIDTH - 12, 18);
                 if (hovered) {
-                    int titleWidth = Math.min(font.width(entry.title()), PAGE_TEXT_WIDTH - 34);
-                    fill(pose, textX - 2, y - 2, textX + titleWidth + 2, y + 12, HOVER_COLOUR);
+                    fill(pose, textX - 2, y - 2, x + PAGE_TEXT_WIDTH - 2, y + 12, HOVER_COLOUR);
                 }
                 renderEntryIcon(pose, entry, iconX, iconY, mouseX, mouseY);
-                String title = font.plainSubstrByWidth(entry.title(), PAGE_TEXT_WIDTH - 34);
-                font.draw(pose, title, textX, y, entryTextColour(entry));
+                drawOverflowText(pose, Component.literal(entry.title()), textX, y, PAGE_TEXT_WIDTH - 34,
+                    entryTextColour(entry), HorizontalAlignment.LEFT, entry.id.hashCode());
                 clickRegions.add(new ClickRegion(x + 12, y - 5, PAGE_TEXT_WIDTH - 12, 18,
                     () -> openEntry(entry, true)));
                 break;
@@ -765,14 +779,16 @@ public final class GuiGuide extends Screen {
         int step = font.lineHeight + 8;
         for (int index = 0; index < contentsChapters.size(); index++) {
             ChapterTab tab = contentsChapters.get(index);
-            int textWidth = font.width(tab.label);
+            int maxTextWidth = Math.max(48, left - 26);
+            int textWidth = Math.min(font.width(tab.label), maxTextWidth);
             int y = top + step * (index + 1);
             boolean hovered = isInside(mouseX, mouseY, left - textWidth - 5, y - 4, textWidth + 16, 16);
             int extension = hovered ? 5 : 0;
             int x = left - textWidth - extension + 5;
             drawTintedNineSlice(pose, CHAPTER_TAB_LEFT, x - 6, y - 4,
                 textWidth + 12 + extension, 16, tab.colour);
-            font.draw(pose, Component.literal(tab.label).withStyle(ChatFormatting.UNDERLINE), x, y, TEXT_COLOUR);
+            drawOverflowText(pose, Component.literal(tab.label).withStyle(ChatFormatting.UNDERLINE),
+                x, y, textWidth, TEXT_COLOUR, HorizontalAlignment.LEFT, tab.key.hashCode());
             clickRegions.add(new ClickRegion(left - textWidth - 5 - extension, y - 4,
                 textWidth + 16 + extension, 16, () -> {
                     contentsSpread = Mth.clamp(tab.pageIndex / 2, 0, maxContentsSpread());
@@ -825,8 +841,7 @@ public final class GuiGuide extends Screen {
             returnToContents();
             return;
         }
-        String title = font.plainSubstrByWidth(currentEntry.title(), BOOK_WIDTH - 70);
-        drawCentred(pose, Component.literal(title), left + 23, top + 10,
+        drawCentred(pose, Component.literal(currentEntry.title()), left + 23, top + 10,
             PAGE_TEXT_WIDTH * 2 + 3, CHAPTER_COLOUR);
 
         int firstPage = documentSpread * 2;
@@ -840,7 +855,8 @@ public final class GuiGuide extends Screen {
         if (document == null) return;
         int step = font.lineHeight + 8;
         int tabIndex = 0;
-        tabIndex = drawDocumentChapterTab(pose, mouseX, mouseY, tabIndex, "Contents",
+        tabIndex = drawDocumentChapterTab(pose, mouseX, mouseY, tabIndex,
+            GuideContent.translateOrLiteral("buildcraft.guide.chapter.contents"),
             DOCUMENT_CHAPTER_COLOURS[0], this::returnToContents);
         for (DocumentChapter chapter : document.chapters) {
             if (chapter.level != 0) continue;
@@ -856,15 +872,17 @@ public final class GuiGuide extends Screen {
 
     private int drawDocumentChapterTab(PoseStack pose, int mouseX, int mouseY, int index, String rawLabel,
         int colour, Runnable action) {
-        String label = font.plainSubstrByWidth(rawLabel, 128);
-        int textWidth = font.width(label);
+        int maxTextWidth = Math.max(48, left - 26);
+        int fullWidth = font.width(rawLabel);
+        int textWidth = Math.min(fullWidth, maxTextWidth);
         int y = top + (font.lineHeight + 8) * (index + 1);
         boolean hovered = isInside(mouseX, mouseY, left - textWidth - 5, y - 4, textWidth + 16, 16);
         int extension = hovered ? 5 : 0;
         int x = left - textWidth - extension + 5;
         drawTintedNineSlice(pose, CHAPTER_TAB_LEFT, x - 6, y - 4,
             textWidth + 12 + extension, 16, colour);
-        font.draw(pose, Component.literal(label).withStyle(ChatFormatting.UNDERLINE), x, y, TEXT_COLOUR);
+        drawOverflowText(pose, Component.literal(rawLabel).withStyle(ChatFormatting.UNDERLINE),
+            x, y, textWidth, TEXT_COLOUR, HorizontalAlignment.LEFT, rawLabel.hashCode());
         clickRegions.add(new ClickRegion(left - textWidth - 5 - extension, y - 4,
             textWidth + 16 + extension, 16, action));
         return index + 1;
@@ -878,12 +896,13 @@ public final class GuiGuide extends Screen {
             int y = originY + element.y;
             switch (element.kind) {
                 case TEXT:
-                    font.draw(pose, element.line, x, y, TEXT_COLOUR);
+                    drawOverflowText(pose, element.line, x, y, PAGE_TEXT_WIDTH - element.x, TEXT_COLOUR,
+                        HorizontalAlignment.LEFT, element.y * 31 + x);
                     if (element.target != null) {
-                        if (isInside(mouseX, mouseY, x, y, element.width, 10)) {
-                            fill(pose, x, y + 9, x + element.width, y + 10, 0xAA315E86);
+                        if (isInside(mouseX, mouseY, x, y, PAGE_TEXT_WIDTH - element.x, 10)) {
+                            fill(pose, x, y + 9, x + Math.min(element.width, PAGE_TEXT_WIDTH - element.x), y + 10, 0xAA315E86);
                         }
-                        clickRegions.add(new ClickRegion(x, y, Math.max(1, element.width), 10,
+                        clickRegions.add(new ClickRegion(x, y, Math.max(1, PAGE_TEXT_WIDTH - element.x), 10,
                             () -> followTarget(element.target, null)));
                     }
                     break;
@@ -893,11 +912,13 @@ public final class GuiGuide extends Screen {
                         drawTintedNineSlice(pose, CHAPTER_BAR, x - 5, y - 4,
                             Math.max(24, PAGE_TEXT_WIDTH - 24 - indent), element.height, element.colour);
                     }
-                    font.draw(pose, element.line, x, y, TEXT_COLOUR);
+                    drawOverflowText(pose, element.line, x, y, PAGE_TEXT_WIDTH - element.x, TEXT_COLOUR,
+                        HorizontalAlignment.LEFT, element.y * 31 + element.x);
                     break;
                 case CODE:
                     fill(pose, x - 2, y - 1, x + PAGE_TEXT_WIDTH - 2, y + 10, 0x356A5A49);
-                    font.draw(pose, element.line, x, y, MUTED_COLOUR);
+                    drawOverflowText(pose, element.line, x, y, PAGE_TEXT_WIDTH - 4, MUTED_COLOUR,
+                        HorizontalAlignment.LEFT, element.y * 31 + x);
                     break;
                 case LINK:
                     renderDocumentLink(pose, element, x, y, mouseX, mouseY);
@@ -922,9 +943,9 @@ public final class GuiGuide extends Screen {
             if (isInside(mouseX, mouseY, x + 1, y + 1, 16, 16)) hoveredStack = element.stack;
         }
         String title = element.component == null ? element.target : element.component.getString();
-        if (title == null) title = "Missing link";
-        font.draw(pose, font.plainSubstrByWidth(title, 143), x + 21, y + 5,
-            hovered ? LINK_COLOUR : TEXT_COLOUR);
+        if (title == null) title = GuideContent.translateOrLiteral("buildcraft.guide.contents.missing_link");
+        drawOverflowText(pose, Component.literal(title), x + 21, y + 5, 143,
+            hovered ? LINK_COLOUR : TEXT_COLOUR, HorizontalAlignment.LEFT, title.hashCode());
         String target = element.target;
         String secondary = element.secondary;
         clickRegions.add(new ClickRegion(x, y, PAGE_TEXT_WIDTH, 19, () -> followTarget(target, secondary)));
@@ -1115,13 +1136,13 @@ public final class GuiGuide extends Screen {
             Component title;
             if ("item_stack".equals(type)) {
                 stack = GuideContent.resolveStackForTag(target);
-                title = stack.isEmpty() ? Component.literal(target == null ? "Missing item" : target)
+                title = stack.isEmpty() ? Component.literal(target == null ? GuideContent.translateOrLiteral("buildcraft.guide.contents.missing_item") : target)
                     : stack.getHoverName();
             } else if (linked != null) {
                 stack = linked.stack;
                 title = Component.literal(linked.title());
             } else {
-                title = Component.literal(target == null ? "Missing link" : target);
+                title = Component.literal(target == null ? GuideContent.translateOrLiteral("buildcraft.guide.contents.missing_link") : target);
             }
             page.elements.add(RenderElement.link(y, title, target, type, stack));
             y += 21;
@@ -1633,17 +1654,84 @@ public final class GuiGuide extends Screen {
     }
 
     private void drawCentred(PoseStack pose, Component text, int x, int y, int availableWidth, int colour) {
-        font.draw(pose, text, x + (availableWidth - font.width(text)) / 2.0F, y, colour);
+        drawOverflowText(pose, text, x, y, availableWidth, colour, HorizontalAlignment.CENTRE,
+            text.getString().hashCode());
     }
 
     private void drawScaledCentred(PoseStack pose, String text, int x, int y, int availableWidth, float scale,
         int colour) {
-        float scaledWidth = font.width(text) * scale;
+        float fittedScale = scale;
+        int unscaledWidth = font.width(text);
+        if (unscaledWidth > 0) {
+            fittedScale = Math.min(scale, availableWidth / (float) unscaledWidth);
+        }
+        float scaledWidth = unscaledWidth * fittedScale;
         pose.pushPose();
         pose.translate(x + (availableWidth - scaledWidth) / 2.0F, y, 0);
-        pose.scale(scale, scale, 1.0F);
+        pose.scale(fittedScale, fittedScale, 1.0F);
         font.draw(pose, text, 0, 0, colour);
         pose.popPose();
+    }
+
+    private void drawOverflowText(PoseStack pose, Component text, int x, int y, int availableWidth, int colour,
+        HorizontalAlignment alignment, int seed) {
+        drawOverflowText(pose, text.getVisualOrderText(), x, y, availableWidth, colour, alignment, seed);
+    }
+
+    private void drawOverflowText(PoseStack pose, FormattedCharSequence text, int x, int y, int availableWidth,
+        int colour, HorizontalAlignment alignment, int seed) {
+        int lineHeight = font.lineHeight;
+        int textWidth = font.width(text);
+        if (textWidth <= availableWidth) {
+            float drawX = alignment == HorizontalAlignment.CENTRE
+                ? x + (availableWidth - textWidth) / 2.0F
+                : x;
+            font.draw(pose, text, drawX, y, colour);
+            return;
+        }
+        enableGuiScissor(x, y - 1, availableWidth, lineHeight + 2);
+        try {
+            float offset = marqueeOffset(textWidth - availableWidth, seed);
+            font.draw(pose, text, x + offset, y, colour);
+        } finally {
+            RenderSystem.disableScissor();
+        }
+    }
+
+    private float marqueeOffset(int overflow, int seed) {
+        if (overflow <= 0) {
+            return 0;
+        }
+        int pause = 20;
+        float travelFrames = Math.max(40.0F, overflow * 2.5F);
+        float cycle = pause * 2.0F + travelFrames * 2.0F;
+        float phase = Math.floorMod(tick + seed, Math.max(1, Math.round(cycle)));
+        if (phase < pause) {
+            return 0;
+        }
+        phase -= pause;
+        if (phase < travelFrames) {
+            return -overflow * (phase / travelFrames);
+        }
+        phase -= travelFrames;
+        if (phase < pause) {
+            return -overflow;
+        }
+        phase -= pause;
+        return -overflow * (1.0F - phase / travelFrames);
+    }
+
+    private void enableGuiScissor(int x, int y, int width, int height) {
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+        Window window = Minecraft.getInstance().getWindow();
+        double scale = window.getGuiScale();
+        int scissorX = Math.max(0, (int) Math.floor(x * scale));
+        int scissorY = Math.max(0, (int) Math.floor(window.getHeight() - (y + height) * scale));
+        int scissorWidth = Math.max(0, (int) Math.ceil(width * scale));
+        int scissorHeight = Math.max(0, (int) Math.ceil(height * scale));
+        RenderSystem.enableScissor(scissorX, scissorY, scissorWidth, scissorHeight);
     }
 
     private static int parseInt(@Nullable String value, int fallback) {
