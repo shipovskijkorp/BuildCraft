@@ -8,8 +8,6 @@ import javax.annotation.Nullable;
 
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.misc.AdvancementUtil;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -24,17 +22,6 @@ import net.minecraftforge.fml.DistExecutor;
 /** The native BuildCraft guide book, using the original BC8 book artwork. */
 public class ItemGuide extends Item {
     private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftcore", "guide");
-
-    /** Stored on the individual guide stack so two books can remember different places and options. */
-    private static final String TAG_GUIDE_STATE = "BuildCraftGuideState";
-    private static final String TAG_VERSION = "Version";
-    private static final String TAG_SHOW_LORE = "ShowLore";
-    private static final String TAG_SHOW_HINTS = "ShowHints";
-    private static final String TAG_SORT_MODE = "SortMode";
-    private static final String TAG_DOCUMENT = "Document";
-    private static final String TAG_ENTRY = "Entry";
-    private static final String TAG_SPREAD = "Spread";
-    private static final int GUIDE_STATE_VERSION = 1;
 
     public ItemGuide(Properties properties) {
         super(properties);
@@ -59,29 +46,7 @@ public class ItemGuide extends Item {
 
     /** Reads the UI state stored on this exact guide stack. */
     public static GuideState readGuideState(ItemStack stack) {
-        CompoundTag root = stack.getTag();
-        if (root == null || !root.contains(TAG_GUIDE_STATE, Tag.TAG_COMPOUND)) {
-            return GuideState.DEFAULT;
-        }
-        CompoundTag tag = root.getCompound(TAG_GUIDE_STATE);
-        if (tag.getInt(TAG_VERSION) != GUIDE_STATE_VERSION) {
-            return GuideState.DEFAULT;
-        }
-
-        boolean showLore = !tag.contains(TAG_SHOW_LORE) || tag.getBoolean(TAG_SHOW_LORE);
-        boolean showHints = tag.getBoolean(TAG_SHOW_HINTS);
-        String sortMode = tag.contains(TAG_SORT_MODE) ? tag.getString(TAG_SORT_MODE) : "TYPE";
-        boolean document = tag.getBoolean(TAG_DOCUMENT);
-        ResourceLocation entry = null;
-        if (document && tag.contains(TAG_ENTRY)) {
-            try {
-                entry = new ResourceLocation(tag.getString(TAG_ENTRY));
-            } catch (RuntimeException ignored) {
-                document = false;
-            }
-        }
-        int spread = Math.max(0, tag.getInt(TAG_SPREAD));
-        return new GuideState(showLore, showHints, sortMode, document, entry, spread);
+        return GuideBookStateCodec.read(stack.getTag());
     }
 
     /** Writes UI state to this exact guide stack. */
@@ -89,17 +54,7 @@ public class ItemGuide extends Item {
         if (stack.isEmpty() || !(stack.getItem() instanceof ItemGuide)) {
             return;
         }
-        CompoundTag tag = new CompoundTag();
-        tag.putInt(TAG_VERSION, GUIDE_STATE_VERSION);
-        tag.putBoolean(TAG_SHOW_LORE, state.showLore);
-        tag.putBoolean(TAG_SHOW_HINTS, state.showHints);
-        tag.putString(TAG_SORT_MODE, state.sortMode);
-        tag.putBoolean(TAG_DOCUMENT, state.document && state.entry != null);
-        if (state.document && state.entry != null) {
-            tag.putString(TAG_ENTRY, state.entry.toString());
-        }
-        tag.putInt(TAG_SPREAD, Math.max(0, state.spread));
-        stack.getOrCreateTag().put(TAG_GUIDE_STATE, tag);
+        GuideBookStateCodec.write(stack.getOrCreateTag(), state);
     }
 
     /** Immutable payload shared by the screen, item NBT and the client-to-server update packet. */

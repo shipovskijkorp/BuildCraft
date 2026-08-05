@@ -1,28 +1,26 @@
 package buildcraft.lib.item;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class GuideBookStateTester {
     @Test
-    void stateBelongsToTheIndividualGuideStack() {
-        ItemGuide guide = new ItemGuide(new Item.Properties().stacksTo(1));
-        ItemStack first = new ItemStack(guide);
-        ItemStack second = new ItemStack(guide);
+    void stateBelongsToTheIndividualGuideTag() {
+        CompoundTag first = new CompoundTag();
+        CompoundTag second = new CompoundTag();
 
-        ItemGuide.writeGuideState(first, new ItemGuide.GuideState(
+        GuideBookStateCodec.write(first, new ItemGuide.GuideState(
             false, true, "MODULE", true, new ResourceLocation("buildcraftbuilders", "block/quarry"), 3
         ));
-        ItemGuide.writeGuideState(second, new ItemGuide.GuideState(
+        GuideBookStateCodec.write(second, new ItemGuide.GuideState(
             true, false, "ALPHABETICAL", false, null, 5
         ));
 
-        ItemGuide.GuideState firstState = ItemGuide.readGuideState(first);
-        ItemGuide.GuideState secondState = ItemGuide.readGuideState(second);
+        ItemGuide.GuideState firstState = GuideBookStateCodec.read(first);
+        ItemGuide.GuideState secondState = GuideBookStateCodec.read(second);
 
         Assertions.assertFalse(firstState.showLore);
         Assertions.assertTrue(firstState.showHints);
