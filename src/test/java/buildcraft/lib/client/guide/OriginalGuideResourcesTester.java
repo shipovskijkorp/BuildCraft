@@ -2,6 +2,8 @@ package buildcraft.lib.client.guide;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,7 +29,6 @@ class OriginalGuideResourcesTester {
     private static final String LAYOUTS = ROOT + "page_layouts.json";
     private static final String LANGUAGES = ROOT + "languages.json";
     private static final String ENGLISH = ROOT + "text/en_us.json";
-    private static final String RUSSIAN = ROOT + "text/ru_ru.json";
     private static final Pattern SLOT = Pattern.compile("\\{\\{bc_text:(\\d+)\\}\\}");
 
     @Test
@@ -34,7 +36,6 @@ class OriginalGuideResourcesTester {
         JsonObject manifest = json(MANIFEST);
         JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
         JsonObject english = json(ENGLISH).getAsJsonObject("pages");
-        JsonObject russian = json(RUSSIAN).getAsJsonObject("pages");
 
         Assertions.assertEquals(5, manifest.get("format").getAsInt());
         Assertions.assertEquals(1, manifest.get("layout_format").getAsInt());
@@ -56,15 +57,13 @@ class OriginalGuideResourcesTester {
         Assertions.assertTrue(listed >= 204, "The current guide must retain every contents entry");
         Assertions.assertEquals(pageKeys, layouts.keySet(), "Manifest and shared layouts disagree");
         Assertions.assertEquals(pageKeys, english.keySet(), "Default English text pack is incomplete");
-        Assertions.assertEquals(pageKeys, russian.keySet(), "Russian text pack is incomplete");
         Assertions.assertEquals(207, pageKeys.size(), "Unexpected number of distinct authored guide pages");
     }
 
     @Test
-    void sharedLayoutsAndBothLanguagesHaveMatchingSlots() throws Exception {
+    void sharedLayoutsAndEnglishHaveMatchingSlots() throws Exception {
         JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
         JsonObject english = json(ENGLISH).getAsJsonObject("pages");
-        JsonObject russian = json(RUSSIAN).getAsJsonObject("pages");
 
         for (Map.Entry<String, JsonElement> entry : layouts.entrySet()) {
             String page = entry.getKey();
@@ -72,9 +71,7 @@ class OriginalGuideResourcesTester {
             String template = layout.get("template").getAsString();
             int slotCount = layout.get("slots").getAsInt();
             JsonArray en = english.getAsJsonArray(page);
-            JsonArray ru = russian.getAsJsonArray(page);
             Assertions.assertEquals(slotCount, en.size(), "English slot mismatch in " + page);
-            Assertions.assertEquals(slotCount, ru.size(), "Russian slot mismatch in " + page);
 
             Set<Integer> indexes = new HashSet<>();
             Matcher matcher = SLOT.matcher(template);
@@ -85,17 +82,11 @@ class OriginalGuideResourcesTester {
                 Assertions.assertTrue(indexes.contains(index), "Unused text slot " + index + " in " + page);
                 Assertions.assertTrue(en.get(index).isJsonPrimitive() && en.get(index).getAsJsonPrimitive().isString(),
                     "English slot is not text in " + page + " #" + index);
-                Assertions.assertTrue(ru.get(index).isJsonPrimitive() && ru.get(index).getAsJsonPrimitive().isString(),
-                    "Russian slot is not text in " + page + " #" + index);
                 Assertions.assertFalse(en.get(index).getAsString().isBlank(),
                     "Default English text cannot be blank in " + page + " #" + index);
-                Assertions.assertFalse(ru.get(index).getAsString().isBlank(),
-                    "Full Russian localization cannot be blank in " + page + " #" + index);
             }
             String renderedEnglish = render(template, strings(en));
-            String renderedRussian = render(template, strings(ru));
             Assertions.assertFalse(SLOT.matcher(renderedEnglish).find(), "Unresolved English slot in " + page);
-            Assertions.assertFalse(SLOT.matcher(renderedRussian).find(), "Unresolved Russian slot in " + page);
         }
     }
 
@@ -188,11 +179,10 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
-    void everyListedPageHasLocalizedOptionalHints() throws Exception {
+    void everyListedPageHasOptionalHints() throws Exception {
         JsonObject manifest = json(MANIFEST);
         JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
         JsonObject english = json(ENGLISH).getAsJsonObject("pages");
-        JsonObject russian = json(RUSSIAN).getAsJsonObject("pages");
         Set<String> checked = new HashSet<>();
 
         for (JsonElement element : manifest.getAsJsonArray("entries")) {
@@ -206,10 +196,8 @@ class OriginalGuideResourcesTester {
             }
             String template = layouts.getAsJsonObject(page).get("template").getAsString();
             String en = render(template, strings(english.getAsJsonArray(page)));
-            String ru = render(template, strings(russian.getAsJsonArray(page)));
             Assertions.assertTrue(en.contains("<hint>"), "Missing hint section in " + page);
             Assertions.assertTrue(en.contains("<bold>Hint:</bold>"), "English hint is not labelled in " + page);
-            Assertions.assertTrue(ru.contains("<bold>Подсказка:</bold>"), "Russian hint is not labelled in " + page);
 
             GuideDocument hidden = GuideDocument.parse(en, true, false, false);
             GuideDocument visible = GuideDocument.parse(en, true, true, false);
@@ -331,17 +319,23 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
-    void ordinaryRussianLanguageFileContainsGuideIndexTranslations() throws Exception {
-        JsonObject russian = json("/assets/buildcraft/lang/ru_ru.json");
-        String[] required = {
-            "buildcraft.guide.chapter.submod.builders", "buildcraft.guide.chapter.submod.robotics",
-            "buildcraft.guide.chapter.subtype.pipe_power", "buildcraft.guide.chapter.subtype.refining",
-            "buildcraft.guide.chapter.type.action", "buildcraft.guide.chapter.type.trigger",
-            "buildcraft.guide.page.guide_page_format", "buildcraft.guide.page.registry_overview"
-        };
-        for (String key : required) {
-            Assertions.assertTrue(russian.has(key), "Missing Russian Guide Book UI translation " + key);
-            Assertions.assertFalse(russian.get(key).getAsString().isBlank(), "Blank Russian translation " + key);
+    void coreDistributionBundlesOnlyEnglishLocalizationData() throws Exception {
+        Path ordinaryDirectory = Path.of("src/main/resources/assets/buildcraft/lang");
+        Path guideDirectory = Path.of("src/main/resources/assets/buildcraft/guide/text");
+
+        Assertions.assertEquals(List.of("en_us.json"), jsonFileNames(ordinaryDirectory),
+            "Non-English interface translations belong in BuildCraft Community Edition: Localizations");
+        Assertions.assertEquals(List.of("en_us.json"), jsonFileNames(guideDirectory),
+            "Non-English Guide Book text packs belong in BuildCraft Community Edition: Localizations");
+    }
+
+    private static List<String> jsonFileNames(Path directory) throws Exception {
+        try (Stream<Path> files = Files.list(directory)) {
+            return files.filter(Files::isRegularFile)
+                .map(path -> path.getFileName().toString())
+                .filter(name -> name.endsWith(".json"))
+                .sorted()
+                .toList();
         }
     }
 
