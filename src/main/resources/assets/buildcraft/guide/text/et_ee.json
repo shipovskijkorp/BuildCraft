@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "et_ee",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "See leht selgitab elemendi Puit hammasratas otstarvet, ühendamist ja ohutut kasutamist.",
+      "Puit hammasratas kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "See leht selgitab elemendi Kivi hammasratas otstarvet, ühendamist ja ohutut kasutamist.",
+      "Kivi hammasratas kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "See leht selgitab elemendi Raud hammasratas otstarvet, ühendamist ja ohutut kasutamist.",
+      "Raud hammasratas kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "See leht selgitab elemendi Kuld hammasratas otstarvet, ühendamist ja ohutut kasutamist.",
+      "Kuld hammasratas kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "See leht selgitab elemendi Teemant hammasratas otstarvet, ühendamist ja ohutut kasutamist.",
+      "Teemant hammasratas kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda."
+    ],
+    "buildcraftcore/item/wrench": [
+      "See leht selgitab elemendi Mutrivõti otstarvet, ühendamist ja ohutut kasutamist.",
+      "Mutrivõti seadistab sihtmärgi ala, tee, filtrid või käitumise.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "See leht selgitab elemendi Pintsel otstarvet, ühendamist ja ohutut kasutamist.",
+      "Pintsel seadistab sihtmärgi ala, tee, filtrid või käitumise.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "See leht selgitab elemendi Märk Connector otstarvet, ühendamist ja ohutut kasutamist.",
+      "Märk Connector paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Kasutamine",
+      "Elemendi Märk Connector käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "See leht selgitab elemendi Path Märk otstarvet, ühendamist ja ohutut kasutamist.",
+      "Path Märk paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Tee loomine",
+      "Elemendi Path Märk käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Kasutamine",
+      "Elemendi Path Märk käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftcore/item/list": [
+      "See leht selgitab elemendi Loend otstarvet, ühendamist ja ohutut kasutamist.",
+      "Loend hoiab ressursse või seadistusi teiste seadmete jaoks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Muutmine",
+      "Elemendi Loend käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Rakendamine",
+      "Elemendi Loend käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Punakivi mootor toodab kütuse või redstone-signaali abil MJ-energiat.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Töö",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Mootorite tööpõhimõte",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Töö",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Töö",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Töö",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Etapi kontroll",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Etapi kontroll",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Etapi kontroll",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Etapi kontroll",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Etapi kontroll",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Päästiku suunad",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Töö",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Töö",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftcore/action/redstone": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Punane rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses.",
+      "Parameetrid",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses.",
+      "Päästiku suunad",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses.",
+      "Päästiku suunad",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses.",
+      "Päästiku suunad",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Aurumootor toodab kütuse või redstone-signaali abil MJ-energiat.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Kütus ja võimsus",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Temperatuur",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Sisepõlemis mootor toodab kütuse või redstone-signaali abil MJ-energiat.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Mahutid",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Kuumutamine ja ohutus",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Mootorite tööpõhimõte",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Destillaator töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Töö",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Automatiseerimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Kuumus Vaheti töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Soojusvahetus",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Seos destilleerimisega",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/tank": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Paak hoiab ressursse või seadistusi teiste seadmete jaoks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Hoiustamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/pump": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Pump teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Paigaldamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Üleujutusvärav töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Vedeliku paigutamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Kaevandus kaev kaevandab määratud alalt plokke ja ressursse.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Kaevandamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Piirangud",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/chute": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Lehter töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Edastus",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "see element töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Seadistamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "See leht kirjeldab BuildCrafti juhendisüsteemi ressursivormingut.",
+      "Juhendiregistri ülevaade määrab juhendilehtede struktuuri, registri ja kuvamise.",
+      "<bold>Vihje:</bold> Pärast identifikaatorite, JSON-süntaksi või keelekoodi muutmist laadi ressursid uuesti ja kontrolli logi.",
+      "Salvestatud andmed",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus.",
+      "Ülesannete eraldamine",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus.",
+      "Kontrollimine",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "See leht kirjeldab BuildCrafti juhendisüsteemi ressursivormingut.",
+      "JSON-juhiste vorming määrab juhendilehtede struktuuri, registri ja kuvamise.",
+      "<bold>Vihje:</bold> Pärast identifikaatorite, JSON-süntaksi või keelekoodi muutmist laadi ressursid uuesti ja kontrolli logi.",
+      "Päis",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>~{buildcraft/json/lib}</code> <code>~args N</code>",
+      "Funktsioonid",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>~{buildcraft/json/lib}</code> <code>~args N</code>",
+      "Praegused juhendiressursid",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>~{buildcraft/json/lib}</code> <code>~args N</code>"
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "See leht kirjeldab BuildCrafti juhendisüsteemi ressursivormingut.",
+      "Juhendi lehevorming määrab juhendilehtede struktuuri, registri ja kuvamise.",
+      "<bold>Vihje:</bold> Pärast identifikaatorite, JSON-süntaksi või keelekoodi muutmist laadi ressursid uuesti ja kontrolli logi.",
+      "Ühised lehepaigutused",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Keele tekstipaketid",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Varutekst ja aliased",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Manifest",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Toetatud märgistus",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>"
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Paigaldamine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Seadistamine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Loogika",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Väravate modifikaatorid",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Väravate variandid",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Päästikud",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Tegevused",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Parameetrid",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Ühendused",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Juhtimine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Toruühendused",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Signaalid",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Toruühendused",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Kasutamine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Filtrid",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Rakendumine",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Rakendumine",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses.",
+      "Suunad",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses.",
+      "Suunad",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "munakivist konstruktsiooni toru edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "puidust esemete transporditoru võtab esemeid kõrvalasuvast inventarist ja saadab need võrku.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "see element transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kivist esemete transporditoru transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kvartsist esemete transporditoru transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "rauast esemete transporditoru transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kuldne esemete transporditoru transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "teemant esemete transporditoru suunab esemeid filtrite või värvide järgi.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "obsidiaanist esemete transporditoru korjab läheduses maas olevad esemed.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Torude tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "liivakivist esemete transporditoru transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "savist esemete transporditoru sisestab esemed võimaluse korral kõrvalasuvasse inventari.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "tühjuse esemete transporditoru hävitab sisenevad esemed ohutult.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "triibuline esemete transporditoru transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Torude tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "puidust teemant esemete transporditoru suunab esemeid filtrite või värvide järgi.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "lasuriit esemete transporditoru suunab esemeid filtrite või värvide järgi.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "diasuliit esemete transporditoru suunab esemeid filtrite või värvide järgi.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "emsuliit esemete transporditoru suunab esemeid filtrite või värvide järgi.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendamine ja toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "puidust vedelikutoru võtab vedelikku kõrvalasuvast mahutist.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendused",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "see element transpordib vedelikke mahutite ja masinate vahel.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kivist vedelikutoru transpordib vedelikke mahutite ja masinate vahel.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kvartsist vedelikutoru transpordib vedelikke mahutite ja masinate vahel.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "rauast vedelikutoru transpordib vedelikke mahutite ja masinate vahel.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kuldne vedelikutoru transpordib vedelikke mahutite ja masinate vahel.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "teemant vedelikutoru suunab vedelikke filtrite järgi.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendused",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "liivakivist vedelikutoru transpordib vedelikke mahutite ja masinate vahel.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "savist vedelikutoru transpordib vedelikke mahutite ja masinate vahel.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "tühjuse vedelikutoru eemaldab siseneva vedeliku.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "puidust teemant vedelikutoru suunab vedelikke filtrite järgi.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Toru tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Ühendused",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toide",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi.",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/item/wire": [
+      "See leht selgitab elemendi %s Toru signaal' otstarvet, ühendamist ja ohutut kasutamist.",
+      "%s Toru signaal' edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Paigaldamine",
+      "Elemendi %s Toru signaal' käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Juhtmete paigaldamine",
+      "Elemendi %s Toru signaal' käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "See leht selgitab elemendi Energiaadapter otstarvet, ühendamist ja ohutut kasutamist.",
+      "Energiaadapter edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Ühendamine",
+      "Elemendi Energiaadapter käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Toruühendused",
+      "Elemendi Energiaadapter käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "See leht selgitab elemendi Toru sulgeja otstarvet, ühendamist ja ohutut kasutamist.",
+      "Toru sulgeja edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Paigaldamine",
+      "Elemendi Toru sulgeja käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda.",
+      "Parameetrid",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses.",
+      "Parameeter",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "see element toodab kütuse või redstone-signaali abil MJ-energiat."
+    ],
+    "buildcraftcore/item/box_volume": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Paigutus ja suurus",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Lisad",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Ala määramine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Kasutamine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftlib/item/guide": [
+      "See leht kirjeldab BuildCrafti juhendisüsteemi ressursivormingut.",
+      "BuildCraft Juhend Raamat määrab juhendilehtede struktuuri, registri ja kuvamise.",
+      "<bold>Vihje:</bold> Pärast identifikaatorite, JSON-süntaksi või keelekoodi muutmist laadi ressursid uuesti ja kontrolli logi.",
+      "Juhendi kasutamine",
+      "Lehe struktuur ja tõlketekst on eraldatud. Keele JSON peab kasutama samu lehe-ID-sid ja sama väljade arvu kui ühine paigutus."
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Toruühendused",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftcore/item/map_location": [
+      "See leht selgitab elemendi Mapi asukoht otstarvet, ühendamist ja ohutut kasutamist.",
+      "Mapi asukoht seadistab sihtmärgi ala, tee, filtrid või käitumise.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Salvestamine",
+      "Elemendi Mapi asukoht käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Robotite alad",
+      "Elemendi Mapi asukoht käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "See leht selgitab elemendi Habras %s Kild otstarvet, ühendamist ja ohutut kasutamist.",
+      "Habras %s Kild kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Vedeliku taastamine",
+      "Elemendi Habras %s Kild käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Loov mootor toodab kütuse või redstone-signaali abil MJ-energiat.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Kasutamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Kavand paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Salvestamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Ehitamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/item/template": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Mustand paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Salvestamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Kasutamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Üksik Plokk Skeem paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Ploki salvestamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Plaani plokkide asendamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Täitja Planner paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Planeerimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Arhitekti laud paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Ala seadistamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Skannimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Ehitaja teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Ehitaja varustamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Paigutus ja parameetrid",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Täitja paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Ala ja ressursid",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Mallid",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/library": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Plaanide raamatukogu paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Teeki laadimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Andmekandjale kirjutamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Asendaja paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Plokkide asendamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Ehitus Märk paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Robotitega ehitamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Raam paigutab plokke plaani või määratud ala järgi.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Karjääri raam",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Kaevandaja kaevandab määratud alalt plokke ja ressursse.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Ala valimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Kaevandamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "See leht selgitab elemendi Robot otstarvet, ühendamist ja ohutut kasutamist.",
+      "Robot kasutatakse BuildCrafti plokkide ja võrkude seadistamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Ettevalmistus",
+      "Elemendi Robot käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Töö",
+      "Elemendi Robot käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "See leht selgitab elemendi Punakivi plaat otstarvet, ühendamist ja ohutut kasutamist.",
+      "Punakivi plaat seadistab sihtmärgi ala, tee, filtrid või käitumise.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Programmeerimine",
+      "Elemendi Punakivi plaat käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Paigaldamine",
+      "Elemendi Punakivi plaat käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "See leht selgitab elemendi dokkimisjaam otstarvet, ühendamist ja ohutut kasutamist.",
+      "dokkimisjaam kasutatakse BuildCrafti plokkide ja võrkude seadistamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Paigaldamine",
+      "Elemendi dokkimisjaam käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Väravate juhtimine",
+      "Elemendi dokkimisjaam käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Tsooniplaneerija töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Tsooni muutmine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Salvestamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Taotleja hoiab ressursse või seadistusi teiste seadmete jaoks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Päringud",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada.",
+      "Võrk",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Korjajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Kandjarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Vedelikukandjarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Puuraidurrobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Saagikoristajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Kaevurrobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Istutajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Põlluharijarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Lehelõikajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Lihunikrobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Kaevajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Pumpajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Kohaletoimetajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Rüütelrobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Pommitajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Triibulinerobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "See robot saab töökorraldused dokkimisjaamast ja redstone-plaadilt.",
+      "Ehitajarobot teeb robotivõrgus erialast tööd.",
+      "<bold>Vihje:</bold> Määra enne käivitamist tööala, filtrid ja sihtkoht ning jäta robotile tagasitee jaama.",
+      "Ülesanne",
+      "Robot otsib sobiva töö, võtab vajalikud tööriistad või ressursid ja liigub määratud alale. Pärast töö lõppu naaseb ta võrku."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "Magab aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "Jaam ühendatud aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "Jaam reserveeritud aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Tingimus",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Mine jaama rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Ärata üles rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Tööta alal rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Laadi või tühjenda alal rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Nõustu Vedelikud rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Nõustu Esemed rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Keela robot rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Sunni robot rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "see element rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Varusta esemetega rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Küsi asju rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "See tegevus saadab värava tingimuse täitumisel ühendatud sihtmärgile juhtkäsu.",
+      "Tellimus Vajalik Esemed rakendab valitud käsu plokile, torule või robotile.",
+      "<bold>Vihje:</bold> Lisa ka peatamistingimus, et süsteem läheks signaali kadumisel ohutusse olekusse.",
+      "Tegevus",
+      "Tegevust rakendatakse seni, kuni värava tingimus on tõene. Suund, värv ja filtrid määratakse värava kasutajaliideses."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "See leht selgitab elemendi Vesi Gelifier otstarvet, ühendamist ja ohutut kasutamist.",
+      "Vesi Gelifier kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Kasutamine",
+      "Elemendi Vesi Gelifier käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust.",
+      "Geeli tagastamine",
+      "Elemendi Vesi Gelifier käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftfactory/item/gel": [
+      "See leht selgitab elemendi Gelled Vesi otstarvet, ühendamist ja ohutut kasutamist.",
+      "Gelled Vesi kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Rakendamine",
+      "Elemendi Gelled Vesi käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Laser töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Töö",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Kokkupaneku laud töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Koostamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Laadimine Laud töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Laadimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Integratsiooni laud töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Integreerimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Arendatud kokkupaneku laud töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Valmistamine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Programmeerimine Laud töötleb sisendi teistsuguseks väljundiks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Programmeerimine",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "See leht selgitab elemendi Punakivi Kristall otstarvet, ühendamist ja ohutut kasutamist.",
+      "Punakivi Kristall kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Tootmine",
+      "Elemendi Punakivi Kristall käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "See leht selgitab elemendi Loogikavärav Copier otstarvet, ühendamist ja ohutut kasutamist.",
+      "Loogikavärav Copier seadistab sihtmärgi ala, tee, filtrid või käitumise.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Kopeerimine",
+      "Elemendi Loogikavärav Copier käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element edastab torude ja väravate vahel signaale ning juhtinfot.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Töö",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Tootmine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Tootmine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Tootmine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Tootmine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "See leht selgitab elemendi see element otstarvet, ühendamist ja ohutut kasutamist.",
+      "see element kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Tootmine",
+      "Elemendi see element käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Rakendumine",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Rakendumine",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "See päästik jälgib ühendatud sihtmärgi olekut ja toimib värava tingimusena.",
+      "see element aktiveerib seotud väravategevuse, kuni tingimus on täidetud.",
+      "<bold>Vihje:</bold> Kontrolli värvilist külge ja jälgitavat sihtmärki ning kasuta vajaduse korral vastastingimust.",
+      "Rakendumine",
+      "Värav kontrollib määratud küljel olevat sihtmärki korrapäraselt. Kui sihtmärke on mitu, näitavad ikooni värv ja toru külg kontrollitavat suunda."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "puidust kineesitoru võtab masinast või mootorist MJ-energia võrku.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "munakivist kineesitoru edastab MJ-energiat energiavõrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kivist kineesitoru edastab MJ-energiat energiavõrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "liivakivist kineesitoru edastab MJ-energiat energiavõrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kvartsist kineesitoru edastab MJ-energiat energiavõrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "kuldne kineesitoru edastab MJ-energiat energiavõrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "rauast kineesitoru edastab MJ-energiat energiavõrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "teemant kineesitoru edastab MJ-energiat energiavõrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "puidust teemant kineesitoru võtab masinast või mootorist MJ-energia võrku.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Energiavõrgu tööpõhimõte",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "See leht selgitab elemendi Toru sulgeja otstarvet, ühendamist ja ohutut kasutamist.",
+      "Toru sulgeja kasutatakse masinate, väravate ja torude valmistamiseks või täiustamiseks.",
+      "<bold>Vihje:</bold> Kontrolli enne põhivõrku lisamist väikeses katses sisendeid, väljundeid ja suunda.",
+      "Rakendamine",
+      "Elemendi Toru sulgeja käitumine sõltub ühendatud sihtmärgist, suunast, filtritest ja MJ-toitest. Kontrolli pärast seadistuse muutmist tegelikku tulemust."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "See masin on BuildCrafti automatiseeritud töövoo funktsionaalne osa.",
+      "Filtreeritud puhver hoiab ressursse või seadistusi teiste seadmete jaoks.",
+      "<bold>Vihje:</bold> Eralda sisend, väljund, MJ-toide ja tööala ning lisa võimalus ummistuse tuvastamiseks.",
+      "Hoiustamine ja filtrid",
+      "Paigalda masin õiges suunas ning varusta see vajalike ressursside ja MJ-ga. Täis väljund võib töötlemise peatada."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Nafta (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Naftajääk (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Raske nafta (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Tihe nafta (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Destilleeritud nafta (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Gaaskütus (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Kerge kütus (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Tihe kütus (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Segatud kergkütus (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Seda vedelikku kasutatakse BuildCrafti naftatöötlus- ja energiatootmisahelas.",
+      "Segatud raskekütus (Jahe) toimib nafta- ja kütusetöötluse vaheprodukti või kütusena.",
+      "<bold>Vihje:</bold> Hoia eri vedelike ja temperatuurietappide mahutid ning torud selgelt lahus.",
+      "Hankimine ja kasutamine",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi.",
+      "Mootorid",
+      "Destilleerija ja soojusvaheti abil saab lähteainest valmistada teisi fraktsioone. Jälgi temperatuuri ja väljundruumi."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Seda toru kasutatakse BuildCrafti võrgus ressursside valimiseks ja transportimiseks.",
+      "see element transpordib esemeid võrgus.",
+      "<bold>Vihje:</bold> Kontrolli tulemust igas hargnemiskohas ning lukusta marsruut vajaduse korral värvide, filtrite või raudtoruga.",
+      "Forestry integratsioon",
+      "Toru tuvastab automaatselt ühendatavad naabertorud ja seadmed. Hargnemisel valitakse järgmine tee toru erireeglite järgi."
+    ]
+  }
+}

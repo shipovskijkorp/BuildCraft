@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "lt_lt",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "Šiame puslapyje paaiškinta Medinė Pavara paskirtis, prijungimas ir saugus naudojimas.",
+      "Medinė Pavara naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Šiame puslapyje paaiškinta Akmeninė Pavara paskirtis, prijungimas ir saugus naudojimas.",
+      "Akmeninė Pavara naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Šiame puslapyje paaiškinta Geležinė Pavara paskirtis, prijungimas ir saugus naudojimas.",
+      "Geležinė Pavara naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Šiame puslapyje paaiškinta Auksinė Pavara paskirtis, prijungimas ir saugus naudojimas.",
+      "Auksinė Pavara naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Šiame puslapyje paaiškinta Deimantinė Pavara paskirtis, prijungimas ir saugus naudojimas.",
+      "Deimantinė Pavara naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Šiame puslapyje paaiškinta Veržliaraktis paskirtis, prijungimas ir saugus naudojimas.",
+      "Veržliaraktis nustato objekto sritį, kelią, filtrus arba elgseną.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Šiame puslapyje paaiškinta Teptukas paskirtis, prijungimas ir saugus naudojimas.",
+      "Teptukas nustato objekto sritį, kelią, filtrus arba elgseną.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Šiame puslapyje paaiškinta Žymeklis Connector paskirtis, prijungimas ir saugus naudojimas.",
+      "Žymeklis Connector deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Naudojimas",
+      "Žymeklis Connector veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Šiame puslapyje paaiškinta Path Žymeklis paskirtis, prijungimas ir saugus naudojimas.",
+      "Path Žymeklis deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Kelio kūrimas",
+      "Path Žymeklis veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Naudojimas",
+      "Path Žymeklis veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftcore/item/list": [
+      "Šiame puslapyje paaiškinta Sąrašas paskirtis, prijungimas ir saugus naudojimas.",
+      "Sąrašas saugo išteklius ar nustatymus kitų įrenginių naudojimui.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Redagavimas",
+      "Sąrašas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Pritaikymas",
+      "Sąrašas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Raudonakmenio Variklis naudodamas kurą arba raudonojo akmens signalą gamina MJ energiją.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Veikimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Variklių veikimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Veikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Veikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Veikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Būsenos tikrinimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Būsenos tikrinimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Būsenos tikrinimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Būsenos tikrinimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Būsenos tikrinimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Aktyviklio kryptys",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Veikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Veikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Raudonas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje.",
+      "Parametrai",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje.",
+      "Aktyviklio kryptys",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje.",
+      "Aktyviklio kryptys",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje.",
+      "Aktyviklio kryptys",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Garo Variklis naudodamas kurą arba raudonojo akmens signalą gamina MJ energiją.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Kuras ir galia",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Temperatūra",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Vidaus degimo Variklis naudodamas kurą arba raudonojo akmens signalą gamina MJ energiją.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Talpyklos",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Kaitinimas ir sauga",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Variklių veikimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Distiliatorius apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Veikimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Automatizavimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Šiluma Keitiklis apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Šilumos mainai",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Ryšys su distiliavimu",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Saugykla (Skysčio) saugo išteklius ar nustatymus kitų įrenginių naudojimui.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Laikymas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Pompa atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Įrengimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Flood Loginiai vartai apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Skysčio išleidimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Kasimo Šulinys kasa blokus ir išteklius nurodytoje srityje.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Kasyba",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Apribojimai",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Piltuvas apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Perdavimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "šis elementas apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Nustatymas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Šiame puslapyje aprašytas BuildCraft vadovo sistemos išteklių formatas.",
+      "Vadovo registro apžvalga apibrėžia vadovo puslapių struktūrą, registrą ir rodymą.",
+      "<bold>Patarimas:</bold> Pakeitę identifikatorius, JSON sintaksę arba kalbos kodą iš naujo įkelkite išteklius ir patikrinkite žurnalą.",
+      "Įrašo duomenys",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas.",
+      "Atsakomybių atskyrimas",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas.",
+      "Tikrinimas",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Šiame puslapyje aprašytas BuildCraft vadovo sistemos išteklių formatas.",
+      "JSON instrukcijų formatas apibrėžia vadovo puslapių struktūrą, registrą ir rodymą.",
+      "<bold>Patarimas:</bold> Pakeitę identifikatorius, JSON sintaksę arba kalbos kodą iš naujo įkelkite išteklius ir patikrinkite žurnalą.",
+      "Antraštė",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>~{buildcraft/json/lib}</code> <code>~args N</code>",
+      "Funkcijos",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>~{buildcraft/json/lib}</code> <code>~args N</code>",
+      "Dabartiniai vadovo ištekliai",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>~{buildcraft/json/lib}</code> <code>~args N</code>"
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Šiame puslapyje aprašytas BuildCraft vadovo sistemos išteklių formatas.",
+      "Vadovo puslapio formatas apibrėžia vadovo puslapių struktūrą, registrą ir rodymą.",
+      "<bold>Patarimas:</bold> Pakeitę identifikatorius, JSON sintaksę arba kalbos kodą iš naujo įkelkite išteklius ir patikrinkite žurnalą.",
+      "Bendri puslapių maketai",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Kalbų tekstų paketai",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Atsarginiai tekstai ir alternatyvūs vardai",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Manifestas",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>",
+      "Palaikomas žymėjimas",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas. <code>assets/buildcraft/guide/page_layouts.json</code> <code>{{bc_text:index}}</code>"
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Įrengimas",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Nustatymas",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Logika",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Vartų modifikatoriai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Vartų variantai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Aktyvikliai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Veiksmai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Parametrai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Jungtys",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Valdymas",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Vamzdžių jungtys",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Signalai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Vamzdžių jungtys",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Naudojimas",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Filtrai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Suveikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Suveikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje.",
+      "Kryptys",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje.",
+      "Kryptys",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "akmeninio grindinio konstrukcinis vamzdis perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "medinis transportavimo vamzdis paima daiktus iš gretimos saugyklos ir siunčia juos į tinklą.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "šis elementas gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "akmeninis transportavimo vamzdis gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "kvarcinis transportavimo vamzdis gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "geležinis transportavimo vamzdis gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "auksinis transportavimo vamzdis gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "deimantinis transportavimo vamzdis nukreipia daiktus pagal filtrus arba spalvas.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "obsidianinis transportavimo vamzdis surenka netoliese numestus daiktus.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdžių veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "smiltainio transportavimo vamzdis gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "molinis transportavimo vamzdis kai įmanoma, įdeda daiktus į gretimą saugyklą.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "tuštumos transportavimo vamzdis saugiai sunaikina įeinančius daiktus.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "dryžuotas transportavimo vamzdis gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdžių veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "medinis deimantinis transportavimo vamzdis nukreipia daiktus pagal filtrus arba spalvas.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "lazurito transportavimo vamzdis nukreipia daiktus pagal filtrus arba spalvas.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "diazulito transportavimo vamzdis nukreipia daiktus pagal filtrus arba spalvas.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "emzulito transportavimo vamzdis nukreipia daiktus pagal filtrus arba spalvas.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Prijungimas ir maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "medinis skysčių vamzdis paima skystį iš gretimos talpyklos.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Jungtys",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "šis elementas gabena skysčius tarp talpyklų ir mašinų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "akmeninis skysčių vamzdis gabena skysčius tarp talpyklų ir mašinų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "kvarcinis skysčių vamzdis gabena skysčius tarp talpyklų ir mašinų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "geležinis skysčių vamzdis gabena skysčius tarp talpyklų ir mašinų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "auksinis skysčių vamzdis gabena skysčius tarp talpyklų ir mašinų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "deimantinis skysčių vamzdis nukreipia skysčius pagal filtrus.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Jungtys",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "smiltainio skysčių vamzdis gabena skysčius tarp talpyklų ir mašinų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "molinis skysčių vamzdis gabena skysčius tarp talpyklų ir mašinų.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "tuštumos skysčių vamzdis pašalina įeinantį skystį.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "medinis deimantinis skysčių vamzdis nukreipia skysčius pagal filtrus.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Vamzdžio veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Jungtys",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Maitinimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles.",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Šiame puslapyje paaiškinta %s Vamzdis Ženklas paskirtis, prijungimas ir saugus naudojimas.",
+      "%s Vamzdis Ženklas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Įrengimas",
+      "%s Vamzdis Ženklas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Laidų įrengimas",
+      "%s Vamzdis Ženklas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Šiame puslapyje paaiškinta Energijos adapteris paskirtis, prijungimas ir saugus naudojimas.",
+      "Energijos adapteris perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Prijungimas",
+      "Energijos adapteris veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Vamzdžių jungtys",
+      "Energijos adapteris veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Šiame puslapyje paaiškinta Vamzdis Kamštis paskirtis, prijungimas ir saugus naudojimas.",
+      "Vamzdis Kamštis perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Įrengimas",
+      "Vamzdis Kamštis veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį.",
+      "Parametrai",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje.",
+      "Parametras",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "šis elementas naudodamas kurą arba raudonojo akmens signalą gamina MJ energiją."
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Vieta ir dydis",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Priedai",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Srities nustatymas",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Naudojimas",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftlib/item/guide": [
+      "Šiame puslapyje aprašytas BuildCraft vadovo sistemos išteklių formatas.",
+      "BuildCraft Vadovas Knyga apibrėžia vadovo puslapių struktūrą, registrą ir rodymą.",
+      "<bold>Patarimas:</bold> Pakeitę identifikatorius, JSON sintaksę arba kalbos kodą iš naujo įkelkite išteklius ir patikrinkite žurnalą.",
+      "Vadovo naudojimas",
+      "Puslapio struktūra ir vertimo tekstas laikomi atskirai. Kalbos JSON turi išlaikyti tuos pačius puslapių ID ir laukų skaičių kaip bendras maketas."
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Vamzdžių jungtys",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Šiame puslapyje paaiškinta Žemėlapis Vieta paskirtis, prijungimas ir saugus naudojimas.",
+      "Žemėlapis Vieta nustato objekto sritį, kelią, filtrus arba elgseną.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Įrašymas",
+      "Žemėlapis Vieta veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Robotų zonos",
+      "Žemėlapis Vieta veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Šiame puslapyje paaiškinta Trapus %s Šukė paskirtis, prijungimas ir saugus naudojimas.",
+      "Trapus %s Šukė naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Skysčio susigrąžinimas",
+      "Trapus %s Šukė veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Kūrybinis Variklis naudodamas kurą arba raudonojo akmens signalą gamina MJ energiją.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Naudojimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Projektas deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Įrašymas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Statyba",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Šablonas deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Įrašymas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Naudojimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Vienas Blokas Schema deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Bloko įrašymas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Brėžinio blokų keitimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Užpildytuvas Planner deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Planavimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Architekto Stalas deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Srities nustatymas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Nuskaitymas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Statytojas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Statytojo aprūpinimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Vieta ir parametrai",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Pildytuvas deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Sritis ir ištekliai",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Šablonai",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Projektų Biblioteka deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Įkėlimas į biblioteką",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Įrašymas į laikmeną",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Keitiklis deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Blokų keitimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Statybinis Žymeklis deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Statyba robotais",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Rėmas deda blokus pagal brėžinį arba nurodytą sritį.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Karjero karkasas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Kasykla kasa blokus ir išteklius nurodytoje srityje.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Srities pasirinkimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Kasyba",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Šiame puslapyje paaiškinta Robotas paskirtis, prijungimas ir saugus naudojimas.",
+      "Robotas naudojamas BuildCraft blokams ir tinklams nustatyti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Paruošimas",
+      "Robotas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Veikimas",
+      "Robotas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Šiame puslapyje paaiškinta Raudonakmenis Plokštė paskirtis, prijungimas ir saugus naudojimas.",
+      "Raudonakmenis Plokštė nustato objekto sritį, kelią, filtrus arba elgseną.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Programavimas",
+      "Raudonakmenis Plokštė veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Įrengimas",
+      "Raudonakmenis Plokštė veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Šiame puslapyje paaiškinta prijungimo stotis paskirtis, prijungimas ir saugus naudojimas.",
+      "prijungimo stotis naudojamas BuildCraft blokams ir tinklams nustatyti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Įrengimas",
+      "prijungimo stotis veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Vartų valdymas",
+      "prijungimo stotis veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Zonų planuoklis apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Zonos redagavimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Išsaugojimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Užklausiklis saugo išteklius ar nustatymus kitų įrenginių naudojimui.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Užklausos",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą.",
+      "Tinklas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Rinkimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Nešimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Skysčių nešimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Medkirčio robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Derliaus rinkimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Kasybos robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Sodinimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Ūkininko robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Lapų pjovimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Mėsininko robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Kasimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Siurbimo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Pristatymo robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Riterio robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Bombonešio robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Dryžuotas robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "Šis robotas gauna darbo nurodymus iš prijungimo stoties ir raudonojo akmens plokštės.",
+      "Statybos robotas atlieka specializuotą darbą robotų tinkle.",
+      "<bold>Patarimas:</bold> Prieš paleisdami nustatykite darbo sritį, filtrus ir paskirties vietą bei palikite kelią grįžti į stotį.",
+      "Paskirtis",
+      "Robotas ieško tinkamo darbo, pasiima reikalingus įrankius ar išteklius ir vyksta į nurodytą sritį. Baigęs grįžta į tinklą."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "Miega aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "Stotis susieta aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "Stotis rezervuota aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Sąlyga",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Eiti į stotį pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Pažadinti pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Dirbti teritorijoje pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Pakrauti arba iškrauti teritorijoje pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Priimti Skysčiai pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Priimti Daiktai pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Uždrausti robotą pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Priversti robotą pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "šis elementas pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Tiekti daiktus pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Request Daiktai pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Šis veiksmas siunčia valdymo komandą prijungtam objektui, kai vartų sąlyga tenkinama.",
+      "Request Reikalinga Daiktai pritaiko pasirinktą komandą blokui, vamzdžiui arba robotui.",
+      "<bold>Patarimas:</bold> Taip pat nustatykite sustabdymo sąlygą, kad dingus signalui sistema grįžtų į saugią būseną.",
+      "Veiksmas",
+      "Veiksmas taikomas tol, kol vartų sąlyga yra teisinga. Kryptis, spalva ir filtrai nustatomi vartų sąsajoje."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Šiame puslapyje paaiškinta Vanduo Gelifier paskirtis, prijungimas ir saugus naudojimas.",
+      "Vanduo Gelifier naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Naudojimas",
+      "Vanduo Gelifier veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą.",
+      "Gelio susigrąžinimas",
+      "Vanduo Gelifier veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Šiame puslapyje paaiškinta Gelled Vanduo paskirtis, prijungimas ir saugus naudojimas.",
+      "Gelled Vanduo naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Pritaikymas",
+      "Gelled Vanduo veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Lazeris apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Veikimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Surinkimo Stalas apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Surinkimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Įkrovimas Stalas apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Įkrovimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Integracija Stalas apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Integravimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Surinkimo darbastalis apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Gamyba",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Programavimas Stalas apdoroja įėjimo išteklius ir paverčia juos kitu rezultatu.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Programavimas",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Šiame puslapyje paaiškinta Raudonakmenis Crystal paskirtis, prijungimas ir saugus naudojimas.",
+      "Raudonakmenis Crystal naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Gamyba",
+      "Raudonakmenis Crystal veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Šiame puslapyje paaiškinta Loginiai vartai Copier paskirtis, prijungimas ir saugus naudojimas.",
+      "Loginiai vartai Copier nustato objekto sritį, kelią, filtrus arba elgseną.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Kopijavimas",
+      "Loginiai vartai Copier veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas perduoda signalus ir valdymo informaciją tarp vamzdžių bei vartų.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Veikimas",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Gamyba",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Gamyba",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Gamyba",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Gamyba",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Šiame puslapyje paaiškinta šis elementas paskirtis, prijungimas ir saugus naudojimas.",
+      "šis elementas naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Gamyba",
+      "šis elementas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Suveikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Suveikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Šis aktyviklis stebi prijungto objekto būseną ir naudojamas kaip vartų sąlyga.",
+      "šis elementas aktyvina susietą vartų veiksmą, kol sąlyga tenkinama.",
+      "<bold>Patarimas:</bold> Patikrinkite spalvotą kraštinę ir stebimą objektą, o klaidoms išvengti naudokite priešingą sąlygą.",
+      "Suveikimas",
+      "Vartai periodiškai tikrina nurodytoje pusėje esantį objektą. Jei objektų keli, piktogramos spalva ir vamzdžio pusė rodo tikrinamą kryptį."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "medinis Kinesis vamzdis paima MJ energiją iš mašinos arba variklio į tinklą.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "akmeninio grindinio Kinesis vamzdis perduoda MJ energiją energijos tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "akmeninis Kinesis vamzdis perduoda MJ energiją energijos tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "smiltainio Kinesis vamzdis perduoda MJ energiją energijos tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "kvarcinis Kinesis vamzdis perduoda MJ energiją energijos tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "auksinis Kinesis vamzdis perduoda MJ energiją energijos tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "geležinis Kinesis vamzdis perduoda MJ energiją energijos tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "deimantinis Kinesis vamzdis perduoda MJ energiją energijos tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "medinis deimantinis Kinesis vamzdis paima MJ energiją iš mašinos arba variklio į tinklą.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Energijos tinklo veikimas",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Šiame puslapyje paaiškinta Vamzdžio Vandeniui Atsparus Silikonas paskirtis, prijungimas ir saugus naudojimas.",
+      "Vamzdžio Vandeniui Atsparus Silikonas naudojamas mašinoms, vartams ir vamzdžiams gaminti arba tobulinti.",
+      "<bold>Patarimas:</bold> Prieš jungdami prie pagrindinės sistemos, mažame bandyme patikrinkite įėjimus, išėjimus ir kryptį.",
+      "Pritaikymas",
+      "Vamzdžio Vandeniui Atsparus Silikonas veikimas priklauso nuo prijungto objekto, krypties, filtrų ir tiekiamos MJ energijos. Pakeitę nustatymus patikrinkite tikrą rezultatą."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Ši mašina yra funkcinė BuildCraft automatizuoto proceso dalis.",
+      "Filtered Buferis saugo išteklius ar nustatymus kitų įrenginių naudojimui.",
+      "<bold>Patarimas:</bold> Atskirkite įėjimą, išėjimą, MJ maitinimą ir darbo sritį bei numatykite užsikimšimo aptikimą.",
+      "Laikymas ir filtrai",
+      "Pastatykite mašiną tinkama kryptimi ir aprūpinkite ištekliais bei MJ energija. Užpildytas išėjimas gali sustabdyti darbą."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Nafta (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Naftos likučiai (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Sunkioji nafta (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Tirštoji nafta (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Distiliuota nafta (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Dujinis kuras (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Lengvasis kuras (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Tirštas kuras (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Mišrus lengvasis kuras (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Šis skystis naudojamas BuildCraft naftos perdirbimo ir energijos gamybos grandinėje.",
+      "Mišrus sunkusis kuras (Vėsus) naudojamas kaip tarpinis produktas arba kuras naftos ir kuro apdorojimo grandinėje.",
+      "<bold>Patarimas:</bold> Aiškiai atskirkite skirtingų skysčių ir temperatūros pakopų talpyklas bei vamzdžius.",
+      "Gavimas ir naudojimas",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime.",
+      "Varikliai",
+      "Naudojant distiliatorių ir šilumokaitį žaliavą galima paversti kitomis frakcijomis. Stebėkite temperatūrą ir laisvą vietą išėjime."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Šis vamzdis naudojamas ištekliams atrinkti ir transportuoti BuildCraft tinkle.",
+      "šis elementas gabena daiktus tinkle.",
+      "<bold>Patarimas:</bold> Patikrinkite rezultatą kiekvienoje sankryžoje, o prireikus užfiksuokite maršrutą spalvomis, filtrais arba geležiniu vamzdžiu.",
+      "Forestry integracija",
+      "Vamzdis automatiškai aptinka prijungiamus gretimus vamzdžius ir įrenginius. Atšakoje kelias parenkamas pagal šio vamzdžio taisykles."
+    ]
+  }
+}
