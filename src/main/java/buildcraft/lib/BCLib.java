@@ -69,6 +69,7 @@ public class BCLib {
                 BCLog.logger.info("  - " + module.lowerCaseName);
             }
         }
+        BCLibItems.registry(modEventBus);
         BCLibRegistries.fmlPreInit();
 
         ExpressionDebugManager.logger = BCLog.logger::info;

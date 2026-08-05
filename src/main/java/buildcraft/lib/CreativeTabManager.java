@@ -81,6 +81,7 @@ public class CreativeTabManager {
             "buildcraftcore:engine_creative",
 
             // Core items
+            "buildcraftlib:guide",
             "buildcraftcore:wrench",
             "buildcraftcore:gears/gear_wood",
             "buildcraftcore:gears/gear_stone",

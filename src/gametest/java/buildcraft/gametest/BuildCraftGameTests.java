@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
@@ -18,6 +20,7 @@ import buildcraft.energy.BCEnergyFluids;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.tile.TileTank;
 import buildcraft.lib.BCLib;
+import buildcraft.lib.BCLibItems;
 
 @GameTestHolder(BCLib.MODID)
 @PrefixGameTestTemplate(false)
@@ -100,4 +103,28 @@ public final class BuildCraftGameTests {
         }
         helper.succeed();
     }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void guideBookItemAndRecipeAreRegistered(GameTestHelper helper) {
+        Item guide = BCLibItems.GUIDE.get();
+        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(guide);
+        if (!new ResourceLocation(BCLib.MODID, "guide").equals(itemId)) {
+            helper.fail("guide book item is not registered as buildcraftlib:guide");
+            return;
+        }
+
+        Recipe<?> recipe = helper.getLevel().getRecipeManager()
+            .byKey(new ResourceLocation(BCLib.MODID, "guide_book"))
+            .orElse(null);
+        if (recipe == null) {
+            helper.fail("guide book crafting recipe was not loaded");
+            return;
+        }
+        if (recipe.getResultItem().getItem() != guide) {
+            helper.fail("guide book recipe produces the wrong item");
+            return;
+        }
+        helper.succeed();
+    }
+
 }
