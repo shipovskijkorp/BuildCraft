@@ -42,12 +42,12 @@ import buildcraft.api.statements.StatementManager;
 /**
  * Loads the original BuildCraft 8 guide registry and markdown files.
  * <p>
- * The manifest is generated directly from the official BuildCraftGuide 8.0.x-1.12 submodule. The markdown itself is
- * kept under the original resource paths so resource packs can replace individual pages exactly as they could in BC8.
+ * The manifest is generated directly from the official BuildCraftGuide 8.0.x-1.12 submodule. All authored guide
+ * sources are kept together under assets/buildcraft/guide so the book can be edited or replaced as one resource tree.
  */
 public final class GuideContent {
     private static final ResourceLocation MANIFEST =
-        new ResourceLocation("buildcraftlib", "guide/original_manifest.json");
+        new ResourceLocation("buildcraft", "guide/original_manifest.json");
     private static final Pattern FIRST_CHAPTER = Pattern.compile("<chapter\\s+name=\"([^\"]+)\"[^>]*/>");
     private static final Pattern FIRST_HEADING = Pattern.compile("(?m)^#+\\s+(.+)$");
     private static final Pattern TAGS = Pattern.compile("<[^>]+>");

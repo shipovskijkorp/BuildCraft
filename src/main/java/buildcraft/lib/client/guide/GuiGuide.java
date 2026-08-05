@@ -63,17 +63,17 @@ import buildcraft.lib.recipe.AssemblyRecipeBasic;
  */
 public final class GuiGuide extends Screen {
     private static final ResourceLocation LEFT_PAGE =
-        new ResourceLocation("buildcraftlib", "textures/gui/guide/left_page.png");
+        new ResourceLocation("buildcraft", "guide/gui/left_page.png");
     private static final ResourceLocation RIGHT_PAGE =
-        new ResourceLocation("buildcraftlib", "textures/gui/guide/right_page.png");
+        new ResourceLocation("buildcraft", "guide/gui/right_page.png");
     private static final ResourceLocation LEFT_PAGE_FIRST =
-        new ResourceLocation("buildcraftlib", "textures/gui/guide/left_page_first.png");
+        new ResourceLocation("buildcraft", "guide/gui/left_page_first.png");
     private static final ResourceLocation RIGHT_PAGE_BACK =
-        new ResourceLocation("buildcraftlib", "textures/gui/guide/right_page_back.png");
+        new ResourceLocation("buildcraft", "guide/gui/right_page_back.png");
     private static final ResourceLocation RIGHT_PAGE_LAST =
-        new ResourceLocation("buildcraftlib", "textures/gui/guide/right_page_last.png");
+        new ResourceLocation("buildcraft", "guide/gui/right_page_last.png");
     private static final ResourceLocation ICONS =
-        new ResourceLocation("buildcraftlib", "textures/gui/guide/icons.png");
+        new ResourceLocation("buildcraft", "guide/gui/icons.png");
 
     private static final int PAGE_TEXTURE_WIDTH = 193;
     private static final int PAGE_TEXTURE_HEIGHT = 248;

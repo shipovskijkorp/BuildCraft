@@ -50,11 +50,11 @@ add "wrench"
 </json_insn>
 And the insn file is in 
 <json_insn>
-"assets/buildcraftcore/compat/buildcraft/guide.txt"
+"assets/buildcraft/guide/registry/buildcraftcore.txt"
 </json_insn>
 then the wrench guide page will be loaded from
 <json_insn>
-"assets/buildcraftcore/compat/buildcraft/guide/item/wrench.md"
+"assets/buildcraft/guide/en_us/buildcraftcore/item/wrench.md"
 </json_insn>
 <new_page/>
 ## The replace function

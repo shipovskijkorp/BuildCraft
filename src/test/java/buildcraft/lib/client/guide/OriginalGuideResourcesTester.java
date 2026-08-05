@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class OriginalGuideResourcesTester {
-    private static final String MANIFEST = "/assets/buildcraftlib/guide/original_manifest.json";
+    private static final String MANIFEST = "/assets/buildcraft/guide/original_manifest.json";
 
     @Test
     void originalGuideManifestContainsEveryOfficialMarkdownPage() throws Exception {
@@ -151,7 +151,7 @@ class OriginalGuideResourcesTester {
 
     @Test
     void deprecatedOriginalGuideShortcutsRemainFunctional() throws Exception {
-        String path = "/assets/buildcraftlib/compat/buildcraft/guide/en_us/item/guide.md";
+        String path = "/assets/buildcraft/guide/en_us/buildcraftlib/item/guide.md";
         String markdown;
         try (InputStream stream = resource(path);
              InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
@@ -174,18 +174,43 @@ class OriginalGuideResourcesTester {
     void originalGuideRegistrySourcesAreBundled() throws Exception {
         String[] namespaces = {
             "buildcraftlib", "buildcraftcore", "buildcraftbuilders", "buildcraftenergy",
-            "buildcraftfactory", "buildcraftrobotics", "buildcraftsilicon", "buildcrafttransport"
+            "buildcraftfactory", "buildcraftrobotics", "buildcraftsilicon", "buildcrafttransport",
+            "buildcraftcompat"
         };
         for (String namespace : namespaces) {
-            try (InputStream ignored = resource("/assets/" + namespace + "/compat/buildcraft/guide.txt")) {
-                // Keep the original guide registry scripts available as an editable source of truth.
+            try (InputStream ignored = resource("/assets/buildcraft/guide/registry/" + namespace + ".txt")) {
+                // All authored registry scripts are kept in the central guide resource tree.
             }
         }
-        try (InputStream ignored = resource("/assets/buildcraftlib/compat/buildcraft/guide/util.txt")) {
-            // Shared aliases used by the original guide.txt files.
+        try (InputStream ignored = resource("/assets/buildcraft/guide/registry/util.txt")) {
+            // Shared aliases used by the original guide registry scripts.
         }
-        try (InputStream ignored = resource("/assets/buildcraftcompat/compat/buildcraft/guide.txt")) {
-            // Optional integrations keep their authored registry source beside the page resources.
+    }
+
+    @Test
+    void guideInterfaceTexturesUseTheCentralBuildCraftResourceTree() throws Exception {
+        String[] textures = {
+            "cover.png", "icons.png", "left_page.png", "left_page_back.png", "left_page_first.png",
+            "note.png", "right_page.png", "right_page_back.png", "right_page_last.png"
+        };
+        for (String texture : textures) {
+            try (InputStream ignored = resource("/assets/buildcraft/guide/gui/" + texture)) {
+                // The custom guide UI is stored beside the authored guide content.
+            }
+        }
+    }
+
+    @Test
+    void everyGuidePageUsesTheCentralBuildCraftResourceTree() throws Exception {
+        JsonObject root;
+        try (InputStream stream = resource(MANIFEST);
+             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+            root = JsonParser.parseReader(reader).getAsJsonObject();
+        }
+        for (JsonElement element : root.getAsJsonArray("entries")) {
+            String source = element.getAsJsonObject().get("source").getAsString();
+            Assertions.assertTrue(source.startsWith("buildcraft:guide/en_us/"),
+                "Guide page escaped the centralized resource tree: " + source);
         }
     }
 
@@ -242,7 +267,7 @@ class OriginalGuideResourcesTester {
 
     @Test
     void representativeArticleKeepsRecipesChaptersAndUsagesInSourceOrder() throws Exception {
-        String path = "/assets/buildcrafttransport/compat/buildcraft/guide/en_us/pipe/quartz_fluid.md";
+        String path = "/assets/buildcraft/guide/en_us/buildcrafttransport/pipe/quartz_fluid.md";
         String markdown;
         try (InputStream stream = resource(path);
              InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
