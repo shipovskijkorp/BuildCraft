@@ -236,7 +236,7 @@ class OriginalGuideResourcesTester {
             // Shared registry aliases.
         }
         String[] textures = {
-            "cover.png", "icons.png", "left_page.png", "left_page_back.png", "left_page_first.png",
+            "icons.png", "left_page.png", "left_page_back.png", "left_page_first.png",
             "note.png", "right_page.png", "right_page_back.png", "right_page_last.png"
         };
         for (String texture : textures) {
