@@ -1,0 +1,36 @@
+modLoader="lowcodefml"
+loaderVersion="[1,)"
+license="MPL-2.0"
+showAsResourcePack=true
+
+[[mods]]
+    modId="${mod_id}"
+    version="${mod_version}"
+    displayName="${mod_name}"
+    authors="CurativeTree, ShipovskijKorp"
+    credits="Special thanks to the original BuildCraft team and all localization contributors."
+    description='''
+Additional interface and Guide Book translations for BuildCraft Community Edition.
+English remains bundled with the main BuildCraft mod and is used as the fallback language.
+    '''
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1,)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1,1.21.2)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.${mod_id}]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="CLIENT"
