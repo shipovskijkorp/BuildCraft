@@ -3,7 +3,14 @@ package buildcraft.lib.client.guide;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -14,42 +21,112 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class OriginalGuideResourcesTester {
-    private static final String MANIFEST = "/assets/buildcraft/guide/original_manifest.json";
+    private static final String ROOT = "/assets/buildcraft/guide/";
+    private static final String MANIFEST = ROOT + "original_manifest.json";
+    private static final String LAYOUTS = ROOT + "page_layouts.json";
+    private static final String LANGUAGES = ROOT + "languages.json";
+    private static final String ENGLISH = ROOT + "text/en_us.json";
+    private static final String RUSSIAN = ROOT + "text/ru_ru.json";
+    private static final Pattern SLOT = Pattern.compile("\\{\\{bc_text:(\\d+)\\}\\}");
 
     @Test
-    void originalGuideManifestContainsEveryOfficialMarkdownPage() throws Exception {
-        JsonObject root;
-        try (InputStream stream = resource(MANIFEST);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            root = JsonParser.parseReader(reader).getAsJsonObject();
-        }
+    void manifestAndPackedPagesCoverTheWholeCurrentGuide() throws Exception {
+        JsonObject manifest = json(MANIFEST);
+        JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
+        JsonObject english = json(ENGLISH).getAsJsonObject("pages");
+        JsonObject russian = json(RUSSIAN).getAsJsonObject("pages");
 
-        JsonArray entries = root.getAsJsonArray("entries");
-        Assertions.assertTrue(entries.size() >= 111, "The current guide must retain every original BuildCraftGuide page");
+        Assertions.assertEquals(5, manifest.get("format").getAsInt());
+        Assertions.assertEquals(1, manifest.get("layout_format").getAsInt());
+        Assertions.assertEquals(1, manifest.get("text_pack_format").getAsInt());
 
+        JsonArray entries = manifest.getAsJsonArray("entries");
+        Assertions.assertTrue(entries.size() >= 209, "The current guide must retain every documented entry");
+        Set<String> pageKeys = new HashSet<>();
         int listed = 0;
         for (JsonElement element : entries) {
             JsonObject entry = element.getAsJsonObject();
-            if (entry.get("listed").getAsBoolean()) listed++;
-            String[] source = entry.get("source").getAsString().split(":", 2);
-            Assertions.assertEquals(2, source.length, "Invalid guide resource location");
-            try (InputStream ignored = resource("/assets/" + source[0] + "/" + source[1])) {
-                // Opening every path is enough: the original registry intentionally contains one empty markdown page.
+            Assertions.assertFalse(entry.has("source"), "Packed entries must not reference loose Markdown files");
+            Assertions.assertTrue(entry.has("page"), "Every guide entry needs a language-neutral page key");
+            pageKeys.add(entry.get("page").getAsString());
+            if (entry.get("listed").getAsBoolean()) {
+                listed++;
             }
         }
-        Assertions.assertTrue(listed >= 106, "The current guide must retain every original contents entry");
+        Assertions.assertTrue(listed >= 204, "The current guide must retain every contents entry");
+        Assertions.assertEquals(pageKeys, layouts.keySet(), "Manifest and shared layouts disagree");
+        Assertions.assertEquals(pageKeys, english.keySet(), "Default English text pack is incomplete");
+        Assertions.assertEquals(pageKeys, russian.keySet(), "Russian text pack is incomplete");
+        Assertions.assertEquals(207, pageKeys.size(), "Unexpected number of distinct authored guide pages");
     }
 
+    @Test
+    void sharedLayoutsAndBothLanguagesHaveMatchingSlots() throws Exception {
+        JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
+        JsonObject english = json(ENGLISH).getAsJsonObject("pages");
+        JsonObject russian = json(RUSSIAN).getAsJsonObject("pages");
+
+        for (Map.Entry<String, JsonElement> entry : layouts.entrySet()) {
+            String page = entry.getKey();
+            JsonObject layout = entry.getValue().getAsJsonObject();
+            String template = layout.get("template").getAsString();
+            int slotCount = layout.get("slots").getAsInt();
+            JsonArray en = english.getAsJsonArray(page);
+            JsonArray ru = russian.getAsJsonArray(page);
+            Assertions.assertEquals(slotCount, en.size(), "English slot mismatch in " + page);
+            Assertions.assertEquals(slotCount, ru.size(), "Russian slot mismatch in " + page);
+
+            Set<Integer> indexes = new HashSet<>();
+            Matcher matcher = SLOT.matcher(template);
+            while (matcher.find()) {
+                indexes.add(Integer.parseInt(matcher.group(1)));
+            }
+            for (int index = 0; index < slotCount; index++) {
+                Assertions.assertTrue(indexes.contains(index), "Unused text slot " + index + " in " + page);
+                Assertions.assertTrue(en.get(index).isJsonPrimitive() && en.get(index).getAsJsonPrimitive().isString(),
+                    "English slot is not text in " + page + " #" + index);
+                Assertions.assertTrue(ru.get(index).isJsonPrimitive() && ru.get(index).getAsJsonPrimitive().isString(),
+                    "Russian slot is not text in " + page + " #" + index);
+                Assertions.assertFalse(en.get(index).getAsString().isBlank(),
+                    "Default English text cannot be blank in " + page + " #" + index);
+                Assertions.assertFalse(ru.get(index).getAsString().isBlank(),
+                    "Full Russian localization cannot be blank in " + page + " #" + index);
+            }
+            String renderedEnglish = render(template, strings(en));
+            String renderedRussian = render(template, strings(ru));
+            Assertions.assertFalse(SLOT.matcher(renderedEnglish).find(), "Unresolved English slot in " + page);
+            Assertions.assertFalse(SLOT.matcher(renderedRussian).find(), "Unresolved Russian slot in " + page);
+        }
+    }
+
+    @Test
+    void regionalEnglishAliasesAndRussianFallbackAreConfigured() throws Exception {
+        JsonObject languages = json(LANGUAGES);
+        JsonObject aliases = languages.getAsJsonObject("aliases");
+        for (String locale : List.of("en_au", "en_ca", "en_gb", "en_nz")) {
+            Assertions.assertEquals("en_us", aliases.get(locale).getAsString());
+        }
+        JsonArray russianFallback = languages.getAsJsonObject("fallbacks").getAsJsonArray("ru_ru");
+        Assertions.assertEquals(1, russianFallback.size());
+        Assertions.assertEquals("en_us", russianFallback.get(0).getAsString());
+
+        Map<String, String> aliasMap = new HashMap<>();
+        aliases.entrySet().forEach(entry -> aliasMap.put(entry.getKey(), entry.getValue().getAsString()));
+        Map<String, List<String>> fallbackMap = Map.of("ru_ru", List.of("en_us"));
+        Assertions.assertEquals("en_us", GuidePageStore.resolveAlias("EN-gb", aliasMap));
+        Assertions.assertEquals(List.of("en_us"),
+            GuidePageStore.buildLoadOrder("en_us", "en_gb", aliasMap, fallbackMap));
+        Assertions.assertEquals(List.of("en_us", "ru_ru"),
+            GuidePageStore.buildLoadOrder("en_us", "ru_ru", aliasMap, fallbackMap));
+        String resolvedEnglish = GuidePageStore.resolveAlias("EN-GB", aliasMap);
+        Assertions.assertEquals("buildcraft:guide/text/en_us.json",
+            GuidePageStore.textPackLocation(resolvedEnglish).toString());
+    }
 
     @Test
     void currentProjectGuideCoversEveryAddedModuleAndMajorWorkflow() throws Exception {
-        JsonObject root;
-        try (InputStream stream = resource(MANIFEST);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            root = JsonParser.parseReader(reader).getAsJsonObject();
-        }
-
-        java.util.Set<String> ids = new java.util.HashSet<>();
+        JsonObject root = json(MANIFEST);
+        Set<String> ids = new HashSet<>();
         for (JsonElement element : root.getAsJsonArray("entries")) {
             ids.add(element.getAsJsonObject().get("id").getAsString());
         }
@@ -71,15 +148,13 @@ class OriginalGuideResourcesTester {
 
     @Test
     void robotCareerEntriesCarryVariantNbt() throws Exception {
-        JsonObject root;
-        try (InputStream stream = resource(MANIFEST);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            root = JsonParser.parseReader(reader).getAsJsonObject();
-        }
+        JsonObject root = json(MANIFEST);
         int careers = 0;
         for (JsonElement element : root.getAsJsonArray("entries")) {
             JsonObject entry = element.getAsJsonObject();
-            if (!entry.get("id").getAsString().startsWith("buildcraftrobotics:robot/")) continue;
+            if (!entry.get("id").getAsString().startsWith("buildcraftrobotics:robot/")) {
+                continue;
+            }
             Assertions.assertEquals("buildcraftrobotics:robot", entry.get("stack").getAsString());
             Assertions.assertTrue(entry.has("stack_nbt"), "Robot career entry must preserve its board variant");
             net.minecraft.nbt.TagParser.parseTag(entry.get("stack_nbt").getAsString());
@@ -90,17 +165,15 @@ class OriginalGuideResourcesTester {
 
     @Test
     void everyCurrentEnergyFluidFamilyHasAReadableGuidePage() throws Exception {
-        JsonObject root;
-        try (InputStream stream = resource(MANIFEST);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            root = JsonParser.parseReader(reader).getAsJsonObject();
-        }
-        java.util.Set<String> ids = new java.util.HashSet<>();
+        JsonObject root = json(MANIFEST);
+        Set<String> ids = new HashSet<>();
         JsonObject forestry = null;
         for (JsonElement element : root.getAsJsonArray("entries")) {
             JsonObject entry = element.getAsJsonObject();
             ids.add(entry.get("id").getAsString());
-            if ("buildcraftcompat:pipe/propolis_item".equals(entry.get("id").getAsString())) forestry = entry;
+            if ("buildcraftcompat:pipe/propolis_item".equals(entry.get("id").getAsString())) {
+                forestry = entry;
+            }
         }
         String[] fluids = {
             "oil", "oil_residue", "oil_heavy", "oil_dense", "oil_distilled",
@@ -115,52 +188,41 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
-    void everyListedGuidePageContainsAnOptionalPracticalHint() throws Exception {
-        JsonObject root;
-        try (InputStream stream = resource(MANIFEST);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            root = JsonParser.parseReader(reader).getAsJsonObject();
-        }
+    void everyListedPageHasLocalizedOptionalHints() throws Exception {
+        JsonObject manifest = json(MANIFEST);
+        JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
+        JsonObject english = json(ENGLISH).getAsJsonObject("pages");
+        JsonObject russian = json(RUSSIAN).getAsJsonObject("pages");
+        Set<String> checked = new HashSet<>();
 
-        java.util.Set<String> checkedSources = new java.util.HashSet<>();
-        for (JsonElement element : root.getAsJsonArray("entries")) {
+        for (JsonElement element : manifest.getAsJsonArray("entries")) {
             JsonObject entry = element.getAsJsonObject();
-            if (!entry.get("listed").getAsBoolean()) continue;
-            String source = entry.get("source").getAsString();
-            if (!checkedSources.add(source)) continue;
-            String[] split = source.split(":", 2);
-            String markdown;
-            try (InputStream stream = resource("/assets/" + split[0] + "/" + split[1]);
-                 InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-                StringBuilder text = new StringBuilder();
-                char[] buffer = new char[1024];
-                int read;
-                while ((read = reader.read(buffer)) >= 0) text.append(buffer, 0, read);
-                markdown = text.toString();
+            if (!entry.get("listed").getAsBoolean()) {
+                continue;
             }
-            Assertions.assertTrue(markdown.contains("<hint>"), "Missing hint section in " + source);
-            Assertions.assertTrue(markdown.contains("<bold>Hint:</bold>"), "Hint is not visibly labelled in " + source);
-            GuideDocument hidden = GuideDocument.parse(markdown, true, false, false);
-            GuideDocument visible = GuideDocument.parse(markdown, true, true, false);
+            String page = entry.get("page").getAsString();
+            if (!checked.add(page)) {
+                continue;
+            }
+            String template = layouts.getAsJsonObject(page).get("template").getAsString();
+            String en = render(template, strings(english.getAsJsonArray(page)));
+            String ru = render(template, strings(russian.getAsJsonArray(page)));
+            Assertions.assertTrue(en.contains("<hint>"), "Missing hint section in " + page);
+            Assertions.assertTrue(en.contains("<bold>Hint:</bold>"), "English hint is not labelled in " + page);
+            Assertions.assertTrue(ru.contains("<bold>Подсказка:</bold>"), "Russian hint is not labelled in " + page);
+
+            GuideDocument hidden = GuideDocument.parse(en, true, false, false);
+            GuideDocument visible = GuideDocument.parse(en, true, true, false);
             Assertions.assertTrue(visible.blocks.size() > hidden.blocks.size(),
-                "Show Hints must reveal additional content in " + source);
+                "Show Hints must reveal additional content in " + page);
         }
-        Assertions.assertTrue(checkedSources.size() >= 204,
+        Assertions.assertTrue(checked.size() >= 204,
             "The current guide should retain practical hints for every listed page");
     }
 
     @Test
     void deprecatedOriginalGuideShortcutsRemainFunctional() throws Exception {
-        String path = "/assets/buildcraft/guide/en_us/buildcraftlib/item/guide.md";
-        String markdown;
-        try (InputStream stream = resource(path);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            StringBuilder text = new StringBuilder();
-            char[] buffer = new char[1024];
-            int read;
-            while ((read = reader.read(buffer)) >= 0) text.append(buffer, 0, read);
-            markdown = text.toString();
-        }
+        String markdown = rendered("buildcraftlib/item/guide", ENGLISH);
         GuideDocument document = GuideDocument.parse(markdown, true, false, false);
         Assertions.assertTrue(document.blocks.stream().anyMatch(block ->
             block.kind == GuideDocument.Kind.RECIPES
@@ -171,47 +233,37 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
-    void originalGuideRegistrySourcesAreBundled() throws Exception {
+    void originalGuideRegistrySourcesAndInterfaceTexturesAreBundled() throws Exception {
         String[] namespaces = {
             "buildcraftlib", "buildcraftcore", "buildcraftbuilders", "buildcraftenergy",
             "buildcraftfactory", "buildcraftrobotics", "buildcraftsilicon", "buildcrafttransport",
             "buildcraftcompat"
         };
         for (String namespace : namespaces) {
-            try (InputStream ignored = resource("/assets/buildcraft/guide/registry/" + namespace + ".txt")) {
-                // All authored registry scripts are kept in the central guide resource tree.
+            try (InputStream ignored = resource(ROOT + "registry/" + namespace + ".txt")) {
+                // Centralized legacy registry scripts retained for resource compatibility.
             }
         }
-        try (InputStream ignored = resource("/assets/buildcraft/guide/registry/util.txt")) {
-            // Shared aliases used by the original guide registry scripts.
+        try (InputStream ignored = resource(ROOT + "registry/util.txt")) {
+            // Shared registry aliases.
         }
-    }
-
-    @Test
-    void guideInterfaceTexturesUseTheCentralBuildCraftResourceTree() throws Exception {
         String[] textures = {
             "cover.png", "icons.png", "left_page.png", "left_page_back.png", "left_page_first.png",
             "note.png", "right_page.png", "right_page_back.png", "right_page_last.png"
         };
         for (String texture : textures) {
-            try (InputStream ignored = resource("/assets/buildcraft/guide/gui/" + texture)) {
-                // The custom guide UI is stored beside the authored guide content.
+            try (InputStream ignored = resource(ROOT + "gui/" + texture)) {
+                // The Guide Book interface remains beside the packed content.
             }
         }
     }
 
     @Test
-    void everyGuidePageUsesTheCentralBuildCraftResourceTree() throws Exception {
-        JsonObject root;
-        try (InputStream stream = resource(MANIFEST);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            root = JsonParser.parseReader(reader).getAsJsonObject();
-        }
-        for (JsonElement element : root.getAsJsonArray("entries")) {
-            String source = element.getAsJsonObject().get("source").getAsString();
-            Assertions.assertTrue(source.startsWith("buildcraft:guide/en_us/"),
-                "Guide page escaped the centralized resource tree: " + source);
-        }
+    void looseMarkdownPagesAreNotBundledAnymore() {
+        Assertions.assertNull(OriginalGuideResourcesTester.class.getResourceAsStream(
+            ROOT + "en_us/buildcrafttransport/pipe/quartz_fluid.md"));
+        Assertions.assertNull(OriginalGuideResourcesTester.class.getResourceAsStream(
+            ROOT + "pages/en_us.json"));
     }
 
     @Test
@@ -245,21 +297,21 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
-    void everyLegacyTransportStackInTheOfficialManifestUsesTheModernRegistryShape() throws Exception {
-        JsonObject root;
-        try (InputStream stream = resource(MANIFEST);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            root = JsonParser.parseReader(reader).getAsJsonObject();
-        }
+    void everyLegacyTransportStackInTheManifestUsesTheModernRegistryShape() throws Exception {
+        JsonObject root = json(MANIFEST);
         int remappedPipes = 0;
         for (JsonElement element : root.getAsJsonArray("entries")) {
             JsonObject entry = element.getAsJsonObject();
-            if (!entry.has("stack")) continue;
+            if (!entry.has("stack")) {
+                continue;
+            }
             String legacy = entry.get("stack").getAsString();
-            if (!legacy.startsWith("buildcrafttransport:pipe_")) continue;
+            if (!legacy.startsWith("buildcrafttransport:pipe_")) {
+                continue;
+            }
             String modern = GuideContent.remapLegacyStackId(legacy, 0);
             Assertions.assertTrue(modern.startsWith("buildcrafttransport:"));
-            Assertions.assertTrue(!modern.startsWith("buildcrafttransport:pipe_"));
+            Assertions.assertFalse(modern.startsWith("buildcrafttransport:pipe_"));
             remappedPipes++;
         }
         Assertions.assertEquals(28, remappedPipes, "Every official item/fluid pipe entry must be migrated");
@@ -267,17 +319,7 @@ class OriginalGuideResourcesTester {
 
     @Test
     void representativeArticleKeepsRecipesChaptersAndUsagesInSourceOrder() throws Exception {
-        String path = "/assets/buildcraft/guide/en_us/buildcrafttransport/pipe/quartz_fluid.md";
-        String markdown;
-        try (InputStream stream = resource(path);
-             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            StringBuilder text = new StringBuilder();
-            char[] buffer = new char[1024];
-            int read;
-            while ((read = reader.read(buffer)) >= 0) text.append(buffer, 0, read);
-            markdown = text.toString();
-        }
-
+        String markdown = rendered("buildcrafttransport/pipe/quartz_fluid", ENGLISH);
         GuideDocument document = GuideDocument.parse(markdown, true, false, false);
         List<GuideDocument.Block> blocks = document.blocks;
         int recipe = indexOf(blocks, GuideDocument.Kind.RECIPES, "recipes");
@@ -288,12 +330,62 @@ class OriginalGuideResourcesTester {
         Assertions.assertEquals("Pipe Mechanics", blocks.get(chapter).text.getString());
     }
 
+    @Test
+    void ordinaryRussianLanguageFileContainsGuideIndexTranslations() throws Exception {
+        JsonObject russian = json("/assets/buildcraft/lang/ru_ru.json");
+        String[] required = {
+            "buildcraft.guide.chapter.submod.builders", "buildcraft.guide.chapter.submod.robotics",
+            "buildcraft.guide.chapter.subtype.pipe_power", "buildcraft.guide.chapter.subtype.refining",
+            "buildcraft.guide.chapter.type.action", "buildcraft.guide.chapter.type.trigger",
+            "buildcraft.guide.page.guide_page_format", "buildcraft.guide.page.registry_overview"
+        };
+        for (String key : required) {
+            Assertions.assertTrue(russian.has(key), "Missing Russian Guide Book UI translation " + key);
+            Assertions.assertFalse(russian.get(key).getAsString().isBlank(), "Blank Russian translation " + key);
+        }
+    }
+
+    private static String rendered(String page, String languagePath) throws Exception {
+        JsonObject layout = json(LAYOUTS).getAsJsonObject("pages").getAsJsonObject(page);
+        JsonArray text = json(languagePath).getAsJsonObject("pages").getAsJsonArray(page);
+        return render(layout.get("template").getAsString(), strings(text));
+    }
+
+    private static List<String> strings(JsonArray array) {
+        List<String> values = new ArrayList<>(array.size());
+        for (JsonElement element : array) {
+            values.add(element == null || element.isJsonNull() ? null : element.getAsString());
+        }
+        return values;
+    }
+
+    private static String render(String template, List<String> values) {
+        Matcher matcher = SLOT.matcher(template);
+        StringBuffer output = new StringBuffer();
+        while (matcher.find()) {
+            int index = Integer.parseInt(matcher.group(1));
+            String value = index < values.size() && values.get(index) != null ? values.get(index) : "";
+            matcher.appendReplacement(output, Matcher.quoteReplacement(value));
+        }
+        matcher.appendTail(output);
+        return output.toString();
+    }
+
     private static int indexOf(List<GuideDocument.Block> blocks, GuideDocument.Kind kind, String secondary) {
         for (int index = 0; index < blocks.size(); index++) {
             GuideDocument.Block block = blocks.get(index);
-            if (block.kind == kind && (secondary == null || secondary.equals(block.secondary))) return index;
+            if (block.kind == kind && (secondary == null || secondary.equals(block.secondary))) {
+                return index;
+            }
         }
         return -1;
+    }
+
+    private static JsonObject json(String path) throws Exception {
+        try (InputStream stream = resource(path);
+             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+            return JsonParser.parseReader(reader).getAsJsonObject();
+        }
     }
 
     private static InputStream resource(String path) {

@@ -30,6 +30,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
@@ -40,10 +41,10 @@ import buildcraft.api.statements.IStatement;
 import buildcraft.api.statements.StatementManager;
 
 /**
- * Loads the original BuildCraft 8 guide registry and markdown files.
+ * Loads the BuildCraft Guide Book index and its localized packed pages.
  * <p>
- * The manifest is generated directly from the official BuildCraftGuide 8.0.x-1.12 submodule. All authored guide
- * sources are kept together under assets/buildcraft/guide so the book can be edited or replaced as one resource tree.
+ * The manifest contains language-neutral entry metadata. {@link GuidePageStore} combines one shared page-layout file
+ * with the selected language text pack and its configured fallbacks before the Markdown document is parsed.
  */
 public final class GuideContent {
     private static final ResourceLocation MANIFEST =
@@ -72,8 +73,11 @@ public final class GuideContent {
 
     public static GuideContent load() {
         try {
-            String manifestText = readText(MANIFEST);
+            Minecraft minecraft = Minecraft.getInstance();
+            ResourceManager resources = minecraft.getResourceManager();
+            String manifestText = readText(resources, MANIFEST);
             JsonObject root = JsonParser.parseString(manifestText).getAsJsonObject();
+            GuidePageStore pageStore = GuidePageStore.load(resources, minecraft.options.languageCode);
             JsonArray array = root.getAsJsonArray("entries");
             List<Entry> entries = new ArrayList<>(array.size());
             for (JsonElement element : array) {
@@ -83,12 +87,15 @@ public final class GuideContent {
                     continue;
                 }
                 ResourceLocation id = new ResourceLocation(json.get("id").getAsString());
-                ResourceLocation source = new ResourceLocation(json.get("source").getAsString());
-                String text;
-                try {
-                    text = readText(source);
-                } catch (IOException io) {
-                    BCLog.logger.warn("[lib.guide] Unable to load original page {} from {}", id, source, io);
+                String page = getString(json, "page");
+                if (page == null || page.isBlank()) {
+                    BCLog.logger.warn("[lib.guide] Entry {} has no page key", id);
+                    continue;
+                }
+                String text = pageStore.get(page);
+                if (text == null) {
+                    BCLog.logger.warn("[lib.guide] Page '{}' for {} is missing from language chain {}",
+                        page, id, pageStore.loadOrder());
                     continue;
                 }
                 String stackId = getString(json, "stack");
@@ -97,7 +104,7 @@ public final class GuideContent {
                 String statement = getString(json, "statement");
                 entries.add(new Entry(
                     id,
-                    source,
+                    page,
                     getString(json, "module"),
                     getString(json, "type"),
                     getString(json, "subtype"),
@@ -112,13 +119,13 @@ public final class GuideContent {
             }
             return new GuideContent(entries);
         } catch (Exception ex) {
-            BCLog.logger.error("[lib.guide] Failed to load the original BuildCraft guide", ex);
+            BCLog.logger.error("[lib.guide] Failed to load the BuildCraft guide", ex);
             return new GuideContent(new ArrayList<>());
         }
     }
 
-    private static String readText(ResourceLocation location) throws IOException {
-        Optional<Resource> optional = Minecraft.getInstance().getResourceManager().getResource(location);
+    private static String readText(ResourceManager resources, ResourceLocation location) throws IOException {
+        Optional<Resource> optional = resources.getResource(location);
         if (optional.isEmpty()) {
             throw new IOException("Missing resource " + location);
         }
@@ -324,14 +331,14 @@ public final class GuideContent {
             "buildcraftlib", "generated/item/" + registryId.getNamespace() + "/" + registryId.getPath()
         );
         return new Entry(
-            pageId, pageId, registryId.getNamespace(), "item", "generated", registryId.getPath(),
+            pageId, pageId.toString(), registryId.getNamespace(), "item", "generated", registryId.getPath(),
             "buildcraftcore:main", false, registryId.toString(), null, stack.copy(), ""
         );
     }
 
     public static final class Entry {
         public final ResourceLocation id;
-        public final ResourceLocation source;
+        public final String page;
         public final String module;
         public final String type;
         public final String subtype;
@@ -344,11 +351,11 @@ public final class GuideContent {
         public final String markdown;
         public final String searchText;
 
-        private Entry(ResourceLocation id, ResourceLocation source, @Nullable String module, @Nullable String type,
+        private Entry(ResourceLocation id, String page, @Nullable String module, @Nullable String type,
             @Nullable String subtype, @Nullable String name, @Nullable String book, boolean listed,
             @Nullable String stackId, @Nullable String statement, ItemStack stack, String markdown) {
             this.id = id;
-            this.source = source;
+            this.page = page;
             this.module = module == null ? id.getNamespace() : module;
             this.type = type == null ? "other" : type;
             this.subtype = subtype == null ? "other" : subtype;

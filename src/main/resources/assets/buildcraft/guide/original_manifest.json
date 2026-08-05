@@ -1,1465 +1,1466 @@
 {
-  "format": 3,
+  "format": 5,
+  "layout_format": 1,
+  "text_pack_format": 1,
   "default_language": "en_us",
   "entries": [
     {
       "id": "buildcraftcore:item/gear_wood",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/gear_wood.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "gear",
       "name": "gear_wood",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:gears/gear_wood"
+      "stack": "buildcraftcore:gears/gear_wood",
+      "page": "buildcraftcore/item/gear_wood"
     },
     {
       "id": "buildcraftcore:item/gear_stone",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/gear_stone.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "gear",
       "name": "gear_stone",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:gears/gear_stone"
+      "stack": "buildcraftcore:gears/gear_stone",
+      "page": "buildcraftcore/item/gear_stone"
     },
     {
       "id": "buildcraftcore:item/gear_iron",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/gear_iron.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "gear",
       "name": "gear_iron",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:gears/gear_iron"
+      "stack": "buildcraftcore:gears/gear_iron",
+      "page": "buildcraftcore/item/gear_iron"
     },
     {
       "id": "buildcraftcore:item/gear_gold",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/gear_gold.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "gear",
       "name": "gear_gold",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:gears/gear_gold"
+      "stack": "buildcraftcore:gears/gear_gold",
+      "page": "buildcraftcore/item/gear_gold"
     },
     {
       "id": "buildcraftcore:item/gear_diamond",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/gear_diamond.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "gear",
       "name": "gear_diamond",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:gears/gear_diamond"
+      "stack": "buildcraftcore:gears/gear_diamond",
+      "page": "buildcraftcore/item/gear_diamond"
     },
     {
       "id": "buildcraftcore:item/wrench",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/wrench.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "tool",
       "name": "wrench",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:wrench"
+      "stack": "buildcraftcore:wrench",
+      "page": "buildcraftcore/item/wrench"
     },
     {
       "id": "buildcraftcore:item/paintbrush",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/paintbrush.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "tool",
       "name": "paintbrush",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:paintbrush/clean"
+      "stack": "buildcraftcore:paintbrush/clean",
+      "page": "buildcraftcore/item/paintbrush"
     },
     {
       "id": "buildcraftcore:item/marker_connector",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/marker_connector.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "tool",
       "name": "marker_connector",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:marker_connector"
+      "stack": "buildcraftcore:marker_connector",
+      "page": "buildcraftcore/item/marker_connector"
     },
     {
       "id": "buildcraftcore:item/marker_path",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/marker_path.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "area",
       "name": "marker_path",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:marker_path"
+      "stack": "buildcraftcore:marker_path",
+      "page": "buildcraftcore/item/marker_path"
     },
     {
       "id": "buildcraftcore:item/list",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/list.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "tool",
       "name": "list",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:list"
+      "stack": "buildcraftcore:list",
+      "page": "buildcraftcore/item/list"
     },
     {
       "id": "buildcraftcore:block/engine_wood",
-      "source": "buildcraft:guide/en_us/buildcraftcore/block/engine_wood.md",
       "module": "buildcraftcore",
       "type": "block",
       "subtype": "engine",
       "name": "engine_wood",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:engine_redstone"
+      "stack": "buildcraftcore:engine_redstone",
+      "page": "buildcraftcore/block/engine_wood"
     },
     {
       "id": "buildcraftcore:trigger/always_on",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/always_on.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "basic",
       "name": "always_on",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraftcore:trigger.true"
+      "statement": "buildcraftcore:trigger.true",
+      "page": "buildcraftcore/trigger/always_on"
     },
     {
       "id": "buildcraftcore:trigger/redstone_active",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/redstone_active.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "basic",
       "name": "redstone_active",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:redstone.input.active"
+      "statement": "buildcraft:redstone.input.active",
+      "page": "buildcraftcore/trigger/redstone_active"
     },
     {
       "id": "buildcraftcore:trigger/redstone_inactive",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/redstone_inactive.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "basic",
       "name": "redstone_inactive",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:redstone.input.inactive"
+      "statement": "buildcraft:redstone.input.inactive",
+      "page": "buildcraftcore/trigger/redstone_inactive"
     },
     {
       "id": "buildcraftcore:trigger/inventory_empty",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/inventory_empty.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "item",
       "name": "inventory_empty",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:inventory.empty"
+      "statement": "buildcraft:inventory.empty",
+      "page": "buildcraftcore/trigger/inventory_empty"
     },
     {
       "id": "buildcraftcore:trigger/inventory_contains",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/inventory_contains.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "item",
       "name": "inventory_contains",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:inventory.contains"
+      "statement": "buildcraft:inventory.contains",
+      "page": "buildcraftcore/trigger/inventory_contains"
     },
     {
       "id": "buildcraftcore:trigger/inventory_space",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/inventory_space.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "item",
       "name": "inventory_space",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:inventory.space"
+      "statement": "buildcraft:inventory.space",
+      "page": "buildcraftcore/trigger/inventory_space"
     },
     {
       "id": "buildcraftcore:trigger/inventory_full",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/inventory_full.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "item",
       "name": "inventory_full",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:inventory.full"
+      "statement": "buildcraft:inventory.full",
+      "page": "buildcraftcore/trigger/inventory_full"
     },
     {
       "id": "buildcraftcore:trigger/inventory_below_25",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/inventory_below_25.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "item",
       "name": "inventory_below_25",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:inventorylevel.below25"
+      "statement": "buildcraft:inventorylevel.below25",
+      "page": "buildcraftcore/trigger/inventory_below_25"
     },
     {
       "id": "buildcraftcore:trigger/inventory_below_50",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/inventory_below_50.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "item",
       "name": "inventory_below_50",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:inventorylevel.below50"
+      "statement": "buildcraft:inventorylevel.below50",
+      "page": "buildcraftcore/trigger/inventory_below_50"
     },
     {
       "id": "buildcraftcore:trigger/inventory_below_75",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/inventory_below_75.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "item",
       "name": "inventory_below_75",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:inventorylevel.below75"
+      "statement": "buildcraft:inventorylevel.below75",
+      "page": "buildcraftcore/trigger/inventory_below_75"
     },
     {
       "id": "buildcraftcore:trigger/fluid_empty",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/fluid_empty.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "fluid",
       "name": "fluid_empty",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:fluid.empty"
+      "statement": "buildcraft:fluid.empty",
+      "page": "buildcraftcore/trigger/fluid_empty"
     },
     {
       "id": "buildcraftcore:trigger/fluid_contains",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/fluid_contains.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "fluid",
       "name": "fluid_contains",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:fluid.contains"
+      "statement": "buildcraft:fluid.contains",
+      "page": "buildcraftcore/trigger/fluid_contains"
     },
     {
       "id": "buildcraftcore:trigger/fluid_space",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/fluid_space.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "fluid",
       "name": "fluid_space",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:fluid.space"
+      "statement": "buildcraft:fluid.space",
+      "page": "buildcraftcore/trigger/fluid_space"
     },
     {
       "id": "buildcraftcore:trigger/fluid_full",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/fluid_full.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "fluid",
       "name": "fluid_full",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:fluid.full"
+      "statement": "buildcraft:fluid.full",
+      "page": "buildcraftcore/trigger/fluid_full"
     },
     {
       "id": "buildcraftcore:trigger/fluid_below_25",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/fluid_below_25.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "fluid",
       "name": "fluid_below_25",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:fluid.below25"
+      "statement": "buildcraft:fluid.below25",
+      "page": "buildcraftcore/trigger/fluid_below_25"
     },
     {
       "id": "buildcraftcore:trigger/fluid_below_50",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/fluid_below_50.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "fluid",
       "name": "fluid_below_50",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:fluid.below50"
+      "statement": "buildcraft:fluid.below50",
+      "page": "buildcraftcore/trigger/fluid_below_50"
     },
     {
       "id": "buildcraftcore:trigger/fluid_below_75",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/fluid_below_75.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "fluid",
       "name": "fluid_below_75",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:fluid.below75"
+      "statement": "buildcraft:fluid.below75",
+      "page": "buildcraftcore/trigger/fluid_below_75"
     },
     {
       "id": "buildcraftcore:trigger/engine_blue",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/engine_blue.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "engine",
       "name": "engine_blue",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:engine.stage.blue"
+      "statement": "buildcraft:engine.stage.blue",
+      "page": "buildcraftcore/trigger/engine_blue"
     },
     {
       "id": "buildcraftcore:trigger/engine_green",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/engine_green.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "engine",
       "name": "engine_green",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:engine.stage.green"
+      "statement": "buildcraft:engine.stage.green",
+      "page": "buildcraftcore/trigger/engine_green"
     },
     {
       "id": "buildcraftcore:trigger/engine_yellow",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/engine_yellow.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "engine",
       "name": "engine_yellow",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:engine.stage.yellow"
+      "statement": "buildcraft:engine.stage.yellow",
+      "page": "buildcraftcore/trigger/engine_yellow"
     },
     {
       "id": "buildcraftcore:trigger/engine_red",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/engine_red.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "engine",
       "name": "engine_red",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:engine.stage.red"
+      "statement": "buildcraft:engine.stage.red",
+      "page": "buildcraftcore/trigger/engine_red"
     },
     {
       "id": "buildcraftcore:trigger/engine_overheat",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/engine_overheat.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "engine",
       "name": "engine_overheat",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:engine.stage.overheat"
+      "statement": "buildcraft:engine.stage.overheat",
+      "page": "buildcraftcore/trigger/engine_overheat"
     },
     {
       "id": "buildcraftcore:trigger/machine_active",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/machine_active.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "automation",
       "name": "machine_active",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:work.scheduled"
+      "statement": "buildcraft:work.scheduled",
+      "page": "buildcraftcore/trigger/machine_active"
     },
     {
       "id": "buildcraftcore:trigger/machine_inactive",
-      "source": "buildcraft:guide/en_us/buildcraftcore/trigger/machine_inactive.md",
       "module": "buildcraftcore",
       "type": "trigger",
       "subtype": "automation",
       "name": "machine_inactive",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:work.done"
+      "statement": "buildcraft:work.done",
+      "page": "buildcraftcore/trigger/machine_inactive"
     },
     {
       "id": "buildcraftcore:action/redstone",
-      "source": "buildcraft:guide/en_us/buildcraftcore/action/redstone.md",
       "module": "buildcraftcore",
       "type": "action",
       "subtype": "basic",
       "name": "redstone",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:redstone.output"
+      "statement": "buildcraft:redstone.output",
+      "page": "buildcraftcore/action/redstone"
     },
     {
       "id": "buildcraftcore:action/machine_control_on",
-      "source": "buildcraft:guide/en_us/buildcraftcore/action/machine_control_on.md",
       "module": "buildcraftcore",
       "type": "action",
       "subtype": "automation",
       "name": "machine_control_on",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:machine.on"
+      "statement": "buildcraft:machine.on",
+      "page": "buildcraftcore/action/machine_control_on"
     },
     {
       "id": "buildcraftcore:action/machine_control_off",
-      "source": "buildcraft:guide/en_us/buildcraftcore/action/machine_control_off.md",
       "module": "buildcraftcore",
       "type": "action",
       "subtype": "automation",
       "name": "machine_control_off",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:machine.off"
+      "statement": "buildcraft:machine.off",
+      "page": "buildcraftcore/action/machine_control_off"
     },
     {
       "id": "buildcraftcore:action/machine_control_loop",
-      "source": "buildcraft:guide/en_us/buildcraftcore/action/machine_control_loop.md",
       "module": "buildcraftcore",
       "type": "action",
       "subtype": "automation",
       "name": "machine_control_loop",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:machine.loop"
+      "statement": "buildcraft:machine.loop",
+      "page": "buildcraftcore/action/machine_control_loop"
     },
     {
       "id": "buildcraftenergy:block/engine_stone",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/block/engine_stone.md",
       "module": "buildcraftenergy",
       "type": "block",
       "subtype": "engine",
       "name": "engine_stone",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:engine_stone"
+      "stack": "buildcraftenergy:engine_stone",
+      "page": "buildcraftenergy/block/engine_stone"
     },
     {
       "id": "buildcraftenergy:block/engine_iron",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/block/engine_iron.md",
       "module": "buildcraftenergy",
       "type": "block",
       "subtype": "engine",
       "name": "engine_iron",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:engine_iron"
+      "stack": "buildcraftenergy:engine_iron",
+      "page": "buildcraftenergy/block/engine_iron"
     },
     {
       "id": "buildcraftfactory:block/distiller",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/distiller.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "refining",
       "name": "distiller",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:distiller"
+      "stack": "buildcraftfactory:distiller",
+      "page": "buildcraftfactory/block/distiller"
     },
     {
       "id": "buildcraftfactory:block/heat_exchange",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/heat_exchange.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "refining",
       "name": "heat_exchange",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:heat_exchange"
+      "stack": "buildcraftfactory:heat_exchange",
+      "page": "buildcraftfactory/block/heat_exchange"
     },
     {
       "id": "buildcraftfactory:block/tank",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/tank.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "fluid",
       "name": "tank",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:tank"
+      "stack": "buildcraftfactory:tank",
+      "page": "buildcraftfactory/block/tank"
     },
     {
       "id": "buildcraftfactory:block/pump",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/pump.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "fluid",
       "name": "pump",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:pump"
+      "stack": "buildcraftfactory:pump",
+      "page": "buildcraftfactory/block/pump"
     },
     {
       "id": "buildcraftfactory:block/flood_gate",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/flood_gate.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "fluid",
       "name": "flood_gate",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:flood_gate"
+      "stack": "buildcraftfactory:flood_gate",
+      "page": "buildcraftfactory/block/flood_gate"
     },
     {
       "id": "buildcraftfactory:block/mining_well",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/mining_well.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "mining",
       "name": "mining_well",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:mining_well"
+      "stack": "buildcraftfactory:mining_well",
+      "page": "buildcraftfactory/block/mining_well"
     },
     {
       "id": "buildcraftfactory:block/chute",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/chute.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "automation",
       "name": "chute",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:chute"
+      "stack": "buildcraftfactory:chute",
+      "page": "buildcraftfactory/block/chute"
     },
     {
       "id": "buildcraftfactory:block/autoworkbench_item",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/block/auto_workbench.md",
       "module": "buildcraftfactory",
       "type": "block",
       "subtype": "automation",
       "name": "autoworkbench_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:autoworkbench_item"
+      "stack": "buildcraftfactory:autoworkbench_item",
+      "page": "buildcraftfactory/block/auto_workbench"
     },
     {
       "id": "buildcraftlib:config/registry_overview",
-      "source": "buildcraft:guide/en_us/buildcraftlib/config/registry_overview.md",
       "module": "buildcraftlib",
       "type": "config",
       "subtype": "resourcepack",
       "name": "registry_overview",
       "book": "buildcraftlib:meta",
-      "listed": true
+      "listed": true,
+      "page": "buildcraftlib/config/registry_overview"
     },
     {
       "id": "buildcraftlib:config/json_insn_format",
-      "source": "buildcraft:guide/en_us/buildcraftlib/config/json_insn_format.md",
       "module": "buildcraftlib",
       "type": "config",
       "subtype": "resourcepack",
       "name": "json_insn_format",
       "book": "buildcraftlib:meta",
-      "listed": true
+      "listed": true,
+      "page": "buildcraftlib/config/json_insn_format"
     },
     {
       "id": "buildcraftlib:config/guide_page_format",
-      "source": "buildcraft:guide/en_us/buildcraftlib/config/guide_page_format.md",
       "module": "buildcraftlib",
       "type": "config",
       "subtype": "resourcepack",
       "name": "guide_page_format",
       "book": "buildcraftlib:meta",
-      "listed": true
+      "listed": true,
+      "page": "buildcraftlib/config/guide_page_format"
     },
     {
       "id": "buildcraftsilicon:item/plug_facade",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/plug_facade.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_facade",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:plug/facade"
+      "stack": "buildcraftsilicon:plug/facade",
+      "page": "buildcraftsilicon/item/plug_facade"
     },
     {
       "id": "buildcraftsilicon:item/plug_gate",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/plug_gate.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_gate",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:plug/gate"
+      "stack": "buildcraftsilicon:plug/gate",
+      "page": "buildcraftsilicon/item/plug_gate"
     },
     {
       "id": "buildcraftsilicon:item/plug_pulsar",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/plug_pulsar.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_pulsar",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:plug/pulsar"
+      "stack": "buildcraftsilicon:plug/pulsar",
+      "page": "buildcraftsilicon/item/plug_pulsar"
     },
     {
       "id": "buildcraftsilicon:item/plug_light_sensor",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/plug_light_sensor.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_light_sensor",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:plug/light_sensor"
+      "stack": "buildcraftsilicon:plug/light_sensor",
+      "page": "buildcraftsilicon/item/plug_light_sensor"
     },
     {
       "id": "buildcraftsilicon:item/plug_lens",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/plug_lens.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_lens",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:plug/lens"
+      "stack": "buildcraftsilicon:plug/lens",
+      "page": "buildcraftsilicon/item/plug_lens"
     },
     {
       "id": "buildcraftsilicon:trigger/light_high",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/trigger/light_high.md",
       "module": "buildcraftsilicon",
       "type": "trigger",
       "subtype": "pipe_plug",
       "name": "light_high",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:light_bright"
+      "statement": "buildcraft:light_bright",
+      "page": "buildcraftsilicon/trigger/light_high"
     },
     {
       "id": "buildcraftsilicon:trigger/light_low",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/trigger/light_low.md",
       "module": "buildcraftsilicon",
       "type": "trigger",
       "subtype": "pipe_plug",
       "name": "light_low",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:light_dark"
+      "statement": "buildcraft:light_dark",
+      "page": "buildcraftsilicon/trigger/light_low"
     },
     {
       "id": "buildcraftsilicon:action/pulsar_constant",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/action/pulsar_constant.md",
       "module": "buildcraftsilicon",
       "type": "action",
       "subtype": "pipe_plug",
       "name": "pulsar_constant",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pulsar.constant"
+      "statement": "buildcraft:pulsar.constant",
+      "page": "buildcraftsilicon/action/pulsar_constant"
     },
     {
       "id": "buildcraftsilicon:action/pulsar_single",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/action/pulsar_single.md",
       "module": "buildcraftsilicon",
       "type": "action",
       "subtype": "pipe_plug",
       "name": "pulsar_single",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pulsar.single"
+      "statement": "buildcraft:pulsar.single",
+      "page": "buildcraftsilicon/action/pulsar_single"
     },
     {
       "id": "buildcrafttransport:pipe/structure",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/structure.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "structure",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_structure"
+      "stack": "buildcrafttransport:pipe_structure",
+      "page": "buildcrafttransport/pipe/structure"
     },
     {
       "id": "buildcrafttransport:pipe/wood_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/wood_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "wood_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_wood_item"
+      "stack": "buildcrafttransport:pipe_wood_item",
+      "page": "buildcrafttransport/pipe/wood_item"
     },
     {
       "id": "buildcrafttransport:pipe/cobble_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/cobble_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "cobble_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_cobble_item"
+      "stack": "buildcrafttransport:pipe_cobble_item",
+      "page": "buildcrafttransport/pipe/cobble_item"
     },
     {
       "id": "buildcrafttransport:pipe/stone_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/stone_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "stone_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_stone_item"
+      "stack": "buildcrafttransport:pipe_stone_item",
+      "page": "buildcrafttransport/pipe/stone_item"
     },
     {
       "id": "buildcrafttransport:pipe/quartz_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/quartz_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "quartz_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_quartz_item"
+      "stack": "buildcrafttransport:pipe_quartz_item",
+      "page": "buildcrafttransport/pipe/quartz_item"
     },
     {
       "id": "buildcrafttransport:pipe/iron_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/iron_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "iron_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_iron_item"
+      "stack": "buildcrafttransport:pipe_iron_item",
+      "page": "buildcrafttransport/pipe/iron_item"
     },
     {
       "id": "buildcrafttransport:pipe/gold_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/gold_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "gold_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_gold_item"
+      "stack": "buildcrafttransport:pipe_gold_item",
+      "page": "buildcrafttransport/pipe/gold_item"
     },
     {
       "id": "buildcrafttransport:pipe/diamond_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/diamond_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "diamond_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_diamond_item"
+      "stack": "buildcrafttransport:pipe_diamond_item",
+      "page": "buildcrafttransport/pipe/diamond_item"
     },
     {
       "id": "buildcrafttransport:pipe/obsidian_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/obsidian_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "obsidian_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_obsidian_item"
+      "stack": "buildcrafttransport:pipe_obsidian_item",
+      "page": "buildcrafttransport/pipe/obsidian_item"
     },
     {
       "id": "buildcrafttransport:pipe/sandstone_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/sandstone_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "sandstone_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_sandstone_item"
+      "stack": "buildcrafttransport:pipe_sandstone_item",
+      "page": "buildcrafttransport/pipe/sandstone_item"
     },
     {
       "id": "buildcrafttransport:pipe/clay_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/clay_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "clay_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_clay_item"
+      "stack": "buildcrafttransport:pipe_clay_item",
+      "page": "buildcrafttransport/pipe/clay_item"
     },
     {
       "id": "buildcrafttransport:pipe/void_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/void_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "void_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_void_item"
+      "stack": "buildcrafttransport:pipe_void_item",
+      "page": "buildcrafttransport/pipe/void_item"
     },
     {
       "id": "buildcrafttransport:pipe/stripes_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/stripes_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "stripes_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_stripes_item"
+      "stack": "buildcrafttransport:pipe_stripes_item",
+      "page": "buildcrafttransport/pipe/stripes_item"
     },
     {
       "id": "buildcrafttransport:pipe/diamond_wood_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/diamond_wood_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "diamond_wood_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_diamond_wood_item"
+      "stack": "buildcrafttransport:pipe_diamond_wood_item",
+      "page": "buildcrafttransport/pipe/diamond_wood_item"
     },
     {
       "id": "buildcrafttransport:pipe/lapis_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/lapis_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "lapis_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_lapis_item"
+      "stack": "buildcrafttransport:pipe_lapis_item",
+      "page": "buildcrafttransport/pipe/lapis_item"
     },
     {
       "id": "buildcrafttransport:pipe/daizuli_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/daizuli_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "daizuli_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_daizuli_item"
+      "stack": "buildcrafttransport:pipe_daizuli_item",
+      "page": "buildcrafttransport/pipe/daizuli_item"
     },
     {
       "id": "buildcrafttransport:pipe/emzuli_item",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/emzuli_item.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_item",
       "name": "emzuli_item",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_emzuli_item"
+      "stack": "buildcrafttransport:pipe_emzuli_item",
+      "page": "buildcrafttransport/pipe/emzuli_item"
     },
     {
       "id": "buildcrafttransport:pipe/wood_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/wood_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "wood_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_wood_fluid"
+      "stack": "buildcrafttransport:pipe_wood_fluid",
+      "page": "buildcrafttransport/pipe/wood_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/cobble_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/cobble_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "cobble_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_cobble_fluid"
+      "stack": "buildcrafttransport:pipe_cobble_fluid",
+      "page": "buildcrafttransport/pipe/cobble_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/stone_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/stone_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "stone_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_stone_fluid"
+      "stack": "buildcrafttransport:pipe_stone_fluid",
+      "page": "buildcrafttransport/pipe/stone_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/quartz_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/quartz_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "quartz_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_quartz_fluid"
+      "stack": "buildcrafttransport:pipe_quartz_fluid",
+      "page": "buildcrafttransport/pipe/quartz_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/iron_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/iron_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "iron_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_iron_fluid"
+      "stack": "buildcrafttransport:pipe_iron_fluid",
+      "page": "buildcrafttransport/pipe/iron_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/gold_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/gold_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "gold_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_gold_fluid"
+      "stack": "buildcrafttransport:pipe_gold_fluid",
+      "page": "buildcrafttransport/pipe/gold_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/diamond_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/diamond_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "diamond_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_diamond_fluid"
+      "stack": "buildcrafttransport:pipe_diamond_fluid",
+      "page": "buildcrafttransport/pipe/diamond_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/sandstone_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/sandstone_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "sandstone_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_sandstone_fluid"
+      "stack": "buildcrafttransport:pipe_sandstone_fluid",
+      "page": "buildcrafttransport/pipe/sandstone_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/clay_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/clay_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "clay_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_clay_fluid"
+      "stack": "buildcrafttransport:pipe_clay_fluid",
+      "page": "buildcrafttransport/pipe/clay_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/void_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/void_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "void_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_void_fluid"
+      "stack": "buildcrafttransport:pipe_void_fluid",
+      "page": "buildcrafttransport/pipe/void_fluid"
     },
     {
       "id": "buildcrafttransport:pipe/diamond_wood_fluid",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/diamond_wood_fluid.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_fluid",
       "name": "diamond_wood_fluid",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:pipe_diamond_wood_fluid"
+      "stack": "buildcrafttransport:pipe_diamond_wood_fluid",
+      "page": "buildcrafttransport/pipe/diamond_wood_fluid"
     },
     {
       "id": "buildcrafttransport:item/wire",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/item/wire.md",
       "module": "buildcrafttransport",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "wire",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:wire/white"
+      "stack": "buildcrafttransport:wire/white",
+      "page": "buildcrafttransport/item/wire"
     },
     {
       "id": "buildcrafttransport:item/plug_power_adaptor",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/item/plug_power_adaptor.md",
       "module": "buildcrafttransport",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_power_adaptor",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:plug_power_adaptor"
+      "stack": "buildcrafttransport:plug_power_adaptor",
+      "page": "buildcrafttransport/item/plug_power_adaptor"
     },
     {
       "id": "buildcrafttransport:item/plug_blocker",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/item/plug_blocker.md",
       "module": "buildcrafttransport",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_blocker",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:plug_blocker"
+      "stack": "buildcrafttransport:plug_blocker",
+      "page": "buildcrafttransport/item/plug_blocker"
     },
     {
       "id": "buildcrafttransport:trigger/items_traversing",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/trigger/items_traversing.md",
       "module": "buildcrafttransport",
       "type": "trigger",
       "subtype": "pipe_item",
       "name": "items_traversing",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe_contains_items"
+      "statement": "buildcraft:pipe_contains_items",
+      "page": "buildcrafttransport/trigger/items_traversing"
     },
     {
       "id": "buildcrafttransport:trigger/fluids_traversing",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/trigger/fluids_traversing.md",
       "module": "buildcrafttransport",
       "type": "trigger",
       "subtype": "pipe_fluid",
       "name": "fluids_traversing",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe_contains_fluids"
+      "statement": "buildcraft:pipe_contains_fluids",
+      "page": "buildcrafttransport/trigger/fluids_traversing"
     },
     {
       "id": "buildcrafttransport:trigger/pipe_empty",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/trigger/pipe_empty.md",
       "module": "buildcrafttransport",
       "type": "trigger",
       "subtype": "pipe_item",
       "name": "pipe_empty",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe_empty"
+      "statement": "buildcraft:pipe_empty",
+      "page": "buildcrafttransport/trigger/pipe_empty"
     },
     {
       "id": "buildcrafttransport:trigger/pipe_signal_active",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/trigger/pipe_signal_active.md",
       "module": "buildcrafttransport",
       "type": "trigger",
       "subtype": "pipe_plug",
       "name": "pipe_signal_active",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft.pipe.wire.input.black.active"
+      "statement": "buildcraft.pipe.wire.input.black.active",
+      "page": "buildcrafttransport/trigger/pipe_signal_active"
     },
     {
       "id": "buildcrafttransport:trigger/pipe_signal_inactive",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/trigger/pipe_signal_inactive.md",
       "module": "buildcrafttransport",
       "type": "trigger",
       "subtype": "pipe_plug",
       "name": "pipe_signal_inactive",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft.pipe.wire.input.black.inactive"
+      "statement": "buildcraft.pipe.wire.input.black.inactive",
+      "page": "buildcrafttransport/trigger/pipe_signal_inactive"
     },
     {
       "id": "buildcrafttransport:action/pipe_direction_north",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_direction_north.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "pipe_direction_north",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.dir.north"
+      "statement": "buildcraft:pipe.dir.north",
+      "page": "buildcrafttransport/action/pipe_direction_north"
     },
     {
       "id": "buildcrafttransport:action/pipe_direction_east",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_direction_east.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "pipe_direction_east",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.dir.east"
+      "statement": "buildcraft:pipe.dir.east",
+      "page": "buildcrafttransport/action/pipe_direction_east"
     },
     {
       "id": "buildcrafttransport:action/pipe_direction_south",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_direction_south.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "pipe_direction_south",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.dir.south"
+      "statement": "buildcraft:pipe.dir.south",
+      "page": "buildcrafttransport/action/pipe_direction_south"
     },
     {
       "id": "buildcrafttransport:action/pipe_direction_west",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_direction_west.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "pipe_direction_west",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.dir.west"
+      "statement": "buildcraft:pipe.dir.west",
+      "page": "buildcrafttransport/action/pipe_direction_west"
     },
     {
       "id": "buildcrafttransport:action/pipe_direction_above",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_direction_above.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "pipe_direction_above",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.dir.up"
+      "statement": "buildcraft:pipe.dir.up",
+      "page": "buildcrafttransport/action/pipe_direction_above"
     },
     {
       "id": "buildcrafttransport:action/pipe_direction_below",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_direction_below.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "pipe_direction_below",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.dir.down"
+      "statement": "buildcraft:pipe.dir.down",
+      "page": "buildcrafttransport/action/pipe_direction_below"
     },
     {
       "id": "buildcrafttransport:action/pipe_signal_active",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_signal_active.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_plug",
       "name": "pipe_signal_active",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.wire.output.black"
+      "statement": "buildcraft:pipe.wire.output.black",
+      "page": "buildcrafttransport/action/pipe_signal_active"
     },
     {
       "id": "buildcrafttransport:action/pipe_colour",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/pipe_colour.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "pipe_colour",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:pipe.color.black"
+      "statement": "buildcraft:pipe.color.black",
+      "page": "buildcrafttransport/action/pipe_colour"
     },
     {
       "id": "buildcrafttransport:action/extraction_preset",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/action/extraction_preset.md",
       "module": "buildcrafttransport",
       "type": "action",
       "subtype": "pipe_item",
       "name": "extraction_preset",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:extraction.preset.red"
+      "statement": "buildcraft:extraction.preset.red",
+      "page": "buildcrafttransport/action/extraction_preset"
     },
     {
       "id": "buildcraftcore:block/engine_basics",
-      "source": "buildcraft:guide/en_us/buildcraftcore/block/engine_basics.md",
       "module": "buildcraftcore",
       "type": "block",
       "subtype": "unlisted",
       "name": "engine_basics",
       "book": "buildcraftcore:main",
-      "listed": false
+      "listed": false,
+      "page": "buildcraftcore/block/engine_basics"
     },
     {
       "id": "buildcraftcore:item/box_volume",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/box_volume.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "unlisted",
       "name": "box_volume",
       "book": "buildcraftcore:main",
-      "listed": false
+      "listed": false,
+      "page": "buildcraftcore/item/box_volume"
     },
     {
       "id": "buildcraftcore:item/marker_land",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/marker_land.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "unlisted",
       "name": "marker_land",
       "book": "buildcraftcore:main",
-      "listed": false
+      "listed": false,
+      "page": "buildcraftcore/item/marker_land"
     },
     {
       "id": "buildcraftlib:item/guide",
-      "source": "buildcraft:guide/en_us/buildcraftlib/item/guide.md",
       "module": "buildcraftlib",
       "type": "item",
       "subtype": "unlisted",
       "name": "guide",
       "book": "buildcraftcore:main",
-      "listed": false
+      "listed": false,
+      "page": "buildcraftlib/item/guide"
     },
     {
       "id": "buildcraftsilicon:item/plug_filter",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/plug_filter.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "unlisted",
       "name": "plug_filter",
       "book": "buildcraftcore:main",
-      "listed": false
+      "listed": false,
+      "page": "buildcraftsilicon/item/plug_filter"
     },
     {
       "id": "buildcraftcore:item/marker_volume",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/marker_land.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "area",
       "name": "marker_volume",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:marker_volume"
+      "stack": "buildcraftcore:marker_volume",
+      "page": "buildcraftcore/item/marker_land"
     },
     {
       "id": "buildcraftcore:item/volume_box",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/box_volume.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "area",
       "name": "volume_box",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:volume_box"
+      "stack": "buildcraftcore:volume_box",
+      "page": "buildcraftcore/item/box_volume"
     },
     {
       "id": "buildcraftcore:item/map_location",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/map_location.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "area",
       "name": "map_location",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:map_location"
+      "stack": "buildcraftcore:map_location",
+      "page": "buildcraftcore/item/map_location"
     },
     {
       "id": "buildcraftcore:item/fragile_fluid_shard",
-      "source": "buildcraft:guide/en_us/buildcraftcore/item/fragile_fluid_shard.md",
       "module": "buildcraftcore",
       "type": "item",
       "subtype": "component",
       "name": "fragile_fluid_shard",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:fragile_fluid_shard"
+      "stack": "buildcraftcore:fragile_fluid_shard",
+      "page": "buildcraftcore/item/fragile_fluid_shard"
     },
     {
       "id": "buildcraftcore:block/engine_creative",
-      "source": "buildcraft:guide/en_us/buildcraftcore/block/engine_creative.md",
       "module": "buildcraftcore",
       "type": "block",
       "subtype": "engine",
       "name": "engine_creative",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftcore:engine_creative"
+      "stack": "buildcraftcore:engine_creative",
+      "page": "buildcraftcore/block/engine_creative"
     },
     {
       "id": "buildcraftbuilders:item/blueprint",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/item/blueprint.md",
       "module": "buildcraftbuilders",
       "type": "item",
       "subtype": "blueprint",
       "name": "blueprint",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:blueprint"
+      "stack": "buildcraftbuilders:blueprint",
+      "page": "buildcraftbuilders/item/blueprint"
     },
     {
       "id": "buildcraftbuilders:item/template",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/item/template.md",
       "module": "buildcraftbuilders",
       "type": "item",
       "subtype": "blueprint",
       "name": "template",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:template"
+      "stack": "buildcraftbuilders:template",
+      "page": "buildcraftbuilders/item/template"
     },
     {
       "id": "buildcraftbuilders:item/schematic_single",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/item/schematic_single.md",
       "module": "buildcraftbuilders",
       "type": "item",
       "subtype": "blueprint",
       "name": "schematic_single",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:schematic_single"
+      "stack": "buildcraftbuilders:schematic_single",
+      "page": "buildcraftbuilders/item/schematic_single"
     },
     {
       "id": "buildcraftbuilders:item/filler_planner",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/item/filler_planner.md",
       "module": "buildcraftbuilders",
       "type": "item",
       "subtype": "area",
       "name": "filler_planner",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:filler_planner"
+      "stack": "buildcraftbuilders:filler_planner",
+      "page": "buildcraftbuilders/item/filler_planner"
     },
     {
       "id": "buildcraftbuilders:block/architect",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/architect.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "construction",
       "name": "architect",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:architect"
+      "stack": "buildcraftbuilders:architect",
+      "page": "buildcraftbuilders/block/architect"
     },
     {
       "id": "buildcraftbuilders:block/builder",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/builder.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "construction",
       "name": "builder",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:builder"
+      "stack": "buildcraftbuilders:builder",
+      "page": "buildcraftbuilders/block/builder"
     },
     {
       "id": "buildcraftbuilders:block/filler",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/filler.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "construction",
       "name": "filler",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:filler"
+      "stack": "buildcraftbuilders:filler",
+      "page": "buildcraftbuilders/block/filler"
     },
     {
       "id": "buildcraftbuilders:block/library",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/library.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "construction",
       "name": "library",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:library"
+      "stack": "buildcraftbuilders:library",
+      "page": "buildcraftbuilders/block/library"
     },
     {
       "id": "buildcraftbuilders:block/replacer",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/replacer.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "construction",
       "name": "replacer",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:replacer"
+      "stack": "buildcraftbuilders:replacer",
+      "page": "buildcraftbuilders/block/replacer"
     },
     {
       "id": "buildcraftbuilders:block/marker_construction",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/marker_construction.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "construction",
       "name": "marker_construction",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:marker_construction"
+      "stack": "buildcraftbuilders:marker_construction",
+      "page": "buildcraftbuilders/block/marker_construction"
     },
     {
       "id": "buildcraftbuilders:block/frame",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/frame.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "construction",
       "name": "frame",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:frame"
+      "stack": "buildcraftbuilders:frame",
+      "page": "buildcraftbuilders/block/frame"
     },
     {
       "id": "buildcraftbuilders:block/quarry",
-      "source": "buildcraft:guide/en_us/buildcraftbuilders/block/quarry.md",
       "module": "buildcraftbuilders",
       "type": "block",
       "subtype": "mining",
       "name": "quarry",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftbuilders:quarry"
+      "stack": "buildcraftbuilders:quarry",
+      "page": "buildcraftbuilders/block/quarry"
     },
     {
       "id": "buildcraftrobotics:item/robot",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/item/robot.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
       "name": "robot",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftrobotics:robot"
+      "stack": "buildcraftrobotics:robot",
+      "page": "buildcraftrobotics/item/robot"
     },
     {
       "id": "buildcraftrobotics:item/redstone_board",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/item/redstone_board.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot_control",
       "name": "redstone_board",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftrobotics:redstone_board"
+      "stack": "buildcraftrobotics:redstone_board",
+      "page": "buildcraftrobotics/item/redstone_board"
     },
     {
       "id": "buildcraftrobotics:item/robot_station",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/item/robot_station.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot_station",
       "name": "robot_station",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftrobotics:robot_station"
+      "stack": "buildcraftrobotics:robot_station",
+      "page": "buildcraftrobotics/item/robot_station"
     },
     {
       "id": "buildcraftrobotics:block/zone_planner",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/block/zone_planner.md",
       "module": "buildcraftrobotics",
       "type": "block",
       "subtype": "robot_control",
       "name": "zone_planner",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftrobotics:zone_planner"
+      "stack": "buildcraftrobotics:zone_planner",
+      "page": "buildcraftrobotics/block/zone_planner"
     },
     {
       "id": "buildcraftrobotics:block/requester",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/block/requester.md",
       "module": "buildcraftrobotics",
       "type": "block",
       "subtype": "robot_control",
       "name": "requester",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftrobotics:requester"
+      "stack": "buildcraftrobotics:requester",
+      "page": "buildcraftrobotics/block/requester"
     },
     {
       "id": "buildcraftrobotics:robot/picker",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/picker.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1467,11 +1468,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotPicker\"},energy:0,robot_key:\"picker\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotPicker\"},energy:0,robot_key:\"picker\"}",
+      "page": "buildcraftrobotics/robot/picker"
     },
     {
       "id": "buildcraftrobotics:robot/carrier",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/carrier.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1479,11 +1480,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotCarrier\"},energy:0,robot_key:\"carrier\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotCarrier\"},energy:0,robot_key:\"carrier\"}",
+      "page": "buildcraftrobotics/robot/carrier"
     },
     {
       "id": "buildcraftrobotics:robot/fluid_carrier",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/fluid_carrier.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1491,11 +1492,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotFluidCarrier\"},energy:0,robot_key:\"fluid_carrier\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotFluidCarrier\"},energy:0,robot_key:\"fluid_carrier\"}",
+      "page": "buildcraftrobotics/robot/fluid_carrier"
     },
     {
       "id": "buildcraftrobotics:robot/lumberjack",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/lumberjack.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1503,11 +1504,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotLumberjack\"},energy:0,robot_key:\"lumberjack\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotLumberjack\"},energy:0,robot_key:\"lumberjack\"}",
+      "page": "buildcraftrobotics/robot/lumberjack"
     },
     {
       "id": "buildcraftrobotics:robot/harvester",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/harvester.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1515,11 +1516,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotHarvester\"},energy:0,robot_key:\"harvester\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotHarvester\"},energy:0,robot_key:\"harvester\"}",
+      "page": "buildcraftrobotics/robot/harvester"
     },
     {
       "id": "buildcraftrobotics:robot/miner",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/miner.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1527,11 +1528,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:miner\"},energy:0,robot_key:\"miner\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:miner\"},energy:0,robot_key:\"miner\"}",
+      "page": "buildcraftrobotics/robot/miner"
     },
     {
       "id": "buildcraftrobotics:robot/planter",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/planter.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1539,11 +1540,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotPlanter\"},energy:0,robot_key:\"planter\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotPlanter\"},energy:0,robot_key:\"planter\"}",
+      "page": "buildcraftrobotics/robot/planter"
     },
     {
       "id": "buildcraftrobotics:robot/farmer",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/farmer.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1551,11 +1552,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotFarmer\"},energy:0,robot_key:\"farmer\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotFarmer\"},energy:0,robot_key:\"farmer\"}",
+      "page": "buildcraftrobotics/robot/farmer"
     },
     {
       "id": "buildcraftrobotics:robot/leave_cutter",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/leave_cutter.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1563,11 +1564,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:leave_cutter\"},energy:0,robot_key:\"leave_cutter\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:leave_cutter\"},energy:0,robot_key:\"leave_cutter\"}",
+      "page": "buildcraftrobotics/robot/leave_cutter"
     },
     {
       "id": "buildcraftrobotics:robot/butcher",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/butcher.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1575,11 +1576,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotButcher\"},energy:0,robot_key:\"butcher\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotButcher\"},energy:0,robot_key:\"butcher\"}",
+      "page": "buildcraftrobotics/robot/butcher"
     },
     {
       "id": "buildcraftrobotics:robot/shovelman",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/shovelman.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1587,11 +1588,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:shovelman\"},energy:0,robot_key:\"shovelman\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:shovelman\"},energy:0,robot_key:\"shovelman\"}",
+      "page": "buildcraftrobotics/robot/shovelman"
     },
     {
       "id": "buildcraftrobotics:robot/pump",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/pump.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1599,11 +1600,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotPump\"},energy:0,robot_key:\"pump\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotPump\"},energy:0,robot_key:\"pump\"}",
+      "page": "buildcraftrobotics/robot/pump"
     },
     {
       "id": "buildcraftrobotics:robot/delivery",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/delivery.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1611,11 +1612,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotDelivery\"},energy:0,robot_key:\"delivery\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotDelivery\"},energy:0,robot_key:\"delivery\"}",
+      "page": "buildcraftrobotics/robot/delivery"
     },
     {
       "id": "buildcraftrobotics:robot/knight",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/knight.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1623,11 +1624,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotKnight\"},energy:0,robot_key:\"knight\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotKnight\"},energy:0,robot_key:\"knight\"}",
+      "page": "buildcraftrobotics/robot/knight"
     },
     {
       "id": "buildcraftrobotics:robot/bomber",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/bomber.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1635,11 +1636,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotBomber\"},energy:0,robot_key:\"bomber\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotBomber\"},energy:0,robot_key:\"bomber\"}",
+      "page": "buildcraftrobotics/robot/bomber"
     },
     {
       "id": "buildcraftrobotics:robot/stripes",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/stripes.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1647,11 +1648,11 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotStripes\"},energy:0,robot_key:\"stripes\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotStripes\"},energy:0,robot_key:\"stripes\"}",
+      "page": "buildcraftrobotics/robot/stripes"
     },
     {
       "id": "buildcraftrobotics:robot/builder",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/robot/builder.md",
       "module": "buildcraftrobotics",
       "type": "item",
       "subtype": "robot",
@@ -1659,649 +1660,649 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftrobotics:robot",
-      "stack_nbt": "{board:{id:\"buildcraft:boardRobotBuilder\"},energy:0,robot_key:\"builder\"}"
+      "stack_nbt": "{board:{id:\"buildcraft:boardRobotBuilder\"},energy:0,robot_key:\"builder\"}",
+      "page": "buildcraftrobotics/robot/builder"
     },
     {
       "id": "buildcraftrobotics:trigger/in_station",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/trigger/in_station.md",
       "module": "buildcraftrobotics",
       "type": "trigger",
       "subtype": "robot",
       "name": "in_station",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.in.station"
+      "statement": "buildcraft:robot.in.station",
+      "page": "buildcraftrobotics/trigger/in_station"
     },
     {
       "id": "buildcraftrobotics:trigger/sleep",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/trigger/sleep.md",
       "module": "buildcraftrobotics",
       "type": "trigger",
       "subtype": "robot",
       "name": "sleep",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.sleep"
+      "statement": "buildcraft:robot.sleep",
+      "page": "buildcraftrobotics/trigger/sleep"
     },
     {
       "id": "buildcraftrobotics:trigger/linked",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/trigger/linked.md",
       "module": "buildcraftrobotics",
       "type": "trigger",
       "subtype": "robot",
       "name": "linked",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.linked"
+      "statement": "buildcraft:robot.linked",
+      "page": "buildcraftrobotics/trigger/linked"
     },
     {
       "id": "buildcraftrobotics:trigger/reserved",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/trigger/reserved.md",
       "module": "buildcraftrobotics",
       "type": "trigger",
       "subtype": "robot",
       "name": "reserved",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.reserved"
+      "statement": "buildcraft:robot.reserved",
+      "page": "buildcraftrobotics/trigger/reserved"
     },
     {
       "id": "buildcraftrobotics:action/work_filter",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/work_filter.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot",
       "name": "work_filter",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.work_filter"
+      "statement": "buildcraft:robot.work_filter",
+      "page": "buildcraftrobotics/action/work_filter"
     },
     {
       "id": "buildcraftrobotics:action/work_filter_tool",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/work_filter_tool.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot",
       "name": "work_filter_tool",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.work_filter_tool"
+      "statement": "buildcraft:robot.work_filter_tool",
+      "page": "buildcraftrobotics/action/work_filter_tool"
     },
     {
       "id": "buildcraftrobotics:action/goto_station",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/goto_station.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot",
       "name": "goto_station",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.goto_station"
+      "statement": "buildcraft:robot.goto_station",
+      "page": "buildcraftrobotics/action/goto_station"
     },
     {
       "id": "buildcraftrobotics:action/wakeup",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/wakeup.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot",
       "name": "wakeup",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.wakeup"
+      "statement": "buildcraft:robot.wakeup",
+      "page": "buildcraftrobotics/action/wakeup"
     },
     {
       "id": "buildcraftrobotics:action/work_in_area",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/work_in_area.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot",
       "name": "work_in_area",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.work_in_area"
+      "statement": "buildcraft:robot.work_in_area",
+      "page": "buildcraftrobotics/action/work_in_area"
     },
     {
       "id": "buildcraftrobotics:action/load_unload_area",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/load_unload_area.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot",
       "name": "load_unload_area",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:robot.load_unload_area"
+      "statement": "buildcraft:robot.load_unload_area",
+      "page": "buildcraftrobotics/action/load_unload_area"
     },
     {
       "id": "buildcraftrobotics:action/accept_fluids",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/accept_fluids.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "accept_fluids",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.accept_fluids"
+      "statement": "buildcraft:station.accept_fluids",
+      "page": "buildcraftrobotics/action/accept_fluids"
     },
     {
       "id": "buildcraftrobotics:action/accept_items",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/accept_items.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "accept_items",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.accept_items"
+      "statement": "buildcraft:station.accept_items",
+      "page": "buildcraftrobotics/action/accept_items"
     },
     {
       "id": "buildcraftrobotics:action/forbid_robot",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/forbid_robot.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "forbid_robot",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.forbid_robot"
+      "statement": "buildcraft:station.forbid_robot",
+      "page": "buildcraftrobotics/action/forbid_robot"
     },
     {
       "id": "buildcraftrobotics:action/force_robot",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/force_robot.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "force_robot",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.force_robot"
+      "statement": "buildcraft:station.force_robot",
+      "page": "buildcraftrobotics/action/force_robot"
     },
     {
       "id": "buildcraftrobotics:action/provide_fluids",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/provide_fluids.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "provide_fluids",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.provide_fluids"
+      "statement": "buildcraft:station.provide_fluids",
+      "page": "buildcraftrobotics/action/provide_fluids"
     },
     {
       "id": "buildcraftrobotics:action/provide_items",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/provide_items.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "provide_items",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.provide_items"
+      "statement": "buildcraft:station.provide_items",
+      "page": "buildcraftrobotics/action/provide_items"
     },
     {
       "id": "buildcraftrobotics:action/request_items",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/request_items.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "request_items",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.request_items"
+      "statement": "buildcraft:station.request_items",
+      "page": "buildcraftrobotics/action/request_items"
     },
     {
       "id": "buildcraftrobotics:action/provide_machine_request",
-      "source": "buildcraft:guide/en_us/buildcraftrobotics/action/provide_machine_request.md",
       "module": "buildcraftrobotics",
       "type": "action",
       "subtype": "robot_station",
       "name": "provide_machine_request",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:station.provide_machine_request"
+      "statement": "buildcraft:station.provide_machine_request",
+      "page": "buildcraftrobotics/action/provide_machine_request"
     },
     {
       "id": "buildcraftfactory:item/water_gel",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/item/water_gel.md",
       "module": "buildcraftfactory",
       "type": "item",
       "subtype": "fluid",
       "name": "water_gel",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:water_gel"
+      "stack": "buildcraftfactory:water_gel",
+      "page": "buildcraftfactory/item/water_gel"
     },
     {
       "id": "buildcraftfactory:item/gel",
-      "source": "buildcraft:guide/en_us/buildcraftfactory/item/gel.md",
       "module": "buildcraftfactory",
       "type": "item",
       "subtype": "fluid",
       "name": "gel",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftfactory:gel"
+      "stack": "buildcraftfactory:gel",
+      "page": "buildcraftfactory/item/gel"
     },
     {
       "id": "buildcraftsilicon:block/laser",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/block/laser.md",
       "module": "buildcraftsilicon",
       "type": "block",
       "subtype": "laser",
       "name": "laser",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:laser"
+      "stack": "buildcraftsilicon:laser",
+      "page": "buildcraftsilicon/block/laser"
     },
     {
       "id": "buildcraftsilicon:block/assembly_table",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/block/assembly_table.md",
       "module": "buildcraftsilicon",
       "type": "block",
       "subtype": "laser",
       "name": "assembly_table",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:assembly_table"
+      "stack": "buildcraftsilicon:assembly_table",
+      "page": "buildcraftsilicon/block/assembly_table"
     },
     {
       "id": "buildcraftsilicon:block/charging_table",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/block/charging_table.md",
       "module": "buildcraftsilicon",
       "type": "block",
       "subtype": "laser",
       "name": "charging_table",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:charging_table"
+      "stack": "buildcraftsilicon:charging_table",
+      "page": "buildcraftsilicon/block/charging_table"
     },
     {
       "id": "buildcraftsilicon:block/integration_table",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/block/integration_table.md",
       "module": "buildcraftsilicon",
       "type": "block",
       "subtype": "laser",
       "name": "integration_table",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:integration_table"
+      "stack": "buildcraftsilicon:integration_table",
+      "page": "buildcraftsilicon/block/integration_table"
     },
     {
       "id": "buildcraftsilicon:block/advanced_crafting_table",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/block/advanced_crafting_table.md",
       "module": "buildcraftsilicon",
       "type": "block",
       "subtype": "automation",
       "name": "advanced_crafting_table",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:advanced_crafting_table"
+      "stack": "buildcraftsilicon:advanced_crafting_table",
+      "page": "buildcraftsilicon/block/advanced_crafting_table"
     },
     {
       "id": "buildcraftsilicon:block/programming_table",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/block/programming_table.md",
       "module": "buildcraftsilicon",
       "type": "block",
       "subtype": "laser",
       "name": "programming_table",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:programming_table"
+      "stack": "buildcraftsilicon:programming_table",
+      "page": "buildcraftsilicon/block/programming_table"
     },
     {
       "id": "buildcraftsilicon:item/redstone_crystal",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/redstone_crystal.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "component",
       "name": "redstone_crystal",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:redstone_crystal"
+      "stack": "buildcraftsilicon:redstone_crystal",
+      "page": "buildcraftsilicon/item/redstone_crystal"
     },
     {
       "id": "buildcraftsilicon:item/gate_copier",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/gate_copier.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "tool",
       "name": "gate_copier",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:gate_copier"
+      "stack": "buildcraftsilicon:gate_copier",
+      "page": "buildcraftsilicon/item/gate_copier"
     },
     {
       "id": "buildcraftsilicon:item/plug_timer",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/plug_timer.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "pipe_plug",
       "name": "plug_timer",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:plug/timer"
+      "stack": "buildcraftsilicon:plug/timer",
+      "page": "buildcraftsilicon/item/plug_timer"
     },
     {
       "id": "buildcraftsilicon:item/chipset_red",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/chipset_red.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "component",
       "name": "chipset_red",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:redstone_chipset/red"
+      "stack": "buildcraftsilicon:redstone_chipset/red",
+      "page": "buildcraftsilicon/item/chipset_red"
     },
     {
       "id": "buildcraftsilicon:item/chipset_iron",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/chipset_iron.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "component",
       "name": "chipset_iron",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:redstone_chipset/iron"
+      "stack": "buildcraftsilicon:redstone_chipset/iron",
+      "page": "buildcraftsilicon/item/chipset_iron"
     },
     {
       "id": "buildcraftsilicon:item/chipset_gold",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/chipset_gold.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "component",
       "name": "chipset_gold",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:redstone_chipset/gold"
+      "stack": "buildcraftsilicon:redstone_chipset/gold",
+      "page": "buildcraftsilicon/item/chipset_gold"
     },
     {
       "id": "buildcraftsilicon:item/chipset_quartz",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/chipset_quartz.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "component",
       "name": "chipset_quartz",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:redstone_chipset/quartz"
+      "stack": "buildcraftsilicon:redstone_chipset/quartz",
+      "page": "buildcraftsilicon/item/chipset_quartz"
     },
     {
       "id": "buildcraftsilicon:item/chipset_diamond",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/item/chipset_diamond.md",
       "module": "buildcraftsilicon",
       "type": "item",
       "subtype": "component",
       "name": "chipset_diamond",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftsilicon:redstone_chipset/diamond"
+      "stack": "buildcraftsilicon:redstone_chipset/diamond",
+      "page": "buildcraftsilicon/item/chipset_diamond"
     },
     {
       "id": "buildcraftsilicon:trigger/timer_short",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/trigger/timer_short.md",
       "module": "buildcraftsilicon",
       "type": "trigger",
       "subtype": "pipe_plug",
       "name": "timer_short",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:timer_short"
+      "statement": "buildcraft:timer_short",
+      "page": "buildcraftsilicon/trigger/timer_short"
     },
     {
       "id": "buildcraftsilicon:trigger/timer_medium",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/trigger/timer_medium.md",
       "module": "buildcraftsilicon",
       "type": "trigger",
       "subtype": "pipe_plug",
       "name": "timer_medium",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:timer_medium"
+      "statement": "buildcraft:timer_medium",
+      "page": "buildcraftsilicon/trigger/timer_medium"
     },
     {
       "id": "buildcraftsilicon:trigger/timer_long",
-      "source": "buildcraft:guide/en_us/buildcraftsilicon/trigger/timer_long.md",
       "module": "buildcraftsilicon",
       "type": "trigger",
       "subtype": "pipe_plug",
       "name": "timer_long",
       "book": "buildcraftcore:main",
       "listed": true,
-      "statement": "buildcraft:timer_long"
+      "statement": "buildcraft:timer_long",
+      "page": "buildcraftsilicon/trigger/timer_long"
     },
     {
       "id": "buildcrafttransport:pipe/wood_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/wood_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "wood_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:wood_power"
+      "stack": "buildcrafttransport:wood_power",
+      "page": "buildcrafttransport/pipe/wood_power"
     },
     {
       "id": "buildcrafttransport:pipe/cobblestone_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/cobblestone_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "cobblestone_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:cobblestone_power"
+      "stack": "buildcrafttransport:cobblestone_power",
+      "page": "buildcrafttransport/pipe/cobblestone_power"
     },
     {
       "id": "buildcrafttransport:pipe/stone_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/stone_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "stone_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:stone_power"
+      "stack": "buildcrafttransport:stone_power",
+      "page": "buildcrafttransport/pipe/stone_power"
     },
     {
       "id": "buildcrafttransport:pipe/sandstone_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/sandstone_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "sandstone_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:sandstone_power"
+      "stack": "buildcrafttransport:sandstone_power",
+      "page": "buildcrafttransport/pipe/sandstone_power"
     },
     {
       "id": "buildcrafttransport:pipe/quartz_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/quartz_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "quartz_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:quartz_power"
+      "stack": "buildcrafttransport:quartz_power",
+      "page": "buildcrafttransport/pipe/quartz_power"
     },
     {
       "id": "buildcrafttransport:pipe/gold_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/gold_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "gold_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:gold_power"
+      "stack": "buildcrafttransport:gold_power",
+      "page": "buildcrafttransport/pipe/gold_power"
     },
     {
       "id": "buildcrafttransport:pipe/iron_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/iron_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "iron_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:iron_power"
+      "stack": "buildcrafttransport:iron_power",
+      "page": "buildcrafttransport/pipe/iron_power"
     },
     {
       "id": "buildcrafttransport:pipe/diamond_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/diamond_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "diamond_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:diamond_power"
+      "stack": "buildcrafttransport:diamond_power",
+      "page": "buildcrafttransport/pipe/diamond_power"
     },
     {
       "id": "buildcrafttransport:pipe/diamond_wood_power",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/pipe/diamond_wood_power.md",
       "module": "buildcrafttransport",
       "type": "pipe",
       "subtype": "pipe_power",
       "name": "diamond_wood_power",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:diamond_wood_power"
+      "stack": "buildcrafttransport:diamond_wood_power",
+      "page": "buildcrafttransport/pipe/diamond_wood_power"
     },
     {
       "id": "buildcrafttransport:item/waterproof",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/item/waterproof.md",
       "module": "buildcrafttransport",
       "type": "item",
       "subtype": "component",
       "name": "waterproof",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:waterproof"
+      "stack": "buildcrafttransport:waterproof",
+      "page": "buildcrafttransport/item/waterproof"
     },
     {
       "id": "buildcrafttransport:block/filtered_buffer",
-      "source": "buildcraft:guide/en_us/buildcrafttransport/block/filtered_buffer.md",
       "module": "buildcrafttransport",
       "type": "block",
       "subtype": "automation",
       "name": "filtered_buffer",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcrafttransport:filtered_buffer"
+      "stack": "buildcrafttransport:filtered_buffer",
+      "page": "buildcrafttransport/block/filtered_buffer"
     },
     {
       "id": "buildcraftenergy:item/oil",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/oil.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "oil",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:oil/cool_bucket"
+      "stack": "buildcraftenergy:oil/cool_bucket",
+      "page": "buildcraftenergy/item/oil"
     },
     {
       "id": "buildcraftenergy:item/oil_residue",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/oil_residue.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "oil_residue",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:oil_residue/cool_bucket"
+      "stack": "buildcraftenergy:oil_residue/cool_bucket",
+      "page": "buildcraftenergy/item/oil_residue"
     },
     {
       "id": "buildcraftenergy:item/oil_heavy",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/oil_heavy.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "oil_heavy",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:oil_heavy/cool_bucket"
+      "stack": "buildcraftenergy:oil_heavy/cool_bucket",
+      "page": "buildcraftenergy/item/oil_heavy"
     },
     {
       "id": "buildcraftenergy:item/oil_dense",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/oil_dense.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "oil_dense",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:oil_dense/cool_bucket"
+      "stack": "buildcraftenergy:oil_dense/cool_bucket",
+      "page": "buildcraftenergy/item/oil_dense"
     },
     {
       "id": "buildcraftenergy:item/oil_distilled",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/oil_distilled.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "oil_distilled",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:oil_distilled/cool_bucket"
+      "stack": "buildcraftenergy:oil_distilled/cool_bucket",
+      "page": "buildcraftenergy/item/oil_distilled"
     },
     {
       "id": "buildcraftenergy:item/fuel_gaseous",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/fuel_gaseous.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "fuel_gaseous",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:fuel_gaseous/cool_bucket"
+      "stack": "buildcraftenergy:fuel_gaseous/cool_bucket",
+      "page": "buildcraftenergy/item/fuel_gaseous"
     },
     {
       "id": "buildcraftenergy:item/fuel_light",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/fuel_light.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "fuel_light",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:fuel_light/cool_bucket"
+      "stack": "buildcraftenergy:fuel_light/cool_bucket",
+      "page": "buildcraftenergy/item/fuel_light"
     },
     {
       "id": "buildcraftenergy:item/fuel_dense",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/fuel_dense.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "fuel_dense",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:fuel_dense/cool_bucket"
+      "stack": "buildcraftenergy:fuel_dense/cool_bucket",
+      "page": "buildcraftenergy/item/fuel_dense"
     },
     {
       "id": "buildcraftenergy:item/fuel_mixed_light",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/fuel_mixed_light.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "fuel_mixed_light",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:fuel_mixed_light/cool_bucket"
+      "stack": "buildcraftenergy:fuel_mixed_light/cool_bucket",
+      "page": "buildcraftenergy/item/fuel_mixed_light"
     },
     {
       "id": "buildcraftenergy:item/fuel_mixed_heavy",
-      "source": "buildcraft:guide/en_us/buildcraftenergy/item/fuel_mixed_heavy.md",
       "module": "buildcraftenergy",
       "type": "item",
       "subtype": "fluid",
       "name": "fuel_mixed_heavy",
       "book": "buildcraftcore:main",
       "listed": true,
-      "stack": "buildcraftenergy:fuel_mixed_heavy/cool_bucket"
+      "stack": "buildcraftenergy:fuel_mixed_heavy/cool_bucket",
+      "page": "buildcraftenergy/item/fuel_mixed_heavy"
     },
     {
       "id": "buildcraftcompat:pipe/propolis_item",
-      "source": "buildcraft:guide/en_us/buildcraftcompat/pipe/propolis_item.md",
       "module": "buildcraftcompat",
       "type": "pipe",
       "subtype": "pipe_item",
@@ -2309,7 +2310,8 @@
       "book": "buildcraftcore:main",
       "listed": true,
       "stack": "buildcraftcompat:pipe_item_propolis",
-      "requires_mod": "forestry"
+      "requires_mod": "forestry",
+      "page": "buildcraftcompat/pipe/propolis_item"
     }
   ]
 }
