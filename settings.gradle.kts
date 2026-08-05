@@ -1,5 +1,3 @@
-import dev.kikugie.stonecutter.StonecutterSettings
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -13,17 +11,18 @@ plugins {
     id("dev.kikugie.stonecutter") version "0.8.4"
 }
 
-extensions.configure<StonecutterSettings> {
+stonecutter {
     kotlinController = true
     centralScript = "build.gradle.kts"
 
-    create(rootProject) {
-        vers("1.19.2-forge", "1.19.2")
-        vers("1.20.1-forge", "1.20.1")
-        vers("1.21.1-forge", "1.21.1")
-        vers("1.21.1-neoforge", "1.21.1")
-        vcsVersion = "1.19.2-forge"
+    shared {
+        version("1.19.2-forge", "1.19.2")
+        version("1.20.1-forge", "1.20.1")
+        version("1.21.1-forge", "1.21.1")
+        version("1.21.1-neoforge", "1.21.1")
     }
+
+    create(rootProject)
 }
 
 rootProject.name = "buildcraft-community-edition-localizations"

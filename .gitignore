@@ -32,3 +32,4 @@ sub_projects/
 logs/
 versions/*/build/
 versions/*/.gradle/
+.gradle-bootstrap

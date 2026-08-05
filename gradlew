@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-GRADLE_VERSION=8.12.1
+GRADLE_VERSION=9.0.0
 APP_HOME=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 BOOTSTRAP_DIR="$APP_HOME/.gradle-bootstrap"
 GRADLE_HOME="$BOOTSTRAP_DIR/gradle-$GRADLE_VERSION"
