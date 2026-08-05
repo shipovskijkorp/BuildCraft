@@ -1,31 +1,19 @@
-<chapter name="tile.pathMarkerBlock.name"/>
-The path marker is useful for <bold>stuffs</bold> and linking up a builders oart path woops that was spelt wrong lol oh well I guess this is just filler.
-<chapter name="Other"/>
-Other <bold>details <underline>include</underline> bold<italic> text</italic></bold>:
-
-Just <blue>in</blue> c<bold>ase</bold> <green>you <red><italic>d<underline>id</red>n</italic>'t</underline> get</green> that...
-
-<recipes_usages stack="buildcraftcore:marker_path"/>
-<chapter name="Information"/>
 <lore>
-Some loric information that is totally not just a lot of really long filler text to test next page logic.
+Straight lines are useful, but large projects often need a route that bends around terrain and machinery.
 </lore>
 <no_lore>
-This should NOT appear in-game, unless lore has been turned off.
+Path Marks define an ordered route for machines that support path-based work.
 </no_lore>
-<image src="buildcraftcore:textures/items/marker_path.png" width="64" height="64"/>
-<image src="buildcraftlib:textures/items/guide_book.png" width="64" height="64"/>
-<image src="buildcraftenergy:textures/gui/combustion_engine_gui.png"/>
 
-<hint>
-Path markers are really useless.
-</hint>
-<new_page/>
-To ensure that new pages <italic>work</italic>.
-HI THIS SHOULD BE ON ANOTHER PAGE
+<recipes_usages stack="buildcraftcore:marker_path"/>
 
-<note id="mark_info">
-Hi there, I am a note!
-Just in case you wanted to know, this is how you make a path mark.
-<recipes stack="buildcraftcore:marker_path" join="false"/>
-</note>
+<chapter name="Creating a Path"/>
+Place Path Marks at the points the route should pass through. Use the Marker Connector to link them in order. The visible laser line shows the path that a compatible Builder or other machine will follow.
+
+A path is directional: the order in which marks are linked determines the order of the points. Break or reconnect marks to reshape the route.
+
+<chapter name="Using the Path"/>
+Place a compatible machine next to one of the linked Path Marks. The machine reads the whole connected route and repeats its work at each position along that path.
+
+<link to="buildcraftcore:item/marker_connector"/>
+<link to="buildcraftbuilders:block/builder"/>

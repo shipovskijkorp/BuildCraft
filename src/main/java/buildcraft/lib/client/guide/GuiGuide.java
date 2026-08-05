@@ -102,6 +102,24 @@ public final class GuiGuide extends Screen {
 
     private static final List<String> MAIN_TYPE_ORDER =
         List.of("action", "block", "item", "pipe", "trigger");
+
+    /**
+     * Logical category order for the Community Edition guide.
+     * <p>
+     * The old implementation sorted translated subtype and entry names alphabetically. That scattered related
+     * progression chains (gears, engines, pipes, robotics and refining products) across the contents pages. The
+     * manifest is authored in gameplay order, while this table controls the order of the category headings.
+     */
+    private static final Map<String, List<String>> SUBTYPE_ORDER = Map.of(
+        "action", List.of("basic", "automation", "pipe_plug", "pipe_item", "robot", "robot_station"),
+        "block", List.of("engine", "mining", "fluid", "refining", "automation", "construction", "laser",
+            "robot_control"),
+        "item", List.of("gear", "component", "tool", "area", "blueprint", "robot_control",
+            "robot_station", "robot", "fluid", "pipe_plug"),
+        "pipe", List.of("pipe_item", "pipe_fluid", "pipe_power"),
+        "trigger", List.of("basic", "item", "fluid", "engine", "automation", "pipe_item", "pipe_fluid",
+            "pipe_plug", "robot")
+    );
     private static final Map<String, Integer> CHAPTER_COLOURS = Map.of(
         // Exact colour cycle used by GuideChapter.COLOURS in BC8.
         "action", 0x9DD5C0,
@@ -120,6 +138,7 @@ public final class GuiGuide extends Screen {
     private static final int SELECTED_COLOUR = 0x66C6A778;
 
     private final GuideContent content;
+    private final Map<ResourceLocation, Integer> manifestOrder = new LinkedHashMap<>();
     private final List<GuideContent.Entry> filteredEntries = new ArrayList<>();
     private final List<ContentsPage> contentsPages = new ArrayList<>();
     private final List<ChapterTab> contentsChapters = new ArrayList<>();
@@ -157,6 +176,10 @@ public final class GuiGuide extends Screen {
     private GuiGuide() {
         super(Component.translatable("item.buildcraft.guide.name"));
         content = GuideContent.load();
+        int order = 0;
+        for (GuideContent.Entry entry : content.getAllEntries()) {
+            manifestOrder.put(entry.id, order++);
+        }
     }
 
     public static void open() {
@@ -215,8 +238,8 @@ public final class GuiGuide extends Screen {
             case MODULE:
                 comparator = Comparator.comparingInt((GuideContent.Entry entry) -> moduleIndex(entry.module))
                     .thenComparingInt(entry -> typeIndex(entry.type))
-                    .thenComparing(entry -> entry.subtypeName().toLowerCase(Locale.ROOT))
-                    .thenComparing(entry -> entry.title().toLowerCase(Locale.ROOT));
+                    .thenComparingInt(entry -> subtypeIndex(entry.type, entry.subtype))
+                    .thenComparingInt(this::manifestIndex);
                 break;
             case ALPHABETICAL:
                 comparator = Comparator.comparing(entry -> entry.title().toLowerCase(Locale.ROOT));
@@ -224,8 +247,8 @@ public final class GuiGuide extends Screen {
             case TYPE:
             default:
                 comparator = Comparator.comparingInt((GuideContent.Entry entry) -> typeIndex(entry.type))
-                    .thenComparing(entry -> entry.subtypeName().toLowerCase(Locale.ROOT))
-                    .thenComparing(entry -> entry.title().toLowerCase(Locale.ROOT));
+                    .thenComparingInt(entry -> subtypeIndex(entry.type, entry.subtype))
+                    .thenComparingInt(this::manifestIndex);
                 break;
         }
         filteredEntries.sort(comparator.thenComparing(entry -> entry.id.toString()));
@@ -291,11 +314,10 @@ public final class GuiGuide extends Screen {
             lines.add(ContentsLine.chapter(type, typeName, chapterColour(type)));
 
             Map<String, List<GuideContent.Entry>> bySubtype = new LinkedHashMap<>();
-            typeEntries.stream()
-                .sorted(Comparator.comparing(entry -> entry.subtypeName().toLowerCase(Locale.ROOT)))
-                .forEach(entry -> bySubtype.computeIfAbsent(entry.subtype, ignored -> new ArrayList<>()).add(entry));
+            for (GuideContent.Entry entry : typeEntries) {
+                bySubtype.computeIfAbsent(entry.subtype, ignored -> new ArrayList<>()).add(entry);
+            }
             for (List<GuideContent.Entry> subtypeEntries : bySubtype.values()) {
-                subtypeEntries.sort(Comparator.comparing(entry -> entry.title().toLowerCase(Locale.ROOT)));
                 lines.add(ContentsLine.subheading(subtypeEntries.get(0).subtypeName()));
                 for (GuideContent.Entry entry : subtypeEntries) lines.add(ContentsLine.entry(entry));
             }
@@ -304,9 +326,9 @@ public final class GuiGuide extends Screen {
 
     private void appendModuleOrderedLines(List<ContentsLine> lines) {
         Map<String, List<GuideContent.Entry>> byModule = new LinkedHashMap<>();
-        filteredEntries.stream()
-            .sorted(Comparator.comparingInt(entry -> moduleIndex(entry.module)))
-            .forEach(entry -> byModule.computeIfAbsent(entry.module, ignored -> new ArrayList<>()).add(entry));
+        for (GuideContent.Entry entry : filteredEntries) {
+            byModule.computeIfAbsent(entry.module, ignored -> new ArrayList<>()).add(entry);
+        }
         int chapterIndex = 0;
         for (Map.Entry<String, List<GuideContent.Entry>> module : byModule.entrySet()) {
             List<GuideContent.Entry> moduleEntries = module.getValue();
@@ -316,11 +338,10 @@ public final class GuiGuide extends Screen {
                 originalChapterColour(chapterIndex++)));
 
             Map<String, List<GuideContent.Entry>> byType = new LinkedHashMap<>();
-            moduleEntries.stream()
-                .sorted(Comparator.comparingInt(entry -> typeIndex(entry.type)))
-                .forEach(entry -> byType.computeIfAbsent(entry.type, ignored -> new ArrayList<>()).add(entry));
+            for (GuideContent.Entry entry : moduleEntries) {
+                byType.computeIfAbsent(entry.type, ignored -> new ArrayList<>()).add(entry);
+            }
             for (List<GuideContent.Entry> typeEntries : byType.values()) {
-                typeEntries.sort(Comparator.comparing(entry -> entry.title().toLowerCase(Locale.ROOT)));
                 lines.add(ContentsLine.subheading(typeEntries.get(0).typeName()));
                 for (GuideContent.Entry entry : typeEntries) lines.add(ContentsLine.entry(entry));
             }
@@ -347,13 +368,27 @@ public final class GuiGuide extends Screen {
         return index < 0 ? Integer.MAX_VALUE : index;
     }
 
+    private static int subtypeIndex(String type, String subtype) {
+        List<String> order = SUBTYPE_ORDER.get(type);
+        if (order == null) return Integer.MAX_VALUE;
+        int index = order.indexOf(subtype);
+        return index < 0 ? Integer.MAX_VALUE : index;
+    }
+
+    private int manifestIndex(GuideContent.Entry entry) {
+        return manifestOrder.getOrDefault(entry.id, Integer.MAX_VALUE);
+    }
+
     private static int moduleIndex(String module) {
         switch (module) {
             case "buildcraftcore": return 0;
-            case "buildcraftenergy": return 1;
-            case "buildcraftfactory": return 2;
-            case "buildcraftsilicon": return 3;
-            case "buildcrafttransport": return 4;
+            case "buildcraftbuilders": return 1;
+            case "buildcraftenergy": return 2;
+            case "buildcraftfactory": return 3;
+            case "buildcraftrobotics": return 4;
+            case "buildcraftsilicon": return 5;
+            case "buildcrafttransport": return 6;
+            case "buildcraftcompat": return 7;
             default: return 100;
         }
     }
@@ -444,7 +479,7 @@ public final class GuiGuide extends Screen {
         drawScaledCentred(pose, "BuildCraft", pageX, top + PAGE_TEXT_TOP, PAGE_TEXT_WIDTH, titleScale, 0x17120E);
         drawScaledCentred(pose, "Guide Book", pageX, top + PAGE_TEXT_TOP + titleLineHeight,
             PAGE_TEXT_WIDTH, titleScale, 0x17120E);
-        drawCentred(pose, Component.literal("v8.0.0"), pageX,
+        drawCentred(pose, Component.literal("Community Edition"), pageX,
             top + PAGE_TEXT_TOP + titleLineHeight * 2,
             PAGE_TEXT_WIDTH, TEXT_COLOUR);
 
@@ -474,10 +509,13 @@ public final class GuiGuide extends Screen {
         int pageX = left + PAGE_TEXTURE_WIDTH + 4;
         List<String> modules = new ArrayList<>();
         addLoadedModule(modules, "buildcraftcore", "BuildCraft Core");
+        addLoadedModule(modules, "buildcraftbuilders", "BuildCraft Builders");
         addLoadedModule(modules, "buildcraftenergy", "BuildCraft Energy");
         addLoadedModule(modules, "buildcraftfactory", "BuildCraft Factory");
+        addLoadedModule(modules, "buildcraftrobotics", "BuildCraft Robotics");
         addLoadedModule(modules, "buildcraftsilicon", "BuildCraft Silicon");
         addLoadedModule(modules, "buildcrafttransport", "BuildCraft Transport");
+        addLoadedModule(modules, "buildcraftcompat", "BuildCraft Compat");
 
         int perLineHeight = font.lineHeight + 3;
         int blockHeight = (modules.size() + 1) * perLineHeight;

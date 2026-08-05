@@ -1,0 +1,5 @@
+~{buildcraft/json/insn}
+
+import "buildcraftlib:util" "buildcraftcore:main"
+
+pipe_item "propolis_item" "buildcraftcompat:pipe_item_propolis"

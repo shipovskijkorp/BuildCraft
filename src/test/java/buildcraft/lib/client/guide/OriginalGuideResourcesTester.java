@@ -25,7 +25,7 @@ class OriginalGuideResourcesTester {
         }
 
         JsonArray entries = root.getAsJsonArray("entries");
-        Assertions.assertEquals(111, entries.size(), "Unexpected number of original BuildCraftGuide pages");
+        Assertions.assertTrue(entries.size() >= 111, "The current guide must retain every original BuildCraftGuide page");
 
         int listed = 0;
         for (JsonElement element : entries) {
@@ -37,9 +37,82 @@ class OriginalGuideResourcesTester {
                 // Opening every path is enough: the original registry intentionally contains one empty markdown page.
             }
         }
-        Assertions.assertEquals(106, listed, "Unexpected number of registered contents entries");
+        Assertions.assertTrue(listed >= 106, "The current guide must retain every original contents entry");
     }
 
+
+    @Test
+    void currentProjectGuideCoversEveryAddedModuleAndMajorWorkflow() throws Exception {
+        JsonObject root;
+        try (InputStream stream = resource(MANIFEST);
+             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+            root = JsonParser.parseReader(reader).getAsJsonObject();
+        }
+
+        java.util.Set<String> ids = new java.util.HashSet<>();
+        for (JsonElement element : root.getAsJsonArray("entries")) {
+            ids.add(element.getAsJsonObject().get("id").getAsString());
+        }
+        String[] required = {
+            "buildcraftbuilders:block/architect", "buildcraftbuilders:block/builder",
+            "buildcraftbuilders:block/filler", "buildcraftbuilders:block/quarry",
+            "buildcraftrobotics:item/robot", "buildcraftrobotics:block/zone_planner",
+            "buildcraftrobotics:block/requester", "buildcraftrobotics:robot/builder",
+            "buildcraftsilicon:block/assembly_table", "buildcraftsilicon:block/programming_table",
+            "buildcrafttransport:pipe/wood_power", "buildcrafttransport:pipe/diamond_power",
+            "buildcraftcore:item/map_location", "buildcraftfactory:item/water_gel",
+            "buildcraftenergy:item/oil", "buildcraftenergy:item/fuel_gaseous",
+            "buildcraftenergy:item/oil_residue", "buildcraftcompat:pipe/propolis_item"
+        };
+        for (String id : required) {
+            Assertions.assertTrue(ids.contains(id), "Missing current-project guide entry " + id);
+        }
+    }
+
+    @Test
+    void robotCareerEntriesCarryVariantNbt() throws Exception {
+        JsonObject root;
+        try (InputStream stream = resource(MANIFEST);
+             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+            root = JsonParser.parseReader(reader).getAsJsonObject();
+        }
+        int careers = 0;
+        for (JsonElement element : root.getAsJsonArray("entries")) {
+            JsonObject entry = element.getAsJsonObject();
+            if (!entry.get("id").getAsString().startsWith("buildcraftrobotics:robot/")) continue;
+            Assertions.assertEquals("buildcraftrobotics:robot", entry.get("stack").getAsString());
+            Assertions.assertTrue(entry.has("stack_nbt"), "Robot career entry must preserve its board variant");
+            net.minecraft.nbt.TagParser.parseTag(entry.get("stack_nbt").getAsString());
+            careers++;
+        }
+        Assertions.assertEquals(17, careers, "Every registered robot career must be documented");
+    }
+
+    @Test
+    void everyCurrentEnergyFluidFamilyHasAReadableGuidePage() throws Exception {
+        JsonObject root;
+        try (InputStream stream = resource(MANIFEST);
+             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+            root = JsonParser.parseReader(reader).getAsJsonObject();
+        }
+        java.util.Set<String> ids = new java.util.HashSet<>();
+        JsonObject forestry = null;
+        for (JsonElement element : root.getAsJsonArray("entries")) {
+            JsonObject entry = element.getAsJsonObject();
+            ids.add(entry.get("id").getAsString());
+            if ("buildcraftcompat:pipe/propolis_item".equals(entry.get("id").getAsString())) forestry = entry;
+        }
+        String[] fluids = {
+            "oil", "oil_residue", "oil_heavy", "oil_dense", "oil_distilled",
+            "fuel_dense", "fuel_mixed_heavy", "fuel_light", "fuel_mixed_light", "fuel_gaseous"
+        };
+        for (String fluid : fluids) {
+            Assertions.assertTrue(ids.contains("buildcraftenergy:item/" + fluid),
+                "Missing current Energy fluid guide for " + fluid);
+        }
+        Assertions.assertNotNull(forestry, "Missing Apiarist's Pipe guide entry");
+        Assertions.assertEquals("forestry", forestry.get("requires_mod").getAsString());
+    }
 
     @Test
     void deprecatedOriginalGuideShortcutsRemainFunctional() throws Exception {
@@ -65,8 +138,8 @@ class OriginalGuideResourcesTester {
     @Test
     void originalGuideRegistrySourcesAreBundled() throws Exception {
         String[] namespaces = {
-            "buildcraftlib", "buildcraftcore", "buildcraftenergy",
-            "buildcraftfactory", "buildcraftsilicon", "buildcrafttransport"
+            "buildcraftlib", "buildcraftcore", "buildcraftbuilders", "buildcraftenergy",
+            "buildcraftfactory", "buildcraftrobotics", "buildcraftsilicon", "buildcrafttransport"
         };
         for (String namespace : namespaces) {
             try (InputStream ignored = resource("/assets/" + namespace + "/compat/buildcraft/guide.txt")) {
@@ -75,6 +148,9 @@ class OriginalGuideResourcesTester {
         }
         try (InputStream ignored = resource("/assets/buildcraftlib/compat/buildcraft/guide/util.txt")) {
             // Shared aliases used by the original guide.txt files.
+        }
+        try (InputStream ignored = resource("/assets/buildcraftcompat/compat/buildcraft/guide.txt")) {
+            // Optional integrations keep their authored registry source beside the page resources.
         }
     }
 

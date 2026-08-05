@@ -27,10 +27,12 @@ import com.google.gson.JsonParser;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import buildcraft.api.core.BCLog;
@@ -76,6 +78,10 @@ public final class GuideContent {
             List<Entry> entries = new ArrayList<>(array.size());
             for (JsonElement element : array) {
                 JsonObject json = element.getAsJsonObject();
+                String requiredMod = getString(json, "requires_mod");
+                if (requiredMod != null && !requiredMod.isBlank() && !ModList.get().isLoaded(requiredMod)) {
+                    continue;
+                }
                 ResourceLocation id = new ResourceLocation(json.get("id").getAsString());
                 ResourceLocation source = new ResourceLocation(json.get("source").getAsString());
                 String text;
@@ -86,7 +92,8 @@ public final class GuideContent {
                     continue;
                 }
                 String stackId = getString(json, "stack");
-                ItemStack stack = resolveStack(stackId);
+                String stackNbt = getString(json, "stack_nbt");
+                ItemStack stack = resolveStack(stackId, stackNbt);
                 String statement = getString(json, "statement");
                 entries.add(new Entry(
                     id,
@@ -131,8 +138,16 @@ public final class GuideContent {
         return element == null || element.isJsonNull() ? null : element.getAsString();
     }
 
-    private static ItemStack resolveStack(@Nullable String rawId) {
-        return resolveStackForTag(rawId, Map.of());
+    private static ItemStack resolveStack(@Nullable String rawId, @Nullable String rawNbt) {
+        ItemStack stack = resolveStackForTag(rawId, Map.of());
+        if (!stack.isEmpty() && rawNbt != null && !rawNbt.isBlank()) {
+            try {
+                stack.setTag(TagParser.parseTag(rawNbt));
+            } catch (Exception ex) {
+                BCLog.logger.warn("[lib.guide] Invalid stack NBT '{}' for {}", rawNbt, rawId, ex);
+            }
+        }
+        return stack;
     }
 
     public static ItemStack resolveStackForTag(@Nullable String rawId) {

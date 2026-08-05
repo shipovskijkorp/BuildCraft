@@ -1,13 +1,22 @@
 <lore>
-On a quest to make better use out of the recently discovered combustible fluids, you discover The Distiller which is used to many distillable fluids into a different liquid and gas fluid.
+Crude oil is a complicated collection of useful fluids waiting for someone to separate them.
 </lore>
 <no_lore>
-To get more from your fuel, a Distiller is used to distill a fluid into a liquid and a gas which can be either heated/cooled or distilled again to be used as a better fuel
+The Distiller consumes MJ and separates a fluid into one gaseous output and one liquid output.
 </no_lore>
-<chapter name="Information"/>
-Gases are extracted out the top and the liquid is extracted out the bottom.
+
 <recipes_usages stack="buildcraftfactory:distiller"/>
-The type of fluid and temperature of the inserted fluid all have an effect on what liquid and gas will be made in the distiller.
-Bear in mind that the distiller outputs fluids of the same temperature that the input fluid was.
-<chapter name="Machine Mechanics"/>
-As with most machines, it requires power. The more power you supply it, the faster it will distill.
+
+<chapter name="Connections"/>
+Insert the source fluid into the input tank. The gaseous product is extracted from the top and the liquid product from the bottom. Keep both outputs clear: the machine cannot complete another operation when either destination has no room.
+
+Supply MJ through a compatible power connection. More available power lets the current operation advance faster, up to the machine's processing limit.
+
+<chapter name="Temperature Selects the Recipe"/>
+Cool, Hot and Searing forms of the same oil product can have different distillation recipes. The outputs retain the input temperature, so a Heat Exchanger is used between distillation stages when the next recipe requires another heat level.
+
+Crude Oil can begin three different refining routes. Further distillation of Distilled Oil, Heavy Oil, Dense Oil and the mixed fuels separates them into Gaseous, Light and Dense Fuel plus Residue.
+
+<link to="buildcraftfactory:block/heat_exchange"/>
+<link to="buildcraftenergy:item/oil"/>
+<link to="buildcraftenergy:block/engine_iron"/>

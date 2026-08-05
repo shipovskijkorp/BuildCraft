@@ -1909,7 +1909,7 @@
   "buildcraft.guide.chapter.subtype.pipe_fluid": "Fluid Transport",
   "buildcraft.guide.chapter.subtype.pipe_plug": "Pluggables",
   "buildcraft.guide.chapter.subtype.refining": "Refining",
-  "buildcraft.guide.chapter.subtype.laser": "Laser Power",
+  "buildcraft.guide.chapter.subtype.laser": "Laser Machinery",
   "buildcraft.guide.chapter.subtype.basic": "Basic",
   "buildcraft.guide.chapter.subtype.resourcepack": "Resource Pack",
   "buildcraft.guide.chapter.mod.buildcraft": "BuildCraft",
@@ -1921,5 +1921,16 @@
   "buildcraft.guide.chapter.title.gate_base": "Gates",
   "buildcraft.guide.page.guide_page_format": "Guide Page File Format",
   "buildcraft.guide.page.json_insn_format": "Json Instruction File Format",
-  "buildcraft.guide.page.registry_overview": "Json Registry Overview"
+  "buildcraft.guide.page.registry_overview": "Json Registry Overview",
+  "buildcraft.guide.chapter.submod.builders": "Builders",
+  "buildcraft.guide.chapter.submod.robotics": "Robotics",
+  "buildcraft.guide.chapter.submod.silicon": "Silicon",
+  "buildcraft.guide.chapter.subtype.blueprint": "Blueprints and Templates",
+  "buildcraft.guide.chapter.subtype.construction": "Construction",
+  "buildcraft.guide.chapter.subtype.area": "Areas and Paths",
+  "buildcraft.guide.chapter.subtype.robot": "Robots",
+  "buildcraft.guide.chapter.subtype.robot_station": "Robot Stations",
+  "buildcraft.guide.chapter.subtype.robot_control": "Robot Control",
+  "buildcraft.guide.chapter.subtype.component": "Components",
+  "buildcraft.guide.chapter.subtype.pipe_power": "Power Transport"
 }

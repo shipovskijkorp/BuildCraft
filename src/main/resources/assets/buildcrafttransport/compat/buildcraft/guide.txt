@@ -4,6 +4,7 @@ import "buildcraftlib:util" "buildcraftcore:main"
 
 alias pipei 1 `pipe_item "%0" "buildcrafttransport:pipe_%0"`
 alias pipef 1 `pipe_fluid "%0" "buildcrafttransport:pipe_%0"`
+alias pipep 1 `pipe_power "%0" "buildcrafttransport:%0"`
 
 pipei "structure"
 
@@ -56,3 +57,16 @@ action "pipe_item" "pipe_direction_below" "buildcraft:pipe.dir.down"
 action "pipe_plug" "pipe_signal_active" "buildcraft:pipe.wire.output.black"
 action "pipe_item" "pipe_colour" "buildcraft:pipe.color.black"
 action "pipe_item" "extraction_preset" "buildcraft:extraction.preset.red"
+
+pipep "wood_power"
+pipep "cobblestone_power"
+pipep "stone_power"
+pipep "sandstone_power"
+pipep "quartz_power"
+pipep "gold_power"
+pipep "iron_power"
+pipep "diamond_power"
+pipep "diamond_wood_power"
+
+item "component" "waterproof" "buildcrafttransport:waterproof"
+block "automation" "filtered_buffer"

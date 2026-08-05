@@ -1,14 +1,19 @@
-<chapter name="tile.markerBlock.name"/>
 <lore>
-Controlling where you want your machines to run is very important during construction, otherwise they may end up out of control.
+Large machines need an exact boundary, otherwise their appetite for blocks can become rather difficult to control.
 </lore>
 <no_lore>
-The Land Mark is used to designate where you want your large scale machines to work.
+Land Marks define rectangular work areas for machines such as the Quarry, Filler and Architect Table.
 </no_lore>
-<chapter name="Information"/>
-To mark out the area, you must connect your Land Marks to ensure that the area is set.
-To connect your Land Marks, place them on the same axis of the world as each other and click them.
+
 <recipes_usages stack="buildcraftcore:marker_volume"/>
-Then a laser will appear connecting the two. Land Marks can connect up to 6 other land marks for the 6 axis but only 4 is really necessary to make a Land Marked cube.
-Land Marks have a 64 block limit to connect to each other which may limit your creativity.
-Applying a redstone signal to a land mark will lead it to emit constant lasers indicating where you can place other Land Marks so they connect.
+
+<chapter name="Defining an Area"/>
+Place Land Marks on matching X, Y or Z axes and connect them with the Marker Connector. Connected marks form the edges of a rectangular box. Most machines only need the horizontal corners, but a full three-dimensional box may also be defined.
+
+Powering a Land Mark with redstone displays guide lasers along the axes, making aligned placement easier.
+
+<chapter name="Using the Area"/>
+Place the machine next to one of the connected marks. The machine claims the marked box and uses it as its work area. If no valid marks are found, some machines use their own default area instead.
+
+<link to="buildcraftcore:item/marker_connector"/>
+<link to="buildcraftcore:item/volume_box"/>

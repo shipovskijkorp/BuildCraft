@@ -1,0 +1,11 @@
+<lore>
+A wooden pipe is excellent at moving items and rather less excellent at keeping water inside itself.
+</lore>
+<no_lore>
+Pipe Sealant is a crafting component used to convert transport materials into fluid-pipe components.
+</no_lore>
+
+<recipes_usages stack="buildcrafttransport:waterproof"/>
+
+<chapter name="Fluid Pipe Crafting"/>
+Use Pipe Sealant in the recipes shown by the guide to create or upgrade Fluid Pipes. It has no independent transport behaviour and is consumed as a crafting material.

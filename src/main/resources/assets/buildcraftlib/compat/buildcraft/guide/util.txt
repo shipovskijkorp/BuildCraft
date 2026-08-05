@@ -38,7 +38,7 @@ alias item_gear 2 `item "gear" "%0" "%1"`
 alias item_plug 2 `item "pipe_plug" "%0" "%1"`
 alias pipe_item 2 `pipe "pipe_item" "%0" "%1"`
 alias pipe_fluid 2 `pipe "pipe_fluid" "%0" "%1"`
-// no "pipe_power" - no point writing the pages as they will be gone soonish :)
+alias pipe_power 2 `pipe "pipe_power" "%0" "%1"`
 alias block_engine 2 `block "engine" "%0" "%1"`
 alias block_refining 1 `block "refining" "%0"`
 alias block_fluid 1 `block "fluid" "%0"`

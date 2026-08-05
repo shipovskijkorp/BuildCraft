@@ -1,24 +1,26 @@
 <lore>
-While furnace fuels are nice. With the discovery of combustible fluids, a more powerful engine is in demand to harness their power.
+Refining oil is useful. Turning it into enough power to run an industrial accident is considerably more useful.
 </lore>
 <no_lore>
-The Combustion Engine is the most powerful engine in BuildCraft and is able to use combustible fuels as a way to produce power.
+The Combustion Engine burns BuildCraft liquid fuels, uses coolant to control heat and stores residue produced by dirty fuels.
 </no_lore>
-<chapter name="Information"/>
-To make use of these combustible fluids, they must be piped into the engine along with a coolant to keep them from over heating.
-<recipes_usages stack="buildcraftcore:engine" data="2"/>
-<chapter name="Different Fuels"/>
-With all combustible fluids, they produce different amounts of power for different amounts of time depending on which fuel is used.
 
-Using dirty fuels in an engine will cause it to get clogged up with residue which you would need to extract.
+<recipes_usages stack="buildcraftenergy:engine_iron"/>
+
+<chapter name="Tanks and Fuels"/>
+The engine has separate tanks for fuel, coolant and residue. Fluid pipes or containers can fill and drain them directly. Apply a redstone signal to burn the inserted fuel; output depends on the selected fuel and ranges from low-output oil products to 8 MJ/t Gaseous Fuel.
+
+Crude Oil, Heavy Oil and Dense Oil are dirty fuels. Burning them gradually produces Residue, and a full residue tank prevents that by-product from being accepted. Refined fuels burn without residue.
+
+<chapter name="Cooling"/>
+Water is the standard liquid coolant. Ice and Packed Ice can also be loaded as solid coolants and are converted into water with greater cooling strength. Hot biomes make the engine heat faster and cool less efficiently, while cold biomes have the opposite effect.
+
+When the redstone signal is removed the engine pauses, applies a short restart cooling penalty and begins shedding excess heat. Keep coolant supplied before operating high-output fuels for long periods.
 
 <chapter name="Engine Mechanics"/>
-BuildCraft engines have 5 temperature stages, which determines the speed the engine runs at: Blue, Green, Yellow, Red and Black.
-Combustion engines will only turn black if the engines internal power buffer fills up as the power has nowhere to go, thus the engine will overheat and needs to be wrenched to be cooled.
-Engines will always connect to the nearest compatible MJ consumer.
-You can use a Wrench to rotate it to change which block it is powering.
+Place the engine against an MJ receiver and rotate it with a Wrench when necessary. The coloured stages show its heat level. Stored MJ is transferred only when the adjacent receiver accepts it; unaccepted power remains in the engine rather than being removed twice.
 
-Combustion engines can be "chained" in a line with up to 5 engines in total.
-
-As with all engines, it <bold>requires a redstone signal to run.</bold>
-Gates can be used to detect the engines temperature stages to help you control them.
+<link to="buildcraftcore:block/engine_basics"/>
+<link to="buildcraftfactory:block/distiller"/>
+<link to="buildcraftfactory:block/heat_exchange"/>
+<link to="buildcraftenergy:item/oil"/>
