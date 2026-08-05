@@ -8,4 +8,8 @@ Paintbrushes can be used to paint various different blocks into one of 16 colour
 Painting a block is normally only useful for decoration, however some blocks have special properties once painted.
 For example pipes will not connect to other pipes if they are painted different colours.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep separate brushes for permanent pipe networks. Colouring only the branches that must not connect is usually easier to maintain than colouring every pipe.
+</hint>
+
 <recipes_usages stack="buildcraftcore:paintbrush"/>

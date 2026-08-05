@@ -115,6 +115,41 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
+    void everyListedGuidePageContainsAnOptionalPracticalHint() throws Exception {
+        JsonObject root;
+        try (InputStream stream = resource(MANIFEST);
+             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+            root = JsonParser.parseReader(reader).getAsJsonObject();
+        }
+
+        java.util.Set<String> checkedSources = new java.util.HashSet<>();
+        for (JsonElement element : root.getAsJsonArray("entries")) {
+            JsonObject entry = element.getAsJsonObject();
+            if (!entry.get("listed").getAsBoolean()) continue;
+            String source = entry.get("source").getAsString();
+            if (!checkedSources.add(source)) continue;
+            String[] split = source.split(":", 2);
+            String markdown;
+            try (InputStream stream = resource("/assets/" + split[0] + "/" + split[1]);
+                 InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+                StringBuilder text = new StringBuilder();
+                char[] buffer = new char[1024];
+                int read;
+                while ((read = reader.read(buffer)) >= 0) text.append(buffer, 0, read);
+                markdown = text.toString();
+            }
+            Assertions.assertTrue(markdown.contains("<hint>"), "Missing hint section in " + source);
+            Assertions.assertTrue(markdown.contains("<bold>Hint:</bold>"), "Hint is not visibly labelled in " + source);
+            GuideDocument hidden = GuideDocument.parse(markdown, true, false, false);
+            GuideDocument visible = GuideDocument.parse(markdown, true, true, false);
+            Assertions.assertTrue(visible.blocks.size() > hidden.blocks.size(),
+                "Show Hints must reveal additional content in " + source);
+        }
+        Assertions.assertTrue(checkedSources.size() >= 204,
+            "The current guide should retain practical hints for every listed page");
+    }
+
+    @Test
     void deprecatedOriginalGuideShortcutsRemainFunctional() throws Exception {
         String path = "/assets/buildcraftlib/compat/buildcraft/guide/en_us/item/guide.md";
         String markdown;

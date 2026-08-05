@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Knight Robot fetches a weapon and attacks hostile mobs inside its assigned work zone.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep the combat zone away from fragile machinery and provide a safe charging station. Test hostile-mob access before relying on the robot for defence.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 64,000 MJ and installed into an empty Robot with an Integration Table.

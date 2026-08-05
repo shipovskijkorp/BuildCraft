@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Stripes Robot loads usable items and applies the same item-use handlers as a Stripes Transport Pipe to free target blocks.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Test each stripes interaction manually before assigning the robot. Some handlers consume, place or transform items in ways that are difficult to reverse.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 64,000 MJ and installed into an empty Robot with an Integration Table.

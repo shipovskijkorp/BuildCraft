@@ -4,6 +4,10 @@ Some machines are built in one piece. Others become useful only after the import
 <no_lore>
 The Integration Table installs compatible upgrades or components into a target item using laser power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Prepare the exact gate, board or robot variant before insertion. Integration recipes often preserve or alter item data that is easier to verify before automation.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:integration_table"/>
 

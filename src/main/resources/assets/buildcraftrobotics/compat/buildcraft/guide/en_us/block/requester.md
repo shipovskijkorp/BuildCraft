@@ -4,6 +4,10 @@ A storage room is much more useful when it can ask for missing stock before some
 <no_lore>
 The Requester maintains configured item quantities and exposes the missing amounts to Delivery Robots.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Request small quantities first and confirm that providers and delivery routes are reachable. Large permanent requests can monopolise carriers and storage.
+</hint>
+
 
 <recipes_usages stack="buildcraftrobotics:requester"/>
 

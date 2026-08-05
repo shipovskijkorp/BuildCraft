@@ -4,6 +4,10 @@ Nine filter slots are not much help when a sorting system must recognise an enti
 <no_lore>
 A List stores reusable item filters for pipes, gates and robot stations.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Lists for reusable filters shared by several Diamond Pipes or gates. Updating one List is safer than editing many individual filter slots.
+</hint>
+
 
 <recipes_usages stack="buildcraftcore:list"/>
 

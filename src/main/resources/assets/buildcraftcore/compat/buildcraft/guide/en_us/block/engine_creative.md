@@ -4,6 +4,10 @@ For testing a factory, waiting for fuel is rarely the part anyone wants to test.
 <no_lore>
 The Creative Engine produces configurable MJ without fuel and is intended for creative-mode testing.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use the Creative Engine only in controlled test rigs. Isolate it from normal power networks so an unlimited source does not hide throughput or buffering problems.
+</hint>
+
 
 <recipes_usages stack="buildcraftcore:engine_creative"/>
 

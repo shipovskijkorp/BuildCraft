@@ -4,6 +4,10 @@ Ordinary redstone dust is energetic, but a crystal is much easier to fit into pr
 <no_lore>
 A Redstone Crystal is an Assembly Table component used by advanced BuildCraft recipes.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check both recipes and usages before mass-producing this component. Silicon parts are often shared by several machines, gates and robot upgrades.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:redstone_crystal"/>
 

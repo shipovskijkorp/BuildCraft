@@ -4,6 +4,10 @@ A plan is only a collection of ideas until something begins placing blocks.
 <no_lore>
 The Builder consumes MJ and resources to construct a used Blueprint or Template.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep spare output space while a Builder is active. If a task is cancelled, reserved items may return to its inventory or drop nearby when no slot is available.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:builder"/>
 

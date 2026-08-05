@@ -4,6 +4,10 @@ Mining by hand is rewarding until the desired ore is underneath several million 
 <no_lore>
 The Quarry builds a frame and automatically mines every permitted block inside its selected area.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Route Quarry output into a buffer before the final sorting system. The buffer prevents short inventory stalls from interrupting mining and makes overflow visible.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:quarry"/>
 

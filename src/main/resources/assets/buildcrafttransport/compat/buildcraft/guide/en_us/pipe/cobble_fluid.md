@@ -4,6 +4,10 @@ Transporting your fluids to where you want them to go fairly slowly.
 <no_lore>
 A Cobblestone Fluid Pipe is used to transport fluids from a pipe into connecting pipes/tanks.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use the Stone/Cobblestone non-connection rule to run separate fluid lines side by side without accidental mixing.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_cobble_fluid"/>
 

@@ -4,6 +4,10 @@ Imagine a pipe which can place blocks, break blocks and use blocks. This is that
 <no_lore>
 A Striped Transport Pipe is used to break blocks, place blocks use items fed through it and transport them into a connecting pipe/inventory.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Stripes Pipes at controlled endpoints and test the target face manually. Their world interaction is more destructive than normal transport.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_stripes_item"/>
 

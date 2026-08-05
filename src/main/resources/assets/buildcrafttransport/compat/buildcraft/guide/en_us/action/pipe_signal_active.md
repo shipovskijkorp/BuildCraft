@@ -4,6 +4,10 @@ Select this to make your connected pipe wire glow.
 <no_lore>
 Pipe Signal On is a gate action provided on any gate that also has a pipe wire of that colour is attached to the same pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use coloured pipe wire to isolate this signal from unrelated automation and avoid feedback loops between neighbouring gates.
+</hint>
+
 
 <chapter name="Requirements"/>
 When the action is activated, the connecting pipe wire of that same colour is activated.

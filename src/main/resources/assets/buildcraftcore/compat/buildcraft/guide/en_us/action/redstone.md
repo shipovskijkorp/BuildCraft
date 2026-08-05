@@ -4,6 +4,10 @@ When triggered, a redstone signal will be emitted.
 <no_lore>
 Redstone Signal is a gate action provided on any gate placed.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use coloured pipe wire to isolate this signal from unrelated automation and avoid feedback loops between neighbouring gates.
+</hint>
+
 
 <chapter name="Requirements"/>
 When the action is activated, it will emit a Redstone signal.

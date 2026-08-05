@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Pump Robot drains matching world fluid blocks into its internal tank and returns to a station to unload the fluid.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Provide an empty fluid destination before starting the Pump Robot. A full station can leave the robot travelling without completing useful work.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

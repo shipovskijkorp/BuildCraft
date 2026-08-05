@@ -4,6 +4,10 @@ Signals are easier to understand when they are visible, and easier to control wh
 <no_lore>
 Lenses and Filters are coloured pipe pluggables stored as variants of the same item.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Configure the pluggable before copying or installing many of them. Test one pipe face first to confirm orientation and gate interaction.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:plug/lens"/>
 

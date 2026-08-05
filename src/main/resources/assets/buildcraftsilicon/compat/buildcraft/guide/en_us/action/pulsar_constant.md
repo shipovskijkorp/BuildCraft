@@ -4,6 +4,10 @@ Did you know you can active control over a connected pipe pulsar using a gate?
 <no_lore>
 Power Pulsar On is a gate action provided on any gate that also has a Pipe Pulsar is attached to the same pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Pair this action with the narrowest useful trigger and test the off-state as carefully as the on-state.
+</hint>
+
 
 <chapter name="Requirements"/>
 When the action is activated, the Pipe Pulsar is activated and the pipe will receive power.

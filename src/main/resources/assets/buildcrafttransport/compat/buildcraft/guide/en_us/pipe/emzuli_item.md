@@ -4,6 +4,10 @@ Using a gate to extract certain items is the latest technical revolution in filt
 <no_lore>
 A Emzuli Transport Pipe is gate controlled pipe used to extract selected items determined by its filter from an inventory when given power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Test redstone-controlled extraction with a small inventory first. Make sure the inactive state matches the behaviour expected during power loss.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_emzuli_item"/>
 

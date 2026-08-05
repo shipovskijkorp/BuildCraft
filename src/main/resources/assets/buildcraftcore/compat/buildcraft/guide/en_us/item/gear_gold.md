@@ -6,4 +6,8 @@ Gold never breaks when crafted into tiny gears, which allows it to be used for c
 <no_lore>
 The Gold Gear is the next tier of gear which is used by machines which work over a large areas.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Craft Gold Gears in planned batches. Higher-tier gears consume the previous tier, so keep a few lower-tier spares for machines and tools.
+</hint>
+
 <recipes_usages stack="buildcraftcore:gear_gold"/>

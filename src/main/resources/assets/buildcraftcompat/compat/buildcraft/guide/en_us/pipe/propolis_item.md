@@ -4,6 +4,10 @@ Sorting bees by colour was never going to be precise enough for a serious apiary
 <no_lore>
 The Apiarist's Pipe is a Forestry compatibility item pipe that routes genetic items with a separate filter for every side.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use an Apiarist's Pipe at a dedicated bee-processing junction. Keep a normal overflow route so unexpected bee types do not block the network.
+</hint>
+
 
 <recipes_usages stack="buildcraftcompat:pipe_item_propolis"/>
 

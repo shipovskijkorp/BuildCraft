@@ -4,6 +4,10 @@ Sometimes the shape matters more than the exact stone, wood or metal used to fil
 <no_lore>
 A Template records only the occupied shape of an area, allowing a Builder to fill it with supplied materials.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Templates record shape rather than exact block identity. Use them when the same structure should be rebuilt from locally available materials.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:template"/>
 

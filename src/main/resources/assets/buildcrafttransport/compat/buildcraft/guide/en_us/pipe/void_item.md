@@ -4,6 +4,10 @@ When you transport items in, they wont come out.
 <no_lore>
 A Void Transport Pipe is used to destroy items that are fed into it.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Place a filter before a Void Pipe whenever valuable and disposable items share a network. Never use the void route as an untested overflow.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_void_item"/>
 

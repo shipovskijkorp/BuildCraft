@@ -4,6 +4,10 @@ Destroying fluids one bucket at a time
 <no_lore>
 A Void Fluid Pipe is used to destroy fluids that are fed into it.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Filter and isolate Void Fluid Pipes. A mistaken connection can destroy an entire stored fluid batch without leaving recoverable items.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_void_fluid"/>
 

@@ -4,6 +4,10 @@ The lightest fraction is eager to leave both the Distiller and any poorly planne
 <no_lore>
 Gaseous Fuel is the highest-output refined Combustion Engine fuel, producing 8 MJ/t without residue.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Reserve high-value fuel for engines that can use it efficiently and provide automatic shutdown when the consumer stops.
+</hint>
+
 
 <chapter name="Production"/>
 Gaseous Fuel is the top output of distilling Cool Oil, Cool Distilled Oil or Cool Mixed Light Fuel. It has Cool, Hot and Searing forms for transport through the Heat Exchanger, although it does not require further distillation.

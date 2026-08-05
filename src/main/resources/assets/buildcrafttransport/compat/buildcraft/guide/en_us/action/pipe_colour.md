@@ -4,6 +4,10 @@ The Lazuli and Daizuli Transport Pipe allows you to paints/sort painted items, t
 <no_lore>
 Paint Items is a gate action provided on any gate that is placed on a Lazuli or Daizuli Transport Pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Pair this action with the narrowest useful trigger and test the off-state as carefully as the on-state.
+</hint>
+
 
 <chapter name="Requirements"/>
 When the action is activated, the gate will adjust the pipe accordingly:

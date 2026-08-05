@@ -4,6 +4,10 @@ Is the tank next to the gate only holding less than three quarters of what it ca
 <no_lore>
 Contains less than 75% is a gate trigger provided on any gate that has a tank placed next to it.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use threshold triggers in ascending order and test the exact boundary with a temporary lamp. This prevents neighbouring 25%, 50% and 75% rules from fighting each other.
+</hint>
+
 
 <chapter name="Requirements"/>
 When selected, the connected actions will only be activated when the connected tank is at less than 75% capacity.

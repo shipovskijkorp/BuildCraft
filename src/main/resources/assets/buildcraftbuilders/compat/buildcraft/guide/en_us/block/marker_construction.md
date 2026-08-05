@@ -4,6 +4,10 @@ A Builder robot needs a plan and a place to collect work even when no stationary
 <no_lore>
 The Construction Marker exposes Blueprint build tasks to Builder Robots.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Construction Markers are best used to inspect a plan before resources are supplied. Correct the anchor and orientation while changes are still free.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:marker_construction"/>
 

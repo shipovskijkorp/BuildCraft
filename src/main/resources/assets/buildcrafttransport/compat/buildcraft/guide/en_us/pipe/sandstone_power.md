@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Sandstone Power carries power between pipes without connecting directly to neighbouring machines.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Sandstone Power Pipes near machines that should not connect directly to the line. Confirm the intended pipe-to-pipe backbone remains continuous.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:sandstone_power"/>
 

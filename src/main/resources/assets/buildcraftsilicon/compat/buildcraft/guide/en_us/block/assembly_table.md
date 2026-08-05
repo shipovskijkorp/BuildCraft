@@ -4,6 +4,10 @@ Redstone and diamonds are useful ingredients, but some components require a much
 <no_lore>
 The Assembly Table uses laser power to manufacture BuildCraft components and pluggables.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Select only the recipes that should run automatically. Leaving unrelated recipes enabled can consume shared ingredients when several outputs are possible.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:assembly_table"/>
 

@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Miner Robot fetches a pickaxe and mines reachable ore blocks inside its work zone.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Give the Miner a reliable pickaxe supply and a nearby unload point. A compact ore zone reduces travel through already-cleared tunnels.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

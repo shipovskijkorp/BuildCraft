@@ -5,6 +5,10 @@ While attempting to collect fluids found in the world, you have found a need to 
 <no_lore>
 The tank is a way to directly store fluids without the need for buckets and chests.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Leave access to at least one face of a tank column for inspection and emergency draining. Separate unrelated fluids into visibly separate banks.
+</hint>
+
 <chapter name="Information"/>
 Tanks can be used to store up to 16 buckets of one fluid per tank block and the tanks can be stacked vertically indefinitely to form one large tank.
 <recipes_usages stack="buildcraftfactory:tank"/>

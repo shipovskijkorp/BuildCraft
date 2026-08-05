@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Harvester Robot finds mature crops in its work zone, harvests them and returns the drops to a station.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Restrict the work zone to mature crops and provide an unloading station with seed handling. This avoids collecting unrelated plants around the farm.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

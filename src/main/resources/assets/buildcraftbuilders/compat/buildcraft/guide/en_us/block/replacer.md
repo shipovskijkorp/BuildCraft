@@ -4,6 +4,10 @@ Changing the material of a finished design should not require rebuilding the des
 <no_lore>
 The Replacer changes every matching block in a used Blueprint from one recorded block state to another.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Test replacement rules on a small sample wall. Include every block state that matters, especially orientation and variants that look similar in inventory.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:replacer"/>
 

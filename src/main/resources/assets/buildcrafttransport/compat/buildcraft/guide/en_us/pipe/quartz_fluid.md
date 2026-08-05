@@ -4,6 +4,10 @@ Transporting your fluids to where you want them to go at a more preferable speed
 <no_lore>
 A Quartz Fluid Pipe is used to transport fluids from a pipe into connecting pipes/tanks.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use visually distinct pipe materials for important refining stages. Clearly separated lines make wrong-fluid connections easier to spot.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_quartz_fluid"/>
 

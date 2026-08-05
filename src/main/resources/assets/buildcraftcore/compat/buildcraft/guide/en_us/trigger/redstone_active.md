@@ -4,6 +4,10 @@ Is the gate receiving a redstone signal?
 <no_lore>
 Redstone Signal On is a gate trigger provided on any gate placed.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Connect the trigger to a temporary lamp first. Once its active and inactive states are confirmed, route the same signal to machinery.
+</hint>
+
 
 <chapter name="Requirements"/>
 When selected, the connected actions will only be activated when the block its placed on is receiving a Redstone signal.

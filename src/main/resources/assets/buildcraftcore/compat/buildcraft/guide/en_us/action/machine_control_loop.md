@@ -4,6 +4,10 @@ Making the machine run over and over again.
 <no_lore>
 Loop is a gate action provided on any gate that is placed next to a machine which could be operating.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Pair this action with the narrowest useful trigger and test the off-state as carefully as the on-state.
+</hint>
+
 
 <chapter name="Requirements"/>
 When the action is activated, the machine will repeatedly complete its operating cycle over and over again.

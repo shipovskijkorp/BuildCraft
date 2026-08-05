@@ -4,6 +4,10 @@ Pipes move resources. Robots move themselves, the resources and sometimes everyt
 <no_lore>
 A Robot is a mobile worker whose behaviour is determined by an installed Redstone Board.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Start with one robot, two reachable Docking Stations and a small work zone. Expand only after charging, tool collection and unloading all work reliably.
+</hint>
+
 
 <recipes_usages stack="buildcraftrobotics:robot"/>
 

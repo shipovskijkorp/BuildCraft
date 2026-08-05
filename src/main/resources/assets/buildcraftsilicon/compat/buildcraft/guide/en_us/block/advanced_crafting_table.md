@@ -4,6 +4,10 @@ Repeating the same crafting recipe is not difficult, but it is exactly the sort 
 <no_lore>
 The Advanced Crafting Table automatically repeats a configured crafting recipe using supplied materials and MJ.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep a buffer of each ingredient and extract completed results separately. Recirculating outputs into the ingredient side can block complex recipes.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:advanced_crafting_table"/>
 

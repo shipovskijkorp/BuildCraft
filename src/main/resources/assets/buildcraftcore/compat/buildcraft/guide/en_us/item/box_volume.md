@@ -4,6 +4,10 @@ Moving four Land Marks every time a project changes size quickly becomes a proje
 <no_lore>
 A Volume Box is a movable area marker controlled with the Marker Connector.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Volume Boxes are convenient for moving a finished area definition between machines. Rename or store them separately when several projects use similar dimensions.
+</hint>
+
 
 <recipes_usages stack="buildcraftcore:volume_box"/>
 

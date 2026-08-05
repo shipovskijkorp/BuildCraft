@@ -4,6 +4,10 @@ Robots and machines are much easier to command when a place, path or work zone c
 <no_lore>
 A Map Location records a point, area, path or Robotics zone for later use.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Record locations while standing on the exact block and facing the intended direction. This avoids one-block offsets when the location is reused by automation.
+</hint>
+
 
 <recipes_usages stack="buildcraftcore:map_location"/>
 

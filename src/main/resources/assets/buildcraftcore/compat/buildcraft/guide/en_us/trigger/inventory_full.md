@@ -4,6 +4,10 @@ If only there was a way to check if the chest is full.
 <no_lore>
 Inventory Full is a gate trigger provided on any gate that has an inventory placed next to it.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Test this trigger against the exact side and inventory or tank used in production. Sided capabilities can make two faces of the same block report different states.
+</hint>
+
 
 <chapter name="Requirements"/>
 When selected, the connected actions will only be activated when all of the connected inventory slot has an item in.

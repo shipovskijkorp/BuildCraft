@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Cobblestone Power is the basic low-capacity power transport pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Choose pipe tiers by both throughput and network layout. A low-tier segment can limit an otherwise upgraded power line.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:cobblestone_power"/>
 

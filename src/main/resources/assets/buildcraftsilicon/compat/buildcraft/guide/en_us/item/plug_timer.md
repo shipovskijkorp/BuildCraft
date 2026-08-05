@@ -4,6 +4,10 @@ A compact pipe network has little room for a tower of repeaters and clocks.
 <no_lore>
 The Timer is a pipe pluggable that adds periodic 5, 10 and 15 second Gate triggers.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Configure the pluggable before copying or installing many of them. Test one pipe face first to confirm orientation and gate interaction.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:plug/timer"/>
 

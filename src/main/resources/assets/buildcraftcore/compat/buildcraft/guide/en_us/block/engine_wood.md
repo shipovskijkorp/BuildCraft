@@ -5,6 +5,10 @@ In a quest to create power, you have discovered a way to produce a small amount 
 <no_lore>
 The Redstone engine is a basic engine that only requires a redstone signal to run. It only produces a tiny amount of power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> A Redstone Engine is best used for low-demand extraction and gates. It cannot replace a stronger engine when a machine has a meaningful MJ-per-tick requirement.
+</hint>
+
 <chapter name="Information"/>
 Due to the little amount of MJ they produce, they are only suitable to operate simple devices such as extraction pipes or pumps.
 <recipes_usages stack="buildcraftcore:engine"/>

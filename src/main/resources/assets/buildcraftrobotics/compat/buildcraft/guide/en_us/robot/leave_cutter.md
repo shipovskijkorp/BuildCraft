@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Leaf Cutter Robot fetches a suitable cutting tool and removes leaf blocks in its work zone.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Run a Leaf Cutter after a Lumberjack only when leaf drops are desired. Its zone should not overlap decorative trees that must remain intact.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

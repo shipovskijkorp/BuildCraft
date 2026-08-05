@@ -4,6 +4,10 @@ It looks like water, feels rather less like water and no longer behaves like wat
 <no_lore>
 Gelled Water is the solid material recovered from Water Gel.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check the Recipes and Usages sections together before crafting in bulk; this item may be an intermediate for several later machines.
+</hint>
+
 
 <recipes_usages stack="buildcraftfactory:gel"/>
 

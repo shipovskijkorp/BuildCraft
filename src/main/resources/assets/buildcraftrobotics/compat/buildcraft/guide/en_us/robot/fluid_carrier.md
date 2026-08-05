@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Tank Robot moves fluids between stations and tanks, using station fluid filters to choose what may be loaded or unloaded.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use dedicated fluid stations and avoid mixing fluid jobs in one zone. Separate routes make a wrong tank assignment immediately visible.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 8,000 MJ and installed into an empty Robot with an Integration Table.

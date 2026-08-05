@@ -4,6 +4,10 @@ The pipe pulsar is useful upgrade from powering wooden pipes with engines, but i
 <no_lore>
 The Pipe Adapter is a pluggable used to power accepting pipes to be powered through a Kinesis Pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check the Recipes and Usages sections together before crafting in bulk; this item may be an intermediate for several later machines.
+</hint>
+
 
 <recipes stack="buildcrafttransport:plug_power_adaptor"/>
 

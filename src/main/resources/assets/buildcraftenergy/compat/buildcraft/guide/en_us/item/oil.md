@@ -4,6 +4,10 @@ A dark liquid bubbling out of the ground is either a valuable energy resource or
 <no_lore>
 Oil is the naturally generated starting material for BuildCraft's fuel-processing chain.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep raw Oil in its own tank and leave room for intermediate products before starting an automated refinery.
+</hint>
+
 
 <chapter name="Collecting Oil"/>
 Oil deposits generate in the world and can be collected with Buckets, a Pump or other compatible fluid handlers. Store it in Tanks and move it with Fluid Pipes.

@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Quartz Power is a medium-capacity transport pipe separated from stone and cobblestone pipe families.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use distinct materials to mark separate voltage or workload zones, even when their current throughput is similar.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:quartz_power"/>
 

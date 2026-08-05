@@ -4,6 +4,10 @@ Two useful fuels are sharing one tank. The Distiller can settle the ownership di
 <no_lore>
 Mixed Light Fuel is a clean intermediate and a usable 3 MJ/t Combustion Engine fuel.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Treat mixed fuels as distinct products and avoid reconnecting them to intermediate-oil lines.
+</hint>
+
 
 <chapter name="Production"/>
 Hot Oil and Hot Distilled Oil produce Mixed Light Fuel as their gaseous output. It contains gaseous and light fuel fractions.

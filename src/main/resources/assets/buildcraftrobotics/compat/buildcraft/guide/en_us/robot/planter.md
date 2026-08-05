@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Planter Robot loads matching seeds and plants them on valid soil positions in its work zone.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Filter the supply station to the intended saplings or seeds. Mixed planting stock can produce an uneven farm that other robots cannot service efficiently.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

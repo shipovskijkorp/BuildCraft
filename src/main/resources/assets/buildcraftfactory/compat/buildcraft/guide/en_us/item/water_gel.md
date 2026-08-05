@@ -4,6 +4,10 @@ Draining an ocean is effective, but sometimes turning the surface into something
 <no_lore>
 The Water Gelifier converts connected source water and aquatic plants into temporary Water Gel.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check the Recipes and Usages sections together before crafting in bulk; this item may be an intermediate for several later machines.
+</hint>
+
 
 <recipes_usages stack="buildcraftfactory:water_gel"/>
 

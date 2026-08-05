@@ -4,6 +4,10 @@ Transporting items at a really fast pace to where you want them to go.
 <no_lore>
 A Gold Transport Pipe is used to quickly transport them to connecting pipes/inventories.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Gold Pipes on long straight runs, then slow or buffer items before complex junctions where rapid bursts can overwhelm inventories.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_gold_item"/>
 

@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Shovelman Robot fetches a shovel and digs blocks that are mineable with a shovel inside its work zone.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Supply appropriate shovels and define exact excavation boundaries. Broad zones can remove paths, farmland or landscaping unintentionally.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

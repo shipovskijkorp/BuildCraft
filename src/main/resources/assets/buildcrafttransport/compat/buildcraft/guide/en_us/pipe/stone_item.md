@@ -4,6 +4,10 @@ Transporting items at a medium pace to where you want them to go.
 <no_lore>
 A Stone Transport Pipe is used to transport items from a pipe into connecting pipes/inventories.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Stone and Cobblestone pipes together when adjacent lines must remain separate without paint or plugs.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_stone_item"/>
 

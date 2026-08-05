@@ -1,3 +1,7 @@
+
+<hint>
+<bold>Hint:</bold> Test this feature in a small isolated setup before connecting it to a large automated network.
+</hint>
 Files should be located in [...]
 On the very first line should be
 <json_insn>

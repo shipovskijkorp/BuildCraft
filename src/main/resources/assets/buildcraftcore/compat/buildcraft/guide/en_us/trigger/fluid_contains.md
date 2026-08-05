@@ -4,6 +4,10 @@ Does the tank next to it hold any fluid?
 <no_lore>
 Fluid in Tank is a gate trigger provided on any gate that has a tank placed next to it.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Test this trigger against the exact side and inventory or tank used in production. Sided capabilities can make two faces of the same block report different states.
+</hint>
+
 
 <chapter name="Requirements"/>
 When selected, the connected actions will only be activated when the connected tank has fluids in.

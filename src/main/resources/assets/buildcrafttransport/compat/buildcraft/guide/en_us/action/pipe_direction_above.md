@@ -4,6 +4,10 @@ Where do you want the pipe to work/transport? Up? Just select this action.
 <no_lore>
 Face the Top Side is a gate action provided on any gate that is placed on a pipe which requires a direction to be set to operate and the top is a valid one.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use one directional action at a time on a gate and provide a safe fallback route. Conflicting directions can make item flow difficult to predict.
+</hint>
+
 
 <chapter name="Setting the Direction"/>
 When the action is activated, the pipe its placed on will set the Top as its direction.

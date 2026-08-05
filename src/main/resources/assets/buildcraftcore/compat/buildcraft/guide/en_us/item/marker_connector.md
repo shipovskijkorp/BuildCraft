@@ -5,6 +5,10 @@ Finer control over the areas that your machines work is vital in any large scale
 <no_lore>
 The Marker Connector is used manipulate the size of a volume box or the direction of a connected path marker.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Connect markers only after every endpoint is in its final position. Reconnecting a finished shape is faster than correcting a twisted or incomplete area later.
+</hint>
+
 <chapter name="Information"/>
 To use the Marker Connector, hold it in your had and click any laser box you want to adjust and move your cursor to adjust it. The click it again to stop adjusting it.
 You can shift click the laser boxes with the marker connector in hand to remove the laser box

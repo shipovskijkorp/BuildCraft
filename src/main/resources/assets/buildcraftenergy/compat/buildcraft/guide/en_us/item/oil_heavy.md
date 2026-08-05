@@ -4,6 +4,10 @@ The lighter fractions have left. What remains is still energetic, but considerab
 <no_lore>
 Heavy Oil is a dirty intermediate fuel produced by distilling Cool Oil.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Label Heavy Oil lines clearly and keep them separate from fuels; intermediate fluids may look similar in pipes and tanks.
+</hint>
+
 
 <chapter name="Fuel"/>
 Heavy Oil burns in a Combustion Engine at 2 MJ/t and produces Residue. It is usable directly, but further refining yields cleaner products.

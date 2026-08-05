@@ -6,4 +6,8 @@ A wrench provides the solution: this can modify the state of a machine or many b
 <no_lore>
 The wrench is the basic tool which is used to rotate and manipulate blocks, machines and some entities with a click.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Carry the Wrench while assembling a machine room. Many BuildCraft blocks and directional pipes can be rotated or reconfigured without breaking them.
+</hint>
+
 <recipes_usages stack="buildcraftcore:wrench"/>

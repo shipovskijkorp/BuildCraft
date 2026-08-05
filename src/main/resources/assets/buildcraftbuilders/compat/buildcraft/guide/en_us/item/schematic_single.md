@@ -4,6 +4,10 @@ Replacing every copy of one block in a large design by hand is a poor use of an 
 <no_lore>
 A Single Block Schematic records one block state for use by the Replacer.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Single-block schematics are useful for testing placement rules and rotations before committing a large Blueprint to a Builder.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:schematic_single"/>
 

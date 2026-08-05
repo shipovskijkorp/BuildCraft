@@ -4,6 +4,10 @@ Some recipes require precision that a furnace, crafting grid and optimistic hamm
 <no_lore>
 A Laser converts MJ into laser power for nearby compatible BuildCraft tables.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Several Lasers can work on one compatible table. Add them gradually and watch the table buffer so extra laser power is not built where it provides no benefit.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:laser"/>
 

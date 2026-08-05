@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Lumberjack Robot fetches a suitable axe and cuts connected logs in trees found inside its work zone.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Pair the Lumberjack with a Planter and provide a tool station. Leave enough space above saplings for the tree types used in the zone.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

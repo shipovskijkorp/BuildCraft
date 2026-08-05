@@ -4,6 +4,10 @@ A blank board contains many possibilities and absolutely no useful instructions.
 <no_lore>
 The Programming Table writes a selected robot career onto a blank Redstone Board using laser power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Program commonly used boards in batches and label their storage. Career boards can look similar until installed in a robot.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:programming_table"/>
 

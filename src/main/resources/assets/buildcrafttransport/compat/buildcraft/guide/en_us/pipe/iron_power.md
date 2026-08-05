@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Iron Power is a configurable power limiter.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Recheck directional power outputs after rotating or moving the pipe. One incorrect face can starve an entire branch.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:iron_power"/>
 

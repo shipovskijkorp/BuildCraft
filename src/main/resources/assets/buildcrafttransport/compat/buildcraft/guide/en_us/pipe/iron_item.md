@@ -4,6 +4,10 @@ Want to transport your items in only one direction? Just set the pipes direction
 <no_lore>
 A Iron Transport Pipe is used to transport items from a pipe in one direction towards a connecting pipe/inventory.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Set the output direction with a Wrench after every rotation or relocation. A wrong arrow can create a silent dead end.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_iron_item"/>
 

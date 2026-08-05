@@ -4,6 +4,10 @@ Want to take fluid out and transport it somewhere else? Just give it power and w
 <no_lore>
 A Wooden Fluid Pipe is used to extract fluids from a tank when given power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Connect extraction to only one intended tank or machine face and provide immediate downstream capacity. A backed-up line stops useful pumping.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_wood_fluid"/>
 

@@ -4,6 +4,10 @@ Robot logistics becomes much more useful when stations can describe their state 
 <no_lore>
 Exposes item requests produced by an adjacent compatible machine to Delivery Robots.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Apply robot actions through a narrowly filtered station or work zone. Broad rules can affect more robots than intended when networks overlap.
+</hint>
+
 
 <chapter name="Action Behaviour"/>
 Exposes item requests produced by an adjacent compatible machine to Delivery Robots.

@@ -5,6 +5,10 @@ It has one caveat, It can only dig straight down and does not dig bedrock.
 <no_lore>
 The Mining well is a machine that is used to automatically mine straight down all the way to bedrock.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use a Mining Well for narrow shafts and quick probes. For large areas, compare its repeated setup cost with a Quarry before committing resources.
+</hint>
+
 <chapter name="Information"/>
 It will mine directly downwards below where it is placed and will automatically output the blocks it breaks into any inventories or pipes placed next to it. Failing to find any pipes or inventories, it will then through the items out into the world.
 The harder the block it is trying to break is, the longer it takes to mine.

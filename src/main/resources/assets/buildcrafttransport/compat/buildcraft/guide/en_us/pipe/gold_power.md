@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Gold Power is a high-capacity power transport pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Upgrade long or heavily loaded trunks first. Short branches feeding one machine often do not benefit from the same tier.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:gold_power"/>
 

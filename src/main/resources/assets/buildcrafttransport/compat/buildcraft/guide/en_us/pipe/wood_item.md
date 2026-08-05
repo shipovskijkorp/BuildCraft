@@ -4,6 +4,10 @@ Want to take items out and transport them somewhere else? Just give it power and
 <no_lore>
 A Wooden Transport Pipe is used to extract items from an inventory when given power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Power extraction only when the destination network has somewhere to send the item. A nearby buffer prevents repeated ejection from a blocked line.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_wood_item"/>
 

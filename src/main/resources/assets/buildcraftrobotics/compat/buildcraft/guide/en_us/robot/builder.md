@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Builder Robot finds nearby Builders or Construction Markers, reserves construction tasks, fetches materials and performs the work.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Give the Builder Robot a nearby supply station and start with a small Blueprint. Confirm that protected blocks and rotations behave correctly before larger jobs.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 128,000 MJ and installed into an empty Robot with an Integration Table.

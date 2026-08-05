@@ -4,6 +4,10 @@ Robot logistics becomes much more useful when stations can describe their state 
 <no_lore>
 Restricts which tools a robot may fetch for a tool-using career.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Apply robot actions through a narrowly filtered station or work zone. Broad rules can affect more robots than intended when networks overlap.
+</hint>
+
 
 <chapter name="Action Behaviour"/>
 Restricts which tools a robot may fetch for a tool-using career.

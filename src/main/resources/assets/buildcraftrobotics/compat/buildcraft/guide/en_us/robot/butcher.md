@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Butcher Robot fetches a sword and hunts eligible passive animals while avoiding cats, dogs and protected tame animals.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep the work zone away from breeding stock and protected animals. A narrow zone makes the robot's targets predictable.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

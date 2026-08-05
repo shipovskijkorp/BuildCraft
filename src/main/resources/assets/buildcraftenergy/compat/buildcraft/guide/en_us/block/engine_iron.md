@@ -4,6 +4,10 @@ Refining oil is useful. Turning it into enough power to run an industrial accide
 <no_lore>
 The Combustion Engine burns BuildCraft liquid fuels, uses coolant to control heat and stores residue produced by dirty fuels.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Provide reliable cooling and an automatic shutdown condition before leaving a Combustion Engine unattended. Test the complete fuel and coolant supply under full load.
+</hint>
+
 
 <recipes_usages stack="buildcraftenergy:engine_iron"/>
 

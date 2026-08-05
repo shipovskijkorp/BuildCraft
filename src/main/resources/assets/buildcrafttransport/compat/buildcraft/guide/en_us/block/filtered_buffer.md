@@ -4,6 +4,10 @@ A buffer is most helpful when it knows which items are actually welcome inside i
 <no_lore>
 The Filtered Buffer is a nine-slot inventory whose real slots are controlled by matching phantom filters.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use the Filtered Buffer between fast pipes and slower machines. It smooths bursts and gives filters a stable inventory to work against.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:filtered_buffer"/>
 

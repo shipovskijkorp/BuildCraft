@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Farmer Robot fetches a hoe and prepares suitable dirt or grass blocks for planting.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use a stable crop layout and separate seed storage from harvested output. This prevents the robot from consuming products that should be exported.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 32,000 MJ and installed into an empty Robot with an Integration Table.

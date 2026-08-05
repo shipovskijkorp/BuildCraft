@@ -4,6 +4,10 @@ A complicated Gate program is much easier to duplicate than to remember perfectl
 <no_lore>
 The Gate Copier stores one Gate configuration and applies it to compatible Gates.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep one verified gate as the master and copy from it. This avoids propagating experimental settings through an entire pipe network.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:gate_copier"/>
 

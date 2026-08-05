@@ -1,6 +1,10 @@
 <no_lore>
 Being able to power your pipes for free without needing a big engine? How cool is that!
 </no_lore>
+<hint>
+<bold>Hint:</bold> Configure the pluggable before copying or installing many of them. Test one pipe face first to confirm orientation and gate interaction.
+</hint>
+
 <no_lore>
 The Pipe Pulsar is a pluggable used to provide small amounts of power to power accepting pipes.
 </no_lore>

@@ -32,6 +32,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -50,6 +51,9 @@ import buildcraft.lib.client.sprite.SpriteNineSliced;
 import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.misc.ColourUtil;
 import buildcraft.lib.misc.LocaleUtil;
+import buildcraft.lib.item.ItemGuide;
+import buildcraft.lib.net.MessageGuideState;
+import buildcraft.lib.net.MessageManager;
 import buildcraft.lib.recipe.AssemblyRecipeBasic;
 
 /**
@@ -138,6 +142,8 @@ public final class GuiGuide extends Screen {
     private static final int SELECTED_COLOUR = 0x66C6A778;
 
     private final GuideContent content;
+    private final InteractionHand guideHand;
+    private final ItemGuide.GuideState initialState;
     private final Map<ResourceLocation, Integer> manifestOrder = new LinkedHashMap<>();
     private final List<GuideContent.Entry> filteredEntries = new ArrayList<>();
     private final List<ContentsPage> contentsPages = new ArrayList<>();
@@ -161,6 +167,7 @@ public final class GuiGuide extends Screen {
     private @Nullable EditBox searchBox;
     private @Nullable ItemStack hoveredStack;
     private @Nullable Component hoveredText;
+    private boolean restoredInitialState;
 
     private enum View {
         CONTENTS,
@@ -173,8 +180,17 @@ public final class GuiGuide extends Screen {
         ALPHABETICAL
     }
 
-    private GuiGuide() {
+    private GuiGuide(ItemStack guideStack, InteractionHand guideHand) {
         super(Component.translatable("item.buildcraft.guide.name"));
+        this.guideHand = guideHand;
+        this.initialState = ItemGuide.readGuideState(guideStack);
+        this.showLore = initialState.showLore;
+        this.showHints = initialState.showHints;
+        try {
+            this.sortMode = SortMode.valueOf(initialState.sortMode);
+        } catch (IllegalArgumentException ignored) {
+            this.sortMode = SortMode.TYPE;
+        }
         content = GuideContent.load();
         int order = 0;
         for (GuideContent.Entry entry : content.getAllEntries()) {
@@ -182,8 +198,8 @@ public final class GuiGuide extends Screen {
         }
     }
 
-    public static void open() {
-        Minecraft.getInstance().setScreen(new GuiGuide());
+    public static void open(ItemStack guideStack, InteractionHand hand) {
+        Minecraft.getInstance().setScreen(new GuiGuide(guideStack, hand));
     }
 
     @Override
@@ -201,6 +217,10 @@ public final class GuiGuide extends Screen {
         searchBox.setValue(oldSearch);
         searchBox.setResponder(value -> rebuildContents());
         rebuildContents();
+        if (!restoredInitialState) {
+            restoredInitialState = true;
+            restoreInitialState();
+        }
         updateSearchVisibility();
     }
 
@@ -217,6 +237,69 @@ public final class GuiGuide extends Screen {
     public void tick() {
         tick++;
         if (searchBox != null) searchBox.tick();
+    }
+
+    private void restoreInitialState() {
+        if (initialState.document && initialState.entry != null) {
+            GuideContent.Entry entry = resolveSavedEntry(initialState.entry);
+            if (entry != null) {
+                currentEntry = entry;
+                document = layoutDocument(entry);
+                documentSpread = Mth.clamp(initialState.spread, 0, document.maxSpread());
+                view = View.DOCUMENT;
+                return;
+            }
+        }
+        view = View.CONTENTS;
+        currentEntry = null;
+        document = null;
+        contentsSpread = Mth.clamp(initialState.spread, 0, maxContentsSpread());
+    }
+
+    @Nullable
+    private GuideContent.Entry resolveSavedEntry(ResourceLocation id) {
+        GuideContent.Entry entry = content.get(id);
+        if (entry != null) {
+            return entry;
+        }
+        String prefix = "generated/item/";
+        if (!"buildcraftlib".equals(id.getNamespace()) || !id.getPath().startsWith(prefix)) {
+            return null;
+        }
+        String encoded = id.getPath().substring(prefix.length());
+        int separator = encoded.indexOf('/');
+        if (separator <= 0 || separator == encoded.length() - 1) {
+            return null;
+        }
+        ResourceLocation itemId = new ResourceLocation(encoded.substring(0, separator), encoded.substring(separator + 1));
+        Item item = ForgeRegistries.ITEMS.getValue(itemId);
+        return item == null || item == Items.AIR ? null : GuideContent.createGeneratedItemEntry(item.getDefaultInstance());
+    }
+
+    private ItemGuide.GuideState currentGuideState() {
+        boolean documentView = view == View.DOCUMENT && currentEntry != null;
+        return new ItemGuide.GuideState(
+            showLore,
+            showHints,
+            sortMode.name(),
+            documentView,
+            documentView ? currentEntry.id : null,
+            documentView ? documentSpread : contentsSpread
+        );
+    }
+
+    private void persistGuideState() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null) {
+            return;
+        }
+        ItemStack stack = minecraft.player.getItemInHand(guideHand);
+        if (!(stack.getItem() instanceof ItemGuide)) {
+            return;
+        }
+        ItemGuide.GuideState state = currentGuideState();
+        ItemGuide.writeGuideState(stack, state);
+        MessageManager.sendToServer(new MessageGuideState(guideHand, state));
     }
 
     private void rebuildContents() {
@@ -498,10 +581,12 @@ public final class GuiGuide extends Screen {
         clickRegions.add(new ClickRegion(loreX, loreY, font.width(lore), 11, () -> {
             showLore = !showLore;
             rebuildOpenDocument();
+            persistGuideState();
         }));
         clickRegions.add(new ClickRegion(hintX, hintY, font.width(hints), 11, () -> {
             showHints = !showHints;
             rebuildOpenDocument();
+            persistGuideState();
         }));
     }
 
@@ -566,6 +651,7 @@ public final class GuiGuide extends Screen {
                 if (contentsSpread == 0) {
                     contentsSpread = Math.min(1, maxContentsSpread());
                     updateSearchVisibility();
+                    persistGuideState();
                 }
                 searchBox.mouseClicked(searchX + 1, searchY + 1, 0);
             }));
@@ -590,6 +676,7 @@ public final class GuiGuide extends Screen {
                 rebuildContents();
                 contentsSpread = Math.min(Math.max(1, contentsSpread), maxContentsSpread());
                 updateSearchVisibility();
+                persistGuideState();
             }));
         }
     }
@@ -690,6 +777,7 @@ public final class GuiGuide extends Screen {
                 textWidth + 16 + extension, 16, () -> {
                     contentsSpread = Mth.clamp(tab.pageIndex / 2, 0, maxContentsSpread());
                     updateSearchVisibility();
+                    persistGuideState();
                 }));
         }
     }
@@ -711,6 +799,7 @@ public final class GuiGuide extends Screen {
         documentSpread = 0;
         view = View.DOCUMENT;
         updateSearchVisibility();
+        persistGuideState();
     }
 
     private void openLinkedEntry(GuideContent.Entry entry) {
@@ -720,6 +809,7 @@ public final class GuiGuide extends Screen {
         documentSpread = 0;
         view = View.DOCUMENT;
         updateSearchVisibility();
+        persistGuideState();
     }
 
     private void rebuildOpenDocument() {
@@ -759,6 +849,7 @@ public final class GuiGuide extends Screen {
                 chapter.colour, () -> {
                     documentSpread = Mth.clamp(targetSpread, 0, document.maxSpread());
                     updateSearchVisibility();
+                    persistGuideState();
                 });
         }
     }
@@ -1442,6 +1533,7 @@ public final class GuiGuide extends Screen {
             documentSpread = Mth.clamp(documentSpread + amount, 0, document.maxSpread());
         }
         updateSearchVisibility();
+        persistGuideState();
     }
 
     private void goBack() {
@@ -1450,6 +1542,8 @@ public final class GuiGuide extends Screen {
             currentEntry = state.entry;
             document = layoutDocument(state.entry);
             documentSpread = Mth.clamp(state.spread, 0, document.maxSpread());
+            updateSearchVisibility();
+            persistGuideState();
         } else {
             returnToContents();
         }
@@ -1461,6 +1555,7 @@ public final class GuiGuide extends Screen {
         document = null;
         documentSpread = 0;
         updateSearchVisibility();
+        persistGuideState();
     }
 
     private int maxContentsSpread() {
@@ -1524,6 +1619,12 @@ public final class GuiGuide extends Screen {
     public boolean charTyped(char codePoint, int modifiers) {
         if (searchBox != null && searchBox.visible && searchBox.charTyped(codePoint, modifiers)) return true;
         return super.charTyped(codePoint, modifiers);
+    }
+
+    @Override
+    public void removed() {
+        persistGuideState();
+        super.removed();
     }
 
     @Override

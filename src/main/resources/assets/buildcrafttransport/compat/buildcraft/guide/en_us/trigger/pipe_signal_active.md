@@ -4,6 +4,10 @@ The Pipe wire connected is glowing brightly.
 <no_lore>
 Pipe Signal On is a gate trigger provided on any gate that also has a pipe wire of that colour is attached to the same pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Connect the trigger to a temporary lamp first. Once its active and inactive states are confirmed, route the same signal to machinery.
+</hint>
+
 
 <chapter name="Requirements"/>
 When selected, the connected actions will only be activated when the connected pipe wire of the same colour is activated.

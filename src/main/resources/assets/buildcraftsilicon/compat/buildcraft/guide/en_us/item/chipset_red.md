@@ -4,6 +4,10 @@ A precise logic circuit is easier to assemble when its redstone has been persuad
 <no_lore>
 The Red Chipset is the basic redstone logic component used by Gates and other Silicon recipes.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check both recipes and usages before mass-producing this component. Silicon parts are often shared by several machines, gates and robot upgrades.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:redstone_chipset/red"/>
 

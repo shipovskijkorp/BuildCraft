@@ -4,6 +4,10 @@ A precise logic circuit is easier to assemble when its redstone has been persuad
 <no_lore>
 The Quartz Chipset is a quartz logic component used by parameter and timing-oriented recipes.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check both recipes and usages before mass-producing this component. Silicon parts are often shared by several machines, gates and robot upgrades.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:redstone_chipset/quartz"/>
 

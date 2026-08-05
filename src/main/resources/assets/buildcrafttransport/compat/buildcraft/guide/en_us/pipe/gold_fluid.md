@@ -4,6 +4,10 @@ Transporting your fluids to where you want them to go quickly.
 <no_lore>
 A Gold Fluid Pipe is used to transport fluids quickly into connecting pipes/tanks.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use higher-throughput sections near pumps and large tanks, but keep enough receiving capacity to absorb bursts.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_gold_fluid"/>
 

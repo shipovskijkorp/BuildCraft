@@ -4,6 +4,10 @@ While a basic hopper is nice, it isn't very functional or original.
 <no_lore>
 The Chute is similar to the hopper, but with more functionality.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Chutes are most reliable when the destination below always has room. Add a buffer inventory if the receiving machine works intermittently.
+</hint>
+
 <chapter name="Information"/>
 The chute, formerly the Hopper, is a fast single block inventory which is able to directly insert items into pipes as well as multiple inventories at once in all directions (including upwards).
 <recipes_usages stack="buildcraftfactory:chute"/>

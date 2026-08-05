@@ -4,6 +4,10 @@ Light Fuel is the sensible middle ground between a short energetic burst and a b
 <no_lore>
 Light Fuel is a clean refined fuel producing 6 MJ/t in a Combustion Engine.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use separate fuel tanks for each grade. This makes engine runtime and refinery throughput easier to compare.
+</hint>
+
 
 <chapter name="Production"/>
 Distil Cool Mixed Light Fuel, Hot Heavy Oil or Hot Mixed Heavy Fuel to obtain Light Fuel. It does not produce Residue when burned.

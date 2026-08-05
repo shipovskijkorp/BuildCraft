@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Diamond Wood Power is a high-capacity wooden extraction pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Attach high-capacity extraction only to sources and networks designed for it. Test the branch with a controlled consumer before full production.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:diamond_wood_power"/>
 

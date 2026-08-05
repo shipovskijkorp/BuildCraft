@@ -4,6 +4,10 @@ Not every construction job needs a detailed Blueprint. Many jobs are simply boxe
 <no_lore>
 The Filler applies a configurable geometric pattern inside a marked area.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Begin with a small marked area and a cheap material. Once the pattern and orientation are correct, move the same setup to the final site.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:filler"/>
 

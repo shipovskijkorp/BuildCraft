@@ -4,6 +4,10 @@ The first pass removed the worst impurities. Several useful fractions are still 
 <no_lore>
 Distilled Oil is a clean-burning intermediate containing gaseous, light and dense fuel fractions.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Distilled Oil is an intermediate product. Buffer it so the upstream Distiller can continue while downstream cooling or refining pauses.
+</hint>
+
 
 <chapter name="Fuel"/>
 Distilled Oil burns without residue at 1 MJ/t. Its direct output is modest, but it is a flexible feedstock for further separation.

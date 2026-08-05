@@ -4,6 +4,10 @@ A furnace that moves a piston instead of cooking dinner is still a perfectly res
 <no_lore>
 The Stirling Engine burns ordinary furnace fuels and produces between one third and one MJ per tick.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Leave a way to disable a Stirling Engine when its consumer stops. A gate watching machine activity or power demand makes unattended systems much safer.
+</hint>
+
 
 <recipes_usages stack="buildcraftenergy:engine_stone"/>
 

@@ -4,6 +4,10 @@ A reliable clock is often more useful than a complicated one.
 <no_lore>
 This trigger pulses once every 5 seconds while a Timer is attached to the pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Connect the trigger to a temporary lamp first. Once its active and inactive states are confirmed, route the same signal to machinery.
+</hint>
+
 
 <chapter name="Timer Pulse"/>
 The trigger becomes active on world ticks divisible by 100. Connect it to Gate actions that should repeat at a fixed interval.

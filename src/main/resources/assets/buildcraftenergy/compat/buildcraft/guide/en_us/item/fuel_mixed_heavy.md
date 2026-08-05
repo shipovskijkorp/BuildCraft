@@ -4,6 +4,10 @@ Light and dense fuel are compatible tank-mates, but separating them makes their 
 <no_lore>
 Mixed Heavy Fuel is a clean intermediate and a usable 5 MJ/t Combustion Engine fuel.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Buffer heavy mixed fuel close to its consumers, but keep the main refinery outputs separated for easier troubleshooting.
+</hint>
+
 
 <chapter name="Production"/>
 Cool Distilled Oil and Searing Heavy Oil can produce Mixed Heavy Fuel. It contains light and dense fuel fractions.

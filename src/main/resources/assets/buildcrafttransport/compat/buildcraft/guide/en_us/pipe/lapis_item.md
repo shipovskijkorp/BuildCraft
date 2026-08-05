@@ -4,6 +4,10 @@ Want to your painted items, just set a colour and they will become that colour.
 <no_lore>
 A Lazuli Transport Pipe is used to paint items and transport them to connected pipes/inventories.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Keep colour-based routing documented near the network. A paint change upstream can alter every later routing decision.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_lapis_item"/>
 

@@ -4,6 +4,10 @@ A robot told to work everywhere will eventually discover somewhere you did not w
 <no_lore>
 The Zone Planner paints detailed multi-layer robot work zones onto Map Locations.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use compact zones that contain only the intended targets. Large overlapping zones make it harder to predict which robot claims a task.
+</hint>
+
 
 <recipes_usages stack="buildcraftrobotics:zone_planner"/>
 

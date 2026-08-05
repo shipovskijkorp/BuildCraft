@@ -4,6 +4,10 @@ Every elegant refining chain eventually produces something sticky that nobody wa
 <no_lore>
 Residue is the heavy by-product of dirty fuels and several high-temperature distillation routes.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Residue is a real output, not waste to ignore. Provide a dedicated tank or controlled disposal route so refining cannot stop.
+</hint>
+
 
 <chapter name="Production"/>
 Crude Oil, Heavy Oil and Dense Oil produce Residue while burning in a Combustion Engine. It is also the liquid output of several Searing distillation recipes.

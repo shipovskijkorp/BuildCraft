@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Diamond Power is a very high-capacity configurable power limiter.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Diamond Power Pipes for high-demand trunks and branching points, not as a substitute for balancing the consumers on each branch.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:diamond_power"/>
 

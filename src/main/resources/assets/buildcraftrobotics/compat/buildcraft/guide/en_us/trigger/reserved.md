@@ -4,6 +4,10 @@ Robot logistics becomes much more useful when stations can describe their state 
 <no_lore>
 The trigger is active while the station or robot is reserved for an operation.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use coloured wire to keep robot-state logic separate from item and fluid automation on the same pipe network.
+</hint>
+
 
 <chapter name="Trigger Behaviour"/>
 The trigger is active while the station or robot is reserved for an operation.

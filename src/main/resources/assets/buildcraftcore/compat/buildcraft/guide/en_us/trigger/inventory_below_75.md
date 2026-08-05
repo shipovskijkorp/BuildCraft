@@ -4,6 +4,10 @@ Does the chest have less than 75% of the items it could have?
 <no_lore>
 Contains less than 75% is a gate trigger provided on any gate that has an inventory placed next to it.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use threshold triggers in ascending order and test the exact boundary with a temporary lamp. This prevents neighbouring 25%, 50% and 75% rules from fighting each other.
+</hint>
+
 
 <chapter name="Requirements"/>
 When selected, the connected actions will only be activated when the connected inventory is at less than 75% capacity.

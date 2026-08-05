@@ -4,6 +4,10 @@ Fed up of using pipe plugs? This pipe will only connect to pipes and nothing els
 <no_lore>
 A Sandstone Fluid Pipe is used to transport fluids from a pipe into connecting pipes.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Sandstone Fluid Pipes where nearby tanks should not connect automatically. Inspect each face after rebuilding the machine wall.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_sandstone_fluid"/>
 

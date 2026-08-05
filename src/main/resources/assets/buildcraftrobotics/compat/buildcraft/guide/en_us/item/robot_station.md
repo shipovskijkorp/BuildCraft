@@ -4,6 +4,10 @@ Even the most independent robot needs somewhere to charge, sleep and be told wha
 <no_lore>
 A Docking Station is a pipe pluggable that links, charges and controls Robots.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Give every work area at least one station for charging and one clear route for loading or unloading. Station filters prevent robots from taking the wrong supplies.
+</hint>
+
 
 <recipes_usages stack="buildcraftrobotics:robot_station"/>
 

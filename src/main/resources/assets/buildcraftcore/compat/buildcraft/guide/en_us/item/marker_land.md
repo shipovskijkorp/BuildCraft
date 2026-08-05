@@ -4,6 +4,10 @@ Large machines need an exact boundary, otherwise their appetite for blocks can b
 <no_lore>
 Land Marks define rectangular work areas for machines such as the Quarry, Filler and Architect Table.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Verify the coloured boundary lines from more than one side before starting a Quarry, Builder or Filler. One misplaced marker can select a much larger area than expected.
+</hint>
+
 
 <recipes_usages stack="buildcraftcore:marker_volume"/>
 

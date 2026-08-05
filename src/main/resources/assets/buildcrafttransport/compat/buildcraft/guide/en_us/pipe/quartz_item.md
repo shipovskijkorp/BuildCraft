@@ -4,6 +4,10 @@ Transporting items at a faster pace to where you want them to go.
 <no_lore>
 A Quartz Transport Pipe is used to transport items from a pipe into connecting pipes/inventories.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Quartz pipes are convenient for visually distinct backbone routes. Keep specialised sorting close to branch points rather than along the whole trunk.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_quartz_item"/>
 

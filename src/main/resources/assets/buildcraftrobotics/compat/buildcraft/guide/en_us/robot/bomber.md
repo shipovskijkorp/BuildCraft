@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Bomber Robot loads TNT, flies over valid ground in its work zone and drops primed explosives.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use the Bomber only inside a carefully isolated zone. Verify blast protection and owner permissions before supplying explosives.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 64,000 MJ and installed into an empty Robot with an Integration Table.

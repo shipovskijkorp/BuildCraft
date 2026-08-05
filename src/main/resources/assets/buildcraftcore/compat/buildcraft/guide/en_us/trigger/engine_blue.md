@@ -4,6 +4,10 @@ What colour is the engine next to the gate? Is it blue?
 <no_lore>
 Engine Blue is a gate trigger provided on any gate that has an Engine next to it.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Combine engine-state triggers with an automatic shutdown action. A visible warning lamp is useful before trusting the same signal to control fuel or coolant.
+</hint>
+
 
 <chapter name="Requirements"/>
 When selected, the connected actions will only be activated when the adjacent engine is at its blue temperature stage.

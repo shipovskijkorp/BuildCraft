@@ -4,6 +4,10 @@ Want to take a certain fluid out and transport it somewhere else? Just give it p
 <no_lore>
 A Wooden Diamond Fluid Pipe is used to extract selected fluids from a tank when given power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Set the extraction filter before connecting several tanks. This prevents draining the wrong fluid when a shared source changes contents.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_diamond_wood_fluid"/>
 

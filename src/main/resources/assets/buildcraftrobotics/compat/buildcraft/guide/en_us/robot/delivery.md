@@ -4,6 +4,10 @@ A specialised worker is usually more reliable than one robot trying to decide wh
 <no_lore>
 The Delivery Robot fulfils item requests exposed by Requesters and station request actions.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use Requesters with modest batch sizes and ensure a provider station is reachable. This reduces repeated long trips for single items.
+</hint>
+
 
 <chapter name="Career"/>
 This career is programmed into a Redstone Board for 64,000 MJ and installed into an empty Robot with an Integration Table.

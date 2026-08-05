@@ -4,6 +4,10 @@ A finished structure is useful once; a Blueprint allows the same design to be bu
 <no_lore>
 A Blueprint stores exact blocks, block states and supported block-entity data from a scanned area.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Name important Blueprints and keep a clean master copy in a Library. Use duplicate copies at construction sites so accidental overwrites do not destroy the original plan.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:blueprint"/>
 

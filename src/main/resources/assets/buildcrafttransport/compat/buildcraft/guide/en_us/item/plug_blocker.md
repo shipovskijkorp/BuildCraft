@@ -4,6 +4,10 @@ Why my pipes keep connecting? How do I stop it? Well just place a Pipe Plug in b
 <no_lore>
 The Pipe Plug is a pluggable used to stop any other pipe and/or pipe wire from connecting to each other.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check the Recipes and Usages sections together before crafting in bulk; this item may be an intermediate for several later machines.
+</hint>
+
 
 <recipes stack="buildcrafttransport:plug_blocker"/>
 

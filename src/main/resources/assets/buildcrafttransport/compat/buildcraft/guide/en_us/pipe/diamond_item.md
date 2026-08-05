@@ -4,6 +4,10 @@ Choosing which items can travel where might be useful for your system.
 <no_lore>
 A Diamond Transport Pipe is used to transport items from a pipe in a direction set by its filter into either another adjacent pipe or inventory.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Leave an unfiltered side only when it is intended as overflow. Filtered sides take priority, so test scarce items before connecting bulk traffic.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_diamond_item"/>
 

@@ -4,6 +4,10 @@ Some recipes require patience, others require the feedstock to be considerably h
 <no_lore>
 The Heat Exchanger moves heat between two fluid streams and converts BuildCraft fluids between Cool, Hot and Searing states.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use dedicated hot and cold fluid lines around a Heat Exchanger. Short, clearly labelled loops make temperature mistakes easier to find.
+</hint>
+
 
 <recipes_usages stack="buildcraftfactory:heat_exchange"/>
 

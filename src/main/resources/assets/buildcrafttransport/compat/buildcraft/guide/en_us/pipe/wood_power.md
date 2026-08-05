@@ -4,6 +4,10 @@ Power is useful only after it reaches the machine that was supposed to receive i
 <no_lore>
 The Wood Power extracts MJ from compatible adjacent producers and injects it into the power-pipe network.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use one wooden extraction connection per intended source and avoid closed loops. Verify the source can safely provide the requested MJ rate.
+</hint>
+
 
 <recipes_usages stack="buildcrafttransport:wood_power"/>
 

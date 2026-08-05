@@ -4,6 +4,10 @@ Do pipes not match the theme of your build? Just place a facade of a block to ma
 <no_lore>
 A Facade is a pluggable which is used to cover your pipes to match your build.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Configure the pluggable before copying or installing many of them. Test one pipe face first to confirm orientation and gate interaction.
+</hint>
+
 
 <recipes stack="buildcraftsilicon:plug_facade"/>
 

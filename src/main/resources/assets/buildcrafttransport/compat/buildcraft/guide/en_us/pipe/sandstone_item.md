@@ -4,6 +4,10 @@ Fed up of using pipe plugs? This pipe will only connect to pipes and nothing els
 <no_lore>
 A Sandstone Transport Pipe is used to transport items from a pipe into connecting pipes.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Sandstone Pipes are useful beside dense machine walls because they avoid unwanted inventory connections. Confirm every intended endpoint remains connected.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_sandstone_item"/>
 

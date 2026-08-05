@@ -4,6 +4,10 @@ A large moving drill is much less alarming when it has a visible scaffold around
 <no_lore>
 Frames are lightweight structural blocks used by the Quarry and construction systems.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Frames are temporary working blocks. Keep the construction area clear so machines can build and remove them without obstruction.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:frame"/>
 

@@ -4,6 +4,10 @@ A portable machine without energy is merely a decorative machine that is inconve
 <no_lore>
 The Charging Table uses laser power to charge Forge Energy items.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use filtered input and output inventories around the Charging Table so charged and uncharged items cannot circulate through the same loop indefinitely.
+</hint>
+
 
 <recipes_usages stack="buildcraftsilicon:charging_table"/>
 

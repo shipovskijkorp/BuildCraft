@@ -4,6 +4,10 @@ A good design should survive longer than the one piece of paper on which it was 
 <no_lore>
 The Electronic Library transfers Blueprint and Template data between snapshot items and the saved snapshot database.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use one Library as the project archive and another near the work site. This separates protected master plans from temporary working copies.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:library"/>
 

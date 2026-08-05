@@ -1,6 +1,10 @@
 <no_lore>
 Why would you want fluid to go to the next pipe when theres a tank right there?.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Place Clay Fluid Pipes near final consumers when fluid should prefer entering a tank or machine over continuing along the network.
+</hint>
+
 <no_lore>
 A Clay Fluid Pipe is used to transport fluids from a pipe into connecting pipes/tanks.
 </no_lore>

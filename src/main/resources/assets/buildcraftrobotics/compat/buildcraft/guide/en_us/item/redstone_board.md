@@ -4,6 +4,10 @@ A machine can move, but without a board it has no idea whether it should carry, 
 <no_lore>
 A Redstone Board stores the career program installed into a Robot.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Store programmed boards by career in separate labelled inventories. Keeping an unprogrammed board nearby makes reconfiguration faster.
+</hint>
+
 
 <recipes_usages stack="buildcraftrobotics:redstone_board"/>
 

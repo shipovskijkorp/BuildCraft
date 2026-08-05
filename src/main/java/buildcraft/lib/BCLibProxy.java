@@ -15,6 +15,7 @@ import buildcraft.api.BCModules;
 import buildcraft.lib.net.MessageContainer;
 import buildcraft.lib.net.MessageDebugRequest;
 import buildcraft.lib.net.MessageDebugResponse;
+import buildcraft.lib.net.MessageGuideState;
 import buildcraft.lib.net.MessageManager;
 import buildcraft.lib.net.MessageMarker;
 import buildcraft.lib.net.MessageUpdateTile;
@@ -80,6 +81,14 @@ public abstract class BCLibProxy {
             MessageDebugResponse.HANDLER,
             MessageDebugResponse::toBytes,
             MessageDebugResponse::new
+        );
+        MessageManager.registerMessageClass(
+            BCModules.LIB,
+            MessageGuideState.class,
+            MessageGuideState.HANDLER,
+            MessageGuideState::toBytes,
+            MessageGuideState::new,
+            Dist.DEDICATED_SERVER
         );
     }
 

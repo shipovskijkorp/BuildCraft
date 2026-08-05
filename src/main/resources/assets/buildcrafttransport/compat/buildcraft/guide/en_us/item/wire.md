@@ -5,6 +5,10 @@ Pipe Wire: Travels indefinitely, Can carry lots of signals per pipe and is avail
 <no_lore>
 A Pipe Wire is a pipe pluggable system used to transmit signals indefinitely data along a pipe system.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check the Recipes and Usages sections together before crafting in bulk; this item may be an intermediate for several later machines.
+</hint>
+
 
 <recipes stack="buildcrafttransport:wire"/>
 

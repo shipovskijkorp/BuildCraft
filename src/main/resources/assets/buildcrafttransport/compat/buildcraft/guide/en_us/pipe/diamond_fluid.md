@@ -4,6 +4,10 @@ Allowing the sorting of fluids to so they can cross pipelines? Madness.
 <no_lore>
 A Diamond Fluid Pipe is used to transport fluids from a pipe in a direction set by its filter into a connecting pipe/tank.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Configure every used side before attaching multiple fluids. Reserve an explicit overflow route rather than relying on an empty filter by accident.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_diamond_fluid"/>
 

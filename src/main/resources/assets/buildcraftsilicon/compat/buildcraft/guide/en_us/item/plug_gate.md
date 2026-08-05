@@ -4,6 +4,10 @@ Redstone takes up a lot of space nowadays. Why not have finer control over syste
 <no_lore>
 The Gate is a upgradeable pluggable used to provide a logistical framework to help manage your pipe system.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Configure the pluggable before copying or installing many of them. Test one pipe face first to confirm orientation and gate interaction.
+</hint>
+
 
 <recipes stack="buildcraftsilicon:plug_gate"/>
 

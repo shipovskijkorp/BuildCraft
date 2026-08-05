@@ -1,3 +1,7 @@
+
+<hint>
+<bold>Hint:</bold> Test this feature in a small isolated setup before connecting it to a large automated network.
+</hint>
 Guide pages are all written in a subset of markdown.
 
 <italic>(Most of this page needs filling out, however here is a list of basic tags)</italic>

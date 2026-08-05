@@ -4,6 +4,10 @@ Picking up items from the world and moving them around is the future!
 <no_lore>
 A Obsidian Transport Pipe is used to pick up in world items and transport them into a connecting pipe/inventory.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Power improves collection behaviour. Place the pipe where loose items cannot be pulled from areas that players still use manually.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_obsidian_item"/>
 

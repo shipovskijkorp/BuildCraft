@@ -4,6 +4,10 @@ Before a machine can rebuild a structure, someone must first teach it what the s
 <no_lore>
 The Architect Table scans a marked area into a Blueprint or Template.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Scan a small representative structure first to verify rotations, block entities and special blocks. Expand to larger captures only after the preview looks correct.
+</hint>
+
 
 <recipes_usages stack="buildcraftbuilders:architect"/>
 

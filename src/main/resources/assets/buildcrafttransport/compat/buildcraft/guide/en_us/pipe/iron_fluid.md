@@ -4,6 +4,10 @@ Want to transport your fluids in only one direction? Just set the pipes directio
 <no_lore>
 A Iron Fluid Pipe is used to transport fluids in one direction from a pipe into a connecting pipe/tank.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Check the one-way output after rotating the pipe. Directional mistakes can trap fluid in a branch that appears connected.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_iron_fluid"/>
 

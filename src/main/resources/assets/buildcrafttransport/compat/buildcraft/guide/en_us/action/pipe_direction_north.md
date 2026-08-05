@@ -4,6 +4,10 @@ Where do you want the pipe to work/transport? North? Just select this action.
 <no_lore>
 Face the North Side is a gate action provided on any gate that is placed on a pipe which requires a direction to be set to operate and the north is a valid one.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Use one directional action at a time on a gate and provide a safe fallback route. Conflicting directions can make item flow difficult to predict.
+</hint>
+
 
 <chapter name="Setting the Direction"/>
 When the action is activated, the pipe its placed on will set North as its direction.

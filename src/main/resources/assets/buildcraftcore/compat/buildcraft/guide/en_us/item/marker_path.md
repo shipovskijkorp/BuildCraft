@@ -4,6 +4,10 @@ Straight lines are useful, but large projects often need a route that bends arou
 <no_lore>
 Path Marks define an ordered route for machines that support path-based work.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Place Path Markers in travel order and keep each segment unobstructed. A short test path is useful before assigning robots or automated builders to it.
+</hint>
+
 
 <recipes_usages stack="buildcraftcore:marker_path"/>
 

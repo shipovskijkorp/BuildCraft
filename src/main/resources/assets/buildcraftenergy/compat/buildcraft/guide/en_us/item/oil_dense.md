@@ -4,6 +4,10 @@ Dense Oil contains the part of the original mixture that strongly objects to mov
 <no_lore>
 Dense Oil is a dirty intermediate fuel obtained from Hot Oil or Hot Distilled Oil.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Store Dense Oil separately until the next processing step is ready. Feeding it into the wrong temperature stage wastes refinery capacity.
+</hint>
+
 
 <chapter name="Fuel"/>
 Dense Oil burns at 4 MJ/t in a Combustion Engine and produces Residue. Its higher output is useful when immediate power is more important than clean operation.

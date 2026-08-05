@@ -4,6 +4,10 @@ Want to take certain items out and transport them somewhere else? Just give it p
 <no_lore>
 A Wooden Diamond Transport Pipe is used to extract selected items determined by its filter from an inventory when given power.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Configure the extraction filter before applying power. An empty or broad filter can drain an inventory much faster than expected.
+</hint>
+
 
 <recipes stack="buildcrafttransport:pipe_diamond_wood_item"/>
 

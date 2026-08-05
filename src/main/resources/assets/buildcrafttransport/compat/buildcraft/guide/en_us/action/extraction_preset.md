@@ -4,6 +4,10 @@ The Emzuli Transport Pipe gives you multiple extraction filters, just you need t
 <no_lore>
 Extraction Preset is a gate action provided on any gate that is placed on a Emzuli Transport Pipe.
 </no_lore>
+<hint>
+<bold>Hint:</bold> Pair this action with the narrowest useful trigger and test the off-state as carefully as the on-state.
+</hint>
+
 
 <chapter name="Requirements"/>
 When the action is activated, the gate will allow the colour of the Extraction Preset selected to be extracted by the Emzuli Pipe.
