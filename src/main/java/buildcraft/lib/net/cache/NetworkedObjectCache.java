@@ -34,6 +34,12 @@ import net.minecraftforge.server.ServerLifecycleHooks;
  * in order to work properly */
 public abstract class NetworkedObjectCache<T> {
 
+    /**
+     * A client normally requests a freshly announced ID within a few ticks. Keeping a large bounded window prevents
+     * dynamic-NBT items from growing the server heap forever while still leaving ample time for those requests.
+     */
+    private static final int MAX_SERVER_ENTRIES = 65_536;
+
     static final boolean DEBUG_LOG = BCDebugging.shouldDebugLog("lib.net.cache");
     static final boolean DEBUG_CPLX = BCDebugging.shouldDebugComplex("lib.net.cache");
 
@@ -48,8 +54,9 @@ public abstract class NetworkedObjectCache<T> {
     /** Server side map of the object to its integer ID. Inverse of {@link #serverIdToObject} */
     private final Object2IntMap<T> serverObjectToId = createObject2IntMap();
 
-    /** The ID for the next stored object. */
+    /** The ID for the next stored object. IDs are never reused, even after an entry is evicted. */
     private int serverCurrentId = 0;
+    private final Queue<Integer> serverInsertionOrder = new LinkedList<>();
 
     /** The list of cached client-side objects. */
     private final Int2ObjectMap<Link> clientObjects = new Int2ObjectOpenHashMap<>();
@@ -176,27 +183,41 @@ public abstract class NetworkedObjectCache<T> {
      * @param object
      * @return */
     private int serverStore(T object) {
-        Integer current = serverObjectToId.get(object);
-        if (current == null) {
-            // new entry
-            int id = serverCurrentId++;
-            T copy = copyOf(object);
-            serverObjectToId.put(copy, id);
-            serverIdToObject.put(id, copy);
-            if (DEBUG_CPLX) {
-                String toString;
-                if (copy instanceof FluidStack) {
-                    FluidStack fluid = (FluidStack) copy;
-                    toString = fluid.getTranslationKey();
-                } else {
-                    toString = copy.toString();
-                }
-                BCLog.logger.info("[lib.net.cache] The cache " + getNameAndId() + " stored #" + id + " as " + toString);
-            }
-            return id;
-        } else {
-            // existing entry
+        int current = serverObjectToId.getInt(object);
+        if (current >= 0) {
             return current;
+        }
+
+        int id = serverCurrentId++;
+        T copy = copyOf(object);
+        serverObjectToId.put(copy, id);
+        serverIdToObject.put(id, copy);
+        serverInsertionOrder.add(id);
+        evictOldServerEntries();
+
+        if (DEBUG_CPLX) {
+            String toString;
+            if (copy instanceof FluidStack) {
+                FluidStack fluid = (FluidStack) copy;
+                toString = fluid.getTranslationKey();
+            } else {
+                toString = String.valueOf(copy);
+            }
+            BCLog.logger.info("[lib.net.cache] The cache " + getNameAndId() + " stored #" + id + " as " + toString);
+        }
+        return id;
+    }
+
+    private void evictOldServerEntries() {
+        while (serverIdToObject.size() > MAX_SERVER_ENTRIES) {
+            Integer oldestId = serverInsertionOrder.poll();
+            if (oldestId == null) {
+                return;
+            }
+            T removed = serverIdToObject.remove(oldestId.intValue());
+            if (removed != null && serverObjectToId.getInt(removed) == oldestId.intValue()) {
+                serverObjectToId.removeInt(removed);
+            }
         }
     }
 
@@ -233,6 +254,11 @@ public abstract class NetworkedObjectCache<T> {
     /** Used by {@link MessageObjectCacheRequest#HANDLER} to write the actual object out. */
     void writeObjectServer(int id, FriendlyByteBuf buffer) {
         T obj = serverIdToObject.get(id);
+        if (obj == null) {
+            // The ID fell outside the bounded retention window. Sending the default keeps the protocol valid; active
+            // objects are announced again with a fresh ID when they are next synchronized.
+            obj = defaultObject;
+        }
         writeObject(obj, buffer);
     }
 

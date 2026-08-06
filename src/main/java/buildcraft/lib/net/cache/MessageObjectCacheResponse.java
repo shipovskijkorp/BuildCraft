@@ -85,7 +85,12 @@ public class MessageObjectCacheResponse {
                 for (int i = 0; i < message.ids.length; i++) {
                     int id = message.ids[i];
                     byte[] payload = message.values[i];
-                    cache.readObjectClient(id, new FriendlyByteBuf(Unpooled.copiedBuffer(payload)));
+                    FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.wrappedBuffer(payload));
+                    try {
+                        cache.readObjectClient(id, buffer);
+                    } finally {
+                        buffer.release();
+                    }
                 }
             } catch (IOException | RuntimeException io) {
                 BCLog.logger.warn("Dropped invalid object cache response", io);

@@ -13,6 +13,7 @@ import java.util.function.Supplier;
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.misc.MessageUtil;
+import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.DecoderException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,22 +26,20 @@ public class MessageContainer {
 
     private int windowId;
     private int msgId;
-    private FriendlyByteBuf payload;
+    private byte[] payload;
 
     @SuppressWarnings("unused")
     public MessageContainer() {}
 
+    /** Takes ownership of {@code payload}. */
     public MessageContainer(int windowId, int msgId, FriendlyByteBuf payload) {
         this.windowId = windowId;
         this.msgId = msgId;
-        this.payload = payload;
+        this.payload = copyAndRelease(payload);
+        if (this.payload.length > MAX_PAYLOAD_SIZE) {
+            throw new IllegalStateException("Container packet payload is too large: " + this.payload.length);
+        }
     }
-
-    // Packet breakdown:
-    // INT - WindowId
-    // USHORT - MsgId
-    // USHORT - PAYLOAD_SIZE->"size"
-    // BYTE[size] - PAYLOAD
 
     public MessageContainer(FriendlyByteBuf buf) {
         windowId = buf.readInt();
@@ -50,23 +49,38 @@ public class MessageContainer {
             throw new DecoderException("Invalid container packet payload size: " + payloadSize
                 + " readable=" + buf.readableBytes());
         }
-        payload = new FriendlyByteBuf(buf.readBytes(payloadSize));
+        payload = new byte[payloadSize];
+        buf.readBytes(payload);
     }
 
     public static void toBytes(MessageContainer msg, FriendlyByteBuf buf) {
         buf.writeInt(msg.windowId);
         buf.writeShort(msg.msgId);
-        int length = msg.payload.readableBytes();
+        int length = msg.payload.length;
         if (length > MAX_PAYLOAD_SIZE) {
             throw new IllegalStateException("Container packet payload is too large: " + length);
         }
         buf.writeShort(length);
-        buf.writeBytes(msg.payload, 0, length);
+        buf.writeBytes(msg.payload);
+    }
+
+    private static byte[] copyAndRelease(FriendlyByteBuf source) {
+        if (source == null) {
+            return new byte[0];
+        }
+        try {
+            byte[] bytes = new byte[source.readableBytes()];
+            source.getBytes(source.readerIndex(), bytes);
+            return bytes;
+        } finally {
+            source.release();
+        }
     }
 
     public static final BiConsumer<MessageContainer, Supplier<NetworkEvent.Context>> HANDLER = (message, ctx) -> {
         NetworkEvent.Context context = ctx.get();
         context.enqueueWork(() -> {
+            FriendlyByteBuf payloadBuffer = new FriendlyByteBuf(Unpooled.wrappedBuffer(message.payload));
             try {
                 int id = message.windowId;
                 ServerPlayer player = context.getSender();
@@ -74,21 +88,21 @@ public class MessageContainer {
                 if (player != null && player.containerMenu.containerId == id
                     && player.containerMenu instanceof MenuBC_Neptune container) {
 
-                    container.readMessage(message.msgId, message.payload, side, context);
+                    container.readMessage(message.msgId, payloadBuffer, side, context);
                     String extra = container.getClass() + ", id = "
                         + container.getIdAllocator().getNameFor(message.msgId);
-                    MessageUtil.ensureEmpty(message.payload, side == LogicalSide.CLIENT, extra);
+                    MessageUtil.ensureEmpty(payloadBuffer, side == LogicalSide.CLIENT, extra);
                 } else if (side == LogicalSide.CLIENT
                     && MessageContainerClientHandler.getClientContainerMenu() instanceof MenuBC_Neptune container) {
-                    container.readMessage(message.msgId, message.payload, side, context);
+                    container.readMessage(message.msgId, payloadBuffer, side, context);
                     String extra = container.getClass() + ", id = "
                         + container.getIdAllocator().getNameFor(message.msgId);
-                    MessageUtil.ensureEmpty(message.payload, true, extra);
+                    MessageUtil.ensureEmpty(payloadBuffer, true, extra);
                 }
             } catch (IOException | RuntimeException e) {
                 BCLog.logger.warn("Dropped invalid BuildCraft container packet", e);
             } finally {
-                // message.payload.release();
+                payloadBuffer.release();
             }
         });
         context.setPacketHandled(true);

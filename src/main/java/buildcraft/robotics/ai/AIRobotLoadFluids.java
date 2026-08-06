@@ -1,5 +1,6 @@
 package buildcraft.robotics.ai;
 
+import buildcraft.api.core.BCLog;
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.DockingStation;
@@ -72,16 +73,35 @@ public class AIRobotLoadFluids extends AIRobot {
 
         FluidStack toDrain = drainable.copy();
         toDrain.setAmount(Math.min(toDrain.getAmount(), fillable));
-        FluidStack drained = handler.drain(toDrain, doLoad ? FluidAction.EXECUTE : FluidAction.SIMULATE);
+        if (!doLoad) {
+            FluidStack simulatedDrain = handler.drain(toDrain, FluidAction.SIMULATE);
+            return simulatedDrain.isEmpty() ? 0 : Math.min(simulatedDrain.getAmount(), fillable);
+        }
+
+        // Execute source-first, then return any unexpectedly rejected remainder to the source. This avoids both the
+        // old fill-first duplication path and silent deletion when a mutable handler changes after simulation.
+        FluidStack drained = handler.drain(toDrain, FluidAction.EXECUTE);
         if (drained.isEmpty()) {
             return 0;
         }
+        if (!filter.matches(drained)) {
+            int returned = handler.fill(drained, FluidAction.EXECUTE);
+            if (returned < drained.getAmount()) {
+                BCLog.logger.error("Robot source returned an unexpected fluid and accepted only " + returned
+                    + " of " + drained.getAmount() + " mB during rollback");
+            }
+            return 0;
+        }
 
-        int filled = robot.fill(drained, doLoad ? FluidAction.EXECUTE : FluidAction.SIMULATE);
-        if (doLoad && filled < drained.getAmount()) {
-            // This should not happen because the operation is simulated first, but report the accepted amount rather
-            // than looping forever if a mutable external tank changed between simulate and execute.
-            return filled;
+        int filled = robot.fill(drained, FluidAction.EXECUTE);
+        if (filled < drained.getAmount()) {
+            FluidStack remainder = drained.copy();
+            remainder.setAmount(drained.getAmount() - filled);
+            int returned = handler.fill(remainder, FluidAction.EXECUTE);
+            if (returned < remainder.getAmount()) {
+                BCLog.logger.error("Robot fluid load rollback was only partially accepted: returned " + returned
+                    + " of " + remainder.getAmount() + " mB");
+            }
         }
         return filled;
     }

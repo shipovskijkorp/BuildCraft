@@ -35,10 +35,17 @@ public final class PluggableHolder {
     public final TilePipeHolder holder;
     public /*final*/ Direction side;
     public PipePluggable pluggable = PipePluggable.EMPTY;
+    private CompoundTag unknownData;
 
     public PluggableHolder(TilePipeHolder holder, Direction side) {
         this.holder = holder;
         this.side = side;
+    }
+
+    /** Replaces the live pluggable and discards any preserved unknown tag intentionally superseded by the player. */
+    public void setPluggable(PipePluggable pluggable) {
+        this.pluggable = pluggable == null ? PipePluggable.EMPTY : pluggable;
+        this.unknownData = null;
     }
 
     // Saving + Loading
@@ -48,25 +55,47 @@ public final class PluggableHolder {
         if (pluggable != PipePluggable.EMPTY) {
             nbt.putString("id", pluggable.definition.identifier.toString());
             nbt.put("data", pluggable.writeToNbt());
+        } else if (unknownData != null && !unknownData.isEmpty()) {
+            // Preserve the complete original tag so temporarily missing addon pluggables can be restored later.
+            return unknownData.copy();
         }
         return nbt;
     }
 
     public void readFromNbt(CompoundTag nbt) {
+        if (pluggable != PipePluggable.EMPTY) {
+            holder.eventBus.unregisterHandler(pluggable);
+        }
+        pluggable = PipePluggable.EMPTY;
+        unknownData = null;
+
         if (nbt.isEmpty()) {
-            pluggable = PipePluggable.EMPTY;
             return;
         }
+
         String id = nbt.getString("id");
-        CompoundTag data = nbt.getCompound("data");
-        ResourceLocation identifier = new ResourceLocation(id);
-        PluggableDefinition def = PipeApi.pluggableRegistry.getDefinition(identifier);
-        if (def == null) {
-            BCLog.logger.warn("Unknown pluggable id '" + id + "'");
-            throw new Error("Def was null!");
-        } else {
-            pluggable = def.readFromNbt(holder, side, data);
+        try {
+            ResourceLocation identifier = new ResourceLocation(id);
+            PluggableDefinition def = PipeApi.pluggableRegistry.getDefinition(identifier);
+            if (def == null) {
+                BCLog.logger.warn("Unknown pluggable id '" + id + "'; preserving its NBT until the addon returns");
+                unknownData = nbt.copy();
+                return;
+            }
+
+            PipePluggable loaded = def.readFromNbt(holder, side, nbt.getCompound("data"));
+            if (loaded == null) {
+                BCLog.logger.warn("Pluggable '" + id + "' returned null while loading; preserving its NBT");
+                unknownData = nbt.copy();
+                return;
+            }
+            pluggable = loaded;
             holder.eventBus.registerHandler(pluggable);
+        } catch (RuntimeException | LinkageError error) {
+            // A broken or temporarily incompatible addon must not make the entire chunk unloadable.
+            BCLog.logger.warn("Failed to load pluggable '" + id + "'; preserving its NBT", error);
+            pluggable = PipePluggable.EMPTY;
+            unknownData = nbt.copy();
         }
     }
 
@@ -95,6 +124,7 @@ public final class PluggableHolder {
         } else if (id == ID_REMOVE_PLUG) {
             holder.eventBus.unregisterHandler(pluggable);
             pluggable = PipePluggable.EMPTY;
+            unknownData = null;
         } else {
             throw new InvalidInputDataException("Invalid ID for creation! " + ID_ALLOC.getNameFor(id));
         }
@@ -110,6 +140,7 @@ public final class PluggableHolder {
             holder.eventBus.unregisterHandler(pluggable);
         }
         pluggable = def.loadFromBuffer(holder, side, buffer);
+        unknownData = null;
         holder.eventBus.registerHandler(pluggable);
     }
 
@@ -143,6 +174,7 @@ public final class PluggableHolder {
             if (id == ID_REMOVE_PLUG) {
                 holder.eventBus.unregisterHandler(pluggable);
                 pluggable = PipePluggable.EMPTY;
+                unknownData = null;
             } else if (id == ID_UPDATE_PLUG) {
                 pluggable.readPayload(buffer, netSide, ctx);
             } else if (id == ID_CREATE_PLUG) {

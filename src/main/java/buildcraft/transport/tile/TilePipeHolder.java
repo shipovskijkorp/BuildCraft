@@ -487,7 +487,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         redstoneValues = new int[6];
         PluggableHolder holder = pluggables.get(side);
         PipePluggable old = holder.pluggable;
-        holder.pluggable = with;
+        holder.setPluggable(with);
 
         eventBus.unregisterHandler(old);
         eventBus.registerHandler(with);

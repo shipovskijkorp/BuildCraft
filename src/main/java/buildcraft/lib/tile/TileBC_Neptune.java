@@ -575,17 +575,22 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	@Override
+    @Override
     public CompoundTag getUpdateTag() {
         ByteBuf buf = Unpooled.buffer();
-        buf.writeShort(NET_RENDER_DATA);
-        writePayload(NET_RENDER_DATA, new FriendlyByteBuf(buf), level.isClientSide ? LogicalSide.CLIENT : LogicalSide.SERVER);
-        byte[] bytes = new byte[buf.readableBytes()];
-        buf.readBytes(bytes);
+        try {
+            buf.writeShort(NET_RENDER_DATA);
+            writePayload(NET_RENDER_DATA, new FriendlyByteBuf(buf),
+                level.isClientSide ? LogicalSide.CLIENT : LogicalSide.SERVER);
+            byte[] bytes = new byte[buf.readableBytes()];
+            buf.readBytes(bytes);
 
-        CompoundTag nbt = super.getUpdateTag();
-        nbt.putByteArray("d", bytes);
-        return nbt;
+            CompoundTag nbt = super.getUpdateTag();
+            nbt.putByteArray("d", bytes);
+            return nbt;
+        } finally {
+            buf.release();
+        }
     }
 
     @Override
@@ -615,6 +620,8 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
             // A malformed render-data packet for a single tile must NOT disconnect the player on join.
             // (The custom-channel path in receivePayload already swallows these exceptions the same way.)
             BCLog.logger.error("[lib.tile] Failed to read update tag for " + getClass() + " at " + worldPosition, e);
+        } finally {
+            buf.release();
         }
     }
 

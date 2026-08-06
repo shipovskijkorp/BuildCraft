@@ -246,8 +246,12 @@ public class VolumeBox {
             .forEach(slotAddon -> addons.put(slotAddon.getKey(), slotAddon.getValue()));
         for (Map.Entry<EnumAddonSlot, Addon> slotAddon : newAddons.entrySet()) {
             FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
-            slotAddon.getValue().toBytes(buffer);
-            addons.get(slotAddon.getKey()).fromBytes(buffer);
+            try {
+                slotAddon.getValue().toBytes(buffer);
+                addons.get(slotAddon.getKey()).fromBytes(buffer);
+            } finally {
+                buffer.release();
+            }
         }
         locks.clear();
         IntStream.range(0, buf.readInt()).mapToObj(i -> {

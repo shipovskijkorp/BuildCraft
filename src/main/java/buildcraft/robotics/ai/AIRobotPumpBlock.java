@@ -1,5 +1,6 @@
 package buildcraft.robotics.ai;
 
+import buildcraft.api.core.BCLog;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
@@ -7,6 +8,8 @@ import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 /** Pumps one source fluid block into the robot's internal tank, matching the classic BuildCraft pump robot cadence. */
@@ -62,14 +65,46 @@ public class AIRobotPumpBlock extends AIRobot {
             // world block untouched and let the board choose another target or unload its current contents.
             if (accepted >= simulated.getAmount()) {
                 FluidStack drained = BlockUtil.drainBlock(robot.level, pos, true);
-                if (!drained.isEmpty() && robot.fill(drained, FluidAction.SIMULATE) >= drained.getAmount()) {
-                    pumped = robot.fill(drained, FluidAction.EXECUTE);
+                if (!drained.isEmpty()) {
+                    int acceptedAfterDrain = robot.fill(drained, FluidAction.SIMULATE);
+                    if (acceptedAfterDrain < drained.getAmount()) {
+                        if (!restoreFluidBlock(pos, drained)) {
+                            // Preserve as much fluid as possible if an external world modification prevents rollback.
+                            pumped = robot.fill(drained, FluidAction.EXECUTE);
+                            BCLog.logger.error("Failed to restore a robot-pumped fluid block at " + pos
+                                + "; preserved " + pumped + " of " + drained.getAmount() + " mB in the robot");
+                        }
+                    } else {
+                        pumped = robot.fill(drained, FluidAction.EXECUTE);
+                        if (pumped < drained.getAmount()) {
+                            FluidStack undo = drained.copy();
+                            undo.setAmount(pumped);
+                            FluidStack removedAgain = robot.drain(undo, FluidAction.EXECUTE);
+                            if (removedAgain.getAmount() == pumped && restoreFluidBlock(pos, drained)) {
+                                pumped = 0;
+                            } else {
+                                robot.fill(removedAgain, FluidAction.EXECUTE);
+                                BCLog.logger.error("Robot accepted only " + pumped + " of " + drained.getAmount()
+                                    + " mB after pumping at " + pos);
+                            }
+                        }
+                    }
                 }
             }
         }
 
         setSuccess(pumped > 0);
         terminate();
+    }
+
+
+    private boolean restoreFluidBlock(BlockPos pos, FluidStack fluid) {
+        if (fluid.isEmpty()) {
+            return true;
+        }
+        FluidTank rollbackTank = new FluidTank(fluid.getAmount());
+        rollbackTank.setFluid(fluid.copy());
+        return FluidUtil.tryPlaceFluid(null, robot.level, null, pos, rollbackTank, fluid.copy());
     }
 
     @Override

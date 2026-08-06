@@ -101,7 +101,17 @@ public class OilGenerator {
         Holder<Biome> biome = world.getUncachedNoiseBiome(
             QuartPos.fromBlock(x), QuartPos.fromBlock(seaLevel), QuartPos.fromBlock(z)
         );
-        ResourceLocation key = biome.unwrapKey().get().location();
+        Optional<ResourceLocation> biomeKey = biome.unwrapKey().map(resourceKey -> resourceKey.location());
+        if (biomeKey.isEmpty()) {
+            // Direct/unregistered biome holders have no registry key. They cannot be matched against the configured
+            // resource-location lists, so skip oil generation instead of crashing the chunk with Optional#get().
+            if (DEBUG_OILGEN_BASIC && log) {
+                BCLog.logger.warn("[energy.oilgen] Skipping oil generation in " + toStr(world) + " chunk " + cx
+                    + ", " + cz + " because its biome has no registry key");
+            }
+            return ImmutableList.of();
+        }
+        ResourceLocation key = biomeKey.get();
         // The user blacklist/whitelist is checked before the datapack-level exclusions.
         boolean isExcludedBiome = !BCEnergyConfig.isBiomeAllowed(key) || config.excludedBiomes().contains(key);
         if (isExcludedBiome) {

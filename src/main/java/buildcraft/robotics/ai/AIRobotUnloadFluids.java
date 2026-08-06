@@ -1,5 +1,6 @@
 package buildcraft.robotics.ai;
 
+import buildcraft.api.core.BCLog;
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.DockingStation;
@@ -71,11 +72,31 @@ public class AIRobotUnloadFluids extends AIRobot {
             return 0;
         }
 
-        int filled = fluidHandler.fill(drainable.copy(), doUnload ? FluidAction.EXECUTE : FluidAction.SIMULATE);
-        if (filled > 0 && doUnload) {
-            FluidStack reallyDrained = drainable.copy();
-            reallyDrained.setAmount(filled);
-            robot.drain(reallyDrained, FluidAction.EXECUTE);
+        int fillable = fluidHandler.fill(drainable.copy(), FluidAction.SIMULATE);
+        if (fillable <= 0) {
+            return 0;
+        }
+
+        FluidStack toDrain = drainable.copy();
+        toDrain.setAmount(Math.min(toDrain.getAmount(), fillable));
+        if (!doUnload) {
+            return toDrain.getAmount();
+        }
+
+        // Drain the robot first. If the target accepts less than promised, put the remainder back into the robot.
+        FluidStack drained = robot.drain(toDrain, FluidAction.EXECUTE);
+        if (drained.isEmpty()) {
+            return 0;
+        }
+        int filled = fluidHandler.fill(drained, FluidAction.EXECUTE);
+        if (filled < drained.getAmount()) {
+            FluidStack remainder = drained.copy();
+            remainder.setAmount(drained.getAmount() - filled);
+            int returned = robot.fill(remainder, FluidAction.EXECUTE);
+            if (returned < remainder.getAmount()) {
+                BCLog.logger.error("Robot fluid unload rollback was only partially accepted: returned " + returned
+                    + " of " + remainder.getAmount() + " mB");
+            }
         }
         return filled;
     }

@@ -20,7 +20,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 @OnlyIn(Dist.CLIENT)
 public class MessageVolumeBoxesClientHandler {
-    private record DecodedVolumeBox(FriendlyByteBuf buffer, VolumeBox box) {}
+    private record DecodedVolumeBox(byte[] payload, VolumeBox box) {}
 
     public static void handle(MessageVolumeBoxes message, Supplier<NetworkEvent.Context> ctx) {
         NetworkEvent.Context context = ctx.get();
@@ -30,15 +30,16 @@ public class MessageVolumeBoxesClientHandler {
                 return;
             }
             Map<UUID, DecodedVolumeBox> updates = new LinkedHashMap<>();
-            for (FriendlyByteBuf buffer : message.buffers) {
+            for (byte[] payload : message.buffers) {
+                FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.wrappedBuffer(payload));
                 try {
                     VolumeBox volumeBox = new VolumeBox(mc.level, buffer);
-                    FriendlyByteBuf copy = new FriendlyByteBuf(Unpooled.buffer());
-                    volumeBox.toBytes(copy);
-                    updates.put(volumeBox.id, new DecodedVolumeBox(copy, volumeBox));
+                    updates.put(volumeBox.id, new DecodedVolumeBox(payload, volumeBox));
                 } catch (IOException | RuntimeException e) {
                     BCLog.logger.warn("Dropped invalid volume box packet", e);
                     return;
+                } finally {
+                    buffer.release();
                 }
             }
 
@@ -54,10 +55,13 @@ public class MessageVolumeBoxesClientHandler {
                     .findFirst()
                     .orElse(null);
                 if (existing != null) {
+                    FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.wrappedBuffer(entry.getValue().payload()));
                     try {
-                        existing.fromBytes(entry.getValue().buffer());
+                        existing.fromBytes(buffer);
                     } catch (IOException | RuntimeException io) {
                         BCLog.logger.warn("Dropped invalid volume box update", io);
+                    } finally {
+                        buffer.release();
                     }
                     continue;
                 }

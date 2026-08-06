@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 
@@ -29,12 +28,12 @@ public class MessageVolumeBoxes {
 
     final boolean replaceAll;
     final List<UUID> removedIds;
-    final List<FriendlyByteBuf> buffers;
+    final List<byte[]> buffers;
 
     public MessageVolumeBoxes() {
         replaceAll = true;
         removedIds = Collections.emptyList();
-        buffers = new ArrayList<>();
+        buffers = Collections.emptyList();
     }
 
     public MessageVolumeBoxes(FriendlyByteBuf buf) {
@@ -43,16 +42,18 @@ public class MessageVolumeBoxes {
         if (count < 0 || count > MAX_BOXES) {
             throw new DecoderException("Invalid volume box count: " + count);
         }
-        FriendlyByteBuf[] cache = new FriendlyByteBuf[count];
+        List<byte[]> decoded = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             int bytes = buf.readVarInt();
             if (bytes < 0 || bytes > MAX_BOX_BYTES || bytes > buf.readableBytes()) {
                 throw new DecoderException("Invalid volume box payload size: " + bytes
                     + " readable=" + buf.readableBytes());
             }
-            cache[i] = new FriendlyByteBuf(buf.readBytes(bytes));
+            byte[] payload = new byte[bytes];
+            buf.readBytes(payload);
+            decoded.add(payload);
         }
-        buffers = ImmutableList.copyOf(cache);
+        buffers = ImmutableList.copyOf(decoded);
 
         int removedCount = buf.readVarInt();
         if (removedCount < 0 || removedCount > MAX_BOXES) {
@@ -77,14 +78,28 @@ public class MessageVolumeBoxes {
     private MessageVolumeBoxes(boolean replaceAll, List<VolumeBox> volumeBoxes, List<UUID> removedIds) {
         this.replaceAll = replaceAll;
         this.removedIds = ImmutableList.copyOf(removedIds);
-        this.buffers = volumeBoxes.stream()
-            .limit(MAX_BOXES)
-            .map(volumeBox -> {
-                FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
+
+        List<byte[]> encoded = new ArrayList<>(Math.min(volumeBoxes.size(), MAX_BOXES));
+        int count = 0;
+        for (VolumeBox volumeBox : volumeBoxes) {
+            if (count++ >= MAX_BOXES) {
+                break;
+            }
+            FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
+            try {
                 volumeBox.toBytes(buffer);
-                return buffer;
-            })
-            .collect(Collectors.toList());
+                int bytes = buffer.readableBytes();
+                if (bytes > MAX_BOX_BYTES) {
+                    throw new IllegalStateException("Volume box payload is too large: " + bytes);
+                }
+                byte[] payload = new byte[bytes];
+                buffer.getBytes(buffer.readerIndex(), payload);
+                encoded.add(payload);
+            } finally {
+                buffer.release();
+            }
+        }
+        this.buffers = ImmutableList.copyOf(encoded);
     }
 
     public static void toBytes(MessageVolumeBoxes msg, FriendlyByteBuf buf) {
@@ -93,13 +108,13 @@ public class MessageVolumeBoxes {
         }
         buf.writeBoolean(msg.replaceAll);
         buf.writeInt(msg.buffers.size());
-        for (FriendlyByteBuf localBuffer : msg.buffers) {
-            int bytes = localBuffer.readableBytes();
+        for (byte[] localBuffer : msg.buffers) {
+            int bytes = localBuffer.length;
             if (bytes > MAX_BOX_BYTES) {
                 throw new IllegalStateException("Volume box payload is too large: " + bytes);
             }
             buf.writeVarInt(bytes);
-            buf.writeBytes(localBuffer, 0, bytes);
+            buf.writeBytes(localBuffer);
         }
         buf.writeVarInt(msg.removedIds.size());
         msg.removedIds.forEach(buf::writeUUID);
