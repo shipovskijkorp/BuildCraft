@@ -1311,13 +1311,13 @@ public final class GuiGuide extends Screen {
                     if (!result.isEmpty()) {
                         try {
                             return ((AssemblyRecipeBasic) recipe).getInputsFor(result).stream()
-                                .anyMatch(definition -> definition.ingredient.test(input));
+                                .anyMatch(definition -> ingredientMatches(definition.ingredient, input));
                         } catch (RuntimeException ignored) {
                             // Fall back to the generic ingredient list below for malformed/dynamic recipes.
                         }
                     }
                 }
-                return recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(input));
+                return recipeIngredients(recipe).stream().anyMatch(ingredient -> ingredientMatches(ingredient, input));
             })
             .sorted(Comparator.comparing(recipe -> recipe.getId().toString()))
             .collect(Collectors.toList());
@@ -1334,11 +1334,38 @@ public final class GuiGuide extends Screen {
                 // A dynamic assembly recipe may only expose getResultItem in the current registry state.
             }
         }
-        ItemStack result = recipe.getResultItem();
+        ItemStack result = recipeResult(recipe);
         if (!result.isEmpty() && outputs.stream().noneMatch(stack -> guideStacksMatch(stack, result))) {
             outputs.add(result);
         }
         return outputs;
+    }
+
+    private static List<Ingredient> recipeIngredients(Recipe<?> recipe) {
+        try {
+            List<Ingredient> ingredients = recipe.getIngredients();
+            return ingredients == null ? List.of() : ingredients;
+        } catch (RuntimeException ignored) {
+            return List.of();
+        }
+    }
+
+    private static ItemStack recipeResult(Recipe<?> recipe) {
+        try {
+            ItemStack result = recipe.getResultItem();
+            return result == null ? ItemStack.EMPTY : result;
+        } catch (RuntimeException ignored) {
+            return ItemStack.EMPTY;
+        }
+    }
+
+    private static boolean ingredientMatches(@Nullable Ingredient ingredient, ItemStack input) {
+        if (ingredient == null) return false;
+        try {
+            return ingredient.test(input);
+        } catch (RuntimeException ignored) {
+            return false;
+        }
     }
 
     private static boolean guideStacksMatch(ItemStack requested, ItemStack candidate) {
@@ -1365,12 +1392,17 @@ public final class GuiGuide extends Screen {
         int x, int y, int mouseX, int mouseY) {
         if (recipe == null) return;
         ItemStack focus = requestedOutput == null ? ItemStack.EMPTY : requestedOutput;
-        if (recipe instanceof AssemblyRecipeBasic) {
-            renderAssemblyRecipe(pose, (AssemblyRecipeBasic) recipe, focus, x, y, mouseX, mouseY);
-        } else if (recipe instanceof AbstractCookingRecipe) {
-            renderSmeltingRecipe(pose, (AbstractCookingRecipe) recipe, focus, x, y, mouseX, mouseY);
-        } else {
-            renderCraftingRecipe(pose, recipe, focus, x, y, mouseX, mouseY);
+        try {
+            if (recipe instanceof AssemblyRecipeBasic) {
+                renderAssemblyRecipe(pose, (AssemblyRecipeBasic) recipe, focus, x, y, mouseX, mouseY);
+            } else if (recipe instanceof AbstractCookingRecipe) {
+                renderSmeltingRecipe(pose, (AbstractCookingRecipe) recipe, focus, x, y, mouseX, mouseY);
+            } else {
+                renderCraftingRecipe(pose, recipe, focus, x, y, mouseX, mouseY);
+            }
+        } catch (RuntimeException ignored) {
+            // Recipe implementations supplied by other mods are allowed to be dynamic. A broken preview must not
+            // close the whole guide; the affected recipe is simply left blank on this frame.
         }
     }
 
@@ -1378,7 +1410,7 @@ public final class GuiGuide extends Screen {
         int x, int y, int mouseX, int mouseY) {
         CRAFTING_GRID.drawAt(pose, x, y);
 
-        List<Ingredient> ingredients = recipe.getIngredients();
+        List<Ingredient> ingredients = recipeIngredients(recipe);
         int recipeWidth = 3;
         int recipeHeight = 3;
         if (recipe instanceof IShapedRecipe<?>) {
@@ -1417,7 +1449,7 @@ public final class GuiGuide extends Screen {
     private void renderSmeltingRecipe(PoseStack pose, AbstractCookingRecipe recipe, ItemStack requestedOutput,
         int x, int y, int mouseX, int mouseY) {
         SMELTING_GRID.drawAt(pose, x, y);
-        List<Ingredient> ingredients = recipe.getIngredients();
+        List<Ingredient> ingredients = recipeIngredients(recipe);
         ItemStack input = ingredients.isEmpty() ? ItemStack.EMPTY : ingredientStack(ingredients.get(0), 0);
         renderRecipeStack(input, x + 1, y + 1, mouseX, mouseY);
         renderRecipeStack(focusedRecipeOutput(recipe, requestedOutput), x + 59, y + 19, mouseX, mouseY);
@@ -1438,7 +1470,7 @@ public final class GuiGuide extends Screen {
         }
         if (inputs.isEmpty()) {
             int index = 0;
-            for (Ingredient ingredient : recipe.getIngredients()) {
+            for (Ingredient ingredient : recipeIngredients(recipe)) {
                 if (index >= 6) break;
                 ItemStack stack = ingredientStack(ingredient, index);
                 renderRecipeStack(stack, x + 1 + (index % 2) * 18, y + 1 + (index / 2) * 18,
@@ -1621,6 +1653,10 @@ public final class GuiGuide extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (searchBox != null && searchBox.visible && searchBox.keyPressed(keyCode, scanCode, modifiers)) return true;
+        if (Minecraft.getInstance().options.keyInventory.matches(keyCode, scanCode)) {
+            onClose();
+            return true;
+        }
         if (keyCode == 263) {
             changeSpread(-1);
             return true;

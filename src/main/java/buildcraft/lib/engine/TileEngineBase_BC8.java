@@ -373,7 +373,6 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 
             if (progress > 0.5 && progressPart == 1) {
                 progressPart = 2;
-                sendPower(); // Comment out for constant power
             } else if (progress >= 1) {
                 progress = 0;
                 progressPart = 0;
@@ -389,10 +388,11 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
             setPumping(false);
         }
 
-        // Uncomment for constant power
-        // if (isRedstonePowered && isActive()) {
-        // sendPower();
-        // } else currentOutput = 0;
+        // Power transfer is independent from the piston animation. Keeping it tied to the midpoint of a
+        // stroke leaves usable energy frozen in the internal buffer between strokes and fuel items.
+        if (isRedstonePowered && isActive()) {
+            sendPower();
+        }
 
         if (!overheat) {
             burn();

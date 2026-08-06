@@ -51,6 +51,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
     private static final long POWER_REQUIRED = POWER_GEN_PASSIVE * 20 * 10;
 
     private static final long POWER_LOST = POWER_GEN_PASSIVE * 10;
+    private static final int POWER_SAVE_INTERVAL = 20;
 
     private static final ResourceLocation ADVANCEMENT_AUTOCRAFT = new ResourceLocation("buildcraftfactory:lazy_crafting");
 
@@ -65,6 +66,8 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
      * will craft the current recipe. */
     private long powerStored;
     private long powerStoredLast;
+    private long persistedPowerStored = Long.MIN_VALUE;
+    private long lastPowerSaveTick = Long.MIN_VALUE;
 
     public ItemStack resultClient = ItemStack.EMPTY;
 
@@ -94,6 +97,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
         super.load(nbt);
         powerStored = Math.max(0, Math.min(POWER_REQUIRED, nbt.getLong("powerStored")));
         powerStoredLast = powerStored;
+        persistedPowerStored = powerStored;
     }
 
     @Override
@@ -111,10 +115,12 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             return;
         }
         boolean didChange = crafting.tick();
+        boolean completedCraft = false;
         long oldPowerStored = powerStored;
         if (crafting.canCraft()) {
             if (powerStored >= POWER_REQUIRED) {
                 if (crafting.craft()) {
+                    completedCraft = true;
                     // This is used for #hasWork(), to ensure that it doesn't return
                     // false for the one tick in between crafts.
                     powerStored = crafting.canCraft() ? 1 : 0;
@@ -129,12 +135,24 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
             powerStored = 0;
         }
         if (powerStored != oldPowerStored) {
-            setChanged();
+            markPowerProgressChanged(completedCraft || powerStored == 0);
         }
         if (didChange) {
             resultClient = crafting.getAssumedResult().copy();
             createFilters();
             sendNetworkGuiUpdate(NET_GUI_DATA);
+        }
+    }
+
+    private void markPowerProgressChanged(boolean force) {
+        if (powerStored == persistedPowerStored) {
+            return;
+        }
+        long now = level.getGameTime();
+        if (force || lastPowerSaveTick == Long.MIN_VALUE || now - lastPowerSaveTick >= POWER_SAVE_INTERVAL) {
+            setChanged();
+            persistedPowerStored = powerStored;
+            lastPowerSaveTick = now;
         }
     }
 

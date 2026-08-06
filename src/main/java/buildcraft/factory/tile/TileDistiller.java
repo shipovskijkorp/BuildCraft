@@ -60,6 +60,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
     public static final int NET_TANK_LIQUID_OUT = IDS.allocId("TANK_LIQUID_OUT");
 
     public static final long MAX_MJ_PER_TICK = 6 * MjAPI.MJ;
+    private static final int PROGRESS_SAVE_INTERVAL = 20;
 
     private final Tank tankIn = new Tank("in", 4 * FluidType.BUCKET_VOLUME, this, this::isDistillableFluid);
     private final Tank tankGasOut = new Tank("gasOut", 4 * FluidType.BUCKET_VOLUME, this);
@@ -84,6 +85,11 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
     private final AverageLong powerAvg = new AverageLong(100);
     private final SafeTimeTracker updateTracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 2);
     private boolean changedSinceNetUpdate = true;
+    private long persistedDistillPower = Long.MIN_VALUE;
+    private long persistedPendingPowerRefund = Long.MIN_VALUE;
+    private long persistedBatteryPower = Long.MIN_VALUE;
+    private boolean persistedActive;
+    private long lastProgressSaveTick = Long.MIN_VALUE;
 
     private long powerAvgClient;
 
@@ -138,6 +144,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         distillPower = Math.max(0, nbt.getLong("distillPower"));
         pendingPowerRefund = Math.max(0, nbt.getLong("pendingPowerRefund"));
         powerAvg.readFromNbt(nbt, "powerAvg");
+		capturePersistentProgress();
 	}
 
 
@@ -226,6 +233,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         if (!refundPendingPower()) {
             isActive = false;
             changedSinceNetUpdate |= wasActive;
+            markPersistentProgressIfNeeded(wasActive != isActive);
             if (changedSinceNetUpdate && updateTracker.markTimeIfDelay(level)) {
                 powerAvgClient = powerAvg.getAverageLong();
                 sendNetworkUpdate(NET_RENDER_DATA);
@@ -236,6 +244,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
 
         currentRecipe =
             BuildcraftRecipeRegistry.refineryRecipes.getDistillationRegistry().getRecipeForInput(tankIn.getFluid());
+        boolean completedOperation = false;
         if (currentRecipe == null) {
             queueProgressRefund();
             isActive = false;
@@ -266,6 +275,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
                     tankIn.drainInternal(reqIn, FluidAction.EXECUTE);
                     tankGasOut.fillInternal(outGas, FluidAction.EXECUTE);
                     tankLiquidOut.fillInternal(outLiquid, FluidAction.EXECUTE);
+                    completedOperation = true;
                 }
             } else {
                 queueProgressRefund();
@@ -273,9 +283,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
             }
         }
 
-        if (distillPower > 0 || pendingPowerRefund > 0 || isActive) {
-            setChanged();
-        }
+        markPersistentProgressIfNeeded(completedOperation || wasActive != isActive);
         changedSinceNetUpdate |= wasActive != isActive;
 
         if (changedSinceNetUpdate && updateTracker.markTimeIfDelay(level)) {
@@ -305,9 +313,35 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         if (refunded > 0) {
             mjBattery.addPower(refunded, FluidAction.EXECUTE);
             pendingPowerRefund -= refunded;
-            setChanged();
         }
         return pendingPowerRefund == 0;
+    }
+
+    private void markPersistentProgressIfNeeded(boolean force) {
+        if (!hasPersistentProgressChanged()) {
+            return;
+        }
+        long now = level.getGameTime();
+        if (force || lastProgressSaveTick == Long.MIN_VALUE
+            || now - lastProgressSaveTick >= PROGRESS_SAVE_INTERVAL) {
+            setChanged();
+            capturePersistentProgress();
+            lastProgressSaveTick = now;
+        }
+    }
+
+    private boolean hasPersistentProgressChanged() {
+        return distillPower != persistedDistillPower
+            || pendingPowerRefund != persistedPendingPowerRefund
+            || mjBattery.getStored() != persistedBatteryPower
+            || isActive != persistedActive;
+    }
+
+    private void capturePersistentProgress() {
+        persistedDistillPower = distillPower;
+        persistedPendingPowerRefund = pendingPowerRefund;
+        persistedBatteryPower = mjBattery.getStored();
+        persistedActive = isActive;
     }
 
     @Override

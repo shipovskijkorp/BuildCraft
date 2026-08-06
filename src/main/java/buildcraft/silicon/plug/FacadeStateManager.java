@@ -303,6 +303,9 @@ public enum FacadeStateManager implements IFacadeRegistry {
             }
             Map<BlockState, ItemStack> usedStates = new HashMap<>();
             Map<ItemStackKey, Map<Property<?>, Comparable<?>>> varyingProperties = new HashMap<>();
+            int skippedStateCount = 0;
+            BlockState firstSkippedState = null;
+            RuntimeException firstStateFailure = null;
             for (BlockState state : block.getStateDefinition().getPossibleStates()) {
                 // state = block.getStateFromMeta(block.getMetaFromState(state));
                 // if (!checkedStates.add(state)) {
@@ -329,10 +332,11 @@ public enum FacadeStateManager implements IFacadeRegistry {
                 try {
                     requiredStack = getRequiredStack(state);
                 } catch (RuntimeException e) {
-                    BCLog.logger.warn(
-                        "[silicon.facade] Disallowed state " + state
-                            + " after getRequiredStack(state) threw an exception!", e
-                    );
+                    skippedStateCount++;
+                    if (firstStateFailure == null) {
+                        firstStateFailure = e;
+                        firstSkippedState = state;
+                    }
                     continue;
                 }
                 usedStates.put(state, requiredStack);
@@ -376,14 +380,15 @@ public enum FacadeStateManager implements IFacadeRegistry {
                 if (!addedSignatures.add(signature)) {
                     continue;
                 }
+                FacadeBlockStateInfo previousInfo = null;
+                boolean registeredForValidation = false;
                 try {
                     ImmutableSet<Property<?>> varSet = ImmutableSet.copyOf(vars.keySet());
                     FacadeBlockStateInfo info = new FacadeBlockStateInfo(state, stack, varSet);
-                    validFacadeStates.put(state, info);
-                    if (!info.requiredStack.isEmpty()) {
-                        ItemStackKey stackKey = new ItemStackKey(info.requiredStack);
-                        stackFacades.computeIfAbsent(stackKey, k -> new ArrayList<>()).add(info);
-                    }
+                    // The NBT/buffer readers resolve the state through this map, so register it temporarily for
+                    // validation and roll it back if a third-party state cannot be serialized safely.
+                    previousInfo = validFacadeStates.put(state, info);
+                    registeredForValidation = true;
 
                     // Test to make sure that we can read + write it
                     FacadePhasedState phasedState = info.createPhased(null);
@@ -400,28 +405,48 @@ public enum FacadeStateManager implements IFacadeRegistry {
                             + "\n !=\n\t" + info + "\n)");
                     }
                     testingBuffer.clear();
+                    if (!info.requiredStack.isEmpty()) {
+                        ItemStackKey stackKey = new ItemStackKey(info.requiredStack);
+                        stackFacades.computeIfAbsent(stackKey, k -> new ArrayList<>()).add(info);
+                    }
                     if (DEBUG) {
                         BCLog.logger.info("[silicon.facade]   Added " + info);
                     }
-                } catch (Throwable t) {
-                    String msg = "Scanning facade states";
-                    msg += "\n\tState = " + state;
-                    msg += "\n\tBlock = " + safeToString(() -> ForgeRegistries.BLOCKS.getKey(block).toString());
-                    msg += "\n\tStack = " + stack;
-                    msg += "\n\tvarying-properties: {";
-                    for (Entry<Property<?>, Comparable<?>> varEntry : vars.entrySet()) {
-                        msg += "\n\t\t" + varEntry.getKey() + " = " + varEntry.getValue();
+                } catch (RuntimeException e) {
+                    testingBuffer.clear();
+                    if (registeredForValidation) {
+                        if (previousInfo == null) {
+                            validFacadeStates.remove(state);
+                        } else {
+                            validFacadeStates.put(state, previousInfo);
+                        }
                     }
-                    msg += "\n\t}";
-                    throw new IllegalStateException(msg.replace("\t", "    "), t);
+                    skippedStateCount++;
+                    if (firstStateFailure == null) {
+                        firstStateFailure = e;
+                        firstSkippedState = state;
+                    }
+                }
+            }
+            if (skippedStateCount > 0) {
+                ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
+                String summary = "[silicon.facade] Skipped " + skippedStateCount + " invalid facade state(s) for "
+                    + blockId + "; first failed state: " + firstSkippedState;
+                if (DEBUG) {
+                    BCLog.logger.warn(summary, firstStateFailure);
+                } else {
+                    BCLog.logger.warn(summary);
                 }
             }
         } catch (RuntimeException e) {
-            if (e instanceof IllegalStateException) {
-                // This one needs to exit properly
-                throw e;
+            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
+            String summary = "[silicon.facade] Skipping " + blockId + " after "
+                + e.getClass().getSimpleName() + ": " + String.valueOf(e.getMessage());
+            if (DEBUG) {
+                BCLog.logger.warn(summary, e);
+            } else {
+                BCLog.logger.warn(summary);
             }
-            BCLog.logger.warn("[silicon.facade] Skipping " + block + " as something about it threw an exception! ", e);
         }
     }
 
