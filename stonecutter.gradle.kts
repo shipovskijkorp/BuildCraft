@@ -1,4 +1,4 @@
-@file:OptIn(dev.kikugie.stonecutter.StonecutterExperimentalAPI::class)
+import java.util.Properties
 
 plugins {
     id("dev.kikugie.stonecutter")
@@ -6,38 +6,42 @@ plugins {
 
 stonecutter active "1.19.2-forge" /* [SC] DO NOT EDIT */
 
-stonecutter parameters {
-    val (version, loader) = current.project.split('-', limit = 2)
+stonecutter {
+    parameters {
+        val loader = node.metadata.project.substringAfterLast('-')
 
-    // Applies shared, version-specific and loader/version-specific tables from
-    // stonecutter.properties.toml to generated projects.
-    properties {
-        tags(version, loader)
+        // Keeps future shared-source loader conditions available on the
+        // Gradle-8-compatible Stonecutter API.
+        constants += listOf(
+            "forge" to (loader == "forge"),
+            "neoforge" to (loader == "neoforge"),
+            "fabric" to (loader == "fabric"),
+        )
     }
-
-    // Enables conditions such as `//? if forge {` in shared source files.
-    constants {
-        match(loader, "forge", "neoforge", "fabric")
-    }
-
-    swaps["mod_version"] = "\"${properties.get<String>("mod.version")}\";"
-    swaps["mod_id"] = "\"${properties.get<String>("mod.id")}\";"
-    swaps["mod_name"] = "\"${properties.get<String>("mod.name")}\";"
-    swaps["mod_group"] = "\"${properties.get<String>("mod.group")}\";"
-    swaps["minecraft"] = "\"${node.metadata.version}\";"
 }
 
-// Runs buildAndCollect in every registered version/loader node.
-stonecutter registerChiseled tasks.register("buildAndCollect", stonecutter.chiseled) {
+// Stonecutter 0.7.x does not expose the registerChiseled/chiseled API used by
+// Stonecutter 0.8/0.9. Keep the aggregate task version-independent by wiring
+// it to each generated node with normal Gradle task paths.
+val targetConfiguration = Properties().apply {
+    rootProject.file("stonecutter-targets.properties").inputStream().use { load(it) }
+}
+val registeredTargets = targetConfiguration.getProperty("targets")
+    ?.split(',')
+    ?.map { it.trim() }
+    ?.filter { it.isNotEmpty() }
+    ?: error("Missing non-empty 'targets' in stonecutter-targets.properties")
+
+tasks.register("buildAndCollect") {
     group = "build"
     description = "Build every registered Stonecutter target and collect release jars"
-    ofTask("buildAndCollect")
+    dependsOn(registeredTargets.map { target -> ":$target:buildAndCollect" })
 }
 
 // Stable convenience tasks that follow whichever target is active.
 val activeProject = stonecutter.current!!.project
 
-fun activeTask(name: String) = "$activeProject:$name"
+fun activeTask(name: String) = ":$activeProject:$name"
 
 tasks.register("runActiveClient") {
     group = "stonecutter"

@@ -210,7 +210,7 @@ public class OilGenerator {
             structures.add(createSphere(new BlockPos(x, wellY, z), radius));
 
             // Generate a spout
-            if (BCEnergyConfig.enableOilSpouts && genSetting.enableOilSpouts()) {
+            if (BCEnergyConfig.enableOilSpouts) {
                 int maxHeight, minHeight;
 
                 if (type == GenType.LARGE) {

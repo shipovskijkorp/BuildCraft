@@ -25,6 +25,27 @@ public class ModelHolderRegistry {
     static final List<ModelHolder> HOLDERS_JSONBAKE = new ArrayList<>();
     static final List<ModelHolder> HOLDERS_VANILLABAKE = new ArrayList<>();
 
+    /** Model-holder classes owned by optional BuildCraft modules. */
+    private static final String[] BUILTIN_HOLDER_CLASSES = {
+        "buildcraft.factory.BCFactoryModels",
+        "buildcraft.robotics.BCRoboticsModels",
+        "buildcraft.silicon.BCSiliconModels",
+        "buildcraft.transport.BCTransportModels"
+    };
+
+    private static void bootstrapBuiltinHolders() {
+        ClassLoader loader = ModelHolderRegistry.class.getClassLoader();
+        for (String className : BUILTIN_HOLDER_CLASSES) {
+            try {
+                Class.forName(className, true, loader);
+            } catch (ClassNotFoundException ignored) {
+                // BuildCraft modules are independently optional.
+            } catch (LinkageError | RuntimeException error) {
+                BCLog.logger.error("[lib.model.holder] Failed to initialise model holder class " + className, error);
+            }
+        }
+    }
+
 	public static void preModelBake(RegisterAdditional event) {
         bootstrapBuiltinHolders();
         for (ModelHolder holder : HOLDERS_VANILLABAKE) {

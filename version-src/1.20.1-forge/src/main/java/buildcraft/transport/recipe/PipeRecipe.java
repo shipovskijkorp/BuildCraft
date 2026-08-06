@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import buildcraft.transport.BCTransportRecipes;
 import buildcraft.transport.item.ItemPipeHolder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -14,6 +15,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -83,7 +85,7 @@ public final class PipeRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
         Match match = findMatch(container);
         if (match == null) {
             return ItemStack.EMPTY;
@@ -191,7 +193,7 @@ public final class PipeRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return result.copy();
     }
 
@@ -213,6 +215,11 @@ public final class PipeRecipe implements CraftingRecipe {
     @Override
     public RecipeSerializer<?> getSerializer() {
         return BCTransportRecipes.PIPE.get();
+    }
+
+    @Override
+    public CraftingBookCategory category() {
+        return CraftingBookCategory.MISC;
     }
 
     private record Match(ItemStack colorSource) {

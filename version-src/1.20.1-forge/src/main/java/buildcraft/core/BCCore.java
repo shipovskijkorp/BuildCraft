@@ -28,13 +28,11 @@ import buildcraft.lib.client.render.DetachedRenderer.RenderMatrixType;
 import buildcraft.lib.gui.BCContainerFactory;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.net.MessageManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,7 +40,6 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent.ModifyBakingResult;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.DynamicFluidContainerModel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -168,13 +165,6 @@ public class BCCore {
         	e.registerBlockEntityRenderer(BCCoreBlocks.MARKER_VOLUME_TILE_BC8.get(), RenderMarkerVolume::new);
         }
         
-        @SubscribeEvent
-        public static void onTextureStitchPost(TextureStitchEvent.Post event) {
-            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
-                RenderEngine_BC8.reloadSprites(event.getAtlas());
-            }
-        }
-
         @SubscribeEvent
         public static void onModelBakePre(RegisterAdditional event) {
         	event.register(ENGINE_MODEL);

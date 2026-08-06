@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
+import buildcraft.lib.BCLibItems;
 import buildcraft.api.enums.EnumEngineType;
 import buildcraft.api.enums.EnumSpring;
 import buildcraft.api.items.IMapLocation.MapLocationType;
@@ -66,6 +67,7 @@ public class BCCoreItems {
     /** Core-owned contents of the BuildCraft main creative tab. */
     public static List<ItemStack> getCreativeTabItems() {
         List<ItemStack> items = new ArrayList<>();
+        add(items, BCLibItems.GUIDE);
         add(items, MARKER_VOLUME);
         add(items, MARKER_PATH);
         add(items, ENGINE_RESTONE_ITEM_BC8);

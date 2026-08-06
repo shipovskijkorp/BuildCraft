@@ -106,7 +106,7 @@ public final class ForestryPropolisNetwork {
         if (player == null || !canEdit(player, message.pos)) {
             return;
         }
-        PipeBehaviourPropolis behaviour = findBehaviour(player.level, message.pos);
+        PipeBehaviourPropolis behaviour = findBehaviour(player.level(), message.pos);
         if (behaviour == null) {
             return;
         }
@@ -122,7 +122,7 @@ public final class ForestryPropolisNetwork {
         if (player == null || message.index < 0 || message.index >= 3 || !canEdit(player, message.pos)) {
             return;
         }
-        PipeBehaviourPropolis behaviour = findBehaviour(player.level, message.pos);
+        PipeBehaviourPropolis behaviour = findBehaviour(player.level(), message.pos);
         if (behaviour == null) {
             return;
         }

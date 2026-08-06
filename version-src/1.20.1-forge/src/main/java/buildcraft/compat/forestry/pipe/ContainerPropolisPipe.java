@@ -21,7 +21,7 @@ public final class ContainerPropolisPipe extends ContainerForestry {
     public static ContainerPropolisPipe fromNetwork(int windowId, Inventory inventory, FriendlyByteBuf buffer) {
         BlockPos pos = buffer.readBlockPos();
         CompoundTag filterTag = buffer.readNbt();
-        PipeBehaviourPropolis behaviour = ForestryPropolisNetwork.findBehaviour(inventory.player.level, pos);
+        PipeBehaviourPropolis behaviour = ForestryPropolisNetwork.findBehaviour(inventory.player.level(), pos);
         if (behaviour != null) {
             if (filterTag != null) {
                 behaviour.getFilter().read(filterTag);
@@ -29,7 +29,7 @@ public final class ContainerPropolisPipe extends ContainerForestry {
             return new ContainerPropolisPipe(windowId, inventory, behaviour, false);
         }
 
-        DetachedLocation location = new DetachedLocation(inventory.player.level, pos);
+        DetachedLocation location = new DetachedLocation(inventory.player.level(), pos);
         PropolisFilterLogic logic = new PropolisFilterLogic(location, (filter, level, player) -> {
         });
         if (filterTag != null) {
@@ -100,10 +100,10 @@ public final class ContainerPropolisPipe extends ContainerForestry {
         if (player.distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) > 64.0D) {
             return false;
         }
-        if (player.level.isClientSide) {
+        if (player.level().isClientSide) {
             return true;
         }
-        PipeBehaviourPropolis current = ForestryPropolisNetwork.findBehaviour(player.level, pos);
+        PipeBehaviourPropolis current = ForestryPropolisNetwork.findBehaviour(player.level(), pos);
         return current != null && current.pipe.getHolder().canPlayerInteract(player);
     }
 

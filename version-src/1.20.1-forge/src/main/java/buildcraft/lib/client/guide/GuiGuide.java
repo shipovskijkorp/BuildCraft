@@ -1348,7 +1348,11 @@ public final class GuiGuide extends Screen {
 
     private static ItemStack recipeResult(Recipe<?> recipe) {
         try {
-            ItemStack result = recipe.getResultItem();
+            Minecraft minecraft = Minecraft.getInstance();
+            if (minecraft.level == null) {
+                return ItemStack.EMPTY;
+            }
+            ItemStack result = recipe.getResultItem(minecraft.level.registryAccess());
             return result == null ? ItemStack.EMPTY : result;
         } catch (RuntimeException ignored) {
             return ItemStack.EMPTY;

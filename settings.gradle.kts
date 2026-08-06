@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
     repositories {
         mavenCentral()
@@ -10,32 +12,41 @@ pluginManagement {
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-    id("dev.kikugie.stonecutter") version "0.9.7"
+    // Stonecutter 0.8/0.9 requires Gradle 9. ForgeGradle 6 uses Gradle 8,
+    // so the workspace intentionally stays on the Gradle-8-compatible line.
+    id("dev.kikugie.stonecutter") version "0.7.11"
 }
 
+val targetConfiguration = Properties().apply {
+    file("stonecutter-targets.properties").inputStream().use { load(it) }
+}
+
+fun requiredTargetProperty(key: String): String =
+    targetConfiguration.getProperty(key)?.trim()?.takeIf { it.isNotEmpty() }
+        ?: error("Missing required property '$key' in stonecutter-targets.properties")
+
+val registeredTargets = requiredTargetProperty("targets")
+    .split(',')
+    .map { it.trim() }
+    .filter { it.isNotEmpty() }
+
 stonecutter {
+    // Required by the 0.7.x controller API for stonecutter.gradle.kts.
+    kotlinController = true
+
     create(rootProject) {
-        /**
-         * Registers one Minecraft version for one or more loaders.
-         *
-         * Each node is generated under versions/{minecraftVersion}-{loader}
-         * and uses build.{loader}.gradle as its platform build script.
-         */
-        fun target(minecraftVersion: String, vararg loaders: String) {
-            for (loader in loaders) {
-                version("$minecraftVersion-$loader", minecraftVersion)
-                    .buildscript("build.$loader.gradle")
+        for (targetId in registeredTargets) {
+            val separator = targetId.lastIndexOf('-')
+            require(separator > 0 && separator < targetId.lastIndex) {
+                "Target '$targetId' must end with a loader suffix, for example 1.20.1-forge"
             }
+            val loader = targetId.substring(separator + 1)
+
+            val minecraftVersion = requiredTargetProperty("target.$targetId.deps.minecraft")
+            version(targetId, minecraftVersion).buildscript("build.$loader.gradle")
         }
 
-        target("1.19.2", "forge")
-        target("1.20.1", "forge")
-
-        // Future examples:
-        // target("1.21.1", "forge", "neoforge")
-        // target("1.20.1", "fabric")
-
-        vcsVersion = "1.19.2-forge"
+        vcsVersion = requiredTargetProperty("vcsTarget")
     }
 }
 

@@ -1,7 +1,10 @@
 package buildcraft.resources;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -29,11 +32,17 @@ public class ResourceJsonTester {
     }
 
     @Test
-    void packMetadataIsPinnedToMinecraft1192() throws IOException {
-        Path path = Path.of("src/main/resources/pack.mcmeta");
-        try (Reader reader = Files.newBufferedReader(path)) {
+    void processedPackMetadataMatchesTarget() throws IOException {
+        String expectedValue = System.getProperty("buildcraft.expectedPackFormat");
+        Assertions.assertNotNull(expectedValue, "Gradle must provide the target pack format");
+        int expected = Integer.parseInt(expectedValue);
+
+        InputStream stream = ResourceJsonTester.class.getResourceAsStream("/pack.mcmeta");
+        Assertions.assertNotNull(stream, "Missing processed pack.mcmeta on the test runtime classpath");
+        try (Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             JsonElement root = JsonParser.parseReader(reader);
-            Assertions.assertEquals(9, root.getAsJsonObject().getAsJsonObject("pack").get("pack_format").getAsInt());
+            Assertions.assertEquals(expected,
+                root.getAsJsonObject().getAsJsonObject("pack").get("pack_format").getAsInt());
         }
     }
 

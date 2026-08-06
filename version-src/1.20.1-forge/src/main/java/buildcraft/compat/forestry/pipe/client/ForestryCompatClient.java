@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -36,7 +37,7 @@ public final class ForestryCompatClient {
         // Pipe items use BuildCraft's dynamic 3D model. The base transport module only replaces
         // models from its own item map, so compat-owned pipe items must opt in here explicitly.
         event.getModels().put(
-            new ModelResourceLocation(BuildCraftCompat.MODID + ":pipe_item_propolis#inventory"),
+            new ModelResourceLocation(new ResourceLocation(BuildCraftCompat.MODID, "pipe_item_propolis"), "inventory"),
             ModelPipeItem.INSTANCE
         );
     }

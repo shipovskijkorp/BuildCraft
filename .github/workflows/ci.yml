@@ -54,7 +54,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t targets < <(sed -nE 's/^[[:space:]]*target\("([^"]+)",[[:space:]]*"forge"\).*/\1-forge/p' settings.gradle.kts)
+          mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets --loader forge)
           for target in "${targets[@]}"; do
             source_root="."
             if [[ -d "version-src/${target}/src" ]]; then
@@ -75,7 +75,7 @@ jobs:
           SERVER_RUNTIME_PROFILE: base
         run: |
           set -euo pipefail
-          mapfile -t targets < <(sed -nE 's/^[[:space:]]*target\("([^"]+)",[[:space:]]*"forge"\).*/\1-forge/p' settings.gradle.kts)
+          mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets --loader forge)
           for target in "${targets[@]}"; do
             echo "Smoke-testing ${target}"
             STONECUTTER_TARGET="$target" bash scripts/ci-server-smoke.sh

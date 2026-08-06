@@ -1,29 +1,36 @@
 #!/usr/bin/env python3
-"""Validate the declarative Stonecutter target matrix without running Gradle."""
+"""Validate the Gradle-8-compatible BuildCraft Stonecutter target matrix."""
 
 from __future__ import annotations
 
+import argparse
 import re
 import sys
-import tomllib
 from pathlib import Path
-from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SETTINGS = ROOT / "settings.gradle.kts"
 ROOT_BUILD = ROOT / "stonecutter.gradle.kts"
-PROPERTIES = ROOT / "stonecutter.properties.toml"
+TARGET_PROPERTIES = ROOT / "stonecutter-targets.properties"
 WRAPPER_PROPERTIES = ROOT / "gradle/wrapper/gradle-wrapper.properties"
 FORGE_BUILD = ROOT / "build.forge.gradle"
 
-TARGET_PATTERN = re.compile(r'^\s*target\("([^"]+)"\s*,\s*(.+?)\)\s*$', re.MULTILINE)
-QUOTED_PATTERN = re.compile(r'"([^"]+)"')
 ACTIVE_PATTERN = re.compile(r'^\s*stonecutter\s+active\s+"([^"]+)"', re.MULTILINE)
-VCS_PATTERN = re.compile(r'^\s*vcsVersion\s*=\s*"([^"]+)"', re.MULTILINE)
 PLACEHOLDER_PATTERN = re.compile(r"\$\{([A-Za-z0-9_.-]+)}")
 RESOURCE_KEY_PATTERN = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_]*)\s*:', re.MULTILINE)
 
-COMMON_TARGET_PATHS = (
+COMMON_REQUIRED = (
+    "mod.group",
+    "mod.id",
+    "mod.name",
+    "mod.version",
+    "mod.archive_name",
+    "mod.authors",
+    "mod.license",
+    "deps.junit",
+)
+
+TARGET_REQUIRED = (
     "deps.minecraft",
     "java.version",
     "network.protocol",
@@ -32,12 +39,18 @@ COMMON_TARGET_PATHS = (
     "pack.data_format",
 )
 
-FORGE_TARGET_PATHS = (
+FORGE_REQUIRED = (
     "deps.forge",
     "loader.version_range",
     "forge.version_range",
     "minecraft.version_range",
     "buildcraft.version_range",
+    "compat.jei.range",
+    "compat.jade.range",
+    "compat.ic2.range",
+    "compat.forestry.range",
+    "deps.jei",
+    "deps.jade",
 )
 
 
@@ -46,33 +59,74 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 
-def nested_get(table: dict[str, Any], dotted_path: str) -> Any:
-    value: Any = table
-    for part in dotted_path.split("."):
-        if not isinstance(value, dict) or part not in value:
-            raise KeyError(dotted_path)
-        value = value[part]
+def load_properties(path: Path) -> dict[str, str]:
+    if not path.is_file():
+        fail(f"missing configuration file: {path.relative_to(ROOT)}")
+
+    result: dict[str, str] = {}
+    pending = ""
+    for line_number, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        line = pending + raw_line
+        if line.endswith("\\") and not line.endswith("\\\\"):
+            pending = line[:-1]
+            continue
+        pending = ""
+
+        stripped = line.strip()
+        if not stripped or stripped.startswith(("#", "!")):
+            continue
+
+        separator = line.find("=")
+        if separator < 0:
+            fail(f"{path.name}:{line_number}: expected key=value")
+        key = line[:separator].strip()
+        value = line[separator + 1 :].strip()
+        if not key:
+            fail(f"{path.name}:{line_number}: empty property key")
+        if key in result:
+            fail(f"{path.name}:{line_number}: duplicate property {key!r}")
+        result[key] = value
+
+    if pending:
+        fail(f"{path.name}: dangling line continuation")
+    return result
+
+
+def required(properties: dict[str, str], key: str) -> str:
+    value = properties.get(key, "").strip()
+    if not value:
+        fail(f"missing required property {key!r} in {TARGET_PROPERTIES.name}")
     return value
 
 
-def parse_targets(settings_text: str) -> list[tuple[str, str]]:
-    targets: list[tuple[str, str]] = []
-    for match in TARGET_PATTERN.finditer(settings_text):
-        minecraft_version = match.group(1)
-        loaders = QUOTED_PATTERN.findall(match.group(2))
-        if not loaders:
-            fail(f'target("{minecraft_version}", ...) has no loaders')
-        targets.extend((minecraft_version, loader) for loader in loaders)
+def target_value(properties: dict[str, str], target: str, key: str, *, allow_empty: bool = False) -> str:
+    target_key = f"target.{target}.{key}"
+    common_key = f"common.{key}"
+    if target_key in properties:
+        value = properties[target_key].strip()
+    elif common_key in properties:
+        value = properties[common_key].strip()
+    else:
+        fail(f"missing property {key!r} for target {target!r}")
+
+    if not allow_empty and not value:
+        fail(f"property {key!r} for target {target!r} must not be empty")
+    return value
+
+
+def parse_targets(properties: dict[str, str]) -> list[str]:
+    targets = [item.strip() for item in required(properties, "targets").split(",") if item.strip()]
     if not targets:
-        fail("settings.gradle.kts does not register any Stonecutter targets")
+        fail("target matrix is empty")
     if len(targets) != len(set(targets)):
-        fail("settings.gradle.kts contains duplicate version/loader targets")
+        fail("target matrix contains duplicate target IDs")
+    for target in targets:
+        if "-" not in target or not target.rsplit("-", 1)[1]:
+            fail(f"target {target!r} must end with a loader suffix")
     return targets
 
 
 def resource_placeholders(loader: str, source_root: Path) -> set[str]:
-    # Metadata differs by loader. Validate only the files owned by the current
-    # loader so adding Fabric/NeoForge does not require imitating Forge's map.
     candidates: dict[str, tuple[Path, ...]] = {
         "forge": (
             source_root / "src/main/resources/META-INF/mods.toml",
@@ -94,95 +148,97 @@ def resource_placeholders(loader: str, source_root: Path) -> set[str]:
     return placeholders
 
 
-def main() -> None:
+def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, int]:
+    for legacy_name in ("settings.gradle", "build.gradle"):
+        if (ROOT / legacy_name).exists():
+            fail(f"legacy {legacy_name} shadows the Stonecutter Kotlin controller; remove it")
+
     settings_text = SETTINGS.read_text(encoding="utf-8")
     root_build_text = ROOT_BUILD.read_text(encoding="utf-8")
-    targets = parse_targets(settings_text)
     wrapper_text = WRAPPER_PROPERTIES.read_text(encoding="utf-8")
+    forge_build_text = FORGE_BUILD.read_text(encoding="utf-8")
+
+    if 'id("dev.kikugie.stonecutter") version "0.7.11"' not in settings_text:
+        fail("Stonecutter must be pinned to the Gradle-8-compatible version 0.7.11")
+    if "kotlinController = true" not in settings_text:
+        fail("Stonecutter 0.7.11 requires kotlinController = true for stonecutter.gradle.kts")
+    if "0.9.7" in settings_text or "StonecutterExperimentalAPI" in root_build_text:
+        fail("Gradle-9-only Stonecutter 0.9 APIs remain in the project")
+    if re.search(r"\bproperties\s*\{\s*tags\(", root_build_text):
+        fail("Structured Properties is a Stonecutter 0.9 API and cannot be used on Gradle 8")
+    if "stonecutter-targets.properties" not in settings_text:
+        fail("settings must read stonecutter-targets.properties")
+    if "version(targetId, minecraftVersion).buildscript" not in settings_text:
+        fail("settings.gradle.kts does not register target-specific build scripts dynamically")
+
     if "gradle-8.8-bin.zip" not in wrapper_text:
-        fail("Gradle wrapper must be pinned to Gradle 8.8")
+        fail("Gradle wrapper must remain pinned to Gradle 8.8")
     if "https://maven.minecraftforge.net/" not in settings_text:
         fail("pluginManagement must include the MinecraftForge Maven repository")
 
-    forge_build_text = FORGE_BUILD.read_text(encoding="utf-8")
     if "net.minecraftforge.accesstransformers" in root_build_text or "net.minecraftforge.accesstransformers" in forge_build_text:
         fail("legacy standalone AccessTransformers plugin is incompatible with Gradle 8+")
     if "id 'net.minecraftforge.gradle' version '[6.0,6.2)'" not in forge_build_text:
-        fail("Forge targets must explicitly use ForgeGradle 6.x, which supports Gradle 8")
+        fail("Forge targets must explicitly use ForgeGradle 6.x")
     if "net.minecraftforge.renamer" in root_build_text or "net.minecraftforge.renamer" in forge_build_text:
-        fail("standalone Renamer must not be used with the ForgeGradle 6 build")
+        fail("standalone Renamer must not be used with ForgeGradle 6")
     if "fg.deobf" not in forge_build_text or "finalizedBy 'reobfJar'" not in forge_build_text:
         fail("ForgeGradle 6 build must use fg.deobf and reobfJar")
-    if "accessTransformer = new File(targetSourceRoot" not in forge_build_text:
-        fail("Forge build must configure the target-specific access transformer file")
-
-    target_ids = {f"{version}-{loader}" for version, loader in targets}
+    if "stonecutter-targets.properties" not in forge_build_text:
+        fail("Forge build must load the Gradle-8-compatible target configuration")
+    if "targetAccessTransformer = new File(targetSourceRoot" not in forge_build_text \
+            or "accessTransformer = targetAccessTransformer" not in forge_build_text:
+        fail("Forge build must configure the target-specific access transformer")
 
     active_match = ACTIVE_PATTERN.search(root_build_text)
     if not active_match:
         fail("stonecutter.gradle.kts has no active target declaration")
     active = active_match.group(1)
-    if active not in target_ids:
-        fail(f"active target {active!r} is not registered in settings.gradle.kts")
+    if active not in targets:
+        fail(f"active target {active!r} is not registered")
 
-    vcs_match = VCS_PATTERN.search(settings_text)
-    if not vcs_match:
-        fail("settings.gradle.kts has no vcsVersion")
-    vcs_target = vcs_match.group(1)
-    if vcs_target not in target_ids:
-        fail(f"vcsVersion {vcs_target!r} is not a registered target")
+    vcs_target = required(properties, "vcsTarget")
+    if vcs_target not in targets:
+        fail(f"vcsTarget {vcs_target!r} is not registered")
 
-    if 'tasks.register("buildAndCollect", stonecutter.chiseled)' not in root_build_text \
-            or 'ofTask("buildAndCollect")' not in root_build_text:
-        fail("root build does not register the chiseled buildAndCollect task")
+    if re.search(r"\bstonecutter\s+registerChiseled\b", root_build_text) \
+            or "stonecutter.chiseled" in root_build_text:
+        fail("Stonecutter 0.7.11 controller must not use the 0.8/0.9 chiseled task API")
+    if 'tasks.register("buildAndCollect")' not in root_build_text:
+        fail("root controller does not register buildAndCollect")
+    if 'dependsOn(registeredTargets.map' not in root_build_text \
+            or '":$target:buildAndCollect"' not in root_build_text:
+        fail("root buildAndCollect must depend on every registered target task")
 
-    with PROPERTIES.open("rb") as handle:
-        properties = tomllib.load(handle)
-
-    for shared_path in ("mod.group", "mod.id", "mod.name", "mod.version", "mod.archive_name", "mod.authors", "mod.license"):
-        try:
-            nested_get(properties, shared_path)
-        except KeyError:
-            fail(f"missing shared Stonecutter property: {shared_path}")
+    for key in COMMON_REQUIRED:
+        required(properties, f"common.{key}")
 
     placeholder_count = 0
-    for minecraft_version, loader in targets:
-        target_id = f"{minecraft_version}-{loader}"
-        loader_table = properties.get(loader)
-        if not isinstance(loader_table, dict):
-            fail(f"missing [{loader!r}] table for {target_id}")
-        target_table = loader_table.get(minecraft_version)
-        if not isinstance(target_table, dict):
-            fail(f'missing [{loader}."{minecraft_version}"] table for {target_id}')
+    for target in targets:
+        loader = target.rsplit("-", 1)[1]
+        for key in TARGET_REQUIRED + (FORGE_REQUIRED if loader == "forge" else ()):
+            target_value(properties, target, key)
 
-        for path in COMMON_TARGET_PATHS + (FORGE_TARGET_PATHS if loader == "forge" else ()):
-            try:
-                nested_get(target_table, path)
-            except KeyError:
-                fail(f"missing {path!r} in target table for {target_id}")
-
-        configured_minecraft = str(nested_get(target_table, "deps.minecraft"))
-        if configured_minecraft != minecraft_version:
+        configured_minecraft = target_value(properties, target, "deps.minecraft")
+        if not target.startswith(configured_minecraft + "-"):
             fail(
-                f"target {target_id} declares deps.minecraft={configured_minecraft!r}; "
-                f"expected {minecraft_version!r}"
+                f"target {target!r} declares deps.minecraft={configured_minecraft!r}; "
+                "the target ID must start with the Minecraft version"
             )
 
-        source_root_value = target_table.get("source", {}).get("root") if isinstance(target_table.get("source"), dict) else None
+        source_root_value = properties.get(f"target.{target}.source.root", "").strip()
         source_root = ROOT / source_root_value if source_root_value else ROOT
         if not source_root.is_dir():
-            fail(f"target {target_id} source root does not exist: {source_root}")
+            fail(f"target {target} source root does not exist: {source_root}")
         for required_source_path in ("src/main/java", "src/main/resources"):
             if not (source_root / required_source_path).is_dir():
-                fail(f"target {target_id} source root is missing {required_source_path}")
-        # The shared source root is the repository root and therefore normally
-        # contains .git. Only target-specific source roots must not be nested repos.
+                fail(f"target {target} source root is missing {required_source_path}")
         if source_root != ROOT and (source_root / ".git").exists():
-            fail(f"target {target_id} source root must not contain a nested .git directory")
+            fail(f"target {target} source root must not contain a nested .git directory")
 
         build_script = ROOT / f"build.{loader}.gradle"
         if not build_script.is_file():
-            fail(f"target {target_id} requires missing {build_script.name}")
+            fail(f"target {target} requires missing {build_script.name}")
         build_text = build_script.read_text(encoding="utf-8")
         if "buildAndCollect" not in build_text:
             fail(f"{build_script.name} does not define buildAndCollect")
@@ -204,10 +260,29 @@ def main() -> None:
                 + ", ".join(sorted(missing_placeholders))
             )
 
+    return active, vcs_target, placeholder_count
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--list-targets", action="store_true", help="print one target ID per line")
+    parser.add_argument("--loader", help="filter --list-targets by loader suffix")
+    args = parser.parse_args()
+
+    properties = load_properties(TARGET_PROPERTIES)
+    targets = parse_targets(properties)
+
+    if args.list_targets:
+        for target in targets:
+            if args.loader is None or target.rsplit("-", 1)[1] == args.loader:
+                print(target)
+        return
+
+    active, vcs_target, placeholder_count = validate(properties, targets)
     print(
         "Stonecutter layout OK: "
-        f"{len(targets)} target(s), active={active}, vcsVersion={vcs_target}, "
-        f"resource placeholders={placeholder_count}"
+        f"{len(targets)} target(s), active={active}, vcsTarget={vcs_target}, "
+        f"resource placeholders={placeholder_count}, Stonecutter=0.7.11, Gradle=8.8"
     )
 
 

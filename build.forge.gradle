@@ -6,18 +6,45 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-def requiredProperty = { String key ->
-    if (!project.hasProperty(key)) {
-        throw new GradleException("Missing Stonecutter property '${key}' for target '${project.name}'")
+def targetName = project.name
+
+def targetConfigFile = rootProject.file('stonecutter-targets.properties')
+if (!targetConfigFile.isFile()) {
+    throw new GradleException("Missing target configuration: ${targetConfigFile}")
+}
+
+def targetConfiguration = new Properties()
+targetConfigFile.withInputStream { targetConfiguration.load(it) }
+
+def configuredProperty = { String key ->
+    // -P values remain valid one-off overrides for local and CI builds.
+    if (project.hasProperty(key)) {
+        return project.property(key).toString().trim()
     }
-    project.property(key).toString()
+
+    def targetValue = targetConfiguration.getProperty("target.${targetName}.${key}")
+    if (targetValue != null) {
+        return targetValue.trim()
+    }
+
+    def commonValue = targetConfiguration.getProperty("common.${key}")
+    commonValue != null ? commonValue.trim() : null
+}
+
+def requiredProperty = { String key ->
+    def value = configuredProperty(key)
+    if (value == null || value.isEmpty()) {
+        throw new GradleException(
+                "Missing target property '${key}' for '${targetName}' in stonecutter-targets.properties"
+        )
+    }
+    value
 }
 
 def optionalProperty = { String key ->
-    project.hasProperty(key) ? project.property(key).toString().trim() : ''
+    configuredProperty(key) ?: ''
 }
 
-def targetName = sc.current.project
 def targetParts = targetName.split('-', 2)
 def minecraftVersion = requiredProperty('deps.minecraft')
 def forgeVersion = requiredProperty('deps.forge')
@@ -27,15 +54,17 @@ def archiveName = requiredProperty('mod.archive_name')
 def javaVersion = Integer.parseInt(requiredProperty('java.version'))
 
 def booleanProperty = { String key, boolean fallback ->
-    if (project.hasProperty(key)) {
-        return project.property(key).toString().toBoolean()
+    def configured = configuredProperty(key)
+    if (configured != null && !configured.isEmpty()) {
+        return configured.toBoolean()
     }
     providers.gradleProperty(key).map { it.toBoolean() }.getOrElse(fallback)
 }
 
 def sourceRootProperty = optionalProperty('source.root')
-def targetSourceRoot = sourceRootProperty ? rootProject.file(sourceRootProperty) : project.projectDir
+def targetSourceRoot = sourceRootProperty ? rootProject.file(sourceRootProperty) : rootProject.projectDir
 def usesVersionSourceRoot = !sourceRootProperty.isEmpty()
+def targetAccessTransformer = new File(targetSourceRoot, 'src/main/resources/META-INF/accesstransformer.cfg')
 def ic2CompatEnabled = booleanProperty('compat.ic2.enabled', true)
 
 if (usesVersionSourceRoot && !targetSourceRoot.isDirectory()) {
@@ -153,7 +182,7 @@ def generatedResources = rootProject.layout.projectDirectory.dir("src/generated/
 
 minecraft {
     mappings channel: 'official', version: minecraftVersion
-    accessTransformer = new File(targetSourceRoot, 'src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = targetAccessTransformer
 
     runs {
         configureEach {
@@ -274,6 +303,11 @@ def productionJar = tasks.named('jar', Jar)
 
 tasks.named('test', Test) {
     useJUnitPlatform()
+    // Stonecutter nodes live under versions/<target>, while the authoritative
+    // source/resource tree remains in the configured target source root.
+    // Keep relative-path resource integrity tests anchored to that source root.
+    workingDir targetSourceRoot
+    systemProperty 'buildcraft.expectedPackFormat', requiredProperty('pack.format')
     testLogging {
         events 'failed', 'skipped'
         exceptionFormat 'full'

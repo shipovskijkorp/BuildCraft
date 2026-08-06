@@ -17,9 +17,7 @@ public final class BCLibItems {
 
     public static final RegistryObject<ItemGuide> GUIDE = ITEMS.register(
         "guide",
-        () -> new ItemGuide(new Item.Properties()
-            .tab(CreativeTabManager.createTab("buildcraft.main"))
-            .stacksTo(1))
+        () -> new ItemGuide(new Item.Properties().stacksTo(1))
     );
 
     private BCLibItems() {

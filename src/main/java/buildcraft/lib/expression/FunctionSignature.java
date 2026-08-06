@@ -81,7 +81,7 @@ public final class FunctionSignature {
                         state = 2;
                     }
                 }
-                //$FALL-THROUGH$
+                // fall through
                 case 2: {
                     argType = NodeTypes.parseType(token.text);
                     state = 3;

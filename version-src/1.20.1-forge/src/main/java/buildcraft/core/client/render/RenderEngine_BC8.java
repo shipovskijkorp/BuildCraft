@@ -120,7 +120,6 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 	
 	@Override
 	public void render(TileEngineBase_BC8 tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
-		ensureSprites();
 		matrix.pushPose();
 		matrix.translate(0.5f, 0.5f, 0.5f);
         Matrix4f matrix4f = matrix.last().pose();
