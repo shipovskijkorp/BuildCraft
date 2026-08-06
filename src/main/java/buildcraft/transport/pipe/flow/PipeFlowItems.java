@@ -156,9 +156,8 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
          buf.writeShort(item.timeToDest > Short.MAX_VALUE ? Short.MAX_VALUE : item.timeToDest);
          });*/
         PipeItemMessageQueue.appendTravellingItem(
-            pipe.getHolder().getPipeWorld(), pipe.getHolder().getPipePos(), stackId, (byte) item.stack.getCount(),
-            item.toCenter, item.side, item.colour, item.timeToDest > Byte.MAX_VALUE ? Byte.MAX_VALUE
-                : (byte) item.timeToDest
+            pipe.getHolder().getPipeWorld(), pipe.getHolder().getPipePos(), stackId, item.stack.getCount(),
+            item.toCenter, item.side, item.colour, item.timeToDest
         );
     }
 
@@ -700,10 +699,17 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     }
 
     private void addItemTryMerge(TravellingItem item) {
-        for (List<TravellingItem> list : items.getAllElements()) {
-            for (TravellingItem item2 : list) {
+        List<List<TravellingItem>> delayed = items.getAllElements();
+        int minDelay = Math.max(0, item.timeToDest - 3);
+        int maxDelay = Math.min(delayed.size() - 1, item.timeToDest + 3);
+        int comparisonsLeft = 64;
+        for (int delay = minDelay; delay <= maxDelay && comparisonsLeft > 0; delay++) {
+            for (TravellingItem item2 : delayed.get(delay)) {
                 if (item2.mergeWith(item)) {
                     return;
+                }
+                if (--comparisonsLeft <= 0) {
+                    break;
                 }
             }
         }

@@ -8,7 +8,6 @@ package buildcraft.factory.tile;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Deque;
 import java.util.EnumSet;
@@ -18,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.items.FluidItemDrops;
@@ -68,11 +65,15 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     );
 
     private static final int[] REBUILD_DELAYS = { 16, 32, 64, 128, 256 };
+    private static final int MAX_FILL_TARGETS = 4096;
+    private static final int MAX_SEARCHED_POSITIONS = 65_536;
+    private static final int MAX_SEARCH_DISTANCE_SQR = 64 * 64;
 
     private final Tank tank = new Tank("tank", 2 * FluidType.BUCKET_VOLUME, this);
     public final Set<Direction> openSides = EnumSet.copyOf(BlockFloodGate.CONNECTED_MAP.keySet());
     public final Deque<BlockPos> queue = new ArrayDeque<>();
-    private final Map<BlockPos, List<BlockPos>> paths = new HashMap<>();
+    /** Child -> parent links for reconstructing a route without copying the complete route for every BFS node. */
+    private final Map<BlockPos, BlockPos> parents = new HashMap<>();
     private int delayIndex = 0;
     private int tick = 0;
 
@@ -88,56 +89,59 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     }
 
     private void buildQueue() {
-//        level.profiler.startSection("prepare");
         queue.clear();
-        paths.clear();
+        parents.clear();
         FluidStack fluid = tank.getFluid();
         if (fluid == null || fluid.getAmount() <= 0) {
-//            level.profiler.endSection();
             return;
         }
+
         Set<BlockPos> checked = new HashSet<>();
         checked.add(worldPosition);
-        List<BlockPos> nextPosesToCheck = new ArrayList<>();
+        Deque<BlockPos> frontier = new ArrayDeque<>();
         for (Direction face : openSides) {
-            BlockPos offset = worldPosition.offset(face.getNormal());
-            nextPosesToCheck.add(offset);
-            paths.put(offset, ImmutableList.of(offset));
-        }
-        Vec3i[] directions = fluid.getFluid().getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
-//        level.profiler.endStartSection("build");
-        outer: while (!nextPosesToCheck.isEmpty()) {
-            List<BlockPos> nextPosesToCheckCopy = new ArrayList<>(nextPosesToCheck);
-            nextPosesToCheck.clear();
-            for (BlockPos toCheck : nextPosesToCheckCopy) {
-                if (toCheck.distSqr(worldPosition) > 64 * 64) {
-                    continue;
-                }
-                if (checked.add(toCheck)) {
-                    if (canSearch(toCheck)) {
-                        if (canFill(toCheck)) {
-                            queue.push(toCheck);
-                            if (queue.size() >= 4096) {
-                                break outer;
-                            }
-                        }
-                        List<BlockPos> checkPath = paths.get(toCheck);
-                        for (Vec3i side : directions) {
-                            BlockPos next = toCheck.offset(side);
-                            if (checked.contains(next)) {
-                                continue;
-                            }
-                            ImmutableList.Builder<BlockPos> pathBuilder = ImmutableList.builder();
-                            pathBuilder.addAll(checkPath);
-                            pathBuilder.add(next);
-                            paths.put(next, pathBuilder.build());
-                            nextPosesToCheck.add(next);
-                        }
-                    }
-                }
+            BlockPos offset = worldPosition.relative(face);
+            if (checked.add(offset)) {
+                parents.put(offset, worldPosition);
+                frontier.addLast(offset);
             }
         }
-//        level.profiler.endSection();
+
+        Vec3i[] directions = fluid.getFluid().getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
+        int searched = 0;
+        while (!frontier.isEmpty() && searched < MAX_SEARCHED_POSITIONS && queue.size() < MAX_FILL_TARGETS) {
+            BlockPos toCheck = frontier.removeFirst();
+            searched++;
+            if (toCheck.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !canSearch(toCheck)) {
+                continue;
+            }
+
+            if (canFill(toCheck)) {
+                // Keep the old nearest-first consumption order: push at the front, consume from the back.
+                queue.addFirst(toCheck);
+            }
+
+            for (Vec3i side : directions) {
+                BlockPos next = toCheck.offset(side);
+                if (next.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !checked.add(next)) {
+                    continue;
+                }
+                parents.put(next, toCheck);
+                frontier.addLast(next);
+            }
+        }
+    }
+
+    private boolean hasOpenPathTo(BlockPos target) {
+        BlockPos current = parents.get(target);
+        int remaining = MAX_SEARCHED_POSITIONS;
+        while (current != null && !current.equals(worldPosition) && remaining-- > 0) {
+            if (!canFillThrough(current)) {
+                return false;
+            }
+            current = parents.get(current);
+        }
+        return current != null && remaining > 0;
     }
 
     private boolean canFill(BlockPos offsetPos) {
@@ -183,20 +187,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
                 FluidStack fluid = tank.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
                 if (fluid != null && fluid.getAmount() >= FluidType.BUCKET_VOLUME) {
                     BlockPos currentPos = queue.removeLast();
-                    List<BlockPos> path = paths.get(currentPos);
-                    boolean canFill = true;
-                    if (path != null) {
-                        for (BlockPos p : path) {
-                            if (p.equals(currentPos)) {
-                                continue;
-                            }
-                            if (!canFillThrough(p)) {
-                                canFill = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (canFill && canFill(currentPos)) {
+                    if (hasOpenPathTo(currentPos) && canFill(currentPos)) {
 //                        FakePlayer fakePlayer =
 //                            BuildCraftAPI.fakePlayerProvider.getFakePlayer((WorldServer) level, getOwner(), currentPos);
                         if (FluidUtil.tryPlaceFluid(null, level, null, currentPos, tank, fluid)) {

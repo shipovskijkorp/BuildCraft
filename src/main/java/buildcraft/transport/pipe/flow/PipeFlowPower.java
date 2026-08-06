@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 import buildcraft.api.core.EnumPipePart;
+import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.IMjPassiveProvider;
 import buildcraft.api.mj.IMjReceiver;
@@ -32,6 +33,7 @@ import buildcraft.api.transport.pipe.PipeApi.PowerTransferInfo;
 import buildcraft.api.transport.pipe.PipeEventPower;
 import buildcraft.api.transport.pipe.PipeFlow;
 import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.MathUtil;
 import buildcraft.lib.misc.VecUtil;
@@ -69,8 +71,10 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     private boolean isReceiver = false;
     private final EnumMap<Direction, Section> sections;
 
-//    private final SafeTimeTracker tracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate);
-//    private long[] transferQuery;
+    private final SafeTimeTracker networkTracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 2);
+    private final EnumFlow[] lastObservedFlows = new EnumFlow[Direction.values().length];
+    private final int[] lastObservedDisplayPower = new int[Direction.values().length];
+    private boolean networkUpdatePending;
 
     public PipeFlowPower(IPipe pipe) {
         super(pipe);
@@ -250,6 +254,8 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         left.add("maxPower = " + LocaleUtil.localizeMj(maxPower));
         left.add("isReceiver = " + isReceiver);
         left.add("disabled = " + disabled);
+        left.add("powerLoss = " + LocaleUtil.localizeMj(powerLoss));
+        left.add("powerResistance = " + (powerResistance * 100.0 / MjAPI.MJ) + "%");
         left.add(
             "internalPower = " + arrayToString(s -> s.internalPower) + " <- " + arrayToString(s -> s.internalNextPower)
         );
@@ -290,16 +296,6 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             return;
         }
 
-        EnumFlow[] lastFlows = new EnumFlow[6];
-        int[] lastDisplayPower = new int[6];
-
-        for (Direction face : Direction.values()) {
-            Section s = sections.get(face);
-            int i = face.ordinal();
-            lastFlows[i] = s.displayFlow;
-            lastDisplayPower[i] = s.displayPower;
-        }
-
         step();
 
         init();
@@ -326,32 +322,44 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
                         Section s2 = sections.get(face2);
                         if (s2.powerQuery > 0) {
                             BigInteger sidePowerQuery = BigInteger.valueOf(s2.powerQuery);
-                            long watts = Math.min(
+                            long offeredInput = Math.min(
                                 BigInteger.valueOf(s.internalPower).multiply(sidePowerQuery).divide(
                                     unusedPowerQuery
                                 ).longValue(), s.internalPower
                             );
                             unusedPowerQuery = unusedPowerQuery.subtract(sidePowerQuery);
+
+                            long offeredAfterLoss = applyResistance(offeredInput);
+                            if (offeredAfterLoss <= 0) {
+                                continue;
+                            }
+
                             IPipe neighbour = pipe.getConnectedPipe(face2);
-                            long leftover = watts;
+                            long leftover = offeredAfterLoss;
                             if (
                                 neighbour != null && neighbour.getFlow() instanceof PipeFlowPower && neighbour
                                     .isConnected(face2.getOpposite())
                             ) {
                                 PipeFlowPower oFlow = (PipeFlowPower) neighbour.getFlow();
-                                leftover = oFlow.sections.get(face2.getOpposite()).receivePowerInternal(watts);
+                                leftover = oFlow.sections.get(face2.getOpposite()).receivePowerInternal(offeredAfterLoss);
                             } else {
                                 IMjReceiver receiver = getPowerSink(face2);
                                 if (receiver != null && receiver.canReceive()) {
-                                    leftover = receiver.receivePower(watts, FluidAction.EXECUTE);
+                                    leftover = receiver.receivePower(offeredAfterLoss, FluidAction.EXECUTE);
                                 }
                             }
-                            long used = watts - leftover;
-                            s.internalPower -= used;
-                            s2.debugPowerOutput += used;
 
-                            s.powerAverage.push((int) used);
-                            s2.powerAverage.push((int) used);
+                            leftover = Math.max(0, Math.min(offeredAfterLoss, leftover));
+                            long delivered = offeredAfterLoss - leftover;
+                            long consumed = getInputForDelivered(delivered, offeredInput);
+                            if (consumed <= 0) {
+                                continue;
+                            }
+                            s.internalPower -= consumed;
+                            s2.debugPowerOutput += delivered;
+
+                            s.powerAverage.push((int) Math.min(Integer.MAX_VALUE, consumed));
+                            s2.powerAverage.push((int) Math.min(Integer.MAX_VALUE, delivered));
 
                             s.displayFlow = EnumFlow.OUT;
                             s2.displayFlow = EnumFlow.IN;
@@ -427,19 +435,20 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         for (Direction face : Direction.values()) {
             Section s = sections.get(face);
             int i = face.ordinal();
-            if (lastFlows[i] != s.displayFlow || lastDisplayPower[i] != s.displayPower) {
+            if (lastObservedFlows[i] != s.displayFlow || lastObservedDisplayPower[i] != s.displayPower) {
                 didChange = true;
-                break;
             }
+            lastObservedFlows[i] = s.displayFlow;
+            lastObservedDisplayPower[i] = s.displayPower;
         }
 
-        // if (tracker.markTimeIfDelay(pipe.getHolder().getPipeWorld())) {
         if (didChange) {
-            sendPayload(NET_POWER_AMOUNTS);
+            networkUpdatePending = true;
         }
-
-//        transferQuery = transferQueryTemp;
-        // }
+        if (networkUpdatePending && networkTracker.markTimeIfDelay(pipe.getHolder().getPipeWorld())) {
+            sendPayload(NET_POWER_AMOUNTS);
+            networkUpdatePending = false;
+        }
     }
 
     private void step() {
@@ -501,6 +510,39 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             }
         }
         return Math.min(req, maxPower);
+    }
+
+    private long applyResistance(long input) {
+        if (input <= 0) {
+            return 0;
+        }
+        if (powerResistance <= 0) {
+            return input;
+        }
+        if (powerResistance >= MjAPI.MJ) {
+            return 0;
+        }
+        BigInteger retained = BigInteger.valueOf(input)
+            .multiply(BigInteger.valueOf(MjAPI.MJ - powerResistance))
+            .divide(BigInteger.valueOf(MjAPI.MJ));
+        return Math.max(1, retained.longValue());
+    }
+
+    private long getInputForDelivered(long delivered, long maxInput) {
+        if (delivered <= 0 || maxInput <= 0) {
+            return 0;
+        }
+        if (powerResistance <= 0) {
+            return Math.min(delivered, maxInput);
+        }
+        long retainedRatio = MjAPI.MJ - powerResistance;
+        if (retainedRatio <= 0) {
+            return maxInput;
+        }
+        BigInteger numerator = BigInteger.valueOf(delivered).multiply(BigInteger.valueOf(MjAPI.MJ));
+        BigInteger denominator = BigInteger.valueOf(retainedRatio);
+        long required = numerator.add(denominator).subtract(BigInteger.ONE).divide(denominator).longValue();
+        return Math.min(required, maxInput);
     }
 
     private static long saturatingAdd(long a, long b) {

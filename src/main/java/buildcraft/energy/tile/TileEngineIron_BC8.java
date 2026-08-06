@@ -231,7 +231,8 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
      */
     private float getBiomeTempScalar() {
         float temperature = getBiome().getBaseTemperature();
-        return ((temperature - 1.0F) * 0.5F) + 1.0F;
+        // Modded biomes may use temperatures below -1 or extreme positive values. Keep cooling finite and positive.
+        return Mth.clamp(((temperature - 1.0F) * 0.5F) + 1.0F, 0.1F, 4.0F);
     }
 
     @Override
@@ -327,12 +328,17 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                             if (coolPerMb > 0) {
                                 boolean alternativeCoolant = solidCoolantLoaded
                                     || !FluidCompatRegistry.areEquivalent(coolant.getFluid(), Fluids.WATER);
-                                int coolantAmount = Math.min(MAX_COOLANT_PER_TICK, tankCoolant.getFluidAmount());
-                                float cooling = coolPerMb / getBiomeTempScalar();
-                                coolingBuffer += coolantAmount * cooling;
-                                tankCoolant.drain(coolantAmount, FluidAction.EXECUTE);
-                                if (alternativeCoolant && getOwner() != null) {
-                                    AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_ICE_COOL);
+                                double coolingPerMb = coolPerMb / getBiomeTempScalar();
+                                int requiredCoolant = Math.max(1, Mth.ceil(extraHeat / coolingPerMb));
+                                int coolantAmount = Math.min(
+                                    Math.min(MAX_COOLANT_PER_TICK, tankCoolant.getFluidAmount()), requiredCoolant
+                                );
+                                FluidStack drained = tankCoolant.drain(coolantAmount, FluidAction.EXECUTE);
+                                if (!drained.isEmpty()) {
+                                    coolingBuffer += Math.min(extraHeat, drained.getAmount() * coolingPerMb);
+                                    if (alternativeCoolant && getOwner() != null) {
+                                        AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_ICE_COOL);
+                                    }
                                 }
                             }
                         }

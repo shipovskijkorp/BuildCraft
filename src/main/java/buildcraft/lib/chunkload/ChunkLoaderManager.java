@@ -6,11 +6,9 @@
 
 package buildcraft.lib.chunkload;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -25,15 +23,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.event.server.ServerStoppingEvent;
 
 /**
  * Forge-backed replacement for BuildCraft's removed chunk-ticket manager.
  *
  * <p>Tickets are persisted by Forge and owned by the loading block's position. The local mirror is used to release
- * chunks when a quarry changes size and to validate persisted owners after their own chunk has loaded.</p>
+ * chunks when a quarry changes size.</p>
  */
 public final class ChunkLoaderManager {
     private static final Map<ServerLevel, Map<BlockPos, Set<ChunkPos>>> LOADED_CHUNKS = new WeakHashMap<>();
@@ -42,14 +38,13 @@ public final class ChunkLoaderManager {
     private ChunkLoaderManager() {
     }
 
-    /** Registers the Forge ticket callback and the delayed persisted-ticket validator. */
+    /** Registers the Forge persisted-ticket validation callback. */
     public static synchronized void init() {
         if (initialized) {
             return;
         }
         initialized = true;
         ForgeChunkManager.setForcedChunkLoadingCallback(BCLib.MODID, ChunkLoaderManager::validateTickets);
-        MinecraftForge.EVENT_BUS.addListener(ChunkLoaderManager::onServerStopping);
     }
 
     /** Applies the chunks currently requested by a loading tile and releases obsolete tickets. */
@@ -150,43 +145,26 @@ public final class ChunkLoaderManager {
     }
 
     /**
-     * Drops tickets persisted by the previous unsafe implementation.
-     *
-     * <p>Forge reinstates accepted tickets while the world is still loading. Persisting a quarry's entire work area can
-     * therefore stall the integrated server before the player joins. Runtime tickets are recreated by the quarry after
-     * its owner chunk has finished loading.</p>
+     * Keeps persisted quarry tickets when chunk loading is enabled, so the owner chunk can load and recreate its
+     * runtime work-area mirror after a server restart. Tickets are rejected when the current configuration disables
+     * hard tile chunk loading.
      */
     private static void validateTickets(ServerLevel level, ForgeChunkManager.TicketHelper helper) {
+        LOADED_CHUNKS.remove(level);
+        if (isEnabledFor(level) && BCLibConfig.chunkLoadingLevel.canLoad(LoadType.HARD)) {
+            return;
+        }
+
         int removedOwners = 0;
         for (BlockPos owner : new HashSet<>(helper.getBlockTickets().keySet())) {
             helper.removeAllTickets(owner);
             removedOwners++;
         }
-        LOADED_CHUNKS.remove(level);
         if (removedOwners > 0) {
-            BCLog.logger.warn("[lib.chunkloading] Removed persisted tickets for {} owner(s) during safe migration", removedOwners);
-        }
-    }
-
-    /**
-     * Runtime quarry tickets are deliberately released before the final world save. They are restored when the quarry
-     * chunk is loaded in a later session, rather than being reinstated inside Forge's world-startup chunk pipeline.
-     */
-    private static void onServerStopping(ServerStoppingEvent event) {
-        List<ServerLevel> levels = new ArrayList<>();
-        for (ServerLevel level : LOADED_CHUNKS.keySet()) {
-            if (level.getServer() == event.getServer()) {
-                levels.add(level);
-            }
-        }
-        for (ServerLevel level : levels) {
-            Map<BlockPos, Set<ChunkPos>> owners = LOADED_CHUNKS.get(level);
-            if (owners == null) {
-                continue;
-            }
-            for (Map.Entry<BlockPos, Set<ChunkPos>> entry : new HashMap<>(owners).entrySet()) {
-                releaseChunksFor(level, entry.getKey(), new HashSet<>(entry.getValue()));
-            }
+            BCLog.logger.info(
+                "[lib.chunkloading] Removed persisted tickets for {} owner(s) because chunk loading is disabled",
+                removedOwners
+            );
         }
     }
 

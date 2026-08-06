@@ -143,6 +143,9 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         super.saveAdditional(nbt);
         if (pipe != Pipe.EMPTY) {
             nbt.put("pipe", pipe.writeToNbt());
+        } else if (unknownData != null && !unknownData.isEmpty()) {
+            // Preserve the original definition if the providing mod is temporarily unavailable.
+            nbt.put("pipe", unknownData.copy());
         }
         CompoundTag plugs = new CompoundTag();
         for (Direction face : Direction.values()) {
@@ -164,6 +167,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         if (nbt.contains("pipe")) {
             try {
                 pipe = new Pipe(this, nbt.getCompound("pipe"));
+                unknownData = null;
                 eventBus.registerHandler(pipe.behaviour);
                 eventBus.registerHandler(pipe.flow);
                 if (pipe.flow instanceof IFlowItems && BCModules.SILICON.isLoaded()) {
@@ -172,7 +176,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
             } catch (InvalidInputDataException e) {
                 // Unfortunately we can't throw an exception because then this tile won't persist :/
                 buildcraft.api.core.BCLog.logger.warn("Failed to load pipe data; preserving unknown pipe NBT", e);
-                unknownData = nbt.copy();
+                unknownData = nbt.getCompound("pipe").copy();
             }
         }
         CompoundTag plugs = nbt.getCompound("plugs");
@@ -200,6 +204,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         if (item instanceof IItemPipe) {
             PipeDefinition definition = ((IItemPipe) item).getDefinition();
             this.pipe = new Pipe(this, definition);
+            unknownData = null;
             eventBus.registerHandler(pipe.behaviour);
             eventBus.registerHandler(pipe.flow);
             if (pipe.flow instanceof IFlowItems && BCModules.SILICON.isLoaded()) {

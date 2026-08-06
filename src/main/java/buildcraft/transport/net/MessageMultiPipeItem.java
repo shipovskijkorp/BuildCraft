@@ -70,32 +70,33 @@ public class MessageMultiPipeItem {
         }
     }
 
-    public void append(BlockPos pos, int stackId, byte stackCount, boolean toCenter, Direction side,
-        DyeColor colour, byte timeToDest) {
+    public boolean append(BlockPos pos, int stackId, int stackCount, boolean toCenter, Direction side,
+        DyeColor colour, int timeToDest) {
         List<TravellingItemData> list = items.get(pos);
         if (list == null) {
             if (items.size() >= MAX_POSITIONS) {
-                return;
+                return false;
             }
             list = new ArrayList<>();
             items.put(pos, list);
         }
         if (list.size() >= MAX_ITEMS_PER_PIPE) {
-            return;
+            return false;
         }
         list.add(new TravellingItemData(stackId, stackCount, toCenter, side, colour, timeToDest));
+        return true;
     }
 
     public static class TravellingItemData {
         public final int stackId;
-        public final byte stackCount;
+        public final int stackCount;
         public final boolean toCenter;
         public final Direction side;
         public final @Nullable DyeColor colour;
-        public final byte timeToDest;
+        public final int timeToDest;
 
-        public TravellingItemData(int stackId, byte stackCount, boolean toCenter, Direction side, DyeColor colour,
-            byte timeToDest) {
+        public TravellingItemData(int stackId, int stackCount, boolean toCenter, Direction side, DyeColor colour,
+            int timeToDest) {
             this.stackId = stackId;
             this.stackCount = stackCount;
             this.toCenter = toCenter;
@@ -106,20 +107,26 @@ public class MessageMultiPipeItem {
 
         TravellingItemData(FriendlyByteBuf buf) {
             stackId = buf.readVarInt();
-            stackCount = buf.readByte();
+            stackCount = buf.readVarInt();
+            if (stackCount <= 0 || stackCount > 1_000_000) {
+                throw new DecoderException("Invalid travelling item stack count: " + stackCount);
+            }
             toCenter = buf.readBoolean();
             side = buf.readEnum(Direction.class);
             colour = MessageUtil.readEnumOrNull(buf, DyeColor.class);
-            timeToDest = buf.readByte();
+            timeToDest = buf.readVarInt();
+            if (timeToDest < 0 || timeToDest > 1_000_000) {
+                throw new DecoderException("Invalid travelling item travel time: " + timeToDest);
+            }
         }
 
         void toBuffer(FriendlyByteBuf buf) {
             buf.writeVarInt(stackId);
-            buf.writeByte(stackCount);
+            buf.writeVarInt(stackCount);
             buf.writeBoolean(toCenter);
             buf.writeEnum(side);
             MessageUtil.writeEnumOrNull(buf, colour);
-            buf.writeByte(timeToDest);
+            buf.writeVarInt(timeToDest);
         }
     }
 

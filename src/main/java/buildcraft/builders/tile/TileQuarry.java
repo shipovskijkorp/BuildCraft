@@ -74,6 +74,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -221,12 +222,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
     @Nonnull
     private BoxIterator createBoxIterator() {
-        long x = getBlockPos().getX();
-        long y = getBlockPos().getY();
-        long z = getBlockPos().getZ();
-        long seed = ((x & 0xFFFF) << 0) | ((y & 0xFFFF) << 16) | ((z & 0xFFFF << 32));
-
-        Random rand = new Random(seed);
+        // BlockPos already provides a stable 64-bit packing of all three coordinates.
+        // The previous int-based shift by 32 discarded Z and caused many quarries to share a seed.
+        Random rand = new Random(getBlockPos().asLong());
         EnumAxisOrder axisOrder = rand.nextBoolean() ? EnumAxisOrder.XZY : EnumAxisOrder.ZXY;
         AxisOrder.Inversion inv = AxisOrder.Inversion.getFor(rand.nextBoolean(), rand.nextBoolean(), false);
         return new BoxIterator(miningBox, AxisOrder.getFor(axisOrder, inv), true);
@@ -1368,11 +1366,12 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         @Override
         void readFromNBT(CompoundTag nbt) {
             super.readFromNBT(nbt);
-            breakPos = BlockPos.of(nbt.getLong("breakPos"));
-            if (breakPos == null) {
-                // We failed to read, abort
+            if (!nbt.contains("breakPos", Tag.TAG_LONG)) {
+                // Missing task data must not silently turn into the world origin.
                 currentTask = null;
+                return;
             }
+            breakPos = BlockPos.of(nbt.getLong("breakPos"));
         }
 
         @Override
@@ -1475,13 +1474,12 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         @Override
         void readFromNBT(CompoundTag nbt) {
             super.readFromNBT(nbt);
-            long pos = nbt.getLong("framePos");
-            if (pos == 0L) {
-                // We failed to read, abort
+            if (!nbt.contains("framePos", Tag.TAG_LONG)) {
                 currentTask = null;
                 return;
             }
-            framePos = BlockPos.of(pos);
+            // BlockPos.ZERO.asLong() is a valid position, so field presence is the validity check.
+            framePos = BlockPos.of(nbt.getLong("framePos"));
         }
 
         @Override

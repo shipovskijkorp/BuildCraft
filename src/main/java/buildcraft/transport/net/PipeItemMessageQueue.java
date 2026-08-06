@@ -31,14 +31,18 @@ public class PipeItemMessageQueue {
         cachedPlayerPackets.clear();
     }
 
-    public static void appendTravellingItem(Level world, BlockPos pos, int stackId, byte stackCount, boolean toCenter,
-        Direction side, @Nullable DyeColor colour, byte timeToDest) {
+    public static void appendTravellingItem(Level world, BlockPos pos, int stackId, int stackCount, boolean toCenter,
+        Direction side, @Nullable DyeColor colour, int timeToDest) {
         ServerLevel server = (ServerLevel) world;
-		MessageMultiPipeItem msg = new MessageMultiPipeItem();
-		msg.append(pos, stackId, stackCount, toCenter, side, colour, timeToDest);
-        cachedPlayerPackets.computeIfAbsent(server.getChunkAt(pos), 
-        	pl -> new ArrayList<>()
-        ).add(msg);
-
+        List<MessageMultiPipeItem> messages = cachedPlayerPackets.computeIfAbsent(
+            server.getChunkAt(pos), ignored -> new ArrayList<>()
+        );
+        MessageMultiPipeItem current = messages.isEmpty() ? null : messages.get(messages.size() - 1);
+        if (current == null || !current.append(pos, stackId, stackCount, toCenter, side, colour, timeToDest)) {
+            MessageMultiPipeItem next = new MessageMultiPipeItem();
+            if (next.append(pos, stackId, stackCount, toCenter, side, colour, timeToDest)) {
+                messages.add(next);
+            }
+        }
     }
 }
