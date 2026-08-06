@@ -741,12 +741,12 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 for (EnumPipePart part : EnumPipePart.VALUES) {
                     Section section = sections.get(part);
                     if (full) {
-                        buffer.writeShort(section.amount);
+                        buffer.writeVarInt(section.amount);
                     } else if (section.amount == section.lastSentAmount) {
                         buffer.writeBoolean(false);
                     } else {
                         buffer.writeBoolean(true);
-                        buffer.writeShort(section.amount);
+                        buffer.writeVarInt(section.amount);
                         section.lastSentAmount = section.amount;
                     }
                     Dir should = Dir.get(section.ticksInDirection);
@@ -769,7 +769,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 for (EnumPipePart part : EnumPipePart.VALUES) {
                     Section section = sections.get(part);
                     if (full || buffer.readBoolean()) {
-                        section.target = buffer.readShort();
+                        section.target = buffer.readVarInt();
                         if (full) {
                             section.clientAmountLast = section.clientAmountThis = section.target;
                         }
@@ -821,23 +821,23 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         }
 
         void writeToNbt(CompoundTag nbt) {
-            nbt.putShort("capacity", (short) amount);
-            nbt.putShort("lastSentAmount", (short) lastSentAmount);
-            nbt.putShort("ticksInDirection", (short) ticksInDirection);
+            nbt.putInt("capacity", amount);
+            nbt.putInt("lastSentAmount", lastSentAmount);
+            nbt.putInt("ticksInDirection", ticksInDirection);
             
             for (int i = 0; i < incoming.length; ++i) {
-                nbt.putShort("in[" + i + "]", (short) incoming[i]);
+                nbt.putInt("in[" + i + "]", incoming[i]);
             }
         }
 
         void readFromNbt(CompoundTag nbt) {
-            this.amount = nbt.getShort("capacity");
-            this.lastSentAmount = nbt.getShort("lastSentAmount");
-            this.ticksInDirection = nbt.getShort("ticksInDirection");
+            this.amount = Math.max(0, nbt.getInt("capacity"));
+            this.lastSentAmount = Math.max(0, nbt.getInt("lastSentAmount"));
+            this.ticksInDirection = nbt.getInt("ticksInDirection");
 
             incomingTotalCache = 0;
             for (int i = 0; i < incoming.length; ++i) {
-                incomingTotalCache += incoming[i] = nbt.getShort("in[" + i + "]");
+                incomingTotalCache += incoming[i] = Math.max(0, nbt.getInt("in[" + i + "]"));
             }
         }
 

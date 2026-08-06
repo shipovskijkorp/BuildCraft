@@ -365,8 +365,11 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         }
 
         updateHeatLevel();
-        getPowerStage();
+        overheat = getPowerStage() == EnumPowerStage.OVERHEAT;
         engineUpdate();
+        if (overheat && explodeIfOverheated()) {
+            return;
+        }
 
         if (progressPart != 0) {
             progress += getPistonSpeed();
@@ -396,6 +399,9 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 
         if (!overheat) {
             burn();
+            if (explodeIfOverheated()) {
+                return;
+            }
         }
 
         boolean operationalForAdvancement = canUnlockPoweringUpAdvancement()
@@ -483,6 +489,26 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     // }
     protected void burn() {}
 
+    /** Only combustion-style engines opt into destructive overheating. */
+    protected boolean shouldExplodeOnOverheat() {
+        return false;
+    }
+
+    private boolean explodeIfOverheated() {
+        if (level == null || level.isClientSide || !shouldExplodeOnOverheat()
+            || getPowerStage() != EnumPowerStage.OVERHEAT) {
+            return false;
+        }
+
+        BlockPos pos = worldPosition.immutable();
+        level.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+            explosionRange(), net.minecraft.world.level.Level.ExplosionInteraction.BLOCK);
+        if (level.getBlockEntity(pos) == this) {
+            level.removeBlock(pos, false);
+        }
+        return true;
+    }
+
     /** Only fuel-burning engines participate in the Powering Up advancement. */
     protected boolean canUnlockPoweringUpAdvancement() {
         return false;
@@ -557,12 +583,6 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     public void addPower(long microJoules) {
         power += microJoules;
         lastPower += microJoules;
-
-        if (getPowerStage() == EnumPowerStage.OVERHEAT) {
-            // TODO: turn engine off
-            // worldObj.createExplosion(null, xCoord, yCoord, zCoord, explosionRange(), true);
-            // worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-        }
 
         if (power > getMaxPower()) {
             power = getMaxPower();

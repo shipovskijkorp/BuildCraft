@@ -67,6 +67,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     private static final int[] REBUILD_DELAYS = { 16, 32, 64, 128, 256 };
     private static final int MAX_FILL_TARGETS = 4096;
     private static final int MAX_SEARCHED_POSITIONS = 65_536;
+    private static final int SEARCH_BUDGET_PER_TICK = 1024;
     private static final int MAX_SEARCH_DISTANCE_SQR = 64 * 64;
 
     private final Tank tank = new Tank("tank", 2 * FluidType.BUCKET_VOLUME, this);
@@ -74,6 +75,12 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     public final Deque<BlockPos> queue = new ArrayDeque<>();
     /** Child -> parent links for reconstructing a route without copying the complete route for every BFS node. */
     private final Map<BlockPos, BlockPos> parents = new HashMap<>();
+    private final Deque<BlockPos> searchFrontier = new ArrayDeque<>();
+    private final Set<BlockPos> checked = new HashSet<>();
+    private Vec3i[] searchDirections = SEARCH_NORMAL;
+    private Fluid searchFluid;
+    private int searchedPositions;
+    private boolean rebuildingQueue;
     private int delayIndex = 0;
     private int tick = 0;
 
@@ -88,30 +95,56 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
         return REBUILD_DELAYS[delayIndex];
     }
 
+    public void onOpenSidesChanged() {
+        delayIndex = 0;
+        tick = 0;
+        buildQueue();
+        markChunkDirty();
+    }
+
     private void buildQueue() {
         queue.clear();
         parents.clear();
+        searchFrontier.clear();
+        checked.clear();
+        searchedPositions = 0;
+        rebuildingQueue = false;
+        searchFluid = null;
+
         FluidStack fluid = tank.getFluid();
-        if (fluid == null || fluid.getAmount() <= 0) {
+        if (fluid == null || fluid.isEmpty()) {
             return;
         }
 
-        Set<BlockPos> checked = new HashSet<>();
+        searchFluid = fluid.getFluid();
+        searchDirections = searchFluid.getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
         checked.add(worldPosition);
-        Deque<BlockPos> frontier = new ArrayDeque<>();
         for (Direction face : openSides) {
             BlockPos offset = worldPosition.relative(face);
             if (checked.add(offset)) {
                 parents.put(offset, worldPosition);
-                frontier.addLast(offset);
+                searchFrontier.addLast(offset);
             }
         }
+        rebuildingQueue = !searchFrontier.isEmpty();
+    }
 
-        Vec3i[] directions = fluid.getFluid().getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
-        int searched = 0;
-        while (!frontier.isEmpty() && searched < MAX_SEARCHED_POSITIONS && queue.size() < MAX_FILL_TARGETS) {
-            BlockPos toCheck = frontier.removeFirst();
-            searched++;
+    private void continueQueueBuild() {
+        if (!rebuildingQueue) {
+            return;
+        }
+
+        FluidStack current = tank.getFluid();
+        if (current == null || current.isEmpty() || !FluidUtilBC.areFluidsEqual(current.getFluid(), searchFluid)) {
+            buildQueue();
+            return;
+        }
+
+        int budget = SEARCH_BUDGET_PER_TICK;
+        while (budget-- > 0 && !searchFrontier.isEmpty()
+            && searchedPositions < MAX_SEARCHED_POSITIONS && queue.size() < MAX_FILL_TARGETS) {
+            BlockPos toCheck = searchFrontier.removeFirst();
+            searchedPositions++;
             if (toCheck.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !canSearch(toCheck)) {
                 continue;
             }
@@ -121,13 +154,25 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
                 queue.addFirst(toCheck);
             }
 
-            for (Vec3i side : directions) {
+            for (Vec3i side : searchDirections) {
                 BlockPos next = toCheck.offset(side);
                 if (next.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !checked.add(next)) {
                     continue;
                 }
                 parents.put(next, toCheck);
-                frontier.addLast(next);
+                searchFrontier.addLast(next);
+            }
+        }
+
+        if (searchFrontier.isEmpty() || searchedPositions >= MAX_SEARCHED_POSITIONS
+            || queue.size() >= MAX_FILL_TARGETS) {
+            rebuildingQueue = false;
+            searchFrontier.clear();
+            checked.clear();
+            searchFluid = null;
+            if (queue.isEmpty()) {
+                // Start the configured backoff only after the incremental scan has actually completed.
+                tick = 0;
             }
         }
     }
@@ -182,6 +227,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
         }
 
         tick++;
+        continueQueueBuild();
         if (tick % 16 == 0) {
             if (!tank.isEmpty() && !queue.isEmpty()) {
                 FluidStack fluid = tank.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
@@ -206,7 +252,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
             }
         }
 
-        if (queue.isEmpty() && tick >= getCurrentDelay()) {
+        if (queue.isEmpty() && !rebuildingQueue && tick >= getCurrentDelay()) {
             delayIndex = Math.min(delayIndex + 1, REBUILD_DELAYS.length - 1);
             tick = 0;
             buildQueue();

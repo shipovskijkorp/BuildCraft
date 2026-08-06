@@ -389,6 +389,11 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     }
 
     @Override
+    protected boolean shouldExplodeOnOverheat() {
+        return true;
+    }
+
+    @Override
     public float explosionRange() {
         return 4;
     }

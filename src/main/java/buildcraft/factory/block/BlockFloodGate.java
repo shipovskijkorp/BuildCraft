@@ -75,7 +75,7 @@ public class BlockFloodGate extends BlockBCTile_Neptune{
                             if (!floodGate.openSides.remove(side)) {
                                 floodGate.openSides.add(side);
                             }
-                            floodGate.queue.clear();
+                            floodGate.onOpenSidesChanged();
                             floodGate.sendNetworkUpdate(TileBC_Neptune.NET_RENDER_DATA);
                             return InteractionResult.SUCCESS;
                         }

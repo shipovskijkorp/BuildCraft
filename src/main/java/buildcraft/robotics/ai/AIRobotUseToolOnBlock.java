@@ -92,7 +92,9 @@ public class AIRobotUseToolOnBlock extends AIRobot {
             }
             robot.setItemInUse(held.isEmpty() ? ItemStack.EMPTY : held);
         } else {
-            robot.setItemInUse(ItemStack.EMPTY);
+            // A successful use does not imply that an unbreakable/modded tool was consumed. Keep the stack returned
+            // by useOn(); consumable items are already represented by an empty or reduced stack here.
+            robot.setItemInUse(held);
         }
         terminate();
     }
