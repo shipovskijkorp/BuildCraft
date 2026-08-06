@@ -64,7 +64,7 @@ tasks.withType<Jar>().configureEach {
 
 val verifyLocalizations by tasks.registering {
     group = "verification"
-    description = "Validates localization JSON and ensures English remains in the main BuildCraft mod."
+    description = "Validates ordinary and Guide Book localization packs bundled by the add-on."
 
     val commonResources = rootProject.file("src/main/resources")
     inputs.dir(commonResources)
@@ -77,18 +77,39 @@ val verifyLocalizations by tasks.registering {
         val guide = guideTextDir.listFiles { file -> file.isFile && file.extension == "json" }
             ?.sortedBy { it.name } ?: emptyList()
 
-        require(ordinary.size == 30) { "Expected 30 ordinary BuildCraft localization files, found ${ordinary.size}" }
+        require(ordinary.isNotEmpty()) { "No ordinary BuildCraft localization files were found" }
+        require(guide.isNotEmpty()) { "No Guide Book text packs were found" }
         require(ordinary.none { it.name == "en_us.json" }) {
-            "The localization addon must not package assets/buildcraft/lang/en_us.json"
+            "The localization add-on must not package assets/buildcraft/lang/en_us.json"
         }
-        require(guide.size == 1 && guide.single().name == "ru_ru.json") { "Expected the Russian Guide Book text pack" }
         require(guide.none { it.name == "en_us.json" }) {
-            "The localization addon must not package the English Guide Book text pack"
+            "The localization add-on must not package assets/buildcraft/guide/text/en_us.json"
+        }
+
+        val localeName = Regex("[a-z]{2}_[a-z]{2}\\.json")
+        (ordinary + guide).forEach { file ->
+            require(localeName.matches(file.name)) {
+                "${file.relativeTo(rootProject.projectDir)} has an invalid locale filename"
+            }
+        }
+
+        val ordinaryLocales = ordinary.mapTo(sortedSetOf()) { it.nameWithoutExtension }
+        val guideLocales = guide.mapTo(sortedSetOf()) { it.nameWithoutExtension }
+        require(ordinaryLocales == guideLocales) {
+            val missingGuide = ordinaryLocales - guideLocales
+            val missingOrdinary = guideLocales - ordinaryLocales
+            buildString {
+                append("Ordinary and Guide Book locale sets do not match.")
+                if (missingGuide.isNotEmpty()) append(" Missing Guide Book packs: ${missingGuide.joinToString() }.")
+                if (missingOrdinary.isNotEmpty()) append(" Missing ordinary lang files: ${missingOrdinary.joinToString() }.")
+            }
         }
 
         fun validateStringObject(file: File) {
             val parsed = JsonSlurper().parse(file)
-            require(parsed is Map<*, *>) { "${file.relativeTo(rootProject.projectDir)} must contain a JSON object" }
+            require(parsed is Map<*, *>) {
+                "${file.relativeTo(rootProject.projectDir)} must contain a JSON object"
+            }
             parsed.forEach { (key, value) ->
                 require(key is String && value is String) {
                     "${file.relativeTo(rootProject.projectDir)} must contain only string-to-string translations"
@@ -98,16 +119,38 @@ val verifyLocalizations by tasks.registering {
 
         ordinary.forEach(::validateStringObject)
 
+        var expectedPageSegments: Map<String, Int>? = null
         guide.forEach { file ->
             val parsed = JsonSlurper().parse(file)
-            require(parsed is Map<*, *>) { "${file.relativeTo(rootProject.projectDir)} must contain a JSON object" }
-            require(parsed["format"] == 1) { "${file.name} has an unsupported Guide Book text-pack format" }
+            require(parsed is Map<*, *>) {
+                "${file.relativeTo(rootProject.projectDir)} must contain a JSON object"
+            }
+            require(parsed["format"] == 1) {
+                "${file.name} has an unsupported Guide Book text-pack format"
+            }
+
             val pages = parsed["pages"]
-            require(pages is Map<*, *> && pages.size == 207) { "${file.name} must contain all 207 Guide Book pages" }
+            require(pages is Map<*, *> && pages.size == 207) {
+                "${file.name} must contain all 207 Guide Book pages"
+            }
+
+            val pageSegments = linkedMapOf<String, Int>()
             pages.forEach { (page, segments) ->
-                require(page is String && segments is List<*>) { "Invalid Guide Book page entry in ${file.name}" }
+                require(page is String && segments is List<*>) {
+                    "Invalid Guide Book page entry in ${file.name}"
+                }
                 require(segments.isNotEmpty() && segments.all { it is String && it.isNotBlank() }) {
                     "Guide Book page $page in ${file.name} contains blank or non-string segments"
+                }
+                pageSegments[page] = segments.size
+            }
+
+            val expected = expectedPageSegments
+            if (expected == null) {
+                expectedPageSegments = pageSegments
+            } else {
+                require(pageSegments == expected) {
+                    "${file.name} does not match the Guide Book page/segment layout used by the other locales"
                 }
             }
         }
