@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "tr_tr",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "Bu sayfa Tahta Dişli öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Tahta Dişli, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Bu sayfa Taş Dişli öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Taş Dişli, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Bu sayfa Demir Dişli öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Demir Dişli, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Bu sayfa Altın Dişli öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Altın Dişli, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Bu sayfa Elmas Dişli öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Elmas Dişli, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Bu sayfa İngiliz Anahtarı öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "İngiliz Anahtarı, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Bu sayfa Boya Fırçası öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Boya Fırçası, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Bu sayfa Işaretleyici Connector öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Işaretleyici Connector, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Bu sayfa Izlek Işaretleyici öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Izlek Işaretleyici, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Yol Oluşturma",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Yolu Kullanma",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin."
+    ],
+    "buildcraftcore/item/list": [
+      "Bu sayfa Liste öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Liste, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Listeyi Düzenleme",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Listeyi Kullanma",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Kızıltaş Motoru, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Motor Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Parametreler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Parametreler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Parametreler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Parametreler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Parametreler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Tetikleyici yönleri",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Parametreler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Tetikleyici yönleri",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Tetikleyici yönleri",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Tetikleyici yönleri",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Kömür Motoru, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Motor Mekaniği",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Yakıt Motoru, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Motor Mekaniği",
+      "Makineyi doğru yönde yerleştirin ve gerekli kaynaklarla MJ enerjisini sağlayın. Dolu bir çıkış veya eksik giriş işlemi durdurabilir."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Damıtıcı, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bağlantılar",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Isı Eşanjör, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Makine Mekaniği",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Maden Makinesi, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Makine Mekaniği",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Huni, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Makineyi doğru yönde yerleştirin ve gerekli kaynaklarla MJ enerjisini sağlayın. Dolu bir çıkış veya eksik giriş işlemi durdurabilir."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Otomatik Çalışma Masası, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir.",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Bu sayfa, BuildCraft kılavuz sistemi tarafından kullanılan bir kaynak biçimini açıklar.",
+      "Sayfa düzeni, yerelleştirilmiş metin ve üstveri ayrı yüklenir ve aynı tanımlayıcıları kullanmalıdır.",
+      "<bold>İpucu:</bold> Tanımlayıcıları, JSON sözdizimini veya dil kodunu değiştirdikten sonra kaynakları yeniden yükleyip günlüğü kontrol edin.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Bu sayfa, BuildCraft kılavuz sistemi tarafından kullanılan bir kaynak biçimini açıklar.",
+      "Sayfa düzeni, yerelleştirilmiş metin ve üstveri ayrı yüklenir ve aynı tanımlayıcıları kullanmalıdır.",
+      "<bold>İpucu:</bold> Tanımlayıcıları, JSON sözdizimini veya dil kodunu değiştirdikten sonra kaynakları yeniden yükleyip günlüğü kontrol edin.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Bu sayfa, BuildCraft kılavuz sistemi tarafından kullanılan bir kaynak biçimini açıklar.",
+      "Sayfa düzeni, yerelleştirilmiş metin ve üstveri ayrı yüklenir ve aynı tanımlayıcıları kullanmalıdır.",
+      "<bold>İpucu:</bold> Tanımlayıcıları, JSON sözdizimini veya dil kodunu değiştirdikten sonra kaynakları yeniden yükleyip günlüğü kontrol edin.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Bu sayfa Cephe öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Cephe, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Bu sayfa Kapı öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Kapı, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Parametreler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Bağlantılar",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Bu sayfa Boru pulsarı öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Boru pulsarı, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Eklenti Mekaniği",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Boru Bağlantıları",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Bu sayfa Hafif Sensör öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Hafif Sensör, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Eklenti Mekaniği",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Boru Bağlantıları",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Bu sayfa Mercek öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Mercek, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Yönler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Yönler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Güç Sağlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Çalışması",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Boru Yönü",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Güç Sağlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Çalışması",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru Yönü",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Güç Sağlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Filtreleme",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Güç Sağlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Filtreleme",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Güç Sağlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Güç Sağlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Filtreleme",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, sıvıları tanklar, makineler ve uyumlu aygıtlar arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Boru Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Filtreleme",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Güç Sağlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Bu sayfa §fbeyaz§r boru teli öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "§fbeyaz§r boru teli, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Bu sayfa Enerji adaptörü öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Enerji adaptörü, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Eklenti Mekaniği",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Bilgi",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Bu sayfa Boru Tıpası öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Boru Tıpası, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Boru Bağlantıları",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Gereksinimler",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Parametreler",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Yönü Ayarlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Yönü Ayarlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Yönü Ayarlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Yönü Ayarlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Yönü Ayarlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Yönü Ayarlama",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Gereksinimler",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır."
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Bu sayfa Volüm Kutu öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Volüm Kutu, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Bilgi",
+      "Volüm Kutu öğesinin davranışı bağlı hedefe, yöne, filtrelere ve kullanılabilir güce bağlıdır. Ayarı değiştirdikten sonra sonucu kontrol edin."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Bu sayfa Arazi İşaretliyicisi öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Arazi İşaretliyicisi, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin."
+    ],
+    "buildcraftlib/item/guide": [
+      "Bu sayfa Guide öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Guide, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir."
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Bu sayfa Plug filtre öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Plug filtre, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "Eklenti Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir.",
+      "Boru Bağlantıları",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Bu sayfa Harita Konumu öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Harita Konumu, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Bilgi",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Bu sayfa Kırılgan %s Parça öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Kırılgan %s Parça, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Yaratıcı Motoru, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Bu sayfa Mavi Baskı öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Mavi Baskı, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Kaydetme",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "İnşa",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Bu sayfa Şablon öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Şablon, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Kaydetme",
+      "Şablon öğesinin davranışı bağlı hedefe, yöne, filtrelere ve kullanılabilir güce bağlıdır. Ayarı değiştirdikten sonra sonucu kontrol edin.",
+      "İnşa",
+      "Şablon öğesinin davranışı bağlı hedefe, yöne, filtrelere ve kullanılabilir güce bağlıdır. Ayarı değiştirdikten sonra sonucu kontrol edin."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Bu sayfa Tek Blok Şematik öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Tek Blok Şematik, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Tek Blok Şematik öğesinin davranışı bağlı hedefe, yöne, filtrelere ve kullanılabilir güce bağlıdır. Ayarı değiştirdikten sonra sonucu kontrol edin.",
+      "Bilgi",
+      "Tek Blok Şematik öğesinin davranışı bağlı hedefe, yöne, filtrelere ve kullanılabilir güce bağlıdır. Ayarı değiştirdikten sonra sonucu kontrol edin."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Bu sayfa Doldurucu Ajanda öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Doldurucu Ajanda, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Mimarlık Masası, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "İnşaatçı, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Doldurucu, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Mavi Baskı Kütüphanesi, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Makineyi doğru yönde yerleştirin ve gerekli kaynaklarla MJ enerjisini sağlayın. Dolu bir çıkış veya eksik giriş işlemi durdurabilir.",
+      "Bilgi",
+      "Makineyi doğru yönde yerleştirin ve gerekli kaynaklarla MJ enerjisini sağlayın. Dolu bir çıkış veya eksik giriş işlemi durdurabilir."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Değiştirici, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Makineyi doğru yönde yerleştirin ve gerekli kaynaklarla MJ enerjisini sağlayın. Dolu bir çıkış veya eksik giriş işlemi durdurabilir."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Inşaat Işaretleyici, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Çerçeve, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Yer Delici, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Madencilik",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Bilgi",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Bu sayfa Kızıltaş Panosu öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Kızıltaş Panosu, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Programlama",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer.",
+      "Bilgi",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Bu sayfa kenetlenme istasyonu öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "kenetlenme istasyonu, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Yerleştirme",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer.",
+      "Bilgi",
+      "Sayfa düzeni ile çevrilmiş metin ayrıdır. Dil JSON dosyası, ortak düzenle aynı sayfa kimliklerini ve aynı sayıda metin alanını içermelidir."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Bölge Planlayıcı, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Önce çalışma alanını veya yolu işaretleyin. Noktaların sırasını, makinenin yönünü ve olası engelleri kontrol edin.",
+      "Bilgi",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "İstekçi, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer.",
+      "Bilgi",
+      "Makineyi doğru yönde yerleştirin ve gerekli kaynaklarla MJ enerjisini sağlayın. Dolu bir çıkış veya eksik giriş işlemi durdurabilir."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "Bu robot, kenetlenme istasyonundan ve takılı redstone kartından iş emirleri alır.",
+      "Robot uygun bir görev bulur, belirtilen alanda çalışır ve ardından istasyona döner.",
+      "<bold>İpucu:</bold> Başlatmadan önce çalışma alanını, filtreleri ve hedefi ayarlayın; robota istasyona dönüş yolu bırakın.",
+      "Görev",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Tetikleyici Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Tetikleyici Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Tetikleyici Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Tetikleyici Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Bu eylem, kapı koşulu sağlandığında bağlı hedefe bir denetim komutu gönderir.",
+      "Eylem seçilen komutu bir bloğa, boruya, motora veya robota uygular.",
+      "<bold>İpucu:</bold> Sinyal kaybolduğunda sistemin güvenli duruma dönmesi için bir kapatma koşulu ekleyin.",
+      "Eylem Davranışı",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Lazer, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Lazer Birleşme Masası, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Montaj",
+      "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Şarj Masası, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Şarj Etme",
+      "Makineyi doğru yönde yerleştirin ve gerekli kaynaklarla MJ enerjisini sağlayın. Dolu bir çıkış veya eksik giriş işlemi durdurabilir."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Entegrasyon Masası, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Entegrasyon",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Gelişmiş Çalışma Masası, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Otomatik Üretim",
+      "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Proglama Masası, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Bilgi",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Bu sayfa Kızıltaş Kristali öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Kızıltaş Kristali, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Üretim",
+      "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Bu sayfa Devre Kopyalıyıcısı öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Devre Kopyalıyıcısı, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Bu sayfa Timer öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Timer, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Bu sayfa Kızıltaş Yonga Seti öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Kızıltaş Yonga Seti, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Montaj",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Bu sayfa Demir Yonga Seti öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Demir Yonga Seti, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Montaj",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Bu sayfa Altın Yonga Seti öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Altın Yonga Seti, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Montaj",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Bu sayfa Kuvars Yonga Seti öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Kuvars Yonga Seti, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Montaj",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Bu sayfa Elmas Yonga Seti öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Elmas Yonga Seti, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Montaj",
+      "Robot uygun işi bulur, gerekli araçları veya kaynakları alır ve belirtilen alana gider. İş bitince geri döner veya sonraki göreve geçer."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Zamanlayıcı Darbesi",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Zamanlayıcı Darbesi",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Bu tetikleyici bağlı hedefin durumunu izler ve bir kapı koşulu olarak kullanılır.",
+      "İzlenen durum ayarla eşleştiği sürece koşul, bağlı eylemleri etkinleştirir.",
+      "<bold>İpucu:</bold> Renkli tarafı ve izlenen hedefi kontrol edin; güvenli denetim için karşıt koşulu da kullanın.",
+      "Zamanlayıcı Darbesi",
+      "Kapı, belirtilen taraftaki hedefi düzenli olarak denetler. Simge rengi, boru tarafı ve parametreler gerçek denetim yönünü ve koşulunu belirler."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, MJ enerjisini kaynaklar ile tüketiciler arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Enerji Borusu Mekaniği",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Bu sayfa Dolgu Parçası öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
+      "Dolgu Parçası, BuildCraft sistemlerini üretmek, denetlemek veya genişletmek için kullanılır.",
+      "<bold>İpucu:</bold> Ana ağa bağlamadan önce girişleri, çıkışları ve yönü küçük bir deneme düzeninde kontrol edin.",
+      "Bilgi",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır.",
+      "Filtreli Tampon, kaynakları işler veya ayarlanan alanda çalışma gerçekleştirir.",
+      "<bold>İpucu:</bold> Giriş, çıkış, MJ beslemesi ve çalışma alanını ayırın; tıkanmayı algılayan bir denetim ekleyin.",
+      "Filtreleme",
+      "Boru, bağlanabilir komşu boruları ve aygıtları otomatik olarak algılar. Bir kavşakta sonraki yol borunun kuralları, filtreleri ve renkleriyle seçilir."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Petrol Toplama",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Kullanım ve Arıtma",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Üretim",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Sıcaklık",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Yakıt",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Arıtma",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Yakıt",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Arıtma",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Yakıt",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Arıtma",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Üretim",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Enerji",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Üretim",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Enerji",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Üretim",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Enerji",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Üretim",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Arıtma",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Bu sıvı, BuildCraft petrol işleme ve enerji üretim zincirinin bir parçasıdır.",
+      "Sıvı; türüne ve sıcaklığına göre depolanabilir, taşınabilir, yakılabilir veya yeniden işlenebilir.",
+      "<bold>İpucu:</bold> Farklı sıvılara ve sıcaklık aşamalarına ait tankları ve boruları açıkça ayırın.",
+      "Üretim",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin.",
+      "Arıtma",
+      "Damıtıcı ve ısı eşanjörü sıvıyı başka fraksiyonlara dönüştürebilir. Sıcaklığı, çıkış alanını ve sıvıların birbirinden ayrılmasını izleyin."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Bu boru, BuildCraft ağı içinde kaynakları seçmek ve taşımak için kullanılır.",
+      "Boru, eşyaları bağlı envanterler, makineler ve diğer borular arasında taşır.",
+      "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
+      "Genetik Filtreler",
+      "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir."
+    ]
+  }
+}

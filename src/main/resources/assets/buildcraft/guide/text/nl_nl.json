@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "nl_nl",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Houten tandwiel uit.",
+      "Houten tandwiel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Stenen tandwiel uit.",
+      "Stenen tandwiel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van IJzeren tandwiel uit.",
+      "IJzeren tandwiel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Gouden tandwiel uit.",
+      "Gouden tandwiel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Diamanten tandwiel uit.",
+      "Diamanten tandwiel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Moersleutel uit.",
+      "Moersleutel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Penseel uit.",
+      "Penseel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Markering Connector uit.",
+      "Markering Connector wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Weg Markering uit.",
+      "Weg Markering wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Een pad maken",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Het pad gebruiken",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels."
+    ],
+    "buildcraftcore/item/list": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Lijst uit.",
+      "Lijst wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Een lijst bewerken",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Een lijst gebruiken",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Redstonemotor verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Werking van de motor",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Parameters",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Parameters",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Parameters",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Parameters",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Parameters",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Richtingen van de trigger",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Parameters",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Richtingen van de trigger",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Richtingen van de trigger",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Richtingen van de trigger",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Stirlingmotor verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Werking van de motor",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Verbrandingsmotor verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Werking van de motor",
+      "Plaats de machine in de juiste richting en voorzie haar van de benodigde middelen en MJ. Een volle uitvoer of ontbrekende invoer kan het proces stoppen."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Destilleerder verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Aansluitingen",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Warmte Wisselaar verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Werking van de machine",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Mijnput verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Werking van de machine",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Trechter verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Plaats de machine in de juiste richting en voorzie haar van de benodigde middelen en MJ. Een volle uitvoer of ontbrekende invoer kan het proces stoppen."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Automatische werkbank verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Controleer voor het maken de benodigde onderdelen en vervolgtoepassingen. Sommige recepten vereisen MJ of een speciale productiemachine.",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Deze pagina beschrijft een resource-indeling die door het BuildCraft-gidssysteem wordt gebruikt.",
+      "Pagina-indeling, gelokaliseerde tekst en metadata worden apart geladen en moeten dezelfde identifiers gebruiken.",
+      "<bold>Tip:</bold> Laad resources opnieuw na wijzigingen aan identifiers, JSON-syntaxis of de taalcode en controleer daarna het logboek.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Deze pagina beschrijft een resource-indeling die door het BuildCraft-gidssysteem wordt gebruikt.",
+      "Pagina-indeling, gelokaliseerde tekst en metadata worden apart geladen en moeten dezelfde identifiers gebruiken.",
+      "<bold>Tip:</bold> Laad resources opnieuw na wijzigingen aan identifiers, JSON-syntaxis of de taalcode en controleer daarna het logboek.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Deze pagina beschrijft een resource-indeling die door het BuildCraft-gidssysteem wordt gebruikt.",
+      "Pagina-indeling, gelokaliseerde tekst en metadata worden apart geladen en moeten dezelfde identifiers gebruiken.",
+      "<bold>Tip:</bold> Laad resources opnieuw na wijzigingen aan identifiers, JSON-syntaxis of de taalcode en controleer daarna het logboek.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Gevel uit.",
+      "Gevel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Poort uit.",
+      "Poort wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Parameters",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Aansluitingen",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Pijppulsator uit.",
+      "Pijppulsator wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Werking van uitbreidingen",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Buisaansluitingen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Licht Sensor uit.",
+      "Licht Sensor wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Werking van uitbreidingen",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Buisaansluitingen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Lens uit.",
+      "Lens wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Richtingen",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Richtingen",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Voeding",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Buiswerking",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Buisrichting",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Voeding",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Buiswerking",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Buisrichting",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Voeding",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Filteren",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Voeding",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Filteren",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Voeding",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Voeding",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Filteren",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert vloeistoffen tussen tanks, machines en compatibele apparaten.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van de buis",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Filteren",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Voeding",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van §fwit§r pijpdraad uit.",
+      "§fwit§r pijpdraad wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Energieadapter uit.",
+      "Energieadapter wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Werking van uitbreidingen",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Informatie",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Pijpstop uit.",
+      "Pijpstop wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Buisaansluitingen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Vereisten",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Parameters",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Richting instellen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Richting instellen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Richting instellen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Richting instellen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Richting instellen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Richting instellen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Vereisten",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen."
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Jaargang Doos uit.",
+      "Jaargang Doos wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Informatie",
+      "Het gedrag van Jaargang Doos hangt af van het aangesloten doel, de richting, filters en beschikbare voeding. Controleer het resultaat na iedere wijziging."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Markering uit.",
+      "Markering wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels."
+    ],
+    "buildcraftlib/item/guide": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Guide uit.",
+      "Guide wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Controleer voor het maken de benodigde onderdelen en vervolgtoepassingen. Sommige recepten vereisen MJ of een speciale productiemachine."
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Plug filter uit.",
+      "Plug filter wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "Werking van uitbreidingen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren.",
+      "Buisaansluitingen",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Stadsplan Locatie uit.",
+      "Stadsplan Locatie wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Informatie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Breekbaar %s Scherf uit.",
+      "Breekbaar %s Scherf wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Creatief Motor verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Blauwdruk uit.",
+      "Blauwdruk wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Opnemen",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Bouwen",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Sjabloon uit.",
+      "Sjabloon wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Opnemen",
+      "Het gedrag van Sjabloon hangt af van het aangesloten doel, de richting, filters en beschikbare voeding. Controleer het resultaat na iedere wijziging.",
+      "Bouwen",
+      "Het gedrag van Sjabloon hangt af van het aangesloten doel, de richting, filters en beschikbare voeding. Controleer het resultaat na iedere wijziging."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Enkel Blok Schema uit.",
+      "Enkel Blok Schema wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Het gedrag van Enkel Blok Schema hangt af van het aangesloten doel, de richting, filters en beschikbare voeding. Controleer het resultaat na iedere wijziging.",
+      "Informatie",
+      "Het gedrag van Enkel Blok Schema hangt af van het aangesloten doel, de richting, filters en beschikbare voeding. Controleer het resultaat na iedere wijziging."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Vuller Planner uit.",
+      "Vuller Planner wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Architectentafel verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Bouwer verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Vuller verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Blauwdrukkenbibliotheek verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Plaats de machine in de juiste richting en voorzie haar van de benodigde middelen en MJ. Een volle uitvoer of ontbrekende invoer kan het proces stoppen.",
+      "Informatie",
+      "Plaats de machine in de juiste richting en voorzie haar van de benodigde middelen en MJ. Een volle uitvoer of ontbrekende invoer kan het proces stoppen."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Vervanger verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Plaats de machine in de juiste richting en voorzie haar van de benodigde middelen en MJ. Een volle uitvoer of ontbrekende invoer kan het proces stoppen."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Bouwmarkering verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Raamwerk verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Groeve verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Mijnbouw",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Informatie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Redstone Printplaat uit.",
+      "Redstone Printplaat wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Programmeren",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak.",
+      "Informatie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van dokstation uit.",
+      "dokstation wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Plaatsing",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak.",
+      "Informatie",
+      "De pagina-indeling en vertaalde tekst zijn gescheiden. Het taal-JSON moet dezelfde pagina-identifiers en hetzelfde aantal tekstvelden bevatten als de gedeelde indeling."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Zoneplanner verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Markeer eerst het werkgebied of pad. Controleer de volgorde van de punten, de richting van de machine en mogelijke obstakels.",
+      "Informatie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Aanvrager verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak.",
+      "Informatie",
+      "Plaats de machine in de juiste richting en voorzie haar van de benodigde middelen en MJ. Een volle uitvoer of ontbrekende invoer kan het proces stoppen."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "Deze robot ontvangt werkopdrachten van een dockingstation en het geïnstalleerde redstonebord.",
+      "De robot zoekt een geschikte taak, voert die in het toegewezen gebied uit en keert daarna terug naar het station.",
+      "<bold>Tip:</bold> Stel voor de start het werkgebied, de filters en het doel in en laat een vrije terugweg naar het station.",
+      "Taak",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Gedrag van de trigger",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Gedrag van de trigger",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Gedrag van de trigger",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Gedrag van de trigger",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Deze actie stuurt een besturingsopdracht naar het aangesloten doel wanneer de poortvoorwaarde waar is.",
+      "De actie past de gekozen opdracht toe op een blok, buis, motor of robot.",
+      "<bold>Tip:</bold> Voeg ook een uitschakelvoorwaarde toe, zodat het systeem bij signaalverlies veilig terugvalt.",
+      "Gedrag van de actie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Laser verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "Controleer voor het maken de benodigde onderdelen en vervolgtoepassingen. Sommige recepten vereisen MJ of een speciale productiemachine."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Assemblagetafel verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Assemblage",
+      "Controleer voor het maken de benodigde onderdelen en vervolgtoepassingen. Sommige recepten vereisen MJ of een speciale productiemachine."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Opladen Tafel verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Opladen",
+      "Plaats de machine in de juiste richting en voorzie haar van de benodigde middelen en MJ. Een volle uitvoer of ontbrekende invoer kan het proces stoppen."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Integratietafel verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Integratie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Assemblagewerkbank verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Automatisch maken",
+      "Controleer voor het maken de benodigde onderdelen en vervolgtoepassingen. Sommige recepten vereisen MJ of een speciale productiemachine."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Programmeren Tafel verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Informatie",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Redstone Kristal uit.",
+      "Redstone Kristal wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Productie",
+      "Controleer voor het maken de benodigde onderdelen en vervolgtoepassingen. Sommige recepten vereisen MJ of een speciale productiemachine."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Poort Kopieerapparaat uit.",
+      "Poort Kopieerapparaat wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Timer uit.",
+      "Timer wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "De actie blijft toegepast zolang de poortvoorwaarde waar is. Richting, kleur en filters worden ingesteld in de interface van de poort."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Redstone chipset uit.",
+      "Redstone chipset wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Assemblage",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van IJzeren chipset uit.",
+      "IJzeren chipset wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Assemblage",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Gouden chipset uit.",
+      "Gouden chipset wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Assemblage",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Kwartsen chipset uit.",
+      "Kwartsen chipset wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Assemblage",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Diamanten chipset uit.",
+      "Diamanten chipset wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Assemblage",
+      "De robot zoekt geschikt werk, neemt benodigde gereedschappen of middelen mee en gaat naar het toegewezen gebied. Na voltooiing keert hij terug of neemt hij een volgende taak."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Timerpuls",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Timerpuls",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Deze trigger bewaakt de toestand van een aangesloten doel en dient als voorwaarde voor een poort.",
+      "De voorwaarde activeert de gekoppelde acties zolang de gecontroleerde toestand overeenkomt met de instelling.",
+      "<bold>Tip:</bold> Controleer de gekleurde zijde en het bewaakte doel; combineer de trigger zo nodig met de tegengestelde voorwaarde.",
+      "Timerpuls",
+      "De poort controleert regelmatig het doel aan de opgegeven zijde. De pictogramkleur, buiszijde en parameters bepalen de werkelijk gecontroleerde richting en voorwaarde."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis transporteert MJ-energie tussen bronnen en verbruikers.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Werking van energiebuis",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Deze pagina legt het doel, de aansluiting en het veilige gebruik van Afdichtingsmiddel uit.",
+      "Afdichtingsmiddel wordt gebruikt om BuildCraft-systemen te maken, te besturen of uit te breiden.",
+      "<bold>Tip:</bold> Controleer invoer, uitvoer en richting in een kleine testopstelling voordat je het onderdeel op het hoofdnetwerk aansluit.",
+      "Informatie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Deze machine is een functioneel onderdeel van geautomatiseerde BuildCraft-processen.",
+      "Gefilterde buffer verwerkt middelen of voert werk uit binnen een ingesteld gebied.",
+      "<bold>Tip:</bold> Houd invoer, uitvoer, MJ-voeding en werkgebied gescheiden en voeg een manier toe om blokkades te detecteren.",
+      "Filteren",
+      "De buis herkent automatisch aansluitbare buizen en apparaten. Bij een vertakking wordt het volgende pad gekozen volgens de eigen regels, filters en kleuren."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Olie verzamelen",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Gebruik en raffinage",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Productie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Temperatuur",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Brandstof",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Raffinage",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Brandstof",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Raffinage",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Brandstof",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Raffinage",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Productie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Energie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Productie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Energie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Productie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Energie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Productie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Raffinage",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Deze vloeistof maakt deel uit van de olie- en energieverwerkingsketen van BuildCraft.",
+      "De vloeistof kan worden opgeslagen, vervoerd, verbrand of verder verwerkt, afhankelijk van type en temperatuur.",
+      "<bold>Tip:</bold> Houd tanks en buizen voor verschillende vloeistoffen en temperatuurstadia duidelijk van elkaar gescheiden.",
+      "Productie",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen.",
+      "Raffinage",
+      "Met de distilleerder en warmtewisselaar kan de vloeistof in andere fracties worden verwerkt. Let op temperatuur, vrije uitvoerruimte en gescheiden vloeistofstromen."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Deze buis selecteert en vervoert middelen binnen een BuildCraft-netwerk.",
+      "De buis vervoert voorwerpen tussen aangesloten inventarissen, machines en andere buizen.",
+      "<bold>Tip:</bold> Controleer iedere vertakking en leg de route zo nodig vast met kleuren, filters of poorten.",
+      "Genetische filters",
+      "Controleer voor het maken de benodigde onderdelen en vervolgtoepassingen. Sommige recepten vereisen MJ of een speciale productiemachine."
+    ]
+  }
+}

@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "sr_sp",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Drveni Zupčanik.",
+      "Drveni Zupčanik se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Kameni Zupčanik.",
+      "Kameni Zupčanik se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Gvozdeni Zupčanik.",
+      "Gvozdeni Zupčanik se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Zlatni Zupčanik.",
+      "Zlatni Zupčanik se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Dijamantni Zupčanik.",
+      "Dijamantni Zupčanik se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Ključ.",
+      "Ključ se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Četkica.",
+      "Četkica se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Spojnik oznaka.",
+      "Spojnik oznaka se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Oznaka puta.",
+      "Oznaka puta se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Pravljenje putanje",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Upotreba putanje",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke."
+    ],
+    "buildcraftcore/item/list": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Lista.",
+      "Lista se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Uređivanje liste",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Upotreba liste",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Redstone motor obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Rad motora",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Parametri",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Parametri",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Parametri",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Parametri",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Parametri",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Smerovi okidača",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Parametri",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Smerovi okidača",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Smerovi okidača",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Smerovi okidača",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Stirlingov Motor obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rad motora",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Motor S Unutrašnjim Sagorevanjem obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rad motora",
+      "Postavite mašinu u pravilan smer i obezbedite potrebne resurse i MJ energiju. Pun izlaz ili nedostajući ulaz može zaustaviti rad."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Destilator obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Povezivanje",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Izmenjivač toplote obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rad mašine",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Rudarska bušotina obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Rad mašine",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Levak obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Postavite mašinu u pravilan smer i obezbedite potrebne resurse i MJ energiju. Pun izlaz ili nedostajući ulaz može zaustaviti rad."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Automatski radni sto obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Pre izrade proverite potrebne komponente i kasnije upotrebe. Neki recepti zahtevaju MJ energiju ili posebnu proizvodnu mašinu.",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Ova stranica opisuje format resursa koji koristi sistem BuildCraft vodiča.",
+      "Struktura stranice, lokalizovani tekst i metapodaci učitavaju se odvojeno i moraju koristiti iste identifikatore.",
+      "<bold>Savet:</bold> Posle izmene identifikatora, JSON sintakse ili jezičkog koda ponovo učitajte resurse i proverite dnevnik.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Ova stranica opisuje format resursa koji koristi sistem BuildCraft vodiča.",
+      "Struktura stranice, lokalizovani tekst i metapodaci učitavaju se odvojeno i moraju koristiti iste identifikatore.",
+      "<bold>Savet:</bold> Posle izmene identifikatora, JSON sintakse ili jezičkog koda ponovo učitajte resurse i proverite dnevnik.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Ova stranica opisuje format resursa koji koristi sistem BuildCraft vodiča.",
+      "Struktura stranice, lokalizovani tekst i metapodaci učitavaju se odvojeno i moraju koristiti iste identifikatore.",
+      "<bold>Savet:</bold> Posle izmene identifikatora, JSON sintakse ili jezičkog koda ponovo učitajte resurse i proverite dnevnik.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Fasada.",
+      "Fasada se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Logička kapija.",
+      "Logička kapija se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Parametri",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Povezivanje",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Cevni pulsator.",
+      "Cevni pulsator se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Rad dodataka",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Povezivanje cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Senzor svetlosti.",
+      "Senzor svetlosti se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Rad dodataka",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Povezivanje cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Sočivo.",
+      "Sočivo se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Smerovi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Smerovi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Napajanje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Smer cevi",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Napajanje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Smer cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Napajanje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Filtriranje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Napajanje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Filtriranje",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Napajanje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Napajanje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Filtriranje",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi tečnosti između rezervoara, mašina i kompatibilnih uređaja.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad cevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Filtriranje",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Napajanje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke §fbela§r žica cevi.",
+      "§fbela§r žica cevi se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Energetski adapter.",
+      "Energetski adapter se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Rad dodataka",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Informacije",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Cevni Čep.",
+      "Cevni Čep se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Povezivanje cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Zahtevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Parametri",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Podešavanje smera",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Podešavanje smera",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Podešavanje smera",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Podešavanje smera",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Podešavanje smera",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Podešavanje smera",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Zahtevi",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft."
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Granična kutija.",
+      "Granična kutija se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Informacije",
+      "Ponašanje stavke Granična kutija zavisi od povezanog cilja, smera, filtera i dostupnog napajanja. Posle izmene podešavanja uvek proverite rezultat."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Oznaka oblasti.",
+      "Oznaka oblasti se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke."
+    ],
+    "buildcraftlib/item/guide": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke BuildCraft vodič.",
+      "BuildCraft vodič se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Pre izrade proverite potrebne komponente i kasnije upotrebe. Neki recepti zahtevaju MJ energiju ili posebnu proizvodnu mašinu."
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Filter za cev.",
+      "Filter za cev se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "Rad dodataka",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama.",
+      "Povezivanje cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Lokacija na mapi.",
+      "Lokacija na mapi se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Informacije",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Krhka krhotina od %s.",
+      "Krhka krhotina od %s se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Kreativni Motor obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Nacrt.",
+      "Nacrt se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Snimanje",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Izgradnja",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Šablon.",
+      "Šablon se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Snimanje",
+      "Ponašanje stavke Šablon zavisi od povezanog cilja, smera, filtera i dostupnog napajanja. Posle izmene podešavanja uvek proverite rezultat.",
+      "Izgradnja",
+      "Ponašanje stavke Šablon zavisi od povezanog cilja, smera, filtera i dostupnog napajanja. Posle izmene podešavanja uvek proverite rezultat."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Šema jednog bloka.",
+      "Šema jednog bloka se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Ponašanje stavke Šema jednog bloka zavisi od povezanog cilja, smera, filtera i dostupnog napajanja. Posle izmene podešavanja uvek proverite rezultat.",
+      "Informacije",
+      "Ponašanje stavke Šema jednog bloka zavisi od povezanog cilja, smera, filtera i dostupnog napajanja. Posle izmene podešavanja uvek proverite rezultat."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Popunjavač Planer.",
+      "Popunjavač Planer se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Arhitektski Stol obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Graditelj obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Popunjavač obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Biblioteka Nacrta obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Postavite mašinu u pravilan smer i obezbedite potrebne resurse i MJ energiju. Pun izlaz ili nedostajući ulaz može zaustaviti rad.",
+      "Informacije",
+      "Postavite mašinu u pravilan smer i obezbedite potrebne resurse i MJ energiju. Pun izlaz ili nedostajući ulaz može zaustaviti rad."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Zamenjivač obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Postavite mašinu u pravilan smer i obezbedite potrebne resurse i MJ energiju. Pun izlaz ili nedostajući ulaz može zaustaviti rad."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Konstrukcija Oznaka obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Okvir obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Kamenolom obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Rudarenje",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Informacije",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Redstone ploča.",
+      "Redstone ploča se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Programiranje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom.",
+      "Informacije",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke priključna stanica.",
+      "priključna stanica se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Postavljanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom.",
+      "Informacije",
+      "Raspored stranice i prevedeni tekst su odvojeni. Jezički JSON mora sadržati iste identifikatore stranica i isti broj tekstualnih polja kao zajednički raspored."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Planer zona obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Najpre označite radnu oblast ili putanju. Proverite redosled tačaka, orijentaciju mašine i da li u prostoru postoje prepreke.",
+      "Informacije",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Zahtevač obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom.",
+      "Informacije",
+      "Postavite mašinu u pravilan smer i obezbedite potrebne resurse i MJ energiju. Pun izlaz ili nedostajući ulaz može zaustaviti rad."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "Ovaj robot prima radne zadatke sa priključne stanice i instalirane redstone ploče.",
+      "Robot pronalazi odgovarajući zadatak, izvršava ga u određenoj oblasti i zatim se vraća stanici.",
+      "<bold>Savet:</bold> Pre pokretanja podesite radnu oblast, filtere i cilj i ostavite robotu put nazad do stanice.",
+      "Zanimanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Ponašanje okidača",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Ponašanje okidača",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Ponašanje okidača",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Ponašanje okidača",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Ova radnja šalje upravljačku komandu povezanom cilju kada je uslov kapije ispunjen.",
+      "Radnja primenjuje izabranu komandu na blok, cev, motor ili robota.",
+      "<bold>Savet:</bold> Dodajte uslov za isključivanje kako bi se sistem posle gubitka signala vratio u bezbedno stanje.",
+      "Ponašanje radnje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Laser obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Pre izrade proverite potrebne komponente i kasnije upotrebe. Neki recepti zahtevaju MJ energiju ili posebnu proizvodnu mašinu."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Montažni Sto obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Sklapanje",
+      "Pre izrade proverite potrebne komponente i kasnije upotrebe. Neki recepti zahtevaju MJ energiju ili posebnu proizvodnu mašinu."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Sto za punjenje obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Punjenje",
+      "Postavite mašinu u pravilan smer i obezbedite potrebne resurse i MJ energiju. Pun izlaz ili nedostajući ulaz može zaustaviti rad."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Sto za integraciju obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Integracija",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Montažni Radni Sto obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Automatska izrada",
+      "Pre izrade proverite potrebne komponente i kasnije upotrebe. Neki recepti zahtevaju MJ energiju ili posebnu proizvodnu mašinu."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Sto za programiranje obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Informacije",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Redstone kristal.",
+      "Redstone kristal se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Proizvodnja",
+      "Pre izrade proverite potrebne komponente i kasnije upotrebe. Neki recepti zahtevaju MJ energiju ili posebnu proizvodnu mašinu."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Kopirnik logičkih kapija.",
+      "Kopirnik logičkih kapija se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Tajmer.",
+      "Tajmer se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Radnja se primenjuje dok je uslov kapije ispunjen. Smer, boju i filtere možete podesiti u interfejsu kapije."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Crveni kamen Čipset.",
+      "Crveni kamen Čipset se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Sklapanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Gvožđe Čipset.",
+      "Gvožđe Čipset se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Sklapanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Zlatni Čipset.",
+      "Zlatni Čipset se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Sklapanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Kvarc Čipset.",
+      "Kvarc Čipset se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Sklapanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Dijamant Čipset.",
+      "Dijamant Čipset se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Sklapanje",
+      "Robot pronalazi odgovarajući posao, uzima potreban alat ili resurse i odlazi u određenu oblast. Po završetku se vraća ili nastavlja sa sledećim zadatkom."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Impuls tajmera",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Impuls tajmera",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Ovaj okidač prati stanje povezanog cilja i služi kao uslov kapije.",
+      "Uslov aktivira povezane radnje dok praćeno stanje odgovara podešavanju.",
+      "<bold>Savet:</bold> Proverite obojenu stranu i praćeni cilj; za bezbedno upravljanje koristite i suprotan uslov.",
+      "Impuls tajmera",
+      "Kapija redovno proverava cilj na podešenoj strani. Boja ikone, strana cevi i parametri određuju stvarno praćeni smer i uslov."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi MJ energiju između izvora i potrošača.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Rad energetske cevi",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Ova stranica objašnjava namenu, povezivanje i bezbednu upotrebu stavke Dodatak Za Vodootpornost Cevi.",
+      "Dodatak Za Vodootpornost Cevi se koristi za izradu, upravljanje ili proširivanje BuildCraft sistema.",
+      "<bold>Savet:</bold> Pre povezivanja sa glavnom mrežom proverite ulaze, izlaze i orijentaciju u maloj probnoj postavci.",
+      "Informacije",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Ova mašina je funkcionalni deo automatizovanih radnih tokova BuildCraft.",
+      "Inventar sa Filterom obrađuje resurse ili obavlja posao u podešenoj oblasti.",
+      "<bold>Savet:</bold> Razdvojite ulaz, izlaz, MJ napajanje i radnu oblast i dodajte način za otkrivanje zastoja.",
+      "Filtriranje",
+      "Cev automatski prepoznaje susedne cevi i uređaje koji se mogu povezati. Na račvanju bira sledeću putanju prema sopstvenim pravilima, filterima i bojama."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Prikupljanje nafte",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Upotreba i rafinacija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Proizvodnja",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Temperatura",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Gorivo",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rafinacija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Gorivo",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rafinacija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Gorivo",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rafinacija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Proizvodnja",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Energija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Proizvodnja",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Energija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Proizvodnja",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Energija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Proizvodnja",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rafinacija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Ova tečnost je deo lanca prerade nafte i proizvodnje energije u BuildCraft.",
+      "Tečnost se može skladištiti, prenositi, sagorevati ili dalje prerađivati u zavisnosti od vrste i temperature.",
+      "<bold>Savet:</bold> Rezervoare i cevi za različite tečnosti i temperaturne nivoe držite jasno odvojene.",
+      "Proizvodnja",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti.",
+      "Rafinacija",
+      "Destilator i izmenjivač toplote mogu razdvojiti tečnost na dodatne frakcije. Pratite temperaturu, slobodan prostor na izlazima i odvajanje pojedinačnih tečnosti."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Ova cev služi za izbor i transport resursa u mreži BuildCraft.",
+      "Cev prenosi predmete između povezanih inventara, mašina i drugih cevi.",
+      "<bold>Savet:</bold> Proverite ponašanje na svakom račvanju i po potrebi zaključajte putanju bojama, filterima ili kapijama.",
+      "Genetski filteri",
+      "Pre izrade proverite potrebne komponente i kasnije upotrebe. Neki recepti zahtevaju MJ energiju ili posebnu proizvodnu mašinu."
+    ]
+  }
+}

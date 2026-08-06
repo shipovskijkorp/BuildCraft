@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "fi_fi",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "Pyrkiessäsi luomaan yksinkertaista automaatiota olet löytänyt hyödyllisen osan: pyörivän hammasrattaan!\nSe on valmistettu vain puusta, joten sitä on parannettava vaativampia tehtäviä varten...",
+      "Puinen hammasratas on BuildCraftin ensimmäinen valmistusvaihe, ja sitä käytetään monien asioiden perustana.",
+      "<bold>Vinkki:</bold> Valmista puisia hammasrattaita suunnitelluissa erissä. Korkeamman tason rattaat kuluttavat edellisen tason rattaita, joten säilytä muutama alemman tason vararatas koneita ja työkaluja varten."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Puu on osoittautunut hankalaksi materiaaliksi kunnollisissa koneissa, joten päätät tehdä uuden hammasrattaan kivestä.\nLisäetuna se ei syty lainkaan palamaan.",
+      "Kivinen hammasratas on käytännössä puisen hammasrattaan parannus, jota käytetään kiven kovuuden ansiosta vahvempien koneiden valmistamiseen.",
+      "<bold>Vinkki:</bold> Valmista kivisiä hammasrattaita suunnitelluissa erissä. Korkeamman tason rattaat kuluttavat edellisen tason rattaita, joten säilytä muutama alemman tason vararatas koneita ja työkaluja varten."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Kivi sopii yksinkertaisiin koneisiin, mutta ei kestä hyvin moottoreissa ja monimutkaisissa koneistoissa esiintyviä suuria rasituksia ja lämpötiloja.\nRauta soveltuu näihin vaativampiin tehtäviin paljon paremmin.",
+      "Hammasrattaiden parantaminen uudelleen mahdollistaa metallin ominaisuuksien ansiosta monimutkaisempien koneiden valmistamisen.",
+      "<bold>Vinkki:</bold> Valmista rautaisia hammasrattaita suunnitelluissa erissä. Korkeamman tason rattaat kuluttavat edellisen tason rattaita, joten säilytä muutama alemman tason vararatas koneita ja työkaluja varten."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Monimutkaisemmat tehtävät vaativat paljon hyvin pieniä toisiinsa kytkeytyviä hammasrattaita, ja rautaiset rattaat rikkoutuvat helposti tällaisessa käytössä.\nKulta ei rikkoudu pieniksi rattaiksi muotoiltuna, joten sitä voidaan käyttää monimutkaisissa mekanismeissa.",
+      "Kultainen hammasratas on seuraava hammasrattaiden taso, ja sitä käytetään laajoilla alueilla työskentelevissä koneissa.",
+      "<bold>Vinkki:</bold> Valmista kultaisia hammasrattaita suunnitelluissa erissä. Korkeamman tason rattaat kuluttavat edellisen tason rattaita, joten säilytä muutama alemman tason vararatas koneita ja työkaluja varten."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Syvien kaivostesi uumenista löydät kaikkein harvinaisimman mutta vahvimman materiaalin: timantit.\nLujuutensa ansiosta timanttiset hammasrattaat kestävät vaativimmatkin tehtävät rikkoutumatta tai kulumatta loppuun.",
+      "Viimeisen tason hammasratas, timanttinen hammasratas, on vahvin ratas ja sitä tarvitaan kaikkein monimutkaisimpiin koneisiin.",
+      "<bold>Vinkki:</bold> Valmista timanttisia hammasrattaita suunnitelluissa erissä. Korkeamman tason rattaat kuluttavat edellisen tason rattaita, joten säilytä muutama alemman tason vararatas koneita ja työkaluja varten."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Koneiden rakentaminen ja käyttäminen on erittäin hyödyllistä, mutta joskus niiden toimintaa täytyy muuttaa tai ne on käännettävä toiseen suuntaan.\nJakoavain ratkaisee ongelman: sillä voi iskulla muuttaa koneen tai monien muiden lohkojen tilaa.",
+      "Jakoavain on perustyökalu, jolla lohkoja, koneita ja joitakin olentoja voidaan napsauttamalla kiertää ja käsitellä.",
+      "<bold>Vinkki:</bold> Pidä jakoavain mukana kootessasi konehuonetta. Monet BuildCraft-lohkot ja suunnatut putket voidaan kiertää tai määrittää uudelleen rikkomatta niitä."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Maailman värikkyys on jo itsessään vaikuttavaa, mutta kuvittele voivasi vaihtaa tiettyjen lohkojen väriä yhdellä siveltimenvedolla.\nLohkojen maalaaminen on mukavaa koristelua, mutta sillä voi olla myös käytännöllinen tarkoitus, kuten putkien erottaminen toisistaan.",
+      "Siveltimillä voidaan maalata erilaisia lohkoja johonkin 16 väristä.\nLohkon maalaaminen on yleensä vain koristeellista, mutta joillakin lohkoilla on maalattuina erityisiä ominaisuuksia.\nEsimerkiksi eri väreillä maalatut putket eivät yhdisty toisiinsa.",
+      "<bold>Vinkki:</bold> Pidä pysyville putkiverkostoille erilliset siveltimet. Yleensä on helpompi ylläpitää järjestelmää, jossa väritetään vain ne haarat, jotka eivät saa yhdistyä, kuin maalata jokainen putki."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Koneiden työskentelyalueiden tarkka hallinta on välttämätöntä kaikissa suurissa rakennushankkeissa, joten tarvitset siihen sopivan työkalun.",
+      "Merkkiyhdistimellä muutetaan tilavuuslaatikon kokoa tai yhdistetyn reittimerkin suuntaa.",
+      "<bold>Vinkki:</bold> Yhdistä merkit vasta, kun jokainen päätepiste on lopullisessa paikassaan. Valmiin muodon yhdistäminen uudelleen on nopeampaa kuin kiertyneen tai keskeneräisen alueen korjaaminen myöhemmin.",
+      "Tiedot",
+      "Käytä merkkiyhdistintä pitämällä sitä kädessäsi ja napsauttamalla säädettävää laserlaatikkoa. Liikuta sitten osoitinta säätääksesi sitä ja lopeta säätäminen napsauttamalla uudelleen.\nVoit poistaa laserlaatikon Shift-napsauttamalla sitä merkkiyhdistin kädessäsi."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Suorat linjat ovat hyödyllisiä, mutta suuret hankkeet tarvitsevat usein reitin, joka kiertää maaston ja koneet.",
+      "Reittimerkit määrittävät järjestetyn reitin koneille, jotka tukevat reittiin perustuvaa työskentelyä.",
+      "<bold>Vinkki:</bold> Aseta reittimerkit kulkujärjestykseen ja pidä jokainen osuus esteettömänä. Lyhyt koereitti kannattaa tehdä ennen robottien tai automaattisten rakentajien määräämistä sille.",
+      "Reitin luominen",
+      "Aseta reittimerkit niihin pisteisiin, joiden kautta reitin tulee kulkea. Yhdistä ne järjestyksessä merkkiyhdistimellä. Näkyvä laserlinja näyttää reitin, jota yhteensopiva Builder tai muu kone seuraa.\n\nReitti on suunnattu: merkkien yhdistämisjärjestys määrää pisteiden järjestyksen. Muotoile reitti uudelleen rikkomalla merkkejä tai yhdistämällä ne uudelleen.",
+      "Reitin käyttäminen",
+      "Aseta yhteensopiva kone yhden yhdistetyn reittimerkin viereen. Kone lukee koko yhdistetyn reitin ja toistaa työnsä jokaisessa reitin kohdassa."
+    ],
+    "buildcraftcore/item/list": [
+      "Yhdeksästä suodatinpaikasta ei ole paljon apua, kun lajittelujärjestelmän täytyy tunnistaa kokonainen työpajallinen toisiinsa liittyviä materiaaleja.",
+      "Luettelo tallentaa uudelleenkäytettäviä esinesuodattimia putkia, portteja ja robottiasemia varten.",
+      "<bold>Vinkki:</bold> Käytä luetteloita useiden timanttiputkien tai porttien jakamiin uudelleenkäytettäviin suodattimiin. Yhden luettelon päivittäminen on turvallisempaa kuin monien yksittäisten suodatinpaikkojen muokkaaminen.",
+      "Luettelon muokkaaminen",
+      "Pidä luetteloa kädessäsi ja avaa se hiiren oikealla painikkeella. Nimeä luettelo, aseta viite-esineet haamupaikkoihin ja valitse, miten kutakin merkintää verrataan.\n\nTarkka vertailu säilyttää esineen tiedot ja muut olennaiset yksityiskohdat. Laajemmat tilat voivat verrata toisiinsa liittyviä esinetyyppejä tai materiaaleja, jos nykyinen esinerekisteri tukee sitä.",
+      "Luettelon käyttäminen",
+      "Aseta määritetty luettelo sen hyväksyvään parametri- tai suodatinpaikkaan. Vastaanottava putki, portti tai robotin toiminto käsittelee merkintöjä yhtenä uudelleenkäytettävänä suodattimena. Luetteloa ei kuluteta suodattimena käytettäessä."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "Etsiessäsi keinoa tuottaa energiaa olet löytänyt tavan tuottaa pienen määrän energiaa pelkällä redstone-signaalilla.",
+      "Redstone-moottori on yksinkertainen moottori, joka tarvitsee toimiakseen vain redstone-signaalin. Se tuottaa vain hyvin pienen määrän energiaa.",
+      "<bold>Vinkki:</bold> Redstone-moottori sopii parhaiten vähän tehoa vaativaan poistoon ja portteihin. Se ei voi korvata vahvempaa moottoria, jos koneella on merkittävä MJ-per-tick-tarve.",
+      "Tiedot",
+      "Niiden tuottaman vähäisen MJ-määrän vuoksi ne soveltuvat vain yksinkertaisten laitteiden, kuten poistoputkien tai pumppujen, käyttämiseen.",
+      "Moottorien toiminta",
+      "BuildCraft-moottoreilla on viisi lämpötilavaihetta, jotka määräävät moottorin nopeuden: sininen, vihreä, keltainen, punainen ja musta.\nTehokkaammista moottoreista poiketen redstone-moottorit <bold>eivät voi ylikuumentua</bold>. Kun energia ei pääse minnekään, ne muuttuvat mustiksi ja jatkavat toimintaansa.\nMoottorit yhdistyvät aina lähimpään yhteensopivaan MJ-kuluttajaan, mutta redstone-moottorit eivät yhdisty kinesis-putkiin ja yhdistyvät vain tiettyihin koneisiin.\nVoit kiertää moottoria jakoavaimella ja vaihtaa lohkoa, jota se käyttää.\n\nKuten kaikki moottorit, se <bold>tarvitsee toimiakseen redstone-signaalin.</bold>\nPortit voivat havaita moottorin lämpötilavaiheet ja auttaa sen ohjaamisessa."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Tapahtuipa mitä tahansa, tämä laukaisin on aina päällä.",
+      "Aina päällä on porttilaukaisin, joka on käytettävissä kaikissa asetetuissa porteissa.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun tämä valitaan, yhdistetyt toiminnot ovat aina käytössä."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Vastaanottaako portti redstone-signaalia?",
+      "Redstone-signaali päällä on porttilaukaisin, joka on käytettävissä kaikissa asetetuissa porteissa.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun tämä valitaan, yhdistetyt toiminnot aktivoituvat vain, kun lohko, johon portti on asetettu, vastaanottaa redstone-signaalin.",
+      "Parametrit",
+      "Kun Redstone-signaali päällä on valittu ja asennetulla portilla on parametreja käytettävissä, Vain portin puoli tulee saataville parametrina.\nKun Vain portin puoli valitaan, tarkistetaan vain, vastaanottaako se puoli, jolla portti sijaitsee, redstone-signaalin."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Eikö portti vastaanota redstone-signaalia?",
+      "Redstone-signaali pois päältä on porttilaukaisin, joka on käytettävissä kaikissa asetetuissa porteissa.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun tämä valitaan, yhdistetyt toiminnot aktivoituvat vain, kun lohko, johon portti on asetettu, ei vastaanota redstone-signaalia.",
+      "Parametrit",
+      "Kun Redstone-signaali pois päältä on valittu ja asennetulla portilla on parametreja käytettävissä, Vain portin puoli tulee saataville parametrina.\nKun Vain portin puoli valitaan, tarkistetaan vain, ettei se puoli, jolla portti sijaitsee, vastaanota redstone-signaalia."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Olisipa jokin tapa tarkistaa, onko arkku tyhjä.",
+      "Varasto tyhjä on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on varasto.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, yhdistetyt toiminnot aktivoituvat vain, kun kaikissa yhdistetyn varaston paikoissa on nolla esinettä.",
+      "Laukaisimen suunnat",
+      "Portti voi näyttää Varasto tyhjä -laukaisimen useita kertoja eri väreillä edustaakseen eri yhdistettyjä varastoja.\nLaukaisimen väri osoittaa varaston suunnan suhteessa putkeen, joten eri varastot voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Onko viereisessä arkussa tämä esine?",
+      "Esineitä varastossa on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on varasto.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, yhdistetyt toiminnot aktivoituvat vain, kun yhdistetyssä varastossa on esineitä.",
+      "Parametrit",
+      "Kun Esineitä varastossa on valittu ja asennetulla portilla on parametreja käytettävissä, sen vieressä olevat suodatinpaikat tulevat saataville parametrina.\nAsettamalla esineitä suodatinpaikkoihin voit ennen laukaisua tarkistaa, sisältääkö varasto jotakin valituista esineistä.",
+      "Laukaisimen suunnat",
+      "Portti voi näyttää Esineitä varastossa -laukaisimen useita kertoja eri väreillä edustaakseen eri yhdistettyjä varastoja.\nLaukaisimen väri osoittaa varaston suunnan suhteessa putkeen, joten eri varastot voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Onko viereisessä arkussa tilaa useammille esineille?",
+      "Tilaa varastossa on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on varasto.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, yhdistetyt toiminnot aktivoituvat vain, kun yhdistetyssä varastossa on tyhjiä paikkoja esineiden vastaanottamiseen.",
+      "Parametrit",
+      "Kun Tilaa varastossa on valittu ja asennetulla portilla on parametreja käytettävissä, sen vieressä olevat suodatinpaikat tulevat saataville parametrina.\nAsettamalla esineitä suodatinpaikkoihin voit ennen laukaisua tarkistaa, onko varastossa tyhjiä tai vajaita paikkoja, jotka voivat vastaanottaa valitut esineet.",
+      "Laukaisimen suunnat",
+      "Portti voi näyttää Tilaa varastossa -laukaisimen useita kertoja eri väreillä edustaakseen eri yhdistettyjä varastoja.\nLaukaisimen väri osoittaa varaston suunnan suhteessa putkeen, joten eri varastot voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Olisipa jokin tapa tarkistaa, onko arkku täynnä.",
+      "Varasto täynnä on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on varasto.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, yhdistetyt toiminnot aktivoituvat vain, kun yhdistetyn varaston jokaisessa paikassa on esine.",
+      "Laukaisimen suunnat",
+      "Portti voi näyttää Varasto täynnä -laukaisimen useita kertoja eri väreillä edustaakseen eri yhdistettyjä varastoja.\nLaukaisimen väri osoittaa varaston suunnan suhteessa putkeen, joten eri varastot voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Onko arkussa alle 25 % siitä tavaramäärästä, jonka se voisi sisältää?",
+      "Sisältää alle 25 % on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on varasto.",
+      "<bold>Vinkki:</bold> Käytä kynnyslaukaisimia nousevassa järjestyksessä ja testaa tarkka raja väliaikaisella lampulla. Näin vierekkäiset 25 %, 50 % ja 75 % säännöt eivät ala kilpailla keskenään.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyn varaston täyttöaste on alle 25 %.",
+      "Parametrit",
+      "Kun Sisältää alle 25 % on valittu ja asennettu portti tukee parametreja, sen vieressä olevat suodatinpaikat tulevat käytettäviksi parametrina.\nKun suodatinpaikkoihin asetetaan esineitä, voidaan ennen laukaisua tarkistaa, sisältääkö varasto alle 25 % suodatinpaikoissa valituista esineistä.",
+      "Laukaisimen suunnat",
+      "Porteissa Sisältää alle 25 % -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä varastoja.\nLaukaisimen väri ilmaisee varaston suunnan putkeen nähden, jotta varastot voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Onko arkussa alle 50 % siitä tavaramäärästä, jonka se voisi sisältää?",
+      "Sisältää alle 50 % on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on varasto.",
+      "<bold>Vinkki:</bold> Käytä kynnyslaukaisimia nousevassa järjestyksessä ja testaa tarkka raja väliaikaisella lampulla. Näin vierekkäiset 25 %, 50 % ja 75 % säännöt eivät ala kilpailla keskenään.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyn varaston täyttöaste on alle 50 %.",
+      "Parametrit",
+      "Kun Sisältää alle 50 % on valittu ja asennettu portti tukee parametreja, sen vieressä olevat suodatinpaikat tulevat käytettäviksi parametrina.\nKun suodatinpaikkoihin asetetaan esineitä, voidaan ennen laukaisua tarkistaa, sisältääkö varasto alle 50 % suodatinpaikoissa valituista esineistä.",
+      "Laukaisimen suunnat",
+      "Porteissa Sisältää alle 50 % -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä varastoja.\nLaukaisimen väri ilmaisee varaston suunnan putkeen nähden, jotta varastot voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Onko arkussa alle 75 % siitä tavaramäärästä, jonka se voisi sisältää?",
+      "Sisältää alle 75 % on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on varasto.",
+      "<bold>Vinkki:</bold> Käytä kynnyslaukaisimia nousevassa järjestyksessä ja testaa tarkka raja väliaikaisella lampulla. Näin vierekkäiset 25 %, 50 % ja 75 % säännöt eivät ala kilpailla keskenään.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyn varaston täyttöaste on alle 75 %.",
+      "Parametrit",
+      "Kun Sisältää alle 75 % on valittu ja asennettu portti tukee parametreja, sen vieressä olevat suodatinpaikat tulevat käytettäviksi parametrina.\nKun suodatinpaikkoihin asetetaan esineitä, voidaan ennen laukaisua tarkistaa, sisältääkö varasto alle 75 % suodatinpaikoissa valituista esineistä.",
+      "Laukaisimen suunnat",
+      "Porteissa Sisältää alle 75 % -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä varastoja.\nLaukaisimen väri ilmaisee varaston suunnan putkeen nähden, jotta varastot voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Onko portin vieressä oleva säiliö tyhjä?",
+      "Säiliö tyhjä on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on säiliö.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun kaikissa liitetyissä säiliöissä on nolla millibuckettia nestettä.",
+      "Laukaisimen suunnat",
+      "Porteissa Säiliö tyhjä -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä säiliöitä.\nLaukaisimen väri ilmaisee säiliön suunnan putkeen nähden, jotta säiliöt voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Sisältääkö viereinen säiliö jotakin nestettä?",
+      "Nestettä säiliössä on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on säiliö.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyssä säiliössä on nestettä.",
+      "Parametrit",
+      "Kun Nestettä säiliössä on valittu ja asennettu portti tukee parametreja, sen vieressä olevat suodatinpaikat tulevat käytettäviksi parametrina.\nKun suodatinpaikkaan asetetaan nestesäiliö, voidaan ennen laukaisua tarkistaa, sisältääkö säiliö suodatinpaikassa valittua nestettä.",
+      "Laukaisimen suunnat",
+      "Porteissa Nestettä säiliössä -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä säiliöitä.\nLaukaisimen väri ilmaisee säiliön suunnan putkeen nähden, jotta säiliöt voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Onko portin vieressä olevassa säiliössä tilaa lisänesteelle?",
+      "Tilaa nesteelle on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on säiliö.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyssä säiliössä on tilaa vastaanottaa lisää nestettä.",
+      "Parametrit",
+      "Kun Tilaa nesteelle on valittu ja asennettu portti tukee parametreja, sen vieressä oleva suodatinpaikka tulee käytettäväksi parametrina.\nKun suodatinpaikkaan asetetaan nestesäiliö, voidaan ennen laukaisua tarkistaa, löytyykö säiliötä, joka voi vastaanottaa suodattimessa valittua nestettä.",
+      "Laukaisimen suunnat",
+      "Porteissa Tilaa nesteelle -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä säiliöitä.\nLaukaisimen väri ilmaisee säiliön suunnan putkeen nähden, jotta säiliöt voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Onko portin vieressä oleva säiliö täynnä?",
+      "Säiliö täynnä on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on säiliö.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereisessä säiliössä ei ole tilaa vastaanottaa enää nestettä.",
+      "Laukaisimen suunnat",
+      "Porteissa Säiliö täynnä -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä säiliöitä.\nLaukaisimen väri ilmaisee säiliön suunnan putkeen nähden, jotta säiliöt voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Sisältääkö portin vieressä oleva säiliö alle neljänneksen kapasiteetistaan?",
+      "Sisältää alle 25 % on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on säiliö.",
+      "<bold>Vinkki:</bold> Käytä kynnyslaukaisimia nousevassa järjestyksessä ja testaa tarkka raja väliaikaisella lampulla. Näin vierekkäiset 25 %, 50 % ja 75 % säännöt eivät ala kilpailla keskenään.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyn säiliön täyttöaste on alle 25 %.",
+      "Parametrit",
+      "Kun Sisältää alle 25 % on valittu ja asennettu portti tukee parametreja, sen vieressä oleva suodatinpaikka tulee käytettäväksi parametrina.\nKun suodatinpaikkaan asetetaan nestesäiliö, voidaan ennen laukaisua tarkistaa, onko säiliössä alle 25 % suodatinpaikassa valittua nestettä.",
+      "Laukaisimen suunnat",
+      "Porteissa Sisältää alle 25 % -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä säiliöitä.\nLaukaisimen väri ilmaisee säiliön suunnan putkeen nähden, jotta säiliöt voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Sisältääkö portin vieressä oleva säiliö alle puolet kapasiteetistaan?",
+      "Sisältää alle 50 % on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on säiliö.",
+      "<bold>Vinkki:</bold> Käytä kynnyslaukaisimia nousevassa järjestyksessä ja testaa tarkka raja väliaikaisella lampulla. Näin vierekkäiset 25 %, 50 % ja 75 % säännöt eivät ala kilpailla keskenään.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyn säiliön täyttöaste on alle 50 %.",
+      "Parametrit",
+      "Kun Sisältää alle 50 % on valittu ja asennettu portti tukee parametreja, sen vieressä oleva suodatinpaikka tulee käytettäväksi parametrina.\nKun suodatinpaikkaan asetetaan nestesäiliö, voidaan ennen laukaisua tarkistaa, onko säiliössä alle 50 % suodatinpaikassa valittua nestettä.",
+      "Laukaisimen suunnat",
+      "Porteissa Sisältää alle 50 % -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä säiliöitä.\nLaukaisimen väri ilmaisee säiliön suunnan putkeen nähden, jotta säiliöt voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Sisältääkö portin vieressä oleva säiliö alle kolme neljännestä kapasiteetistaan?",
+      "Sisältää alle 75 % on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on säiliö.",
+      "<bold>Vinkki:</bold> Käytä kynnyslaukaisimia nousevassa järjestyksessä ja testaa tarkka raja väliaikaisella lampulla. Näin vierekkäiset 25 %, 50 % ja 75 % säännöt eivät ala kilpailla keskenään.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun liitetyn säiliön täyttöaste on alle 75 %.",
+      "Parametrit",
+      "Kun Sisältää alle 75 % on valittu ja asennettu portti tukee parametreja, sen vieressä oleva suodatinpaikka tulee käytettäväksi parametrina.\nKun suodatinpaikkaan asetetaan nestesäiliö, voidaan ennen laukaisua tarkistaa, onko säiliössä alle 75 % suodatinpaikassa valittua nestettä.",
+      "Laukaisimen suunnat",
+      "Porteissa Sisältää alle 75 % -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä säiliöitä.\nLaukaisimen väri ilmaisee säiliön suunnan putkeen nähden, jotta säiliöt voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Minkä värinen portin vieressä oleva moottori on? Onko se sininen?",
+      "Moottori sininen on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on moottori.",
+      "<bold>Vinkki:</bold> Yhdistä moottorin tilalaukaisimet automaattiseen sammutustoimintoon. Näkyvä varoituslamppu kannattaa asentaa ennen kuin samaa signaalia käytetään polttoaineen tai jäähdytysnesteen ohjaamiseen.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereinen moottori on sinisessä lämpötilavaiheessa.",
+      "Laukaisimen suunnat",
+      "Porteissa Moottori sininen -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä moottoreita.\nLaukaisimen väri ilmaisee moottorin suunnan putkeen nähden, jotta moottorit voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Minkä värinen portin vieressä oleva moottori on? Onko se vihreä?",
+      "Moottori vihreä on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on moottori.",
+      "<bold>Vinkki:</bold> Yhdistä moottorin tilalaukaisimet automaattiseen sammutustoimintoon. Näkyvä varoituslamppu kannattaa asentaa ennen kuin samaa signaalia käytetään polttoaineen tai jäähdytysnesteen ohjaamiseen.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereinen moottori on vihreässä lämpötilavaiheessa.",
+      "Laukaisimen suunnat",
+      "Porteissa Moottori vihreä -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä moottoreita.\nLaukaisimen väri ilmaisee moottorin suunnan putkeen nähden, jotta moottorit voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Minkä värinen portin vieressä oleva moottori on? Onko se keltainen?",
+      "Moottori keltainen on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on moottori.",
+      "<bold>Vinkki:</bold> Yhdistä moottorin tilalaukaisimet automaattiseen sammutustoimintoon. Näkyvä varoituslamppu kannattaa asentaa ennen kuin samaa signaalia käytetään polttoaineen tai jäähdytysnesteen ohjaamiseen.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereinen moottori on keltaisessa lämpötilavaiheessa.",
+      "Laukaisimen suunnat",
+      "Porteissa Moottori keltainen -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä moottoreita.\nLaukaisimen väri ilmaisee moottorin suunnan putkeen nähden, jotta moottorit voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Minkä värinen portin vieressä oleva moottori on? Onko se sininen?",
+      "Moottori punainen on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on moottori.",
+      "<bold>Vinkki:</bold> Yhdistä moottorin tilalaukaisimet automaattiseen sammutustoimintoon. Näkyvä varoituslamppu kannattaa asentaa ennen kuin samaa signaalia käytetään polttoaineen tai jäähdytysnesteen ohjaamiseen.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereinen moottori on punaisessa lämpötilavaiheessa.",
+      "Laukaisimen suunnat",
+      "Porteissa Moottori punainen -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä moottoreita.\nLaukaisimen väri ilmaisee moottorin suunnan putkeen nähden, jotta moottorit voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Minkä värinen portin vieressä oleva moottori on? Onko se musta ja ylikuumentumassa?",
+      "Moottori ylikuumentunut on porttilaukaisin, joka on käytettävissä kaikissa porteissa, joiden vieressä on moottori.",
+      "<bold>Vinkki:</bold> Yhdistä moottorin tilalaukaisimet automaattiseen sammutustoimintoon. Näkyvä varoituslamppu kannattaa asentaa ennen kuin samaa signaalia käytetään polttoaineen tai jäähdytysnesteen ohjaamiseen.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereinen moottori on ylikuumenemisvaiheessa.",
+      "Laukaisimen suunnat",
+      "Porteissa Moottori ylikuumentunut -laukaisin voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä moottoreita.\nLaukaisimen väri ilmaisee moottorin suunnan putkeen nähden, jotta moottorit voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Onko viereisellä koneella todella työtä, jota se voisi tehdä?",
+      "Työtä saatavilla on porttilaukaisin, joka on käytettävissä kaikissa porteissa, jotka on asetettu toimimaan kykenevän koneen viereen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereisellä koneella on tehtävissä olevaa työtä.\n\nHuomautus: Kaikki koneet eivät tue Työtä saatavilla -laukaisinta."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Onko viereinen kone todella saanut kaiken työnsä valmiiksi?",
+      "Työ valmis on porttilaukaisin, joka on käytettävissä kaikissa porteissa, jotka on asetettu toimintonsa suorittaneen koneen viereen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun viereinen kone on suorittanut kaiken mahdollisen työnsä.\n\nHuomautus: Kaikki koneet eivät tue Työ valmis -laukaisinta."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Lauetessaan toiminto lähettää redstone-signaalin.",
+      "Redstone-signaali on porttitoiminto, joka on käytettävissä kaikissa asetetuissa porteissa.",
+      "<bold>Vinkki:</bold> Eristä tämä signaali muusta automaatiosta värillisellä putkijohdolla ja vältä palautesilmukoita viereisten porttien välillä.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, se lähettää redstone-signaalin.",
+      "Parametrit",
+      "Kun Redstone-signaali on valittu ja asennettu portti tukee parametreja, Vain portin puoli tulee käytettäväksi parametrina.\nVain portin puoli -valinta tarkoittaa, että redstone-signaali lähetetään ainoastaan portin asennuspuolelta."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Tämä käynnistää koneen.",
+      "Päällä on porttitoiminto, joka on käytettävissä kaikissa porteissa, jotka on asetettu toimimaan kykenevän koneen viereen.",
+      "<bold>Vinkki:</bold> Yhdistä tämä toiminto mahdollisimman tarkkaan käyttökelpoiseen laukaisimeen ja testaa pois päältä -tila yhtä huolellisesti kuin päällä-tila.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, kone alkaa toimia.\nHuomautus: Kaikki koneet eivät tue Päällä-toimintoa.",
+      "Laukaisimen suunnat",
+      "Porteissa Päällä-toiminto voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä koneita.\nToiminnon väri ilmaisee koneen suunnan putkeen nähden, jotta koneet voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Tämä sammuttaa koneen.",
+      "Pois päältä on porttitoiminto, joka on käytettävissä kaikissa porteissa, jotka on asetettu toimimaan kykenevän koneen viereen.",
+      "<bold>Vinkki:</bold> Yhdistä tämä toiminto mahdollisimman tarkkaan käyttökelpoiseen laukaisimeen ja testaa pois päältä -tila yhtä huolellisesti kuin päällä-tila.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, kone lakkaa toimimasta.\nHuomautus: Kaikki koneet eivät tue Pois päältä -toimintoa.",
+      "Laukaisimen suunnat",
+      "Porteissa Pois päältä -toiminto voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä koneita.\nToiminnon väri ilmaisee koneen suunnan putkeen nähden, jotta koneet voidaan erottaa toisistaan."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Saa koneen suorittamaan työnsä yhä uudelleen.",
+      "Silmukka on porttitoiminto, joka on käytettävissä kaikissa porteissa, jotka on asetettu toimimaan kykenevän koneen viereen.",
+      "<bold>Vinkki:</bold> Yhdistä tämä toiminto mahdollisimman tarkkaan käyttökelpoiseen laukaisimeen ja testaa pois päältä -tila yhtä huolellisesti kuin päällä-tila.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, kone suorittaa toimintajaksonsa toistuvasti uudelleen.\nHuomautus: Kaikki koneet eivät tue Silmukka-toimintoa.",
+      "Laukaisimen suunnat",
+      "Porteissa Silmukka-toiminto voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä koneita.\nToiminnon väri ilmaisee koneen suunnan putkeen nähden, jotta koneet voidaan erottaa toisistaan."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Uuni, joka liikuttaa mäntää illallisen kypsentämisen sijaan, on silti täysin kunniallinen uuni.",
+      "Stirling-moottori polttaa tavallisia uunipolttoaineita ja tuottaa kolmasosasta yhteen MJ:hin tickiä kohti.",
+      "<bold>Vinkki:</bold> Jätä tapa poistaa Stirling-moottori käytöstä, kun sen kuluttaja pysähtyy. Koneen toimintaa tai tehontarvetta valvova portti tekee valvomattomista järjestelmistä paljon turvallisempia.",
+      "Polttoaine ja tuotto",
+      "Aseta mikä tahansa kelvollinen uunipolttoaine moottorin ainoaan polttoainepaikkaan ja anna redstone-signaali. Moottori säätää tuottonsa noin 0,33–1 MJ/t välille sen mukaan, kuinka paljon MJ:tä sen 1 000 MJ:n sisäisessä puskurissa jo on.\n\nMoottori käyttää samoja uunipolttoaineita, jotka Minecraft tunnistaa. Polttoaineen palauttamat säiliöt, kuten tyhjä ämpäri, jäävät saataville moottorin varastoon.",
+      "Moottorien toiminta",
+      "Aseta moottori MJ-vastaanottajaa vasten. Se valitsee yhteensopivan ulostulopinnan asetettaessa; käännä sitä jakoavaimella, jos virta täytyy syöttää toiselle pinnalle.\n\nSininen, vihreä, keltainen, punainen ja musta vaihe kuvaavat moottorin sisäistä lämpötilaa, joka seuraa tehopuskurin täyttöastetta. Jos ulostulo estyy, puskuri täyttyy, moottori saavuttaa ylikuumenemisvaiheen ja lopettaa tuottamisen. Poista redstone-signaali tai järjestä varastoidulle MJ:lle vastaanottaja, jotta moottori voi jäähtyä."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Öljyn jalostaminen on hyödyllistä. Sen muuttaminen tehomääräksi, jolla voi aiheuttaa teollisuusonnettomuuden, on huomattavasti hyödyllisempää.",
+      "Polttomoottori polttaa BuildCraftin nestemäisiä polttoaineita, hallitsee lämpöä jäähdytysnesteellä ja varastoi likaisten polttoaineiden tuottamaa jäännöstä.",
+      "<bold>Vinkki:</bold> Järjestä luotettava jäähdytys ja automaattinen sammutusehto ennen kuin jätät polttomoottorin valvomatta. Testaa koko polttoaine- ja jäähdytysnestejärjestelmä täydellä kuormalla.",
+      "Säiliöt ja polttoaineet",
+      "Moottorissa on erilliset säiliöt polttoaineelle, jäähdytysnesteelle ja jäännökselle. Nesteputket tai säiliöt voivat täyttää ja tyhjentää ne suoraan. Anna redstone-signaali polttaaksesi lisätyn polttoaineen; tuotto riippuu valitusta polttoaineesta ja vaihtelee vähätehoisista öljytuotteista 8 MJ/t tuottavaan kaasumaiseen polttoaineeseen.\n\nRaakaöljy, raskas öljy ja tiheä öljy ovat likaisia polttoaineita. Niiden polttaminen tuottaa vähitellen jäännöstä, ja täysi jäännössäiliö estää sivutuotteen vastaanottamisen. Jalostetut polttoaineet palavat ilman jäännöstä.",
+      "Jäähdytys",
+      "Vesi on tavallinen nestemäinen jäähdytysaine. Jäätä ja pakattua jäätä voidaan myös lisätä kiinteinä jäähdytysaineina, jolloin ne muuttuvat vedeksi ja jäähdyttävät tehokkaammin. Kuumat biomit saavat moottorin lämpenemään nopeammin ja jäähtymään tehottomammin, kun taas kylmissä biomeissa vaikutus on päinvastainen.\n\nKun redstone-signaali poistetaan, moottori pysähtyy, saa lyhyen uudelleenkäynnistyksen jäähdytysrangaistuksen ja alkaa luovuttaa ylimääräistä lämpöä. Pidä jäähdytysnestettä saatavilla ennen suuritehoisten polttoaineiden pitkäaikaista käyttöä.",
+      "Moottorien toiminta",
+      "Aseta moottori MJ-vastaanottajaa vasten ja käännä sitä tarvittaessa jakoavaimella. Värilliset vaiheet näyttävät sen lämpötason. Varastoitu MJ siirtyy vain, jos viereinen vastaanottaja hyväksyy sen; vastaanottamatta jäävä teho pysyy moottorissa eikä sitä poisteta kahdesti."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Raakaöljy on monimutkainen kokoelma hyödyllisiä nesteitä, jotka odottavat erottamista.",
+      "Tislaamo kuluttaa MJ:tä ja erottaa nesteen yhdeksi kaasumaiseksi ja yhdeksi nestemäiseksi tuotteeksi.",
+      "<bold>Vinkki:</bold> Varastoi jokainen tislaamon tuote erilliseen säiliöön. Välituotteiden sekoittaminen tai molempien tuotteiden johtaminen samaan suodattamattomaan linjaan vaikeuttaa myöhempien jalostusvaiheiden vianetsintää.",
+      "Liitännät",
+      "Syötä lähtöneste sisääntulosäiliöön. Kaasumainen tuote poistetaan ylhäältä ja nestemäinen tuote alhaalta. Pidä molemmat ulostulot vapaina: kone ei voi suorittaa seuraavaa toimintoa, jos kummassakaan kohteessa ei ole tilaa.\n\nSyötä MJ:tä yhteensopivan teholiitännän kautta. Enemmän käytettävissä olevaa tehoa nopeuttaa nykyistä toimintoa koneen käsittelyrajaan saakka.",
+      "Lämpötila valitsee reseptin",
+      "Saman öljytuotteen viileällä, kuumalla ja hehkuvalla muodolla voi olla eri tislausreseptit. Tuotteet säilyttävät syötteen lämpötilan, joten tislausvaiheiden välissä käytetään lämmönvaihdinta, kun seuraava resepti vaatii toisen lämpötason.\n\nRaakaöljystä voidaan aloittaa kolme eri jalostusreittiä. Tislatun öljyn, raskaan öljyn, tiheän öljyn ja seospolttoaineiden jatkotislaus erottaa niistä kaasumaisen, kevyen ja tiheän polttoaineen sekä jäännöksen."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Jotkin reseptit vaativat kärsivällisyyttä, toiset taas sen, että raaka-aine kuumennetaan ensin huomattavasti kuumemmaksi.",
+      "Lämmönvaihdin siirtää lämpöä kahden nestevirran välillä ja muuntaa BuildCraft-nesteitä viileän, kuuman ja hehkuvan tilan välillä.",
+      "<bold>Vinkki:</bold> Käytä lämmönvaihtimen ympärillä erillisiä kuumia ja kylmiä nestelinjoja. Lyhyet ja selvästi merkityt kierrot helpottavat lämpötilavirheiden löytämistä.",
+      "Monilohkorakenteen rakentaminen",
+      "Lämmönvaihdin koostuu alusta, yhdestä tai useammasta keskiosasta ja suorassa linjassa liitetystä päädystä. Keskiosia voidaan käyttää enintään kolme; lisäkelpoiset osat kasvattavat kootun koneen käsittelemää määrää.",
+      "Lämmön käyttäminen",
+      "Syötä lämmitettävä neste lämmityspuolelle ja jäähdytettävä neste jäähdytyspuolelle. Lämpö siirtyy eikä synny ilmaiseksi: toinen virta kuumenee samalla kun toinen jäähtyy. BuildCraftin öljytuotteet siirtyvät viileän, kuuman ja hehkuvan tilan välillä kymmenen millibucketin reseptiyksiköissä.\n\nVesi voi vastaanottaa lämpöä ja laava luovuttaa sitä. Nesteen suunta ja käytettävissä oleva ulostulotila ratkaisevat, voiko lämmönvaihdin jatkaa käsittelyä.\n\nValittu lämpötila vaikuttaa tislaamoon, joten johda nesteet tarvittaessa lämmönvaihtimen kautta ennen seuraavaa jalostusvaihetta."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Yrittäessäsi kerätä maailmasta löytyviä nesteitä huomaat tarvitsevasi tavan varastoida niitä ilman ämpäreitä.",
+      "Säiliöllä voidaan varastoida nesteitä suoraan ilman ämpäreitä ja arkkuja.",
+      "<bold>Vinkki:</bold> Jätä vähintään yksi säiliöpylvään pinta vapaaksi tarkastusta ja hätätyhjennystä varten. Pidä toisistaan riippumattomat nesteet näkyvästi erillisissä säiliöryhmissä.",
+      "Tiedot",
+      "Yhteen säiliölohkoon mahtuu 16 ämpärillistä yhtä nestettä, ja säiliöitä voidaan pinota pystysuunnassa rajattomasti yhdeksi suureksi säiliöksi.",
+      "Arkkujen tapaan säiliöt eivät säilytä sisältöään rikottaessa, mutta ne eivät myöskään pudota nesteitä.\n\nÄlä riko niitä, kun niissä on nestettä, sillä et saa nestettä takaisin."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Nesteiden kerääminen käsin voi olla hyvin työlästä ja joskus vaarallista, joten tarvitaan automaattinen keräystapa.",
+      "Pumppu kerää automaattisesti kaikki suoraan alapuolellaan olevat nestelähteet sekä niihin yhteydessä olevat lähteet.",
+      "<bold>Vinkki:</bold> Aseta pumppu vakaan lähdealueen yläpuolelle ja järjestä riittävän tilava ulostulo ennen virran kytkemistä. Tukkeutunut nestelinja tuhlaa aikaa ja voi pysäyttää hyödyllisen työn.",
+      "Kerätäksesi nestettä maailmasta aseta pumppu pumpattavan nesteen lähdelohkon yläpuolelle ja anna sille tehoa.\nAlapuolella olevat nestelähteet 'imetään' ylimmästä lähteestä alaspäin ja syötetään automaattisesti viereisiin putkiin tai säiliöihin.\nPumppu kerää nesteitä 64 lohkon säteeltä ylhäältä alas ja yhdistyneiden nestealueiden reunoilta kohti keskustaa.",
+      "Koneen toimintaperiaate",
+      "Useimpien koneiden tavoin se tarvitsee tehoa. Mitä enemmän tehoa syötetään, sitä nopeammin se pumppaa.\nRedstone-signaali pysäyttää pumpun, joten ole varovainen vipujen sijoittelussa."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Monissa suurissa rakennusprojekteissa laajojen alueiden täyttäminen nesteellä on työläs tehtävä, jonka mielellään automatisoi.",
+      "Sitä käytetään nesteiden automaattiseen sijoittamiseen maailmaan ilman käsin käytettäviä ämpäreitä.",
+      "<bold>Vinkki:</bold> Testaa tulvaportti ensin rajatussa altaassa. Sen sijoituskäyttäytyminen on paljon helpompi ymmärtää ennen liittämistä suureen säiliöön tai avoimeen maisemaan.",
+      "Tiedot",
+      "Tulvaportti on virraton kone, joka sijoittaa putkilla syötetyt nesteet alaspäin maailmaan.",
+      "Tulvaportti sijoittaa nesteitä 64 lohkon säteellä alhaalta ylös ja keskustasta ulospäin."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "Pyrkiessäsi kaivamaan syvemmälle alat tutkia uusia koneita ja koota laitetta, joka voi kaivaa automaattisesti puolestasi.\nSiinä on yksi rajoitus: se kaivaa vain suoraan alaspäin eikä riko peruskalliota.",
+      "Kaivoskaivo on kone, joka louhii automaattisesti suoraan alaspäin aina peruskallioon asti.",
+      "<bold>Vinkki:</bold> Käytä kaivoskaivoa kapeisiin kuiluihin ja nopeisiin koekaivauksiin. Vertaa suurilla alueilla sen toistuvaa pystytyskustannusta louhokseen ennen resurssien sitomista.",
+      "Tiedot",
+      "Se louhii suoraan alaspäin sijoituskohtansa alta ja syöttää rikkomansa lohkot automaattisesti viereisiin varastoihin tai putkiin. Jos putkia tai varastoja ei löydy, se heittää esineet maailmaan.\nMitä kovempi rikottava lohko on, sitä kauemmin louhiminen kestää.",
+      "Koneen toimintaperiaate",
+      "Useimpien koneiden tavoin se tarvitsee tehoa. Mitä enemmän tehoa syötetään, sitä nopeammin se kaivaa.\nRedstone-signaali pysäyttää kaivoskaivon."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Tavallinen suppilo on mukava, mutta se ei ole kovin toiminnallinen tai omaperäinen.",
+      "Kouru muistuttaa suppiloa, mutta siinä on enemmän toimintoja.",
+      "<bold>Vinkki:</bold> Kourut toimivat luotettavimmin, kun alapuolisessa kohteessa on aina tilaa. Lisää puskurivarasto, jos vastaanottava kone toimii vain ajoittain.",
+      "Tiedot",
+      "Kouru, entiseltä nimeltään suppilo, on nopea yhden lohkon varasto, joka voi syöttää esineitä suoraan putkiin sekä useisiin varastoihin samanaikaisesti kaikkiin suuntiin, myös ylöspäin.",
+      "Suppilon tavoin kouru voi hitaasti poimia maassa olevia esineitä, jos ne ovat sen ylä- tai alapuolella ja kouru osoittaa niitä kohti. Toimintaa voidaan nopeuttaa redstone-moottorilla."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Kuten jokaisen insinöörin velvollisuuksiin kuuluu, huomaat tarpeen automatisoida kaiken. Käsin valmistaminen voi olla työlästä, joten miksi et automatisoisi sitä?",
+      "Automaattinen työpöytä valmistaa esineitä automaattisesti ilman käsin tekemistä.",
+      "<bold>Vinkki:</bold> Puskuroi sekä ainesosat että tuotteet automaattisen työpöydän ympärillä. Puuttuva ainesosapaikka voi pysäyttää näennäisesti toimivan automaation tuottamatta mitään.",
+      "Tiedot",
+      "Automaattinen työpöytä valmistaa esineitä ilman, että sinun tarvitsee tehdä niitä itse. Aseta haluamasi esineen resepti ja syötä ainesosat putkilla.",
+      "Syötä vain reseptin vaatimat resurssit automaattiseen työpöytään, niin se valmistaa esineen tai lohkon hitaasti ilman tehoa."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Opasrekisteri on kirjan sisällysluettelon taustalla oleva taulukko: se päättää, mitä on olemassa, missä se näkyy ja mikä kuvake sitä edustaa.",
+      "Tällä sivulla kuvataan BuildCraft Community Editionin opaskirjan kielineutraali manifesti.",
+      "<bold>Vinkki:</bold> Pidä sivutunnukset vakaina julkaisun jälkeen. Näyttötekstin muuttaminen on turvallista, mutta tunnuksen muuttaminen voi rikkoa tallennetun kirjahistorian ja ulkoiset linkit.",
+      "Merkinnän metatiedot",
+      "Jokaisella merkinnällä on <code>id</code> ja kielineutraali <code>page</code>-avain. Valinnaiset kentät määrittävät moduulin, tyypin, alatyypin, varanäyttönimen, kirjan, listaustilan, esinepinon, NBT-muunnelman, lausekkeen ja vaaditun modin.",
+      "Vastuualueiden erottaminen",
+      "Manifesti ei koskaan sisällä käännettyä leipätekstiä. Sivumekaniikka sijaitsee tiedostossa <code>page_layouts.json</code>; englanninkieliset ja käännetyt merkkijonot ovat hakemiston <code>text/</code> tiedostoissa. Resurssipaketit voivat korvata jokaisen kerroksen erikseen.",
+      "Tarkistus",
+      "Jokaisen manifestin sivuavaimen on löydyttävä yhteisistä asetteluista ja englannin oletustekstipaketista. Käännöksistä voidaan jättää sivuja tai yksittäisiä paikkoja pois, kun varakieli on määritetty."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Tieto-ohjatut ohjeet ovat hyödyllisiä, kun resurssipaketin täytyy muokata rekisteriä kääntämättä Java-koodia.",
+      "Tämä tekninen sivu esittelee tiivistetysti BuildCraftin vanhan JSON-ohjekielen, joka on säilytetty resurssien yhteensopivuuden vuoksi.",
+      "<bold>Vinkki:</bold> Käytä uusilla opaskirjan sivuilla ensisijaisesti pakattua manifestia ja tekstiresursseja; käytä ohjeskriptejä vain vanhan rekisteriskriptin muokkaamiseen.",
+      "Otsake",
+      "Ohjetiedostot alkavat alla olevalla merkinnällä. Tuodut kirjastotiedostot käyttävät sen sijaan merkintää <code>~{buildcraft/json/lib}</code> ja voivat ilmoittaa argumenttien määrän komennolla <code>~args N</code>.",
+      "Funktiot",
+      "Jäsennin hyväksyy kommentit ja funktiokutsut, kuten <code>add</code>, <code>remove</code>, <code>replace</code>, <code>modify</code>, <code>overwrite</code>, <code>alias</code> ja <code>import</code>. Argumentit voivat olla numeroita, lainausmerkeissä olevia merkkijonoja tai gravismerkeillä rajattuja monirivisiä merkkijonoja.",
+      "Nykyiset opasresurssit",
+      "Community Editionin opas ei enää lataa yhtä Markdown-tiedostoa jokaista merkintää kohti. Hakemiston metatiedot ovat tiedostossa <code>original_manifest.json</code>, yhteiset mallit tiedostossa <code>page_layouts.json</code> ja käännetyt paikkataulukot tiedostossa <code>text/&lt;language&gt;.json</code>."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Opassivua on helpompi ylläpitää, kun mekaniikkaa ja käännöksiä ei kopioida jokaiseen kieleen.",
+      "Tällä sivulla kuvataan BuildCraft Community Editionin käyttämä pakattu ja lokalisoitu opaskirjan resurssimuoto.",
+      "<bold>Vinkki:</bold> Asettelun muuttamisen jälkeen testaa sekä Tarina- että Vinkit-asetukset ja avaa sivu englanniksi sekä vähintään yhdellä käännetyllä kielellä.",
+      "Yhteiset sivuasettelut",
+      "Kielineutraali sivurakenne tallennetaan kerran tiedostoon <code>assets/buildcraft/guide/page_layouts.json</code>. Jokaisella sivulla on Markdown-malli ja numeroidut <code>{{bc_text:index}}</code>-paikat. Reseptit, linkit, kuvat, näkyvyystunnisteet ja muu mekaniikka kuuluvat malliin.",
+      "Lokalisoidut tekstipaketit",
+      "Näkyvä teksti tallennetaan yhteen tiiviiseen tiedostoon kieltä kohti hakemistossa <code>assets/buildcraft/guide/text/&lt;language&gt;.json</code>. Sivun arvo on taulukko, jonka indeksit vastaavat mallin paikkoja. Näin tekninen rakenne pysyy poissa käännöksistä ja koko kieli voidaan pakata yhdeksi JAR-merkinnäksi.",
+      "Varakieli ja aliakset",
+      "<code>assets/buildcraft/guide/languages.json</code> valitsee oletuskielen, alueelliset aliakset ja varakieliketjut. Puuttuva sivu tai <code>null</code>-paikka perii ylemmän kielensä; tyhjä merkkijono piilottaa paikan tarkoituksella.",
+      "Manifesti",
+      "<code>original_manifest.json</code> sisältää vain hakemiston metatiedot: sivutunnuksen, sivuavaimen, moduulin, tyypin, alatyypin, näkyvyyden sekä valinnaiset esine- tai lausekeviittaukset. <code>page</code>-avain yhdistää merkinnän sen asetteluun ja lokalisoituun tekstiin.",
+      "Tuettu merkintä",
+      "Tavallista Markdown-tekstiä, otsikoita ja muotoilutunnisteita tuetaan. Alla olevat tunnisteet ovat kielineutraaleja ja niiden tulee pysyä yhteisessä asettelussa."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Eivätkö putket sovi rakennelmasi tyyliin? Peitä ne rakennelmaan sopivasta lohkosta tehdyllä julkisivulla.",
+      "Julkisivu on kiinnitettävä osa, jolla putket peitetään rakennelman mukaisiksi.",
+      "<bold>Vinkki:</bold> Määritä kiinnitettävä osa ennen kuin kopioit tai asennat niitä paljon. Testaa ensin yksi putken pinta varmistaaksesi suunnan ja porttien toiminnan.",
+      "Julkisivumuunnelmat",
+      "Lähes mistä tahansa pelin lohkosta voidaan tehdä julkisivu ja asettaa se putken sivulle.\nUmpinainen julkisivu estää väliin asetettuna kaikki putkiliitännät.\nOntto julkisivu sallii putkiliitäntöjen kulkea lävitseen."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Redstone vie nykyään paljon tilaa. Mikset hallitsisi järjestelmää tarkemmin ja pienemmässä tilassa putkien avulla? Aseta portti putkeen ja ala suunnitella.",
+      "Portti on päivitettävä kiinnitettävä osa, joka tarjoaa logistisen kehyksen putkijärjestelmän hallintaan.",
+      "<bold>Vinkki:</bold> Määritä kiinnitettävä osa ennen kuin kopioit tai asennat niitä paljon. Testaa ensin yksi putken pinta varmistaaksesi suunnan ja porttien toiminnan.",
+      "Portin sijoittaminen",
+      "Portti on kiinnitettävä osa, joten se voidaan asettaa vain putkeen, mutta mille tahansa putken sivulle.\nSamalle sivulle viereen asetettu putki ei yhdisty.",
+      "Porttitasot",
+      "Portteja on eri tasoja, jotka tarjoavat eri määrän paikkoja:\nPerusportti – 1 paikkasarja (ei voi muokata).\nRautaportti – 2 paikkasarjaa.\nNether-tiiliportti – 4 paikkasarjaa.\nKultaportti – 8 paikkasarjaa.",
+      "Portin muokkaimet",
+      "Portteja voidaan muokata lisäämään parametripaikkoja:\nLapislisäosa – antaa 1 parametripaikan jokaiselle laukaisimelle.\nKvartsilisäosa – antaa 1 parametripaikan jokaiselle sarjalle (puolittaa portin paikkamäärän).\nTimanttilisäosa – antaa 3 parametripaikkaa jokaiselle sarjalle (puolittaa portin paikkamäärän).",
+      "Porttimuunnelmat",
+      "JA-portti varmistaa, että </bold>kaikki</bold> liitetyt laukaisimet ovat aktiivisia ennen kuin yhteys toimintoihin aktivoituu.\nTAI-portti varmistaa, että </bold>yksi tai useampi</bold> liitetyistä laukaisimista on aktiivinen ennen kuin yhteys toimintoihin aktivoituu.",
+      "Laukaisimet",
+      "Vasemman puolen kuvakkeita kutsutaan laukaisimiksi. Ne vedetään käyttöliittymän vasemman puolen paikkoihin.\nEri laukaisimet havaitsevat eri asioita omilla ehdoillaan. Kun laukaisimen ehto täyttyy, viereinen yhteys aktivoituu.",
+      "Toiminnot",
+      "Oikean puolen kuvakkeita kutsutaan toiminnoiksi. Ne vedetään käyttöliittymän oikean puolen paikkoihin.\nEri toiminnot suorittavat eri tehtäviä. Kun viereinen yhteys on aktiivinen, liitetyt toiminnot suoritetaan.",
+      "Parametrit",
+      "Kun parametripaikkoja on asennettu, joidenkin laukaisimien ja toimintojen viereen ilmestyy lisäpaikkoja.\nLisäpaikat tarjoavat toimintoja, joilla laukaisimista ja toiminnoista tehdään tarkempia.\nLisäpaikkaa voi napsauttaa lisävalintoja varten tai siihen voi asettaa esineitä suodattimeksi.",
+      "Liitännät",
+      "Keskellä olevat viivat yhdistävät laukaisimet toimintoihin, jotta ne voivat toimia yhdessä.\nViivoja napsauttamalla yhteys voidaan kytkeä tai katkaista useiden laukaisimien tai toimintojen vaatimiseksi.\nKun laukaisin täyttyy, keskiviiva syttyy (vain osittain, jos vaaditaan useita laukaisimia).\nKun viiva palaa, siihen liitetyt toiminnot suoritetaan."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Putkien syöttäminen ilmaisella energialla ilman suurta moottoria – kuinka hienoa se onkaan!",
+      "<bold>Vinkki:</bold> Määritä kiinnitettävä osa ennen kuin kopioit tai asennat niitä paljon. Testaa ensin yksi putken pinta varmistaaksesi suunnan ja porttien toiminnan.",
+      "Putkipulssitin on kiinnitettävä osa, joka tuottaa pieniä määriä energiaa sitä vastaanottaville putkille.",
+      "Tulpan mekaniikka",
+      "Se voidaan asettaa vain energiaa vastaanottavaan putkeen ja aktivoida hiiren oikealla painikkeella.\nPutkipulssitin voidaan aktivoida myös portilla käyttäen pulssitintoimintoja.",
+      "Putkiliitännät",
+      "Kiinnitettävät osat voidaan asettaa vain putkiin ja mille tahansa putken sivulle.\nKahden putken väliin asetettuna osa estää muut putki- ja putkijohtoliitännät niiden välillä."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Valoanturilla voit käyttää valon voimaa porttien hallintaan.",
+      "Valoanturi on kiinnitettävä osa, joka havaitsee edessään olevan lohkon valotason ja välittää tiedon saman putken viereisellä sivulla olevalle portille.",
+      "<bold>Vinkki:</bold> Määritä kiinnitettävä osa ennen kuin kopioit tai asennat niitä paljon. Testaa ensin yksi putken pinta varmistaaksesi suunnan ja porttien toiminnan.",
+      "Tulpan mekaniikka",
+      "Tiedon avulla viereinen portti voi Kirkas- ja Pimeä-laukaisimilla havaita, onko ympäristö valoisa vai pimeä.\nNäillä laukaisimilla voidaan käynnistää portin toiminto.",
+      "Putkiliitännät",
+      "Kiinnitettävät osat voidaan asettaa vain putkiin ja mille tahansa putken sivulle.\nKahden putken väliin asetettuna osa estää muut putki- ja putkijohtoliitännät niiden välillä."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Signaalit ovat helpompia ymmärtää, kun ne näkyvät, ja helpompia hallita, kun ne voidaan suodattaa.",
+      "Linssit ja suodattimet ovat värillisiä putkeen kiinnitettäviä osia, jotka tallennetaan saman esineen muunnelmina.",
+      "<bold>Vinkki:</bold> Määritä kiinnitettävä osa ennen kuin kopioit tai asennat niitä paljon. Testaa ensin yksi putken pinta varmistaaksesi suunnan ja porttien toiminnan.",
+      "Linssit",
+      "Linssi näyttää ja heijastaa värinsä, kun liitetyn putkijohdon signaali on aktiivinen. Käytä sitä pienenä merkkivalona millä tahansa vapaalla putken sivulla.",
+      "Suodattimet",
+      "Suodatinmuunnelmat käyttävät samoja kuuttatoista väriä, mutta toimivat tuetuissa kohteissa lausekeparametreina ja kiinnitettävinä suodattimina. Väri ja suodatintila tallennetaan esinemuunnelmaan, joten pelkän rekisterin perustunnuksen kopiointi ei riitä tietyn suodattimen tunnistamiseen."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Onko portin ulkopuolella valoisaa? Jos on, se laukeaa.",
+      "Kirkas on porttilaukaisin, joka on käytettävissä porteissa, kun samanvärinen valoanturi on kiinnitetty samaan putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun valoanturin edessä olevan lohkon valotaso on korkea."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Onko portin ulkopuolella valoisaa? Jos ei, se laukeaa.",
+      "Pimeä on porttilaukaisin, joka on käytettävissä porteissa, kun samanvärinen valoanturi on kiinnitetty samaan putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun tämä valitaan, liitetyt toiminnot aktivoituvat vain, kun valoanturin edessä olevan lohkon valotaso on matala."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Tiesitkö, että portilla voidaan hallita aktiivisesti liitettyä putkipulssitinta?",
+      "Putkipulssitin päälle on porttitoiminto, joka on käytettävissä porteissa, kun putkipulssitin on kiinnitetty samaan putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä tämä toiminto mahdollisimman tarkkaan käyttökelpoiseen laukaisimeen ja testaa pois päältä -tila yhtä huolellisesti kuin päällä-tila.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, putkipulssitin käynnistyy ja putki saa energiaa.",
+      "Suunnat",
+      "Porteissa Putkipulssitin päälle -toiminto voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä putkipulssittimia.\nToiminnon väri ilmaisee putkipulssittimen suunnan putkeen nähden, jotta ne voidaan erottaa toisistaan."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Tiesitkö, että liitetyn putkipulssittimen voi asettaa antamaan vain yhden pulssin?",
+      "Yksi energiapulssi on porttitoiminto, joka on käytettävissä porteissa, kun putkipulssitin on kiinnitetty samaan putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä tämä toiminto mahdollisimman tarkkaan käyttökelpoiseen laukaisimeen ja testaa pois päältä -tila yhtä huolellisesti kuin päällä-tila.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, putkipulssitin käynnistyy lyhyeksi ajaksi ja putki saa riittävästi energiaa yhden toiminnon suorittamiseen.",
+      "Suunnat",
+      "Porteissa Putkipulssitin päälle -toiminto voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä putkipulssittimia.\nToiminnon väri ilmaisee putkipulssittimen suunnan putkeen nähden, jotta ne voidaan erottaa toisistaan."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Haluatko välittää putkisignaaleja ilman, että mitään kulkee putken läpi? Täytä se soralla.",
+      "Rakenneputki voi kantaa portteja ja putkijohtoja, mutta sen läpi ei voi kuljettaa mitään.",
+      "<bold>Vinkki:</bold> Rakenneputket ovat hyödyllisiä kiinnityspisteitä johdoille, porteille ja tulpille, kun esinekuljetusta ei tarvita.",
+      "Putken mekaniikka",
+      "Tavallisen putken tavoin siihen voidaan asentaa kiinnitettäviä osia ja putkijohtoja, mutta se ei kuljeta esineitä, nesteitä, energiaa tai muuta."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Haluatko poistaa esineitä varastosta ja kuljettaa ne muualle? Anna putkelle energiaa ja katso niiden virtaavan.",
+      "Puista kuljetusputkea käytetään esineiden poistamiseen varastosta, kun sille annetaan energiaa.",
+      "<bold>Vinkki:</bold> Energiaa käytetään irrotukseen vain, kun kohdeverkossa on paikka esineelle. Lähellä oleva puskurivarasto estää esineen jatkuvan ulossylkemisen tukkeutuneesta linjasta.",
+      "Putken mekaniikka",
+      "Kun putki saa energiaa, se ottaa esineitä ja kuljettaa ne muihin yhdistettyihin varastoihin tai putkiin.\nEsineet otetaan putken kiinteältä sivulta ja kuljetetaan läpinäkyviä sivuja kohti.\nJos läpinäkyviä sivuja on useita, esineet valitsevat niiden väliltä satunnaisesti.\nJos esineillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä suoraan Wooden Transport Pipeen ilman, että putki tarvitsee energiaa.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Energian syöttö",
+      "Se voi vastaanottaa energiaa mistä tahansa MJ-energialähteestä, kuten moottorista, virtasovittimesta tai Pipe Pulsarista.",
+      "Jokaisella saamallaan energiapulssilla putki ottaa esineitä viereisestä varastosta.\nMitä voimakkaampi pulssi on, sitä enemmän esineitä otetaan pulssia kohti."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Kuljettaa esineitä hitaasti ja tasaisesti haluamaasi paikkaan.",
+      "Cobblestone Transport Pipe kuljettaa esineitä putkesta yhdistettyihin putkiin tai varastoihin.",
+      "<bold>Vinkki:</bold> Käytä Cobblestone- ja Stone-putkia yhdessä, kun vierekkäiset linjat on pidettävä erillään ilman maalia tai tulppia.",
+      "Putken mekaniikka",
+      "Cobblestone Transport Pipe aiheuttaa kuljetettaville esineille suuren vastuksen, joten se hidastaa kiihdytetyt esineet nopeasti.\n\nCobblestone Transport Pipet eivät yhdisty Stone- tai Quartz Transport Pipeihin.\n\nJos putkella on useita yhteyksiä, esineet kulkevat satunnaiseen suuntaan.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Kuljettaa esineitä kohtalaisella nopeudella haluamaasi paikkaan.",
+      "Stone Transport Pipe kuljettaa esineitä putkesta yhdistettyihin putkiin tai varastoihin.",
+      "<bold>Vinkki:</bold> Käytä Stone- ja Cobblestone-putkia yhdessä, kun vierekkäiset linjat on pidettävä erillään ilman maalia tai tulppia.",
+      "Putken mekaniikka",
+      "Stone Transport Pipe aiheuttaa kuljetettaville esineille keskisuuren vastuksen, joten se hidastaa kiihdytettyjä esineitä.\n\nStone Transport Pipet eivät yhdisty Cobblestone- tai Quartz Transport Pipeihin.\n\nJos putkella on useita yhteyksiä, esineet kulkevat satunnaiseen suuntaan.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Kuljettaa esineitä nopeasti haluamaasi paikkaan.",
+      "Quartz Transport Pipe kuljettaa esineitä putkesta yhdistettyihin putkiin tai varastoihin.",
+      "<bold>Vinkki:</bold> Quartz-putket sopivat selvästi erottuviksi runkolinjoiksi. Sijoita erikoistunut lajittelu haarakohtien lähelle koko runkolinjan sijaan.",
+      "Putken mekaniikka",
+      "Quartz Transport Pipe aiheuttaa kuljetettaville esineille vain pienen vastuksen, joten se hidastaa kiihdytettyjä esineitä vain vähän.\n\nQuartz Transport Pipet eivät yhdisty Cobblestone- tai Stone Transport Pipeihin.\n\nJos putkella on useita yhteyksiä, esineet kulkevat satunnaiseen suuntaan.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Haluatko kuljettaa esineitä vain yhteen suuntaan? Aseta putken suunta ja syötä ne läpi.",
+      "Iron Transport Pipe kuljettaa esineitä putkesta yhteen suuntaan kohti yhdistettyä putkea tai varastoa.",
+      "<bold>Vinkki:</bold> Aseta ulostulosuunta jakoavaimella jokaisen käännön tai siirron jälkeen. Väärä nuoli voi luoda huomaamattoman umpikujan.",
+      "Putken mekaniikka",
+      "Esineet tulevat sisään kiinteiltä sivuilta ja poistuvat läpinäkyvän sivun suuntaan.\nSuuntaa voi vaihtaa lyömällä jakoavaimella sitä Iron Transport Pipen sivua, johon esineiden halutaan menevän, antamalla redstone-signaalin tai käyttämällä porttia.\n\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne pomppivat edestakaisin ja yrittävät jatkuvasti liikkua asetettuun suuntaan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Kuljettaa esineitä erittäin nopeasti haluamaasi paikkaan.",
+      "Gold Transport Pipe kuljettaa esineet nopeasti yhdistettyihin putkiin tai varastoihin.",
+      "<bold>Vinkki:</bold> Käytä Gold Pipeja pitkillä suorilla osuuksilla ja hidasta tai puskuroi esineet ennen monimutkaisia risteyksiä, joissa nopeat purskeet voivat ylikuormittaa varastoja.",
+      "Putken mekaniikka",
+      "Gold Transport Pipe antaa kuljetettaville esineille suuren nopeuslisän, joten ne liikkuvat putkissa nopeammin.\n\nJos putkella on useita yhteyksiä, esineet kulkevat satunnaiseen suuntaan.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Järjestelmälle voi olla hyödyllistä päättää, mitkä esineet saavat kulkea mihinkin.",
+      "Diamond Transport Pipe kuljettaa esineitä putkesta suodattimen määräämään suuntaan viereiseen putkeen tai varastoon.",
+      "<bold>Vinkki:</bold> Jätä suodattamaton sivu avoimeksi vain tarkoitettua ylivuotoa varten. Suodatetut sivut ovat etusijalla, joten testaa harvinaisilla esineillä ennen massaliikenteen kytkemistä.",
+      "Suodattimen asettaminen",
+      "Diamond Transport Pipen jokainen sivu on merkitty eri värillä.\nAvaa Diamond Transport Pipen käyttöliittymä suodattimen määrittämistä varten.\nAseta haluamasi esineet tietyn värin paikkoihin määrittääksesi, mitkä esineet voivat kulkea mihinkin suuntaan.\nUseampi samanlainen esine samassa värissä lisää kyseisen suunnan 'painoa'.\n\nListaa voidaan käyttää suodatinpaikassa laajempien suodatusvaihtoehtojen saamiseksi.",
+      "Putken mekaniikka",
+      "Jos esineellä on useita mahdollisia suuntia, se jaetaan niiden kesken annetun painon mukaisesti.\nMikä tahansa kelvollinen suunta ilman suodatinta sallii kaikki esineet, mutta suodatetut suunnat ovat etusijalla.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos yhdistettyä putkea ei ole tai viereinen varasto on täynnä eikä esineellä ole muuta reittiä, se putoaa putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä suoraan Diamond Transport Pipeen ilman irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Maassa olevien esineiden poimiminen ja siirtäminen on tulevaisuutta!",
+      "Obsidian Transport Pipe poimii maailmassa olevia esineitä ja kuljettaa ne yhdistettyyn putkeen tai varastoon.",
+      "<bold>Vinkki:</bold> Energia parantaa keräystä. Sijoita putki niin, ettei se vedä irtoesineitä alueilta, joita pelaajat käyttävät edelleen käsin.",
+      "Putken toiminta",
+      "Kun putki saa energiaa, se voi poimia esineitä yläpuolellaan olevalta 3x4x3 alueelta.\nIlman energiaa se poimii edelleen kaikki esineet, jotka koskettavat putkea.",
+      "Putken suunta",
+      "Obsidian Transport Pipen on 'osoitettava' johonkin suuntaan, jotta sillä on vaikutusalue.\nJos putkella on useita yhteyksiä, se menettää kykynsä poimia esineitä maailmasta.",
+      "Putken mekaniikka",
+      "Jos vastaanotetuilla esineillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Energian syöttö",
+      "Se voi vastaanottaa energiaa mistä tahansa MJ-energialähteestä, kuten moottorista, virtasovittimesta tai Pipe Pulsarista.",
+      "Jokaisella saamallaan energiapulssilla putki poimii esineitä maasta.\nMitä voimakkaampi pulssi on, sitä enemmän esineitä poimitaan pulssia kohti."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Kyllästyttävätkö Pipe Plugit? Tämä putki yhdistyy vain muihin putkiin eikä mihinkään muuhun.",
+      "Sandstone Transport Pipe kuljettaa esineitä putkesta yhdistettyihin putkiin.",
+      "<bold>Vinkki:</bold> Sandstone Pipet ovat hyödyllisiä tiheiden koneseinien vieressä, koska ne estävät ei-toivotut yhteydet varastoihin. Varmista, että kaikki tarkoitetut päätepisteet ovat edelleen yhteydessä.",
+      "Putken mekaniikka",
+      "Se ei yhdisty mihinkään koneeseen vaan ainoastaan muihin putkiin.\n\nJos putkella on useita yhteyksiä, esineet kulkevat satunnaiseen suuntaan.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Clay Pipen avulla esineet eivät enää koskaan ohita arkkua.",
+      "Clay Transport Pipe kuljettaa esineitä putkesta yhdistettyihin putkiin tai varastoihin.",
+      "<bold>Vinkki:</bold> Käytä Clay Pipeja lopullisissa toimituspisteissä, joissa varastoihin syöttäminen pitää asettaa putkiverkossa jatkamisen edelle.",
+      "Putken mekaniikka",
+      "Clay Transport Pipe yrittää ensisijaisesti asettaa esineet varastoon ennen niiden kuljettamista eteenpäin.\n\nJos putkella on useita yhteyksiä, esineet valitsevat ensin yhdistetyn varaston ja vasta sitten satunnaisen jatkosuunnan.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Kun kuljetat esineitä sisään, ne eivät tule takaisin ulos.",
+      "Void Transport Pipe tuhoaa siihen syötetyt esineet.",
+      "<bold>Vinkki:</bold> Aseta suodatin ennen Void Pipea aina, kun arvokkaat ja hävitettävät esineet jakavat verkon. Älä koskaan käytä tyhjiöreittiä testaamattomana ylivuotona.",
+      "Putken mekaniikka",
+      "Esineet eivät voi kulkea putken läpi, koska kaikki keskelle saapuvat esineet tuhoutuvat automaattisesti.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Kuvittele putki, joka voi asettaa ja rikkoa palikoita sekä käyttää esineitä. Tämä on juuri se putki.",
+      "Striped Transport Pipe rikkoo palikoita, asettaa palikoita, käyttää sen läpi syötettyjä esineitä ja kuljettaa ne yhdistettyyn putkeen tai varastoon.",
+      "<bold>Vinkki:</bold> Käytä Stripes Pipeja hallituissa päätepisteissä ja testaa kohdepinta käsin. Niiden vaikutus maailmaan on tavallista kuljetusta tuhoisampi.",
+      "Putken toiminta",
+      "Kun putki saa energiaa, se rikkoo suoraan edessään olevan palikan ja siirtää sen viereiseen putkeen tai varastoon.\nKun palikka syötetään putken läpi, se asettaa palikan suoraan eteensä.\nKun esine syötetään putken läpi, se yrittää 'käyttää' esinettä edessään olevaan palikkaan tai olentoon.",
+      "Putken suunta",
+      "Striped Transport Pipen on 'osoitettava' johonkin suuntaan vaikuttaakseen edessään olevaan palikkaan.\nJos siihen yhdistetään useita putkia tai varastoja, se menettää kykynsä vaikuttaa maailmaan.",
+      "Putken mekaniikka",
+      "Jos kuljetettavilla esineillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Energian syöttö",
+      "Se voi vastaanottaa energiaa mistä tahansa MJ-energialähteestä, kuten moottorista, virtasovittimesta tai Pipe Pulsarista.",
+      "Jokaisella saamallaan energiapulssilla putki käyttää saamansa energian yrittääkseen rikkoa edessään olevan palikan.\nMitä voimakkaampi pulssi on, sitä enemmän energiaa palikan rikkomiseen käytetään."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Haluatko ottaa tietyt esineet ulos ja kuljettaa ne muualle? Anna putkelle energiaa ja katso niiden virtaavan.",
+      "Wooden Diamond Transport Pipe ottaa suodattimen valitsemat esineet varastosta, kun putki saa energiaa.",
+      "<bold>Vinkki:</bold> Määritä irrotussuodatin ennen energian syöttämistä. Tyhjä tai liian laaja suodatin voi tyhjentää varaston odotettua nopeammin.",
+      "Putken mekaniikka",
+      "Kun putki saa energiaa, se ottaa suodattimessa valitut esineet ja kuljettaa ne muihin yhdistettyihin varastoihin tai putkiin.\nEsineet otetaan putken kiinteältä sivulta ja kuljetetaan läpinäkyviä sivuja kohti.\nJos läpinäkyviä sivuja on useita, esineet liikkuvat satunnaiseen suuntaan.\nJos esineellä ei ole paikkaa, johon mennä, se putoaa putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä suoraan Wooden Diamond Transport Pipeen ilman energiaa (tällöin suodatinta ei noudateta).\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Suodatus",
+      "Avaa Wooden Diamond Transport Pipen käyttöliittymä suodattimen määrittämistä varten.\nAseta haluamasi esineet paikkoihin määrittääksesi, mitä putki ottaa.\nVoit muuttaa suodattimen toimintaa Whitelist-, Blacklist- tai Round Robin -asetuksilla:\nWhitelist: Vain valitut esineet otetaan.\nBlacklist: Kaikki muut kuin valitut esineet otetaan.\nRound Robin: Esineet otetaan täsmälleen yllä olevien suodatinpaikkojen järjestyksessä vasemmalta oikealle.\n\nListaa voidaan käyttää suodatinpaikassa laajempien suodatusvaihtoehtojen saamiseksi.",
+      "Energian syöttö",
+      "Se voi vastaanottaa energiaa mistä tahansa MJ-energialähteestä, kuten moottorista, virtasovittimesta tai Pipe Pulsarista.",
+      "Jokaisella saamallaan energiapulssilla putki ottaa esineitä viereisestä varastosta.\nMitä voimakkaampi pulssi on, sitä enemmän esineitä otetaan pulssia kohti."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Haluatko maalata esineesi? Valitse väri, niin ne saavat sen.",
+      "Lazuli Transport Pipe maalaa esineitä ja kuljettaa ne yhdistettyihin putkiin tai varastoihin.",
+      "<bold>Vinkki:</bold> Dokumentoi väreihin perustuva reititys verkon lähelle. Ylävirran värimuutos voi muuttaa jokaista myöhempää reitityspäätöstä.",
+      "Esineiden maalaaminen",
+      "Putki maalaa sen läpi kulkevan esineen asetetulla värillä.\nVäriä voidaan vaihtaa lyömällä putkea jakoavaimella tai portin avulla.",
+      "Putken mekaniikka",
+      "Jos putkella on useita läpinäkyviä sivuja, esineet liikkuvat satunnaiseen suuntaan.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Haluatko lajitella maalatut esineet? Aseta väri ja suunta ja syötä ne putken läpi.",
+      "Daizuli Transport Pipe lähettää vastaanottamansa maalatut esineet yhteen suuntaan kohti yhdistettyä putkea tai varastoa.",
+      "<bold>Vinkki:</bold> Käytä Daizuli-reititystä yhdessä selkeän värikäytännön kanssa. Varaa yksi väri ylivuodolle tai lajittelemattomille esineille.",
+      "Putken mekaniikka",
+      "Esineet tulevat sisään kiinteiltä sivuilta ja poistuvat läpinäkyvää sivua kohti.\nEsineet eivät palaa tulosuuntaansa vaan valitsevat jonkin muun suunnan.\nJos niillä ei ole paikkaa, johon mennä, ne putoavat putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Värin ja suunnan asettaminen",
+      "Maalattujen esineiden suuntaa voidaan muuttaa lyömällä jakoavaimella sitä putken sivua, johon esineiden halutaan menevän, tai portin avulla.\nVoit vaihtaa kyseiseen suuntaan lähetettävän värin lyömällä putken keskiosaa jakoavaimella tai portin avulla."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Portin käyttäminen tiettyjen esineiden irrottamiseen on suodatusteknologian uusin tekninen vallankumous.",
+      "Emzuli Transport Pipe on portilla ohjattu putki, joka ottaa suodattimen valitsemat esineet varastosta, kun se saa energiaa.",
+      "<bold>Vinkki:</bold> Testaa redstonella ohjattu irrotus ensin pienellä varastolla. Varmista, että passiivinen tila vastaa sähkökatkon aikana odotettua toimintaa.",
+      "Putken mekaniikka",
+      "Kun putki saa energiaa, se ottaa suodattimessa valitut esineet ja kuljettaa ne muihin yhdistettyihin varastoihin tai putkiin.\nEsineet otetaan putken kiinteältä sivulta ja kuljetetaan läpinäkyviä sivuja kohti.\nJos läpinäkyviä sivuja on useita, esineet liikkuvat satunnaiseen suuntaan.\nJos esineellä ei ole paikkaa, johon mennä, se putoaa putkesta maahan.\n\nJotkin koneet voivat syöttää esineitä suoraan Emzuli Pipeen ilman energiaa (tällöin suodattimia ei noudateta).\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Suodatus",
+      "Emzuli Transport Pipen käyttöliittymässä on neljä väriä ja neljä erillistä suodatusvaihtoehtoa.\nPaikkoihin asetetut esineet määrittävät, mitä kukin suodatin ottaa.\nPaikkojen vieressä olevien siveltimien väri määrää, minkä värisiksi esineet maalataan irrotettaessa; väriä voi vaihtaa napsauttamalla.\nYksi neljästä suodattimesta valitaan putkeen asetetulla portilla ja värillisellä Extraction Preset -toiminnolla. Esimerkiksi Redstone signal -> Red Extraction Preset.\n\nListaa voidaan käyttää suodatinpaikassa laajempien suodatusvaihtoehtojen saamiseksi.",
+      "Energian syöttö",
+      "Se voi vastaanottaa energiaa mistä tahansa MJ-energialähteestä, kuten moottorista, virtasovittimesta tai Pipe Pulsarista.",
+      "Jokaisella saamallaan energiapulssilla putki ottaa esineitä viereisestä varastosta.\nMitä voimakkaampi pulssi on, sitä enemmän esineitä otetaan pulssia kohti."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Haluatko ottaa nestettä ulos ja kuljettaa sen muualle? Anna putkelle energiaa ja katso sen virtaavan.",
+      "Wooden Fluid Pipe ottaa nesteitä säiliöstä saadessaan energiaa.",
+      "<bold>Vinkki:</bold> Yhdistä irrotus vain yhteen tarkoitettuun säiliöön tai koneen sivuun ja varmista välitön kapasiteetti alavirtaan. Tukkeutunut linja pysäyttää hyödyllisen pumppauksen.",
+      "Putken mekaniikka",
+      "Kun putki saa energiaa, se ottaa nestettä ja kuljettaa sen muihin yhdistettyihin säiliöihin tai putkiin.\nJotkin koneet voivat syöttää nesteitä suoraan Wooden Fluid Pipeen ilman energiaa.\nNeste otetaan putken kiinteältä sivulta ja siirretään läpinäkyviä sivuja kohti.\nJos läpinäkyviä sivuja on useita, neste jakautuu tasan eri suuntiin.\n\nJotkin koneet voivat syöttää nesteitä suoraan Wooden Fluid Pipeen ilman energiaa.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Energian syöttö",
+      "Se voi vastaanottaa energiaa mistä tahansa MJ-energialähteestä, kuten moottorista, virtasovittimesta tai Pipe Pulsarista.",
+      "Jokaisella saamallaan energiapulssilla putki ottaa nestettä viereisestä säiliöstä.\nMitä voimakkaampi pulssi on, sitä enemmän nestettä otetaan pulssia kohti.",
+      "Wooden Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 0,2 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Kuljettaa nesteitä melko hitaasti haluamaasi paikkaan.",
+      "Cobblestone Fluid Pipe kuljettaa nesteitä putkesta yhdistettyihin putkiin tai säiliöihin.",
+      "<bold>Vinkki:</bold> Hyödynnä Stone- ja Cobblestone-putkien yhdistymättömyyttä, jotta voit vetää erilliset nestelinjat rinnakkain ilman tahatonta sekoittumista.",
+      "Putken mekaniikka",
+      "Cobblestone Fluid Pipet ovat hitaimpia nesteputkia.\n\nCobblestone Fluid Pipet eivät yhdisty Stone Fluid Pipeihin tai Quartz Fluid Pipeihin.\n\nNeste ei palaa tulosuuntaansa vaan jatkaa toiseen suuntaan.\nJos mahdollisia suuntia on useita, neste jakautuu tasan niiden kesken.\n\nJotkin koneet voivat syöttää nestettä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Cobblestone Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 0,2 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Kuljettaa nesteitä kohtuullisella nopeudella haluamaasi paikkaan.",
+      "Stone Fluid Pipe kuljettaa nesteitä putkesta yhdistettyihin putkiin tai säiliöihin.",
+      "<bold>Vinkki:</bold> Hyödynnä Stone- ja Cobblestone-putkien yhdistymättömyyttä, jotta voit vetää erilliset nestelinjat rinnakkain ilman tahatonta sekoittumista.",
+      "Putken mekaniikka",
+      "Stone Fluid Pipet kuljettavat nesteitä keskimääräisellä nopeudella.\n\nStone Fluid Pipet eivät yhdisty Cobblestone Fluid Pipeihin tai Quartz Fluid Pipeihin.\n\nNeste ei palaa tulosuuntaansa vaan jatkaa toiseen suuntaan.\nJos mahdollisia suuntia on useita, neste jakautuu tasan niiden kesken.\n\nJotkin koneet voivat syöttää nestettä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Stone Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 0,4 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Kuljettaa nesteitä miellyttävämmällä nopeudella haluamaasi paikkaan.",
+      "Quartz Fluid Pipe kuljettaa nesteitä putkesta yhdistettyihin putkiin tai säiliöihin.",
+      "<bold>Vinkki:</bold> Käytä tärkeissä jalostusvaiheissa selvästi erottuvia putkimateriaaleja. Selkeästi erotetut linjat helpottavat väärien nesteliitäntöjen havaitsemista.",
+      "Putken mekaniikka",
+      "Quartz Fluid Pipet kuljettavat nesteitä hyvällä nopeudella.\n\nQuartz Fluid Pipet eivät yhdisty Cobblestone Fluid Pipeihin tai Stone Fluid Pipeihin.\n\nNeste ei palaa tulosuuntaansa vaan jatkaa toiseen suuntaan.\nJos mahdollisia suuntia on useita, neste jakautuu tasan niiden kesken.\n\nJotkin koneet voivat syöttää nestettä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Quartz Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 0,8 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Haluatko kuljettaa nesteitä vain yhteen suuntaan? Aseta putken suunta ja syötä ne läpi.",
+      "Iron Fluid Pipe kuljettaa nesteitä yhteen suuntaan putkesta yhdistettyyn putkeen tai säiliöön.",
+      "<bold>Vinkki:</bold> Tarkista yksisuuntainen ulostulo putken kääntämisen jälkeen. Suuntavirhe voi vangita nesteen haaraan, joka näyttää olevan yhdistetty.",
+      "Putken mekaniikka",
+      "Nesteen suunta asetetaan lyömällä jakoavaimella sitä putken sivua, johon nesteen halutaan menevän, antamalla redstone-signaali tai käyttämällä porttia.\n\nNeste tulee sisään putken kiinteiltä sivuilta ja poistuu läpinäkyvän sivun suuntaan.\nNeste ei palaa tulosuuntaansa vaan kulkee vain asetettuun suuntaan.\n\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Iron Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 0,8 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Kuljettaa nesteitä nopeasti haluamaasi paikkaan.",
+      "Gold Fluid Pipe kuljettaa nesteitä nopeasti yhdistettyihin putkiin tai säiliöihin.",
+      "<bold>Vinkki:</bold> Käytä suuremman läpivirtauksen osuuksia pumppujen ja suurten säiliöiden lähellä, mutta jätä vastaanottajille riittävästi kapasiteettia purskeita varten.",
+      "Putken mekaniikka",
+      "Gold Fluid Pipet ovat nopeimpia nesteputkia.\n\nNeste ei palaa tulosuuntaansa vaan jatkaa toiseen suuntaan.\nJos mahdollisia suuntia on useita, neste jakautuu tasan niiden kesken.\n\nJotkin koneet voivat syöttää nestettä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Gold Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 1,6 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Nesteiden lajittelu niin, että putkilinjat voivat risteytyä? Hulluutta.",
+      "Diamond Fluid Pipe kuljettaa nesteitä putkesta suodattimen määräämään suuntaan yhdistettyyn putkeen tai säiliöön.",
+      "<bold>Vinkki:</bold> Määritä kaikki käytetyt sivut ennen useiden nesteiden liittämistä. Varaa selkeä ylivuotoreitti sen sijaan, että luottaisit vahingossa tyhjään suodattimeen.",
+      "Suodatus",
+      "Diamond Fluid Pipen jokainen sivu on merkitty eri värillä.\nAvaa Diamond Fluid Pipen käyttöliittymä suodattimen määrittämistä varten.\nAseta ämpäri tai muu nestesäiliö halutulla nesteellä tietyn värin paikkaan määrittääksesi, mikä neste voi kulkea mihinkin suuntaan.\nUseampi samanlainen neste samassa värissä lisää kyseisen suunnan 'painoa'.",
+      "Putken mekaniikka",
+      "Mikä tahansa kelvollinen suunta ilman suodatinta sallii kaikki nesteet, mutta suodatetut suunnat ovat etusijalla.\nNeste ei palaa tulosuuntaansa.\n\nJotkin koneet voivat syöttää nestettä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Diamond Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 1,6 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Kyllästyttävätkö Pipe Plugit? Tämä putki yhdistyy vain muihin putkiin eikä mihinkään muuhun.",
+      "Sandstone Fluid Pipe kuljettaa nesteitä putkesta yhdistettyihin putkiin.",
+      "<bold>Vinkki:</bold> Käytä Sandstone Fluid Pipeja paikoissa, joissa lähellä olevien säiliöiden ei pidä yhdistyä automaattisesti. Tarkista jokainen sivu koneseinän uudelleenrakentamisen jälkeen.",
+      "Putken mekaniikka",
+      "Se ei yhdisty mihinkään koneeseen vaan ainoastaan muihin putkiin.\n\nNeste ei palaa tulosuuntaansa vaan jatkaa toiseen suuntaan.\nJos mahdollisia suuntia on useita, neste jakautuu tasan niiden kesken.\n\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Sandstone Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 0,4 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Miksi nesteen pitäisi jatkaa seuraavaan putkeen, kun säiliö on aivan vieressä?",
+      "<bold>Vinkki:</bold> Sijoita Clay Fluid Pipet lopullisten kuluttajien lähelle, kun nesteen pitää suosia säiliötä tai konetta verkossa jatkamisen sijaan.",
+      "Clay Fluid Pipe kuljettaa nesteitä putkesta yhdistettyihin putkiin tai säiliöihin.",
+      "Putken mekaniikka",
+      "Clay Fluid Pipe syöttää nesteen ensisijaisesti viereiseen säiliöön ennen seuraavaan putkeen jatkamista.\nNeste ei palaa tulosuuntaansa vaan jatkaa toiseen suuntaan.\nJos mahdollisia suuntia on useita, neste jakautuu tasan niiden kesken ja suosii säiliöitä.\n\nJotkin koneet voivat syöttää nestettä siihen suoraan ilman energialla toimivaa irrotusputkea.\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Clay Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 0,8 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Tuhoaa nesteitä ämpäri kerrallaan",
+      "Void Fluid Pipe tuhoaa siihen syötetyt nesteet.",
+      "<bold>Vinkki:</bold> Suodata ja eristä Void Fluid Pipet. Väärä liitäntä voi tuhota kokonaisen varastoidun neste-erän jättämättä palautettavia esineitä.",
+      "Putken mekaniikka",
+      "Neste ei voi kulkea putken läpi, koska kaikki keskelle saapuva neste tuhoutuu automaattisesti.\n\nJotkin koneet voivat syöttää nestettä suoraan Void Fluid Pipeen ilman irrotusputkea.",
+      "Nesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Haluatko ottaa tietyn nesteen ulos ja kuljettaa sen muualle? Anna putkelle energiaa ja katso sen virtaavan.",
+      "Wooden Diamond Fluid Pipe ottaa valittuja nesteitä säiliöstä saadessaan energiaa.",
+      "<bold>Vinkki:</bold> Aseta irrotussuodatin ennen useiden säiliöiden liittämistä. Näin väärä neste ei tyhjene, kun yhteisen lähteen sisältö muuttuu.",
+      "Putken mekaniikka",
+      "Kun putki saa energiaa, se ottaa suodattimen valitseman nesteen ja siirtää sen muihin yhdistettyihin säiliöihin tai putkiin.\nNeste otetaan putken kiinteältä sivulta ja siirretään läpinäkyviä sivuja kohti.\nJos läpinäkyviä sivuja on useita, neste jakautuu tasan eri suuntiin.\n\nJotkin koneet voivat syöttää nestettä siihen suoraan ilman energiaa (tällöin suodatinta ei noudateta).\nPipe Plugit tai putkien maalaaminen eri väreillä voivat estää putkia yhdistymästä.",
+      "Suodatus",
+      "Avaa Wooden Diamond Fluid Pipen käyttöliittymä suodattimen määrittämistä varten.\nAseta ämpäri tai muu nestesäiliö halutulla nesteellä paikkoihin määrittääksesi, mitä putki ottaa.\nWhitelist- ja Blacklist-asetukset muuttavat suodattimen toimintaa:\nWhitelist: Vain valitut nesteet otetaan.\nBlacklist: Kaikki muut kuin valittu neste otetaan.",
+      "Energian syöttö",
+      "Se voi vastaanottaa energiaa mistä tahansa MJ-energialähteestä, kuten moottorista, virtasovittimesta tai Pipe Pulsarista.",
+      "Jokaisella saamallaan energiapulssilla putki ottaa nestettä viereisestä säiliöstä.\nMitä voimakkaampi pulssi on, sitä enemmän nestettä otetaan pulssia kohti.",
+      "Wooden Diamond Fluid Pipe kuljettaa nestettä viereisiin putkiin ja säiliöihin 1,6 ämpäriä sekunnissa.\nNesteputkessa on sisäinen säiliö, johon mahtuu 1 ämpäri kutakin sivua kohti ja 1 ämpäri keskelle."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Redstone: Kantama vain 15 palikkaa, yksi signaali palikkaa kohti ja vain punainen — tylsää.\nPipe Wire: Kulkee rajattomasti, voi kantaa useita signaaleja putkea kohti ja on saatavana monissa väreissä.",
+      "Pipe Wire on putkeen kiinnitettävä järjestelmä, joka välittää datasignaaleja rajattomasti putkiverkossa.",
+      "<bold>Vinkki:</bold> Tarkista sekä Reseptit- että Käyttökohteet-osio ennen suurten määrien valmistamista; tämä esine voi olla välivaihe usealle myöhemmälle koneelle.",
+      "Johdinmekaniikka",
+      "Portti syöttää signaalin Pipe Wireen, joka välitetään muihin samanvärisiin yhdistettyihin Pipe Wireihin.\nSignaali voi olla vain päällä tai pois ja kulkee rajattoman matkan toisin kuin redstone.\nPipe Wire on saatavana kaikissa 16 värissä.",
+      "Johtimen sijoittaminen",
+      "Pipe Wire voidaan sijoittaa putken jokaiseen kulmaan, ja se yhdistyy vain samanvärisiin Pipe Wireihin pääilmansuunnissa.\nSamanväriset johtimet voivat yhdistyä eri putkien yli, vaikka itse putket eivät olisi yhteydessä."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Pipe Pulsar on hyödyllinen parannus Wooden Pipejen moottorikäyttöön verrattuna, mutta se tuntuu silti rajalliselta. Olisi hyödyllistä käyttää olemassa olevaa energiaverkkoa ja moottoreita irrotusputkien nopeampaan käyttöön.",
+      "Pipe Adapter on putkeen kiinnitettävä osa, joka mahdollistaa energiaa vastaanottavien putkien syöttämisen Kinesis Pipen kautta.",
+      "<bold>Vinkki:</bold> Tarkista sekä Reseptit- että Käyttökohteet-osio ennen suurten määrien valmistamista; tämä esine voi olla välivaihe usealle myöhemmälle koneelle.",
+      "Tulpan mekaniikka",
+      "Se voidaan sijoittaa vain energiaa vastaanottavaan putkeen, ja viereinen Kinesis Pipe yhdistyy siihen.\n\nYhdistetyn Kinesis Pipen kautta syötetty energia voi käyttää siihen liitettyä energiaa vastaanottavaa kuljetus- tai nesteputkea.",
+      "Putkiliitännät",
+      "Kiinnitysosia voidaan sijoittaa vain putkiin ja mille tahansa putken sivulle.\nKun osa sijoitetaan kahden putken väliin, se estää muut putki- ja Pipe Wire -liitännät niiden välillä, paitsi Kinesis Pipen ja itsensä."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Miksi putkeni yhdistyvät jatkuvasti? Miten sen voi estää? Aseta Pipe Plug niiden väliin.",
+      "Pipe Plug on putkeen kiinnitettävä osa, joka estää putkia ja/tai Pipe Wireja yhdistymästä toisiinsa.",
+      "<bold>Vinkki:</bold> Tarkista sekä Reseptit- että Käyttökohteet-osio ennen suurten määrien valmistamista; tämä esine voi olla välivaihe usealle myöhemmälle koneelle.",
+      "Putkiliitännät",
+      "Se asetetaan suoraan putken mille tahansa sivulle, eikä kyseiselle sivulle asetettu putki yhdisty.\n\nKiinnitysosia voidaan sijoittaa vain putkiin ja mille tahansa putken sivulle."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Kun esineitä kulkee putken läpi, laukaisin aktivoituu.",
+      "Items Traversing on portin laukaisin, joka on käytettävissä kaikissa kuljetusputkeen asetetuissa porteissa.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun se on valittu, liitetyt toiminnot aktivoituvat vain esineen kulkiessa putken läpi.",
+      "Parametrit",
+      "Kun Items Traversing valitaan ja asennetulla portilla on parametreja, vieressä oleva suodatinpaikka tulee käyttöön parametrina.\nAseta esine suodatinpaikkaan tarkistaaksesi ennen laukaisua, kulkeeko valittu esine putken läpi."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Nestettä kulkee sen putken läpi, johon portti on asetettu.",
+      "Fluid Traversing on portin laukaisin, joka on käytettävissä kaikissa nesteputkeen asetetuissa porteissa.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun se on valittu, liitetyt toiminnot aktivoituvat vain nesteen kulkiessa putken läpi."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Kun putken läpi ei kulje esineitä, laukaisin aktivoituu.",
+      "Pipe Empty on portin laukaisin, joka on käytettävissä kaikissa kuljetus- tai nesteputkeen asetetuissa porteissa.",
+      "<bold>Vinkki:</bold> Testaa tämä laukaisin juuri sitä puolta ja tuotannossa käytettävää varastoa tai säiliötä vasten. Sivukohtaiset ominaisuudet voivat saada saman lohkon eri sivut ilmoittamaan eri tilan.",
+      "Vaatimukset",
+      "Kun se on valittu, liitetyt toiminnot aktivoituvat vain, kun putken läpi ei kulje esineitä eikä nesteitä."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Liitetty Pipe Wire hehkuu kirkkaasti.",
+      "Pipe Signal On on portin laukaisin, joka on käytettävissä, kun samanvärinen Pipe Wire on kiinnitetty samaan putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun se on valittu, liitetyt toiminnot aktivoituvat vain samanvärisen liitetyn Pipe Wiren ollessa aktiivinen.",
+      "Parametrit",
+      "Kun Pipe Signal On on valittu ja asennetulla portilla on parametreja, muiden liitettyjen Pipe Wire -värien Pipe Signal On- ja Pipe Signal Off -tilat tulevat parametreiksi.\nValitsemalla Pipe Signal On tai Pipe Signal Off voit vaatia useita johdinsignaaleja ennen laukaisua."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Liitetty Pipe Wire ei hehku.",
+      "Pipe Signal Off on portin laukaisin, joka on käytettävissä, kun samanvärinen Pipe Wire on kiinnitetty samaan putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Vaatimukset",
+      "Kun se on valittu, liitetyt toiminnot aktivoituvat vain samanvärisen liitetyn Pipe Wiren ollessa pois käytöstä.",
+      "Parametrit",
+      "Kun Pipe Signal Off on valittu ja asennetulla portilla on parametreja, muiden liitettyjen Pipe Wire -värien Pipe Signal On- ja Pipe Signal Off -tilat tulevat parametreiksi.\nValitsemalla Pipe Signal On tai Pipe Signal Off parametriksi voit vaatia useita johdinsignaaleja ennen laukaisua."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Mihin suuntaan putken pitäisi toimia tai kuljettaa? Pohjoiseen? Valitse tämä toiminto.",
+      "Face the North Side on portin toiminto, joka on käytettävissä suunnan vaativaan putkeen asetetussa portissa, kun pohjoinen on kelvollinen suunta.",
+      "<bold>Vinkki:</bold> Käytä portissa vain yhtä suuntatoimintoa kerrallaan ja varmista turvallinen varareitti. Ristiriitaiset suunnat tekevät esinevirrasta vaikeasti ennustettavan.",
+      "Suunnan asettaminen",
+      "Kun toiminto aktivoituu, putki asettaa pohjoisen suunnakseen.\nPutki siis lähettää sisältönsä pohjoiseen tai suorittaa maailmaan vaikuttavan toimintonsa pohjoisella sivulla."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Mihin suuntaan putken pitäisi toimia tai kuljettaa? Itään? Valitse tämä toiminto.",
+      "Face the East Side on portin toiminto, joka on käytettävissä suunnan vaativaan putkeen asetetussa portissa, kun itä on kelvollinen suunta.",
+      "<bold>Vinkki:</bold> Käytä portissa vain yhtä suuntatoimintoa kerrallaan ja varmista turvallinen varareitti. Ristiriitaiset suunnat tekevät esinevirrasta vaikeasti ennustettavan.",
+      "Suunnan asettaminen",
+      "Kun toiminto aktivoituu, putki asettaa idän suunnakseen.\nPutki siis lähettää sisältönsä itään tai suorittaa maailmaan vaikuttavan toimintonsa itäisellä sivulla."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Mihin suuntaan putken pitäisi toimia tai kuljettaa? Etelään? Valitse tämä toiminto.",
+      "Face the South Side on portin toiminto, joka on käytettävissä suunnan vaativaan putkeen asetetussa portissa, kun etelä on kelvollinen suunta.",
+      "<bold>Vinkki:</bold> Käytä portissa vain yhtä suuntatoimintoa kerrallaan ja varmista turvallinen varareitti. Ristiriitaiset suunnat tekevät esinevirrasta vaikeasti ennustettavan.",
+      "Suunnan asettaminen",
+      "Kun toiminto aktivoituu, putki asettaa etelän suunnakseen.\nPutki siis lähettää sisältönsä etelään tai suorittaa maailmaan vaikuttavan toimintonsa eteläisellä sivulla."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Mihin suuntaan putken pitäisi toimia tai kuljettaa? Länteen? Valitse tämä toiminto.",
+      "Face the West Side on portin toiminto, joka on käytettävissä suunnan vaativaan putkeen asetetussa portissa, kun länsi on kelvollinen suunta.",
+      "<bold>Vinkki:</bold> Käytä portissa vain yhtä suuntatoimintoa kerrallaan ja varmista turvallinen varareitti. Ristiriitaiset suunnat tekevät esinevirrasta vaikeasti ennustettavan.",
+      "Suunnan asettaminen",
+      "Kun toiminto aktivoituu, putki asettaa lännen suunnakseen.\nPutki siis lähettää sisältönsä länteen tai suorittaa maailmaan vaikuttavan toimintonsa läntisellä sivulla."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Mihin suuntaan putken pitäisi toimia tai kuljettaa? Ylös? Valitse tämä toiminto.",
+      "Face the Top Side on portin toiminto, joka on käytettävissä suunnan vaativaan putkeen asetetussa portissa, kun ylös on kelvollinen suunta.",
+      "<bold>Vinkki:</bold> Käytä portissa vain yhtä suuntatoimintoa kerrallaan ja varmista turvallinen varareitti. Ristiriitaiset suunnat tekevät esinevirrasta vaikeasti ennustettavan.",
+      "Suunnan asettaminen",
+      "Kun toiminto aktivoituu, putki asettaa yläsivun suunnakseen.\nPutki siis lähettää sisältönsä ylöspäin tai suorittaa maailmaan vaikuttavan toimintonsa yläpuolella."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Mihin suuntaan putken pitäisi toimia tai kuljettaa? Alas? Valitse tämä toiminto.",
+      "Face the Bottom Side on portin toiminto, joka on käytettävissä suunnan vaativaan putkeen asetetussa portissa, kun alas on kelvollinen suunta.",
+      "<bold>Vinkki:</bold> Käytä portissa vain yhtä suuntatoimintoa kerrallaan ja varmista turvallinen varareitti. Ristiriitaiset suunnat tekevät esinevirrasta vaikeasti ennustettavan.",
+      "Suunnan asettaminen",
+      "Kun toiminto aktivoituu, putki asettaa alasivun suunnakseen.\nPutki siis lähettää sisältönsä alaspäin tai suorittaa maailmaan vaikuttavan toimintonsa alapuolella."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Valitse tämä, jotta liitetty Pipe Wire alkaa hehkua.",
+      "Pipe Signal On on portin toiminto, joka on käytettävissä, kun samanvärinen Pipe Wire on kiinnitetty samaan putkeen.",
+      "<bold>Vinkki:</bold> Eristä tämä signaali muusta automaatiosta värillisellä putkijohdolla ja vältä palautesilmukoita viereisten porttien välillä.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, samanvärinen liitetty Pipe Wire aktivoituu.",
+      "Parametri",
+      "Kun Pipe Signal On on valittu ja asennetulla portilla on parametreja, muiden liitettyjen Pipe Wire -värien Pipe Signal On- ja Pipe Signal Off -tilat tulevat parametreiksi.\nValitsemalla Pipe Signal On alkuperäiselle laukaisimelle voit aktivoida useita Pipe Wireja alkuperäisten laukaisimien aktivoituessa."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Lazuli- ja Daizuli Transport Pipet maalaavat ja lajittelevat maalattuja esineitä; tällä toiminnolla vaihdetaan käytettävä väri.",
+      "Paint Items on portin toiminto, joka on käytettävissä Lazuli- tai Daizuli Transport Pipeen asetetussa portissa.",
+      "<bold>Vinkki:</bold> Yhdistä tämä toiminto mahdollisimman tarkkaan käyttökelpoiseen laukaisimeen ja testaa pois päältä -tila yhtä huolellisesti kuin päällä-tila.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, portti säätää putkea seuraavasti:\nLazuli Pipe maalaa läpi kulkevat esineet Paint Items -toiminnossa valitulla värillä.\nDaizuli Pipe lähettää vain valitulla värillä maalatut esineet asetettuun suuntaan."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Emzuli Transport Pipe tarjoaa useita irrotussuodattimia; valitse portissa yksi niistä käyttöön.",
+      "Extraction Preset on portin toiminto, joka on käytettävissä Emzuli Transport Pipeen asetetussa portissa.",
+      "<bold>Vinkki:</bold> Yhdistä tämä toiminto mahdollisimman tarkkaan käyttökelpoiseen laukaisimeen ja testaa pois päältä -tila yhtä huolellisesti kuin päällä-tila.",
+      "Vaatimukset",
+      "Kun toiminto aktivoituu, portti sallii Emzuli Pipen käyttää valitunväristä Extraction Preset -suodatinta.\nIlman portin asettamaa irrotusasetusta Emzuli Pipe ei voi ottaa esineitä."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Moottorien perusteet"
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Neljän Land Markin siirtäminen aina projektin koon muuttuessa muuttuu nopeasti omaksi projektikseen.",
+      "Volume Box on Marker Connectorilla hallittava siirrettävä aluemerkki.",
+      "<bold>Vinkki:</bold> Volume Boxit sopivat valmiin aluemäärityksen siirtämiseen koneelta toiselle. Nimeä tai säilytä ne erikseen, kun useat projektit käyttävät samankokoisia alueita.",
+      "Sijoittaminen ja koon muuttaminen",
+      "Luo Volume Box käyttämällä esinettä palikkaan. Napsauta laatikon kahvaa Marker Connectorilla, siirrä valittua kulmaa ja lopeta koon muuttaminen napsauttamalla uudelleen.\n\nPoista laatikko hiipimällä ja käyttämällä Marker Connectoria siihen. Laatikon vieressä olevat koneet voivat käyttää valittua tilavuutta samalla tavalla kuin Land Mark -aluetta.",
+      "Lisäosat",
+      "Volume Box voi sisältää yhteensopivia suunnittelulisäosia. Filler Planner tallentaa Filler-kuvion ja käänteisen tilan laatikkoon, jolloin lähellä oleva Filler voi ottaa ne automaattisesti käyttöön."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Suuret koneet tarvitsevat tarkan rajan, muuten niiden palikannälkää voi olla vaikea hallita.",
+      "Land Markit määrittävät suorakulmaisia työalueita esimerkiksi Quarrylle, Fillerille ja Architect Tablelle.",
+      "<bold>Vinkki:</bold> Tarkista värilliset rajaviivat useammalta sivulta ennen Quarryn, Builderin tai Fillerin käynnistämistä. Yksi väärässä paikassa oleva merkki voi valita paljon odotettua suuremman alueen.",
+      "Alueen määrittäminen",
+      "Sijoita Land Markit samoille X-, Y- tai Z-akseleille ja yhdistä ne Marker Connectorilla. Yhdistetyt merkit muodostavat suorakulmaisen laatikon reunat. Useimmat koneet tarvitsevat vain vaakasuorat kulmat, mutta myös täydellinen kolmiulotteinen laatikko voidaan määrittää.\n\nRedstone-energian antaminen Land Markille näyttää ohjauslaserit akseleilla ja helpottaa kohdistamista.",
+      "Alueen käyttäminen",
+      "Sijoita kone yhden yhdistetyn merkin viereen. Kone ottaa merkityn laatikon työalueekseen. Jos kelvollisia merkkejä ei löydy, jotkin koneet käyttävät omaa oletusaluettaan."
+    ],
+    "buildcraftlib/item/guide": [
+      "Suuri verstas on helpompi rakentaa, kun jokaisen koneen mukana tulee ohjeita arvailun sijaan.",
+      "Tämä kirja sisältää BuildCraft Community Editionin pelinsisäisen dokumentaation.",
+      "<bold>Vinkki:</bold> Ota Näytä vinkit käyttöön käytännön asennusohjeita varten ja käytä hakua, kun tiedät palikan tai mekanismin nimen.",
+      "Kirjan käyttäminen",
+      "Sisältö yhdistää palikat, esineet, putket, laukaisimet ja toiminnot kaikista ladatuista BuildCraft-moduuleista. Lajittelu muuttaa vain hakemistoa; linkit, reseptit ja viimeksi avattu sivu tallennetaan tähän yksittäiseen kirjaan.\n\n$[special.all_crafting](buildcraftlib:guide)\n\n$[special.new_page]"
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Vain punaiseksi maalatut esineet kulkevat sen läpi, jos suodatin tietenkin on punainen.",
+      "Filter on putkeen kiinnitettävä osa, joka vetää puoleensa samanväriset saapuvat esineet ja päästää vain kyseisen värin läpi.",
+      "Tulpan mekaniikka",
+      "Vain suodattimen värisiksi maalatut esineet voivat kulkea sen läpi; muunväriset esineet yrittävät jatkaa toiseen suuntaan.\nFilter voidaan asettaa vain esineiden kuljetusputkeen, koska vain esineitä voidaan maalata.",
+      "Putkiliitännät",
+      "Kiinnitysosia voidaan sijoittaa vain putkiin ja mille tahansa putken sivulle.\nKahden putken väliin sijoitettuna se ei estä muita putki- tai Pipe Wire -liitäntöjä."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Robotteja ja koneita on helpompi ohjata, kun paikka, reitti tai työalue voidaan kantaa taskussa.",
+      "Map Location tallentaa pisteen, alueen, reitin tai Robotics-alueen myöhempää käyttöä varten.",
+      "<bold>Vinkki:</bold> Tallenna sijainti seisten täsmälleen oikealla palikalla ja katsoen haluttuun suuntaan. Tämä estää yhden palikan siirtymät automaation käyttäessä sijaintia uudelleen.",
+      "Sijaintien tallentaminen",
+      "Tallenna piste ja napsautettu sivu käyttämällä tyhjää Map Locationia tavalliseen palikkaan. Tallenna laatikko käyttämällä sitä yhdistettyyn Land Markiin, Volume Boxiin tai muuhun alueen tarjoajaan. Tallenna reitti käyttämällä sitä Path Mark -verkkoon.\n\nTyhjennä tallennetut tiedot hiipimällä ja napsauttamalla ilmaa oikealla. Tyhjät sijainnit pinoutuvat, mutta tallennetut sijainnit pidetään erillään.",
+      "Robotics-alueet",
+      "Zone Planner voi kirjoittaa kuusitoistakerroksisen maalatun työalueen Map Locationiin. Portit ja Docking Stationit voivat käyttää karttaa rajoittamaan yhdistettyjen robottien työaluetta."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Jotkin palikat sisältävät nestettä, jonka ei pitäisi kadota palikan rikkoutuessa.",
+      "Fragile Fluid Shard on väliaikainen yksisuuntainen säiliö, johon mahtuu enintään 500 mB nestettä.",
+      "<bold>Vinkki:</bold> Pidä tämä työkalu tai komponentti sitä käyttävien koneiden lähellä ja tarkista Käyttökohteet ennen suurten määrien valmistamista.",
+      "Nesteen talteenotto",
+      "Tuetut palikat voivat pudottaa näitä sirpaleita, jos ne rikotaan nesteen ollessa vielä sisällä. Kukin sirpale säilyttää enintään puoli ämpäriä. Nesteenkäsittelijät voivat tyhjentää sirpaleen ja kuluttaa sen sisällön.\n\nSirpaletta ei voi täyttää käsin eikä sitä ole tarkoitettu uudelleenkäytettäväksi säiliöksi. Siirrä sisältö yhteensopivaan säiliöön tai putkeen ennen kuin käsittelet sirpaletta tavallisena materiaalina."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Tehdasta testattaessa polttoaineen odottaminen on harvoin se osa, jota kukaan haluaa testata.",
+      "Creative Engine tuottaa säädettävää MJ-energiaa ilman polttoainetta ja on tarkoitettu luovan tilan testaukseen.",
+      "<bold>Vinkki:</bold> Käytä Creative Engineä vain hallituissa testikokoonpanoissa. Eristä se tavallisista energiaverkoista, jotta rajaton lähde ei peitä läpivirtaus- tai puskurointiongelmia.",
+      "Teho",
+      "Käynnistä moottori redstone-signaalilla. Vaihda jakoavaimella tehoa arvojen 1, 2, 4, 8, 16, 32, 64, 128 ja 256 MJ/tick välillä.\n\nMoottori ei kuluta polttoainetta eikä räjähdä. Käännä sitä jakoavaimella niin, että liikkuva pää osoittaa energiaa vastaanottavaan koneeseen tai energiaputkeen."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Valmis rakennelma on hyödyllinen kerran; Blueprint mahdollistaa saman mallin rakentamisen yhä uudelleen.",
+      "Blueprint tallentaa skannatun alueen tarkat palikat, palikkatilat ja tuetut palikkaentiteettitiedot.",
+      "<bold>Vinkki:</bold> Nimeä tärkeät Blueprintit ja säilytä puhdas pääkopio Libraryssa. Käytä työmailla kaksoiskappaleita, jotta vahingossa tehty ylikirjoitus ei tuhoa alkuperäistä suunnitelmaa.",
+      "Tallentaminen",
+      "Aseta tyhjä Blueprint Architect Tableen Land Mark- tai Volume Box -alueen viereen. Pöytä skannaa valitun tilavuuden ajan kuluessa ja palauttaa käytetyn Blueprintin. Tyhjät Blueprintit pinoutuvat kuuteentoista; tallennetut eivät pinoudu.\n\nBlueprint muistaa skannatun rakennelman todelliset materiaalit ja suunnan. Tuetut palikkaentiteettitiedot ja entiteetit sisällytetään, kun nykyiset kaaviokäsittelijät sallivat ne.",
+      "Rakentaminen",
+      "Aseta käytetty Blueprint Builderiin. Toimita pyydetyt palikat, nesteet ja MJ. Builder rakentaa tallennetun rakennelman ja voi kiertää tai kaivaa sen, jos nämä asetukset sallittiin tallennettaessa."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Joskus muoto on tärkeämpi kuin sen täyttävä tarkka kivi, puu tai metalli.",
+      "Template tallentaa vain alueen täytetyn muodon, jolloin Builder voi täyttää sen toimitetuilla materiaaleilla.",
+      "<bold>Vinkki:</bold> Templatet tallentavat muodon eivätkä tarkkaa palikkatyyppiä. Käytä niitä, kun sama rakennelma pitää rakentaa paikallisesti saatavista materiaaleista.",
+      "Tallentaminen",
+      "Tallenna Template Architect Tablessa aivan kuten Blueprint. Skannaus muistaa täytetyt ja tyhjät kohdat, mutta ei alkuperäisiä palikkatyyppejä tai palikkaentiteettitietoja.",
+      "Rakentaminen",
+      "Aseta käytetty Template Builderiin ja toimita haluamasi palikat. Builder käyttää saatavilla olevia materiaaleja tallennetun muodon rakentamiseen. Templatet sopivat teihin, seiniin, kuoriin ja toistuviin rakennelmiin, joiden materiaali voi vaihtua."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Yhden palikan jokaisen esiintymän vaihtaminen käsin suuressa suunnitelmassa on huonoa arkkitehdin ajankäyttöä.",
+      "Single Block Schematic tallentaa yhden palikkatilan Replacerin käyttöön.",
+      "<bold>Vinkki:</bold> Single Block Schematic -kaaviot sopivat sijoitussääntöjen ja kiertojen testaamiseen ennen suuren Blueprintin antamista Builderille.",
+      "Palikan tallentaminen",
+      "Tallenna palikka käyttämällä siihen tyhjää kaaviota. Kaavio säilyttää palikkatilan ja tuetut vaatimukset sen tuottamiseen. Tyhjennä kaavio hiipimällä ja napsauttamalla oikealla.",
+      "Blueprint-palikoiden vaihtaminen",
+      "Replacer vastaanottaa käytetyn Blueprintin, lähdekaavion ja kohdekaavion. Jokainen Blueprintin vastaava lähdepalikka vaihdetaan kohdepalikaksi muuttamatta maailmaa suoraan."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Rakennuslaatikko on hyödyllisempi, kun se muistaa työalueen lisäksi myös tehtävän työn.",
+      "Filler Planner tallentaa Filler-kuvion ja parametrit Volume Box -lisäosana.",
+      "<bold>Vinkki:</bold> Esikatsele valittu muoto ja mitat ennen Filler-kuvion tallentamista. Pienet koordinaattivirheet tulevat kalliiksi suuressa tilavuudessa toistettuina.",
+      "Suunnittelu",
+      "Kiinnitä suunnittelija Volume Boxiin ja määritä kuvio, parametrit ja käänteinen tila. Laatikkoa käyttävä Filler voi lukea tallennetun suunnitelman uuden määrityksen sijaan.\n\nEsikatselu seuraa Volume Boxia, joten suunniteltua toimintoa voidaan muuttaa ja tarkastella ennen materiaalien ja MJ:n kuluttamista."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Ennen kuin kone voi rakentaa rakennelman uudelleen, jonkun on opetettava sille, millainen rakennelma on.",
+      "Architect Table skannaa merkityn alueen Blueprintiksi tai Templateksi.",
+      "<bold>Vinkki:</bold> Skannaa ensin pieni edustava rakennelma kiertojen, palikkaentiteettien ja erikoispalikoiden tarkistamiseksi. Laajenna suurempiin skannauksiin vasta, kun esikatselu näyttää oikealta.",
+      "Alueen määritys",
+      "Aseta pöytä yhdistetyn Land Mark -alueen tai Volume Boxin viereen. Valittu laatikko luetaan pöydän takana tai vieressä olevasta alueen tarjoajasta.",
+      "Skannaus",
+      "Aseta tyhjä Blueprint tarkkojen palikoiden, tilojen ja tuettujen tietojen tallentamiseen tai tyhjä Template pelkän muodon tallentamiseen. Valitse, saako tulosta kiertää, kaivaa olemassa olevia palikoita tai käyttää vain luovan tilan sijoitusta, ja käynnistä skannaus.\n\nSkannaus etenee vaiheittain, joten suuret alueet vievät aikaa palvelimen jäädyttämisen sijaan. Pidä alue ladattuna, kunnes käytetty tilannekuva näkyy ulostulossa."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "Suunnitelma on vain kokoelma ajatuksia, kunnes jokin alkaa asettaa palikoita.",
+      "Builder käyttää MJ:tä ja resursseja käytetyn Blueprintin tai Templaten rakentamiseen.",
+      "<bold>Vinkki:</bold> Jätä ulostuloon vapaata tilaa Builderin työskennellessä. Jos tehtävä peruutetaan, varatut esineet voivat palata varastoon tai pudota lähelle, jos paikkaa ei ole.",
+      "Builderin toimittaminen",
+      "Aseta käytetty Blueprint tai Template tilannekuvapaikkaan. Vaatimusnäkymä näyttää tarvittavat materiaalit. Toimita esineet resurssivarastoon tai liitetyillä esineputkilla, nesteet sisäisiin säiliöihin ja MJ yhteensopivan energiayhteyden kautta.\n\nBlueprintit vaativat tallennetut palikat. Templatet käyttävät sopivia toimitettuja palikoita muodon rakentamiseen.",
+      "Sijoittaminen ja asetukset",
+      "Rakennelma sijoitetaan Builderin suunnan mukaan. Kierto ja kaivaminen ovat käytettävissä vain, jos tilannekuvan otsake sallii ne. Kun liitetty Path Mark -reitti on olemassa, Builder voi toistaa mallin reitin kohdissa.\n\nTyötila ja varatut resurssit tallennetaan. Uudelleenlatauksen jälkeen keskeneräiset tehtävät tarkistetaan ja niiden varatut esineet, nesteet ja energia palautetaan turvallisesti ennen työn jatkumista."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Kaikki rakennustyöt eivät tarvitse yksityiskohtaista Blueprintiä. Monet ovat vain laatikoita, seiniä, lattioita tai paljon tyhjää tilaa.",
+      "Filler käyttää määritettävää geometrista kuviota merkityllä alueella.",
+      "<bold>Vinkki:</bold> Aloita pienellä merkityllä alueella ja halvalla materiaalilla. Kun kuvio ja suunta ovat oikein, siirrä sama kokoonpano lopulliselle paikalle.",
+      "Alue ja resurssit",
+      "Aseta Filler Land Markien tai Volume Boxin viereen ja päivitä työalue avaamalla käyttöliittymä. Toimita rakennuspalikat resurssipaikkoihin ja MJ sisäiseen akkuun. Kaivavat kuviot voivat poistaa olemassa olevia palikoita, kun kaivaminen on käytössä.",
+      "Kuviot",
+      "Kuvioita ovat tyhjennys, täyttö, laatikko, kehys, horisontti, tasoitus, sylinteri, pyramidi ja portaat. Kaksiulotteisiin muotoihin kuuluvat kolmiot, säännölliset monikulmiot, kaaret ja ympyrät. Kolmiulotteisiin kuuluvat pallot ja osapallot.\n\nParametrit hallitsevat suuntaa, kiertoa, katsesuuntaa, akselia, keskustaa ja onttoja muotoja. Valinnan kääntäminen vaihtaa luodun kuvion sisä- ja ulkopuolen."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Hyvän suunnitelman pitäisi kestää pidempään kuin paperi, jolle se ensin tallennettiin.",
+      "Electronic Library siirtää Blueprint- ja Template-tietoja tilannekuvaesineiden ja tallennetun tietokannan välillä.",
+      "<bold>Vinkki:</bold> Käytä yhtä Librarya projektiarkistona ja toista työmaan lähellä. Näin suojatut pääsuunnitelmat pysyvät erillään väliaikaisista työkopioista.",
+      "Lataaminen",
+      "Aseta käytetty Blueprint tai Template, jonka malli on maailman tilannekuvatietokannassa. Siirron jälkeen malli kopioidaan asiakasliittymän käyttämiin paikallisiin kirjastotietoihin.",
+      "Lähettäminen",
+      "Valitse Libraryn käyttöliittymässä tallennettu malli ja aseta puhdas Blueprint tai Template lähetyspaikkaan. Library siirtää valitun tilannekuvan palvelimelle ja tuottaa käytetyn tilannekuvaesineen.\n\nKukin siirto kestää 50 tickiä. Älä poista syötettä edistymispalkin liikkuessa."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Valmiin mallin materiaalin vaihtamisen ei pitäisi vaatia mallin uudelleen rakentamista muistista.",
+      "Replacer vaihtaa käytetyn Blueprintin jokaisen vastaavan palikan yhdestä tallennetusta palikkatilasta toiseen.",
+      "<bold>Vinkki:</bold> Testaa vaihtosääntöjä pienellä koeseinällä. Sisällytä kaikki tärkeät palikkatilat, erityisesti suunnat ja varastossa samalta näyttävät muunnelmat.",
+      "Palikoiden vaihtaminen",
+      "Aseta käytetty Blueprint Blueprint-paikkaan. Tallenna etsittävä palikka yhteen Single Block Schematic -kaavioon ja korvaava palikka toiseen. Replacer muokkaa Blueprint-tietoja ja palauttaa muutetun mallin.\n\nKone muuttaa suunnitelmaa, ei maailmaan jo asetettuja palikoita. Molemmat kaaviot kulutetaan valmiissa vaihtotoiminnossa."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Builder-robotti tarvitsee suunnitelman ja paikan, josta hakea työtä, vaikka paikallaan oleva Builder ei tekisi rakentamista.",
+      "Construction Marker tarjoaa Blueprint-rakennustehtäviä Builder Roboteille.",
+      "<bold>Vinkki:</bold> Construction Marker sopii suunnitelman tarkasteluun ennen resurssien toimittamista. Korjaa ankkuri ja suunta, kun muutokset ovat vielä ilmaisia.",
+      "Robottirakentaminen",
+      "Aseta Construction Marker ja käytetty Blueprint. Merkki luo rakennustehtäviä, mutta ei itse kuluta MJ:tä tai aseta palikoita. Lähellä olevat Builder Robotit voivat varata tehtäviä, hakea materiaalit ja rakentaa.\n\nMerkki käyttää tilannekuvan kierto-, kaivamis- ja omistajuusasetuksia. Rajoita Builder Robotit työalueella, kun useita projekteja on lähekkäin."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Suuri liikkuva pora on paljon vähemmän huolestuttava, kun sen työalueella on näkyvä teline.",
+      "Framet ovat kevyitä rakennepalikoita, joita Quarry ja rakennusjärjestelmät käyttävät.",
+      "<bold>Vinkki:</bold> Framet ovat väliaikaisia työpalikoita. Pidä rakennusalue vapaana, jotta koneet voivat rakentaa ja poistaa niitä esteettä.",
+      "Quarryn kehys",
+      "Quarry asettaa automaattisesti Framet valitun alueen ympärille ennen louhintaa. Kehys näyttää työrajan ja tukee liikkuvaa porakokoonpanoa.\n\nFrameja voi käyttää myös halpoina avoimina telineinä, mutta Quarry hallitsee ja poistaa omat Frame-palikkansa työkiertonsa aikana."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Käsin louhiminen on palkitsevaa, kunnes haluttu malmi on usean miljoonan ei-halutun palikan alla.",
+      "Quarry rakentaa kehyksen ja louhii automaattisesti kaikki sallitut palikat valitulta alueelta.",
+      "<bold>Vinkki:</bold> Ohjaa Quarryn ulostulo puskuriin ennen lopullista lajittelua. Puskuri estää lyhyitä varastokatkoja keskeyttämästä louhintaa ja tekee ylivuodon näkyväksi.",
+      "Alueen valinta",
+      "Määritä vaakasuora työalue asettamalla Quarry yhdistettyjen Land Markien viereen. Ilman kelvollista aluetta se luo pienemmän oletuslouhoksen eteensä. Toimiessaan Quarry pitää työalueensa tarvitsemat chunkit ladattuina.",
+      "Louhinta",
+      "Toimita MJ:tä. Quarry skannaa ja rakentaa ensin kehyksensä, siirtää sitten poraa alueella ja louhii alaspäin asetettuun syvyyteen tai maailman pohjalle. Suurempi energiamäärä lisää tickissä tehtävää työtä koneen rajaan asti.\n\nLouhintatulokset tarjotaan viereisiin varastoihin ja esineputkiin. Jätä riittävästi ulostulotilaa: tukos voi pysäyttää hyödyllisen etenemisen. Suojatut palikat tarkistetaan Quarryn omistajan vale-pelaajalla eikä suojausta ohiteta huomaamatta."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Putket siirtävät resursseja. Robotit siirtävät itsensä, resurssit ja joskus kaiken tielle osuvan.",
+      "Robot on liikkuva työntekijä, jonka toiminnan määrää asennettu Redstone Board.",
+      "<bold>Vinkki:</bold> Aloita yhdellä robotilla, kahdella saavutettavalla Docking Stationilla ja pienellä työalueella. Laajenna vasta, kun lataus, työkalujen nouto ja purkaminen toimivat luotettavasti.",
+      "Robotin luominen",
+      "Ohjelmoi tyhjä Redstone Board Programming Tablessa ja asenna ohjelmoitu levy tyhjään Robotiin Integration Tablella. Eri levyt luovat eri robottiammatit.",
+      "Käyttöönotto ja lataus",
+      "Kiinnitä Docking Station putkeen ja käytä ohjelmoitua Robotia asemalla. Sijoittajasta tulee omistaja. MJ:hin yhdistetty asema voi ladata telakoitua robottia.\n\nRobotit säilyttävät turvallisen energiavarannon ja palaavat sopivalle asemalle latautumaan, lastaamaan tai purkamaan. Docking Stationien porttitoiminnot hallitsevat suodattimia, reittejä, työalueita ja saatavia resursseja."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Kone voi liikkua, mutta ilman levyä se ei tiedä, pitäisikö sen kantaa, istuttaa, louhia vai paeta lähintä lehmää.",
+      "Redstone Board tallentaa Robotiin asennettavan ammattiohjelman.",
+      "<bold>Vinkki:</bold> Säilytä ohjelmoidut levyt ammateittain erillisissä nimetyissä varastoissa. Tyhjä levy lähellä nopeuttaa uudelleenmääritystä.",
+      "Ohjelmointi",
+      "Aseta tyhjä levy Programming Tableen, valitse ammatti ja toimita laserenergiaa. Tyhjät levyt pinoutuvat kuuteentoista, ohjelmoidut yhteen.\n\nKustannus riippuu ammatista: peruslogistiikka 8 000 MJ, tavalliset työt 32 000 MJ, edistynyt taistelu tai toimitus 64 000 MJ ja Builder 128 000 MJ.",
+      "Asentaminen",
+      "Yhdistä ohjelmoitu levy tyhjään Robotiin Integration Tablella. Asennus maksaa 10 000 MJ. Robot säilyttää ammatin, kunnes se rakennetaan uudelleen eri levyllä."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Itsenäisinkin robotti tarvitsee paikan latautua, nukkua ja saada ohjeet siitä, mitä ei pidä poimia.",
+      "Docking Station on putkeen kiinnitettävä osa, joka yhdistää, lataa ja ohjaa Robotteja.",
+      "<bold>Vinkki:</bold> Anna jokaiselle työalueelle vähintään yksi latausasema ja selkeä lastaus- tai purkureitti. Asemien suodattimet estävät vääriä tarvikkeita.",
+      "Sijoittaminen",
+      "Aseta asema putken vapaalle sivulle. Ota ohjelmoitu Robot käyttöön käyttämällä sitä asemaan. Asemalla voi olla vain yksi robotti kerrallaan.\n\nMJ:tä kuljettava putkiverkko voi ladata telakoitua robottia. Vapauta robotti esineeksi hiipimällä ja käyttämällä jakoavainta liitettyyn pääasemaan, kun aseman tila sallii sen.",
+      "Porttiohjaus",
+      "Kiinnitä portti putkeen ja käytä Robotics-asematoimintoja esineiden ja nesteiden vastaanottamiseen tai tarjoamiseen, resurssien pyytämiseen, robottien kieltämiseen tai pakottamiseen ja konepyyntöjen näyttämiseen. Map Locationit voivat rajata työ- tai lastausalueita."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "Kaikkialle työskentelemään käsketty robotti löytää lopulta paikan, jossa et halunnut sen työskentelevän.",
+      "Zone Planner maalaa yksityiskohtaisia monikerroksisia robottien työalueita Map Locationeihin.",
+      "<bold>Vinkki:</bold> Käytä pieniä alueita, joissa ovat vain tarkoitetut kohteet. Suuret päällekkäiset alueet vaikeuttavat tehtävän varaavan robotin ennustamista.",
+      "Alueen piirtäminen",
+      "Aseta tyhjä Map Location ja muokkaa aluetta suunnittelijassa. Kartta tukee kuuttatoista erikseen muokattavaa kerrosta 2048 x 2048 koordinaattiruudukossa. Kerroksia voi valita, yhdistää ja nimetä.\n\n120 tickin jälkeen ulostulo saa nykyisen Zone Planin sisältävän Map Locationin. Aiemmin tallennetun alueen voi tuoda jatkomuokkaukseen.",
+      "Alueen käyttäminen",
+      "Aseta valmis Map Location yhteensopivaan porttiparametriin tai Docking Station -toimintoon. Liitetyt robotit rajoittavat hakunsa ja työnsä maalattuun alueeseen."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Varasto on hyödyllisempi, kun se voi pyytää puuttuvaa tavaraa ennen tyhjän hyllyn huomaamista.",
+      "Requester ylläpitää asetettuja esinemääriä ja ilmoittaa puuttuvat määrät Delivery Roboteille.",
+      "<bold>Vinkki:</bold> Pyydä ensin pieniä määriä ja varmista, että tarjoajat ja toimitusreitit ovat saavutettavissa. Suuret pysyvät pyynnöt voivat varata kuljettajat ja varastot.",
+      "Pyyntöjen määrittäminen",
+      "Ylemmät kaksikymmentä haamupaikkaa määrittävät pyydetyn esineen ja määrän. Vastaava oikea paikka alapuolella hyväksyy vain pyydetyn esineen tai sopivan List-osuman.\n\nDelivery Robotit tarkistavat puuttuvan määrän ja toimittavat, kunnes pyynnöt täyttyvät. Jo varastossa olevat esineet vähentävät aktiivista pyyntöä.",
+      "Redstone-ulostulo",
+      "Comparator ilmoittaa määritettyjen pyyntöpaikkojen keskimääräisen täyttöasteen. Tyhjä määritys ei anna signaalia; täyttyvät pyynnöt nostavat signaalia kohti viittätoista."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Picker Robot kerää työalueensa pudonneet esineet, käyttää aseman suodatinta ja palaa purkamaan ne.",
+      "<bold>Vinkki:</bold> Pidä keräysalue pienenä ja purkuasema lähellä, muuten robotti käyttää aikansa matkustamiseen.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 8 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti kerää pudonneita esineitä työalueelta, käyttää aseman suodatinta ja palaa purkamaan ne. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRajoita käsiteltäviä esineitä porttisuodattimilla ja Listeillä."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Carrier Robot lastaa sopivia esineitä tarjoavalta asemalta ja kuljettaa ne vastaanottavalle asemalle.",
+      "<bold>Vinkki:</bold> Sijoita lastaus- ja purkuasemat lyhyelle esteettömälle reitille. Molempien päiden suodattimet estävät väärien esineiden kuljetuksen.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 8 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti lastaa sopivia esineitä tarjoavalta asemalta ja kuljettaa ne vastaanottavalle asemalle. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRajoita käsiteltäviä esineitä porttisuodattimilla ja Listeillä."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Tank Robot siirtää nesteitä asemien ja säiliöiden välillä käyttäen asemien nestesuodattimia.",
+      "<bold>Vinkki:</bold> Käytä erillisiä nesteasemia äläkä sekoita nestejobsia yhdelle alueelle. Erilliset reitit paljastavat väärän säiliömäärityksen heti.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 8 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti siirtää nesteitä asemien ja säiliöiden välillä asemien nestesuodattimien mukaisesti. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nEstä muiden nesteiden pääsy reitille asemien nestesuodattimilla."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Lumberjack Robot hakee sopivan kirveen ja kaataa työalueensa puiden yhtenäiset rungot.",
+      "<bold>Vinkki:</bold> Yhdistä Lumberjack Planteriin ja tarjoa työkaluasema. Jätä taimien yläpuolelle riittävästi tilaa käytetyille puulajeille.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee sopivan kirveen ja kaataa työalueen yhtenäiset rungot. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRobotti hakee työkalun asemalta. Hallitse työkaluja ja vaurioituneiden työkalujen palautusta suodattimilla."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Harvester Robot löytää kypsät kasvit, korjaa ne ja palauttaa sadon asemalle.",
+      "<bold>Vinkki:</bold> Rajaa alue kypsiin kasveihin ja tarjoa purkuasema siementen käsittelyllä. Näin muut kasvit eivät päädy mukaan.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti löytää kypsät kasvit, korjaa ne ja palauttaa sadon asemalle. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Miner Robot hakee hakun ja louhii saavutettavia malmipalikoita työalueellaan.",
+      "<bold>Vinkki:</bold> Anna Minerille luotettava hakkutarjonta ja lähellä oleva purkupaikka. Pieni malmialue vähentää kulkemista tyhjissä tunneleissa.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee hakun ja louhii saavutettavia malmipalikoita. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRobotti hakee työkalun asemalta. Hallitse työkaluja ja vaurioituneiden työkalujen palautusta suodattimilla."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Planter Robot lastaa sopivia siemeniä ja istuttaa ne kelvolliseen maahan työalueellaan.",
+      "<bold>Vinkki:</bold> Suodata tarjonta-asema halutuille taimille tai siemenille. Sekoitettu istutusvarasto voi tuottaa epätasaisen tilan.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti lastaa sopivia siemeniä ja istuttaa ne kelvolliseen maahan. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRajoita käsiteltäviä esineitä porttisuodattimilla ja Listeillä."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Farmer Robot hakee kuokan ja muokkaa sopivaa multaa tai ruohoa istutusta varten.",
+      "<bold>Vinkki:</bold> Käytä vakaata viljelyasettelua ja erota siemenvarasto sadosta, jotta robotti ei kuluta vietäviä tuotteita.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee kuokan ja muokkaa sopivaa multaa tai ruohoa istutusta varten. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRobotti hakee työkalun asemalta. Hallitse työkaluja ja palautusta suodattimilla."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Leaf Cutter Robot hakee sopivan leikkaustyökalun ja poistaa lehtipalikat työalueeltaan.",
+      "<bold>Vinkki:</bold> Käytä Leaf Cutteria Lumberjackin jälkeen vain, kun lehtipudotuksia halutaan. Alue ei saa peittää säilytettäviä koristepuita.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee leikkaustyökalun ja poistaa lehtipalikoita. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Butcher Robot hakee miekan ja metsästää sallittuja passiivisia eläimiä välttäen kissoja, koiria ja suojattuja kesyeläimiä.",
+      "<bold>Vinkki:</bold> Pidä työalue poissa jalostuseläimistä ja suojatuista eläimistä. Kapea alue tekee kohteista ennustettavia.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee miekan ja metsästää sallittuja passiivisia eläimiä välttäen suojatut kesyeläimet. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRobotti hakee työkalun asemalta. Hallitse työkaluja ja palautusta suodattimilla."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Shovelman Robot hakee lapion ja kaivaa sillä louhittavia palikoita työalueellaan.",
+      "<bold>Vinkki:</bold> Tarjoa sopivia lapioita ja määritä tarkat kaivurajat. Laaja alue voi poistaa polkuja, viljelymaata tai maisemointia.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee lapion ja kaivaa sillä louhittavia palikoita. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRobotti hakee työkalun asemalta. Hallitse työkaluja ja palautusta suodattimilla."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Pump Robot tyhjentää sopivia maailman nestepalikoita sisäiseen säiliöönsä ja palaa asemalle purkamaan nesteen.",
+      "<bold>Vinkki:</bold> Järjestä tyhjä nestekohde ennen Pump Robotin käynnistämistä. Täysi asema voi jättää robotin kulkemaan ilman hyödyllistä työtä.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 32 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti tyhjentää sopivia maailman nestepalikoita sisäiseen säiliöönsä ja palaa purkamaan. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nEstä muiden nesteiden pääsy reitille asemien nestesuodattimilla."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Delivery Robot täyttää Requesterien ja asematoimintojen esinepyynnöt.",
+      "<bold>Vinkki:</bold> Käytä kohtuullisia eräkokoja ja varmista tarjoaja-aseman saavutettavuus. Näin yksittäisistä esineistä ei tehdä pitkiä toistuvia matkoja.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 64 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti täyttää Requesterien ja asematoimintojen esinepyynnöt. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRajoita käsiteltäviä esineitä porttisuodattimilla ja Listeillä."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Knight Robot hakee aseen ja hyökkää vihamielisten mobien kimppuun työalueellaan.",
+      "<bold>Vinkki:</bold> Pidä taistelualue poissa herkistä koneista ja tarjoa turvallinen latausasema. Testaa mobien pääsy ennen puolustukseen luottamista.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 64 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee aseen ja hyökkää vihamielisten mobien kimppuun työalueellaan. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRobotti hakee työkalun asemalta. Hallitse työkaluja ja palautusta suodattimilla."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Bomber Robot lastaa TNT:tä, lentää kelvollisen maan yli ja pudottaa sytytettyjä räjähteitä.",
+      "<bold>Vinkki:</bold> Käytä Bomberia vain tarkasti eristetyllä alueella. Tarkista räjähdyssuojaus ja omistajan oikeudet ennen räjähteiden antamista.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 64 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti lastaa TNT:tä, lentää kelvollisen maan yli ja pudottaa sytytettyjä räjähteitä. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Stripes Robot lataa käytettäviä esineitä ja käyttää vapaisiin kohdelohkoihin samoja esineenkäyttökäsittelijöitä kuin Stripes Transport Pipe.",
+      "<bold>Vinkki:</bold> Testaa jokainen stripes-toiminto käsin ennen robotin määräämistä. Jotkin käsittelijät kuluttavat, sijoittavat tai muuttavat esineitä tavoilla, joita on vaikea perua.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 64 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti lataa käytettäviä esineitä ja käyttää vapaisiin kohdelohkoihin samoja esineenkäyttökäsittelijöitä kuin Stripes Transport Pipe. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
+      "Builder Robot etsii läheisiä Buildereita tai Construction Markereita, varaa rakennustehtäviä, hakee materiaalit ja suorittaa työn.",
+      "<bold>Vinkki:</bold> Anna Builder Robotille läheinen varastoasema ja aloita pienellä Blueprintillä. Varmista suojattujen lohkojen ja kiertojen oikea toiminta ennen suurempia töitä.",
+      "Ammatti",
+      "Tämä ammatti ohjelmoidaan Redstone Boardiin 128 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti etsii läheisiä Buildereita tai Construction Markereita, varaa rakennustehtäviä, hakee materiaalit ja suorittaa työn. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nBuilder Robotit voivat työskennellä sekä paikallaan oleville Buildereille että Construction Markereille. Pidä projekti ja varastoasemat robotin saavutettavalla alueella."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Laukaisin on aktiivinen, kun robotti on telakoituna asemalle.",
+      "<bold>Vinkki:</bold> Käytä värillistä johdinta erottamaan robotin tilalogiikka saman putkiverkon esine- ja nesteautomaatiosta.",
+      "Laukaisimen toiminta",
+      "Laukaisin on aktiivinen, kun robotti on telakoituna asemalle."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Laukaisin on aktiivinen, kun linkitetty robotti nukkuu ja odottaa työtä.",
+      "<bold>Vinkki:</bold> Käytä värillistä johdinta erottamaan robotin tilalogiikka saman putkiverkon esine- ja nesteautomaatiosta.",
+      "Laukaisimen toiminta",
+      "Laukaisin on aktiivinen, kun linkitetty robotti nukkuu ja odottaa työtä.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Laukaisin on aktiivinen, kun asemalla on linkitetty robotti riippumatta siitä, onko se telakoituna.",
+      "<bold>Vinkki:</bold> Käytä värillistä johdinta erottamaan robotin tilalogiikka saman putkiverkon esine- ja nesteautomaatiosta.",
+      "Laukaisimen toiminta",
+      "Laukaisin on aktiivinen, kun asemalla on linkitetty robotti riippumatta siitä, onko se telakoituna.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Laukaisin on aktiivinen, kun asema tai robotti on varattu toimintoa varten.",
+      "<bold>Vinkki:</bold> Käytä värillistä johdinta erottamaan robotin tilalogiikka saman putkiverkon esine- ja nesteautomaatiosta.",
+      "Laukaisimen toiminta",
+      "Laukaisin on aktiivinen, kun asema tai robotti on varattu toimintoa varten.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Asettaa robotin työssä ja aseman lastauksessa käytetyn esine- tai nestesuodattimen. Rajaa suodatinta lisäämällä esine-, neste- tai List-parametreja.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Asettaa robotin työssä ja aseman lastauksessa käytetyn esine- tai nestesuodattimen. Rajaa suodatinta lisäämällä esine-, neste- tai List-parametreja."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Rajoittaa, mitä työkaluja robotti saa hakea työkalua käyttävään ammattiin.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Rajoittaa, mitä työkaluja robotti saa hakea työkalua käyttävään ammattiin.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Käskee linkitetyn robotin palaamaan tälle Docking Stationille porttiehdon ollessa aktiivinen.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Käskee linkitetyn robotin palaamaan tälle Docking Stationille porttiehdon ollessa aktiivinen.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Herättää nukkuvan linkitetyn robotin, jotta se voi etsiä jälleen työtä.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Herättää nukkuvan linkitetyn robotin, jotta se voi etsiä jälleen työtä.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Määrittää Map Location -alueen robotin työalueeksi.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Määrittää Map Location -alueen robotin työalueeksi.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Rajoittaa aluetta, jolta robotti saa etsiä lastaus- ja purkuasemia.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Rajoittaa aluetta, jolta robotti saa etsiä lastaus- ja purkuasemia.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Sallii robottien purkaa täsmääviä nesteitä tälle asemalle tai siihen yhdistettyihin käsittelijöihin.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Sallii robottien purkaa täsmääviä nesteitä tälle asemalle tai siihen yhdistettyihin käsittelijöihin.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Sallii robottien purkaa täsmääviä esineitä tälle asemalle tai sen yhdistettyyn varastoon.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Sallii robottien purkaa täsmääviä esineitä tälle asemalle tai sen yhdistettyyn varastoon.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Estää robotteja valitsemasta tätä asemaa toiminnon ollessa aktiivinen.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Estää robotteja valitsemasta tätä asemaa toiminnon ollessa aktiivinen.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Saa linkitetyn robotin suosimaan tätä asemaa tai palaamaan sille toiminnon ollessa aktiivinen.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Saa linkitetyn robotin suosimaan tätä asemaa tai palaamaan sille toiminnon ollessa aktiivinen.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Ilmoittaa tämän aseman täsmäävistä nesteistä roboteille, joiden täytyy lastata niitä.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Ilmoittaa tämän aseman täsmäävistä nesteistä roboteille, joiden täytyy lastata niitä.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Ilmoittaa tämän aseman täsmäävistä esineistä roboteille, joiden täytyy lastata niitä.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Ilmoittaa tämän aseman täsmäävistä esineistä roboteille, joiden täytyy lastata niitä.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Luo esinepyyntöjä, jotka Delivery Robotit voivat täyttää.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Luo esinepyyntöjä, jotka Delivery Robotit voivat täyttää.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Robottilogistiikka muuttuu paljon hyödyllisemmäksi, kun asemat voivat kuvata tilansa ja antaa täsmällisiä ohjeita.",
+      "Välittää viereisen yhteensopivan koneen tuottamat esinepyynnöt Delivery Roboteille.",
+      "<bold>Vinkki:</bold> Käytä robottitoimintoja tarkasti suodatetun aseman tai työalueen kautta. Laajat säännöt voivat vaikuttaa tarkoitettua useampiin robotteihin verkkojen limittyessä.",
+      "Toiminnon käyttäytyminen",
+      "Välittää viereisen yhteensopivan koneen tuottamat esinepyynnöt Delivery Roboteille.\n\nKäytä tätä statementia Gateen, joka on kiinnitetty samaan putkeen asiaankuuluvan Docking Stationin kanssa. Esineiden, nesteiden, Listsien ja Map Locationien kaltaiset parametrit ovat käytettävissä vain, jos statement tukee niitä."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Valtameren tyhjentäminen on tehokasta, mutta joskus pinnan muuttaminen kiinteäksi on viihdyttävämpi ratkaisu.",
+      "Water Gelifier muuntaa yhdistyneen lähdeveden ja vesikasvit väliaikaiseksi Water Geliksi.",
+      "<bold>Vinkki:</bold> Tarkista sekä Reseptit- että Käyttökohteet-osio ennen suurten määrien valmistamista; tämä esine voi olla välivaihe usealle myöhemmälle koneelle.",
+      "Gelifierin käyttö",
+      "Käytä esinettä osoittaessasi vettä. Ensimmäinen geelilohko asetetaan kohteena olevaan vesipaikkaan ja alkaa levitä viereiseen lähdeveteen sekä tuettuihin vesikasveihin.\n\nWater Gel etenee useiden vaiheiden läpi ja jähmettyy lopulta. Ympäröivän veden kosketus hidastaa lopullista jähmettymistä, jotta geelirintama ehtii levitä ennen vakautumista.",
+      "Geelin kerääminen",
+      "Jähmettyneen Water Gelin rikkominen pudottaa Gelled Water -esineitä. Menetelmä on tarkoitettu hallittuun veden poistoon ja väliaikaiseen rakentamiseen, joten testaa sitä pienessä lammikossa ennen valtamerta."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Se näyttää vedeltä, tuntuu paljon vähemmän vedeltä eikä enää käyttäydy lainkaan veden tavoin.",
+      "Gelled Water on Water Gelistä kerättävä kiinteä materiaali.",
+      "<bold>Vinkki:</bold> Tarkista sekä Reseptit- että Käyttökohteet-osio ennen suurten määrien valmistamista; tämä esine voi olla välivaihe usealle myöhemmälle koneelle.",
+      "Hankkiminen",
+      "Käytä Water Gelifieria lähdeveteen ja odota leviävän geelin jähmettymistä. Valmiin geelin rikkominen tuottaa Gelled Wateria."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Jotkin reseptit vaativat tarkkuutta, johon sulatusuuni, crafting-ruudukko ja optimistinen vasara eivät pysty.",
+      "Laser muuntaa MJ:n laserenergiaksi lähellä oleville yhteensopiville BuildCraft-pöydille.",
+      "<bold>Vinkki:</bold> Useat Laserit voivat työskennellä yhdellä yhteensopivalla pöydällä. Lisää niitä vähitellen ja seuraa pöydän puskuria, jotta ylimääräistä laseritehoa ei rakenneta turhaan.",
+      "Pöytien energiansyöttö",
+      "Sijoita Laserit enintään kuuden lohkon päähän Assembly-, Charging-, Integration-, Advanced Crafting- tai Programming Tablesta ja syötä Lasereille MJ:tä. Jokainen Laser etsii automaattisesti yhteensopivan pöydän, joka sillä hetkellä pyytää energiaa.\n\nLaser voi siirtää enintään 6,4 MJ tickiä kohden. Useat Laserit voivat työskennellä samalla pöydällä, ja niiden säteet siirtyvät pöydän tarpeen muuttuessa."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Redstone ja timantit ovat hyödyllisiä aineksia, mutta jotkin osat vaativat paljon tarkempaa energian järjestelyä.",
+      "Assembly Table käyttää laserenergiaa BuildCraft-osien ja putkiliitäntöjen valmistamiseen.",
+      "<bold>Vinkki:</bold> Valitse vain automaattisesti suoritettavat reseptit. Asiaankuulumattomien reseptien jättäminen käyttöön voi kuluttaa yhteisiä aineksia, kun mahdollisia tuloksia on useita.",
+      "Kokoaminen",
+      "Aseta tarvittavat ainekset ja valitse yksi tai useampi käytettävissä oleva kokoamisresepti. Lähellä olevat käynnissä olevat Laserit täyttävät valitun reseptin energiavaatimuksen. Valmistuttuaan tulos sijoitetaan pöytään tai tarjotaan viereisille varastoille ja putkille.\n\nUseita valittuja reseptejä voidaan kierrättää automaattisesti, kun niiden aineksia on saatavilla. Pöytä tallentaa osittaisen laseriedistymisen, joten keskeytetty työ voi jatkua myöhemmin."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Kannettava kone ilman energiaa on vain koristeellinen kone, jota on hankala kantaa.",
+      "Charging Table käyttää laserenergiaa Forge Energy -esineiden lataamiseen.",
+      "<bold>Vinkki:</bold> Käytä suodatettuja tulo- ja lähtövarastoja Charging Tablen ympärillä, jotta ladatut ja lataamattomat esineet eivät kierrä samassa silmukassa loputtomasti.",
+      "Lataaminen",
+      "Aseta ladattava esine ainoaan paikkaan. Lähellä olevat Laserit syöttävät energiaa pöydälle, joka siirtää kokonaisia energiayksiköitä Forge Energy -ominaisuuden tarjoaviin esineisiin.\n\nPöytä pyytää vain määrän, jonka esine voi vielä vastaanottaa, ja pysähtyy esineen täytyttyä. Energiaa vastaanottamattomat esineet hylätään."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Jotkin koneet rakennetaan yhtenä kappaleena. Toiset muuttuvat hyödyllisiksi vasta tärkeän osan asennuksen jälkeen.",
+      "Integration Table asentaa yhteensopivia parannuksia tai osia kohde-esineeseen laserenergialla.",
+      "<bold>Vinkki:</bold> Valmistele tarkka portti-, levy- tai robottimuunnelma ennen asettamista. Integrointireseptit usein säilyttävät tai muuttavat esinetietoja, jotka on helpompi tarkistaa ennen automaatiota.",
+      "Integrointi",
+      "Aseta kohde-esine keskipaikkaan ja tarvittavat osat ympäröiviin paikkoihin. Jos rekisteröity integrointiresepti täsmää, lähellä olevat Laserit tuottavat vaaditun energian ja valmis esine ilmestyy lähtöön.\n\nRoboticsin tärkeä käyttötapa on ohjelmoidun Redstone Boardin asentaminen tyhjään Robotiin. Toiminto vaatii 10 000 MJ."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Saman crafting-reseptin toistaminen ei ole vaikeaa, mutta juuri sellainen työ kuuluu koneelle.",
+      "Advanced Crafting Table toistaa määritetyn crafting-reseptin automaattisesti toimitetuilla materiaaleilla ja MJ:llä.",
+      "<bold>Vinkki:</bold> Pidä puskurissa jokaista ainesta ja poista valmiit tulokset erikseen. Tulosten kierrättäminen ainespuolelle voi tukkia monimutkaiset reseptit.",
+      "Automaattinen crafting",
+      "Järjestä haluttu resepti fantomiin 3 kertaa 3 Blueprint-ruudukkoon ja toimita sitten täsmäävät ainekset materiaalivarastoon. Pöytä valmistaa tuloksen lähtövarastoonsa, kun resepti on kelvollinen ja tilaa on riittävästi.\n\nJokainen toiminto pyytää 500 MJ. Pöytä voi vastaanottaa MJ:tä suoraan ja osallistuu myös laserpöytäjärjestelmään."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Tyhjä levy sisältää monia mahdollisuuksia eikä yhtään hyödyllistä ohjetta.",
+      "Programming Table kirjoittaa valitun robottiammatin tyhjään Redstone Boardiin laserenergialla.",
+      "<bold>Vinkki:</bold> Ohjelmoi usein käytettyjä levyjä erissä ja merkitse niiden säilytys. Ammattilevyt voivat näyttää samanlaisilta ennen robottiin asentamista.",
+      "Levyjen ohjelmointi",
+      "Aseta tyhjä Redstone Board, valitse ammatti vaihtoehdoista ja käynnistä lähellä olevat Laserit. Pöytä tuottaa ohjelmoidun levyn, kun ammatin energiakustannus täyttyy.\n\nVaihtoehdot järjestetään energiakustannuksen ja nimen mukaan. Peruslogistiikka-ammatit maksavat 8 000 MJ, tavalliset työammatit 32 000 MJ, edistyneet ammatit 64 000 MJ ja Builder 128 000 MJ."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Tavallinen redstone-pöly on energistä, mutta kristalli on paljon helpompi sovittaa tarkkuuskoneistoon.",
+      "Redstone Crystal on Assembly Tablen osa, jota käytetään edistyneissä BuildCraft-resepteissä.",
+      "<bold>Vinkki:</bold> Tarkista sekä reseptit että käyttötavat ennen tämän osan massatuotantoa. Silicon-osia käyttävät usein useat koneet, portit ja robottiparannukset.",
+      "Valmistus",
+      "Valmista Redstone Crystaleja Assembly Tablessa reseptinäytön osoittamilla aineksilla. Niitä käytetään laserkoneissa, porteissa ja muissa korkean tason osissa."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Monimutkainen porttiohjelma on paljon helpompi kopioida kuin muistaa täydellisesti kuusitoista kertaa.",
+      "Gate Copier tallentaa yhden porttiasetuksen ja käyttää sitä yhteensopiviin portteihin.",
+      "<bold>Vinkki:</bold> Säilytä yksi varmistettu portti päämallina ja kopioi siitä. Näin kokeelliset asetukset eivät leviä koko putkiverkkoon.",
+      "Kopiointi ja liittäminen",
+      "Käytä kopioijaa määritettyyn Gateen tallentaaksesi sen laukaisin-, toiminto-, yhteys- ja parametritiedot. Käytä täytettyä kopioijaa toiseen yhteensopivaan Gateen kopioidaksesi tallennetun ohjelman.\n\nHiivi ja napsauta ilmaa oikealla tyhjentääksesi tallennetut tiedot. Esinemalli ja työkaluvihje näyttävät, onko ohjelma tallennettu."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Kompaktissa putkiverkossa on vähän tilaa toistimien ja kellojen tornille.",
+      "Timer on putkiliitäntä, joka lisää säännölliset 5, 10 ja 15 sekunnin porttilaukaisimet.",
+      "<bold>Vinkki:</bold> Määritä kiinnitettävä osa ennen kuin kopioit tai asennat niitä paljon. Testaa ensin yksi putken pinta varmistaaksesi suunnan ja porttien toiminnan.",
+      "Timer-laukaisimet",
+      "Kiinnitä Timer putkeen. Putken portit saavat kolme sisäistä laukaisinta, jotka pulssittavat 5, 10 tai 15 sekunnin välein maailman peliajan mukaan.\n\nTimer vie ja estää oman putkensivunsa kuten muut liitännät."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Tarkka logiikkapiiri on helpompi koota, kun sen redstone on suostuteltu pysymään yhtenä huolellisesti valmistettuna kappaleena.",
+      "Red Chipset on porttien ja muiden Silicon-reseptien käyttämä redstone-logiikan perusosa.",
+      "<bold>Vinkki:</bold> Tarkista sekä reseptit että käyttötavat ennen tämän osan massatuotantoa. Silicon-osia käyttävät usein useat koneet, portit ja robottiparannukset.",
+      "Kokoaminen",
+      "Valmista tämä piirisarja Assembly Tablessa laserenergialla. Tarkat käyttötavat näkyvät reseptinäytössä ja voivat sisältää portteja, laajennuksia, Robotics-osia ja laserkoneita."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Tarkka logiikkapiiri on helpompi koota, kun sen redstone on suostuteltu pysymään yhtenä huolellisesti valmistettuna kappaleena.",
+      "Iron Chipset on rautatason logiikkaosa, jota käytetään vahvemmissa porteissa ja koneissa.",
+      "<bold>Vinkki:</bold> Tarkista sekä reseptit että käyttötavat ennen tämän osan massatuotantoa. Silicon-osia käyttävät usein useat koneet, portit ja robottiparannukset.",
+      "Kokoaminen",
+      "Valmista tämä piirisarja Assembly Tablessa laserenergialla. Tarkat käyttötavat näkyvät reseptinäytössä ja voivat sisältää portteja, laajennuksia, Robotics-osia ja laserkoneita."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Tarkka logiikkapiiri on helpompi koota, kun sen redstone on suostuteltu pysymään yhtenä huolellisesti valmistettuna kappaleena.",
+      "Gold Chipset on kultatason logiikkaosa, jota käytetään suuren kapasiteetin portti- ja koneresepteissä.",
+      "<bold>Vinkki:</bold> Tarkista sekä reseptit että käyttötavat ennen tämän osan massatuotantoa. Silicon-osia käyttävät usein useat koneet, portit ja robottiparannukset.",
+      "Kokoaminen",
+      "Valmista tämä piirisarja Assembly Tablessa laserenergialla. Tarkat käyttötavat näkyvät reseptinäytössä ja voivat sisältää portteja, laajennuksia, Robotics-osia ja laserkoneita."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Tarkka logiikkapiiri on helpompi koota, kun sen redstone on suostuteltu pysymään yhtenä huolellisesti valmistettuna kappaleena.",
+      "Quartz Chipset on kvartsinen logiikkaosa, jota käytetään parametri- ja ajoituspainotteisissa resepteissä.",
+      "<bold>Vinkki:</bold> Tarkista sekä reseptit että käyttötavat ennen tämän osan massatuotantoa. Silicon-osia käyttävät usein useat koneet, portit ja robottiparannukset.",
+      "Kokoaminen",
+      "Valmista tämä piirisarja Assembly Tablessa laserenergialla. Tarkat käyttötavat näkyvät reseptinäytössä ja voivat sisältää portteja, laajennuksia, Robotics-osia ja laserkoneita."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Tarkka logiikkapiiri on helpompi koota, kun sen redstone on suostuteltu pysymään yhtenä huolellisesti valmistettuna kappaleena.",
+      "Diamond Chipset on korkein vakiopiirisarja, jota käytetään edistyneissä porttilaajennuksissa ja tarkkuuskoneissa.",
+      "<bold>Vinkki:</bold> Tarkista sekä reseptit että käyttötavat ennen tämän osan massatuotantoa. Silicon-osia käyttävät usein useat koneet, portit ja robottiparannukset.",
+      "Kokoaminen",
+      "Valmista tämä piirisarja Assembly Tablessa laserenergialla. Tarkat käyttötavat näkyvät reseptinäytössä ja voivat sisältää portteja, laajennuksia, Robotics-osia ja laserkoneita."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Luotettava kello on usein hyödyllisempi kuin monimutkainen.",
+      "Tämä laukaisin pulssittaa kerran 5 sekunnissa, kun Timer on kiinnitetty putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Timer-pulssi",
+      "Laukaisin aktivoituu maailman tickeillä, jotka ovat jaollisia sadalla. Liitä se porttitoimintoihin, joiden tulee toistua kiinteällä aikavälillä."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Luotettava kello on usein hyödyllisempi kuin monimutkainen.",
+      "Tämä laukaisin pulssittaa kerran 10 sekunnissa, kun Timer on kiinnitetty putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Timer-pulssi",
+      "Laukaisin aktivoituu maailman tickeillä, jotka ovat jaollisia kahdellasadalla. Liitä se porttitoimintoihin, joiden tulee toistua kiinteällä aikavälillä."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Luotettava kello on usein hyödyllisempi kuin monimutkainen.",
+      "Tämä laukaisin pulssittaa kerran 15 sekunnissa, kun Timer on kiinnitetty putkeen.",
+      "<bold>Vinkki:</bold> Yhdistä laukaisin ensin väliaikaiseen lamppuun. Kun aktiivinen ja passiivinen tila on varmistettu, johda sama signaali koneistolle.",
+      "Timer-pulssi",
+      "Laukaisin aktivoituu maailman tickeillä, jotka ovat jaollisia kolmellasadalla. Liitä se porttitoimintoihin, joiden tulee toistua kiinteällä aikavälillä."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Wood Power ottaa MJ:tä yhteensopivista viereisistä tuottajista ja syöttää sen energiaputkiverkkoon.",
+      "<bold>Vinkki:</bold> Käytä yhtä puista poistoliitäntää kutakin tarkoitettua lähdettä kohti ja vältä suljettuja silmukoita. Varmista, että lähde voi turvallisesti tuottaa pyydetyn MJ-nopeuden.",
+      "Energiaputkien mekaniikka",
+      "Oletussiirtoraja on 16 MJ tickiä kohden. Wooden Power Pipet eivät yhdisty suoraan toiseen puiseen poistoputkeen.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Cobblestone Power on pieni­kapasiteettinen perusenergiaputki.",
+      "<bold>Vinkki:</bold> Valitse putkitasot sekä läpäisyn että verkon rakenteen mukaan. Matalan tason osa voi rajoittaa muuten parannettua energialinjaa.",
+      "Energiaputkien mekaniikka",
+      "Oletussiirtoraja on 4 MJ tickiä kohden. Se ei yhdisty Stone Power Pipeihin, joten viereiset linjat voidaan pitää erillään.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Stone Power on yleinen pienikapasiteettinen energiaputki.",
+      "<bold>Vinkki:</bold> Valitse putkitasot sekä läpäisyn että verkon rakenteen mukaan. Matalan tason osa voi rajoittaa muuten parannettua energialinjaa.",
+      "Energiaputkien mekaniikka",
+      "Oletussiirtoraja on 8 MJ tickiä kohden. Se ei yhdisty Cobblestone Power Pipeihin.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Sandstone Power kuljettaa energiaa putkien välillä yhdistymättä suoraan viereisiin koneisiin.",
+      "<bold>Vinkki:</bold> Käytä Sandstone Power Pipeja lähellä koneita, joiden ei pidä liittyä suoraan linjaan. Varmista, että suunniteltu putkien välinen runko pysyy yhtenäisenä.",
+      "Energiaputkien mekaniikka",
+      "Oletussiirtoraja on 16 MJ tickiä kohden. Käytä sitä linjan viemiseen sellaisten koneiden ohi, joista ei pidä tulla energiapäätepisteitä.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Quartz Power on keskikapasiteettinen kuljetusputki, joka on erotettu kivi- ja mukulakiviputkien perheistä.",
+      "<bold>Vinkki:</bold> Merkitse erilliset jännite- tai kuormitusalueet eri materiaaleilla, vaikka niiden nykyinen läpäisy olisi samanlainen.",
+      "Energiaputkien mekaniikka",
+      "Oletussiirtoraja on 32 MJ tickiä kohden.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Gold Power on suurikapasiteettinen energiaputki.",
+      "<bold>Vinkki:</bold> Paranna ensin pitkät tai voimakkaasti kuormitetut runkolinjat. Yhtä konetta syöttävät lyhyet haarat eivät usein hyödy samasta tasosta.",
+      "Energiaputkien mekaniikka",
+      "Oletussiirtoraja on 64 MJ tickiä kohden.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Iron Power on säädettävä energianrajoitin.",
+      "<bold>Vinkki:</bold> Tarkista suunnatut energialähdöt uudelleen putken kiertämisen tai siirtämisen jälkeen. Yksi väärä sivu voi jättää kokonaisen haaran ilman energiaa.",
+      "Energiaputkien mekaniikka",
+      "Täysi siirtoraja on 32 MJ tickiä kohden. Puolita rajaa toistuvasti Wrenchillä aina yhteen kuudeskymmenesneljäsosaan asti, poista siirto sitten kokonaan käytöstä ennen paluuta täyteen tehoon.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Diamond Power on erittäin suurikapasiteettinen säädettävä energianrajoitin.",
+      "<bold>Vinkki:</bold> Käytä Diamond Power Pipeja suuren kysynnän runkolinjoissa ja haarautumiskohdissa, älä korvaamaan kunkin haaran kuluttajien tasapainotusta.",
+      "Energiaputkien mekaniikka",
+      "Täysi siirtoraja on 256 MJ tickiä kohden. Puolita rajaa toistuvasti Wrenchillä tai poista siirto kokonaan käytöstä.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Energiasta on hyötyä vasta, kun se saavuttaa koneen, jonka piti vastaanottaa se.",
+      "Diamond Wood Power on suurikapasiteettinen puinen poistoputki.",
+      "<bold>Vinkki:</bold> Liitä suurikapasiteettinen poisto vain sille suunniteltuihin lähteisiin ja verkkoihin. Testaa haara hallitulla kuluttajalla ennen täyttä tuotantoa.",
+      "Energiaputkien mekaniikka",
+      "Oletussiirtoraja on 256 MJ tickiä kohden. Tavallisen Wooden Power Pipen tavoin se vastaanottaa MJ:tä yhteensopivilta tuottajilta eikä yhdisty toiseen puiseen poistoputkeen.\n\nLiitokseen tuleva energia jaetaan suhteellisesti sitä pyytäville lähdöille. Osuus hyväksyy enintään nykyisen vapaan kapasiteettinsa, ja verkko säilyttää vastaanottamatta jääneen energian sen kopioimisen tai hävittämisen sijaan normaalin siirron aikana.\n\nEstä ei-toivotut yhteydet Pipe Plugeilla tai maalaamalla viereiset putket eri väreillä. Energiaputkien rajat määritetään verkon muuttuessa ja palautetaan maailman lataamisen jälkeen."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Puinen putki on erinomainen esineiden siirtämisessä ja huomattavasti heikompi veden pitämisessä sisällään.",
+      "Pipe Sealant on crafting-osa, jolla kuljetusmateriaaleja muunnetaan nesteputkien osiksi.",
+      "<bold>Vinkki:</bold> Tarkista sekä Reseptit- että Käyttökohteet-osio ennen suurten määrien valmistamista; tämä esine voi olla välivaihe usealle myöhemmälle koneelle.",
+      "Nesteputkien crafting",
+      "Käytä Pipe Sealantia oppaan näyttämissä resepteissä Fluid Pipejen luomiseen tai parantamiseen. Sillä ei ole omaa kuljetuskäyttäytymistä, ja se kulutetaan crafting-materiaalina."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Puskuri on hyödyllisin, kun se tietää, mitkä esineet ovat oikeasti tervetulleita sen sisään.",
+      "Filtered Buffer on yhdeksän paikan varasto, jonka todellisia paikkoja ohjaavat vastaavat fantomisuodattimet.",
+      "<bold>Vinkki:</bold> Käytä Filtered Bufferia nopeiden putkien ja hitaampien koneiden välissä. Se tasaa purkauksia ja antaa suodattimille vakaan varaston, jota vasten toimia.",
+      "Suodatus",
+      "Määritä käyttöliittymän yhdeksän fantomisuodatinpaikkaa. Jokainen vastaava todellinen varastopaikka hyväksyy vain suodattimensa valitseman esineen. Putket ja muut esinekäsittelijät voivat lisätä todelliseen varastoon tai poistaa siitä näkyvän esineominaisuuden kautta.\n\nKäytä puskuria lajitteluvaiheiden välissä varaamaan erilliset varastopaikat eri esineille ja estämään asiaankuulumattomien pinojen pääsy linjalle."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Maasta kupliva tumma neste on joko arvokas energialähde tai erittäin kallis ympäristöongelma.",
+      "Oil on luonnollisesti muodostuva lähtöaine BuildCraftin polttoaineenkäsittelyketjulle.",
+      "<bold>Vinkki:</bold> Pidä raaka Oil omassa säiliössään ja jätä tilaa välituotteille ennen automaattisen jalostamon käynnistämistä.",
+      "Oilin kerääminen",
+      "Oil-esiintymiä syntyy maailmaan, ja niitä voi kerätä Bucketeilla, Pumpilla tai muilla yhteensopivilla nestekäsittelijöillä. Säilytä sitä Tankeissa ja siirrä Fluid Pipeilla.",
+      "Käyttö ja jalostus",
+      "Cool Oil on likainen Combustion Enginen polttoaine, joka tuottaa 3 MJ/t ja Residuea. Jalostaminen on yleensä arvokkaampaa.\n\nDistiller valitsee reitin nykyisen lämpötilan mukaan: Cool Oil erotetaan Gaseous Fueliksi ja Heavy Oiliksi; Hot Oil Mixed Light Fueliksi ja Dense Oiliksi; Searing Oil Distilled Oiliksi ja Residueksi."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Jokainen tyylikäs jalostusketju tuottaa lopulta jotain tahmeaa, jota kukaan ei halunnut varastoida.",
+      "Residue on likaisten polttoaineiden ja useiden korkean lämpötilan tislausreittien raskas sivutuote.",
+      "<bold>Vinkki:</bold> Residue on todellinen tuote, ei huomiotta jätettävää jätettä. Järjestä sille oma säiliö tai hallittu poistoreitti, jotta jalostus ei pysähdy.",
+      "Tuotanto",
+      "Crude Oil, Heavy Oil ja Dense Oil tuottavat Residuea palaessaan Combustion Enginessä. Se on myös useiden Searing-tislausreseptien nestemäinen tuotos.\n\nResiduea ei ole rekisteröity Combustion Enginen polttoaineeksi. Tyhjennä se moottoreista ja koneista Fluid Pipeilla tai astioilla, jotta Residue-säiliöt eivät tukkeudu.",
+      "Lämpötila",
+      "Muiden BuildCraftin öljytuotteiden tavoin Residuella on Cool-, Hot- ja Searing-tilat, ja se voi vaihtaa lämpöä Heat Exchangerissa. Nykyisessä projektissa se on ensisijaisesti sivutuote ja kuljetettava prosessineste."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Kevyemmät jakeet ovat lähteneet. Jäljellä oleva on yhä energistä mutta huomattavasti yhteistyöhaluttomampaa.",
+      "Heavy Oil on likainen välipolttoaine, jota syntyy tislattaessa Cool Oilia.",
+      "<bold>Vinkki:</bold> Merkitse Heavy Oil -linjat selvästi ja pidä ne erillään polttoaineista; välituotteet voivat näyttää samanlaisilta putkissa ja säiliöissä.",
+      "Polttoaine",
+      "Heavy Oil palaa Combustion Enginessä teholla 2 MJ/t ja tuottaa Residuea. Sitä voi käyttää suoraan, mutta lisäjalostus tuottaa puhtaampia tuotteita.",
+      "Jalostus",
+      "Hot Heavy Oil tislautuu Light Fueliksi ja Dense Oiliksi. Searing Heavy Oil tislautuu Mixed Heavy Fueliksi ja Residueksi. Valitse tarvittava lämpötila Heat Exchangerilla ennen nesteen lähettämistä Distilleriin."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Dense Oil sisältää alkuperäisen seoksen osan, joka vastustaa voimakkaasti nopeaa liikkumista koneiston läpi.",
+      "Dense Oil on likainen välipolttoaine, jota saadaan Hot Oilista tai Hot Distilled Oilista.",
+      "<bold>Vinkki:</bold> Säilytä Dense Oil erillään, kunnes seuraava käsittelyvaihe on valmis. Sen syöttäminen väärään lämpötilavaiheeseen tuhlaa jalostamon kapasiteettia.",
+      "Polttoaine",
+      "Dense Oil palaa Combustion Enginessä teholla 4 MJ/t ja tuottaa Residuea. Suurempi teho on hyödyllinen, kun välitön energia on puhdasta toimintaa tärkeämpää.",
+      "Jalostus",
+      "Kuumenna Dense Oil Searing-tilaan ja tislaa se erottaaksesi Dense Fuelin Residueksi. Tämä on käsittelyketjun tämän haaran viimeinen jalostusvaihe."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Ensimmäinen kierros poisti pahimmat epäpuhtaudet. Useat hyödylliset jakeet jakavat yhä saman säiliön.",
+      "Distilled Oil on puhtaasti palava välituote, joka sisältää kaasumaisia, kevyitä ja raskaita polttoainejakeita.",
+      "<bold>Vinkki:</bold> Distilled Oil on välituote. Puskuroi sitä, jotta edeltävä Distiller voi jatkaa, vaikka jälkijäähdytys tai -jalostus pysähtyy.",
+      "Polttoaine",
+      "Distilled Oil palaa ilman Residuea teholla 1 MJ/t. Sen suora teho on vaatimaton, mutta se on joustava lähtöaine jatkoerotteluun.",
+      "Jalostus",
+      "Cool Distilled Oil tislautuu Gaseous Fueliksi ja Mixed Heavy Fueliksi. Hot Distilled Oil tislautuu Mixed Light Fueliksi ja Dense Fueliksi. Muuta lämpötilaa Heat Exchangerissa ennen seuraavan reitin valintaa."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Kevyin jae haluaa innokkaasti poistua sekä Distilleristä että jokaisesta huonosti suunnitellusta putkiverkosta.",
+      "Gaseous Fuel on suurimman tehon jalostettu Combustion Engine -polttoaine ja tuottaa 8 MJ/t ilman Residuea.",
+      "<bold>Vinkki:</bold> Säästä arvokas polttoaine moottoreille, jotka käyttävät sitä tehokkaasti, ja järjestä automaattinen sammutus kuluttajan pysähtyessä.",
+      "Tuotanto",
+      "Gaseous Fuel on Cool Oilin, Cool Distilled Oilin tai Cool Mixed Light Fuelin tislauksen ylin tuotos. Sillä on Cool-, Hot- ja Searing-muodot Heat Exchangerin läpi kuljettamista varten, vaikka se ei tarvitse jatkotislausta.",
+      "Energia",
+      "Käytä sitä, kun kone tarvitsee yhden Combustion Enginen suurimman hetkellisen tehon. Suuri teho lisää myös nopeasti lämpöä, joten ylläpidä luotettavaa jäähdytysnesteen syöttöä ja MJ-kuluttajaa, joka voi vastaanottaa tuotetun energian."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Light Fuel on järkevä keskitie lyhyen energiapurkauksen ja koko viikon kestävän tynnyrin välillä.",
+      "Light Fuel on puhdas jalostettu polttoaine, joka tuottaa Combustion Enginessä 6 MJ/t.",
+      "<bold>Vinkki:</bold> Käytä erillisiä polttoainesäiliöitä jokaiselle laadulle. Näin moottorin käyntiaikaa ja jalostamon läpäisyä on helpompi verrata.",
+      "Tuotanto",
+      "Tislaa Cool Mixed Light Fuelia, Hot Heavy Oilia tai Hot Mixed Heavy Fuelia saadaksesi Light Fuelia. Se ei palaessaan tuota Residuea.",
+      "Energia",
+      "Light Fuel yhdistää suuren tehon puhtaaseen toimintaan. Pidä moottori viileänä ja varmista, että yhdistetty MJ-verkko voi vastaanottaa 6 MJ joka tickillä."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Dense Fuel arvostaa kestävyyttä innostuksen sijaan ja pitää moottorin mielellään käynnissä pitkään.",
+      "Dense Fuel on puhdas jalostettu polttoaine, joka tuottaa 4 MJ/t ja palaa pitkään.",
+      "<bold>Vinkki:</bold> Dense Fuel on riittävän arvokasta perustelemaan puskuroidun toimituksen ja moottorin sammutuslaukaisimen ennen valvomatonta käyttöä.",
+      "Tuotanto",
+      "Hot Distilled Oil, Hot Mixed Heavy Fuel ja Searing Dense Oil voivat tuottaa Dense Fuelia. Dense Oil -reitti erottaa toisena tuotoksenaan myös Residuea.",
+      "Energia",
+      "Dense Fuel palaa tuottamatta Residuea. Kohtalainen teho ja suuri kokonaisenergia sopivat jatkuvaan konekäyttöön paremmin kuin lyhyisiin huippukuormiin."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Kaksi hyödyllistä polttoainetta jakaa yhden säiliön. Distiller voi ratkaista omistuskiistan.",
+      "Mixed Light Fuel on puhdas välituote ja käyttökelpoinen 3 MJ/t Combustion Engine -polttoaine.",
+      "<bold>Vinkki:</bold> Käsittele seospolttoaineita erillisinä tuotteina äläkä yhdistä niitä takaisin väliöljylinjoihin.",
+      "Tuotanto",
+      "Hot Oil ja Hot Distilled Oil tuottavat Mixed Light Fuelia kaasumaisena tuotoksenaan. Se sisältää kaasumaisia ja kevyitä polttoainejakeita.",
+      "Jalostus",
+      "Tislaa Cool Mixed Light Fuel erottaaksesi Gaseous Fuelin ja Light Fuelin. Se voidaan myös polttaa suoraan tuottamatta Residuea."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Kevyt ja raskas polttoaine voivat jakaa säiliön, mutta niiden erottaminen helpottaa erilaisten vahvuuksien hyödyntämistä.",
+      "Mixed Heavy Fuel on puhdas välituote ja käyttökelpoinen 5 MJ/t Combustion Engine -polttoaine.",
+      "<bold>Vinkki:</bold> Puskuroi raskasta seospolttoainetta lähellä kuluttajia, mutta pidä jalostamon pääulostulot erillään helpompaa vianetsintää varten.",
+      "Tuotanto",
+      "Cool Distilled Oil ja Searing Heavy Oil voivat tuottaa Mixed Heavy Fuelia. Se sisältää kevyitä ja raskaita polttoainejakeita.",
+      "Jalostus",
+      "Tislaa Hot Mixed Heavy Fuel erottaaksesi Light Fuelin ja Dense Fuelin. Seoksen suora polttaminen ei tuota Residuea ja antaa tehon näiden kahden lopullisen polttoaineen väliltä."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Mehiläisten lajittelu värin perusteella ei koskaan olisi riittävän tarkkaa vakavaan mehiläishoitoon.",
+      "Apiarist's Pipe on Forestry-yhteensopiva esineputki, joka reitittää geneettisiä esineitä jokaiselle sivulle erillisellä suodattimella.",
+      "<bold>Vinkki:</bold> Käytä Apiarist's Pipea erillisessä mehiläisten käsittelyliitoksessa. Säilytä tavallinen ylivuotoreitti, jotta odottamattomat mehiläistyypit eivät tuki verkkoa.",
+      "Geneettiset suodattimet",
+      "Avaa putki ja määritä jokainen lähtösivu. Forestryn suodatinsäännöt voivat täsmätä geneettisiä esineitä lajin, lajiperheen ja elinvaiheen mukaan. Yhdelle sivulle voidaan määrittää enintään kolme valittua lajia, ja jokainen merkintä voidaan ottaa erikseen käyttöön tai pois käytöstä.\n\nEsineet reititetään ensimmäiseen yhteensopivaan lähtöön määritettyjen Forestry-sääntöjen mukaan. Lähdöt, joilla ei ole aktiivista täsmäävää sääntöä, eivät ota geneettistä esinettä. Putki voidaan maalata ja yhdistää kuten muut BuildCraft-esineputket.\n\nTämä sivu ladataan vain, kun Forestry on asennettu ja yhteensopivuusesine rekisteröity."
+    ]
+  }
+}

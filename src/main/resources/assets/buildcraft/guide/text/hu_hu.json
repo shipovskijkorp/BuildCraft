@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "hu_hu",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "Az egyszerű automatizálás megalkotása közben hasznos alkatrészre bukkantál: egy forgatható fogaskerékre!\nMivel csak fából készült, a komolyabb feladatokhoz tovább kell fejleszteni...",
+      "A fa fogaskerék a BuildCraft használatának első gyártási lépése, és sok minden alapjául szolgál.",
+      "<bold>Tipp:</bold> A fa fogaskerekeket előre megtervezett adagokban készítsd. A magasabb szintű fogaskerekek felhasználják az előző szintet, ezért tarts meg néhány alacsonyabb szintű tartalékot a gépekhez és szerszámokhoz."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "A fa túl gyengének bizonyult a valódi gépekben, ezért úgy döntesz, hogy kőből készítesz új fogaskereket.\nTovábbi előnye, hogy egyáltalán nem gyullad meg.",
+      "A kő fogaskerék lényegében a fa fogaskerék továbbfejlesztése, és a kő keménységének köszönhetően erősebb gépek készíthetők vele.",
+      "<bold>Tipp:</bold> A kő fogaskerekeket előre megtervezett adagokban készítsd. A magasabb szintű fogaskerekek felhasználják az előző szintet, ezért tarts meg néhány alacsonyabb szintű tartalékot a gépekhez és szerszámokhoz."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "A kő megfelel egyszerű gépekhez, de nem bírja jól a motorokban és összetett gépezetekben fellépő nagy terhelést és hőmérsékletet.\nA vas sokkal alkalmasabb ezekre a komolyabb feladatokra.",
+      "A fogaskerekek újabb fejlesztése a fém tulajdonságainak köszönhetően összetettebb gépek elkészítését teszi lehetővé.",
+      "<bold>Tipp:</bold> A vas fogaskerekeket előre megtervezett adagokban készítsd. A magasabb szintű fogaskerekek felhasználják az előző szintet, ezért tarts meg néhány alacsonyabb szintű tartalékot a gépekhez és szerszámokhoz."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Az összetettebb feladatokhoz sok apró, egymásba kapcsolódó fogaskerék kell, a vas fogaskerekek pedig ilyen használat mellett könnyen eltörnek.\nAz arany apró fogaskerékké formálva sem törik el, ezért összetett szerkezetekben is használható.",
+      "Az arany fogaskerék a fogaskerekek következő szintje, amelyet nagy területen dolgozó gépek használnak.",
+      "<bold>Tipp:</bold> Az arany fogaskerekeket előre megtervezett adagokban készítsd. A magasabb szintű fogaskerekek felhasználják az előző szintet, ezért tarts meg néhány alacsonyabb szintű tartalékot a gépekhez és szerszámokhoz."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "A mély bányajáratokban felfedezed a legritkább, ugyanakkor legerősebb anyagot: a gyémántot.\nSzilárdsága miatt a gyémánt fogaskerék a legmegterhelőbb feladatokat is képes teljesíteni törés és elkopás nélkül.",
+      "A fogaskerekek utolsó szintje, a gyémánt fogaskerék, a legerősebb fogaskerék, amely a legösszetettebb gépekhez szükséges.",
+      "<bold>Tipp:</bold> A gyémánt fogaskerekeket előre megtervezett adagokban készítsd. A magasabb szintű fogaskerekek felhasználják az előző szintet, ezért tarts meg néhány alacsonyabb szintű tartalékot a gépekhez és szerszámokhoz."
+    ],
+    "buildcraftcore/item/wrench": [
+      "A gépek létrehozása és használata nagyon hasznos, néha azonban módosítani kell a működésüket, vagy más irányba kell fordítani őket.\nA franciakulcs erre kínál megoldást: egy ütéssel megváltoztathatja egy gép vagy sok más blokk állapotát.",
+      "A franciakulcs az alapvető szerszám, amellyel kattintással elforgathatók és módosíthatók a blokkok, gépek és bizonyos entitások.",
+      "<bold>Tipp:</bold> Tartsd magadnál a franciakulcsot a gépterem összeállításakor. Sok BuildCraft-blokk és irányított cső elforgatható vagy újrakonfigurálható anélkül, hogy szét kellene törni."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "A világ színkavalkádja önmagában is lenyűgöző, de képzeld el, hogy egyetlen ecsetvonással megváltoztathatod bizonyos blokkok színét.\nA blokkok festése nemcsak díszítésre jó, hanem gyakorlati célja is lehet, például a csövek elkülönítése.",
+      "A festőecsetekkel különféle blokkok festhetők a 16 szín egyikére.\nEgy blokk festése általában csak díszítésre szolgál, egyes blokkok azonban festés után különleges tulajdonságokat kapnak.\nA különböző színűre festett csövek például nem kapcsolódnak egymáshoz.",
+      "<bold>Tipp:</bold> A tartós csőhálózatokhoz használj külön ecseteket. Általában könnyebb csak azokat az ágakat színezni, amelyek nem kapcsolódhatnak össze, mint minden csövet befesteni."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "A gépek munkaterületének pontos szabályozása minden nagy mérnöki projektben létfontosságú, ezért szükséged van egy erre szolgáló eszközre.",
+      "A Jelölő összekötő a térfogatdoboz méretének vagy egy csatlakoztatott útvonaljelölő irányának módosítására használható.",
+      "<bold>Tipp:</bold> Csak akkor kösd össze a jelölőket, amikor minden végpont a végleges helyén van. Egy kész alakzat újbóli összekötése gyorsabb, mint később kijavítani egy megcsavarodott vagy hiányos területet.",
+      "Információ",
+      "A Jelölő összekötő használatához tartsd a kezedben, kattints a módosítani kívánt lézerdobozra, majd mozgasd a kurzort a beállításhoz. Kattints rá ismét a beállítás befejezéséhez.\nA Jelölő összekötőt kézben tartva Shift-kattintással eltávolíthatod a lézerdobozt."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Az egyenes vonalak hasznosak, de a nagy projektekhez gyakran olyan útvonal kell, amely megkerüli a terepet és a gépeket.",
+      "Az útvonaljelölők rendezett útvonalat határoznak meg az útvonalalapú munkát támogató gépek számára.",
+      "<bold>Tipp:</bold> Az útvonaljelölőket a haladás sorrendjében helyezd el, és minden szakaszt tarts akadálymentesen. Érdemes rövid próbaútvonalat készíteni, mielőtt robotokat vagy automatikus építőket rendelsz hozzá.",
+      "Útvonal létrehozása",
+      "Helyezz útvonaljelölőket azokra a pontokra, amelyeken az útvonalnak át kell haladnia. A Jelölő összekötővel kösd össze őket sorrendben. A látható lézervonal mutatja az útvonalat, amelyet egy kompatibilis Builder vagy más gép követni fog.\n\nAz útvonal irányított: a jelölők összekötési sorrendje határozza meg a pontok sorrendjét. Az útvonal átalakításához törd ki vagy kösd újra a jelölőket.",
+      "Az útvonal használata",
+      "Helyezz egy kompatibilis gépet az egyik összekötött útvonaljelölő mellé. A gép beolvassa a teljes összekötött útvonalat, és annak minden pontján megismétli a munkáját."
+    ],
+    "buildcraftcore/item/list": [
+      "Kilenc szűrőhely kevés segítséget jelent, amikor egy válogatórendszernek egy teljes műhelynyi kapcsolódó anyagot kell felismernie.",
+      "A Lista újrafelhasználható tárgyszűrőket tárol csövekhez, kapukhoz és robotállomásokhoz.",
+      "<bold>Tipp:</bold> Használj listákat a több gyémántcső vagy kapu által megosztott, újrafelhasználható szűrőkhöz. Egyetlen lista frissítése biztonságosabb, mint sok különálló szűrőhely szerkesztése.",
+      "Lista szerkesztése",
+      "Tartsd a Listát, és jobb kattintással nyisd meg. Adj neki nevet, helyezz referenciatárgyakat a szellemhelyekre, és válaszd ki, hogyan történjen az egyes bejegyzések összehasonlítása.\n\nA pontos egyezés megtartja a tárgyadatokat és más fontos részleteket. A tágabb módok kapcsolódó tárgytípusokat vagy anyagokat is egyeztethetnek, ha ezt a jelenlegi tárgynyilvántartás támogatja.",
+      "Lista használata",
+      "Helyezd a beállított Listát egy azt elfogadó paraméter- vagy szűrőhelyre. A fogadó cső, kapu vagy robotművelet egyetlen újrafelhasználható szűrőként kezeli a bejegyzéseket. A Lista szűrőként használva nem fogy el."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "Az energia előállítására tett kísérleteid során felfedeztél egy módszert, amellyel pusztán redstone-jellel kis mennyiségű energiát termelhetsz.",
+      "A redstone motor egy alapvető motor, amelynek működéséhez csak redstone-jel szükséges. Csupán nagyon kis mennyiségű energiát termel.",
+      "<bold>Tipp:</bold> A redstone motor leginkább kis igényű kitermeléshez és kapukhoz használható. Nem helyettesíthet erősebb motort, ha egy gépnek számottevő MJ/tick igénye van.",
+      "Információ",
+      "A kis mennyiségű termelt MJ miatt csak egyszerű eszközök, például kitermelőcsövek vagy szivattyúk működtetésére alkalmasak.",
+      "A motor működése",
+      "A BuildCraft motorjainak öt hőmérsékleti fokozata van, amelyek meghatározzák a motor sebességét: kék, zöld, sárga, piros és fekete.\nAz erősebb motorokkal ellentétben a redstone motorok <bold>nem melegedhetnek túl</bold>. Ha az energia nem tud hová távozni, feketévé válnak, de tovább működnek.\nA motorok mindig a legközelebbi kompatibilis MJ-fogyasztóhoz kapcsolódnak, a redstone motorok azonban nem kapcsolódnak kinesis csövekhez, és csak bizonyos gépekkel csatlakoznak.\nFranciakulccsal elforgathatod a motort, és megváltoztathatod, melyik blokkot látja el energiával.\n\nMint minden motornak, <bold>ennek is redstone-jelre van szüksége a működéshez.</bold>\nA kapuk érzékelhetik a motor hőmérsékleti fokozatait, és segíthetnek a vezérlésében."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Bármi történjék is, ez az érzékelő mindig bekapcsolt állapotban van.",
+      "A Mindig bekapcsolva minden elhelyezett kapun elérhető kapuérzékelő.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek mindig aktívak."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Kap a kapu redstone-jelet?",
+      "A Redstone-jel bekapcsolva minden elhelyezett kapun elérhető kapuérzékelő.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a blokk, amelyen a kapu található, redstone-jelet kap.",
+      "Paraméterek",
+      "Ha a Redstone-jel bekapcsolva van kiválasztva, és a felszerelt kapuhoz paraméterek érhetők el, a Csak a kapu oldala paraméter is megjelenik.\nA Csak a kapu oldala kiválasztásakor csak azt ellenőrzi, hogy a kapu felőli oldal kap-e redstone-jelet."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Nem kap a kapu redstone-jelet?",
+      "A Redstone-jel kikapcsolva minden elhelyezett kapun elérhető kapuérzékelő.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a blokk, amelyen a kapu található, nem kap redstone-jelet.",
+      "Paraméterek",
+      "Ha a Redstone-jel kikapcsolva van kiválasztva, és a felszerelt kapuhoz paraméterek érhetők el, a Csak a kapu oldala paraméter is megjelenik.\nA Csak a kapu oldala kiválasztásakor csak azt ellenőrzi, hogy a kapu felőli oldal nem kap-e redstone-jelet."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Bárcsak lenne mód annak ellenőrzésére, hogy üres-e a láda.",
+      "A Tároló üres olyan kapuérzékelő, amely minden olyan kapun elérhető, amely mellett tároló található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tároló minden helyén nulla tárgy van.",
+      "Érzékelési irányok",
+      "A kapuk a Tároló üres érzékelőt többször, különböző színekben is megjeleníthetik, hogy az egyes csatlakoztatott tárolókat képviseljék.\nAz érzékelő színe a tároló csőhöz viszonyított irányát jelzi, így megkülönböztetheted az egyes tárolókat."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Van ilyen tárgy a mellette lévő ládában?",
+      "A Tárgyak a tárolóban olyan kapuérzékelő, amely minden olyan kapun elérhető, amely mellett tároló található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tárolóban tárgyak vannak.",
+      "Paraméterek",
+      "Ha a Tárgyak a tárolóban van kiválasztva, és a felszerelt kapuhoz paraméterek érhetők el, a mellette lévő szűrőhelyek paraméterként használhatók.\nA szűrőhelyekre helyezett tárgyakkal ellenőrizheted, hogy a tároló tartalmaz-e a kiválasztott tárgyak közül valamelyiket, mielőtt az érzékelő aktiválódik.",
+      "Érzékelési irányok",
+      "A kapuk a Tárgyak a tárolóban érzékelőt többször, különböző színekben is megjeleníthetik, hogy az egyes csatlakoztatott tárolókat képviseljék.\nAz érzékelő színe a tároló csőhöz viszonyított irányát jelzi, így megkülönböztetheted az egyes tárolókat."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Van még hely tárgyaknak a mellette lévő ládában?",
+      "A Hely a tárolóban olyan kapuérzékelő, amely minden olyan kapun elérhető, amely mellett tároló található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tárolóban vannak tárgyak fogadására alkalmas üres helyek.",
+      "Paraméterek",
+      "Ha a Hely a tárolóban van kiválasztva, és a felszerelt kapuhoz paraméterek érhetők el, a mellette lévő szűrőhelyek paraméterként használhatók.\nA szűrőhelyekre helyezett tárgyakkal ellenőrizheted, hogy a tárolóban vannak-e üres vagy nem teljes helyek, amelyek fogadhatják a kiválasztott tárgyakat, mielőtt az érzékelő aktiválódik.",
+      "Érzékelési irányok",
+      "A kapuk a Hely a tárolóban érzékelőt többször, különböző színekben is megjeleníthetik, hogy az egyes csatlakoztatott tárolókat képviseljék.\nAz érzékelő színe a tároló csőhöz viszonyított irányát jelzi, így megkülönböztetheted az egyes tárolókat."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Bárcsak lenne mód annak ellenőrzésére, hogy tele van-e a láda.",
+      "A Tároló tele olyan kapuérzékelő, amely minden olyan kapun elérhető, amely mellett tároló található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tároló minden helyén van tárgy.",
+      "Érzékelési irányok",
+      "A kapuk a Tároló tele érzékelőt többször, különböző színekben is megjeleníthetik, hogy az egyes csatlakoztatott tárolókat képviseljék.\nAz érzékelő színe a tároló csőhöz viszonyított irányát jelzi, így megkülönböztetheted az egyes tárolókat."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "A láda a befogadóképességének kevesebb mint 25%-áig van megtöltve?",
+      "A Kevesebb mint 25%-ot tartalmaz kapuérzékelő minden olyan kapun elérhető, amely mellett tároló található.",
+      "<bold>Tipp:</bold> A küszöbérték-érzékelőket növekvő sorrendben használd, a pontos határt pedig ideiglenes lámpával teszteld. Így a szomszédos 25%-os, 50%-os és 75%-os szabályok nem akadályozzák egymást.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tároló kevesebb mint 25%-ig van megtöltve.",
+      "Paraméterek",
+      "Ha a Kevesebb mint 25%-ot tartalmaz érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhelyek paraméterként elérhetővé válnak.\nA szűrőhelyekre tett tárgyakkal ellenőrizhető, hogy a tároló a kiválasztott tárgyakból kevesebb mint 25%-ot tartalmaz-e az aktiválás előtt.",
+      "Érzékelési irányok",
+      "A kapuk a Kevesebb mint 25%-ot tartalmaz érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tárolók jelölésére.\nAz érzékelő színe a tároló csőhöz viszonyított irányát jelzi, így a tárolók megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "A láda a befogadóképességének kevesebb mint 50%-áig van megtöltve?",
+      "A Kevesebb mint 50%-ot tartalmaz kapuérzékelő minden olyan kapun elérhető, amely mellett tároló található.",
+      "<bold>Tipp:</bold> A küszöbérték-érzékelőket növekvő sorrendben használd, a pontos határt pedig ideiglenes lámpával teszteld. Így a szomszédos 25%-os, 50%-os és 75%-os szabályok nem akadályozzák egymást.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tároló kevesebb mint 50%-ig van megtöltve.",
+      "Paraméterek",
+      "Ha a Kevesebb mint 50%-ot tartalmaz érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhelyek paraméterként elérhetővé válnak.\nA szűrőhelyekre tett tárgyakkal ellenőrizhető, hogy a tároló a kiválasztott tárgyakból kevesebb mint 50%-ot tartalmaz-e az aktiválás előtt.",
+      "Érzékelési irányok",
+      "A kapuk a Kevesebb mint 50%-ot tartalmaz érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tárolók jelölésére.\nAz érzékelő színe a tároló csőhöz viszonyított irányát jelzi, így a tárolók megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "A láda a befogadóképességének kevesebb mint 75%-áig van megtöltve?",
+      "A Kevesebb mint 75%-ot tartalmaz kapuérzékelő minden olyan kapun elérhető, amely mellett tároló található.",
+      "<bold>Tipp:</bold> A küszöbérték-érzékelőket növekvő sorrendben használd, a pontos határt pedig ideiglenes lámpával teszteld. Így a szomszédos 25%-os, 50%-os és 75%-os szabályok nem akadályozzák egymást.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tároló kevesebb mint 75%-ig van megtöltve.",
+      "Paraméterek",
+      "Ha a Kevesebb mint 75%-ot tartalmaz érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhelyek paraméterként elérhetővé válnak.\nA szűrőhelyekre tett tárgyakkal ellenőrizhető, hogy a tároló a kiválasztott tárgyakból kevesebb mint 75%-ot tartalmaz-e az aktiválás előtt.",
+      "Érzékelési irányok",
+      "A kapuk a Kevesebb mint 75%-ot tartalmaz érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tárolók jelölésére.\nAz érzékelő színe a tároló csőhöz viszonyított irányát jelzi, így a tárolók megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Üres a kapu melletti tartály?",
+      "Az Üres tartály kapuérzékelő minden olyan kapun elérhető, amely mellett tartály található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha minden csatlakoztatott tartály teljesen üres.",
+      "Érzékelési irányok",
+      "A kapuk az Üres tartály érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tartályok jelölésére.\nAz érzékelő színe a tartály csőhöz viszonyított irányát jelzi, így a tartályok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Tartalmaz valamilyen folyadékot a szomszédos tartály?",
+      "A Folyadék a tartályban kapuérzékelő minden olyan kapun elérhető, amely mellett tartály található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tartályban van folyadék.",
+      "Paraméterek",
+      "Ha a Folyadék a tartályban érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhelyek paraméterként elérhetővé válnak.\nA szűrőhelyre tett folyadéktartállyal ellenőrizhető, hogy a tartály tartalmazza-e a szűrőhelyen kiválasztott folyadékot.",
+      "Érzékelési irányok",
+      "A kapuk a Folyadék a tartályban érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tartályok jelölésére.\nAz érzékelő színe a tartály csőhöz viszonyított irányát jelzi, így a tartályok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Van még hely folyadéknak a kapu melletti tartályban?",
+      "A Hely folyadéknak kapuérzékelő minden olyan kapun elérhető, amely mellett tartály található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tartály képes további folyadékot fogadni.",
+      "Paraméterek",
+      "Ha a Hely folyadéknak érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhely paraméterként elérhetővé válik.\nA szűrőhelyre tett folyadéktartállyal ellenőrizhető, hogy van-e olyan tartály, amely képes fogadni a szűrőben kiválasztott folyadékot.",
+      "Érzékelési irányok",
+      "A kapuk a Hely folyadéknak érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tartályok jelölésére.\nAz érzékelő színe a tartály csőhöz viszonyított irányát jelzi, így a tartályok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Tele van a kapu melletti tartály?",
+      "A Tele tartály kapuérzékelő minden olyan kapun elérhető, amely mellett tartály található.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos tartály már nem tud több folyadékot fogadni.",
+      "Érzékelési irányok",
+      "A kapuk a Tele tartály érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tartályok jelölésére.\nAz érzékelő színe a tartály csőhöz viszonyított irányát jelzi, így a tartályok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "A kapu melletti tartály a kapacitásának kevesebb mint negyedéig van megtöltve?",
+      "A Kevesebb mint 25%-ot tartalmaz kapuérzékelő minden olyan kapun elérhető, amely mellett tartály található.",
+      "<bold>Tipp:</bold> A küszöbérték-érzékelőket növekvő sorrendben használd, a pontos határt pedig ideiglenes lámpával teszteld. Így a szomszédos 25%-os, 50%-os és 75%-os szabályok nem akadályozzák egymást.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tartály kevesebb mint 25%-ig van megtöltve.",
+      "Paraméterek",
+      "Ha a Kevesebb mint 25%-ot tartalmaz érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhely paraméterként elérhetővé válik.\nA szűrőhelyre tett folyadéktartállyal ellenőrizhető, hogy a tartály a kiválasztott folyadékból kevesebb mint 25%-ot tartalmaz-e az aktiválás előtt.",
+      "Érzékelési irányok",
+      "A kapuk a Kevesebb mint 25%-ot tartalmaz érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tartályok jelölésére.\nAz érzékelő színe a tartály csőhöz viszonyított irányát jelzi, így a tartályok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "A kapu melletti tartály a kapacitásának kevesebb mint feléig van megtöltve?",
+      "A Kevesebb mint 50%-ot tartalmaz kapuérzékelő minden olyan kapun elérhető, amely mellett tartály található.",
+      "<bold>Tipp:</bold> A küszöbérték-érzékelőket növekvő sorrendben használd, a pontos határt pedig ideiglenes lámpával teszteld. Így a szomszédos 25%-os, 50%-os és 75%-os szabályok nem akadályozzák egymást.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tartály kevesebb mint 50%-ig van megtöltve.",
+      "Paraméterek",
+      "Ha a Kevesebb mint 50%-ot tartalmaz érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhely paraméterként elérhetővé válik.\nA szűrőhelyre tett folyadéktartállyal ellenőrizhető, hogy a tartály a kiválasztott folyadékból kevesebb mint 50%-ot tartalmaz-e az aktiválás előtt.",
+      "Érzékelési irányok",
+      "A kapuk a Kevesebb mint 50%-ot tartalmaz érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tartályok jelölésére.\nAz érzékelő színe a tartály csőhöz viszonyított irányát jelzi, így a tartályok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "A kapu melletti tartály a kapacitásának kevesebb mint háromnegyedéig van megtöltve?",
+      "A Kevesebb mint 75%-ot tartalmaz kapuérzékelő minden olyan kapun elérhető, amely mellett tartály található.",
+      "<bold>Tipp:</bold> A küszöbérték-érzékelőket növekvő sorrendben használd, a pontos határt pedig ideiglenes lámpával teszteld. Így a szomszédos 25%-os, 50%-os és 75%-os szabályok nem akadályozzák egymást.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a csatlakoztatott tartály kevesebb mint 75%-ig van megtöltve.",
+      "Paraméterek",
+      "Ha a Kevesebb mint 75%-ot tartalmaz érzékelő van kiválasztva, és a felszerelt kapu paramétereket támogat, a mellette lévő szűrőhely paraméterként elérhetővé válik.\nA szűrőhelyre tett folyadéktartállyal ellenőrizhető, hogy a tartály a kiválasztott folyadékból kevesebb mint 75%-ot tartalmaz-e az aktiválás előtt.",
+      "Érzékelési irányok",
+      "A kapuk a Kevesebb mint 75%-ot tartalmaz érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott tartályok jelölésére.\nAz érzékelő színe a tartály csőhöz viszonyított irányát jelzi, így a tartályok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Milyen színű a kapu melletti motor? Kék?",
+      "A Kék motor kapuérzékelő minden olyan kapun elérhető, amely mellett motor található.",
+      "<bold>Tipp:</bold> A motorállapot-érzékelőket párosítsd automatikus leállítási művelettel. Érdemes látható figyelmeztető lámpát használni, mielőtt ugyanazt a jelet az üzemanyag vagy a hűtőfolyadék vezérlésére bízod.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos motor a kék hőmérsékleti szakaszban van.",
+      "Érzékelési irányok",
+      "A kapuk a Kék motor érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott motorok jelölésére.\nAz érzékelő színe a motor csőhöz viszonyított irányát jelzi, így a motorok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Milyen színű a kapu melletti motor? Zöld?",
+      "A Zöld motor kapuérzékelő minden olyan kapun elérhető, amely mellett motor található.",
+      "<bold>Tipp:</bold> A motorállapot-érzékelőket párosítsd automatikus leállítási művelettel. Érdemes látható figyelmeztető lámpát használni, mielőtt ugyanazt a jelet az üzemanyag vagy a hűtőfolyadék vezérlésére bízod.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos motor a zöld hőmérsékleti szakaszban van.",
+      "Érzékelési irányok",
+      "A kapuk a Zöld motor érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott motorok jelölésére.\nAz érzékelő színe a motor csőhöz viszonyított irányát jelzi, így a motorok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Milyen színű a kapu melletti motor? Sárga?",
+      "A Sárga motor kapuérzékelő minden olyan kapun elérhető, amely mellett motor található.",
+      "<bold>Tipp:</bold> A motorállapot-érzékelőket párosítsd automatikus leállítási művelettel. Érdemes látható figyelmeztető lámpát használni, mielőtt ugyanazt a jelet az üzemanyag vagy a hűtőfolyadék vezérlésére bízod.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos motor a sárga hőmérsékleti szakaszban van.",
+      "Érzékelési irányok",
+      "A kapuk a Sárga motor érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott motorok jelölésére.\nAz érzékelő színe a motor csőhöz viszonyított irányát jelzi, így a motorok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Milyen színű a kapu melletti motor? Kék?",
+      "A Vörös motor kapuérzékelő minden olyan kapun elérhető, amely mellett motor található.",
+      "<bold>Tipp:</bold> A motorállapot-érzékelőket párosítsd automatikus leállítási művelettel. Érdemes látható figyelmeztető lámpát használni, mielőtt ugyanazt a jelet az üzemanyag vagy a hűtőfolyadék vezérlésére bízod.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos motor a vörös hőmérsékleti szakaszban van.",
+      "Érzékelési irányok",
+      "A kapuk a Vörös motor érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott motorok jelölésére.\nAz érzékelő színe a motor csőhöz viszonyított irányát jelzi, így a motorok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Milyen színű a kapu melletti motor? Fekete és túlmelegedett?",
+      "A Motor túlmelegedett kapuérzékelő minden olyan kapun elérhető, amely mellett motor található.",
+      "<bold>Tipp:</bold> A motorállapot-érzékelőket párosítsd automatikus leállítási művelettel. Érdemes látható figyelmeztető lámpát használni, mielőtt ugyanazt a jelet az üzemanyag vagy a hűtőfolyadék vezérlésére bízod.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos motor a túlmelegedési szakaszban van.",
+      "Érzékelési irányok",
+      "A kapuk a Motor túlmelegedett érzékelőt többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott motorok jelölésére.\nAz érzékelő színe a motor csőhöz viszonyított irányát jelzi, így a motorok megkülönböztethetők."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Van a mellette lévő gépnek ténylegesen elvégezhető munkája?",
+      "A Van munka kapuérzékelő minden olyan kapun elérhető, amely egy működésre képes gép mellett található.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos gépnek van elvégezhető munkája.\n\nMegjegyzés: Nem minden gép támogatja a Van munka érzékelőt."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Valóban nincs több elvégezhető munkája a mellette lévő gépnek?",
+      "A Munka kész kapuérzékelő minden olyan kapun elérhető, amely egy működési ciklusát befejező gép mellett található.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a szomszédos gép minden elvégezhető munkáját befejezte.\n\nMegjegyzés: Nem minden gép támogatja a Munka kész érzékelőt."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Aktiválásakor redstone-jel kerül kibocsátásra.",
+      "A Redstone-jel minden elhelyezett kapun elérhető kapuművelet.",
+      "<bold>Tipp:</bold> Színes csővezetékkel különítsd el ezt a jelet a nem kapcsolódó automatizálástól, és kerüld el a szomszédos kapuk közötti visszacsatolási hurkokat.",
+      "Követelmények",
+      "A művelet aktiválásakor redstone-jelet bocsát ki.",
+      "Paraméterek",
+      "Ha a Redstone-jel művelet van kiválasztva, és a felszerelt kapu paramétereket támogat, a Csak a kapu oldala paraméter elérhetővé válik.\nA Csak a kapu oldala beállítás azt jelenti, hogy a redstone-jel kizárólag azon az oldalon távozik, amelyre a kaput felszerelték."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Ez bekapcsolja a gépet.",
+      "A Bekapcsolás minden olyan kapun elérhető kapuművelet, amely egy működésre képes gép mellett található.",
+      "<bold>Tipp:</bold> Ezt a műveletet a lehető legszűkebb hasznos érzékelővel párosítsd, és a kikapcsolt állapotot ugyanolyan gondosan teszteld, mint a bekapcsoltat.",
+      "Követelmények",
+      "A művelet aktiválásakor a gép működni kezd.\nMegjegyzés: Nem minden gép támogatja a Bekapcsolás műveletet.",
+      "Érzékelési irányok",
+      "A kapuk a Bekapcsolás műveletet többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott gépek jelölésére.\nA művelet színe a gép csőhöz viszonyított irányát jelzi, így a gépek megkülönböztethetők."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Ez kikapcsolja a gépet.",
+      "A Kikapcsolás minden olyan kapun elérhető kapuművelet, amely egy működésre képes gép mellett található.",
+      "<bold>Tipp:</bold> Ezt a műveletet a lehető legszűkebb hasznos érzékelővel párosítsd, és a kikapcsolt állapotot ugyanolyan gondosan teszteld, mint a bekapcsoltat.",
+      "Követelmények",
+      "A művelet aktiválásakor a gép leáll.\nMegjegyzés: Nem minden gép támogatja a Kikapcsolás műveletet.",
+      "Érzékelési irányok",
+      "A kapuk a Kikapcsolás műveletet többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott gépek jelölésére.\nA művelet színe a gép csőhöz viszonyított irányát jelzi, így a gépek megkülönböztethetők."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "A gép újra és újra lefut.",
+      "Az Ismétlés minden olyan kapun elérhető kapuművelet, amely egy működésre képes gép mellett található.",
+      "<bold>Tipp:</bold> Ezt a műveletet a lehető legszűkebb hasznos érzékelővel párosítsd, és a kikapcsolt állapotot ugyanolyan gondosan teszteld, mint a bekapcsoltat.",
+      "Követelmények",
+      "A művelet aktiválásakor a gép egymás után újra és újra végrehajtja a működési ciklusát.\nMegjegyzés: Nem minden gép támogatja az Ismétlés műveletet.",
+      "Érzékelési irányok",
+      "A kapuk az Ismétlés műveletet többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott gépek jelölésére.\nA művelet színe a gép csőhöz viszonyított irányát jelzi, így a gépek megkülönböztethetők."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Az a kemence, amely vacsorafőzés helyett dugattyút mozgat, továbbra is teljesen tiszteletre méltó kemence.",
+      "A Stirling-motor szokványos kemence-üzemanyagokat éget, és tickenként egyharmad és egy MJ közötti energiát termel.",
+      "<bold>Tipp:</bold> Gondoskodj róla, hogy a Stirling-motor letiltható legyen, amikor a fogyasztója leáll. A gép működését vagy az energiaigényt figyelő kapu sokkal biztonságosabbá teszi a felügyelet nélkül hagyott rendszereket.",
+      "Üzemanyag és kimenet",
+      "Tegyél bármilyen érvényes kemence-üzemanyagot a motor egyetlen üzemanyaghelyére, és adj redstone-jelet. A motor nagyjából 0,33 MJ/t és 1 MJ/t között szabályozza a teljesítményét aszerint, hogy az 1 000 MJ kapacitású belső pufferében mennyi MJ található.\n\nA motor ugyanazokat a kemence-üzemanyagokat használja, amelyeket a Minecraft is felismer. Az üzemanyag által visszaadott tárolók, például az üres vödör, a motor tárolójában maradnak.",
+      "A motor működése",
+      "Helyezd a motort egy MJ-fogadó mellé. Lerakáskor kompatibilis kimeneti oldalt választ; franciakulccsal fordítsd el, ha másik oldalt kell ellátnia.\n\nA kék, zöld, sárga, vörös és fekete szakasz a motor pillanatnyi belső hőmérsékletét mutatja, amely az energiapuffer telítettségét követi. Ha a kimenet elzáródik, a puffer feltöltődik, a motor eléri a túlmelegedési szakaszt, majd leáll a termeléssel. Távolítsd el a redstone-jelet, vagy biztosíts helyet a tárolt MJ számára, hogy a motor újra lehűlhessen."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Az olaj finomítása hasznos. Annyi energiává alakítani, amellyel ipari baleset okozható, lényegesen hasznosabb.",
+      "A belső égésű motor folyékony BuildCraft-üzemanyagokat éget, hűtőfolyadékkal szabályozza a hőt, és eltárolja a szennyezett üzemanyagokból keletkező maradékot.",
+      "<bold>Tipp:</bold> Biztosíts megbízható hűtést és automatikus leállítási feltételt, mielőtt a belső égésű motort felügyelet nélkül hagyod. Teljes terhelésen teszteld a teljes üzemanyag- és hűtőfolyadék-ellátást.",
+      "Tartályok és üzemanyagok",
+      "A motor külön tartályt használ az üzemanyaghoz, a hűtőfolyadékhoz és a maradékhoz. Folyadékcsövek vagy tárolók közvetlenül feltölthetik és leüríthetik ezeket. Adj redstone-jelet a behelyezett üzemanyag elégetéséhez; a teljesítmény a választott üzemanyagtól függ, és az alacsony teljesítményű olajtermékektől a 8 MJ/t teljesítményű Gáz halmazállapotú üzemanyagig terjed.\n\nA nyersolaj, a nehézolaj és a sűrűolaj szennyezett üzemanyag. Égetésük fokozatosan maradékot termel, a megtelt maradéktartály pedig megakadályozza a melléktermék befogadását. A finomított üzemanyagok maradék nélkül égnek.",
+      "Hűtés",
+      "A víz az alapértelmezett folyékony hűtőanyag. Jég és tömör jég szilárd hűtőanyagként is behelyezhető; ezek nagyobb hűtőerővel alakulnak vízzé. A forró biomokban a motor gyorsabban melegszik és kevésbé hatékonyan hűl, a hideg biomokban pedig ennek ellenkezője történik.\n\nA redstone-jel megszüntetésekor a motor szünetel, rövid újraindítási hűtési büntetést alkalmaz, és elkezdi leadni a felesleges hőt. Nagy teljesítményű üzemanyagok hosszan tartó használata előtt gondoskodj folyamatos hűtőfolyadék-ellátásról.",
+      "A motor működése",
+      "Helyezd a motort egy MJ-fogadó mellé, és szükség esetén fordítsd el franciakulccsal. A színes szakaszok a hőszintjét mutatják. A tárolt MJ csak akkor kerül átadásra, ha a szomszédos fogadó elfogadja; a fel nem vett energia a motorban marad, nem kerül kétszer eltávolításra."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "A nyersolaj hasznos folyadékok összetett keveréke, amely csak arra vár, hogy valaki szétválassza.",
+      "A desztilláló MJ-t fogyaszt, és a folyadékot egy gáz halmazállapotú és egy folyékony kimenetre választja szét.",
+      "<bold>Tipp:</bold> A desztilláló minden kimenetét külön tartályban tárold. A köztes folyadékok keverése vagy mindkét kimenet egyetlen szűretlen vezetékbe irányítása megnehezíti a későbbi finomítási szakaszok hibakeresését.",
+      "Csatlakozások",
+      "Vezesd a kiinduló folyadékot a bemeneti tartályba. A gáz halmazállapotú termék felül, a folyékony termék alul távozik. Mindkét kimenetet tartsd szabadon: a gép nem tud új műveletet befejezni, ha bármelyik célhelyen nincs hely.\n\nMJ-t kompatibilis energiacsatlakozáson keresztül adj. A nagyobb rendelkezésre álló teljesítmény gyorsítja az aktuális műveletet a gép feldolgozási korlátjáig.",
+      "A hőmérséklet választja ki a receptet",
+      "Ugyanazon olajtermék hűvös, forró és izzó változatához eltérő desztillálási receptek tartozhatnak. A kimenetek megtartják a bemenet hőmérsékletét, ezért a desztillálási szakaszok között hőcserélő szükséges, ha a következő recept más hőszintet igényel.\n\nA nyersolaj három különböző finomítási útvonalat indíthat. A desztillált olaj, a nehézolaj, a sűrűolaj és a kevert üzemanyagok további desztillálása gáz halmazállapotú, könnyű és sűrű üzemanyagra, valamint maradékra választja szét őket."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Egyes receptek türelmet igényelnek, mások pedig azt, hogy az alapanyag előbb jóval forróbb legyen.",
+      "A hőcserélő két folyadékáram között mozgatja a hőt, és a BuildCraft-folyadékokat hűvös, forró és izzó állapot között alakítja át.",
+      "<bold>Tipp:</bold> A hőcserélő körül külön forró és hideg folyadékvezetékeket használj. A rövid, egyértelműen feliratozott hurkokban könnyebb megtalálni a hőmérsékleti hibákat.",
+      "A többblokkból álló szerkezet megépítése",
+      "A hőcserélő egy kezdőelemből, egy vagy több középső szakaszból és egyenes vonalban csatlakozó végelemből áll. Legfeljebb három középső szakasz használható; minden további érvényes szakasz növeli az összeállított gép feldolgozási kapacitását.",
+      "A hő használata",
+      "Vezess melegíthető folyadékot a fűtési oldalra, hűthető folyadékot pedig a hűtési oldalra. A hő átadásra kerül, nem ingyen keletkezik: az egyik áram felmelegszik, miközben a másik lehűl. A BuildCraft olajtermékei tíz millibucketes receptadagokban váltanak a hűvös, forró és izzó állapot között.\n\nA víz hőt vehet fel, a láva pedig hőt adhat le. A folyadék iránya és a rendelkezésre álló kimeneti hely határozza meg, hogy a hőcserélő folytathatja-e a feldolgozást.\n\nA kiválasztott hőmérséklet fontos a desztilláló számára, ezért szükség esetén a következő finomítási szakasz előtt vezesd át a folyadékokat a hőcserélőn."
+    ],
+    "buildcraftfactory/block/tank": [
+      "A világban található folyadékok összegyűjtése közben szükséged lesz egy módszerre, amellyel vödrök nélkül tárolhatod őket.",
+      "A tartály lehetővé teszi a folyadékok közvetlen tárolását vödrök és ládák nélkül.",
+      "<bold>Tipp:</bold> A tartályoszlop legalább egyik oldala maradjon hozzáférhető ellenőrzéshez és vészleeresztéshez. Az egymáshoz nem kapcsolódó folyadékokat láthatóan elkülönített tartálycsoportokban tartsd.",
+      "Információ",
+      "Egy tartályblokk egyetlen folyadékból legfeljebb 16 vödörnyit tárolhat, a tartályok pedig függőlegesen korlátlanul egymásra rakhatók egy nagy tartállyá.",
+      "A ládákhoz hasonlóan a tartályok töréskor nem őrzik meg a tartalmukat, és a folyadékot sem dobják ki.\n\nNe törd össze őket, ha folyadék van bennük, mert azt nem kapod vissza."
+    ],
+    "buildcraftfactory/block/pump": [
+      "A folyadékok kézi összegyűjtése fáradságos és időnként veszélyes, ezért szükség van automatizált gyűjtési módszerre.",
+      "A szivattyú automatikusan felszedi a közvetlenül alatta található folyadékforrásokat, valamint a hozzájuk kapcsolódó forrásokat.",
+      "<bold>Tipp:</bold> A szivattyút stabil forrásterület fölé helyezd, és bekapcsolás előtt biztosíts megfelelő kapacitású kimenetet. A feltorlódott folyadékvezeték időt pazarol, és leállíthatja a hasznos munkát.",
+      "A világban lévő folyadék összegyűjtéséhez helyezz egy szivattyút a kívánt folyadék forrásblokkja fölé, és adj neki energiát.\nAz alatta található folyadékforrásokat a felső forrástól lefelé 'kiszívja', majd automatikusan a szomszédos csövekbe vagy tartályokba továbbítja.\nA folyadékokat 64 blokk sugarú körben, felülről lefelé és az összefüggő folyadékterület külső széleitől befelé szivattyúzza.",
+      "A gép működése",
+      "A legtöbb géphez hasonlóan energiát igényel. Minél több energiát kap, annál gyorsabban szivattyúz.\nA redstone-jel leállítja a szivattyút, ezért ügyelj a karok elhelyezésére."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Sok nagy építési projektben a nagy területek folyadékkal való elárasztása unalmas feladat, amelyet jobb lenne automatizálni.",
+      "Folyadékokat helyez el automatikusan a világban, így nem kell kézzel vödröket használni.",
+      "<bold>Tipp:</bold> Az árasztókaput először zárt medencében teszteld. Az elhelyezési viselkedését sokkal könnyebb megérteni, mielőtt nagy tartályhoz vagy nyílt tájhoz csatlakoztatod.",
+      "Információ",
+      "Az árasztókapu energiát nem igénylő gép, amely a csövön bevezetett folyadékokat lefelé helyezi el a világban.",
+      "Az árasztókapu 64 blokk sugarú körben, alulról felfelé és középről kifelé helyezi el a folyadékokat."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "Miközben egyre mélyebbre szeretnél ásni, új gépeket kezdesz kutatni, és összeállítasz egy gépet, amely automatikusan ás helyetted.\nEgyetlen hátránya van: csak egyenesen lefelé ás, és az alapkőzetet nem töri fel.",
+      "A bányakút olyan gép, amely automatikusan egyenesen lefelé bányászik egészen az alapkőzetig.",
+      "<bold>Tipp:</bold> A bányakutat keskeny aknákhoz és gyors próbaásásokhoz használd. Nagy területnél hasonlítsd össze az ismételt felállítás költségét a kőfejtőével, mielőtt erőforrásokat kötsz le.",
+      "Információ",
+      "Közvetlenül a lerakási helye alatt bányászik lefelé, és a kitermelt blokkokat automatikusan a mellette lévő tárolókba vagy csövekbe küldi. Ha nem talál csövet vagy tárolót, a tárgyakat a világba dobja.\nMinél keményebb a kitermelendő blokk, annál tovább tart a bányászat.",
+      "A gép működése",
+      "A legtöbb géphez hasonlóan energiát igényel. Minél több energiát kap, annál gyorsabban ás.\nRedstone-jel hatására a bányakút leáll."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Az egyszerű tölcsér hasznos, de nem túl sokoldalú vagy eredeti.",
+      "A csúszda a tölcsérhez hasonló, de több funkcióval rendelkezik.",
+      "<bold>Tipp:</bold> A csúszdák akkor a legmegbízhatóbbak, ha az alattuk lévő célhelyen mindig van hely. Adj hozzá puffertárolót, ha a fogadó gép csak időszakosan működik.",
+      "Információ",
+      "A korábban tölcsérként ismert csúszda gyors, egyblokkos tároló, amely közvetlenül csövekbe, valamint egyszerre több tárolóba is képes tárgyakat helyezni minden irányban, felfelé is.",
+      "A tölcsérhez hasonlóan a csúszda lassan felveheti a földről a fölötte vagy alatta lévő tárgyakat, ha feléjük néz. Redstone-motorral felgyorsítható."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Minden mérnök kötelességéhez híven mindent automatizálni szeretnél. A kézi barkácsolás fáradságos lehet, ezért miért ne automatizálnád?",
+      "Az automatikus munkaasztal tárgyakat készít automatikusan, kézi barkácsolás nélkül.",
+      "<bold>Tipp:</bold> Az automatikus munkaasztal körül az összetevőket és a kimenetet is puffereld. Egy hiányzó összetevőhely miatt a látszólag helyes automatizálás termelés nélkül megállhat.",
+      "Információ",
+      "Az automatikus munkaasztal tárgyakat készít anélkül, hogy neked kellene barkácsolnod. Állítsd be a kívánt tárgy receptjét, és csövön vezesd be az összetevőket.",
+      "A recepthez szükséges erőforrásokat csövön vezesd az automatikus munkaasztalba; az energia nélkül, lassan elkészíti a tárgyat vagy blokkot."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Az útmutató-nyilvántartás a könyv mögötti tartalomjegyzék: meghatározza, mi létezik, hol jelenik meg, és melyik ikon képviseli.",
+      "Ez az oldal a BuildCraft Community Edition útmutatókönyvének nyelvfüggetlen jegyzékét ismerteti.",
+      "<bold>Tipp:</bold> Kiadás után tartsd változatlanul az oldalazonosítókat. A megjelenített szöveg biztonságosan módosítható, az azonosító megváltoztatása azonban érvénytelenítheti a mentett könyvelőzményeket és a külső hivatkozásokat.",
+      "Bejegyzés-metaadatok",
+      "Minden bejegyzés rendelkezik <code>id</code> mezővel és nyelvfüggetlen <code>page</code> kulccsal. Az opcionális mezők a modult, típust, altípust, tartalék megjelenítési nevet, könyvet, listázási állapotot, tárgyhalmot, NBT-változatot, utasítást és szükséges modot határozzák meg.",
+      "A feladatkörök szétválasztása",
+      "A jegyzék soha nem tartalmaz lefordított prózát. Az oldal működése a <code>page_layouts.json</code> fájlban található; az angol és lefordított szövegek a <code>text/</code> alatti fájlokban vannak. Az erőforráscsomagok bármely réteget egymástól függetlenül lecserélhetnek.",
+      "Ellenőrzés",
+      "A jegyzék minden oldalkulcsának szerepelnie kell a közös elrendezésekben és az alapértelmezett angol szövegcsomagban. Ha tartaléknyelv van beállítva, a fordítások oldalakat vagy egyes helyeket kihagyhatnak."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Az adatvezérelt utasítások akkor hasznosak, amikor egy erőforráscsomagnak Java-kód fordítása nélkül kell módosítania a nyilvántartást.",
+      "Ez a műszaki oldal összefoglalja az erőforrás-kompatibilitás miatt megtartott régi BuildCraft JSON-utasításnyelvet.",
+      "<bold>Tipp:</bold> Új útmutatóoldalakhoz inkább a csomagolt jegyzéket és szövegerőforrásokat használd; utasításszkripteket csak régi nyilvántartási szkriptek módosításakor alkalmazz.",
+      "Fejléc",
+      "Az utasításfájlok az alábbi jelölővel kezdődnek. Az importált könyvtárfájlok helyette a <code>~{buildcraft/json/lib}</code> jelölőt használják, és az argumentumok számát a <code>~args N</code> sorral adhatják meg.",
+      "Függvények",
+      "Az értelmező megjegyzéseket és olyan függvényhívásokat fogad el, mint az <code>add</code>, <code>remove</code>, <code>replace</code>, <code>modify</code>, <code>overwrite</code>, <code>alias</code> és <code>import</code>. Az argumentum lehet szám, idézőjelezett szöveg vagy fordított aposztrófokkal határolt többsoros szöveg.",
+      "Jelenlegi útmutató-erőforrások",
+      "A Community Edition útmutatója már nem tölt be bejegyzésenként egy Markdown-fájlt. Az index metaadatai az <code>original_manifest.json</code>, a közös sablonok a <code>page_layouts.json</code>, a lefordított helytömbök pedig a <code>text/&lt;language&gt;.json</code> fájlban találhatók."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Az útmutatóoldal akkor marad könnyen karbantartható, ha a működés és a fordítás nem kerül minden nyelvbe külön bemásolásra.",
+      "Ez az oldal a BuildCraft Community Edition által használt csomagolt, honosított útmutatókönyv-erőforrásformátumot ismerteti.",
+      "<bold>Tipp:</bold> Elrendezés módosítása után teszteld a Történet és a Tippek beállítást is, majd nyisd meg az oldalt angolul és legalább egy lefordított nyelven.",
+      "Közös oldalelrendezések",
+      "A nyelvfüggetlen oldalstruktúra egyszer szerepel az <code>assets/buildcraft/guide/page_layouts.json</code> fájlban. Minden oldalnak van Markdown-sablonja és számozott <code>{{bc_text:index}}</code> helyei. A receptek, hivatkozások, képek, láthatósági címkék és más működési elemek a sablonba tartoznak.",
+      "Honosított szövegcsomagok",
+      "A látható szöveg nyelvenként egy tömör fájlban található az <code>assets/buildcraft/guide/text/&lt;language&gt;.json</code> alatt. Az oldalérték olyan tömb, amelynek indexei megfelelnek a sablonhelyeknek. Így a műszaki szerkezet kimarad a fordításokból, a teljes nyelv pedig egyetlen JAR-bejegyzésként tömöríthető.",
+      "Tartaléknyelv és álnevek",
+      "Az <code>assets/buildcraft/guide/languages.json</code> választja ki az alapértelmezett nyelvet, a regionális álneveket és a tartaléknyelv-láncokat. A hiányzó oldal vagy <code>null</code> hely a szülőnyelvtől öröklődik; az üres szöveg szándékosan elrejti a helyet.",
+      "Jegyzék",
+      "Az <code>original_manifest.json</code> csak index-metaadatokat tartalmaz: oldalazonosítót, oldalkulcsot, modult, típust, altípust, láthatóságot és opcionális tárgy- vagy utasításhivatkozásokat. A <code>page</code> kulcs kapcsolja a bejegyzést az elrendezéséhez és honosított szövegéhez.",
+      "Támogatott jelölés",
+      "A szokásos Markdown-szöveg, címsorok és formázócímkék támogatottak. Az alábbi címkék nyelvfüggetlenek, ezért a közös elrendezésben kell maradniuk."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Nem illenek a csövek az építményed stílusához? Helyezz rájuk az építményhez illő blokkból készült burkolatot, és rejtsd el őket.",
+      "A burkolat csőre szerelhető elem, amely eltakarja a csöveket, hogy illeszkedjenek az építményhez.",
+      "<bold>Tipp:</bold> A csőre szerelhető elemet még a sokszorosítás vagy tömeges telepítés előtt állítsd be. Először egyetlen csőoldalon ellenőrizd az irányt és a kapukkal való együttműködést.",
+      "Burkolatváltozatok",
+      "A játék szinte bármely blokkjából készíthető burkolat, amely a cső oldalára helyezhető.\nA tömör burkolat megszakít minden csőkapcsolatot, ha közéjük kerül.\nAz üreges burkolat átengedi a csőkapcsolatokat."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "A redstone manapság sok helyet foglal. Miért ne irányítanád a rendszert pontosabban és kisebb helyen csövek segítségével? Tegyél egy kaput a csőre, és kezdj el tervezni.",
+      "A kapu fejleszthető, csőre szerelhető elem, amely logisztikai keretet biztosít a csőrendszer kezeléséhez.",
+      "<bold>Tipp:</bold> A csőre szerelhető elemet még a sokszorosítás vagy tömeges telepítés előtt állítsd be. Először egyetlen csőoldalon ellenőrizd az irányt és a kapukkal való együttműködést.",
+      "Kapu elhelyezése",
+      "A kapu csőre szerelhető elem, ezért csak csőre helyezhető, annak viszont bármely oldalára.\nAz azon az oldalon mellé helyezett cső nem fog csatlakozni.",
+      "Kapuszintek",
+      "A kapuk különböző szinteken érhetők el, és eltérő számú helyet adnak:\nAlapkapu – 1 helykészlet (nem módosítható).\nVaskapu – 2 helykészlet.\nNether-téglakapu – 4 helykészlet.\nAranykapu – 8 helykészlet.",
+      "Kapumódosítók",
+      "A kapuk paraméterhelyekkel bővíthetők:\nLazúrkő-bővítés – minden érzékelőhöz 1 paraméterhelyet ad.\nKvarcbővítés – minden készlethez 1 paraméterhelyet ad, de megfelezi a kapu helyeinek számát.\nGyémántbővítés – minden készlethez 3 paraméterhelyet ad, de megfelezi a kapu helyeinek számát.",
+      "Kapuváltozatok",
+      "Az ÉS kapu megköveteli, hogy </bold>minden</bold> csatlakoztatott érzékelő aktív legyen, mielőtt a műveletekhez vezető kapcsolat aktiválódik.\nA VAGY kapu megköveteli, hogy </bold>egy vagy több</bold> csatlakoztatott érzékelő aktív legyen, mielőtt a műveletekhez vezető kapcsolat aktiválódik.",
+      "Érzékelők",
+      "A bal oldali ikonokat érzékelőknek nevezzük. Ezeket a kezelőfelület bal oldalán lévő helyekre kell húzni.\nA különböző érzékelők eltérő dolgokat, saját feltételek szerint figyelnek. Amikor egy érzékelő feltétele teljesül, a mellette lévő kapcsolat aktívvá válik.",
+      "Műveletek",
+      "A jobb oldali ikonokat műveleteknek nevezzük. Ezeket a kezelőfelület jobb oldalán lévő helyekre kell húzni.\nA különböző műveletek más-más feladatokat hajtanak végre. Amikor a mellettük lévő kapcsolat aktív, a csatlakoztatott műveletek végrehajtódnak.",
+      "Paraméterek",
+      "Paraméterhelyek telepítésekor egyes érzékelők és műveletek mellett további helyek jelennek meg.\nEzekkel pontosabban beállíthatók az érzékelők és műveletek.\nA kiegészítő helyre kattintva további lehetőségek érhetők el, vagy tárgy helyezhető bele szűrőként.",
+      "Csatlakozások",
+      "A középen futó vonalak kötik össze az érzékelőket a műveletekkel, hogy együtt dolgozhassanak.\nKattintással csatlakoztathatók vagy leválaszthatók, így több érzékelő vagy művelet is megkövetelhető.\nHa egy érzékelő feltétele teljesül, a középső vonal világítani kezd, több szükséges érzékelő esetén csak részben.\nAmikor egy vonal világít, végrehajtódnak a hozzá kapcsolt műveletek."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Ingyen energiával meghajtani a csöveket nagy motor nélkül? Milyen menő!",
+      "<bold>Tipp:</bold> A csőre szerelhető elemet még a sokszorosítás vagy tömeges telepítés előtt állítsd be. Először egyetlen csőoldalon ellenőrizd az irányt és a kapukkal való együttműködést.",
+      "A csőpulzátor kis mennyiségű energiát biztosító, csőre szerelhető elem az energiát fogadó csövekhez.",
+      "Dugó működése",
+      "Csak energiát fogadó csőre helyezhető, és jobb kattintással aktiválható.\nA csőpulzátort kapu is aktiválhatja pulzátorműveletekkel.",
+      "Csőkapcsolatok",
+      "A csőre szerelhető elemek csak csövekre, azok bármely oldalára helyezhetők.\nKét cső közé helyezve megszakítják a többi cső- és csővezeték-kapcsolatot."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Fényérzékelővel a fény erejét használhatod a kapuk vezérlésére.",
+      "A fényérzékelő csőre szerelhető elem, amely érzékeli az előtte lévő blokk fényszintjét, és adatot küld ugyanazon cső szomszédos oldalán lévő kapunak.",
+      "<bold>Tipp:</bold> A csőre szerelhető elemet még a sokszorosítás vagy tömeges telepítés előtt állítsd be. Először egyetlen csőoldalon ellenőrizd az irányt és a kapukkal való együttműködést.",
+      "Dugó működése",
+      "Az adat lehetővé teszi, hogy a szomszédos kapu a Világos és Sötét érzékelőkkel eldöntse, világos vagy sötét van-e.\nEzek az érzékelők kapun keresztül műveletet indíthatnak.",
+      "Csőkapcsolatok",
+      "A csőre szerelhető elemek csak csövekre, azok bármely oldalára helyezhetők.\nKét cső közé helyezve megszakítják a többi cső- és csővezeték-kapcsolatot."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "A jelek láthatóan könnyebben érthetők, szűrhetően pedig könnyebben irányíthatók.",
+      "A lencsék és szűrők színes, csőre szerelhető elemek, amelyek ugyanazon tárgy változataiként tárolódnak.",
+      "<bold>Tipp:</bold> A csőre szerelhető elemet még a sokszorosítás vagy tömeges telepítés előtt állítsd be. Először egyetlen csőoldalon ellenőrizd az irányt és a kapukkal való együttműködést.",
+      "Lencsék",
+      "A lencse megjeleníti és kivetíti a színét, amikor a csatlakoztatott csővezeték jele aktív. Használd kompakt vizuális jelzőként bármely szabad csőoldalon.",
+      "Szűrők",
+      "A szűrőváltozatok ugyanazt a tizenhat színt használják, de ahol támogatott, utasításparaméterként és felszerelhető szűrőként működnek. Színük és szűrőállapotuk a tárgyváltozatban tárolódik, ezért egy adott szűrő azonosításához nem elég csak az alap nyilvántartási azonosítót lemásolni."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Világos van a kapu előtt? Ha igen, aktiválódik.",
+      "A Világos minden olyan kapun elérhető érzékelő, amelyhez azonos színű fényérzékelő csatlakozik ugyanazon a csövön.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a fényérzékelő előtti blokk fényszintje magas."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Világos van a kapu előtt? Ha nem, aktiválódik.",
+      "A Sötét minden olyan kapun elérhető érzékelő, amelyhez azonos színű fényérzékelő csatlakozik ugyanazon a csövön.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakoztatott műveletek csak akkor aktiválódnak, ha a fényérzékelő előtti blokk fényszintje alacsony."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Tudtad, hogy egy kapuval aktívan vezérelheted a csatlakoztatott csőpulzátort?",
+      "A Csőpulzátor bekapcsolása minden olyan kapun elérhető művelet, amelynek csövéhez csőpulzátor csatlakozik.",
+      "<bold>Tipp:</bold> Ezt a műveletet a lehető legszűkebb hasznos érzékelővel párosítsd, és a kikapcsolt állapotot ugyanolyan gondosan teszteld, mint a bekapcsoltat.",
+      "Követelmények",
+      "A művelet aktiválásakor a csőpulzátor bekapcsol, és a cső energiát kap.",
+      "Irányok",
+      "A kapuk a Csőpulzátor bekapcsolása műveletet többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott pulzátorok jelölésére.\nA művelet színe a csőpulzátor csőhöz viszonyított irányát jelzi, így megkülönböztethetők."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Tudtad, hogy a csatlakoztatott csőpulzátor egyetlen impulzusra is beállítható?",
+      "Az Egyetlen energiaimpulzus minden olyan kapun elérhető művelet, amelynek csövéhez csőpulzátor csatlakozik.",
+      "<bold>Tipp:</bold> Ezt a műveletet a lehető legszűkebb hasznos érzékelővel párosítsd, és a kikapcsolt állapotot ugyanolyan gondosan teszteld, mint a bekapcsoltat.",
+      "Követelmények",
+      "A művelet aktiválásakor a csőpulzátor rövid időre bekapcsol, a cső pedig egy művelet befejezéséhez elegendő energiát kap.",
+      "Irányok",
+      "A kapuk a Csőpulzátor bekapcsolása műveletet többször, különböző színekben is megjeleníthetik az egyes csatlakoztatott pulzátorok jelölésére.\nA művelet színe a csőpulzátor csőhöz viszonyított irányát jelzi, így megkülönböztethetők."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Szeretnél csőjeleket továbbítani anélkül, hogy bármi áthaladna a csövön? Töltsd fel kaviccsal.",
+      "A szerkezeti cső kapukat és csővezetékeket hordozhat, de semmi nem szállítható rajta keresztül.",
+      "<bold>Tipp:</bold> A szerkezeti csövek hasznos rögzítési pontok vezetékekhez, kapukhoz és dugókhoz ott, ahol nincs szükség tárgyszállításra.",
+      "Csőműködés",
+      "A normál csőhöz hasonlóan felszerelhető elemek és csővezetékek helyezhetők rá, de tárgyat, folyadékot, energiát és egyebet nem szállít."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Szeretnél tárgyakat kivenni és máshová szállítani? Adj neki energiát, és nézd, ahogy áramlanak.",
+      "A fa szállítócső energiát kapva tárgyakat von ki egy tárolóból.",
+      "<bold>Tipp:</bold> Az energiával végzett kivonás csak akkor működik, ha a célhálózat tovább tudja küldeni a tárgyat. Egy közeli puffer megakadályozza, hogy az eltömődött vezeték újra és újra kidobja.",
+      "Csőműködés",
+      "Energia hatására tárgyakat vesz ki, és más csatlakozó tárolókba vagy csövekbe továbbítja őket.\nA tárgyakat a cső tömör oldalán veszi ki, majd az átlátszó oldalak felé szállítja.\nHa több átlátszó oldala van, a tárgyak véletlenszerűen választanak közöttük.\nHa nincs hová menniük, a kivett tárgyak a földre esnek.\n\nEgyes gépek energia nélkül is képesek közvetlenül Wooden Transport Pipe-ba kiadni a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Energiaellátás",
+      "Bármilyen MJ-energiaforrásból kaphat energiát, például motorból, energiaadapterből vagy Pipe Pulsarból.",
+      "Minden energiaimpulzusnál tárgyakat vesz ki a szomszédos tárolóból.\nMinél erősebb az impulzus, annál több tárgyat vesz ki impulzusonként."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Lassan és egyenletesen szállítja a tárgyakat a kívánt helyre.",
+      "A Cobblestone Transport Pipe tárgyakat szállít egy csőből csatlakozó csövekbe vagy tárolókba.",
+      "<bold>Tipp:</bold> Használj Cobblestone és Stone csöveket együtt, amikor a szomszédos vezetékeket festés vagy dugók nélkül kell elkülöníteni.",
+      "Csőműködés",
+      "A Cobblestone Transport Pipe nagy ellenállást fejt ki a szállított tárgyakra, ezért gyorsan lelassítja a felgyorsított tárgyakat.\n\nA Cobblestone Transport Pipe nem csatlakozik Stone vagy Quartz Transport Pipe-hoz.\n\nHa több csatlakozó oldala van, a tárgyak véletlenszerű irányba haladnak.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Közepes tempóban szállítja a tárgyakat a kívánt helyre.",
+      "A Stone Transport Pipe tárgyakat szállít egy csőből csatlakozó csövekbe vagy tárolókba.",
+      "<bold>Tipp:</bold> Használj Stone és Cobblestone csöveket együtt, amikor a szomszédos vezetékeket festés vagy dugók nélkül kell elkülöníteni.",
+      "Csőműködés",
+      "A Stone Transport Pipe közepes ellenállást fejt ki a szállított tárgyakra, ezért lelassítja a felgyorsított tárgyakat.\n\nA Stone Transport Pipe nem csatlakozik Cobblestone vagy Quartz Transport Pipe-hoz.\n\nHa több csatlakozó oldala van, a tárgyak véletlenszerű irányba haladnak.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Gyorsabb tempóban szállítja a tárgyakat a kívánt helyre.",
+      "A Quartz Transport Pipe tárgyakat szállít egy csőből csatlakozó csövekbe vagy tárolókba.",
+      "<bold>Tipp:</bold> A Quartz csövek jól látható gerincvezetékekhez használhatók. A speciális válogatást az elágazásokhoz közel helyezd el, ne a teljes fővezeték mentén.",
+      "Csőműködés",
+      "A Quartz Transport Pipe kis ellenállást fejt ki a szállított tárgyakra, így csak enyhén lassítja a felgyorsított tárgyakat.\n\nA Quartz Transport Pipe nem csatlakozik Cobblestone vagy Stone Transport Pipe-hoz.\n\nHa több csatlakozó oldala van, a tárgyak véletlenszerű irányba haladnak.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Csak egy irányba szeretnéd szállítani a tárgyakat? Állítsd be a cső irányát, majd vezesd át rajta őket.",
+      "Az Iron Transport Pipe egy irányban szállítja a tárgyakat egy csőből a csatlakozó cső vagy tároló felé.",
+      "<bold>Tipp:</bold> Minden elforgatás vagy áthelyezés után állítsd be a kimeneti irányt franciakulccsal. Egy rossz nyíl észrevétlen zsákutcát hozhat létre.",
+      "Csőműködés",
+      "A tárgyak a tömör oldalakon lépnek be, és az átlátszó oldal felé távoznak.\nAz irány megváltoztatható az Iron Transport Pipe kívánt oldalának franciakulccsal történő megütésével, redstone-jellel vagy kapuval.\n\nA tárgyak nem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, oda-vissza pattognak, és folyamatosan a beállított irányba próbálnak haladni.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Nagyon gyorsan szállítja a tárgyakat a kívánt helyre.",
+      "A Gold Transport Pipe gyorsan szállítja a tárgyakat csatlakozó csövekbe vagy tárolókba.",
+      "<bold>Tipp:</bold> Használj Gold Pipe-okat hosszú, egyenes szakaszokon, majd lassítsd vagy puffereld a tárgyakat az összetett csomópontok előtt, ahol a gyors hullámok túlterhelhetik a tárolókat.",
+      "Csőműködés",
+      "A Gold Transport Pipe nagy sebességnövelést ad a tárgyaknak, ezért gyorsabban haladnak a csövekben.\n\nHa több csatlakozó oldala van, a tárgyak véletlenszerű irányba haladnak.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Hasznos lehet meghatározni, mely tárgyak merre haladhatnak a rendszerben.",
+      "A Diamond Transport Pipe a szűrője által meghatározott irányba szállít tárgyakat egy csőből egy szomszédos csőbe vagy tárolóba.",
+      "<bold>Tipp:</bold> Szűretlen oldalt csak szándékos túlfolyóként hagyj nyitva. A szűrt oldalak elsőbbséget élveznek, ezért a tömeges forgalom bekötése előtt tesztelj ritka tárgyakkal.",
+      "A szűrő beállítása",
+      "A Diamond Transport Pipe minden oldalát más szín jelöli.\nNyisd meg a Diamond Transport Pipe kezelőfelületét a szűrő beállításához.\nHelyezd a kívánt tárgyakat az adott szín mezőibe, hogy meghatározd, melyik tárgy melyik irányba haladhat.\nUgyanabból a tárgyból több példány egy színben nagyobb 'súlyt' ad az adott iránynak.\n\nLista helyezhető egy szűrőmezőbe a kibővített szűrési lehetőségekhez.",
+      "Csőműködés",
+      "Ha egy tárgy több irányba is mehet, a beállított súlyok alapján oszlik el közöttük.\nMinden szűrő nélküli érvényes irány átenged bármilyen tárgyat, de a szűrt irányok elsőbbséget élveznek.\nA tárgyak nem mennek vissza arra, ahonnan érkeztek.\nHa nincs csatlakozó cső, vagy a szomszédos tároló tele van, és nincs más út, a tárgy kiesik a csőből a földre.\n\nEgyes gépek kivonócső nélkül is közvetlenül Diamond Transport Pipe-ba adhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "A világban lévő tárgyak felszedése és mozgatása a jövő!",
+      "Az Obsidian Transport Pipe felszedi a világban lévő tárgyakat, és csatlakozó csőbe vagy tárolóba szállítja őket.",
+      "<bold>Tipp:</bold> Az energia javítja a begyűjtést. Úgy helyezd el a csövet, hogy ne húzza el a tárgyakat olyan területekről, amelyeket a játékosok még kézzel használnak.",
+      "A cső működése",
+      "Energia hatására a fölötte lévő 3x4x3 területen képes tárgyakat felszedni.\nEnergia nélkül is felszed minden tárgyat, amely hozzáér a csőhöz.",
+      "A cső iránya",
+      "Az Obsidian Transport Pipe-nak egy irányba kell 'néznie', hogy hatásterülete legyen.\nHa több csatlakozása van, elveszíti a világban lévő tárgyak felszedésének képességét.",
+      "Csőműködés",
+      "Ha a fogadott tárgyaknak nincs hová menniük, kiesnek a csőből a földre.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Energiaellátás",
+      "Bármilyen MJ-energiaforrásból kaphat energiát, például motorból, energiaadapterből vagy Pipe Pulsarból.",
+      "Minden energiaimpulzusnál tárgyakat szed fel a földről.\nMinél erősebb az impulzus, annál több tárgyat szed fel impulzusonként."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Eleged van a Pipe Plugokból? Ez a cső kizárólag más csövekhez csatlakozik.",
+      "A Sandstone Transport Pipe tárgyakat szállít egy csőből csatlakozó csövekbe.",
+      "<bold>Tipp:</bold> A Sandstone Pipe hasznos sűrű gépfalak mellett, mert elkerüli a nem kívánt tárolókapcsolatokat. Ellenőrizd, hogy minden tervezett végpont csatlakozik-e.",
+      "Csőműködés",
+      "Nem csatlakozik gépekhez, csak más csövekhez.\n\nHa több csatlakozó oldala van, a tárgyak véletlenszerű irányba haladnak.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "A Clay Pipe segítségével a tárgyak soha többé nem kerülik el a ládát.",
+      "A Clay Transport Pipe tárgyakat szállít egy csőből csatlakozó csövekbe vagy tárolókba.",
+      "<bold>Tipp:</bold> Használj Clay Pipe-okat a végső kézbesítési pontokon, ahol a tárolót előnyben kell részesíteni a csőhálózaton való továbbhaladással szemben.",
+      "Csőműködés",
+      "A Clay Transport Pipe előnyben részesíti a tárgyak tárolóba helyezését a továbbhaladással szemben.\n\nHa több csatlakozó oldala van, a tárgyak először a csatlakozó tárolót választják, majd csak utána a véletlenszerű irányt.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Ha tárgyakat küldesz bele, többé nem jönnek ki.",
+      "A Void Transport Pipe megsemmisíti a belé küldött tárgyakat.",
+      "<bold>Tipp:</bold> Tegyél szűrőt a Void Pipe elé, amikor értékes és eldobható tárgyak osztoznak a hálózaton. Soha ne használj üresjáratot kipróbálatlan túlfolyóként.",
+      "Csőműködés",
+      "A tárgyak nem haladhatnak át a csövön, mert a közepét elérő minden tárgy automatikusan megsemmisül.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Képzelj el egy csövet, amely blokkokat helyezhet le, blokkokat törhet és tárgyakat használhat. Ez pontosan az a cső.",
+      "A Striped Transport Pipe blokkokat tör, blokkokat helyez le, használja a rajta átküldött tárgyakat, és csatlakozó csőbe vagy tárolóba továbbítja őket.",
+      "<bold>Tipp:</bold> Használj Stripes Pipe-okat ellenőrzött végpontokon, és kézzel teszteld a célfelületet. A világra gyakorolt hatásuk rombolóbb a szokásos szállításnál.",
+      "A cső működése",
+      "Energia hatására összetöri a közvetlenül előtte lévő blokkot, és továbbítja a szomszédos csőbe vagy tárolóba.\nHa blokkot küldesz át rajta, közvetlenül maga elé helyezi.\nHa tárgyat küldesz át rajta, megpróbálja 'használni' az előtte lévő blokkon vagy entitáson.",
+      "A cső iránya",
+      "A Striped Transport Pipe-nak egy irányba kell 'néznie', hogy hatással legyen az előtte lévő blokkra.\nHa több cső vagy tároló csatlakozik hozzá, elveszíti a világra gyakorolt képességét.",
+      "Csőműködés",
+      "Ha a szállított tárgyaknak nincs hová menniük, kiesnek a csőből a földre.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Energiaellátás",
+      "Bármilyen MJ-energiaforrásból kaphat energiát, például motorból, energiaadapterből vagy Pipe Pulsarból.",
+      "Minden energiaimpulzusnál a kapott energiát arra használja, hogy megpróbálja összetörni az előtte lévő blokkot.\nMinél erősebb az impulzus, annál több energiát használ a blokk törésére."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Bizonyos tárgyakat szeretnél kivenni és máshová szállítani? Adj energiát a csőnek, és figyeld az áramlást.",
+      "A Wooden Diamond Transport Pipe energia hatására a szűrőjében kiválasztott tárgyakat veszi ki egy tárolóból.",
+      "<bold>Tipp:</bold> Az energia bekapcsolása előtt állítsd be a kivonási szűrőt. Egy üres vagy túl tág szűrő a vártnál sokkal gyorsabban kiürítheti a tárolót.",
+      "Csőműködés",
+      "Energia hatására a szűrőben kiválasztott tárgyakat veszi ki, és más csatlakozó tárolókba vagy csövekbe továbbítja őket.\nA tárgyakat a cső tömör oldalán veszi ki, majd az átlátszó oldalak felé szállítja.\nHa több átlátszó oldala van, a tárgyak véletlenszerű irányba haladnak.\nHa nincs hová menniük, a kivett tárgyak kiesnek a csőből a földre.\n\nEgyes gépek energia nélkül is közvetlenül Wooden Diamond Transport Pipe-ba adhatják a tárgyakat (ilyenkor a szűrőt nem veszi figyelembe).\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Szűrés",
+      "Nyisd meg a Wooden Diamond Transport Pipe kezelőfelületét a szűrő beállításához.\nHelyezd a kívánt tárgyakat a mezőkbe, hogy meghatározd, mit vegyen ki.\nA Whitelist, Blacklist és Round Robin lehetőségekkel módosíthatod a szűrő működését:\nWhitelist: Csak a kiválasztott tárgyakat veszi ki.\nBlacklist: A kiválasztott tárgyakon kívül minden mást kivesz.\nRound Robin: Pontosan a fenti szűrőmezőkben megadott sorrendben veszi ki a tárgyakat, balról jobbra.\n\nLista helyezhető egy szűrőmezőbe a kibővített szűrési lehetőségekhez.",
+      "Energiaellátás",
+      "Bármilyen MJ-energiaforrásból kaphat energiát, például motorból, energiaadapterből vagy Pipe Pulsarból.",
+      "Minden energiaimpulzusnál tárgyakat vesz ki a szomszédos tárolóból.\nMinél erősebb az impulzus, annál több tárgyat vesz ki impulzusonként."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Be szeretnéd festeni a tárgyaidat? Válassz színt, és olyan színűek lesznek.",
+      "A Lazuli Transport Pipe befest tárgyakat, és csatlakozó csövekbe vagy tárolókba továbbítja őket.",
+      "<bold>Tipp:</bold> Dokumentáld a színalapú útválasztást a hálózat közelében. Egy korábbi festékváltás minden későbbi útválasztási döntést módosíthat.",
+      "Tárgyak festése",
+      "A rajta áthaladó tárgyat a beállított színűre festi.\nA festés színe a cső franciakulccsal történő megütésével vagy kapuval módosítható.",
+      "Csőműködés",
+      "Ha több átlátszó oldala van, a tárgyak véletlenszerű irányba haladnak.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Szeretnéd szétválogatni a festett tárgyakat? Állíts be egy színt és irányt, majd vezesd át őket.",
+      "A Daizuli Transport Pipe a fogadott festett tárgyakat egy irányba, a csatlakozó cső vagy tároló felé küldi.",
+      "<bold>Tipp:</bold> A Daizuli útválasztást egyértelmű színrendszerrel használd. Egy színt tarts fenn túlfolyónak vagy válogatatlan tárgyaknak.",
+      "Csőműködés",
+      "A tárgyak a tömör oldalakon lépnek be, és az átlátszó oldal felé távoznak.\nNem mennek vissza arra, ahonnan érkeztek, hanem másik irányt választanak.\nHa nincs hová menniük, kiesnek a csőből a földre.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a tárgyakat.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A szín és az irány beállítása",
+      "A festett tárgyak iránya a kívánt csőoldal franciakulccsal történő megütésével vagy kapuval változtatható meg.\nAz adott irányba küldött színt a cső közepének franciakulccsal történő megütésével vagy kapuval módosíthatod."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "A kapuval vezérelt tárgykivonás a szűrési technológia legújabb műszaki forradalma.",
+      "Az Emzuli Transport Pipe egy kapuvezérelt cső, amely energia hatására a szűrőjével kiválasztott tárgyakat veszi ki egy tárolóból.",
+      "<bold>Tipp:</bold> Először kis tárolóval teszteld a redstone-vezérelt kivonást. Győződj meg arról, hogy az inaktív állapot megfelel az energiakimaradáskor elvárt működésnek.",
+      "Csőműködés",
+      "Energia hatására a szűrőben kiválasztott tárgyakat veszi ki, és más csatlakozó tárolókba vagy csövekbe továbbítja őket.\nA tárgyakat a cső tömör oldalán veszi ki, majd az átlátszó oldalak felé szállítja.\nHa több átlátszó oldala van, a tárgyak véletlenszerű irányba haladnak.\nHa nincs hová menniük, a kivett tárgyak kiesnek a csőből a földre.\n\nEgyes gépek energia nélkül is közvetlenül Emzuli Pipe-ba adhatják a tárgyakat (ilyenkor a szűrőket nem veszi figyelembe).\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Szűrés",
+      "Az Emzuli Transport Pipe kezelőfelülete négy színt kínál négy különálló szűrési beállításhoz.\nA mezőkbe helyezett tárgyak meghatározzák, mit vesz ki az egyes szűrő.\nA mezők melletti ecsetek színe határozza meg a kivont tárgyak festését; kattintással módosítható.\nA négy szűrő egyikének kiválasztásához egy kapu és egy színes Extraction Preset művelet szükséges. Például: Redstone signal -> Red Extraction Preset.\n\nLista helyezhető egy szűrőmezőbe a kibővített szűrési lehetőségekhez.",
+      "Energiaellátás",
+      "Bármilyen MJ-energiaforrásból kaphat energiát, például motorból, energiaadapterből vagy Pipe Pulsarból.",
+      "Minden energiaimpulzusnál tárgyakat vesz ki a szomszédos tárolóból.\nMinél erősebb az impulzus, annál több tárgyat vesz ki impulzusonként."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Folyadékot szeretnél kivenni és máshová szállítani? Adj energiát a csőnek, és figyeld az áramlást.",
+      "A Wooden Fluid Pipe energia hatására folyadékot von ki egy tartályból.",
+      "<bold>Tipp:</bold> A kivonást csak egy tervezett tartályhoz vagy gépoldalhoz csatlakoztasd, és biztosíts azonnali kapacitást a kimeneti oldalon. Az eltömődött vezeték leállítja a hasznos szivattyúzást.",
+      "Csőműködés",
+      "Energia hatására folyadékot von ki, és más csatlakozó tartályokba vagy csövekbe továbbítja.\nEgyes gépek energia nélkül is közvetlenül Wooden Fluid Pipe-ba adhatják a folyadékot.\nA folyadékot a cső tömör oldalán vonja ki, majd az átlátszó oldalak felé küldi.\nHa több átlátszó oldala van, a folyadék egyenlően oszlik el az irányok között.\n\nEgyes gépek energia nélkül is közvetlenül Wooden Fluid Pipe-ba adhatják a folyadékot.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Energiaellátás",
+      "Bármilyen MJ-energiaforrásból kaphat energiát, például motorból, energiaadapterből vagy Pipe Pulsarból.",
+      "Minden energiaimpulzusnál folyadékot von ki a szomszédos tartályból.\nMinél erősebb az impulzus, annál több folyadékot von ki impulzusonként.",
+      "A Wooden Fluid Pipe másodpercenként 0,2 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Viszonylag lassan szállítja a folyadékokat a kívánt helyre.",
+      "A Cobblestone Fluid Pipe folyadékokat szállít egy csőből csatlakozó csövekbe vagy tartályokba.",
+      "<bold>Tipp:</bold> Használd ki, hogy a Stone és Cobblestone csövek nem csatlakoznak, így külön folyadékvezetékeket vezethetsz egymás mellett véletlen keveredés nélkül.",
+      "Csőműködés",
+      "A Cobblestone Fluid Pipe a leglassabb folyadékszállító cső.\n\nNem csatlakozik Stone Fluid Pipe-hoz vagy Quartz Fluid Pipe-hoz.\n\nA folyadék nem halad vissza arra, ahonnan érkezett, hanem másik irányba megy.\nHa több lehetséges irány van, egyenlően oszlik el közöttük.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a folyadékot.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A Cobblestone Fluid Pipe másodpercenként 0,2 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Ésszerű sebességgel szállítja a folyadékokat a kívánt helyre.",
+      "A Stone Fluid Pipe folyadékokat szállít egy csőből csatlakozó csövekbe vagy tartályokba.",
+      "<bold>Tipp:</bold> Használd ki, hogy a Stone és Cobblestone csövek nem csatlakoznak, így külön folyadékvezetékeket vezethetsz egymás mellett véletlen keveredés nélkül.",
+      "Csőműködés",
+      "A Stone Fluid Pipe átlagos sebességgel szállít folyadékokat.\n\nNem csatlakozik Cobblestone Fluid Pipe-hoz vagy Quartz Fluid Pipe-hoz.\n\nA folyadék nem halad vissza arra, ahonnan érkezett, hanem másik irányba megy.\nHa több lehetséges irány van, egyenlően oszlik el közöttük.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a folyadékot.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A Stone Fluid Pipe másodpercenként 0,4 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Kedvezőbb sebességgel szállítja a folyadékokat a kívánt helyre.",
+      "A Quartz Fluid Pipe folyadékokat szállít egy csőből csatlakozó csövekbe vagy tartályokba.",
+      "<bold>Tipp:</bold> A fontos finomítási szakaszokhoz használj jól megkülönböztethető csőanyagokat. A világosan elkülönített vezetékeken könnyebb észrevenni a rossz folyadékcsatlakozást.",
+      "Csőműködés",
+      "A Quartz Fluid Pipe jó sebességgel szállít folyadékokat.\n\nNem csatlakozik Cobblestone Fluid Pipe-hoz vagy Stone Fluid Pipe-hoz.\n\nA folyadék nem halad vissza arra, ahonnan érkezett, hanem másik irányba megy.\nHa több lehetséges irány van, egyenlően oszlik el közöttük.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a folyadékot.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A Quartz Fluid Pipe másodpercenként 0,8 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Csak egy irányba szeretnéd szállítani a folyadékokat? Állítsd be a cső irányát, és vezesd át rajta őket.",
+      "Az Iron Fluid Pipe egy irányban szállít folyadékot egy csőből a csatlakozó csőbe vagy tartályba.",
+      "<bold>Tipp:</bold> A cső elforgatása után ellenőrizd az egyirányú kimenetet. Egy irányhiba folyadékot zárhat egy látszólag csatlakozó ágba.",
+      "Csőműködés",
+      "A folyadék iránya a kívánt csőoldal franciakulccsal történő megütésével, redstone-jellel vagy kapuval állítható be.\n\nA folyadék a cső tömör oldalain lép be, és az átlátszó oldal felé távozik.\nNem halad vissza arra, ahonnan érkezett, csak a beállított irányba.\n\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Az Iron Fluid Pipe másodpercenként 0,8 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Gyorsan szállítja a folyadékokat a kívánt helyre.",
+      "A Gold Fluid Pipe gyorsan szállít folyadékokat csatlakozó csövekbe vagy tartályokba.",
+      "<bold>Tipp:</bold> Használj nagyobb áteresztésű szakaszokat szivattyúk és nagy tartályok közelében, de hagyj elegendő fogadókapacitást a hirtelen mennyiségekhez.",
+      "Csőműködés",
+      "A Gold Fluid Pipe a leggyorsabb folyadékszállító cső.\n\nA folyadék nem halad vissza arra, ahonnan érkezett, hanem másik irányba megy.\nHa több lehetséges irány van, egyenlően oszlik el közöttük.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a folyadékot.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A Gold Fluid Pipe másodpercenként 1,6 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Folyadékok válogatása, hogy a csővezetékek kereszteződhessenek? Őrület.",
+      "A Diamond Fluid Pipe a szűrője által meghatározott irányba szállít folyadékot egy csőből egy csatlakozó csőbe vagy tartályba.",
+      "<bold>Tipp:</bold> Több folyadék csatlakoztatása előtt állíts be minden használt oldalt. Külön túlfolyóutat tervezz ahelyett, hogy véletlenül üres szűrőre hagyatkoznál.",
+      "Szűrés",
+      "A Diamond Fluid Pipe minden oldalát más szín jelöli.\nNyisd meg a Diamond Fluid Pipe kezelőfelületét a szűrő beállításához.\nHelyezz a kívánt folyadékkal teli vödröt vagy más tartályt az adott szín mezőjébe, hogy meghatározd, melyik folyadék melyik irányba haladhat.\nUgyanabból a folyadékból több példány egy színben nagyobb 'súlyt' ad az adott iránynak.",
+      "Csőműködés",
+      "Minden szűrő nélküli érvényes irány átenged bármilyen folyadékot, de a szűrt irányok elsőbbséget élveznek.\nA folyadék nem halad vissza arra, ahonnan érkezett.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a folyadékot.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A Diamond Fluid Pipe másodpercenként 1,6 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Eleged van a Pipe Plugokból? Ez a cső kizárólag más csövekhez csatlakozik.",
+      "A Sandstone Fluid Pipe folyadékokat szállít egy csőből csatlakozó csövekbe.",
+      "<bold>Tipp:</bold> Használj Sandstone Fluid Pipe-okat ott, ahol a közeli tartályok nem csatlakozhatnak automatikusan. A gépfal újjáépítése után ellenőrizz minden oldalt.",
+      "Csőműködés",
+      "Nem csatlakozik gépekhez, csak más csövekhez.\n\nA folyadék nem halad vissza arra, ahonnan érkezett, hanem másik irányba megy.\nHa több lehetséges irány van, egyenlően oszlik el közöttük.\n\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A Sandstone Fluid Pipe másodpercenként 0,4 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Miért menne tovább a folyadék a következő csőbe, amikor ott van mellette egy tartály?",
+      "<bold>Tipp:</bold> Helyezz Clay Fluid Pipe-okat a végső fogyasztók közelébe, ha a folyadéknak a hálózaton való továbbhaladás helyett inkább tartályba vagy gépbe kell belépnie.",
+      "A Clay Fluid Pipe folyadékokat szállít egy csőből csatlakozó csövekbe vagy tartályokba.",
+      "Csőműködés",
+      "A Clay Fluid Pipe előnyben részesíti a folyadék szomszédos tartályba helyezését a következő cső felé haladással szemben.\nA folyadék nem halad vissza arra, ahonnan érkezett, hanem másik irányba megy.\nHa több lehetséges irány van, egyenlően oszlik el közöttük, a tartályokat előnyben részesítve.\n\nEgyes gépek energiaellátott kivonócső nélkül is közvetlenül beleadhatják a folyadékot.\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "A Clay Fluid Pipe másodpercenként 0,8 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Folyadékok megsemmisítése vödrönként",
+      "A Void Fluid Pipe megsemmisíti a belé küldött folyadékokat.",
+      "<bold>Tipp:</bold> Szűrd és különítsd el a Void Fluid Pipe-okat. Egy téves csatlakozás egy egész tárolt folyadékmennyiséget megsemmisíthet visszaszerezhető tárgyak nélkül.",
+      "Csőműködés",
+      "A folyadék nem haladhat át a csövön, mert a közepét elérő minden folyadék automatikusan megsemmisül.\n\nEgyes gépek kivonócső nélkül is közvetlenül Void Fluid Pipe-ba adhatják a folyadékot.",
+      "A folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Egy bizonyos folyadékot szeretnél kivenni és máshová szállítani? Adj energiát a csőnek, és figyeld az áramlást.",
+      "A Wooden Diamond Fluid Pipe energia hatására kiválasztott folyadékokat von ki egy tartályból.",
+      "<bold>Tipp:</bold> Több tartály csatlakoztatása előtt állítsd be a kivonási szűrőt. Így nem ürül ki a rossz folyadék, ha a közös forrás tartalma megváltozik.",
+      "Csőműködés",
+      "Energia hatására a szűrő által kiválasztott folyadékot vonja ki, és más csatlakozó tartályokba vagy csövekbe továbbítja.\nA folyadékot a cső tömör oldalán vonja ki, majd az átlátszó oldalak felé küldi.\nHa több átlátszó oldala van, a folyadék egyenlően oszlik el az irányok között.\n\nEgyes gépek energia nélkül is közvetlenül beleadhatják a folyadékot (ilyenkor a szűrőt nem veszi figyelembe).\nPipe Plug használatával vagy a csövek eltérő színűre festésével megakadályozható a csatlakozás.",
+      "Szűrés",
+      "Nyisd meg a Wooden Diamond Fluid Pipe kezelőfelületét a szűrő beállításához.\nHelyezz a kívánt folyadékkal teli vödröt vagy más tartályt a mezőkbe, hogy meghatározd, mit vonjon ki.\nA Whitelist és Blacklist lehetőségek módosítják a szűrő működését:\nWhitelist: Csak a kiválasztott folyadékokat vonja ki.\nBlacklist: A kiválasztott folyadékon kívül minden mást kivon.",
+      "Energiaellátás",
+      "Bármilyen MJ-energiaforrásból kaphat energiát, például motorból, energiaadapterből vagy Pipe Pulsarból.",
+      "Minden energiaimpulzusnál folyadékot von ki a szomszédos tartályból.\nMinél erősebb az impulzus, annál több folyadékot von ki impulzusonként.",
+      "A Wooden Diamond Fluid Pipe másodpercenként 1,6 vödör folyadékot szállít a szomszédos csövekbe és tartályokba.\nA folyadékcsövek belső tartálya oldalanként 1 vödröt, középen további 1 vödröt képes tárolni."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Redstone: Csak 15 blokkra ér el, blokkonként egy jelet visz, és csak piros — unalmas.\nPipe Wire: Korlátlan távolságra halad, csövenként sok jelet hordoz, és sok színben elérhető.",
+      "A Pipe Wire egy csőre szerelhető rendszer, amely korlátlan távolságra továbbít adatjeleket a csőhálózaton.",
+      "<bold>Tipp:</bold> Tömeges gyártás előtt együtt nézd meg a Receptek és Felhasználások részt; ez a tárgy több későbbi gép köztes alkatrésze lehet.",
+      "Vezetékmechanika",
+      "Egy kapu jelet ad a Pipe Wire-nak, amelyet az továbbít a vele összekapcsolt, azonos színű Pipe Wire-oknak.\nA jel csak be- vagy kikapcsolt lehet, és a redstone-nal ellentétben korlátlan távolságra halad.\nA Pipe Wire mind a 16 színben elérhető.",
+      "Vezeték elhelyezése",
+      "Pipe Wire a cső minden sarkára helyezhető, és csak azonos színű Pipe Wire-hoz csatlakozik a fő irányokban.\nAzonos színű vezetékek különböző csöveken keresztül is összekapcsolódhatnak akkor is, ha maguk a csövek nem csatlakoznak."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "A Pipe Pulsar hasznos fejlesztés a Wooden Pipe-ok motorral történő működtetéséhez képest, de még mindig korlátozottnak tűnik. Hasznos lenne a meglévő energiahálózatot és motorokat a kivonócsövek gyorsabb hajtására használni.",
+      "A Pipe Adapter egy csőre szerelhető alkatrész, amely lehetővé teszi az energiafogadó csövek Kinesis Pipe-on keresztüli működtetését.",
+      "<bold>Tipp:</bold> Tömeges gyártás előtt együtt nézd meg a Receptek és Felhasználások részt; ez a tárgy több későbbi gép köztes alkatrésze lehet.",
+      "Dugó működése",
+      "Csak energiafogadó csőre helyezhető, és a mellé helyezett Kinesis Pipe csatlakozik hozzá.\n\nA csatlakozó Kinesis Pipe-on érkező energia működtetheti a kapcsolódó energiafogadó szállító- vagy folyadékcsövet.",
+      "Csőcsatlakozások",
+      "A csőre szerelhető elemek csak csövekre és a cső bármely oldalára helyezhetők.\nKét cső közé helyezve megakadályozza a többi cső- és Pipe Wire-csatlakozást közöttük, kivéve a Kinesis Pipe-ot és magát az adaptert."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Miért csatlakoznak folyton a csöveim? Hogyan állítsam meg? Egyszerűen tegyél közéjük Pipe Plugot.",
+      "A Pipe Plug egy csőre szerelhető elem, amely megakadályozza, hogy a csövek és/vagy Pipe Wire-ok egymáshoz csatlakozzanak.",
+      "<bold>Tipp:</bold> Tömeges gyártás előtt együtt nézd meg a Receptek és Felhasználások részt; ez a tárgy több későbbi gép köztes alkatrésze lehet.",
+      "Csőkapcsolatok",
+      "Közvetlenül a cső bármely oldalára helyezhető, és az azon az oldalon lévő következő cső nem csatlakozik.\n\nA csőre szerelhető elemek csak csövekre és a cső bármely oldalára helyezhetők."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Amikor tárgyak haladnak át a csövön, az érzékelő aktiválódik.",
+      "Az Items Traversing egy kapuérzékelő, amely minden szállítócsőre helyezett kapun elérhető.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakozó műveletek csak akkor aktiválódnak, amikor egy tárgy halad át a csövön.",
+      "Paraméterek",
+      "Ha az Items Traversing van kiválasztva, és a telepített kapu rendelkezik paraméterekkel, a mellette lévő szűrőmező paraméterként elérhetővé válik.\nTegyél tárgyat a szűrőmezőbe, hogy aktiválás előtt ellenőrizze, az adott tárgy halad-e át a csövön."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Folyadék halad át azon a csövön, amelyre a kapu van helyezve.",
+      "A Fluid Traversing egy kapuérzékelő, amely minden folyadékcsőre helyezett kapun elérhető.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakozó műveletek csak akkor aktiválódnak, amikor folyadék halad át a csövön."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Amikor nem halad tárgy a csövön, az érzékelő aktiválódik.",
+      "A Pipe Empty egy kapuérzékelő, amely minden szállító- vagy folyadékcsőre helyezett kapun elérhető.",
+      "<bold>Tipp:</bold> Ezt az érzékelőt pontosan azon az oldalon és azon a tárolón vagy tartályon teszteld, amelyet a termelésben használsz. Az oldalfüggő képességek miatt ugyanannak a blokknak két oldala eltérő állapotot jelezhet.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakozó műveletek csak akkor aktiválódnak, amikor sem tárgy, sem folyadék nem halad át a csövön."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "A csatlakoztatott Pipe Wire fényesen világít.",
+      "A Pipe Signal On egy kapuérzékelő, amely akkor érhető el, ha azonos színű Pipe Wire van ugyanarra a csőre rögzítve.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakozó műveletek csak akkor aktiválódnak, amikor az azonos színű Pipe Wire aktív.",
+      "Paraméterek",
+      "Ha a Pipe Signal On van kiválasztva, és a kapu rendelkezik paraméterekkel, a többi csatlakozó Pipe Wire-szín Pipe Signal On és Pipe Signal Off állapota paraméterként elérhetővé válik.\nPipe Signal On vagy Pipe Signal Off kiválasztásával több vezetékfeltételt követelhetsz meg az aktiválás előtt."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "A csatlakoztatott Pipe Wire nem világít.",
+      "A Pipe Signal Off egy kapuérzékelő, amely akkor érhető el, ha azonos színű Pipe Wire van ugyanarra a csőre rögzítve.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Követelmények",
+      "Kiválasztásakor a csatlakozó műveletek csak akkor aktiválódnak, amikor az azonos színű Pipe Wire nem aktív.",
+      "Paraméterek",
+      "Ha a Pipe Signal Off van kiválasztva, és a kapu rendelkezik paraméterekkel, a többi csatlakozó Pipe Wire-szín Pipe Signal On és Pipe Signal Off állapota paraméterként elérhetővé válik.\nPipe Signal On vagy Pipe Signal Off paraméterrel több vezetékfeltételt követelhetsz meg az aktiválás előtt."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Merre működjön vagy szállítson a cső? Északra? Válaszd ezt a műveletet.",
+      "A Face the North Side olyan kapuművelet, amely irányt igénylő csövön érhető el, ha észak érvényes irány.",
+      "<bold>Tipp:</bold> Egyszerre csak egy irányműveletet használj a kapun, és biztosíts biztonságos tartalék útvonalat. Az ütköző irányok kiszámíthatatlanná tehetik a tárgyáramlást.",
+      "Az irány beállítása",
+      "A művelet aktiválásakor a cső északot állítja be irányként.\nEz azt jelenti, hogy tartalmát északra küldi, vagy a világban végzett műveletét az északi oldalán hajtja végre."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Merre működjön vagy szállítson a cső? Keletre? Válaszd ezt a műveletet.",
+      "A Face the East Side olyan kapuművelet, amely irányt igénylő csövön érhető el, ha kelet érvényes irány.",
+      "<bold>Tipp:</bold> Egyszerre csak egy irányműveletet használj a kapun, és biztosíts biztonságos tartalék útvonalat. Az ütköző irányok kiszámíthatatlanná tehetik a tárgyáramlást.",
+      "Az irány beállítása",
+      "A művelet aktiválásakor a cső keletet állítja be irányként.\nEz azt jelenti, hogy tartalmát keletre küldi, vagy a világban végzett műveletét a keleti oldalán hajtja végre."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Merre működjön vagy szállítson a cső? Délre? Válaszd ezt a műveletet.",
+      "A Face the South Side olyan kapuművelet, amely irányt igénylő csövön érhető el, ha dél érvényes irány.",
+      "<bold>Tipp:</bold> Egyszerre csak egy irányműveletet használj a kapun, és biztosíts biztonságos tartalék útvonalat. Az ütköző irányok kiszámíthatatlanná tehetik a tárgyáramlást.",
+      "Az irány beállítása",
+      "A művelet aktiválásakor a cső délt állítja be irányként.\nEz azt jelenti, hogy tartalmát délre küldi, vagy a világban végzett műveletét a déli oldalán hajtja végre."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Merre működjön vagy szállítson a cső? Nyugatra? Válaszd ezt a műveletet.",
+      "A Face the West Side olyan kapuművelet, amely irányt igénylő csövön érhető el, ha nyugat érvényes irány.",
+      "<bold>Tipp:</bold> Egyszerre csak egy irányműveletet használj a kapun, és biztosíts biztonságos tartalék útvonalat. Az ütköző irányok kiszámíthatatlanná tehetik a tárgyáramlást.",
+      "Az irány beállítása",
+      "A művelet aktiválásakor a cső nyugatot állítja be irányként.\nEz azt jelenti, hogy tartalmát nyugatra küldi, vagy a világban végzett műveletét a nyugati oldalán hajtja végre."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Merre működjön vagy szállítson a cső? Felfelé? Válaszd ezt a műveletet.",
+      "A Face the Top Side olyan kapuművelet, amely irányt igénylő csövön érhető el, ha felfelé érvényes irány.",
+      "<bold>Tipp:</bold> Egyszerre csak egy irányműveletet használj a kapun, és biztosíts biztonságos tartalék útvonalat. Az ütköző irányok kiszámíthatatlanná tehetik a tárgyáramlást.",
+      "Az irány beállítása",
+      "A művelet aktiválásakor a cső a felső oldalt állítja be irányként.\nEz azt jelenti, hogy tartalmát felfelé küldi, vagy a világban végzett műveletét maga fölött hajtja végre."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Merre működjön vagy szállítson a cső? Lefelé? Válaszd ezt a műveletet.",
+      "A Face the Bottom Side olyan kapuművelet, amely irányt igénylő csövön érhető el, ha lefelé érvényes irány.",
+      "<bold>Tipp:</bold> Egyszerre csak egy irányműveletet használj a kapun, és biztosíts biztonságos tartalék útvonalat. Az ütköző irányok kiszámíthatatlanná tehetik a tárgyáramlást.",
+      "Az irány beállítása",
+      "A művelet aktiválásakor a cső az alsó oldalt állítja be irányként.\nEz azt jelenti, hogy tartalmát lefelé küldi, vagy a világban végzett műveletét maga alatt hajtja végre."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Válaszd ezt, hogy a csatlakozó Pipe Wire világítson.",
+      "A Pipe Signal On olyan kapuművelet, amely akkor érhető el, ha azonos színű Pipe Wire van ugyanarra a csőre rögzítve.",
+      "<bold>Tipp:</bold> Színes csővezetékkel különítsd el ezt a jelet a nem kapcsolódó automatizálástól, és kerüld el a szomszédos kapuk közötti visszacsatolási hurkokat.",
+      "Követelmények",
+      "A művelet aktiválásakor az azonos színű csatlakozó Pipe Wire bekapcsol.",
+      "Paraméter",
+      "Ha a Pipe Signal On van kiválasztva, és a kapu rendelkezik paraméterekkel, a többi csatlakozó Pipe Wire-szín Pipe Signal On és Pipe Signal Off állapota paraméterként elérhetővé válik.\nPipe Signal On kiválasztásával több Pipe Wire is aktiválódhat, amikor a kezdeti érzékelők bekapcsolnak."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "A Lazuli és Daizuli Transport Pipe festett tárgyakat festhet és válogathat; ez a művelet módosítja a használt színt.",
+      "A Paint Items egy kapuművelet, amely Lazuli vagy Daizuli Transport Pipe-ra helyezett kapun érhető el.",
+      "<bold>Tipp:</bold> Ezt a műveletet a lehető legszűkebb hasznos érzékelővel párosítsd, és a kikapcsolt állapotot ugyanolyan gondosan teszteld, mint a bekapcsoltat.",
+      "Követelmények",
+      "A művelet aktiválásakor a kapu így állítja be a csövet:\nA Lazuli Pipe a Paint Items műveletben kiválasztott színűre festi az áthaladó tárgyakat.\nA Daizuli Pipe csak a kiválasztott színű tárgyakat küldi a beállított irányba."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Az Emzuli Transport Pipe több kivonási szűrőt kínál; a használathoz válassz ki egyet a kapuban.",
+      "Az Extraction Preset egy kapuművelet, amely Emzuli Transport Pipe-ra helyezett kapun érhető el.",
+      "<bold>Tipp:</bold> Ezt a műveletet a lehető legszűkebb hasznos érzékelővel párosítsd, és a kikapcsolt állapotot ugyanolyan gondosan teszteld, mint a bekapcsoltat.",
+      "Követelmények",
+      "A művelet aktiválásakor a kapu lehetővé teszi, hogy az Emzuli Pipe a kiválasztott Extraction Preset szín szerint vonjon ki.\nA kapu által beállított kivonási előbeállítás nélkül az Emzuli Pipe nem tud tárgyat kivenni."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "A motorok alapjai"
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Négy Land Mark áthelyezése minden méretváltozáskor gyorsan önálló projektté válik.",
+      "A Volume Box egy Marker Connectorral vezérelhető, mozgatható területjelölő.",
+      "<bold>Tipp:</bold> A Volume Box kényelmes a kész területmeghatározás gépek közötti mozgatásához. Nevezd át vagy tárold külön őket, amikor több projekt hasonló méreteket használ.",
+      "Elhelyezés és átméretezés",
+      "Használd a tárgyat egy blokkon, hogy mellette Volume Box jöjjön létre. Kattints a doboz egyik fogantyújára Marker Connectorral, mozgasd a kiválasztott sarkot, majd kattints újra az átméretezés befejezéséhez.\n\nLopakodva használd a Marker Connectort a dobozon az eltávolításhoz. A mellette lévő gépek ugyanúgy használhatják a kijelölt térfogatot, mint egy Land Mark-területet.",
+      "Kiegészítők",
+      "A Volume Box kompatibilis tervezési kiegészítőket tárolhat. A Filler Planner egy Filler-mintát és annak fordított állapotát menti a dobozba, hogy a közeli Filler automatikusan átvehesse őket."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "A nagy gépeknek pontos határra van szükségük, különben nehéz kordában tartani a blokkok iránti étvágyukat.",
+      "A Land Markok téglalap alakú munkaterületeket határoznak meg olyan gépek számára, mint a Quarry, a Filler és az Architect Table.",
+      "<bold>Tipp:</bold> Quarry, Builder vagy Filler indítása előtt több oldalról ellenőrizd a színes határvonalakat. Egy rosszul elhelyezett jelölő a vártnál sokkal nagyobb területet választhat ki.",
+      "Terület meghatározása",
+      "Helyezd a Land Markokat egyező X, Y vagy Z tengelyekre, és kösd össze őket Marker Connectorral. A csatlakozó jelölők egy téglatest éleit alkotják. A legtöbb gépnek csak a vízszintes sarkokra van szüksége, de teljes háromdimenziós doboz is meghatározható.\n\nA Land Mark redstone-energiával történő ellátása vezetőlézereket jelenít meg a tengelyek mentén, megkönnyítve az igazítást.",
+      "A terület használata",
+      "Helyezd a gépet az egyik csatlakozó jelölő mellé. A gép lefoglalja a megjelölt dobozt és munkaterületként használja. Ha nem talál érvényes jelölőket, egyes gépek saját alapértelmezett területüket használják."
+    ],
+    "buildcraftlib/item/guide": [
+      "Egy nagy műhely könnyebben építhető, ha minden géphez jegyzetek tartoznak találgatás helyett.",
+      "Ez a könyv tartalmazza a BuildCraft Community Edition játékon belüli dokumentációját.",
+      "<bold>Tipp:</bold> Kapcsold be a Tippek megjelenítése lehetőséget a gyakorlati beállítási tanácsokért, és használd a keresést, ha ismered egy blokk vagy mechanika nevét.",
+      "A könyv használata",
+      "A tartalom az összes betöltött BuildCraft-modul blokkjait, tárgyait, csöveit, érzékelőit és műveleteit egyesíti. A rendezés csak a tárgymutatót módosítja; a hivatkozások, receptek és az utoljára megnyitott oldal ebben a könyvben tárolódik.\n\n$[special.all_crafting](buildcraftlib:guide)\n\n$[special.new_page]"
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Csak pirosra festett tárgyak haladnak át rajta, természetesen ha a szűrő piros.",
+      "A Filter egy csőre szerelhető elem, amely magához húzza az önmagával azonos színű beérkező tárgyakat, és csak ezt a színt engedi át.",
+      "Dugó működése",
+      "Csak a szűrővel azonos színűre festett tárgyak haladhatnak át; minden más színű tárgy másik irányba próbál menni.\nFilter csak tárgyszállító csőre helyezhető, mert csak tárgyakat lehet festeni.",
+      "Csőkapcsolatok",
+      "A csőre szerelhető elemek csak csövekre és a cső bármely oldalára helyezhetők.\nKét cső közé helyezve nem állítja meg a többi cső- és Pipe Wire-csatlakozást."
+    ],
+    "buildcraftcore/item/map_location": [
+      "A robotok és gépek sokkal könnyebben irányíthatók, ha egy helyet, útvonalat vagy munkazónát a zsebedben hordhatsz.",
+      "A Map Location egy pontot, területet, útvonalat vagy Robotics-zónát rögzít későbbi használatra.",
+      "<bold>Tipp:</bold> Pontosan a megfelelő blokkon állva és a kívánt irányba nézve rögzítsd a helyeket. Így az automatizálás nem használja őket egy blokkal eltolva.",
+      "Helyek rögzítése",
+      "Használj üres Map Locationt egy normál blokkon a pont és a kattintott oldal rögzítéséhez. Használd csatlakoztatott Land Markon, Volume Boxon vagy más területforráson a doboz rögzítéséhez. Használd Path Mark-hálózaton az útvonal rögzítéséhez.\n\nLopakodva kattints jobb gombbal a levegőbe az adatok törléséhez. Az üres helyek halmozhatók, a rögzítettek külön maradnak.",
+      "Robotics-zónák",
+      "A Zone Planner tizenhat rétegű festett munkazónát írhat egy Map Locationbe. A kapuk és Docking Stationök ezután ezzel a térképpel korlátozhatják a kapcsolt robotok munkaterületét."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Egyes blokkok olyan folyadékot tartalmaznak, amelynek nem kellene egyszerűen eltűnnie a blokk törésekor.",
+      "A Fragile Fluid Shard egy ideiglenes, egyirányú tároló, amely legfeljebb 500 mB folyadékot tartalmazhat.",
+      "<bold>Tipp:</bold> Tartsd ezt az eszközt vagy alkatrészt az azt használó gépek közelében, és nagy mennyiség gyártása előtt ellenőrizd a Felhasználások részt.",
+      "Folyadék-visszanyerés",
+      "A támogatott blokkok ilyen szilánkokat dobhatnak, ha még maradt bennük folyadék a töréskor. Egy szilánk legfeljebb fél vödörnyit tárol. A folyadékkezelők leereszthetik a szilánkot, elfogyasztva a tartalmát.\n\nA szilánk kézzel nem tölthető, és nem újrahasználható tartály. Juttasd a tartalmát kompatibilis tartályba vagy csőbe, mielőtt közönséges anyagként kezelnéd."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Egy gyár tesztelésekor ritkán az üzemanyagra várás az a rész, amelyet bárki tesztelni szeretne.",
+      "A Creative Engine üzemanyag nélkül termel beállítható MJ-t, és kreatív módú tesztelésre szolgál.",
+      "<bold>Tipp:</bold> A Creative Engine-t csak ellenőrzött tesztberendezésekben használd. Válaszd le a normál energiahálózatról, hogy a korlátlan forrás ne rejtse el az áteresztési vagy pufferelési problémákat.",
+      "Kimenet",
+      "A motor redstone-jellel működik. Franciakulccsal válthatsz az 1, 2, 4, 8, 16, 32, 64, 128 és 256 MJ/tick kimenetek között.\n\nA motor nem fogyaszt üzemanyagot és nem robban fel. Fordítsd úgy franciakulccsal, hogy a mozgó vége az energiát fogadó gép vagy energiacső felé nézzen."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Egy kész építmény egyszer hasznos; a Blueprint ugyanazt a tervet újra és újra megépíthetővé teszi.",
+      "A Blueprint egy beolvasott terület pontos blokkjait, blokkállapotait és támogatott blokkentitás-adatait tárolja.",
+      "<bold>Tipp:</bold> Nevezd el a fontos Blueprinteket, és tarts tiszta mesterpéldányt egy Libraryban. A munkaterületeken másolatokat használj, hogy véletlen felülírás ne semmisítse meg az eredeti tervet.",
+      "Rögzítés",
+      "Helyezz üres Blueprintet egy Land Mark- vagy Volume Box-terület melletti Architect Table-be. Az asztal idővel beolvassa a kijelölt térfogatot, és használt Blueprintet ad vissza. Az üres Blueprintek tizenhatig halmozhatók; a rögzítettek nem.\n\nA Blueprint megjegyzi az építmény tényleges anyagait és tájolását. A támogatott blokkentitás-adatok és entitások akkor kerülnek bele, ha a jelenlegi sémakezelők engedélyezik.",
+      "Építés",
+      "Helyezd a használt Blueprintet egy Builderbe. Add meg a kért blokkokat, folyadékokat és MJ-t. A Builder újraalkotja a rögzített építményt, és elforgathatja vagy kiáshatja, ha ezeket a lehetőségeket rögzítéskor engedélyezték."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Néha a forma fontosabb, mint az azt kitöltő pontos kő, fa vagy fém.",
+      "A Template csak egy terület kitöltött alakját rögzíti, így a Builder a rendelkezésre bocsátott anyagokkal töltheti ki.",
+      "<bold>Tipp:</bold> A Template az alakot rögzíti, nem a pontos blokkazonosságot. Akkor használd, ha ugyanazt az építményt helyben elérhető anyagokból kell újraépíteni.",
+      "Rögzítés",
+      "A Template-et ugyanúgy rögzítsd Architect Table-ben, mint a Blueprintet. A beolvasás megjegyzi a kitöltött és üres helyeket, de nem őrzi meg az eredeti blokktípusokat vagy blokkentitás-adatokat.",
+      "Építés",
+      "Helyezd a használt Template-et egy Builderbe, és add meg a használni kívánt blokkokat. A Builder a rendelkezésre álló anyagokból újraalkotja a rögzített alakot. A Template hasznos utakhoz, falakhoz, héjakhoz és ismétlődő szerkezetekhez, ahol az anyag változhat."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Egy blokk minden példányának kézi cseréje egy nagy tervben rossz felhasználása egy építész idejének.",
+      "A Single Block Schematic egy blokkállapotot rögzít a Replacer számára.",
+      "<bold>Tipp:</bold> A Single Block Schematic hasznos elhelyezési szabályok és forgatások tesztelésére, mielőtt nagy Blueprintet adnál a Buildernek.",
+      "Blokk rögzítése",
+      "Használj üres sémát egy blokkon a rögzítéséhez. A séma tárolja a blokkállapotot és a létrehozásához szükséges támogatott követelményeket. Lopakodva kattints jobb gombbal a törléshez.",
+      "Blueprint-blokkok cseréje",
+      "A Replacer egy használt Blueprintet, egy forrássémát és egy célsémát fogad. A Blueprint minden egyező forrásblokkja célblokkra változik a világ közvetlen módosítása nélkül."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Egy építési doboz hasznosabb, ha nemcsak a munkaterületre, hanem az elvégzendő munkára is emlékszik.",
+      "A Filler Planner egy Filler-mintát és paramétereket tárol Volume Box-kiegészítőként.",
+      "<bold>Tipp:</bold> A Filler-minta mentése előtt tekintsd meg a kiválasztott alakot és méreteket. Kis koordinátahibák nagy térfogatban ismételve költségessé válnak.",
+      "Tervezés",
+      "Csatlakoztasd a tervezőt egy Volume Boxhoz, és állítsd be a mintát, paramétereket és megfordítást. Az ezt a dobozt használó Filler a mentett tervet olvashatja be új beállítás helyett.\n\nAz előnézet követi a Volume Boxot, így a tervezett művelet átméretezhető és ellenőrizhető az anyagok és MJ felhasználása előtt."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Mielőtt egy gép újraépíthet egy szerkezetet, valakinek előbb meg kell tanítania, mi a szerkezet.",
+      "Az Architect Table egy megjelölt területet Blueprintbe vagy Template-be olvas be.",
+      "<bold>Tipp:</bold> Először kis, jellemző szerkezetet olvass be a forgatások, blokkentitások és különleges blokkok ellenőrzéséhez. Csak helyes előnézet után válts nagyobb beolvasásra.",
+      "Terület beállítása",
+      "Helyezd az asztalt egy csatlakozó Land Mark-terület vagy Volume Box mellé. A kijelölt dobozt az asztal mögötti vagy melletti területforrásból olvassa be.",
+      "Beolvasás",
+      "Helyezz be üres Blueprintet a pontos blokkok, állapotok és támogatott adatok rögzítéséhez, vagy üres Template-et csak az alak rögzítéséhez. Válaszd ki, hogy az eredmény forgatható-e, kiáshat-e meglévő blokkokat vagy használhat-e csak kreatív elhelyezést, majd indítsd a beolvasást.\n\nA beolvasás fokozatos, így a nagy területek időt vesznek igénybe a szerver lefagyasztása helyett. Tartsd betöltve a területet, amíg a használt pillanatkép megjelenik a kimenetben."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "A terv csak ötletek gyűjteménye, amíg valami el nem kezdi elhelyezni a blokkokat.",
+      "A Builder MJ-t és erőforrásokat használ használt Blueprint vagy Template megépítéséhez.",
+      "<bold>Tipp:</bold> Hagyj szabad kimeneti helyet, amíg a Builder dolgozik. Feladat törlésekor a lefoglalt tárgyak visszatérhetnek a tárolóba, vagy helyhiány esetén a közelben eshetnek le.",
+      "A Builder ellátása",
+      "Helyezz használt Blueprintet vagy Template-et a pillanatképmezőbe. A követelménykijelző mutatja a szükséges anyagokat. Tárgyakat az erőforrás-tárolón vagy csöveken, folyadékot a belső tartályokon, MJ-t kompatibilis energiacsatlakozáson keresztül adj.\n\nA Blueprint a rögzített blokkokat kéri. A Template megfelelő rendelkezésre álló blokkokból készíti el a mentett alakot.",
+      "Elhelyezés és beállítások",
+      "A szerkezet a Builder irányához képest kerül elhelyezésre. Forgatás és kiásás csak akkor érhető el, ha a pillanatkép fejléce engedélyezi. Csatlakozó Path Mark-útvonal esetén a Builder az út mentén ismételheti a tervet.\n\nA munkaállapot és a lefoglalt erőforrások mentődnek. Újratöltés után a befejezetlen feladatokat újraellenőrzi, és a lefoglalt tárgyakat, folyadékokat és energiát biztonságosan visszaadja a munka folytatása előtt."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Nem minden építési munkához kell részletes Blueprint. Sok feladat csak doboz, fal, padló vagy rengeteg üres tér.",
+      "A Filler beállítható geometriai mintát alkalmaz egy megjelölt területen.",
+      "<bold>Tipp:</bold> Kezdd kis területtel és olcsó anyaggal. Ha a minta és tájolás helyes, vidd át ugyanazt a beállítást a végleges helyszínre.",
+      "Terület és erőforrások",
+      "Helyezd a Fillert Land Markok vagy Volume Box mellé, majd nyisd meg a kezelőfelületét a munkaterület frissítéséhez. Adj építőblokkokat az erőforrásmezőkbe, MJ-t a belső akkumulátorba. A kiásó minták meglévő blokkokat is eltávolíthatnak, ha a kiásás engedélyezett.",
+      "Minták",
+      "A minták közé tartozik a törlés, kitöltés, doboz, keret, horizont, lapítás, henger, piramis és lépcső. A kétdimenziós alakok közé tartoznak a háromszögek, szabályos sokszögek, ívek és körök. A háromdimenziósak közé a gömbök és részleges gömbök.\n\nA paraméterek irányt, forgatást, tájolást, tengelyt, középpontot és üreges változatokat vezérelnek. A kijelölés megfordítása felcseréli a létrehozott minta belsejét és külsejét."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Egy jó tervnek tovább kell élnie annál az egy papírdarabnál, amelyre először rögzítették.",
+      "Az Electronic Library Blueprint- és Template-adatokat továbbít a pillanatképtárgyak és a mentett adatbázis között.",
+      "<bold>Tipp:</bold> Egy Library legyen projektarchívum, egy másik pedig a munkaterület közelében. Így a védett mestertervek elkülönülnek az ideiglenes munkapéldányoktól.",
+      "Letöltés",
+      "Helyezz be egy használt Blueprintet vagy Template-et, amelynek terve megtalálható a világ pillanatkép-adatbázisában. Az átvitel után a terv a kliensfelület által használt helyi könyvtáradatokba másolódik.",
+      "Feltöltés",
+      "Válassz mentett tervet a Library felületén, és helyezz tiszta Blueprintet vagy Template-et a feltöltési mezőbe. A Library a kiválasztott pillanatképet a szerverre továbbítja, és használt pillanatképtárgyat készít.\n\nMinden átvitel 50 ticket vesz igénybe. Ne távolítsd el a bemenetet, amíg a folyamatjelző mozog."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Egy kész terv anyagának megváltoztatása nem követelheti meg a terv emlékezetből való újraépítését.",
+      "A Replacer egy használt Blueprint minden egyező blokkját egy rögzített blokkállapotról egy másikra változtatja.",
+      "<bold>Tipp:</bold> Teszteld a csereszabályokat kis mintafalon. Minden fontos blokkállapotot vegyél fel, különösen a tájolást és a tárolóban hasonló változatokat.",
+      "Blokkok cseréje",
+      "Helyezd a használt Blueprintet a Blueprint-mezőbe. Rögzítsd a keresett blokkot az egyik Single Block Schematicbe, a csereblokkot a másikba. A Replacer szerkeszti a Blueprint adatait és visszaadja a módosított tervet.\n\nA gép a tervet módosítja, nem a világban már elhelyezett blokkokat. Mindkét séma elfogy a befejezett csere során."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Egy Builder robotnak tervre és munkaforrásra van szüksége akkor is, ha nem egy helyhez kötött Builder végzi az építést.",
+      "A Construction Marker Blueprint-építési feladatokat tesz elérhetővé a Builder Robots számára.",
+      "<bold>Tipp:</bold> A Construction Markers leginkább tervellenőrzésre jók az erőforrások beadása előtt. Javítsd az ankert és tájolást, amíg a változtatás ingyenes.",
+      "Robotépítés",
+      "Helyezz le Construction Markert, és tegyél bele használt Blueprintet. A jelölő építési feladatokat hoz létre, de önmagában nem fogyaszt MJ-t és nem helyez blokkokat. A közeli Builder Robots lefoglalhatják a feladatokat, begyűjthetik az anyagokat és építhetnek.\n\nA jelölő a pillanatkép forgatási, kiásási és tulajdonosi beállításait használja. Több közeli projekt esetén munkazónával korlátozd a Builder Robots működését."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Egy nagy mozgó fúró sokkal kevésbé ijesztő, ha látható állványzat veszi körül a munkaterületét.",
+      "A Frames könnyű szerkezeti blokkok, amelyeket a Quarry és építési rendszerek használnak.",
+      "<bold>Tipp:</bold> A Frames ideiglenes munkablokkok. Tartsd szabadon az építési területet, hogy a gépek akadály nélkül építhessék és eltávolíthassák őket.",
+      "Quarry-keret",
+      "A Quarry automatikusan Frames blokkokat helyez a kijelölt terület köré a bányászat előtt. A keret mutatja a munkahatárt és megtartja a mozgó fúrószerkezetet.\n\nA Frames olcsó nyitott állványzatként is használható, de a Quarry maga kezeli és távolítja el saját keretblokkjait a munkaciklusban."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Kézzel bányászni addig kifizetődő, amíg a kívánt érc nincs több millió nem kívánt blokk alatt.",
+      "A Quarry keretet épít, majd automatikusan kibányász minden engedélyezett blokkot a kijelölt területen.",
+      "<bold>Tipp:</bold> A Quarry kimenetét először pufferbe vezesd, és csak utána a végső válogatóba. A puffer megakadályozza, hogy rövid tárolóleállások megszakítsák a bányászatot, és láthatóvá teszi a túlfolyást.",
+      "Terület kiválasztása",
+      "Helyezd a Quarryt csatlakozó Land Markok mellé a vízszintes munkaterület kijelöléséhez. Érvényes terület nélkül kisebb alapértelmezett bányát hoz létre maga előtt. Működés közben betöltve tartja a munkaterülethez szükséges chunkokat.",
+      "Bányászat",
+      "Adj MJ-t. A Quarry először beolvassa és felépíti a keretét, majd a fúrót a területen mozgatva lefelé bányászik a beállított mélységig vagy a világ aljáig. Több energia tickenként több munkát enged a gép határáig.\n\nA kitermelt tárgyakat szomszédos tárolóknak és csöveknek ajánlja fel. Hagyj elég kimeneti helyet: a blokkolt kimenet megállíthatja az előrehaladást. A védett blokkokat a Quarry tulajdonosának ál-játékosával ellenőrzi, és nem kerüli meg csendben a védelmet."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "A csövek erőforrásokat mozgatnak. A robotok önmagukat, az erőforrásokat és néha mindent, ami útban áll.",
+      "A Robot egy mozgó munkás, amelynek viselkedését a telepített Redstone Board határozza meg.",
+      "<bold>Tipp:</bold> Kezdd egy robottal, két elérhető Docking Stationnel és kis munkazónával. Csak akkor bővíts, ha a töltés, szerszámfelvétel és kirakodás megbízható.",
+      "Robot létrehozása",
+      "Programozz üres Redstone Boardot Programming Table-ben, majd telepítsd az üres Robotba Integration Table-lel. A különböző táblák különböző robotkarriereket adnak.",
+      "Telepítés és töltés",
+      "Rögzíts Docking Stationt egy csőre, majd használd rajta a programozott Robotot. Az elhelyező játékos lesz a tulajdonos. MJ-hez csatlakozó állomás töltheti a dokkolt robotot.\n\nA robotok biztonsági energiatartalékot őriznek, és megfelelő állomásra térnek vissza tölteni, fel- vagy lerakodni. A Docking Station kapuműveletei szűrőket, útvonalakat, munkazónákat és erőforrásokat vezérelnek."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Egy gép mozoghat, de tábla nélkül nem tudja, hogy cipeljen, ültessen, bányásszon vagy a legközelebbi tehén elől meneküljön.",
+      "A Redstone Board a Robotba telepített karrierprogramot tárolja.",
+      "<bold>Tipp:</bold> A programozott táblákat karrierenként külön feliratozott tárolókban tartsd. Egy üres tábla a közelben gyorsabbá teszi az átállítást.",
+      "Programozás",
+      "Helyezz üres táblát Programming Table-be, válassz karriert és adj lézerenergiát. Az üres táblák tizenhatig, a programozottak egyig halmozhatók.\n\nA költség karriertől függ: alaplogisztika 8 000 MJ, gyakori munkák 32 000 MJ, fejlett harc vagy szállítás 64 000 MJ, Builder 128 000 MJ.",
+      "Telepítés",
+      "Integration Table-lel kombináld a programozott táblát üres Robottal. A telepítés 10 000 MJ. A Robot addig tartja meg a karriert, amíg másik táblával újra nem építik."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Még a legönállóbb robotnak is kell hely tölteni, aludni és megtudni, mit ne vegyen fel.",
+      "A Docking Station egy csőre szerelhető elem, amely összekapcsolja, tölti és vezérli a Robotokat.",
+      "<bold>Tipp:</bold> Minden munkaterülethez legyen legalább egy töltőállomás és tiszta fel- vagy lerakodási út. A szűrők megakadályozzák a rossz készletek felvételét.",
+      "Elhelyezés",
+      "Helyezd az állomást egy cső szabad oldalára. Használd rajta a programozott Robotot a telepítéshez. Egyszerre csak egy robot foglalhatja el.\n\nMJ-t szállító csőhálózat töltheti a dokkolt robotot. Lopakodva használj franciakulcsot a kapcsolt főállomáson a robot tárggyá alakításához, ha az állapot engedi.",
+      "Kapus vezérlés",
+      "Rögzíts kaput a csőre, és Robotics állomásműveletekkel fogadj vagy adj tárgyakat és folyadékokat, kérj erőforrásokat, tilts vagy kényszeríts robotokat, illetve jeleníts meg gépkéréseket. Map Location korlátozhatja a munka- vagy rakodási zónát."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "A mindenhol dolgozó robot előbb-utóbb felfedez egy helyet, ahol nem akartad, hogy dolgozzon.",
+      "A Zone Planner részletes, többrétegű robot-munkazónákat fest Map Locationökre.",
+      "<bold>Tipp:</bold> Használj kis zónákat csak a kívánt célokkal. A nagy átfedő zónák megnehezítik annak előrejelzését, melyik robot foglalja le a feladatot.",
+      "Zóna rajzolása",
+      "Helyezz be üres Map Locationt és szerkeszd a zónát. A térkép tizenhat külön szerkeszthető réteget támogat 2048 x 2048 koordinátarácson. A rétegek kijelölhetők, egyesíthetők és elnevezhetők.\n\n120 tick után a kimenet megkapja az aktuális Zone Plant tartalmazó Map Locationt. Korábbi zóna importálható a szerkesztés folytatásához.",
+      "A zóna használata",
+      "Helyezd a Map Locationt kompatibilis kapuparaméterbe vagy Docking Station-műveletbe. A kapcsolt robotok ezután a festett zónára korlátozzák keresésüket és munkájukat."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Egy raktár hasznosabb, ha a hiányzó készletet még az üres polc észlelése előtt kérheti.",
+      "A Requester fenntartja a beállított tárgymennyiségeket, és a hiányt megjeleníti a Delivery Robots számára.",
+      "<bold>Tipp:</bold> Először kis mennyiségeket kérj, és ellenőrizd a szolgáltatók és útvonalak elérhetőségét. A nagy állandó kérések lefoglalhatják a szállítókat és tárolót.",
+      "Kérések beállítása",
+      "A felső húsz fantommező adja meg a kért tárgyat és mennyiséget. Az alatta lévő valódi mező csak ezt vagy kompatibilis List-egyezést fogad el.\n\nA Delivery Robots lekérdezi a hiányt, és a kérések teljesüléséig szállít. A már jelen lévő tárgyak csökkentik az aktív kérést.",
+      "Redstone-kimenet",
+      "A comparator a beállított kérésmezők átlagos töltöttségét jelzi. Üres beállítás nem ad jelet; a teljesebb kérések tizenöt felé emelik."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Picker Robot összegyűjti a ledobott tárgyakat a zónában, alkalmazza az állomás szűrőjét, majd visszatér kirakodni.",
+      "<bold>Tipp:</bold> Tartsd kicsiben a gyűjtőzónát és közel a kirakodóállomást, különben a robot többnyire utazik.",
+      "Karrier",
+      "Ezt a karriert 8 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot ledobott tárgyakat gyűjt a zónában, alkalmazza az állomás szűrőjét és visszatér kirakodni. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nKapuszűrőkkel és Lists használatával korlátozd a tárgyakat."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Carrier Robot egyező tárgyakat rakodik egy szolgáltató állomáson, és fogadó állomásra viszi őket.",
+      "<bold>Tipp:</bold> A rakodó- és kirakodóállomások között rövid, akadálymentes út legyen. Mindkét vég szűrői megakadályozzák a rossz tárgy mozgatását.",
+      "Karrier",
+      "Ezt a karriert 8 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot egyező tárgyakat rakodik szolgáltató állomáson és fogadó állomásra viszi. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nKapuszűrőkkel és Lists használatával korlátozd a tárgyakat."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Tank Robot folyadékot mozgat állomások és tartályok között állomási folyadékszűrőkkel.",
+      "<bold>Tipp:</bold> Használj külön folyadékállomásokat, és ne keverj folyadékfeladatokat egy zónában. A külön útvonalak azonnal láthatóvá teszik a rossz tartályt.",
+      "Karrier",
+      "Ezt a karriert 8 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot folyadékot mozgat állomások és tartályok között a szűrők szerint. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nFolyadékszűrőkkel tartsd távol a nem kívánt folyadékokat."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Lumberjack Robot megfelelő fejszét hoz, és kivágja a zónában talált fák összefüggő törzseit.",
+      "<bold>Tipp:</bold> Párosítsd Planterrel és biztosíts szerszámállomást. Hagyj elég helyet a facsemeték fölött.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot fejszét hoz és kivágja az összefüggő törzseket. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nA szerszámot állomásról szerzi; szűrőkkel szabályozd a szerszámokat és visszaküldést."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Harvester Robot megkeresi az érett növényeket, betakarítja, majd állomásra viszi a termést.",
+      "<bold>Tipp:</bold> A zónát érett növényekre korlátozd, és legyen magkezelő kirakodás. Így nem gyűjt össze más növényeket.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot érett növényeket talál, betakarít és állomásra viszi a termést. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Miner Robot csákányt hoz és elérhető érceket bányászik a zónában.",
+      "<bold>Tipp:</bold> Biztosíts megbízható csákányellátást és közeli kirakodást. Kis érceszóna csökkenti az utazást a kiürített járatokban.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot csákányt hoz és elérhető érceket bányászik. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nSzűrőkkel szabályozd a szerszámokat és visszaküldést."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Planter Robot egyező magokat rakodik és érvényes talajra ülteti őket.",
+      "<bold>Tipp:</bold> Szűrd a szolgáltató állomást a kívánt csemetékre vagy magokra. A kevert készlet egyenetlen farmot hozhat létre.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot magokat rakodik és érvényes talajra ültet. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nKapuszűrőkkel és Lists használatával korlátozd a tárgyakat."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Farmer Robot kapát hoz és megfelelő földet vagy füvet készít elő ültetéshez.",
+      "<bold>Tipp:</bold> Használj állandó terményelrendezést, és válaszd külön a magokat a betakarítástól, hogy a robot ne fogyassza el az exportálandó terményt.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot kapát hoz és megfelelő talajt készít elő. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nSzűrőkkel szabályozd a szerszámokat és visszaküldést."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Leaf Cutter Robot vágószerszámot hoz és eltávolítja a levélblokkokat a zónában.",
+      "<bold>Tipp:</bold> Csak akkor futtasd Lumberjack után, ha levéldropokra van szükség. A zóna ne fedje a megőrzendő díszfákat.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot vágószerszámot hoz és levélblokkokat távolít el. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Butcher Robot kardot hoz és engedélyezett békés állatokat vadászik, miközben elkerüli a macskákat, kutyákat és védett szelíd állatokat.",
+      "<bold>Tipp:</bold> Tartsd távol a zónát a tenyész- és védett állatoktól. A szűk zóna kiszámítható célokat ad.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot kardot hoz és engedélyezett békés állatokat vadászik, elkerülve a védett szelíd állatokat. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nSzűrőkkel szabályozd a szerszámokat és visszaküldést."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Shovelman Robot lapátot hoz és lapáttal bányászható blokkokat ás a zónában.",
+      "<bold>Tipp:</bold> Adj megfelelő lapátokat és pontos határokat. A széles zónák véletlenül utakat, termőföldet vagy díszítést távolíthatnak el.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot lapátot hoz és lapáttal bányászható blokkokat ás. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nSzűrőkkel szabályozd a szerszámokat és visszaküldést."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Pump Robot egyező világfolyadék-blokkokat szív belső tartályába, majd állomáson ürít.",
+      "<bold>Tipp:</bold> Indítás előtt biztosíts üres folyadékcélt. A teli állomás haszontalan utazásra kényszerítheti a robotot.",
+      "Karrier",
+      "Ezt a karriert 32 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot egyező folyadékblokkokat szív belső tartályába és visszatér üríteni. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nFolyadékszűrőkkel tartsd távol a nem kívánt folyadékokat."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Delivery Robot teljesíti a Requesters és állomási kérésműveletek tárgykéréseit.",
+      "<bold>Tipp:</bold> Használj mérsékelt tételméretet és elérhető szolgáltató állomást. Ez csökkenti az egyedi tárgyakért tett hosszú utakat.",
+      "Karrier",
+      "Ezt a karriert 64 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot teljesíti a Requesters és állomások tárgykéréseit. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nKapuszűrőkkel és Lists használatával korlátozd a tárgyakat."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Knight Robot fegyvert hoz és ellenséges mobokat támad a kijelölt zónában.",
+      "<bold>Tipp:</bold> A harci zóna legyen távol törékeny gépektől, és legyen biztonságos töltőállomás. Teszteld a mobok hozzáférését.",
+      "Karrier",
+      "Ezt a karriert 64 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot fegyvert hoz és ellenséges mobokat támad a zónában. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nSzűrőkkel szabályozd a szerszámokat és visszaküldést."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Bomber Robot TNT-t rakodik, érvényes talaj fölött repül és meggyújtott robbanóanyagokat dob le.",
+      "<bold>Tipp:</bold> Csak gondosan elszigetelt zónában használd. Robbanóanyag beadása előtt ellenőrizd a robbanásvédelmet és jogosultságokat.",
+      "Karrier",
+      "Ezt a karriert 64 000 MJ-ért programozzák Redstone Boardba, majd Integration Table-lel üres Robotba telepítik.\n\nAktív állapotban a robot TNT-t rakodik, érvényes talaj fölött repül és meggyújtott robbanóanyagokat dob le. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Stripes Robot használható tárgyakat rakodik be, és a szabad célblokkokon ugyanazokat a tárgyhasználati kezelőket alkalmazza, mint a Stripes Transport Pipe.",
+      "<bold>Tipp:</bold> A robot hozzárendelése előtt kézzel tesztelj minden stripes-műveletet. Egyes kezelők nehezen visszafordítható módon fogyasztanak el, helyeznek le vagy alakítanak át tárgyakat.",
+      "Karrier",
+      "Ezt a karriert 64 000 MJ-ért programozzák egy Redstone Boardba, majd Integration Table segítségével üres Robotba telepítik.\n\nMűködés közben a robot használható tárgyakat rakodik be, és a szabad célblokkokon ugyanazokat a tárgyhasználati kezelőket alkalmazza, mint a Stripes Transport Pipe. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "A szakosodott munkás általában megbízhatóbb, mint egy robot, amely eldönti, hogy ma fa, láda vagy creeper a fontosabb.",
+      "A Builder Robot közeli Buildereket vagy Construction Markereket keres, építési feladatokat foglal le, anyagokat hoz és elvégzi a munkát.",
+      "<bold>Tipp:</bold> Adj a Builder Robotnak közeli ellátóállomást, és kis Blueprinttel kezdj. Nagyobb munkák előtt ellenőrizd a védett blokkok és forgatások helyes működését.",
+      "Karrier",
+      "Ezt a karriert 128 000 MJ-ért programozzák egy Redstone Boardba, majd Integration Table segítségével üres Robotba telepítik.\n\nMűködés közben a robot közeli Buildereket vagy Construction Markereket keres, építési feladatokat foglal le, anyagokat hoz és elvégzi a munkát. Szükség szerint kompatibilis Docking Stationökre tér vissza tölteni, fel- vagy lerakodni.\n\nA Builder Robotok helyhez kötött Builderekkel és Construction Markerekkel is dolgozhatnak. Tartsd a projektet és az ellátóállomásokat a robot elérhető zónáján belül."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Az érzékelő aktív, amíg egy robot az állomáson dokkol.",
+      "<bold>Tipp:</bold> Színes vezetékkel válaszd külön a robotállapot logikáját az ugyanazon csőhálózat tárgy- és folyadékautomatizálásától.",
+      "Érzékelő viselkedése",
+      "Az érzékelő aktív, amíg egy robot az állomáson dokkol."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Az érzékelő aktív, amíg a kapcsolt robot alszik és munkára vár.",
+      "<bold>Tipp:</bold> Színes vezetékkel válaszd külön a robotállapot logikáját az ugyanazon csőhálózat tárgy- és folyadékautomatizálásától.",
+      "Érzékelő viselkedése",
+      "Az érzékelő aktív, amíg a kapcsolt robot alszik és munkára vár.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Az érzékelő aktív, ha az állomáshoz robot kapcsolódik, függetlenül attól, hogy éppen dokkol-e.",
+      "<bold>Tipp:</bold> Színes vezetékkel válaszd külön a robotállapot logikáját az ugyanazon csőhálózat tárgy- és folyadékautomatizálásától.",
+      "Érzékelő viselkedése",
+      "Az érzékelő aktív, ha az állomáshoz robot kapcsolódik, függetlenül attól, hogy éppen dokkol-e.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Az érzékelő aktív, amíg az állomás vagy robot egy művelethez le van foglalva.",
+      "<bold>Tipp:</bold> Színes vezetékkel válaszd külön a robotállapot logikáját az ugyanazon csőhálózat tárgy- és folyadékautomatizálásától.",
+      "Érzékelő viselkedése",
+      "Az érzékelő aktív, amíg az állomás vagy robot egy művelethez le van foglalva.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Beállítja a robotmunka és az állomási berakodás által használt tárgy- vagy folyadékszűrőt. Tárgy-, folyadék- vagy List-paraméterekkel szűkítheted.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Beállítja a robotmunka és az állomási berakodás által használt tárgy- vagy folyadékszűrőt. Tárgy-, folyadék- vagy List-paraméterekkel szűkítheted."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Korlátozza, hogy egy eszközhasználó karrierhez milyen szerszámokat hozhat a robot.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Korlátozza, hogy egy eszközhasználó karrierhez milyen szerszámokat hozhat a robot.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Arra utasítja a kapcsolt robotot, hogy az aktív kapufeltétel alatt térjen vissza ehhez a Docking Stationhöz.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Arra utasítja a kapcsolt robotot, hogy az aktív kapufeltétel alatt térjen vissza ehhez a Docking Stationhöz.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Felébreszti az alvó kapcsolt robotot, hogy ismét munkát kereshessen.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Felébreszti az alvó kapcsolt robotot, hogy ismét munkát kereshessen.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Egy Map Location-zónát rendel a robot munkaterületéhez.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Egy Map Location-zónát rendel a robot munkaterületéhez.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Korlátozza azt a területet, ahol a robot be- és kirakodóállomásokat kereshet.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Korlátozza azt a területet, ahol a robot be- és kirakodóállomásokat kereshet.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Lehetővé teszi, hogy a robotok egyező folyadékokat rakodjanak ki erre az állomásra vagy kapcsolt kezelőibe.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Lehetővé teszi, hogy a robotok egyező folyadékokat rakodjanak ki erre az állomásra vagy kapcsolt kezelőibe.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Lehetővé teszi, hogy a robotok egyező tárgyakat rakodjanak ki erre az állomásra vagy kapcsolt tárolójába.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Lehetővé teszi, hogy a robotok egyező tárgyakat rakodjanak ki erre az állomásra vagy kapcsolt tárolójába.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Megakadályozza, hogy a robotok ezt az állomást válasszák, amíg a művelet aktív.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Megakadályozza, hogy a robotok ezt az állomást válasszák, amíg a művelet aktív.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Arra készteti a kapcsolt robotot, hogy ezt az állomást részesítse előnyben vagy ide térjen vissza, amíg a művelet aktív.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Arra készteti a kapcsolt robotot, hogy ezt az állomást részesítse előnyben vagy ide térjen vissza, amíg a művelet aktív.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Egyező folyadékokat hirdet ezen az állomáson azoknak a robotoknak, amelyeknek be kell rakodniuk őket.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Egyező folyadékokat hirdet ezen az állomáson azoknak a robotoknak, amelyeknek be kell rakodniuk őket.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Egyező tárgyakat hirdet ezen az állomáson azoknak a robotoknak, amelyeknek be kell rakodniuk őket.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Egyező tárgyakat hirdet ezen az állomáson azoknak a robotoknak, amelyeknek be kell rakodniuk őket.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "Tárgykéréseket hoz létre, amelyeket Delivery Robotok teljesíthetnek.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "Tárgykéréseket hoz létre, amelyeket Delivery Robotok teljesíthetnek.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "A robotlogisztika sokkal hasznosabbá válik, ha az állomások leírhatják állapotukat és pontos utasításokat adhatnak.",
+      "A szomszédos kompatibilis gép tárgykéréseit elérhetővé teszi a Delivery Robotok számára.",
+      "<bold>Tipp:</bold> A robotműveleteket szűken szűrt állomáson vagy munkazónán keresztül alkalmazd. Átfedő hálózatoknál a tág szabályok a tervezettnél több robotot érinthetnek.",
+      "Művelet viselkedése",
+      "A szomszédos kompatibilis gép tárgykéréseit elérhetővé teszi a Delivery Robotok számára.\n\nEzt a statementet a megfelelő Docking Stationnel azonos csőre szerelt Gate-en használd. A tárgyakhoz, folyadékokhoz, Listshez és Map Locationshöz hasonló paraméterek csak ott érhetők el, ahol a statement támogatja őket."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Egy óceán lecsapolása hatékony, de néha szórakoztatóbb szilárddá tenni a felszínét.",
+      "A Water Gelifier az összefüggő forrásvizet és vízinövényeket ideiglenes Water Gellé alakítja.",
+      "<bold>Tipp:</bold> Tömeges gyártás előtt együtt nézd meg a Receptek és Felhasználások részt; ez a tárgy több későbbi gép köztes alkatrésze lehet.",
+      "A Gelifier használata",
+      "A tárgyat vízre mutatva használd. Az első gélblokk a célzott víz helyére kerül, majd terjedni kezd a szomszédos forrásvízen és támogatott vízinövényeken keresztül.\n\nA Water Gel több szakaszon halad át, végül megszilárdul. A környező vízzel való érintkezés lassítja a végső szilárdulást, így a gélfront stabilizálódás előtt tovább terjedhet.",
+      "A gél visszanyerése",
+      "A megszilárdult Water Gel feltörése Gelled Water tárgyakat dob. A folyamat ellenőrzött vízeltávolításra és ideiglenes építésre készült, ezért óceán előtt kis medencén próbáld ki."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Víznek látszik, jóval kevésbé érződik víznek, és egyáltalán nem is viselkedik többé vízként.",
+      "A Gelled Water a Water Gelből visszanyert szilárd anyag.",
+      "<bold>Tipp:</bold> Tömeges gyártás előtt együtt nézd meg a Receptek és Felhasználások részt; ez a tárgy több későbbi gép köztes alkatrésze lehet.",
+      "Megszerzés",
+      "Használj Water Gelifiert forrásvízen, majd várd meg, amíg a terjedő gél megszilárdul. A kész gél feltörése Gelled Watert ad."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Egyes receptek olyan pontosságot igényelnek, amelyet egy kemence, crafting-rács és optimista kalapács nem tud biztosítani.",
+      "A Laser az MJ-t lézerenergiává alakítja a közeli kompatibilis BuildCraft asztalok számára.",
+      "<bold>Tipp:</bold> Több Laser is dolgozhat egy kompatibilis asztalon. Fokozatosan add hozzá őket, és figyeld az asztal pufferét, nehogy haszontalan többletteljesítményt építs.",
+      "Asztalok energiaellátása",
+      "Helyezd a Lasereket legfeljebb hat blokkra egy Assembly, Charging, Integration, Advanced Crafting vagy Programming Tabletől, és adj nekik MJ-t. Minden Laser automatikusan kompatibilis, éppen energiát kérő asztalt keres.\n\nEgy Laser tickenként legfeljebb 6,4 MJ-t adhat át. Több Laser dolgozhat ugyanazon az asztalon, sugaraik pedig az asztal igényével együtt mozognak."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "A redstone és a gyémánt hasznos alapanyag, de egyes alkatrészek sokkal pontosabb energiaelrendezést igényelnek.",
+      "Az Assembly Table lézerenergiával gyárt BuildCraft-alkatrészeket és csőkiegészítőket.",
+      "<bold>Tipp:</bold> Csak az automatikusan futtatandó recepteket válaszd ki. A felesleges receptek engedélyezve hagyása közös alapanyagokat fogyaszthat, ha több kimenet lehetséges.",
+      "Összeszerelés",
+      "Helyezd be a szükséges alapanyagokat, és válassz egy vagy több elérhető összeszerelési receptet. A közeli működő Laserek feltöltik a kiválasztott recept energiaigényét. Elkészüléskor a kimenet az asztalba kerül, vagy a szomszédos tárolóknak és csöveknek ajánlódik fel.\n\nTöbb kiválasztott recept automatikusan váltogatható, amikor elérhetők az alapanyagaik. Az asztal megőrzi a részleges lézeres előrehaladást, így a megszakított munka később folytatható."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Egy energia nélküli hordozható gép csupán kényelmetlenül cipelhető díszgép.",
+      "A Charging Table lézerenergiával tölti a Forge Energy tárgyakat.",
+      "<bold>Tipp:</bold> Használj szűrt be- és kimeneti tárolókat a Charging Table körül, hogy a feltöltött és üres tárgyak ne keringjenek végtelenül ugyanabban a hurokban.",
+      "Töltés",
+      "Helyezz tölthető tárgyat az egyetlen helyre. A közeli Laserek energiát adnak az asztalnak, amely egész energiaegységeket továbbít a Forge Energy képességet biztosító tárgyakba.\n\nAz asztal csak annyi energiát kér, amennyit a tárgy még fogadni tud, és telítettségkor leáll. Az energiát fogadni nem képes tárgyakat elutasítja."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Egyes gépek egy darabban készülnek. Mások csak a fontos alkatrész beszerelése után válnak hasznossá.",
+      "Az Integration Table kompatibilis fejlesztéseket vagy alkatrészeket telepít a céltárgyba lézerenergiával.",
+      "<bold>Tipp:</bold> Behelyezés előtt készítsd elő a pontos kapu-, tábla- vagy robotváltozatot. Az integrációs receptek gyakran megőrzik vagy módosítják a tárgyadatokat, amelyeket automatizálás előtt könnyebb ellenőrizni.",
+      "Integráció",
+      "Helyezd a céltárgyat a középső helyre, a szükséges alkatrészeket pedig a környező helyekre. Ha egyezik egy regisztrált integrációs recept, a közeli Laserek biztosítják a szükséges energiát, a kész tárgy pedig megjelenik a kimeneten.\n\nA Robotics egyik fő felhasználása programozott Redstone Board telepítése üres Robotba. Ez 10 000 MJ-t igényel."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Ugyanazon crafting-recept ismétlése nem nehéz, de pontosan ilyen munkát kellene egy gépnek végeznie.",
+      "Az Advanced Crafting Table automatikusan ismétli a beállított crafting-receptet a biztosított anyagok és MJ felhasználásával.",
+      "<bold>Tipp:</bold> Tarts puffert minden alapanyagból, a kész eredményeket pedig külön vond ki. A kimenetek visszaforgatása az alapanyagoldalra összetett recepteket blokkolhat.",
+      "Automatikus crafting",
+      "Rendezd el a kívánt receptet a fantom 3-szor-3-as Blueprint-rácson, majd biztosíts egyező alapanyagokat az anyagtárolóban. Az asztal a kimeneti tárolójába craftolja az eredményt, amikor a recept érvényes és elég hely áll rendelkezésre.\n\nMinden művelet 500 MJ-t kér. Az asztal közvetlenül is fogadhat MJ-t, és részt vesz a lézerasztal-rendszerben is."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Egy üres tábla sok lehetőséget és pontosan nulla hasznos utasítást tartalmaz.",
+      "A Programming Table lézerenergiával írja a kiválasztott robotkarriert egy üres Redstone Boardra.",
+      "<bold>Tipp:</bold> A gyakran használt táblákat kötegekben programozd, és címkézd a tárolójukat. A karriertáblák a robotba telepítésig hasonlónak tűnhetnek.",
+      "Táblák programozása",
+      "Helyezz be egy üres Redstone Boardot, válassz karriert a lehetőségek közül, és működtesd a közeli Lasereket. Az asztal a karrier energiaköltségének elérésekor programozott táblát ad ki.\n\nA lehetőségek energiaköltség és név szerint rendezettek. Az alap logisztikai karrierek 8 000 MJ-be, a gyakori munkakarrierek 32 000 MJ-be, a fejlett karrierek 64 000 MJ-be, a Builder pedig 128 000 MJ-be kerül."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "A közönséges redstone-por energikus, de egy kristályt sokkal könnyebb precíziós gépbe illeszteni.",
+      "A Redstone Crystal az Assembly Table egyik alkatrésze, amelyet fejlett BuildCraft-receptek használnak.",
+      "<bold>Tipp:</bold> Tömeggyártás előtt ellenőrizd az alkatrész receptjeit és felhasználásait is. A Silicon-alkatrészeket gyakran több gép, kapu és robotfejlesztés használja.",
+      "Gyártás",
+      "Redstone Crystalokat Assembly Table-ben, a receptnézetben mutatott alapanyagokkal gyárts. Lézergépekben, kapukban és más magas szintű alkatrészekben használhatók."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Egy bonyolult kapuprogramot sokkal könnyebb lemásolni, mint tizenhatszor tökéletesen megjegyezni.",
+      "A Gate Copier egy Gate beállítását tárolja, majd kompatibilis Gate-ekre alkalmazza.",
+      "<bold>Tipp:</bold> Tarts meg egy ellenőrzött kaput mesterpéldányként, és arról másolj. Így a kísérleti beállítások nem terjednek el egy teljes csőhálózaton.",
+      "Másolás és beillesztés",
+      "Használd a másolót egy beállított Gate-en az érzékelő-, művelet-, kapcsolat- és paraméteradatainak mentéséhez. A megtöltött másolót egy másik kompatibilis Gate-en használva másold át a tárolt programot.\n\nLopakodva kattints jobb gombbal a levegőbe a tárolt adatok törléséhez. A tárgymodell és az eszköztipp jelzi, hogy van-e program tárolva."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Egy kompakt csőhálózaton kevés hely jut ismétlőkből és órákból álló toronynak.",
+      "A Timer egy csőkiegészítő, amely periodikus, 5, 10 és 15 másodperces Gate-érzékelőket ad.",
+      "<bold>Tipp:</bold> A csőre szerelhető elemet még a sokszorosítás vagy tömeges telepítés előtt állítsd be. Először egyetlen csőoldalon ellenőrizd az irányt és a kapukkal való együttműködést.",
+      "Timer-érzékelők",
+      "Rögzítsd a Timert egy csőre. A csövön lévő Gate-ek három belső érzékelőt kapnak, amelyek a világ játékideje szerint 5, 10 vagy 15 másodpercenként impulzust adnak.\n\nA Timer más kiegészítőkhöz hasonlóan elfoglalja és blokkolja a cső saját oldalát."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Egy precíz logikai áramkört könnyebb összeszerelni, ha a redstone-t sikerült rávenni, hogy egyetlen gondosan gyártott darabban maradjon.",
+      "A Red Chipset a Gate-ek és más Silicon-receptek által használt alap redstone-logikai alkatrész.",
+      "<bold>Tipp:</bold> Tömeggyártás előtt ellenőrizd az alkatrész receptjeit és felhasználásait is. A Silicon-alkatrészeket gyakran több gép, kapu és robotfejlesztés használja.",
+      "Összeszerelés",
+      "Ezt a chipsetet Assembly Table-ben, lézerenergiával gyártsd. Pontos felhasználásai a receptnézetben találhatók, és Gate-eket, bővítéseket, Robotics-alkatrészeket és lézergépeket is tartalmazhatnak."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Egy precíz logikai áramkört könnyebb összeszerelni, ha a redstone-t sikerült rávenni, hogy egyetlen gondosan gyártott darabban maradjon.",
+      "Az Iron Chipset vasszintű logikai alkatrész, amelyet erősebb Gate-ek és gépek használnak.",
+      "<bold>Tipp:</bold> Tömeggyártás előtt ellenőrizd az alkatrész receptjeit és felhasználásait is. A Silicon-alkatrészeket gyakran több gép, kapu és robotfejlesztés használja.",
+      "Összeszerelés",
+      "Ezt a chipsetet Assembly Table-ben, lézerenergiával gyártsd. Pontos felhasználásai a receptnézetben találhatók, és Gate-eket, bővítéseket, Robotics-alkatrészeket és lézergépeket is tartalmazhatnak."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Egy precíz logikai áramkört könnyebb összeszerelni, ha a redstone-t sikerült rávenni, hogy egyetlen gondosan gyártott darabban maradjon.",
+      "A Gold Chipset aranyszintű logikai alkatrész nagy kapacitású Gate- és gépreceptekhez.",
+      "<bold>Tipp:</bold> Tömeggyártás előtt ellenőrizd az alkatrész receptjeit és felhasználásait is. A Silicon-alkatrészeket gyakran több gép, kapu és robotfejlesztés használja.",
+      "Összeszerelés",
+      "Ezt a chipsetet Assembly Table-ben, lézerenergiával gyártsd. Pontos felhasználásai a receptnézetben találhatók, és Gate-eket, bővítéseket, Robotics-alkatrészeket és lézergépeket is tartalmazhatnak."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Egy precíz logikai áramkört könnyebb összeszerelni, ha a redstone-t sikerült rávenni, hogy egyetlen gondosan gyártott darabban maradjon.",
+      "A Quartz Chipset kvarc logikai alkatrész paraméter- és időzítésközpontú receptekhez.",
+      "<bold>Tipp:</bold> Tömeggyártás előtt ellenőrizd az alkatrész receptjeit és felhasználásait is. A Silicon-alkatrészeket gyakran több gép, kapu és robotfejlesztés használja.",
+      "Összeszerelés",
+      "Ezt a chipsetet Assembly Table-ben, lézerenergiával gyártsd. Pontos felhasználásai a receptnézetben találhatók, és Gate-eket, bővítéseket, Robotics-alkatrészeket és lézergépeket is tartalmazhatnak."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Egy precíz logikai áramkört könnyebb összeszerelni, ha a redstone-t sikerült rávenni, hogy egyetlen gondosan gyártott darabban maradjon.",
+      "A Diamond Chipset a legmagasabb szabványos chipset fejlett Gate-bővítésekhez és precíziós gépekhez.",
+      "<bold>Tipp:</bold> Tömeggyártás előtt ellenőrizd az alkatrész receptjeit és felhasználásait is. A Silicon-alkatrészeket gyakran több gép, kapu és robotfejlesztés használja.",
+      "Összeszerelés",
+      "Ezt a chipsetet Assembly Table-ben, lézerenergiával gyártsd. Pontos felhasználásai a receptnézetben találhatók, és Gate-eket, bővítéseket, Robotics-alkatrészeket és lézergépeket is tartalmazhatnak."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Egy megbízható óra gyakran hasznosabb, mint egy bonyolult.",
+      "Ez az érzékelő 5 másodpercenként egyszer impulzust ad, amíg Timer van a csőre szerelve.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Timer-impulzus",
+      "Az érzékelő a 100-zal osztható világtickeken válik aktívvá. Olyan Gate-műveletekhez csatlakoztasd, amelyeknek rögzített időközönként ismétlődniük kell."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Egy megbízható óra gyakran hasznosabb, mint egy bonyolult.",
+      "Ez az érzékelő 10 másodpercenként egyszer impulzust ad, amíg Timer van a csőre szerelve.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Timer-impulzus",
+      "Az érzékelő a 200-zal osztható világtickeken válik aktívvá. Olyan Gate-műveletekhez csatlakoztasd, amelyeknek rögzített időközönként ismétlődniük kell."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Egy megbízható óra gyakran hasznosabb, mint egy bonyolult.",
+      "Ez az érzékelő 15 másodpercenként egyszer impulzust ad, amíg Timer van a csőre szerelve.",
+      "<bold>Tipp:</bold> Először csatlakoztasd az érzékelőt egy ideiglenes lámpához. Miután ellenőrizted az aktív és inaktív állapotát, vezesd ugyanazt a jelet a gépekhez.",
+      "Timer-impulzus",
+      "Az érzékelő a 300-zal osztható világtickeken válik aktívvá. Olyan Gate-műveletekhez csatlakoztasd, amelyeknek rögzített időközönként ismétlődniük kell."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Wood Power MJ-t von ki a kompatibilis szomszédos termelőkből, és az energiacső-hálózatba juttatja.",
+      "<bold>Tipp:</bold> Tervezett forrásonként egy fa kinyerőcsatlakozást használj, és kerüld a zárt hurkokat. Ellenőrizd, hogy a forrás biztonságosan biztosíthatja a kért MJ-sebességet.",
+      "Energiacső-mechanika",
+      "Az alapértelmezett átviteli korlát tickenként 16 MJ. A Wooden Power Pipe-ok nem kapcsolódnak közvetlenül másik fa kinyerőcsőhöz.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Cobblestone Power az alap kis kapacitású energiaszállító cső.",
+      "<bold>Tipp:</bold> A csőszinteket az áteresztőképesség és a hálózat elrendezése alapján is válaszd. Egy alacsony szintű szakasz korlátozhat egy egyébként fejlesztett energiavonalat.",
+      "Energiacső-mechanika",
+      "Az alapértelmezett átviteli korlát tickenként 4 MJ. Nem kapcsolódik Stone Power Pipe-okhoz, így a szomszédos vonalak külön maradhatnak.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Stone Power általános kis kapacitású energiaszállító cső.",
+      "<bold>Tipp:</bold> A csőszinteket az áteresztőképesség és a hálózat elrendezése alapján is válaszd. Egy alacsony szintű szakasz korlátozhat egy egyébként fejlesztett energiavonalat.",
+      "Energiacső-mechanika",
+      "Az alapértelmezett átviteli korlát tickenként 8 MJ. Nem kapcsolódik Cobblestone Power Pipe-okhoz.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Sandstone Power csövek között szállít energiát anélkül, hogy közvetlenül csatlakozna a szomszédos gépekhez.",
+      "<bold>Tipp:</bold> Használj Sandstone Power Pipe-okat olyan gépek közelében, amelyeknek nem szabad közvetlenül a vonalhoz csatlakozniuk. Ellenőrizd, hogy a tervezett cső-cső gerinc folytonos marad.",
+      "Energiacső-mechanika",
+      "Az alapértelmezett átviteli korlát tickenként 16 MJ. Olyan gépek mellett vezesd el vele a vonalat, amelyeknek nem szabad energiavégponttá válniuk.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Quartz Power közepes kapacitású szállítócső, amely elkülönül a kő- és zúzottkőcső-családoktól.",
+      "<bold>Tipp:</bold> Különböző anyagokkal jelöld a külön feszültség- vagy terhelési zónákat, még akkor is, ha jelenlegi áteresztőképességük hasonló.",
+      "Energiacső-mechanika",
+      "Az alapértelmezett átviteli korlát tickenként 32 MJ.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Gold Power nagy kapacitású energiaszállító cső.",
+      "<bold>Tipp:</bold> Először a hosszú vagy erősen terhelt gerinceket fejleszd. Egy gépet tápláló rövid ágak gyakran nem profitálnak ugyanabból a szintből.",
+      "Energiacső-mechanika",
+      "Az alapértelmezett átviteli korlát tickenként 64 MJ.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "Az Iron Power állítható energiakorlátozó.",
+      "<bold>Tipp:</bold> A cső forgatása vagy mozgatása után ellenőrizd újra az irányított energiakimeneteket. Egy rossz oldal egy egész ágat éheztethet.",
+      "Energiacső-mechanika",
+      "A teljes átviteli korlát tickenként 32 MJ. Wrench segítségével ismételten felezd a korlátot egészen az egyhatvannegyed részéig, majd tiltsd le teljesen az átvitelt, mielőtt visszavált teljes teljesítményre.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Diamond Power nagyon nagy kapacitású, állítható energiakorlátozó.",
+      "<bold>Tipp:</bold> Diamond Power Pipe-okat nagy igényű gerincekhez és elágazásokhoz használj, ne az egyes ágak fogyasztóinak kiegyensúlyozása helyett.",
+      "Energiacső-mechanika",
+      "A teljes átviteli korlát tickenként 256 MJ. Wrench segítségével ismételten felezd a korlátot, vagy tiltsd le teljesen az átvitelt.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Az energia csak akkor hasznos, amikor eléri azt a gépet, amelynek kapnia kellett.",
+      "A Diamond Wood Power nagy kapacitású fa kinyerőcső.",
+      "<bold>Tipp:</bold> Nagy kapacitású kinyerést csak erre tervezett forrásokhoz és hálózatokhoz csatlakoztass. Teljes termelés előtt ellenőrzött fogyasztóval teszteld az ágat.",
+      "Energiacső-mechanika",
+      "Az alapértelmezett átviteli korlát tickenként 256 MJ. A normál Wooden Power Pipe-hoz hasonlóan kompatibilis termelőktől fogad MJ-t, és nem kapcsolódik másik fa kinyerőcsőhöz.\n\nA csomópontba érkező energia arányosan oszlik meg az azt kérő kimenetek között. Egy szakasz legfeljebb aktuális szabad kapacitását fogadja el, a hálózat pedig normál átvitel során megőrzi az el nem fogadott energiát ahelyett, hogy sokszorosítaná vagy eldobná.\n\nA nem kívánt kapcsolatok megakadályozásához használj Pipe Plugokat, vagy fesd különböző színűre a szomszédos csöveket. Az energiacső-korlátok a hálózat változásakor állítódnak be, és világ betöltése után helyreállnak."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Egy facső kiválóan mozgat tárgyakat, és jóval kevésbé kiválóan tartja magában a vizet.",
+      "A Pipe Sealant crafting-alkatrész, amellyel szállítóanyagok alakíthatók folyadékcső-alkatrészekké.",
+      "<bold>Tipp:</bold> Tömeges gyártás előtt együtt nézd meg a Receptek és Felhasználások részt; ez a tárgy több későbbi gép köztes alkatrésze lehet.",
+      "Folyadékcsövek craftingja",
+      "A Pipe Sealantet az útmutatóban mutatott receptekben használd Fluid Pipe-ok létrehozására vagy fejlesztésére. Nincs önálló szállítási viselkedése, és crafting-anyagként elfogy."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Egy puffer akkor a leghasznosabb, ha tudja, mely tárgyakat látják benne valóban szívesen.",
+      "A Filtered Buffer kilenchelyes tároló, amelynek valódi helyeit egyező fantomszűrők vezérlik.",
+      "<bold>Tipp:</bold> Használd a Filtered Buffert gyors csövek és lassabb gépek között. Kisimítja a terhelési csúcsokat, és stabil tárolót ad a szűrőknek.",
+      "Szűrés",
+      "Állítsd be a felület kilenc fantomszűrő-helyét. Minden megfelelő valódi tárolóhely csak a saját szűrője által kiválasztott tárgyat fogadja el. A csövek és más tárgykezelők a közzétett tárgyképességen keresztül helyezhetnek a valódi tárolóba vagy vehetnek ki belőle.\n\nHasználd a puffert rendezési szakaszok között, hogy külön tárolóhelyeket foglalj le különböző tárgyaknak, és megállítsd a nem kapcsolódó halmokat a vonalra jutás előtt."
+    ],
+    "buildcraftenergy/item/oil": [
+      "A földből bugyborékoló sötét folyadék vagy értékes energiaforrás, vagy nagyon drága környezeti probléma.",
+      "Az Oil a BuildCraft üzemanyag-feldolgozási láncának természetesen generálódó kiinduló anyaga.",
+      "<bold>Tipp:</bold> A nyers Oilt saját tartályban tartsd, és hagyj helyet a köztes termékeknek az automatizált finomító indítása előtt.",
+      "Oil gyűjtése",
+      "Oil-lelőhelyek keletkeznek a világban, és Buckets, Pump vagy más kompatibilis folyadékkezelők segítségével gyűjthetők. Tanksben tárold, és Fluid Pipe-okkal mozgasd.",
+      "Használat és finomítás",
+      "A Cool Oil szennyezett Combustion Engine-üzemanyag, amely 3 MJ/t-t és Residue-t termel. Finomítása általában értékesebb.\n\nA Distiller az aktuális hőmérséklet alapján választ útvonalat: a Cool Oil Gaseous Fuelre és Heavy Oilra; a Hot Oil Mixed Light Fuelre és Dense Oilra; a Searing Oil Distilled Oilra és Residue-re válik szét."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Minden elegáns finomítólánc végül előállít valami ragacsosat, amit senki sem akart tárolni.",
+      "A Residue a szennyezett üzemanyagok és több magas hőmérsékletű desztillációs útvonal nehéz mellékterméke.",
+      "<bold>Tipp:</bold> A Residue valódi kimenet, nem figyelmen kívül hagyható hulladék. Biztosíts külön tartályt vagy ellenőrzött ártalmatlanítási útvonalat, hogy a finomítás ne álljon le.",
+      "Termelés",
+      "A Crude Oil, Heavy Oil és Dense Oil Residue-t termel a Combustion Engine-ben égve. Több Searing desztillációs recept folyadékkimenete is.\n\nA Residue nincs Combustion Engine-üzemanyagként regisztrálva. Fluid Pipe-okkal vagy tárolókkal vezesd el motorokból és gépekből, hogy a Residue-tartályok ne teljenek el.",
+      "Hőmérséklet",
+      "A BuildCraft többi olajtermékéhez hasonlóan a Residue-nak Cool, Hot és Searing állapota van, és Heat Exchangerben hőt cserélhet. A jelenlegi projektben elsősorban melléktermék és szállítható folyamatfolyadék."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "A könnyebb frakciók távoztak. Ami maradt, még energikus, de lényegesen kevésbé együttműködő.",
+      "A Heavy Oil szennyezett köztes üzemanyag, amely a Cool Oil desztillációjával készül.",
+      "<bold>Tipp:</bold> Egyértelműen címkézd a Heavy Oil vezetékeit, és tartsd elkülönítve az üzemanyagoktól; a köztes folyadékok hasonlónak tűnhetnek csövekben és tartályokban.",
+      "Üzemanyag",
+      "A Heavy Oil Combustion Engine-ben 2 MJ/t teljesítménnyel ég és Residue-t termel. Közvetlenül használható, de további finomítása tisztább termékeket ad.",
+      "Finomítás",
+      "A Hot Heavy Oil Light Fuelre és Dense Oilra desztillálódik. A Searing Heavy Oil Mixed Heavy Fuelre és Residue-re desztillálódik. Heat Exchangerrel válaszd ki a szükséges hőmérsékletet, mielőtt a Distillerbe küldöd."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "A Dense Oil az eredeti keverék azon részét tartalmazza, amely határozottan ellenzi a gyors mozgást a gépeken keresztül.",
+      "A Dense Oil szennyezett köztes üzemanyag, amely Hot Oilból vagy Hot Distilled Oilból származik.",
+      "<bold>Tipp:</bold> A Dense Oilt külön tárold, amíg a következő feldolgozási lépés készen nem áll. Rossz hőmérsékleti szakaszba adagolása pazarolja a finomító kapacitását.",
+      "Üzemanyag",
+      "A Dense Oil Combustion Engine-ben 4 MJ/t teljesítménnyel ég és Residue-t termel. Nagyobb kimenete hasznos, amikor az azonnali energia fontosabb a tiszta működésnél.",
+      "Finomítás",
+      "Hevítsd a Dense Oilt Searing állapotba, majd desztilláld a Dense Fuel és Residue szétválasztásához. Ez a feldolgozási lánc ezen ágának utolsó finomítási lépése."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Az első menet eltávolította a legrosszabb szennyeződéseket. Több hasznos frakció még mindig ugyanazt a tartályt használja.",
+      "A Distilled Oil tisztán égő köztes termék, amely gáznemű, könnyű és sűrű üzemanyagfrakciókat tartalmaz.",
+      "<bold>Tipp:</bold> A Distilled Oil köztes termék. Puffereld, hogy a korábbi Distiller folytathassa a munkát, miközben a későbbi hűtés vagy finomítás szünetel.",
+      "Üzemanyag",
+      "A Distilled Oil Residue nélkül, 1 MJ/t teljesítménnyel ég. Közvetlen kimenete szerény, de rugalmas alapanyag további szétválasztáshoz.",
+      "Finomítás",
+      "A Cool Distilled Oil Gaseous Fuelre és Mixed Heavy Fuelre desztillálódik. A Hot Distilled Oil Mixed Light Fuelre és Dense Fuelre desztillálódik. A következő útvonal kiválasztása előtt Heat Exchangerben változtasd meg a hőmérsékletét."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "A legkönnyebb frakció alig várja, hogy elhagyja a Distillert és minden rosszul tervezett csőhálózatot.",
+      "A Gaseous Fuel a legnagyobb kimenetű finomított Combustion Engine-üzemanyag, amely Residue nélkül 8 MJ/t-t termel.",
+      "<bold>Tipp:</bold> A nagy értékű üzemanyagot hatékonyan használó motoroknak tartsd fenn, és biztosíts automatikus leállítást, amikor a fogyasztó megáll.",
+      "Termelés",
+      "A Gaseous Fuel a Cool Oil, Cool Distilled Oil vagy Cool Mixed Light Fuel desztillációjának felső kimenete. Cool, Hot és Searing formája van Heat Exchangeren keresztüli szállításhoz, bár további desztillációt nem igényel.",
+      "Energia",
+      "Akkor használd, amikor egy gépnek egyetlen Combustion Engine legnagyobb pillanatnyi kimenetére van szüksége. A nagy kimenet gyorsan hőt is termel, ezért tarts fenn megbízható hűtőfolyadék-ellátást és a termelt energiát fogadni képes MJ-fogyasztót."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "A Light Fuel az ésszerű középút egy rövid energialöket és egy egész hétig tartó hordó között.",
+      "A Light Fuel tiszta finomított üzemanyag, amely Combustion Engine-ben 6 MJ/t-t termel.",
+      "<bold>Tipp:</bold> Minden minőséghez külön üzemanyagtartályt használj. Így könnyebb összehasonlítani a motor futásidejét és a finomító áteresztőképességét.",
+      "Termelés",
+      "Light Fuel előállításához desztillálj Cool Mixed Light Fuelt, Hot Heavy Oilt vagy Hot Mixed Heavy Fuelt. Égéskor nem termel Residue-t.",
+      "Energia",
+      "A Light Fuel nagy kimenetet és tiszta működést egyesít. Tartsd hűtve a motort, és biztosítsd, hogy a kapcsolt MJ-hálózat minden ticken 6 MJ-t fogadhasson."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "A Dense Fuel a kitartást többre értékeli a lelkesedésnél, és örömmel tart sokáig működésben egy motort.",
+      "A Dense Fuel tiszta finomított üzemanyag, amely hosszú égési idővel 4 MJ/t-t termel.",
+      "<bold>Tipp:</bold> A Dense Fuel elég értékes ahhoz, hogy pufferelt szállítást és felügyelet nélküli működés előtt motorleállító érzékelőt indokoljon.",
+      "Termelés",
+      "A Hot Distilled Oil, Hot Mixed Heavy Fuel és Searing Dense Oil Dense Fuelt termelhet. A Dense Oil útvonala második kimenetként Residue-t is leválaszt.",
+      "Energia",
+      "A Dense Fuel Residue létrehozása nélkül ég. Mérsékelt kimenete és magas összenergiája inkább tartós gépmunkára, mint rövid csúcsterhelésekre alkalmas."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Két hasznos üzemanyag osztozik egy tartályon. A Distiller rendezheti a tulajdonjogi vitát.",
+      "A Mixed Light Fuel tiszta köztes termék és használható, 3 MJ/t teljesítményű Combustion Engine-üzemanyag.",
+      "<bold>Tipp:</bold> A kevert üzemanyagokat külön termékként kezeld, és ne csatlakoztasd őket újra a köztes olajvezetékekhez.",
+      "Termelés",
+      "A Hot Oil és Hot Distilled Oil gáznemű kimenetként Mixed Light Fuelt termel. Gáznemű és könnyű üzemanyagfrakciókat tartalmaz.",
+      "Finomítás",
+      "A Cool Mixed Light Fuelt desztillálva válaszd szét Gaseous Fuelre és Light Fuelre. Közvetlenül is elégethető Residue termelése nélkül."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "A könnyű és sűrű üzemanyag kompatibilis tartálytárs, de szétválasztásukkal könnyebb kihasználni eltérő erősségeiket.",
+      "A Mixed Heavy Fuel tiszta köztes termék és használható, 5 MJ/t teljesítményű Combustion Engine-üzemanyag.",
+      "<bold>Tipp:</bold> A nehéz kevert üzemanyagot a fogyasztók közelében puffereld, de a finomító fő kimeneteit tartsd külön a könnyebb hibakeresésért.",
+      "Termelés",
+      "A Cool Distilled Oil és Searing Heavy Oil Mixed Heavy Fuelt termelhet. Könnyű és sűrű üzemanyagfrakciókat tartalmaz.",
+      "Finomítás",
+      "A Hot Mixed Heavy Fuelt desztillálva válaszd szét Light Fuelre és Dense Fuelre. A keverék közvetlen elégetése nem hoz létre Residue-t, és a két végső üzemanyag közötti kimenetet biztosít."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "A méhek szín szerinti rendezése sosem lett volna elég pontos egy komoly méhészethez.",
+      "Az Apiarist's Pipe Forestry-kompatibilis tárgycső, amely oldalanként külön szűrővel irányítja a genetikai tárgyakat.",
+      "<bold>Tipp:</bold> Apiarist's Pipe-ot külön méhfeldolgozó csomóponton használj. Tarts fenn normál túlfolyási útvonalat, hogy a váratlan méhtípusok ne blokkolják a hálózatot.",
+      "Genetikai szűrők",
+      "Nyisd meg a csövet minden kimeneti oldal beállításához. A Forestry szűrőszabályai faj, fajcsalád és életszakasz alapján egyeztethetik a genetikai tárgyakat. Oldalanként legfeljebb három kiválasztott faj rendelhető hozzá, és minden bejegyzés külön engedélyezhető vagy letiltható.\n\nA tárgyak a beállított Forestry-szabályok szerinti első kompatibilis kimenetre irányítódnak. Aktív egyező szabály nélküli kimenetek nem veszik magukhoz a genetikai tárgyat. A cső más BuildCraft tárgycsövekhez hasonlóan festhető és csatlakoztatható.\n\nEz az oldal csak akkor töltődik be, ha a Forestry telepítve van és a kompatibilitási tárgy regisztrálva lett."
+    ]
+  }
+}

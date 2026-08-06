@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "pt_br",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Engrenagem de madeira.",
+      "Engrenagem de madeira é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Engrenagem de pedra.",
+      "Engrenagem de pedra é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Engrenagem de ferro.",
+      "Engrenagem de ferro é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Engrenagem de ouro.",
+      "Engrenagem de ouro é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Engrenagem de diamante.",
+      "Engrenagem de diamante é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Chave inglesa.",
+      "Chave inglesa é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Pincel.",
+      "Pincel é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Conector de marcadores.",
+      "Conector de marcadores é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Marcador de caminho.",
+      "Marcador de caminho é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Criação de um caminho",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Uso do caminho",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos."
+    ],
+    "buildcraftcore/item/list": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Lista.",
+      "Lista é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Edição de uma lista",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Uso de uma lista",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Motor de redstone processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Funcionamento do motor",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Parâmetros",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Parâmetros",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Parâmetros",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Parâmetros",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Parâmetros",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Direções do gatilho",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Parâmetros",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Direções do gatilho",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Direções do gatilho",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Direções do gatilho",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Motor Stirling processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Funcionamento do motor",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Motor de combustão processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Funcionamento do motor",
+      "Coloque a máquina na orientação correta e forneça os recursos e a energia MJ necessários. Uma saída cheia ou entrada ausente pode interromper o processo."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Destilador processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Conexões",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Trocador de calor processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Funcionamento da máquina",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Poço de mineração processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Funcionamento da máquina",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Funil processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Coloque a máquina na orientação correta e forneça os recursos e a energia MJ necessários. Uma saída cheia ou entrada ausente pode interromper o processo."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Bancada automática processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Antes de fabricar, confira os componentes necessários e os usos posteriores. Algumas receitas exigem MJ ou uma máquina especial de produção.",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Esta página descreve um formato de recurso usado pelo sistema de guia do BuildCraft.",
+      "O layout da página, o texto localizado e os metadados são carregados separadamente e devem usar os mesmos identificadores.",
+      "<bold>Dica:</bold> Recarregue os recursos após alterar identificadores, sintaxe JSON ou código de idioma e verifique o registro.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Esta página descreve um formato de recurso usado pelo sistema de guia do BuildCraft.",
+      "O layout da página, o texto localizado e os metadados são carregados separadamente e devem usar os mesmos identificadores.",
+      "<bold>Dica:</bold> Recarregue os recursos após alterar identificadores, sintaxe JSON ou código de idioma e verifique o registro.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Esta página descreve um formato de recurso usado pelo sistema de guia do BuildCraft.",
+      "O layout da página, o texto localizado e os metadados são carregados separadamente e devem usar os mesmos identificadores.",
+      "<bold>Dica:</bold> Recarregue os recursos após alterar identificadores, sintaxe JSON ou código de idioma e verifique o registro.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Fachada.",
+      "Fachada é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Porta lógica.",
+      "Porta lógica é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Parâmetros",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Conexões",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Tubo Pulsar.",
+      "Tubo Pulsar é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Funcionamento dos acessórios",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Conexões de tubos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Sensor de luz.",
+      "Sensor de luz é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Funcionamento dos acessórios",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Conexões de tubos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Lente.",
+      "Lente é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Direções",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Direções",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Alimentação",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Operação do tubo",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Direção do tubo",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Alimentação",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Operação do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Direção do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Alimentação",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Filtragem",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Alimentação",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Filtragem",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Alimentação",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Alimentação",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Filtragem",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta fluidos entre tanques, máquinas e dispositivos compatíveis.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Filtragem",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Alimentação",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de fio de tubo §fbranco§r.",
+      "fio de tubo §fbranco§r é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Alimente umdaptor.",
+      "Alimente umdaptor é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Funcionamento dos acessórios",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Informações",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Tampa de Tubo.",
+      "Tampa de Tubo é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Conexões de tubos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Requisitos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Parâmetros",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Definição da direção",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Definição da direção",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Definição da direção",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Definição da direção",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Definição da direção",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Definição da direção",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Requisitos",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft."
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Caixa de volume.",
+      "Caixa de volume é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Informações",
+      "O comportamento de Caixa de volume depende do alvo conectado, da direção, dos filtros e da energia disponível. Verifique o resultado após mudar a configuração."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Marcador de Localização.",
+      "Marcador de Localização é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos."
+    ],
+    "buildcraftlib/item/guide": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Guide.",
+      "Guide é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "Antes de fabricar, confira os componentes necessários e os usos posteriores. Algumas receitas exigem MJ ou uma máquina especial de produção."
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Plug filtro.",
+      "Plug filtro é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "Funcionamento dos acessórios",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo.",
+      "Conexões de tubos",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Localização no mapa.",
+      "Localização no mapa é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Informações",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Fragmento frágil de %s.",
+      "Fragmento frágil de %s é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Motor criativo processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Projeto.",
+      "Projeto é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Gravação",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Construção",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Modelo.",
+      "Modelo é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Gravação",
+      "O comportamento de Modelo depende do alvo conectado, da direção, dos filtros e da energia disponível. Verifique o resultado após mudar a configuração.",
+      "Construção",
+      "O comportamento de Modelo depende do alvo conectado, da direção, dos filtros e da energia disponível. Verifique o resultado após mudar a configuração."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Único Bloco Esquema.",
+      "Único Bloco Esquema é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "O comportamento de Único Bloco Esquema depende do alvo conectado, da direção, dos filtros e da energia disponível. Verifique o resultado após mudar a configuração.",
+      "Informações",
+      "O comportamento de Único Bloco Esquema depende do alvo conectado, da direção, dos filtros e da energia disponível. Verifique o resultado após mudar a configuração."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Planejador de preenchimento.",
+      "Planejador de preenchimento é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Mesa de Arquitetura processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Construtor processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Preenchedor processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Biblioteca de Diagramas processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Coloque a máquina na orientação correta e forneça os recursos e a energia MJ necessários. Uma saída cheia ou entrada ausente pode interromper o processo.",
+      "Informações",
+      "Coloque a máquina na orientação correta e forneça os recursos e a energia MJ necessários. Uma saída cheia ou entrada ausente pode interromper o processo."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Substituidor processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Coloque a máquina na orientação correta e forneça os recursos e a energia MJ necessários. Uma saída cheia ou entrada ausente pode interromper o processo."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Marcador de construção processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Estrutura processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Pedreira processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Mineração",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Informações",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Placa de redstone.",
+      "Placa de redstone é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Programação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa.",
+      "Informações",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Estação de Encaixe.",
+      "Estação de Encaixe é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Colocação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa.",
+      "Informações",
+      "O layout da página e o texto traduzido ficam separados. O JSON do idioma deve conter os mesmos identificadores de página e a mesma quantidade de campos da estrutura compartilhada."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Planejador de zonas processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Primeiro marque a área de trabalho ou o caminho. Verifique a ordem dos pontos, a orientação da máquina e possíveis obstáculos.",
+      "Informações",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Solicitador processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa.",
+      "Informações",
+      "Coloque a máquina na orientação correta e forneça os recursos e a energia MJ necessários. Uma saída cheia ou entrada ausente pode interromper o processo."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "Este robô recebe tarefas de uma estação de acoplamento e da placa de redstone instalada.",
+      "O robô procura uma tarefa adequada, trabalha na área indicada e depois retorna à estação.",
+      "<bold>Dica:</bold> Defina a área de trabalho, os filtros e o destino antes de iniciar e deixe um caminho de retorno para a estação.",
+      "Profissão",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Comportamento do gatilho",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Comportamento do gatilho",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Comportamento do gatilho",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Comportamento do gatilho",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Esta ação envia um comando de controle ao alvo conectado quando a condição do portão é satisfeita.",
+      "A ação aplica o comando escolhido a um bloco, tubo, motor ou robô.",
+      "<bold>Dica:</bold> Adicione uma condição de desligamento para que o sistema volte a um estado seguro quando o sinal desaparecer.",
+      "Comportamento da ação",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Laser processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "Antes de fabricar, confira os componentes necessários e os usos posteriores. Algumas receitas exigem MJ ou uma máquina especial de produção."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Mesa de montagem processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Montagem",
+      "Antes de fabricar, confira os componentes necessários e os usos posteriores. Algumas receitas exigem MJ ou uma máquina especial de produção."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Mesa de carregamento processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Carregamento",
+      "Coloque a máquina na orientação correta e forneça os recursos e a energia MJ necessários. Uma saída cheia ou entrada ausente pode interromper o processo."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Mesa de integração processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Integração",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Mesa de Trabalho Avançado processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Fabricação automática",
+      "Antes de fabricar, confira os componentes necessários e os usos posteriores. Algumas receitas exigem MJ ou uma máquina especial de produção."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Mesa de programação processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Informações",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Cristal de Redstone.",
+      "Cristal de Redstone é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Produção",
+      "Antes de fabricar, confira os componentes necessários e os usos posteriores. Algumas receitas exigem MJ ou uma máquina especial de produção."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Copiadora de Porta Lógica.",
+      "Copiadora de Porta Lógica é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Temporizador.",
+      "Temporizador é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "A ação é aplicada enquanto a condição do portão for verdadeira. Direção, cor e filtros são configurados na interface do portão."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Chipset de redstone.",
+      "Chipset de redstone é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Montagem",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Chipset de ferro.",
+      "Chipset de ferro é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Montagem",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Chipset de ouro.",
+      "Chipset de ouro é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Montagem",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Chipset de quartzo.",
+      "Chipset de quartzo é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Montagem",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Chipset de diamante.",
+      "Chipset de diamante é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Montagem",
+      "O robô procura um trabalho adequado, recolhe as ferramentas ou os recursos necessários e vai até a área indicada. Ao terminar, retorna ou continua com outra tarefa."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Pulso do temporizador",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Pulso do temporizador",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Este gatilho monitora o estado de um alvo conectado e funciona como condição de um portão.",
+      "A condição ativa as ações associadas enquanto o estado monitorado corresponder à configuração.",
+      "<bold>Dica:</bold> Confira o lado colorido e o alvo monitorado; use também a condição oposta para um controle seguro.",
+      "Pulso do temporizador",
+      "O portão verifica periodicamente o alvo do lado configurado. A cor do ícone, o lado do tubo e os parâmetros indicam a direção e a condição realmente verificadas."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta energia MJ entre fontes e consumidores.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Funcionamento do tubo de energia",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Esta página explica a finalidade, a conexão e o uso seguro de Vedação de Tubo.",
+      "Vedação de Tubo é usado para criar, controlar ou ampliar sistemas do BuildCraft.",
+      "<bold>Dica:</bold> Antes de conectar ao sistema principal, verifique entradas, saídas e orientação em uma montagem pequena de teste.",
+      "Informações",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Esta máquina é uma parte funcional dos fluxos automatizados do BuildCraft.",
+      "Buffer filtrado processa recursos ou executa trabalho dentro de uma área configurada.",
+      "<bold>Dica:</bold> Separe entrada, saída, alimentação MJ e área de trabalho e adicione uma forma de detectar bloqueios.",
+      "Filtragem",
+      "O tubo detecta automaticamente tubos e dispositivos conectáveis. Em uma bifurcação, a próxima rota é escolhida pelas regras, filtros e cores desse tubo."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Coleta de petróleo",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Uso e refino",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Produção",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Temperatura",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Combustível",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Refino",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Combustível",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Refino",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Combustível",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Refino",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Produção",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Energia",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Produção",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Energia",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Produção",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Energia",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Produção",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Refino",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Este fluido faz parte da cadeia de processamento de petróleo e geração de energia do BuildCraft.",
+      "O fluido pode ser armazenado, transportado, queimado ou processado novamente conforme o tipo e a temperatura.",
+      "<bold>Dica:</bold> Mantenha claramente separados os tanques e tubos de fluidos e estágios de temperatura diferentes.",
+      "Produção",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos.",
+      "Refino",
+      "O destilador e o trocador de calor podem transformar o fluido em outras frações. Observe a temperatura, o espaço das saídas e a separação entre fluidos."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Este tubo seleciona e transporta recursos dentro de uma rede do BuildCraft.",
+      "O tubo transporta itens entre inventários, máquinas e outros tubos conectados.",
+      "<bold>Dica:</bold> Confira o resultado em cada bifurcação e fixe a rota com cores, filtros ou portões quando necessário.",
+      "Filtros genéticos",
+      "Antes de fabricar, confira os componentes necessários e os usos posteriores. Algumas receitas exigem MJ ou uma máquina especial de produção."
+    ]
+  }
+}

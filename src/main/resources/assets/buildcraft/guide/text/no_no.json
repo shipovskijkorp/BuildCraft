@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "no_no",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "I arbeidet med å lage enkel automatisering har du funnet en nyttig del: et tannhjul som kan dreies!\nDet er bare laget av tre, så det må oppgraderes for mer krevende oppgaver...",
+      "Tretannhjulet er det første produksjonstrinnet når du begynner med BuildCraft, og brukes som grunnlag for mange ting.",
+      "<bold>Tips:</bold> Lag tretannhjul i planlagte partier. Tannhjul på høyere nivå bruker opp nivået under, så behold noen enklere reservehjul til maskiner og verktøy."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Tre har vist seg vanskelig å bruke i ordentlige maskiner, så du bestemmer deg for å lage et nytt tannhjul av stein.\nSom en ekstra fordel kan det ikke ta fyr.",
+      "Steintannhjulet er i praksis en oppgradering av tretannhjulet og brukes til å lage sterkere maskiner takket være steinens hardhet.",
+      "<bold>Tips:</bold> Lag steintannhjul i planlagte partier. Tannhjul på høyere nivå bruker opp nivået under, så behold noen enklere reservehjul til maskiner og verktøy."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Stein har vist seg nyttig i enkle maskiner, men tåler ikke de høye belastningene og temperaturene i motorer og avanserte maskiner særlig godt.\nJern passer derimot mye bedre til slike krevende oppgaver.",
+      "Når du oppgraderer tannhjulene igjen, kan du bygge mer avanserte maskiner takket være metallets egenskaper.",
+      "<bold>Tips:</bold> Lag jerntannhjul i planlagte partier. Tannhjul på høyere nivå bruker opp nivået under, så behold noen enklere reservehjul til maskiner og verktøy."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Mer avanserte oppgaver krever mange svært små tannhjul som griper inn i hverandre, og jerntannhjul går lett i stykker når de brukes slik.\nGull går aldri i stykker når det formes til bittesmå tannhjul, og kan derfor brukes i kompliserte mekanismer.",
+      "Gulltannhjulet er neste nivå og brukes av maskiner som arbeider over store områder.",
+      "<bold>Tips:</bold> Lag gulltannhjul i planlagte partier. Tannhjul på høyere nivå bruker opp nivået under, så behold noen enklere reservehjul til maskiner og verktøy."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Dypt nede i gruvene oppdager du det sjeldneste og sterkeste materialet av alle: diamanter.\nStyrken gjør at diamanttannhjul kan håndtere de mest krevende oppgavene uten å bryte sammen eller bli utslitt.",
+      "Diamanttannhjulet er det siste nivået og det sterkeste tannhjulet, nødvendig for de mest avanserte maskinene.",
+      "<bold>Tips:</bold> Lag diamanttannhjul i planlagte partier. Tannhjul på høyere nivå bruker opp nivået under, så behold noen enklere reservehjul til maskiner og verktøy."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Det er svært nyttig å bygge og bruke maskiner, men noen ganger må virkemåten endres eller maskinen roteres mot en annen retning.\nEn skiftenøkkel løser problemet: med et slag kan den endre tilstanden til en maskin eller mange ulike blokker.",
+      "Skiftenøkkelen er grunnverktøyet som brukes til å rotere og manipulere blokker, maskiner og enkelte entiteter med et klikk.",
+      "<bold>Tips:</bold> Ha skiftenøkkelen med deg når du bygger et maskinrom. Mange BuildCraft-blokker og retningsbestemte rør kan roteres eller konfigureres om uten å brytes."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Mengden farger som finnes rundt om i verden er imponerende, men tenk om du kunne endre fargen på enkelte blokker med ett enkelt penselstrøk.\nÅ male blokker er fint som pynt, men kan også ha praktiske formål, som å skille rør fra hverandre.",
+      "Pensler kan brukes til å male forskjellige blokker i én av 16 farger.\nÅ male en blokk er vanligvis bare dekorativt, men noen blokker får spesielle egenskaper når de males.\nRør kobler for eksempel ikke til andre rør dersom de har forskjellig farge.",
+      "<bold>Tips:</bold> Ha egne pensler for permanente rørnett. Det er vanligvis enklere å vedlikeholde nettet dersom du bare farger grenene som ikke skal kobles sammen, i stedet for alle rørene."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Nøyaktig kontroll over områdene der maskinene arbeider, er avgjørende i ethvert stort ingeniørprosjekt, og du trenger et verktøy for dette.",
+      "Markørkobleren brukes til å endre størrelsen på en volumboks eller retningen til en tilkoblet rutemarkør.",
+      "<bold>Tips:</bold> Koble markørene først når alle endepunktene står på sine endelige plasser. Det går raskere å koble sammen en ferdig form på nytt enn å rette et vridd eller ufullstendig område senere.",
+      "Informasjon",
+      "For å bruke markørkobleren holder du den i hånden og klikker på en laserboks du vil justere. Flytt deretter markøren for å endre den, og klikk igjen for å stoppe justeringen.\nDu kan skiftklikke på laserboksene med markørkobleren i hånden for å fjerne dem."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Rette linjer er nyttige, men store prosjekter trenger ofte en rute som bøyer seg rundt terreng og maskiner.",
+      "Rutemarkører definerer en ordnet rute for maskiner som støtter arbeid langs en bane.",
+      "<bold>Tips:</bold> Plasser rutemarkører i rekkefølgen de skal passeres, og hold hver strekning fri. En kort testrute er nyttig før du setter roboter eller automatiske byggere til å følge den.",
+      "Opprette en rute",
+      "Plasser rutemarkører på punktene ruten skal passere. Bruk markørkobleren til å koble dem sammen i riktig rekkefølge. Den synlige laserlinjen viser ruten en kompatibel bygger eller annen maskin vil følge.\n\nEn rute er retningsbestemt: rekkefølgen markørene kobles i bestemmer rekkefølgen på punktene. Bryt eller koble markører på nytt for å forme ruten annerledes.",
+      "Bruke ruten",
+      "Plasser en kompatibel maskin ved siden av en av de sammenkoblede rutemarkørene. Maskinen leser hele den tilkoblede ruten og gjentar arbeidet ved hver posisjon langs banen."
+    ],
+    "buildcraftcore/item/list": [
+      "Ni filterplasser hjelper lite når et sorteringssystem må kjenne igjen et helt verksted med beslektede materialer.",
+      "En liste lagrer gjenbrukbare gjenstandsfiltre for rør, porter og robotstasjoner.",
+      "<bold>Tips:</bold> Bruk lister til gjenbrukbare filtre som deles av flere diamantrør eller porter. Det er tryggere å oppdatere én liste enn å redigere mange separate filterplasser.",
+      "Redigere en liste",
+      "Hold listen og høyreklikk for å åpne den. Gi listen et navn, legg referansegjenstander i fantomplassene og velg hvordan hver oppføring skal sammenlignes.\n\nNøyaktig samsvar beholder gjenstandsdata og andre relevante detaljer. Bredere moduser kan samsvare med beslektede gjenstandstyper eller materialer når det støttes av det gjeldende registeret.",
+      "Bruke en liste",
+      "Plasser den konfigurerte listen i en parameter- eller filterplass som godtar den. Røret, porten eller robothandlingen som mottar listen, behandler oppføringene som ett gjenbrukbart filter. Listen forbrukes ikke når den brukes som filter."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "I jakten på energi har du oppdaget en måte å produsere en liten mengde på ved å bruke bare et redstonesignal.",
+      "Redstonemotoren er en enkel motor som bare trenger et redstonesignal for å kjøre. Den produserer svært lite energi.",
+      "<bold>Tips:</bold> En redstonemotor passer best til utvinning med lav etterspørsel og til porter. Den kan ikke erstatte en sterkere motor når en maskin har et merkbart behov for MJ per tick.",
+      "Informasjon",
+      "Fordi de produserer så lite MJ, egner de seg bare til enkle enheter som utvinningsrør eller pumper.",
+      "Motormekanikk",
+      "BuildCraft-motorer har 5 temperaturtrinn som bestemmer motorhastigheten: blå, grønn, gul, rød og svart.\nI motsetning til kraftigere motorer kan redstonemotorer <bold>ikke overopphetes</bold>. De blir svarte når energien ikke har noe sted å gå, og fortsetter å kjøre.\nMotorer kobler seg alltid til nærmeste kompatible MJ-forbruker, men redstonemotorer kobler seg ikke til kinesisrør og kan bare kobles til enkelte maskiner.\nDu kan bruke en skiftenøkkel til å rotere motoren og endre hvilken blokk den driver.\n\nSom alle motorer <bold>krever den et redstonesignal for å kjøre.</bold>\nPorter kan oppdage temperaturtrinnene til motoren og hjelpe deg med å styre den."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Uansett hva som skjer, vil denne utløseren alltid være aktiv.",
+      "Alltid på er en portutløser som finnes på alle plasserte porter.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, er de tilkoblede handlingene alltid aktivert."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Mottar porten et redstonesignal?",
+      "Redstonesignal på er en portutløser som finnes på alle plasserte porter.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når blokken porten er plassert på mottar et redstonesignal.",
+      "Parametere",
+      "Når Redstonesignal på er valgt og den installerte porten har tilgjengelige parametere, blir parameteren Bare portsiden tilgjengelig.\nHvis Bare portsiden velges, kontrolleres bare om siden porten er montert på mottar et redstonesignal."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Mottar porten ikke noe redstonesignal?",
+      "Redstonesignal av er en portutløser som finnes på alle plasserte porter.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når blokken porten er plassert på ikke mottar et redstonesignal.",
+      "Parametere",
+      "Når Redstonesignal av er valgt og den installerte porten har tilgjengelige parametere, blir parameteren Bare portsiden tilgjengelig.\nHvis Bare portsiden velges, kontrolleres bare om siden porten er montert på ikke mottar noe redstonesignal."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Om det bare fantes en måte å sjekke om kisten er tom.",
+      "Tomt lager er en portutløser som finnes på alle porter med et lager plassert ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når alle plassene i det tilkoblede lageret inneholder null gjenstander.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Tomt lager flere ganger i forskjellige farger for å representere hvert tilkoblet lager.\nFargen på utløseren viser retningen til lageret i forhold til røret, slik at du kan skille lagrene fra hverandre."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Har kisten ved siden av denne gjenstanden?",
+      "Gjenstander i lager er en portutløser som finnes på alle porter med et lager plassert ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når det tilkoblede lageret inneholder gjenstander.",
+      "Parametere",
+      "Når Gjenstander i lager er valgt og den installerte porten har tilgjengelige parametere, blir filterplassene ved siden av tilgjengelige.\nVed å legge gjenstander i filterplassene kan du sjekke om lageret inneholder noen av de valgte gjenstandene før utløseren aktiveres.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Gjenstander i lager flere ganger i forskjellige farger for å representere hvert tilkoblet lager.\nFargen på utløseren viser retningen til lageret i forhold til røret, slik at du kan skille lagrene fra hverandre."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Har kisten ved siden av plass til flere gjenstander?",
+      "Plass i lager er en portutløser som finnes på alle porter med et lager plassert ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når det tilkoblede lageret har tomme plasser som kan ta imot gjenstander.",
+      "Parametere",
+      "Når Plass i lager er valgt og den installerte porten har tilgjengelige parametere, blir filterplassene ved siden av tilgjengelige.\nVed å legge gjenstander i filterplassene kan du sjekke om lageret har tomme eller ufullstendige plasser som kan ta imot de valgte gjenstandene før utløseren aktiveres.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Plass i lager flere ganger i forskjellige farger for å representere hvert tilkoblet lager.\nFargen på utløseren viser retningen til lageret i forhold til røret, slik at du kan skille lagrene fra hverandre."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Om det bare fantes en måte å sjekke om kisten er full.",
+      "Fullt lager er en portutløser som finnes på alle porter med et lager plassert ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når alle plassene i det tilkoblede lageret inneholder en gjenstand.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Fullt lager flere ganger i forskjellige farger for å representere hvert tilkoblet lager.\nFargen på utløseren viser retningen til lageret i forhold til røret, slik at du kan skille lagrene fra hverandre."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Har kisten mindre enn 25 % av gjenstandene den kan romme?",
+      "Inneholder mindre enn 25 % er en portutløser som finnes på alle porter med en beholdning ved siden av.",
+      "<bold>Tips:</bold> Bruk terskelutløsere i stigende rekkefølge, og test den nøyaktige grensen med en midlertidig lampe. Dette hindrer nærliggende regler for 25 %, 50 % og 75 % i å motarbeide hverandre.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede beholdningen er mindre enn 25 % full.",
+      "Parametere",
+      "Når Inneholder mindre enn 25 % er valgt og den installerte porten har tilgjengelige parametere, blir filtersporene ved siden av tilgjengelige som parameter.\nVed å plassere gjenstander i filtersporene kan du kontrollere om beholdningen har mindre enn 25 % av gjenstandene som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Inneholder mindre enn 25 % flere ganger i ulike farger for å representere hver tilkoblet beholdning.\nFargen på utløseren viser retningen til beholdningen i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Har kisten mindre enn 50 % av gjenstandene den kan romme?",
+      "Inneholder mindre enn 50 % er en portutløser som finnes på alle porter med en beholdning ved siden av.",
+      "<bold>Tips:</bold> Bruk terskelutløsere i stigende rekkefølge, og test den nøyaktige grensen med en midlertidig lampe. Dette hindrer nærliggende regler for 25 %, 50 % og 75 % i å motarbeide hverandre.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede beholdningen er mindre enn 50 % full.",
+      "Parametere",
+      "Når Inneholder mindre enn 50 % er valgt og den installerte porten har tilgjengelige parametere, blir filtersporene ved siden av tilgjengelige som parameter.\nVed å plassere gjenstander i filtersporene kan du kontrollere om beholdningen har mindre enn 50 % av gjenstandene som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Inneholder mindre enn 50 % flere ganger i ulike farger for å representere hver tilkoblet beholdning.\nFargen på utløseren viser retningen til beholdningen i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Har kisten mindre enn 75 % av gjenstandene den kan romme?",
+      "Inneholder mindre enn 75 % er en portutløser som finnes på alle porter med en beholdning ved siden av.",
+      "<bold>Tips:</bold> Bruk terskelutløsere i stigende rekkefølge, og test den nøyaktige grensen med en midlertidig lampe. Dette hindrer nærliggende regler for 25 %, 50 % og 75 % i å motarbeide hverandre.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede beholdningen er mindre enn 75 % full.",
+      "Parametere",
+      "Når Inneholder mindre enn 75 % er valgt og den installerte porten har tilgjengelige parametere, blir filtersporene ved siden av tilgjengelige som parameter.\nVed å plassere gjenstander i filtersporene kan du kontrollere om beholdningen har mindre enn 75 % av gjenstandene som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Inneholder mindre enn 75 % flere ganger i ulike farger for å representere hver tilkoblet beholdning.\nFargen på utløseren viser retningen til beholdningen i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Er tanken ved siden av porten tom?",
+      "Tom tank er en portutløser som finnes på alle porter med en tank ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når alle tilkoblede tanker er helt tomme for væske.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Tom tank flere ganger i ulike farger for å representere hver tilkoblet tank.\nFargen på utløseren viser retningen til tanken i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Inneholder tanken ved siden av noen væske?",
+      "Væske i tank er en portutløser som finnes på alle porter med en tank ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede tanken inneholder væske.",
+      "Parametere",
+      "Når Væske i tank er valgt og den installerte porten har tilgjengelige parametere, blir filtersporene ved siden av tilgjengelige som parameter.\nVed å plassere en væskebeholder i filtersporet kan du kontrollere om tanken inneholder væsken som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Væske i tank flere ganger i ulike farger for å representere hver tilkoblet tank.\nFargen på utløseren viser retningen til tanken i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Har tanken ved siden av porten plass til mer væske?",
+      "Plass til væske er en portutløser som finnes på alle porter med en tank ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede tanken har plass til å ta imot mer væske.",
+      "Parametere",
+      "Når Plass til væske er valgt og den installerte porten har tilgjengelige parametere, blir filtersporet ved siden av tilgjengelig som parameter.\nVed å plassere en væskebeholder i filtersporet kan du kontrollere om noen tank kan ta imot væsken som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Plass til væske flere ganger i ulike farger for å representere hver tilkoblet tank.\nFargen på utløseren viser retningen til tanken i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Er tanken ved siden av porten full?",
+      "Full tank er en portutløser som finnes på alle porter med en tank ved siden av.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende tanken ikke har plass til mer væske.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Full tank flere ganger i ulike farger for å representere hver tilkoblet tank.\nFargen på utløseren viser retningen til tanken i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Inneholder tanken ved siden av porten mindre enn en fjerdedel av kapasiteten?",
+      "Inneholder mindre enn 25 % er en portutløser som finnes på alle porter med en tank ved siden av.",
+      "<bold>Tips:</bold> Bruk terskelutløsere i stigende rekkefølge, og test den nøyaktige grensen med en midlertidig lampe. Dette hindrer nærliggende regler for 25 %, 50 % og 75 % i å motarbeide hverandre.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede tanken er mindre enn 25 % full.",
+      "Parametere",
+      "Når Inneholder mindre enn 25 % er valgt og den installerte porten har tilgjengelige parametere, blir filtersporet ved siden av tilgjengelig som parameter.\nVed å plassere en væskebeholder i filtersporet kan du kontrollere om tanken har mindre enn 25 % av væsken som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Inneholder mindre enn 25 % flere ganger i ulike farger for å representere hver tilkoblet tank.\nFargen på utløseren viser retningen til tanken i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Inneholder tanken ved siden av porten mindre enn halvparten av kapasiteten?",
+      "Inneholder mindre enn 50 % er en portutløser som finnes på alle porter med en tank ved siden av.",
+      "<bold>Tips:</bold> Bruk terskelutløsere i stigende rekkefølge, og test den nøyaktige grensen med en midlertidig lampe. Dette hindrer nærliggende regler for 25 %, 50 % og 75 % i å motarbeide hverandre.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede tanken er mindre enn 50 % full.",
+      "Parametere",
+      "Når Inneholder mindre enn 50 % er valgt og den installerte porten har tilgjengelige parametere, blir filtersporet ved siden av tilgjengelig som parameter.\nVed å plassere en væskebeholder i filtersporet kan du kontrollere om tanken har mindre enn 50 % av væsken som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Inneholder mindre enn 50 % flere ganger i ulike farger for å representere hver tilkoblet tank.\nFargen på utløseren viser retningen til tanken i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Inneholder tanken ved siden av porten mindre enn tre fjerdedeler av kapasiteten?",
+      "Inneholder mindre enn 75 % er en portutløser som finnes på alle porter med en tank ved siden av.",
+      "<bold>Tips:</bold> Bruk terskelutløsere i stigende rekkefølge, og test den nøyaktige grensen med en midlertidig lampe. Dette hindrer nærliggende regler for 25 %, 50 % og 75 % i å motarbeide hverandre.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede tanken er mindre enn 75 % full.",
+      "Parametere",
+      "Når Inneholder mindre enn 75 % er valgt og den installerte porten har tilgjengelige parametere, blir filtersporet ved siden av tilgjengelig som parameter.\nVed å plassere en væskebeholder i filtersporet kan du kontrollere om tanken har mindre enn 75 % av væsken som er valgt i filteret, før utløsning.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Inneholder mindre enn 75 % flere ganger i ulike farger for å representere hver tilkoblet tank.\nFargen på utløseren viser retningen til tanken i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Hvilken farge har motoren ved siden av porten? Er den blå?",
+      "Blå motor er en portutløser som finnes på alle porter med en motor ved siden av.",
+      "<bold>Tips:</bold> Kombiner motorstatusutløsere med en automatisk avstengingshandling. En synlig varsellampe er nyttig før du lar det samme signalet styre drivstoff eller kjølevæske.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende motoren er på det blå temperaturstadiet.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Blå motor flere ganger i ulike farger for å representere hver tilkoblet motor.\nFargen på utløseren viser retningen til motoren i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Hvilken farge har motoren ved siden av porten? Er den grønn?",
+      "Grønn motor er en portutløser som finnes på alle porter med en motor ved siden av.",
+      "<bold>Tips:</bold> Kombiner motorstatusutløsere med en automatisk avstengingshandling. En synlig varsellampe er nyttig før du lar det samme signalet styre drivstoff eller kjølevæske.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende motoren er på det grønne temperaturstadiet.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Grønn motor flere ganger i ulike farger for å representere hver tilkoblet motor.\nFargen på utløseren viser retningen til motoren i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Hvilken farge har motoren ved siden av porten? Er den gul?",
+      "Gul motor er en portutløser som finnes på alle porter med en motor ved siden av.",
+      "<bold>Tips:</bold> Kombiner motorstatusutløsere med en automatisk avstengingshandling. En synlig varsellampe er nyttig før du lar det samme signalet styre drivstoff eller kjølevæske.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende motoren er på det gule temperaturstadiet.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Gul motor flere ganger i ulike farger for å representere hver tilkoblet motor.\nFargen på utløseren viser retningen til motoren i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Hvilken farge har motoren ved siden av porten? Er den blå?",
+      "Rød motor er en portutløser som finnes på alle porter med en motor ved siden av.",
+      "<bold>Tips:</bold> Kombiner motorstatusutløsere med en automatisk avstengingshandling. En synlig varsellampe er nyttig før du lar det samme signalet styre drivstoff eller kjølevæske.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende motoren er på det røde temperaturstadiet.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Rød motor flere ganger i ulike farger for å representere hver tilkoblet motor.\nFargen på utløseren viser retningen til motoren i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Hvilken farge har motoren ved siden av porten? Er den svart og overopphetet?",
+      "Motor overopphetet er en portutløser som finnes på alle porter med en motor ved siden av.",
+      "<bold>Tips:</bold> Kombiner motorstatusutløsere med en automatisk avstengingshandling. En synlig varsellampe er nyttig før du lar det samme signalet styre drivstoff eller kjølevæske.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende motoren er på overopphetingsstadiet.",
+      "Utløserretninger",
+      "Porter kan vise utløseren Motor overopphetet flere ganger i ulike farger for å representere hver tilkoblet motor.\nFargen på utløseren viser retningen til motoren i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Har maskinen ved siden av faktisk arbeid den kan utføre?",
+      "Har arbeid er en portutløser som finnes på alle porter ved siden av en maskin som kan være i drift.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende maskinen har arbeid den kan utføre.\n\nMerk: Ikke alle maskiner støtter utløseren Har arbeid."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Har maskinen ved siden av virkelig ikke mer arbeid den kan utføre?",
+      "Arbeid ferdig er en portutløser som finnes på alle porter ved siden av en maskin som har fullført driften.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilstøtende maskinen har fullført alt arbeid den kan utføre.\n\nMerk: Ikke alle maskiner støtter utløseren Arbeid ferdig."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Når den utløses, sendes et redstone-signal.",
+      "Redstone-signal er en porthandling som finnes på alle plasserte porter.",
+      "<bold>Tips:</bold> Bruk farget rørledning til å isolere dette signalet fra annen automatisering og unngå tilbakekoblingssløyfer mellom nærliggende porter.",
+      "Krav",
+      "Når handlingen aktiveres, sender den ut et redstone-signal.",
+      "Parametere",
+      "Når Redstone-signal er valgt og den installerte porten har tilgjengelige parametere, blir Bare portsiden tilgjengelig som parameter.\nNår Bare portsiden velges, sendes redstone-signalet bare ut fra den bestemte siden porten er plassert på."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Dette slår på maskinen.",
+      "På er en porthandling som finnes på alle porter ved siden av en maskin som kan være i drift.",
+      "<bold>Tips:</bold> Kombiner denne handlingen med den mest presise nyttige utløseren, og test av-tilstanden like grundig som på-tilstanden.",
+      "Krav",
+      "Når handlingen aktiveres, begynner maskinen å arbeide.\nMerk: Ikke alle maskiner støtter handlingen På.",
+      "Utløserretninger",
+      "Porter kan vise handlingen På flere ganger i ulike farger for å representere hver tilkoblet maskin.\nFargen på handlingen viser retningen til maskinen i forhold til røret, slik at du kan skille maskinene fra hverandre."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Dette slår av maskinen.",
+      "Av er en porthandling som finnes på alle porter ved siden av en maskin som kan være i drift.",
+      "<bold>Tips:</bold> Kombiner denne handlingen med den mest presise nyttige utløseren, og test av-tilstanden like grundig som på-tilstanden.",
+      "Krav",
+      "Når handlingen aktiveres, stopper maskinen.\nMerk: Ikke alle maskiner støtter handlingen Av.",
+      "Utløserretninger",
+      "Porter kan vise handlingen Av flere ganger i ulike farger for å representere hver tilkoblet maskin.\nFargen på handlingen viser retningen til maskinen i forhold til røret, slik at du kan skille maskinene fra hverandre."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Får maskinen til å kjøre om og om igjen.",
+      "Gjenta er en porthandling som finnes på alle porter ved siden av en maskin som kan være i drift.",
+      "<bold>Tips:</bold> Kombiner denne handlingen med den mest presise nyttige utløseren, og test av-tilstanden like grundig som på-tilstanden.",
+      "Krav",
+      "Når handlingen aktiveres, fullfører maskinen arbeidssyklusen gjentatte ganger.\nMerk: Ikke alle maskiner støtter handlingen Gjenta.",
+      "Utløserretninger",
+      "Porter kan vise handlingen Gjenta flere ganger i ulike farger for å representere hver tilkoblet maskin.\nFargen på handlingen viser retningen til maskinen i forhold til røret, slik at du kan skille maskinene fra hverandre."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "En ovn som beveger et stempel i stedet for å lage middag, er fortsatt en fullt respektabel ovn.",
+      "Stirlingmotoren brenner vanlige ovnsbrensler og produserer mellom en tredjedel og én MJ per tick.",
+      "<bold>Tips:</bold> Sørg for en måte å deaktivere en Stirlingmotor på når forbrukeren stopper. En port som overvåker maskinaktivitet eller kraftbehov, gjør systemer uten tilsyn langt tryggere.",
+      "Brensel og utgang",
+      "Legg et gyldig ovnsbrensel i motorens eneste brenselspor og gi et redstone-signal. Motoren justerer ytelsen mellom omtrent 0,33 MJ/t og 1 MJ/t etter hvor mye MJ som allerede ligger i den interne bufferen på 1 000 MJ.\n\nMotoren bruker de samme ovnsbrenslene som Minecraft kjenner igjen. Beholdere som returneres av et brensel, som en tom bøtte, blir liggende tilgjengelig i motorens beholdning.",
+      "Motormekanikk",
+      "Plasser motoren mot en MJ-mottaker. Den velger en kompatibel utgangsside når den plasseres; bruk en skiftenøkkel til å dreie den dersom en annen side skal forsynes.\n\nDe blå, grønne, gule, røde og svarte stadiene viser motorens gjeldende interne varme, som følger fyllingsgraden i kraftbufferen. Hvis utgangen blokkeres, fylles bufferen, motoren når overopphetingsstadiet og slutter å produsere. Fjern redstone-signalet eller gi den lagrede MJ-en et sted å gå, slik at motoren kan kjøles ned igjen."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Det er nyttig å raffinere olje. Å gjøre den om til nok kraft til en industriulykke er betydelig mer nyttig.",
+      "Forbrenningsmotoren brenner flytende BuildCraft-brensler, bruker kjølevæske til å styre varmen og lagrer reststoff som dannes av skitne brensler.",
+      "<bold>Tips:</bold> Sørg for pålitelig kjøling og en automatisk avstengingsbetingelse før en forbrenningsmotor forlates uten tilsyn. Test hele brensel- og kjølevæsketilførselen under full belastning.",
+      "Tanker og brensler",
+      "Motoren har separate tanker for brensel, kjølevæske og reststoff. Væskerør eller beholdere kan fylle og tømme dem direkte. Gi et redstone-signal for å brenne det innsatte brenselet; ytelsen avhenger av valgt brensel og varierer fra oljeprodukter med lav effekt til gassformig brensel på 8 MJ/t.\n\nRåolje, tungolje og tett olje er skitne brensler. Når de brennes, dannes det gradvis reststoff, og en full reststofftank hindrer at biproduktet tas imot. Raffinerte brensler brenner uten reststoff.",
+      "Kjøling",
+      "Vann er standard flytende kjølevæske. Is og pakket is kan også legges inn som faste kjølemidler og omdannes til vann med større kjøleeffekt. Varme biomer får motoren til å varmes raskere opp og kjøles mindre effektivt, mens kalde biomer har motsatt virkning.\n\nNår redstone-signalet fjernes, går motoren på pause, får en kort kjølestraff ved omstart og begynner å avgi overskuddsvarme. Hold kjølevæsken tilført før brensler med høy effekt brukes over lengre tid.",
+      "Motormekanikk",
+      "Plasser motoren mot en MJ-mottaker og drei den med en skiftenøkkel ved behov. De fargede stadiene viser varmenivået. Lagret MJ overføres bare når mottakeren ved siden av godtar den; kraft som ikke tas imot, blir i motoren i stedet for å bli fjernet to ganger."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Råolje er en komplisert samling nyttige væsker som venter på å bli skilt fra hverandre.",
+      "Destillatoren bruker MJ og skiller en væske i én gassformig utgang og én flytende utgang.",
+      "<bold>Tips:</bold> Oppbevar hver utgang fra destillatoren i en egen tank. Blanding av mellomvæsker eller føring av begge utganger gjennom én ufiltrert linje gjør senere raffineringstrinn vanskelige å feilsøke.",
+      "Tilkoblinger",
+      "Før kildevæsken inn i inngangstanken. Det gassformige produktet trekkes ut på toppen og det flytende produktet på bunnen. Hold begge utgangene åpne: Maskinen kan ikke fullføre en ny operasjon dersom en av destinasjonene mangler plass.\n\nTilfør MJ gjennom en kompatibel krafttilkobling. Mer tilgjengelig kraft lar den pågående operasjonen gå raskere, opp til maskinens behandlingsgrense.",
+      "Temperaturen velger oppskriften",
+      "Kjølige, varme og glødende former av det samme oljeproduktet kan ha forskjellige destillasjonsoppskrifter. Utgangene beholder temperaturen fra inngangen, så en varmeveksler brukes mellom destillasjonstrinn når den neste oppskriften krever et annet varmenivå.\n\nRåolje kan starte tre ulike raffineringsruter. Videre destillasjon av destillert olje, tungolje, tett olje og blandede brensler skiller dem i gassformig, lett og tett brensel samt reststoff."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Noen oppskrifter krever tålmodighet, andre krever først at råmaterialet blir betydelig varmere.",
+      "Varmeveksleren flytter varme mellom to væskestrømmer og omdanner BuildCraft-væsker mellom kjølig, varm og glødende tilstand.",
+      "<bold>Tips:</bold> Bruk egne varme og kalde væskelinjer rundt en varmeveksler. Korte, tydelig merkede sløyfer gjør temperaturfeil enklere å finne.",
+      "Bygging av multiblokken",
+      "En varmeveksler består av en start, én eller flere midtseksjoner og en ende koblet sammen i en rett linje. Opptil tre midtseksjoner kan brukes; flere gyldige seksjoner øker mengden den sammensatte maskinen kan behandle.",
+      "Bruk av varme",
+      "Før en væske som kan varmes opp inn på varmesiden, og en væske som kan kjøles ned inn på kjølesiden. Varme overføres, den skapes ikke gratis: Den ene strømmen blir varmere mens den andre blir kaldere. BuildCrafts oljeprodukter beveger seg gjennom kjølig, varm og glødende tilstand i oppskriftsenheter på ti millibøtter.\n\nVann kan ta opp varme, mens lava kan levere den. Væskeretningen og tilgjengelig utgangsplass avgjør om veksleren kan fortsette behandlingen.\n\nDen valgte temperaturen er viktig for destillatoren, så før væskene gjennom varmeveksleren før neste raffineringstrinn når det er nødvendig."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Når du prøver å samle væsker som finnes i verden, oppdager du behovet for å lagre dem uten å bruke bøtter.",
+      "Tanken lar deg lagre væsker direkte uten bøtter og kister.",
+      "<bold>Tips:</bold> La minst én side av en tanksøyle være tilgjengelig for inspeksjon og nødtømming. Hold væsker som ikke hører sammen, i tydelig adskilte tankgrupper.",
+      "Informasjon",
+      "Hver tankblokk kan lagre opptil 16 bøtter av én væske, og tankene kan stables loddrett uten grense for å danne én stor tank.",
+      "Som kister beholder ikke tanker innholdet når de knuses, men de slipper heller ikke ut væsken.\n\nIkke knus dem når de inneholder væske, for da får du ikke væsken tilbake."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Å samle væsker for hånd kan være svært tidkrevende og iblant farlig, noe som skaper behov for en automatisk måte å hente dem på.",
+      "Pumpen samler automatisk opp alle væskekilder rett under seg og kilder som er koblet til dem.",
+      "<bold>Tips:</bold> Plasser pumpen over et stabilt kildeområde og sørg for en utgang med nok kapasitet før den får kraft. En oppstuvet væskelinje kaster bort tid og kan stoppe nyttig arbeid.",
+      "For å hente væske fra verden plasserer du en pumpe over en kildeblokk av væsken du vil pumpe, og gir den kraft.\nVæskekildene under blir 'sugd' opp fra den øverste kilden og nedover og sendes automatisk ut i rør eller tanker ved siden av.\nDen pumper væsker innenfor en radius på 64 blokker fra toppen og ned, og fra ytterkantene av sammenhengende væske inn mot midten.",
+      "Maskinmekanikk",
+      "Som de fleste maskiner krever den kraft. Jo mer kraft du gir den, desto raskere pumper den.\nEt redstone-signal stopper pumpen, så vær forsiktig med hvor du plasserer spaker."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "I mange store byggeprosjekter er det en kjedelig oppgave å oversvømme store områder med væske, noe du gjerne vil slippe.",
+      "Den brukes til å plassere væsker automatisk i verden uten manuelt arbeid med bøtter.",
+      "<bold>Tips:</bold> Test en flomport i et avgrenset basseng først. Plasseringsoppførselen er mye lettere å forstå før den kobles til en stor tank eller et åpent landskap.",
+      "Informasjon",
+      "Flomporten er en kraftfri maskin som plasserer væsker nedover i verden når de føres inn gjennom rør.",
+      "Flomporten plasserer væsker innenfor en radius på 64 blokker fra bunnen og opp og fra midten og utover."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "På jakt etter å grave dypere begynner du å undersøke nye maskiner og setter sammen en maskin som kan grave automatisk for deg.\nDen har én begrensning: Den kan bare grave rett ned og bryter ikke grunnfjell.",
+      "Gruvebrønnen er en maskin som automatisk graver rett ned helt til grunnfjellet.",
+      "<bold>Tips:</bold> Bruk en gruvebrønn til smale sjakter og raske prøveboringer. For store områder bør den gjentatte oppsettskostnaden sammenlignes med et steinbrudd før du binder opp ressurser.",
+      "Informasjon",
+      "Den graver rett ned under stedet der den er plassert, og sender blokkene den bryter automatisk til beholdninger eller rør ved siden av. Hvis den ikke finner rør eller beholdninger, kaster den gjenstandene ut i verden.\nJo hardere blokken er, desto lengre tid tar det å bryte den.",
+      "Maskinmekanikk",
+      "Som de fleste maskiner krever den kraft. Jo mer kraft du gir den, desto raskere graver den.\nHvis den får et redstone-signal, stopper gruvebrønnen."
+    ],
+    "buildcraftfactory/block/chute": [
+      "En vanlig trakt er grei, men den er ikke særlig funksjonell eller original.",
+      "Rennen ligner trakten, men har flere funksjoner.",
+      "<bold>Tips:</bold> Renner er mest pålitelige når destinasjonen under alltid har plass. Legg til en bufferbeholdning dersom mottakermaskinen arbeider med pauser.",
+      "Informasjon",
+      "Rennen, tidligere kalt trakten, er en rask beholdning i én blokk som kan sette gjenstander direkte inn i rør og i flere beholdninger samtidig i alle retninger, også oppover.",
+      "Som trakten kan rennen sakte plukke opp gjenstander fra bakken dersom de ligger over eller under og den peker mot dem. Dette kan gå raskere dersom den drives av en redstonemotor."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Som enhver ingeniørs plikt oppdager du behovet for å automatisere alt. Manuell produksjon kan være kjedelig, så hvorfor ikke automatisere den?",
+      "Det automatiske arbeidsbordet lager gjenstander automatisk uten at du må gjøre det manuelt.",
+      "<bold>Tips:</bold> Buffer både ingredienser og utganger rundt et automatisk arbeidsbord. En manglende ingrediensplass kan få en tilsynelatende gyldig automatisering til å stoppe uten å produsere noe.",
+      "Informasjon",
+      "Det automatiske arbeidsbordet lager gjenstander uten at du trenger å gjøre det selv. Sett opp oppskriften på ønsket gjenstand og før ingrediensene inn med rør.",
+      "Før bare ressursene oppskriften krever inn i det automatiske arbeidsbordet, så lager det gjenstanden eller blokken sakte uten kraft."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Guideregisteret er innholdsfortegnelsen bak boken: Det avgjør hva som finnes, hvor det vises og hvilket ikon som representerer det.",
+      "Denne siden beskriver det språknøytrale manifestet til guideboken i BuildCraft Community Edition.",
+      "<bold>Tips:</bold> Hold side-ID-er stabile etter utgivelse. Det er trygt å endre visningsteksten, mens endring av en ID kan ugyldiggjøre lagret bokhistorikk og eksterne lenker.",
+      "Oppføringsmetadata",
+      "Hver oppføring har en <code>id</code> og en språknøytral <code>page</code>-nøkkel. Valgfrie felt definerer modul, type, undertype, reservevisningsnavn, bok, listestatus, gjenstandsstabel, NBT-variant, utsagn og påkrevd mod.",
+      "Adskillelse av ansvar",
+      "Manifestet inneholder aldri oversatt prosa. Sidemekanikken ligger i <code>page_layouts.json</code>; engelske og oversatte strenger ligger i filene under <code>text/</code>. Ressurspakker kan erstatte hvert lag uavhengig.",
+      "Validering",
+      "Hver sidenøkkel i manifestet må finnes i de delte oppsettene og i den engelske standardtekstpakken. Oversettelser kan utelate sider eller enkelte plasser når et reservespråk er konfigurert."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Datadrevne instruksjoner er nyttige når en ressurspakke må justere et register uten å kompilere Java-kode.",
+      "Denne tekniske siden oppsummerer det eldre BuildCraft-instruksjonsspråket i JSON som er beholdt for ressurskompatibilitet.",
+      "<bold>Tips:</bold> Foretrekk det pakkede manifestet og tekstressursene for nye guideboksider; bruk instruksjonsskript bare når et eldre registerskript skal endres.",
+      "Topptekst",
+      "Instruksjonsfiler starter med markøren nedenfor. Importerte bibliotekfiler bruker i stedet <code>~{buildcraft/json/lib}</code> og kan angi antall argumenter med <code>~args N</code>.",
+      "Funksjoner",
+      "Parseren godtar kommentarer og funksjonskall som <code>add</code>, <code>remove</code>, <code>replace</code>, <code>modify</code>, <code>overwrite</code>, <code>alias</code> og <code>import</code>. Argumenter kan være tall, tekst i anførselstegn eller flerlinjet tekst avgrenset med bakoverapostrofer.",
+      "Nåværende guideressurser",
+      "Community Edition-guiden laster ikke lenger én Markdown-fil per oppføring. Indeksmetadata ligger i <code>original_manifest.json</code>, delte maler i <code>page_layouts.json</code> og oversatte plassmatriser i <code>text/&lt;language&gt;.json</code>."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "En guideside er lettere å vedlikeholde når mekanikk og oversettelser ikke kopieres inn i hvert språk.",
+      "Denne siden beskriver det pakkede og lokaliserte guidebokformatet som brukes av BuildCraft Community Edition.",
+      "<bold>Tips:</bold> Etter at et oppsett er endret, må både Historie- og Tips-innstillingene testes, og siden åpnes på engelsk og minst ett oversatt språk.",
+      "Delte sideoppsett",
+      "Språknøytral sidestruktur lagres én gang i <code>assets/buildcraft/guide/page_layouts.json</code>. Hver side har en Markdown-mal og nummererte <code>{{bc_text:index}}</code>-plasser. Oppskrifter, lenker, bilder, synlighetstagger og annen mekanikk hører hjemme i malen.",
+      "Lokaliserte tekstpakker",
+      "Synlig tekst lagres i én kompakt fil per språk under <code>assets/buildcraft/guide/text/&lt;language&gt;.json</code>. En sideverdi er en matrise der indeksene samsvarer med plassene i malen. Dette holder teknisk struktur ute av oversettelsene og lar hele språket komprimeres som én JAR-oppføring.",
+      "Reservespråk og aliaser",
+      "<code>assets/buildcraft/guide/languages.json</code> velger standardspråk, regionale aliaser og kjeder av reservespråk. En manglende side eller en <code>null</code>-plass arver fra foreldrespråket; en tom tekst skjuler plassen med vilje.",
+      "Manifest",
+      "<code>original_manifest.json</code> inneholder bare indeksmetadata: side-ID, sidenøkkel, modul, type, undertype, synlighet og valgfrie referanser til gjenstander eller utsagn. <code>page</code>-nøkkelen kobler en oppføring til oppsettet og den lokaliserte teksten.",
+      "Støttet markup",
+      "Vanlig Markdown-tekst, overskrifter og formateringstagger støttes. Taggene nedenfor er språknøytrale og skal forbli i det delte oppsettet."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Passer ikke rørene til temaet i byggverket ditt? Plasser en fasade av en passende blokk for å skjule dem.",
+      "En fasade er en monterbar del som dekker rørene slik at de passer til byggverket.",
+      "<bold>Tips:</bold> Konfigurer den monterbare delen før du kopierer eller installerer mange av dem. Test én rørside først for å bekrefte retning og samspill med porter.",
+      "Fasadevarianter",
+      "Nesten hvilken som helst blokk i spillet kan gjøres om til en fasade og plasseres på siden av et rør.\nEn massiv fasade stopper alle rørforbindelser dersom den plasseres mellom dem.\nEn hul fasade lar rørforbindelser gå gjennom."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Redstone tar mye plass nå for tiden. Hvorfor ikke styre systemet mer presist på mindre plass ved hjelp av rør? Plasser en port på et rør og begynn å tenke.",
+      "Porten er en oppgraderbar monterbar del som gir et logistisk rammeverk for å administrere rørsystemet.",
+      "<bold>Tips:</bold> Konfigurer den monterbare delen før du kopierer eller installerer mange av dem. Test én rørside først for å bekrefte retning og samspill med porter.",
+      "Plassering av porter",
+      "En port er en monterbar del og kan derfor bare plasseres på rør, men på hvilken som helst side av røret.\nEt rør som plasseres inntil denne siden, vil ikke koble seg til.",
+      "Portnivåer",
+      "Porter finnes i forskjellige nivåer som gir ulikt antall plasser:\nGrunnport – gir 1 sett med plasser (kan ikke endres).\nJernport – gir 2 sett med plasser.\nNethermursteinsport – gir 4 sett med plasser.\nGullport – gir 8 sett med plasser.",
+      "Portmodifikatorer",
+      "Porter kan endres for å gi parameterplasser:\nLapisutvidelse – gir 1 parameterplass til hver utløser.\nKvartsutvidelse – gir 1 parameterplass til hvert sett, men halverer antallet plasser i porten.\nDiamantutvidelse – gir 3 parameterplasser til hvert sett, men halverer antallet plasser i porten.",
+      "Portvarianter",
+      "En OG-port krever at </bold>alle</bold> tilkoblede utløsere er aktive før forbindelsen til handlingene aktiveres.\nEn ELLER-port krever at </bold>én eller flere</bold> tilkoblede utløsere er aktive før forbindelsen til handlingene aktiveres.",
+      "Utløsere",
+      "Ikonene på venstre side kalles utløsere. De dras inn i plassene på venstre side av grensesnittet.\nForskjellige utløsere oppdager forskjellige forhold, hver med egne kriterier. Når kriteriet til en utløser oppfylles, blir forbindelsen ved siden av aktiv.",
+      "Handlinger",
+      "Ikonene på høyre side kalles handlinger. De dras inn i plassene på høyre side av grensesnittet.\nForskjellige handlinger utfører forskjellige oppgaver. Når forbindelsen ved siden av er aktiv, utføres de tilkoblede handlingene.",
+      "Parametere",
+      "Når parameterplasser er installert, blir ekstra plasser ved siden av enkelte utløsere og handlinger tilgjengelige.\nDisse ekstra plassene gir funksjonalitet som gjør utløserne og handlingene mer presise.\nI de ekstra plassene kan du enten klikke for flere valg eller legge inn gjenstander som filter.",
+      "Tilkoblinger",
+      "Linjene i midten kobler utløserne til handlingene slik at de kan virke sammen.\nDe kan klikkes på for å kobles til eller fra og dermed kreve flere utløsere eller handlinger.\nNår en utløser oppfylles, lyser linjen i midten, bare delvis dersom flere utløsere kreves.\nNår en linje lyser, utføres handlingene den er koblet til."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Å kunne drive rørene gratis uten en stor motor – hvor kult er ikke det!",
+      "<bold>Tips:</bold> Konfigurer den monterbare delen før du kopierer eller installerer mange av dem. Test én rørside først for å bekrefte retning og samspill med porter.",
+      "Rørpulseren er en monterbar del som gir små mengder kraft til rør som kan ta imot energi.",
+      "Pluggmekanikk",
+      "Den kan bare plasseres på rør som kan ta imot kraft, og aktiveres med høyreklikk.\nEn rørpulser kan også aktiveres av en port med pulserhandlinger.",
+      "Rørforbindelser",
+      "Monterbare deler kan bare plasseres på rør og på hvilken som helst side av et rør.\nNår en del plasseres mellom to rør, stopper den andre rør- og rørledningsforbindelser mellom dem."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Med en lyssensor kan du bruke lysets kraft til å styre portene dine.",
+      "Lyssensoren er en monterbar del som registrerer lysnivået til blokken foran og sender disse dataene til porten på den tilstøtende siden av det samme røret.",
+      "<bold>Tips:</bold> Konfigurer den monterbare delen før du kopierer eller installerer mange av dem. Test én rørside først for å bekrefte retning og samspill med porter.",
+      "Pluggmekanikk",
+      "Dataene lar porten ved siden av registrere om det er lyst eller mørkt gjennom utløserne Lys og Mørke.\nDisse utløserne kan aktivere en handling gjennom en port.",
+      "Rørforbindelser",
+      "Monterbare deler kan bare plasseres på rør og på hvilken som helst side av et rør.\nNår en del plasseres mellom to rør, stopper den andre rør- og rørledningsforbindelser mellom dem."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Signaler er lettere å forstå når de er synlige, og lettere å styre når de kan filtreres.",
+      "Linser og filtre er fargede monterbare rørdeler som lagres som varianter av samme gjenstand.",
+      "<bold>Tips:</bold> Konfigurer den monterbare delen før du kopierer eller installerer mange av dem. Test én rørside først for å bekrefte retning og samspill med porter.",
+      "Linser",
+      "En linse viser og projiserer fargen sin når signalet i den tilkoblede rørledningen er aktivt. Bruk den som en kompakt visuell indikator på en ledig rørside.",
+      "Filtre",
+      "Filtervarianter bruker de samme seksten fargene, men fungerer som utsagnsparametere og monterbare filtre der det støttes. Fargen og filtertilstanden lagres i gjenstandsvarianten, så det er ikke nok å kopiere bare grunn-ID-en i registeret for å identifisere et bestemt filter."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Er det lyst utenfor porten? Da utløses den.",
+      "Lys er en portutløser som finnes på alle porter når en lyssensor med samme farge er festet til det samme røret.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når lysnivået på blokken foran lyssensoren er høyt."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Er det lyst utenfor porten? Hvis ikke, utløses den.",
+      "Mørke er en portutløser som finnes på alle porter når en lyssensor med samme farge er festet til det samme røret.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når lysnivået på blokken foran lyssensoren er lavt."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Visste du at en port kan styre en tilkoblet rørpulser aktivt?",
+      "Slå på rørpulser er en porthandling som finnes på alle porter når en rørpulser er festet til det samme røret.",
+      "<bold>Tips:</bold> Kombiner denne handlingen med den mest presise nyttige utløseren, og test av-tilstanden like grundig som på-tilstanden.",
+      "Krav",
+      "Når handlingen aktiveres, slås rørpulseren på og røret mottar kraft.",
+      "Retninger",
+      "Porter kan vise handlingen Slå på rørpulser flere ganger i ulike farger for å representere hver tilkoblet rørpulser.\nFargen på handlingen viser retningen til rørpulseren i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Visste du at en tilkoblet rørpulser kan fås til å pulsere bare én gang?",
+      "Enkelt kraftpuls er en porthandling som finnes på alle porter når en rørpulser er festet til det samme røret.",
+      "<bold>Tips:</bold> Kombiner denne handlingen med den mest presise nyttige utløseren, og test av-tilstanden like grundig som på-tilstanden.",
+      "Krav",
+      "Når handlingen aktiveres, slås rørpulseren på en kort stund, og røret mottar nok kraft til å fullføre én operasjon.",
+      "Retninger",
+      "Porter kan vise handlingen Slå på rørpulser flere ganger i ulike farger for å representere hver tilkoblet rørpulser.\nFargen på handlingen viser retningen til rørpulseren i forhold til røret, slik at du kan skille dem fra hverandre."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Vil du overføre rørsignaler uten at noe beveger seg gjennom røret? Fyll det med grus.",
+      "Et strukturrør kan bære porter og rørledninger, men ingenting kan transporteres gjennom det.",
+      "<bold>Tips:</bold> Strukturrør er nyttige monteringspunkter for ledninger, porter og plugger der gjenstandstransport ikke er nødvendig.",
+      "Rørmekanikk",
+      "Som på et vanlig rør kan monterbare deler og rørledninger plasseres på det, men det transporterer ikke gjenstander, væsker, kraft eller annet."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Vil du ta gjenstander ut og transportere dem et annet sted? Gi røret kraft og se dem flyte.",
+      "Et transporttrerør brukes til å trekke gjenstander ut av en beholdning når det får kraft.",
+      "<bold>Tips:</bold> Energiuttrekk virker bare når målnettverket har et sted å sende gjenstanden. En buffer i nærheten hindrer gjentatt utkast fra en blokkert linje.",
+      "Rørmekanikk",
+      "Når røret får energi, trekker det ut gjenstander og transporterer dem til andre tilkoblede beholdninger eller rør.\nGjenstandene trekkes ut gjennom den solide siden av røret og transporteres mot de gjennomsiktige sidene.\nHvis det har flere gjennomsiktige sider, beveger gjenstandene seg tilfeldig mellom dem.\nHvis gjenstandene ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i et Wooden Transport Pipe uten at røret trenger energi.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Energiforsyning",
+      "Det kan motta energi fra enhver MJ-energikilde, for eksempel en motor, en strømadapter eller en Pipe Pulsar.",
+      "For hver energipuls trekker røret gjenstander ut av beholdningen ved siden av.\nJo kraftigere pulsen er, desto flere gjenstander trekkes ut per puls."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Transporterer gjenstander sakte og jevnt dit du ønsker.",
+      "Et Cobblestone Transport Pipe brukes til å transportere gjenstander fra et rør til tilkoblede rør eller beholdninger.",
+      "<bold>Tips:</bold> Bruk Cobblestone- og Stone-rør sammen når linjer ved siden av hverandre må holdes adskilt uten maling eller plugger.",
+      "Rørmekanikk",
+      "Cobblestone Transport Pipe gir transporterte gjenstander stor motstand, slik at akselererte gjenstander raskt bremses.\n\nCobblestone Transport Pipes kobles ikke til Stone- eller Quartz Transport Pipes.\n\nHvis røret har flere forbindelser, går gjenstandene i en tilfeldig retning.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Transporterer gjenstander i moderat tempo dit du ønsker.",
+      "Et Stone Transport Pipe brukes til å transportere gjenstander fra et rør til tilkoblede rør eller beholdninger.",
+      "<bold>Tips:</bold> Bruk Stone- og Cobblestone-rør sammen når linjer ved siden av hverandre må holdes adskilt uten maling eller plugger.",
+      "Rørmekanikk",
+      "Stone Transport Pipe gir transporterte gjenstander middels motstand, slik at akselererte gjenstander bremses.\n\nStone Transport Pipes kobles ikke til Cobblestone- eller Quartz Transport Pipes.\n\nHvis røret har flere forbindelser, går gjenstandene i en tilfeldig retning.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Transporterer gjenstander raskere dit du ønsker.",
+      "Et Quartz Transport Pipe brukes til å transportere gjenstander fra et rør til tilkoblede rør eller beholdninger.",
+      "<bold>Tips:</bold> Quartz-rør er praktiske som tydelig synlige hovedlinjer. Plasser spesialisert sortering nær forgreiningene i stedet for langs hele stammen.",
+      "Rørmekanikk",
+      "Quartz Transport Pipe gir transporterte gjenstander liten motstand, slik at akselererte gjenstander bare bremses litt.\n\nQuartz Transport Pipes kobles ikke til Cobblestone- eller Stone Transport Pipes.\n\nHvis røret har flere forbindelser, går gjenstandene i en tilfeldig retning.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Vil du transportere gjenstandene i bare én retning? Still inn retningen på røret og send dem gjennom.",
+      "Et Iron Transport Pipe brukes til å transportere gjenstander fra et rør i én retning mot et tilkoblet rør eller en beholdning.",
+      "<bold>Tips:</bold> Still inn utgangsretningen med en skiftenøkkel etter hver rotasjon eller flytting. En feil pil kan lage en stille blindvei.",
+      "Rørmekanikk",
+      "Gjenstander kommer inn gjennom de solide sidene og sendes ut mot den gjennomsiktige siden.\nRetningen kan endres ved å slå med en skiftenøkkel på siden av Iron Transport Pipe som gjenstandene skal gå mot, ved å gi et redstone-signal eller ved hjelp av en port.\n\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, spretter de frem og tilbake og prøver hele tiden å gå i den innstilte retningen.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Transporterer gjenstander svært raskt dit du ønsker.",
+      "Et Gold Transport Pipe brukes til raskt å transportere gjenstander til tilkoblede rør eller beholdninger.",
+      "<bold>Tips:</bold> Bruk Gold Pipes på lange rette strekninger, og senk deretter hastigheten eller buffer gjenstandene før kompliserte knutepunkter der raske puljer kan overbelaste beholdninger.",
+      "Rørmekanikk",
+      "Gold Transport Pipe gir transporterte gjenstander en stor fartsøkning, slik at de beveger seg raskere gjennom rørene.\n\nHvis røret har flere forbindelser, går gjenstandene i en tilfeldig retning.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Det kan være nyttig å velge hvilke gjenstander som får gå hvor i systemet.",
+      "Et Diamond Transport Pipe brukes til å transportere gjenstander fra et rør i en retning bestemt av filteret, til et annet rør eller en beholdning ved siden av.",
+      "<bold>Tips:</bold> La bare en ufiltrert side stå åpen når den skal brukes som overløp. Filtrerte sider har prioritet, så test sjeldne gjenstander før du kobler til massetrafikk.",
+      "Innstilling av filteret",
+      "Hver side av Diamond Transport Pipe er merket med en egen farge.\nÅpne grensesnittet til Diamond Transport Pipe for å konfigurere et filter.\nPlasser ønskede gjenstander i feltene med den aktuelle fargen for å bestemme hvilke gjenstander som kan gå i hvilken retning.\nFlere av samme gjenstand i én farge gir retningen større 'vekt'.\n\nEn liste kan brukes i et filterfelt for å gi utvidede filtreringsmuligheter.",
+      "Rørmekanikk",
+      "Hvis en gjenstand kan gå i flere retninger, fordeles den mellom dem avhengig av den angitte vekten.\nEnhver gyldig retning uten filter tillater alle gjenstander, men filtrerte retninger har prioritet.\nGjenstander går ikke tilbake dit de kom fra.\nHvis det ikke er noe tilkoblet rør, eller beholdningen ved siden av er full og gjenstanden ikke har noen annen vei, faller den ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i et Diamond Transport Pipe uten uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Å plukke opp gjenstander fra verden og flytte dem rundt er fremtiden!",
+      "Et Obsidian Transport Pipe brukes til å plukke opp gjenstander fra verden og transportere dem til et tilkoblet rør eller en beholdning.",
+      "<bold>Tips:</bold> Energi forbedrer innsamlingen. Plasser røret slik at løse gjenstander ikke kan trekkes bort fra områder spillerne fortsatt bruker manuelt.",
+      "Rørets funksjon",
+      "Når røret får energi, kan det plukke opp gjenstander i et område på 3x4x3 over seg.\nUten energi plukker det fortsatt opp gjenstander som kommer i kontakt med røret.",
+      "Rørets retning",
+      "Et Obsidian Transport Pipe må 'peke' i en retning for å ha et virkeområde.\nHvis røret har flere forbindelser, mister det evnen til å plukke opp gjenstander fra verden.",
+      "Rørmekanikk",
+      "Hvis de mottatte gjenstandene ikke har noe sted å gå, faller de ut av røret på bakken.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Energiforsyning",
+      "Det kan motta energi fra enhver MJ-energikilde, for eksempel en motor, en strømadapter eller en Pipe Pulsar.",
+      "For hver energipuls plukker røret opp gjenstander fra bakken.\nJo kraftigere pulsen er, desto flere gjenstander plukkes opp per puls."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Lei av Pipe Plugs? Dette røret kobles bare til andre rør og ingenting annet.",
+      "Et Sandstone Transport Pipe brukes til å transportere gjenstander fra et rør til tilkoblede rør.",
+      "<bold>Tips:</bold> Sandstone Pipes er nyttige ved tette maskinvegger fordi de unngår uønskede tilkoblinger til beholdninger. Kontroller at alle planlagte endepunkter fortsatt er koblet til.",
+      "Rørmekanikk",
+      "Det kobles ikke til noen maskin, bare til andre rør.\n\nHvis røret har flere forbindelser, går gjenstandene i en tilfeldig retning.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Med Clay Pipe vil gjenstandene aldri bomme på en kiste igjen.",
+      "Et Clay Transport Pipe brukes til å transportere gjenstander fra et rør til tilkoblede rør eller beholdninger.",
+      "<bold>Tips:</bold> Bruk Clay Pipes ved endelige leveringspunkter der beholdninger skal prioriteres fremfor videre transport gjennom rørnettet.",
+      "Rørmekanikk",
+      "Clay Transport Pipe prioriterer å sette gjenstander inn i en beholdning før de sendes videre.\n\nHvis røret har flere forbindelser, prioriterer gjenstandene en tilkoblet beholdning før de går i en tilfeldig retning.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Når du sender gjenstander inn, kommer de ikke ut igjen.",
+      "Et Void Transport Pipe brukes til å ødelegge gjenstander som sendes inn i det.",
+      "<bold>Tips:</bold> Plasser et filter før et Void Pipe når verdifulle og kasserbare gjenstander deler nettverk. Bruk aldri tomruten som et uprøvd overløp.",
+      "Rørmekanikk",
+      "Gjenstander kan ikke gå gjennom røret, fordi alle gjenstander som når midten automatisk blir ødelagt.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Tenk deg et rør som kan plassere blokker, bryte blokker og bruke gjenstander. Dette er akkurat det røret.",
+      "Et Striped Transport Pipe brukes til å bryte blokker, plassere blokker, bruke gjenstander som sendes gjennom det, og transportere dem til et tilkoblet rør eller en beholdning.",
+      "<bold>Tips:</bold> Bruk Stripes Pipes ved kontrollerte endepunkter, og test målflaten manuelt. Samhandlingen deres med verden er mer ødeleggende enn vanlig transport.",
+      "Rørets funksjon",
+      "Når røret får energi, bryter det blokken rett foran seg og sender den videre til røret eller beholdningen ved siden av.\nNår en blokk sendes gjennom røret, plasserer det blokken rett foran seg.\nNår en gjenstand sendes gjennom røret, forsøker det å 'bruke' den på blokken eller entiteten foran seg.",
+      "Rørets retning",
+      "Et Striped Transport Pipe må 'peke' i en retning for å påvirke blokken foran seg.\nHvis flere rør eller beholdninger er koblet til, mister det evnen til å påvirke verden.",
+      "Rørmekanikk",
+      "Hvis de transporterte gjenstandene ikke har noe sted å gå, faller de ut av røret på bakken.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Energiforsyning",
+      "Det kan motta energi fra enhver MJ-energikilde, for eksempel en motor, en strømadapter eller en Pipe Pulsar.",
+      "For hver energipuls bruker røret den mottatte energien til å forsøke å bryte blokken foran seg.\nJo kraftigere pulsen er, desto mer energi brukes til å bryte blokken."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Vil du ta ut bestemte gjenstander og transportere dem et annet sted? Gi røret energi og se dem flyte.",
+      "Et Wooden Diamond Transport Pipe brukes til å trekke ut utvalgte gjenstander, bestemt av filteret, fra en beholdning når det får energi.",
+      "<bold>Tips:</bold> Konfigurer uttrekksfilteret før du tilfører energi. Et tomt eller bredt filter kan tømme en beholdning mye raskere enn forventet.",
+      "Rørmekanikk",
+      "Når røret får energi, trekker det ut gjenstandene som er valgt i filteret og transporterer dem til andre tilkoblede beholdninger eller rør.\nGjenstandene trekkes ut gjennom den solide siden av røret og transporteres mot de gjennomsiktige sidene.\nHvis det har flere gjennomsiktige sider, beveger gjenstandene seg i en tilfeldig retning.\nHvis gjenstanden ikke har noe sted å gå, faller den ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i et Wooden Diamond Transport Pipe uten energi (da respekteres ikke filteret).\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Filtrering",
+      "Åpne grensesnittet til Wooden Diamond Transport Pipe for å konfigurere et filter.\nPlasser ønskede gjenstander i feltene for å bestemme hva røret trekker ut.\nDu kan bruke Whitelist, Blacklist eller Round Robin til å endre filterets oppførsel:\nWhitelist: Bare de valgte gjenstandene trekkes ut.\nBlacklist: Alle andre gjenstander enn de valgte trekkes ut.\nRound Robin: Trekker ut gjenstandene i nøyaktig rekkefølge som valgt i filterfeltene over, fra venstre mot høyre.\n\nEn liste kan brukes i et filterfelt for å gi utvidede filtreringsmuligheter.",
+      "Energiforsyning",
+      "Det kan motta energi fra enhver MJ-energikilde, for eksempel en motor, en strømadapter eller en Pipe Pulsar.",
+      "For hver energipuls trekker røret gjenstander ut av beholdningen ved siden av.\nJo kraftigere pulsen er, desto flere gjenstander trekkes ut per puls."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Vil du male gjenstandene dine? Velg en farge, så får de den.",
+      "Et Lazuli Transport Pipe brukes til å male gjenstander og transportere dem til tilkoblede rør eller beholdninger.",
+      "<bold>Tips:</bold> Dokumenter fargebasert ruting i nærheten av nettverket. En fargeendring oppstrøms kan endre alle senere rutingsvalg.",
+      "Maling av gjenstander",
+      "Det maler en gjenstand som går gjennom røret, i den innstilte fargen.\nFargen kan endres ved å slå på røret med en skiftenøkkel eller ved hjelp av en port.",
+      "Rørmekanikk",
+      "Hvis røret har flere gjennomsiktige sider, beveger gjenstandene seg i en tilfeldig retning.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Vil du sortere de malte gjenstandene? Velg en farge og retning, og send dem gjennom røret.",
+      "Et Daizuli Transport Pipe brukes til å sende mottatte malte gjenstander i én retning mot et tilkoblet rør eller en beholdning.",
+      "<bold>Tips:</bold> Bruk Daizuli-ruting sammen med et tydelig fargesystem. Reserver én farge til overløp eller usorterte gjenstander.",
+      "Rørmekanikk",
+      "Gjenstander kommer inn gjennom de solide sidene og sendes ut mot den gjennomsiktige siden.\nGjenstander går ikke tilbake dit de kom fra, men velger en annen retning.\nHvis de ikke har noe sted å gå, faller de ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Innstilling av farge og retning",
+      "Retningen de malte gjenstandene går, kan endres ved å slå med en skiftenøkkel på siden av røret som gjenstandene skal gå mot, eller med en port.\nDu kan endre hvilken farge som sendes i den retningen ved å slå på midten av røret med en skiftenøkkel eller med en port."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Å bruke en port til å trekke ut bestemte gjenstander er den nyeste tekniske revolusjonen innen filtreringsteknologi.",
+      "Et Emzuli Transport Pipe er et portstyrt rør som trekker ut utvalgte gjenstander bestemt av filteret fra en beholdning når det får energi.",
+      "<bold>Tips:</bold> Test redstone-styrt uttrekk med en liten beholdning først. Sørg for at den inaktive tilstanden samsvarer med forventet oppførsel under strømbrudd.",
+      "Rørmekanikk",
+      "Når røret får energi, trekker det ut gjenstandene som er valgt i filteret og transporterer dem til andre tilkoblede beholdninger eller rør.\nGjenstandene trekkes ut gjennom den solide siden av røret og transporteres mot de gjennomsiktige sidene.\nHvis det har flere gjennomsiktige sider, beveger gjenstandene seg i en tilfeldig retning.\nHvis gjenstanden ikke har noe sted å gå, faller den ut av røret på bakken.\n\nNoen maskiner kan automatisk sende gjenstander direkte inn i et Emzuli Pipe uten energi (da respekteres ikke filtrene).\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Filtrering",
+      "Grensesnittet til Emzuli Transport Pipe viser fire farger for fire separate filtreringsvalg.\nGjenstander i feltene bestemmer hva hvert filter trekker ut.\nFargen på penslene ved siden av feltene bestemmer hvilken farge gjenstandene får ved uttrekk, og kan endres ved å klikke.\nFor å velge ett av de fire filtrene må en port med en farget Extraction Preset-handling plasseres på røret. Eksempel: Redstone signal -> Red Extraction Preset.\n\nEn liste kan brukes i et filterfelt for å gi utvidede filtreringsmuligheter.",
+      "Energiforsyning",
+      "Det kan motta energi fra enhver MJ-energikilde, for eksempel en motor, en strømadapter eller en Pipe Pulsar.",
+      "For hver energipuls trekker røret gjenstander ut av beholdningen ved siden av.\nJo kraftigere pulsen er, desto flere gjenstander trekkes ut per puls."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Vil du ta ut væske og transportere den et annet sted? Gi røret energi og se den flyte.",
+      "Et Wooden Fluid Pipe brukes til å trekke væsker ut av en tank når det får energi.",
+      "<bold>Tips:</bold> Koble uttrekket til bare én planlagt tank eller maskinside, og sørg for kapasitet umiddelbart nedstrøms. En blokkert linje stopper nyttig pumping.",
+      "Rørmekanikk",
+      "Når røret får energi, trekker det ut væske og transporterer den til andre tilkoblede tanker eller rør.\nNoen maskiner kan sende væsker direkte inn i et Wooden Fluid Pipe uten energi.\nVæsken trekkes ut gjennom den solide siden av røret mot de gjennomsiktige sidene.\nHvis det har flere gjennomsiktige sider, fordeles væsken jevnt mellom retningene.\n\nNoen maskiner kan sende væsker direkte inn i et Wooden Fluid Pipe uten energi.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Energiforsyning",
+      "Det kan motta energi fra enhver MJ-energikilde, for eksempel en motor, en strømadapter eller en Pipe Pulsar.",
+      "For hver energipuls trekker røret væske ut av tanken ved siden av.\nJo kraftigere pulsen er, desto mer væske trekkes ut per puls.",
+      "Wooden Fluid Pipe transporterer væske til rør og tanker ved siden av med 0,2 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Transporterer væskene dine ganske sakte dit du ønsker.",
+      "Et Cobblestone Fluid Pipe brukes til å transportere væsker fra et rør til tilkoblede rør eller tanker.",
+      "<bold>Tips:</bold> Bruk regelen om at Stone- og Cobblestone-rør ikke kobles sammen, for å føre separate væskelinjer side om side uten utilsiktet blanding.",
+      "Rørmekanikk",
+      "Cobblestone Fluid Pipes er de langsomste rørene for væsketransport.\n\nCobblestone Fluid Pipes kobles ikke til Stone Fluid Pipes eller Quartz Fluid Pipes.\n\nVæske går ikke tilbake dit den kom fra, men bare i en annen retning.\nHvis den kan gå i flere retninger, fordeles den jevnt mellom dem.\n\nNoen maskiner kan sende væske direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Cobblestone Fluid Pipe transporterer væske til rør og tanker ved siden av med 0,2 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Transporterer væskene dine i rimelig tempo dit du ønsker.",
+      "Et Stone Fluid Pipe brukes til å transportere væsker fra et rør til tilkoblede rør eller tanker.",
+      "<bold>Tips:</bold> Bruk regelen om at Stone- og Cobblestone-rør ikke kobles sammen, for å føre separate væskelinjer side om side uten utilsiktet blanding.",
+      "Rørmekanikk",
+      "Stone Fluid Pipes transporterer væsker med middels hastighet.\n\nStone Fluid Pipes kobles ikke til Cobblestone Fluid Pipes eller Quartz Fluid Pipes.\n\nVæske går ikke tilbake dit den kom fra, men bare i en annen retning.\nHvis den kan gå i flere retninger, fordeles den jevnt mellom dem.\n\nNoen maskiner kan sende væske direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Stone Fluid Pipe transporterer væske til rør og tanker ved siden av med 0,4 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Transporterer væskene dine med en bedre hastighet dit du ønsker.",
+      "Et Quartz Fluid Pipe brukes til å transportere væsker fra et rør til tilkoblede rør eller tanker.",
+      "<bold>Tips:</bold> Bruk tydelig forskjellige rørmaterialer for viktige raffineringssteg. Klart adskilte linjer gjør feil væsketilkoblinger lettere å oppdage.",
+      "Rørmekanikk",
+      "Quartz Fluid Pipes transporterer væsker med god hastighet.\n\nQuartz Fluid Pipes kobles ikke til Cobblestone Fluid Pipes eller Stone Fluid Pipes.\n\nVæske går ikke tilbake dit den kom fra, men bare i en annen retning.\nHvis den kan gå i flere retninger, fordeles den jevnt mellom dem.\n\nNoen maskiner kan sende væske direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Quartz Fluid Pipe transporterer væske til rør og tanker ved siden av med 0,8 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Vil du transportere væskene i bare én retning? Still inn retningen på røret og send dem gjennom.",
+      "Et Iron Fluid Pipe brukes til å transportere væsker i én retning fra et rør til et tilkoblet rør eller en tank.",
+      "<bold>Tips:</bold> Kontroller enveisutgangen etter at røret er rotert. Retningsfeil kan fange væske i en gren som ser tilkoblet ut.",
+      "Rørmekanikk",
+      "Retningen væsken skal gå, stilles ved å slå med en skiftenøkkel på siden av røret den skal gå mot, ved å gi et redstone-signal eller med en port.\n\nVæsken kommer inn gjennom de solide sidene og går ut mot den gjennomsiktige siden.\nDen går ikke tilbake dit den kom fra, men bare i den innstilte retningen.\n\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Iron Fluid Pipe transporterer væske til rør og tanker ved siden av med 0,8 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Transporterer væskene dine raskt dit du ønsker.",
+      "Et Gold Fluid Pipe brukes til å transportere væsker raskt til tilkoblede rør eller tanker.",
+      "<bold>Tips:</bold> Bruk seksjoner med høyere kapasitet nær pumper og store tanker, men behold nok mottakskapasitet til å absorbere puljer.",
+      "Rørmekanikk",
+      "Gold Fluid Pipes er de raskeste rørene for væsketransport.\n\nVæske går ikke tilbake dit den kom fra, men bare i en annen retning.\nHvis den kan gå i flere retninger, fordeles den jevnt mellom dem.\n\nNoen maskiner kan sende væske direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Gold Fluid Pipe transporterer væske til rør og tanker ved siden av med 1,6 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Sortere væsker slik at rørledninger kan krysse hverandre? Galskap.",
+      "Et Diamond Fluid Pipe brukes til å transportere væsker fra et rør i en retning bestemt av filteret, til et tilkoblet rør eller en tank.",
+      "<bold>Tips:</bold> Konfigurer hver side som brukes før du kobler til flere væsker. Reserver en tydelig overløpsrute i stedet for å stole på et tomt filter ved et uhell.",
+      "Filtrering",
+      "Hver side av Diamond Fluid Pipe er merket med en egen farge.\nÅpne grensesnittet til Diamond Fluid Pipe for å konfigurere et filter.\nPlasser en bøtte eller annen væskebeholder med ønsket væske i feltet med riktig farge for å bestemme hvilken væske som kan gå i hvilken retning.\nFlere av samme væske i én farge gir retningen større 'vekt'.",
+      "Rørmekanikk",
+      "Enhver gyldig retning uten filter tillater all væske, men filtrerte retninger har prioritet.\nVæske går ikke tilbake dit den kom fra.\n\nNoen maskiner kan sende væske direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Diamond Fluid Pipe transporterer væske til rør og tanker ved siden av med 1,6 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Lei av Pipe Plugs? Dette røret kobles bare til andre rør og ingenting annet.",
+      "Et Sandstone Fluid Pipe brukes til å transportere væsker fra et rør til tilkoblede rør.",
+      "<bold>Tips:</bold> Bruk Sandstone Fluid Pipes der tanker i nærheten ikke skal kobles til automatisk. Kontroller hver side etter at maskinveggen er bygget om.",
+      "Rørmekanikk",
+      "Det kobles ikke til noen maskin, bare til andre rør.\n\nVæske går ikke tilbake dit den kom fra, men bare i en annen retning.\nHvis den kan gå i flere retninger, fordeles den jevnt mellom dem.\n\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Sandstone Fluid Pipe transporterer væske til rør og tanker ved siden av med 0,4 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Hvorfor skulle væsken gå videre til neste rør når det står en tank akkurat der?",
+      "<bold>Tips:</bold> Plasser Clay Fluid Pipes nær sluttforbrukerne når væske skal foretrekke en tank eller maskin fremfor å fortsette gjennom nettverket.",
+      "Et Clay Fluid Pipe brukes til å transportere væsker fra et rør til tilkoblede rør eller tanker.",
+      "Rørmekanikk",
+      "Clay Fluid Pipe prioriterer å sette væske inn i en tank ved siden av før den fortsetter til neste rør.\nVæske går ikke tilbake dit den kom fra, men bare i en annen retning.\nHvis den kan gå i flere retninger, fordeles den jevnt mellom dem, med prioritet til tanker.\n\nNoen maskiner kan sende væske direkte inn i røret uten et energidrevet uttrekksrør.\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Clay Fluid Pipe transporterer væske til rør og tanker ved siden av med 0,8 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Ødelegger væske én bøtte om gangen",
+      "Et Void Fluid Pipe brukes til å ødelegge væsker som sendes inn i det.",
+      "<bold>Tips:</bold> Filtrer og isoler Void Fluid Pipes. En feil tilkobling kan ødelegge en hel lagret væskebatch uten å etterlate gjenstander som kan gjenopprettes.",
+      "Rørmekanikk",
+      "Væske kan ikke gå gjennom røret, fordi all væske som når midten automatisk blir ødelagt.\n\nNoen maskiner kan sende væske direkte inn i et Void Fluid Pipe uten uttrekksrør.",
+      "Væskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Vil du ta ut en bestemt væske og transportere den et annet sted? Gi røret energi og se den flyte.",
+      "Et Wooden Diamond Fluid Pipe brukes til å trekke ut valgte væsker fra en tank når det får energi.",
+      "<bold>Tips:</bold> Still inn uttrekksfilteret før du kobler til flere tanker. Det hindrer at feil væske tappes når en felles kilde endrer innhold.",
+      "Rørmekanikk",
+      "Når røret får energi, trekker det ut væsken valgt av filteret og sender den til andre tilkoblede tanker eller rør.\nVæsken trekkes ut gjennom den solide siden av røret mot de gjennomsiktige sidene.\nHvis det har flere gjennomsiktige sider, fordeles væsken jevnt mellom retningene.\n\nNoen maskiner kan sende væske direkte inn i røret uten energi (da respekteres ikke filteret).\nPipe Plugs eller rør malt i forskjellige farger kan hindre at rørene kobles sammen.",
+      "Filtrering",
+      "Åpne grensesnittet til Wooden Diamond Fluid Pipe for å konfigurere et filter.\nPlasser en bøtte eller annen væskebeholder med ønsket væske i feltene for å bestemme hva røret trekker ut.\nWhitelist- og Blacklist-valgene endrer filterets oppførsel:\nWhitelist: Bare de valgte væskene trekkes ut.\nBlacklist: All annen væske enn den valgte trekkes ut.",
+      "Energiforsyning",
+      "Det kan motta energi fra enhver MJ-energikilde, for eksempel en motor, en strømadapter eller en Pipe Pulsar.",
+      "For hver energipuls trekker røret væske ut av tanken ved siden av.\nJo kraftigere pulsen er, desto mer væske trekkes ut per puls.",
+      "Wooden Diamond Fluid Pipe transporterer væske til rør og tanker ved siden av med 1,6 bøtter per sekund.\nVæskerør har en intern tank som kan romme 1 bøtte per side og 1 bøtte i midten."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Redstone: Rekker bare 15 blokker, bærer bare ett signal per blokk og finnes bare i rødt — kjedelig.\nPipe Wire: Går ubegrenset, kan bære mange signaler per rør og finnes i mange farger.",
+      "Pipe Wire er et tilbehørssystem for rør som sender datasignaler ubegrenset gjennom et rørsystem.",
+      "<bold>Tips:</bold> Kontroller både Oppskrifter- og Bruksområder-delen før masseproduksjon; denne gjenstanden kan være en mellomkomponent for flere senere maskiner.",
+      "Ledningsmekanikk",
+      "En port gir et signal til en Pipe Wire, som sender det videre til andre tilkoblede Pipe Wires med samme farge.\nEt signal kan bare være på eller av og går over ubegrenset avstand, i motsetning til redstone.\nPipe Wire finnes i alle 16 farger.",
+      "Plassering av ledning",
+      "Pipe Wire kan plasseres i hvert hjørne av et rør og kobles bare til Pipe Wires med samme farge i en hovedretning.\nLedninger med samme farge kan kobles sammen over forskjellige rør selv om selve rørene ikke er koblet sammen."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Pipe Pulsar er en nyttig oppgradering fra å drive Wooden Pipes med motorer, men virker fortsatt begrenset. Det ville vært nyttig å bruke det eksisterende energinettet og motorene til å drive uttrekksrør raskere.",
+      "Pipe Adapter er et rørtilbehør som lar energiaksepterende rør få energi gjennom et Kinesis Pipe.",
+      "<bold>Tips:</bold> Kontroller både Oppskrifter- og Bruksområder-delen før masseproduksjon; denne gjenstanden kan være en mellomkomponent for flere senere maskiner.",
+      "Pluggmekanikk",
+      "Det kan bare plasseres på et rør som tar imot energi, og alle Kinesis Pipes ved siden av kobles til det.\n\nEnergi gjennom det tilkoblede Kinesis Pipe kan drive det tilkoblede transport- eller væskerøret som tar imot energi.",
+      "Rørtilkoblinger",
+      "Tilbehør kan bare plasseres på rør og på hvilken som helst side av et rør.\nNår det plasseres mellom to rør, stopper det alle andre rør- og Pipe Wire-tilkoblinger mellom dem, bortsett fra Kinesis Pipes og selve adapteren."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Hvorfor fortsetter rørene mine å koble seg sammen? Hvordan stopper jeg det? Plasser bare en Pipe Plug mellom dem.",
+      "Pipe Plug er et rørtilbehør som hindrer rør og/eller Pipe Wire i å koble seg til hverandre.",
+      "<bold>Tips:</bold> Kontroller både Oppskrifter- og Bruksområder-delen før masseproduksjon; denne gjenstanden kan være en mellomkomponent for flere senere maskiner.",
+      "Rørforbindelser",
+      "Det plasseres direkte på hvilken som helst side av et rør, og et rør ved siden av den siden kobles ikke til.\n\nTilbehør kan bare plasseres på rør og på hvilken som helst side av et rør."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Når gjenstander beveger seg gjennom røret, aktiveres utløseren.",
+      "Items Traversing er en portutløser som finnes på alle porter plassert på et transportrør.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare mens en gjenstand beveger seg gjennom røret.",
+      "Parametere",
+      "Når Items Traversing er valgt og den installerte porten har tilgjengelige parametere, blir filterfeltet ved siden av tilgjengelig som parameter.\nPlasser en gjenstand i filterfeltet for å kontrollere om den valgte gjenstanden går gjennom røret før utløsing."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Væske beveger seg gjennom røret som porten er plassert på.",
+      "Fluid Traversing er en portutløser som finnes på alle porter plassert på et væskerør.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare mens væske beveger seg gjennom røret."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Når ingen gjenstander beveger seg gjennom røret, aktiveres utløseren.",
+      "Pipe Empty er en portutløser som finnes på alle porter plassert på et transport- eller væskerør.",
+      "<bold>Tips:</bold> Test denne utløseren mot nøyaktig den siden og det lageret eller den tanken som brukes i produksjonen. Sidebestemte kapasiteter kan få to sider av samme blokk til å rapportere forskjellige tilstander.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når verken gjenstander eller væske beveger seg gjennom røret."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Den tilkoblede Pipe Wire lyser sterkt.",
+      "Pipe Signal On er en portutløser som finnes når en Pipe Wire med samme farge er festet til det samme røret.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede Pipe Wire med samme farge er aktiv.",
+      "Parametere",
+      "Når Pipe Signal On er valgt og den installerte porten har parametere, blir Pipe Signal On og Pipe Signal Off for de andre tilkoblede Pipe Wire-fargene tilgjengelige som parametere.\nVed å velge Pipe Signal On eller Pipe Signal Off kan du kreve flere ledningssignaler før utløsing."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Den tilkoblede Pipe Wire lyser ikke.",
+      "Pipe Signal Off er en portutløser som finnes når en Pipe Wire med samme farge er festet til det samme røret.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Krav",
+      "Når den er valgt, aktiveres de tilkoblede handlingene bare når den tilkoblede Pipe Wire med samme farge ikke er aktiv.",
+      "Parametere",
+      "Når Pipe Signal Off er valgt og den installerte porten har parametere, blir Pipe Signal On og Pipe Signal Off for de andre tilkoblede Pipe Wire-fargene tilgjengelige som parametere.\nVed å velge Pipe Signal On eller Pipe Signal Off som parameter kan du kreve flere ledningssignaler før utløsing."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Hvor skal røret arbeide eller transportere? Nordover? Velg denne handlingen.",
+      "Face the North Side er en porthandling som finnes på en port plassert på et rør som krever retning, når nord er en gyldig retning.",
+      "<bold>Tips:</bold> Bruk bare én retningshandling om gangen på en port, og sørg for en sikker reserverute. Motstridende retninger kan gjøre gjenstandsstrømmen vanskelig å forutsi.",
+      "Innstilling av retningen",
+      "Når handlingen aktiveres, setter røret nord som retning.\nDet betyr at røret sender innholdet nordover eller utfører handlingen i verden på nordsiden."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Hvor skal røret arbeide eller transportere? Østover? Velg denne handlingen.",
+      "Face the East Side er en porthandling som finnes på en port plassert på et rør som krever retning, når øst er en gyldig retning.",
+      "<bold>Tips:</bold> Bruk bare én retningshandling om gangen på en port, og sørg for en sikker reserverute. Motstridende retninger kan gjøre gjenstandsstrømmen vanskelig å forutsi.",
+      "Innstilling av retningen",
+      "Når handlingen aktiveres, setter røret øst som retning.\nDet betyr at røret sender innholdet østover eller utfører handlingen i verden på østsiden."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Hvor skal røret arbeide eller transportere? Sørover? Velg denne handlingen.",
+      "Face the South Side er en porthandling som finnes på en port plassert på et rør som krever retning, når sør er en gyldig retning.",
+      "<bold>Tips:</bold> Bruk bare én retningshandling om gangen på en port, og sørg for en sikker reserverute. Motstridende retninger kan gjøre gjenstandsstrømmen vanskelig å forutsi.",
+      "Innstilling av retningen",
+      "Når handlingen aktiveres, setter røret sør som retning.\nDet betyr at røret sender innholdet sørover eller utfører handlingen i verden på sørsiden."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Hvor skal røret arbeide eller transportere? Vestover? Velg denne handlingen.",
+      "Face the West Side er en porthandling som finnes på en port plassert på et rør som krever retning, når vest er en gyldig retning.",
+      "<bold>Tips:</bold> Bruk bare én retningshandling om gangen på en port, og sørg for en sikker reserverute. Motstridende retninger kan gjøre gjenstandsstrømmen vanskelig å forutsi.",
+      "Innstilling av retningen",
+      "Når handlingen aktiveres, setter røret vest som retning.\nDet betyr at røret sender innholdet vestover eller utfører handlingen i verden på vestsiden."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Hvor skal røret arbeide eller transportere? Opp? Velg denne handlingen.",
+      "Face the Top Side er en porthandling som finnes på en port plassert på et rør som krever retning, når opp er en gyldig retning.",
+      "<bold>Tips:</bold> Bruk bare én retningshandling om gangen på en port, og sørg for en sikker reserverute. Motstridende retninger kan gjøre gjenstandsstrømmen vanskelig å forutsi.",
+      "Innstilling av retningen",
+      "Når handlingen aktiveres, setter røret toppen som retning.\nDet betyr at røret sender innholdet oppover eller utfører handlingen i verden over seg."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Hvor skal røret arbeide eller transportere? Ned? Velg denne handlingen.",
+      "Face the Bottom Side er en porthandling som finnes på en port plassert på et rør som krever retning, når ned er en gyldig retning.",
+      "<bold>Tips:</bold> Bruk bare én retningshandling om gangen på en port, og sørg for en sikker reserverute. Motstridende retninger kan gjøre gjenstandsstrømmen vanskelig å forutsi.",
+      "Innstilling av retningen",
+      "Når handlingen aktiveres, setter røret bunnen som retning.\nDet betyr at røret sender innholdet nedover eller utfører handlingen i verden under seg."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Velg dette for å få den tilkoblede Pipe Wire til å lyse.",
+      "Pipe Signal On er en porthandling som finnes når en Pipe Wire med samme farge er festet til det samme røret.",
+      "<bold>Tips:</bold> Bruk farget rørledning til å isolere dette signalet fra annen automatisering og unngå tilbakekoblingssløyfer mellom nærliggende porter.",
+      "Krav",
+      "Når handlingen aktiveres, aktiveres den tilkoblede Pipe Wire med samme farge.",
+      "Parameter",
+      "Når Pipe Signal On er valgt og den installerte porten har parametere, blir Pipe Signal On og Pipe Signal Off for de andre tilkoblede Pipe Wire-fargene tilgjengelige som parametere.\nVed å velge Pipe Signal On for den første utløseren kan flere Pipe Wires aktiveres når de første utløserne aktiveres."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Lazuli og Daizuli Transport Pipe kan male og sortere malte gjenstander; denne handlingen endrer fargen som brukes.",
+      "Paint Items er en porthandling som finnes på en port plassert på et Lazuli eller Daizuli Transport Pipe.",
+      "<bold>Tips:</bold> Kombiner denne handlingen med den mest presise nyttige utløseren, og test av-tilstanden like grundig som på-tilstanden.",
+      "Krav",
+      "Når handlingen aktiveres, justerer porten røret slik:\nLazuli Pipe maler gjenstander som passerer, i fargen valgt av Paint Items-handlingen.\nDaizuli Pipe sender bare gjenstander med den valgte fargen i den innstilte retningen."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Emzuli Transport Pipe gir flere uttrekksfiltre; velg ett av dem i en port for å bruke det.",
+      "Extraction Preset er en porthandling som finnes på en port plassert på et Emzuli Transport Pipe.",
+      "<bold>Tips:</bold> Kombiner denne handlingen med den mest presise nyttige utløseren, og test av-tilstanden like grundig som på-tilstanden.",
+      "Krav",
+      "Når handlingen aktiveres, lar porten Emzuli Pipe trekke ut med fargen valgt i Extraction Preset.\nUten en uttrekksinnstilling fra porten kan Emzuli Pipe ikke trekke ut noen gjenstander."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Grunnleggende om motorer"
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Å flytte fire Land Marks hver gang et prosjekt endrer størrelse, blir raskt et prosjekt i seg selv.",
+      "En Volume Box er en flyttbar områdemarkør som styres med Marker Connector.",
+      "<bold>Tips:</bold> Volume Boxes er praktiske for å flytte en ferdig områdedefinisjon mellom maskiner. Gi dem navn eller oppbevar dem separat når flere prosjekter bruker lignende dimensjoner.",
+      "Plassering og endring av størrelse",
+      "Bruk gjenstanden på en blokk for å opprette en Volume Box ved siden av den. Klikk på et av håndtakene med Marker Connector, flytt det valgte hjørnet og klikk igjen for å fullføre størrelsesendringen.\n\nSnik og bruk Marker Connector på boksen for å fjerne den. Maskiner ved siden av boksen kan bruke det valgte volumet på samme måte som et Land Mark-område.",
+      "Tillegg",
+      "En Volume Box kan inneholde kompatible planleggingstillegg. Filler Planner lagrer et Filler-mønster og omvendt tilstand i boksen, slik at en Filler i nærheten kan overta dem automatisk."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Store maskiner trenger en nøyaktig grense, ellers kan appetitten på blokker bli vanskelig å kontrollere.",
+      "Land Marks definerer rektangulære arbeidsområder for maskiner som Quarry, Filler og Architect Table.",
+      "<bold>Tips:</bold> Kontroller de fargede grenselinjene fra mer enn én side før du starter en Quarry, Builder eller Filler. Én feilplassert markør kan velge et mye større område enn forventet.",
+      "Definere et område",
+      "Plasser Land Marks på samsvarende X-, Y- eller Z-akser og koble dem sammen med Marker Connector. Tilkoblede merker danner kantene på en rektangulær boks. De fleste maskiner trenger bare de vannrette hjørnene, men en full tredimensjonal boks kan også defineres.\n\nRedstone-energi til et Land Mark viser styrelasere langs aksene og gjør justering enklere.",
+      "Bruke området",
+      "Plasser maskinen ved siden av ett av de tilkoblede merkene. Maskinen tar den markerte boksen og bruker den som arbeidsområde. Hvis ingen gyldige merker finnes, bruker noen maskiner sitt eget standardområde."
+    ],
+    "buildcraftlib/item/guide": [
+      "Et stort verksted er enklere å bygge når hver maskin kommer med notater i stedet for gjetting.",
+      "Denne boken inneholder dokumentasjonen i spillet for BuildCraft Community Edition.",
+      "<bold>Tips:</bold> Aktiver Vis tips for praktiske oppsettråd, og bruk søk når du kjenner navnet på en blokk eller mekanikk.",
+      "Bruke boken",
+      "Innholdet kombinerer blokker, gjenstander, rør, utløsere og handlinger fra alle innlastede BuildCraft-moduler. Sortering endrer bare indeksen; lenker, oppskrifter og sist åpne side lagres i denne individuelle boken.\n\n$[special.all_crafting](buildcraftlib:guide)\n\n$[special.new_page]"
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Bare røde malte gjenstander går gjennom, hvis filteret selvfølgelig er rødt.",
+      "Filter er et rørtilbehør som trekker til seg innkommende gjenstander med samme farge som seg selv, og bare lar den fargen passere.",
+      "Pluggmekanikk",
+      "Bare gjenstander malt i samme farge som filteret kan passere; alle andre fargede gjenstander forsøker å gå i en annen retning.\nFiltre kan bare plasseres på transportrør for gjenstander, fordi bare gjenstander kan males.",
+      "Rørforbindelser",
+      "Tilbehør kan bare plasseres på rør og på hvilken som helst side av et rør.\nNår det plasseres mellom to rør, stopper det ikke andre rør- eller Pipe Wire-tilkoblinger."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Roboter og maskiner er mye enklere å styre når et sted, en rute eller en arbeidssone kan bæres i lommen.",
+      "En Map Location lagrer et punkt, et område, en rute eller en Robotics-sone for senere bruk.",
+      "<bold>Tips:</bold> Registrer steder mens du står på nøyaktig blokk og vender i ønsket retning. Det unngår forskyvning på én blokk når stedet brukes av automatisering.",
+      "Registrere steder",
+      "Bruk en tom Map Location på en vanlig blokk for å lagre punktet og den klikkede siden. Bruk den på et tilkoblet Land Mark, en Volume Box eller en annen områdeleverandør for å lagre boksen. Bruk den på et Path Mark-nettverk for å lagre ruten.\n\nSnik og høyreklikk i luften for å slette lagrede data. Tomme steder kan stables, mens registrerte steder holdes adskilt.",
+      "Robotics-soner",
+      "Zone Planner kan skrive en malt arbeidssone med seksten lag til en Map Location. Porter og Docking Stations kan deretter bruke kartet til å begrense hvor tilknyttede roboter arbeider."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Noen blokker inneholder væske som ikke bare bør forsvinne når selve blokken brytes.",
+      "En Fragile Fluid Shard er en midlertidig enveisbeholder som rommer opptil 500 mB væske.",
+      "<bold>Tips:</bold> Oppbevar dette verktøyet eller denne komponenten nær maskinene som bruker det, og kontroller Bruksområder før du lager store mengder.",
+      "Gjenvinning av væske",
+      "Støttede blokker kan slippe disse skårene når de brytes med væske fortsatt inni. Hvert skår lagrer opptil en halv bøtte. Væskehåndterere kan tømme skåret og forbruke innholdet.\n\nSkåret kan ikke fylles manuelt og er ikke ment som en gjenbrukbar tank. Flytt innholdet til en kompatibel tank eller et rør før du behandler skåret som vanlig materiale."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Når en fabrikk testes, er venting på drivstoff sjelden delen noen ønsker å teste.",
+      "Creative Engine produserer konfigurerbar MJ uten drivstoff og er ment for testing i kreativ modus.",
+      "<bold>Tips:</bold> Bruk Creative Engine bare i kontrollerte testoppsett. Isoler den fra vanlige energinettverk slik at en ubegrenset kilde ikke skjuler kapasitets- eller bufferproblemer.",
+      "Utgang",
+      "Gi et redstone-signal for å kjøre motoren. Bruk en skiftenøkkel til å bytte utgang mellom 1, 2, 4, 8, 16, 32, 64, 128 og 256 MJ per tick.\n\nMotoren bruker ikke drivstoff og eksploderer ikke. Roter den med en skiftenøkkel slik at den bevegelige enden vender mot maskinen eller energirøret som skal motta energi."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "En ferdig struktur er nyttig én gang; en Blueprint lar samme design bygges igjen og igjen.",
+      "En Blueprint lagrer nøyaktige blokker, blokktilstander og støttede blokkentitetsdata fra et skannet område.",
+      "<bold>Tips:</bold> Gi viktige Blueprints navn og oppbevar en ren masterkopi i et Library. Bruk kopier på byggeplasser slik at utilsiktet overskriving ikke ødelegger originalplanen.",
+      "Registrering",
+      "Sett en tom Blueprint inn i et Architect Table ved siden av et område med Land Marks eller Volume Box. Bordet skanner volumet over tid og returnerer en brukt Blueprint. Tomme Blueprints stables til seksten; registrerte gjør ikke det.\n\nEn Blueprint husker de faktiske materialene og retningen i den skannede strukturen. Støttede blokkentitetsdata og entiteter tas med når gjeldende skjemahåndterere tillater det.",
+      "Bygging",
+      "Plasser den brukte Blueprint i en Builder. Lever de etterspurte blokkene, væskene og MJ. Builder gjenskaper strukturen og kan rotere eller grave den ut når disse valgene var aktivert under registreringen."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Noen ganger er formen viktigere enn nøyaktig stein, tre eller metall som fyller den.",
+      "En Template registrerer bare den fylte formen på et område, slik at en Builder kan fylle den med leverte materialer.",
+      "<bold>Tips:</bold> Templates registrerer form i stedet for nøyaktig blokkidentitet. Bruk dem når samme struktur skal bygges av lokalt tilgjengelige materialer.",
+      "Registrering",
+      "Registrer en Template i et Architect Table på samme måte som en Blueprint. Skanningen husker fylte og tomme posisjoner, men ikke de opprinnelige blokktypene eller blokkentitetsdataene.",
+      "Bygging",
+      "Sett den brukte Template inn i en Builder og lever blokkene du vil bruke. Builder bruker tilgjengelige materialer til å gjenskape formen. Templates passer til veier, vegger, skall og gjentatte strukturer der materialet kan variere."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Å bytte hver forekomst av én blokk for hånd i et stort design er dårlig bruk av en arkitekts tid.",
+      "En Single Block Schematic registrerer én blokktilstand for bruk av Replacer.",
+      "<bold>Tips:</bold> Single Block Schematics er nyttige for å teste plasseringsregler og rotasjoner før en stor Blueprint overlates til en Builder.",
+      "Registrere en blokk",
+      "Bruk et tomt skjema på en blokk for å registrere den. Skjemaet lagrer blokktilstanden og støttede krav for å gjenskape blokken. Snik og høyreklikk for å tømme det.",
+      "Erstatte Blueprint-blokker",
+      "Replacer tar imot en brukt Blueprint, et kildeskjema og et målskjema. Hver tilsvarende kildeblokk i Blueprint endres til målblokken uten å endre verden direkte."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "En byggeboks er mer nyttig når den husker både hvor det skal arbeides og hvilket arbeid som skal gjøres.",
+      "Filler Planner lagrer et Filler-mønster og parametere som et tillegg til en Volume Box.",
+      "<bold>Tips:</bold> Forhåndsvis formen og dimensjonene før du lagrer et Filler-mønster. Små koordinatfeil blir dyre når de gjentas over et stort volum.",
+      "Planlegging",
+      "Fest planleggeren til en Volume Box og konfigurer mønster, parametere og invertering. En Filler som bruker boksen, kan lese den lagrede planen i stedet for å konfigureres på nytt.\n\nForhåndsvisningen følger Volume Box, slik at operasjonen kan endres og inspiseres før materialer og MJ brukes."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Før en maskin kan bygge en struktur på nytt, må noen først lære den hva strukturen er.",
+      "Architect Table skanner et markert område til en Blueprint eller Template.",
+      "<bold>Tips:</bold> Skann først en liten representativ struktur for å kontrollere rotasjoner, blokkentiteter og spesialblokker. Gå videre til større opptak først når forhåndsvisningen ser riktig ut.",
+      "Områdeoppsett",
+      "Plasser bordet ved siden av et tilkoblet Land Mark-område eller en Volume Box. Den valgte boksen leses fra områdeleverandøren bak eller ved siden av bordet.",
+      "Skanning",
+      "Sett inn en tom Blueprint for å registrere nøyaktige blokker, tilstander og støttede data, eller en tom Template for bare formen. Velg om resultatet kan roteres, grave ut eksisterende blokker eller bruke plassering bare i kreativ modus, og start skanningen.\n\nSkanning skjer trinnvis, slik at store områder tar tid i stedet for å fryse serveren. Hold området lastet til det brukte øyeblikksbildet vises i utgangen."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "En plan er bare en samling ideer til noe begynner å plassere blokker.",
+      "Builder bruker MJ og ressurser til å bygge en brukt Blueprint eller Template.",
+      "<bold>Tips:</bold> Hold ledig utgangsplass mens en Builder arbeider. Hvis en oppgave avbrytes, kan reserverte gjenstander gå tilbake til beholdningen eller falle i nærheten når ingen plass er ledig.",
+      "Forsyne Builder",
+      "Sett inn en brukt Blueprint eller Template i øyeblikksbildefeltet. Kravvisningen viser nødvendige materialer. Lever gjenstander gjennom ressursbeholdningen eller tilkoblede rør, væsker gjennom interne tanker og MJ gjennom en kompatibel energitilkobling.\n\nBlueprints krever de registrerte blokkene. Templates bruker egnede leverte blokker til å gjenskape formen.",
+      "Plassering og valg",
+      "Strukturen plasseres i forhold til Builderens retning. Rotasjon og utgraving er bare tilgjengelig når øyeblikksbildets hode tillater det. Med en tilkoblet Path Mark-rute kan Builder gjenta designet langs ruten.\n\nArbeidstilstand og reserverte ressurser lagres. Etter omlasting kontrolleres uferdige oppgaver igjen, og reserverte gjenstander, væsker og energi returneres trygt før arbeidet fortsetter."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Ikke alle byggejobber trenger en detaljert Blueprint. Mange er bare bokser, vegger, gulv eller svært mye tomrom.",
+      "Filler bruker et konfigurerbart geometrisk mønster innenfor et markert område.",
+      "<bold>Tips:</bold> Begynn med et lite markert område og et billig materiale. Når mønster og retning er riktige, flytter du samme oppsett til det endelige stedet.",
+      "Område og ressurser",
+      "Plasser Filler ved Land Marks eller en Volume Box, og åpne grensesnittet for å oppdatere arbeidsområdet. Lever byggeblokker til ressursfeltene og MJ til det interne batteriet. Gravemønstre kan også fjerne eksisterende blokker når utgraving er aktivert.",
+      "Mønstre",
+      "Tilgjengelige mønstre omfatter rydd, fyll, boks, ramme, horisont, flat ut, sylinder, pyramide og trapper. Todimensjonale former inkluderer trekanter, regulære polygoner, buer og sirkler. Tredimensjonale former inkluderer kuler og delvise kuler.\n\nParametere styrer retning, rotasjon, orientering, akse, sentrum og hule varianter. Invertering bytter innsiden og utsiden av mønsteret."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Et godt design bør vare lenger enn papiret det først ble registrert på.",
+      "Electronic Library overfører Blueprint- og Template-data mellom øyeblikksbildegjenstander og den lagrede databasen.",
+      "<bold>Tips:</bold> Bruk ett Library som prosjektarkiv og et annet nær arbeidsstedet. Det skiller beskyttede masterplaner fra midlertidige arbeidskopier.",
+      "Nedlasting",
+      "Sett inn en brukt Blueprint eller Template hvis design finnes i verdens øyeblikksbildedatabase. Etter overføringen kopieres designet til lokale bibliotekdata som brukes av klientgrensesnittet.",
+      "Opplasting",
+      "Velg et lagret design i Library-grensesnittet og sett en ren Blueprint eller Template i opplastingsfeltet. Library overfører øyeblikksbildet til serveren og lager en brukt øyeblikksbildegjenstand.\n\nHver overføring tar 50 ticks. Ikke fjern inndata mens fremdriftslinjen beveger seg."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Å endre materialet i et ferdig design bør ikke kreve at designet bygges opp igjen fra hukommelsen.",
+      "Replacer endrer hver tilsvarende blokk i en brukt Blueprint fra én registrert blokktilstand til en annen.",
+      "<bold>Tips:</bold> Test erstatningsregler på en liten prøvevegg. Ta med alle viktige blokktilstander, særlig retning og varianter som ser like ut i beholdningen.",
+      "Erstatte blokker",
+      "Plasser den brukte Blueprint i Blueprint-feltet. Registrer blokken som skal finnes i én Single Block Schematic og erstatningsblokken i den andre. Replacer redigerer Blueprint-data og returnerer designet.\n\nMaskinen endrer planen, ikke blokker som allerede er plassert i verden. Begge skjemaene forbrukes av en fullført erstatning."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "En Builder-robot trenger en plan og et sted å hente arbeid selv når ingen stasjonær Builder gjør selve byggingen.",
+      "Construction Marker gjør Blueprint-byggeoppgaver tilgjengelige for Builder Robots.",
+      "<bold>Tips:</bold> Construction Markers brukes best til å inspisere planen før ressurser leveres. Rett anker og retning mens endringer fortsatt er gratis.",
+      "Robotbygging",
+      "Plasser en Construction Marker og sett inn en brukt Blueprint. Markøren lager byggeoppgaver, men bruker ikke MJ eller plasserer blokker selv. Builder Robots i nærheten kan reservere oppgavene, hente materialene og bygge.\n\nMarkøren bruker øyeblikksbildets innstillinger for rotasjon, utgraving og eierskap. Begrens Builder Robots med en arbeidssone når flere prosjekter ligger nær hverandre."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "En stor bevegelig drill er langt mindre skremmende når den har et synlig stillas rundt arbeidsområdet.",
+      "Frames er lette konstruksjonsblokker som brukes av Quarry og byggesystemer.",
+      "<bold>Tips:</bold> Frames er midlertidige arbeidsblokker. Hold byggeområdet ryddig slik at maskiner kan bygge og fjerne dem uten hindringer.",
+      "Quarry-ramme",
+      "En Quarry plasserer automatisk Frames rundt området før gruvedrift begynner. Rammen viser arbeidsgrensen og støtter den bevegelige drillen.\n\nFrames kan brukes som billig åpent stillas, men en Quarry administrerer og fjerner sine egne rammeblokker som del av arbeidssyklusen."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Gruvedrift for hånd er givende til den ønskede malmen ligger under flere millioner blokker som ikke er den ønskede malmen.",
+      "Quarry bygger en ramme og utvinner automatisk alle tillatte blokker i det valgte området.",
+      "<bold>Tips:</bold> Før Quarry-utgangen til en buffer før det endelige sorteringssystemet. Bufferen hindrer korte beholdningsstopp i å avbryte gruvedriften og gjør overløp synlig.",
+      "Velge området",
+      "Plasser Quarry ved tilkoblede Land Marks for å definere det vannrette arbeidsområdet. Uten et gyldig markert område lager den et mindre standardbrudd foran seg. Quarry holder nødvendige chunks lastet mens den arbeider.",
+      "Gruvedrift",
+      "Lever MJ. Quarry skanner og bygger først rammen, flytter deretter drillen over området og graver ned til angitt dybde eller verdens bunn. Mer tilgjengelig energi gir mer arbeid per tick opp til maskinens grense.\n\nUtgravde gjenstander tilbys beholdninger og rør ved siden av. Sørg for nok utgangsplass: en blokkert utgang kan stoppe fremdriften. Beskyttede blokker kontrolleres med Quarry-eierens falske spiller og omgås ikke i det stille."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Rør flytter ressurser. Roboter flytter seg selv, ressursene og noen ganger alt som står i veien.",
+      "En Robot er en mobil arbeider hvis oppførsel bestemmes av et installert Redstone Board.",
+      "<bold>Tips:</bold> Begynn med én robot, to tilgjengelige Docking Stations og en liten arbeidssone. Utvid først når lading, verktøyhenting og lossing fungerer pålitelig.",
+      "Opprette en robot",
+      "Programmer et tomt Redstone Board i et Programming Table, og installer det i en tom Robot med et Integration Table. Ulike kort gir ulike robotyrker.",
+      "Utplassering og lading",
+      "Fest en Docking Station til et rør, og bruk den programmerte Robot på stasjonen. Spilleren som plasserer den, blir eier. En MJ-tilkoblet stasjon kan lade roboten.\n\nRoboter holder en sikker energireserve og vender tilbake til en passende stasjon for å lade, laste eller losse. Porthandlinger på Docking Stations styrer filtre, ruter, arbeidssoner og ressurser."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "En maskin kan bevege seg, men uten et kort vet den ikke om den skal bære, plante, grave eller flykte fra nærmeste ku.",
+      "Et Redstone Board lagrer yrkesprogrammet som installeres i en Robot.",
+      "<bold>Tips:</bold> Oppbevar programmerte kort etter yrke i separate merkede beholdninger. Et tomt kort i nærheten gjør omprogrammering raskere.",
+      "Programmering",
+      "Plasser et tomt kort i et Programming Table, velg yrke og lever laserenergi. Tomme kort stables til seksten, programmerte til én.\n\nKostnaden avhenger av yrket: grunnleggende logistikk 8 000 MJ, vanlige jobber 32 000 MJ, avansert kamp eller levering 64 000 MJ og Builder 128 000 MJ.",
+      "Installering",
+      "Bruk et Integration Table til å kombinere kortet med en tom Robot. Installering krever 10 000 MJ. Robot beholder yrket til den bygges om med et annet kort."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Selv den mest selvstendige roboten trenger et sted å lade, sove og få beskjed om hva den ikke skal plukke opp.",
+      "En Docking Station er et rørtilbehør som kobler, lader og styrer Roboter.",
+      "<bold>Tips:</bold> Gi hvert arbeidsområde minst én ladestasjon og en klar rute for lasting eller lossing. Stasjonsfiltre hindrer feil forsyninger.",
+      "Plassering",
+      "Plasser stasjonen på en ledig side av et rør. Bruk en programmert Robot på stasjonen for å utplassere den. Bare én robot kan bruke stasjonen om gangen.\n\nEt rørnett med MJ kan lade roboten. Snik og bruk en skiftenøkkel på en tilknyttet hovedstasjon for å frigjøre roboten som gjenstand når tilstanden tillater det.",
+      "Portstyring",
+      "Fest en port til røret og bruk Robotics-stasjonshandlinger til å motta eller tilby gjenstander og væsker, be om ressurser, forby eller tvinge roboter og vise maskinforespørsler. Map Locations kan begrense arbeids- eller lastesoner."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "En robot som skal arbeide overalt, oppdager før eller siden et sted der du ikke ønsket den.",
+      "Zone Planner maler detaljerte flerlagssoner for roboter på Map Locations.",
+      "<bold>Tips:</bold> Bruk kompakte soner med bare ønskede mål. Store overlappende soner gjør det vanskeligere å forutsi hvilken robot som tar en oppgave.",
+      "Tegne en sone",
+      "Sett inn en tom Map Location og rediger sonen. Kartet støtter seksten uavhengige lag på et koordinatrutenett på 2048 x 2048. Lag kan velges, kombineres og navngis.\n\nEtter 120 ticks mottar utgangen en Map Location med gjeldende Zone Plan. En lagret sone kan importeres for videre redigering.",
+      "Bruke sonen",
+      "Plasser Map Location i en kompatibel portparameter eller Docking Station-handling. Tilknyttede roboter begrenser deretter søk og arbeid til den malte sonen."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Et lager er mer nyttig når det kan be om manglende varer før noen ser den tomme hyllen.",
+      "Requester opprettholder konfigurerte mengder og viser manglende antall til Delivery Robots.",
+      "<bold>Tips:</bold> Be først om små mengder og kontroller at tilbydere og ruter kan nås. Store permanente forespørsler kan oppta transportører og lager.",
+      "Konfigurere forespørsler",
+      "De øverste tjue fantomfeltene definerer ønsket gjenstand og mengde. Det tilsvarende ekte feltet under godtar bare denne gjenstanden eller en kompatibel List.\n\nDelivery Robots spør etter manglende mengde og leverer til forespørselen er oppfylt. Gjenstander som allerede finnes, reduserer forespørselen.",
+      "Redstone-utgang",
+      "En comparator rapporterer gjennomsnittlig fyllingsgrad for forespørselsfeltene. Tom konfigurasjon gir intet signal; mer fullførte forespørsler øker signalet mot femten."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Picker Robot samler droppede gjenstander i sonen, bruker stasjonsfilteret og vender tilbake for å losse.",
+      "<bold>Tips:</bold> Hold sonen liten og ha en lossestasjon i nærheten, ellers bruker roboten mest tid på å reise.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 8 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, samler den droppede gjenstander i sonen, bruker stasjonsfilteret og vender tilbake for å losse. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk portfiltre og Lists til å begrense gjenstandene."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Carrier Robot laster passende gjenstander fra en tilbyderstasjon og bærer dem til en stasjon som kan motta dem.",
+      "<bold>Tips:</bold> Plasser laste- og lossestasjoner på en kort, fri rute. Filtre i begge ender hindrer feil gjenstand.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 8 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, laster den passende gjenstander ved en tilbyderstasjon og bærer dem til en mottaker. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk portfiltre og Lists til å begrense gjenstandene."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Tank Robot flytter væsker mellom stasjoner og tanker ved hjelp av stasjonsfiltre.",
+      "<bold>Tips:</bold> Bruk egne væskestasjoner og unngå blandede væskejobber i én sone. Separate ruter gjør feil tank synlig med én gang.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 8 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, flytter den væsker mellom stasjoner og tanker etter filtrene. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk væskefiltre til å holde andre væsker ute."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Lumberjack Robot henter en øks og hogger sammenhengende stokker i trær i sonen.",
+      "<bold>Tips:</bold> Kombiner Lumberjack med Planter og en verktøystasjon. La det være nok plass over spirene.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, henter den en øks og hogger sammenhengende stokker. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nVerktøyet hentes fra en stasjon; bruk filtre til å styre verktøy og retur."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Harvester Robot finner modne avlinger, høster dem og returnerer avlingen til en stasjon.",
+      "<bold>Tips:</bold> Begrens sonen til modne avlinger og bruk en lossestasjon med frøhåndtering. Det hindrer innsamling av andre planter.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, finner den modne avlinger, høster dem og leverer avlingen til en stasjon. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Miner Robot henter en hakke og utvinner tilgjengelige malmblokker i sonen.",
+      "<bold>Tips:</bold> Sørg for hakker og et lossested i nærheten. En kompakt malmsone reduserer reising gjennom ryddede tunneler.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, henter den en hakke og utvinner tilgjengelig malm. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk filtre til å styre verktøy og retur."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Planter Robot laster passende frø og planter dem på gyldig jord i sonen.",
+      "<bold>Tips:</bold> Filtrer tilbyderstasjonen til ønskede spirer eller frø. Blandet lager kan skape en ujevn gård.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, laster den frø og planter dem på gyldig jord. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk portfiltre og Lists til å begrense gjenstandene."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Farmer Robot henter en hakke og klargjør egnet jord eller gress for planting.",
+      "<bold>Tips:</bold> Bruk et stabilt avlingsoppsett og skill frø fra høstet utgang, så roboten ikke bruker varer som skal eksporteres.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, henter den en hakke og klargjør egnet jord eller gress. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk filtre til å styre verktøy og retur."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Leaf Cutter Robot henter et skjæreverktøy og fjerner løvblokker i sonen.",
+      "<bold>Tips:</bold> Kjør Leaf Cutter etter Lumberjack bare når løvdrops ønskes. Sonen må ikke dekke dekorative trær.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, henter den et skjæreverktøy og fjerner løvblokker. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Butcher Robot henter et sverd og jakter tillatte passive dyr, men unngår katter, hunder og beskyttede tamdyr.",
+      "<bold>Tips:</bold> Hold sonen unna avlsdyr og beskyttede dyr. En smal sone gjør målene forutsigbare.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, henter den et sverd og jakter tillatte passive dyr, men unngår beskyttede tamdyr. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk filtre til å styre verktøy og retur."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Shovelman Robot henter en spade og graver blokker som kan utvinnes med spade i sonen.",
+      "<bold>Tips:</bold> Lever passende spader og definer nøyaktige grenser. Brede soner kan fjerne stier, åker eller landskap.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, henter den en spade og graver blokker som kan utvinnes med spade. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk filtre til å styre verktøy og retur."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Pump Robot tapper passende væskeblokker fra verden til den interne tanken og vender tilbake for å losse.",
+      "<bold>Tips:</bold> Sørg for et tomt væskemål før start. En full stasjon kan la roboten reise uten nyttig arbeid.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 32 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, tapper den passende væskeblokker til sin interne tank og vender tilbake for å losse. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk væskefiltre til å holde andre væsker ute."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Delivery Robot oppfyller gjenstandsforespørsler fra Requesters og stasjonshandlinger.",
+      "<bold>Tips:</bold> Bruk moderate mengder og sørg for at en tilbyderstasjon kan nås. Det reduserer lange turer for enkeltgjenstander.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 64 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, oppfyller den gjenstandsforespørsler fra Requesters og stasjoner. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk portfiltre og Lists til å begrense gjenstandene."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Knight Robot henter et våpen og angriper fiendtlige mobs i sonen.",
+      "<bold>Tips:</bold> Hold kampsonen unna skjøre maskiner og ha en trygg ladestasjon. Test mobtilgang før roboten brukes til forsvar.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 64 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, henter den et våpen og angriper fiendtlige mobs i sonen. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse.\n\nBruk filtre til å styre verktøy og retur."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Bomber Robot laster TNT, flyr over gyldig bakke og slipper antente eksplosiver.",
+      "<bold>Tips:</bold> Bruk Bomber bare i en nøye isolert sone. Kontroller eksplosjonsvern og eierrettigheter før du leverer eksplosiver.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 64 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, laster den TNT, flyr over gyldig bakke og slipper antente eksplosiver. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Stripes Robot laster brukbare gjenstander og bruker de samme gjenstandsbehandlerne som et Stripes Transport Pipe på frie målblokker.",
+      "<bold>Tips:</bold> Test hver stripes-handling manuelt før roboten tildeles. Noen behandlere forbruker, plasserer eller omformer gjenstander på måter som er vanskelige å angre.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 64 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, laster den brukbare gjenstander og bruker de samme gjenstandsbehandlerne som et Stripes Transport Pipe på frie målblokker. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse etter behov."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "En spesialisert arbeider er vanligvis mer pålitelig enn én robot som velger om treet, kisten eller creeperen er dagens prioritet.",
+      "Builder Robot finner Builders eller Construction Markers i nærheten, reserverer byggeoppgaver, henter materialer og utfører arbeidet.",
+      "<bold>Tips:</bold> Gi Builder Robot en forsyningsstasjon i nærheten og begynn med en liten Blueprint. Kontroller at beskyttede blokker og rotasjoner fungerer riktig før større jobber.",
+      "Yrke",
+      "Dette yrket programmeres i et Redstone Board for 128 000 MJ og installeres i en tom Robot med et Integration Table.\n\nMens roboten er aktiv, finner den Builders eller Construction Markers i nærheten, reserverer byggeoppgaver, henter materialer og utfører arbeidet. Den vender tilbake til kompatible Docking Stations for å lade, laste eller losse etter behov.\n\nBuilder Robots kan arbeide for både stasjonære Builders og Construction Markers. Hold prosjektet og forsyningsstasjonene innenfor robotens rekkevidde."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Utløseren er aktiv mens en robot er dokket ved stasjonen.",
+      "<bold>Tips:</bold> Bruk farget ledning for å holde robottilstandslogikken adskilt fra gjenstands- og væskeautomatisering på det samme rørnettet.",
+      "Utløseratferd",
+      "Utløseren er aktiv mens en robot er dokket ved stasjonen."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Utløseren er aktiv mens den tilknyttede roboten sover og venter på arbeid.",
+      "<bold>Tips:</bold> Bruk farget ledning for å holde robottilstandslogikken adskilt fra gjenstands- og væskeautomatisering på det samme rørnettet.",
+      "Utløseratferd",
+      "Utløseren er aktiv mens den tilknyttede roboten sover og venter på arbeid.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Utløseren er aktiv når stasjonen har en tilknyttet robot, uansett om den er dokket akkurat nå.",
+      "<bold>Tips:</bold> Bruk farget ledning for å holde robottilstandslogikken adskilt fra gjenstands- og væskeautomatisering på det samme rørnettet.",
+      "Utløseratferd",
+      "Utløseren er aktiv når stasjonen har en tilknyttet robot, uansett om den er dokket akkurat nå.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Utløseren er aktiv mens stasjonen eller roboten er reservert for en operasjon.",
+      "<bold>Tips:</bold> Bruk farget ledning for å holde robottilstandslogikken adskilt fra gjenstands- og væskeautomatisering på det samme rørnettet.",
+      "Utløseratferd",
+      "Utløseren er aktiv mens stasjonen eller roboten er reservert for en operasjon.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Angir gjenstands- eller væskefilteret som brukes av robotarbeid og lasting ved stasjonen. Legg til parametere for gjenstander, væsker eller Lists for å snevre inn filteret.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Angir gjenstands- eller væskefilteret som brukes av robotarbeid og lasting ved stasjonen. Legg til parametere for gjenstander, væsker eller Lists for å snevre inn filteret."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Begrenser hvilke verktøy en robot kan hente for et yrke som bruker verktøy.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Begrenser hvilke verktøy en robot kan hente for et yrke som bruker verktøy.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Beordrer den tilknyttede roboten til å vende tilbake til denne Docking Station når portbetingelsen er aktiv.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Beordrer den tilknyttede roboten til å vende tilbake til denne Docking Station når portbetingelsen er aktiv.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Vekker en sovende tilknyttet robot slik at den kan søke etter arbeid igjen.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Vekker en sovende tilknyttet robot slik at den kan søke etter arbeid igjen.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Tildeler en Map Location-sone som robotens arbeidsområde.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Tildeler en Map Location-sone som robotens arbeidsområde.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Begrenser området der roboten kan søke etter laste- og lossestasjoner.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Begrenser området der roboten kan søke etter laste- og lossestasjoner.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Lar roboter losse passende væsker til denne stasjonen eller tilkoblede behandlere.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Lar roboter losse passende væsker til denne stasjonen eller tilkoblede behandlere.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Lar roboter losse passende gjenstander til denne stasjonen eller dens tilkoblede beholdning.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Lar roboter losse passende gjenstander til denne stasjonen eller dens tilkoblede beholdning.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Hindrer roboter i å velge denne stasjonen mens handlingen er aktiv.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Hindrer roboter i å velge denne stasjonen mens handlingen er aktiv.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Får den tilknyttede roboten til å foretrekke eller vende tilbake til denne stasjonen mens handlingen er aktiv.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Får den tilknyttede roboten til å foretrekke eller vende tilbake til denne stasjonen mens handlingen er aktiv.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Tilbyr passende væsker ved denne stasjonen til roboter som trenger å laste dem.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Tilbyr passende væsker ved denne stasjonen til roboter som trenger å laste dem.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Tilbyr passende gjenstander ved denne stasjonen til roboter som trenger å laste dem.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Tilbyr passende gjenstander ved denne stasjonen til roboter som trenger å laste dem.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Oppretter gjenstandsforespørsler som Delivery Robots kan oppfylle.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Oppretter gjenstandsforespørsler som Delivery Robots kan oppfylle.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Robotlogistikk blir langt mer nyttig når stasjoner kan beskrive tilstanden sin og gi presise instruksjoner.",
+      "Gjør gjenstandsforespørsler fra en tilstøtende kompatibel maskin synlige for Delivery Robots.",
+      "<bold>Tips:</bold> Bruk robothandlinger gjennom en nøye filtrert stasjon eller arbeidssone. Brede regler kan påvirke flere roboter enn planlagt når nettverk overlapper.",
+      "Handlingsatferd",
+      "Gjør gjenstandsforespørsler fra en tilstøtende kompatibel maskin synlige for Delivery Robots.\n\nBruk denne statementen på en Gate som er festet til det samme røret som den aktuelle Docking Station. Parametere som gjenstander, væsker, Lists og Map Locations er bare tilgjengelige der statementen støtter dem."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Å tømme et hav er effektivt, men noen ganger er det mer underholdende å gjøre overflaten fast.",
+      "Water Gelifier omdanner sammenhengende kildevann og vannplanter til midlertidig Water Gel.",
+      "<bold>Tips:</bold> Kontroller både Oppskrifter- og Bruksområder-delen før masseproduksjon; denne gjenstanden kan være en mellomkomponent for flere senere maskiner.",
+      "Bruke Gelifier",
+      "Bruk gjenstanden mens du peker på vann. Den første gelblokken plasseres ved den valgte vannposisjonen og begynner å spre seg gjennom kildevann og støttede vannplanter i nærheten.\n\nWater Gel går gjennom flere stadier og størkner til slutt. Kontakt med vannet rundt forsinker den siste størkningen, slik at gelfronten kan spre seg før den blir stabil.",
+      "Hente ut gel",
+      "Når størknet Water Gel brytes, slipper den Gelled Water-gjenstander. Prosessen er beregnet på kontrollert vannfjerning og midlertidig bygging, så prøv den i en liten dam før et hav."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Det ser ut som vann, føles langt mindre som vann og oppfører seg ikke lenger som vann i det hele tatt.",
+      "Gelled Water er det faste materialet som hentes fra Water Gel.",
+      "<bold>Tips:</bold> Kontroller både Oppskrifter- og Bruksområder-delen før masseproduksjon; denne gjenstanden kan være en mellomkomponent for flere senere maskiner.",
+      "Anskaffelse",
+      "Bruk en Water Gelifier på kildevann og vent til gelen som sprer seg, størkner. Når den ferdige gelen brytes, får du Gelled Water."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Noen oppskrifter krever en presisjon som en ovn, et crafting-rutenett og en optimistisk hammer ikke kan levere.",
+      "En Laser omdanner MJ til laserenergi for kompatible BuildCraft-bord i nærheten.",
+      "<bold>Tips:</bold> Flere Lasers kan arbeide på ett kompatibelt bord. Legg dem til gradvis og følg med på bordbufferet, slik at ekstra laserkraft ikke bygges uten nytte.",
+      "Strøm til bord",
+      "Plasser Lasers innen seks blokker fra et Assembly, Charging, Integration, Advanced Crafting eller Programming Table, og forsyn dem med MJ. Hver Laser søker automatisk etter et kompatibelt bord som ber om energi.\n\nEn Laser kan overføre opptil 6,4 MJ per tick. Flere Lasers kan arbeide på samme bord, og strålene flytter seg når bordets behov endres."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Redstone og diamanter er nyttige ingredienser, men noen komponenter krever en langt mer presis plassering av energi.",
+      "Assembly Table bruker laserenergi til å produsere BuildCraft-komponenter og rørtilbehør.",
+      "<bold>Tips:</bold> Velg bare oppskriftene som skal kjøre automatisk. Hvis uvedkommende oppskrifter står på, kan de bruke felles ingredienser når flere resultater er mulige.",
+      "Montering",
+      "Sett inn de nødvendige ingrediensene og velg én eller flere tilgjengelige monteringsoppskrifter. Strømførte Lasers i nærheten fyller energikravet til valgt oppskrift. Når den er ferdig, legges resultatet i bordet eller tilbys tilstøtende beholdninger og rør.\n\nFlere valgte oppskrifter kan kjøres etter tur automatisk når ingrediensene finnes. Bordet lagrer delvis laserfremdrift, slik at avbrutt arbeid kan fortsette senere."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "En bærbar maskin uten energi er bare en dekorativ maskin som er upraktisk å bære.",
+      "Charging Table bruker laserenergi til å lade Forge Energy-gjenstander.",
+      "<bold>Tips:</bold> Bruk filtrerte inn- og utgangsbeholdninger rundt Charging Table, slik at ladede og utladede gjenstander ikke går i samme løkke for alltid.",
+      "Lading",
+      "Plasser en ladbar gjenstand i det ene feltet. Lasers i nærheten leverer energi til bordet, som overfører hele energienheter til gjenstander med Forge Energy-funksjonen.\n\nBordet ber bare om mengden gjenstanden fortsatt kan motta og stopper når den er full. Gjenstander som ikke kan motta energi, avvises."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Noen maskiner bygges i ett stykke. Andre blir først nyttige når den viktige delen er installert.",
+      "Integration Table installerer kompatible oppgraderinger eller komponenter i en målgjenstand ved hjelp av laserenergi.",
+      "<bold>Tips:</bold> Klargjør den nøyaktige port-, kort- eller robotvarianten før innsetting. Integrasjonsoppskrifter bevarer eller endrer ofte gjenstandsdata som er enklere å kontrollere før automatisering.",
+      "Integrasjon",
+      "Plasser målgjenstanden i midtfeltet og de nødvendige komponentene i feltene rundt. Hvis en registrert integrasjonsoppskrift passer, leverer Lasers i nærheten den nødvendige energien, og den ferdige gjenstanden vises i utgangen.\n\nEn viktig bruk i Robotics er å installere et programmert Redstone Board i en tom Robot. Operasjonen krever 10 000 MJ."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Å gjenta den samme crafting-oppskriften er ikke vanskelig, men det er akkurat slikt arbeid en maskin bør gjøre.",
+      "Advanced Crafting Table gjentar automatisk en konfigurert crafting-oppskrift med leverte materialer og MJ.",
+      "<bold>Tips:</bold> Hold en buffer av hver ingrediens og trekk ut ferdige resultater separat. Hvis resultater sendes tilbake til ingredienssiden, kan kompliserte oppskrifter bli blokkert.",
+      "Automatisk crafting",
+      "Ordne ønsket oppskrift i det fantomaktige 3 ganger 3 Blueprint-rutenettet, og lever deretter passende ingredienser til materialbeholdningen. Bordet crafter resultatet til utgangsbeholdningen når oppskriften er gyldig og det er nok plass.\n\nHver operasjon ber om 500 MJ. Bordet kan motta MJ direkte og deltar også i laserbordsystemet."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Et tomt kort inneholder mange muligheter og absolutt ingen nyttige instruksjoner.",
+      "Programming Table skriver et valgt robotyrke til et tomt Redstone Board ved hjelp av laserenergi.",
+      "<bold>Tips:</bold> Programmer ofte brukte kort i serier, og merk lagringen deres. Yrkeskort kan se like ut før de installeres i en robot.",
+      "Programmere kort",
+      "Sett inn et tomt Redstone Board, velg et yrke blant alternativene, og gi strøm til Lasers i nærheten. Bordet lager et programmert kort når energikostnaden til yrket er nådd.\n\nAlternativene sorteres etter energikostnad og navn. Grunnleggende logistikkyrker koster 8 000 MJ, vanlige arbeidsyrker 32 000 MJ, avanserte yrker 64 000 MJ og Builder 128 000 MJ."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Vanlig redstone-støv er energisk, men en krystall er mye enklere å få plass til i presisjonsmaskiner.",
+      "En Redstone Crystal er en Assembly Table-komponent som brukes i avanserte BuildCraft-oppskrifter.",
+      "<bold>Tips:</bold> Kontroller både oppskrifter og bruksområder før masseproduksjon. Silicon-deler deles ofte av flere maskiner, porter og robotoppgraderinger.",
+      "Produksjon",
+      "Produser Redstone Crystals i et Assembly Table med ingrediensene som vises i oppskriftsvisningen. De brukes i lasermaskiner, porter og andre avanserte komponenter."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Et komplisert portprogram er mye enklere å kopiere enn å huske perfekt seksten ganger.",
+      "Gate Copier lagrer én portkonfigurasjon og bruker den på kompatible porter.",
+      "<bold>Tips:</bold> Behold én kontrollert port som master, og kopier fra den. Dette hindrer at eksperimentelle innstillinger sprer seg gjennom hele rørnettet.",
+      "Kopiering og innliming",
+      "Bruk kopieringsverktøyet på en konfigurert Gate for å lagre data om utløser, handling, tilkobling og parametere. Bruk det fylte verktøyet på en annen kompatibel Gate for å kopiere det lagrede programmet.\n\nSnik-høyreklikk i luften for å slette lagrede data. Gjenstandsmodellen og verktøytipset viser om et program er lagret."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Et kompakt rørnett har lite plass til et tårn av repeatere og klokker.",
+      "Timer er et rørtilbehør som legger til periodiske portutløsere på 5, 10 og 15 sekunder.",
+      "<bold>Tips:</bold> Konfigurer den monterbare delen før du kopierer eller installerer mange av dem. Test én rørside først for å bekrefte retning og samspill med porter.",
+      "Timer-utløsere",
+      "Fest Timer til et rør. Porter på røret får tre interne utløsere som pulserer hvert 5., 10. eller 15. sekund etter spilletiden i verden.\n\nTimer opptar og blokkerer sin side av røret som annet tilbehør."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "En presis logikkrets er enklere å sette sammen når redstone har blitt overtalt til å bli i ett nøye produsert stykke.",
+      "Red Chipset er den grunnleggende redstone-logikkkomponenten som brukes av porter og andre Silicon-oppskrifter.",
+      "<bold>Tips:</bold> Kontroller både oppskrifter og bruksområder før masseproduksjon. Silicon-deler deles ofte av flere maskiner, porter og robotoppgraderinger.",
+      "Montering",
+      "Produser dette brikkesettet i et Assembly Table med laserenergi. De nøyaktige bruksområdene vises i oppskriftsvisningen og kan omfatte porter, utvidelser, Robotics-komponenter og lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "En presis logikkrets er enklere å sette sammen når redstone har blitt overtalt til å bli i ett nøye produsert stykke.",
+      "Iron Chipset er en logikkkomponent på jernnivå som brukes av sterkere porter og maskiner.",
+      "<bold>Tips:</bold> Kontroller både oppskrifter og bruksområder før masseproduksjon. Silicon-deler deles ofte av flere maskiner, porter og robotoppgraderinger.",
+      "Montering",
+      "Produser dette brikkesettet i et Assembly Table med laserenergi. De nøyaktige bruksområdene vises i oppskriftsvisningen og kan omfatte porter, utvidelser, Robotics-komponenter og lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "En presis logikkrets er enklere å sette sammen når redstone har blitt overtalt til å bli i ett nøye produsert stykke.",
+      "Gold Chipset er en logikkkomponent på gullnivå for port- og maskinoppskrifter med høy kapasitet.",
+      "<bold>Tips:</bold> Kontroller både oppskrifter og bruksområder før masseproduksjon. Silicon-deler deles ofte av flere maskiner, porter og robotoppgraderinger.",
+      "Montering",
+      "Produser dette brikkesettet i et Assembly Table med laserenergi. De nøyaktige bruksområdene vises i oppskriftsvisningen og kan omfatte porter, utvidelser, Robotics-komponenter og lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "En presis logikkrets er enklere å sette sammen når redstone har blitt overtalt til å bli i ett nøye produsert stykke.",
+      "Quartz Chipset er en kvartslogikkkomponent for parameter- og tidsorienterte oppskrifter.",
+      "<bold>Tips:</bold> Kontroller både oppskrifter og bruksområder før masseproduksjon. Silicon-deler deles ofte av flere maskiner, porter og robotoppgraderinger.",
+      "Montering",
+      "Produser dette brikkesettet i et Assembly Table med laserenergi. De nøyaktige bruksområdene vises i oppskriftsvisningen og kan omfatte porter, utvidelser, Robotics-komponenter og lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "En presis logikkrets er enklere å sette sammen når redstone har blitt overtalt til å bli i ett nøye produsert stykke.",
+      "Diamond Chipset er det høyeste standardbrikkesettet for avanserte portutvidelser og presisjonsmaskiner.",
+      "<bold>Tips:</bold> Kontroller både oppskrifter og bruksområder før masseproduksjon. Silicon-deler deles ofte av flere maskiner, porter og robotoppgraderinger.",
+      "Montering",
+      "Produser dette brikkesettet i et Assembly Table med laserenergi. De nøyaktige bruksområdene vises i oppskriftsvisningen og kan omfatte porter, utvidelser, Robotics-komponenter og lasermaskiner."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "En pålitelig klokke er ofte mer nyttig enn en komplisert.",
+      "Denne utløseren pulserer én gang hvert 5. sekund mens en Timer er festet til røret.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Timer-puls",
+      "Utløseren blir aktiv på verdensticks som er delelige med 100. Koble den til porthandlinger som skal gjentas med et fast intervall."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "En pålitelig klokke er ofte mer nyttig enn en komplisert.",
+      "Denne utløseren pulserer én gang hvert 10. sekund mens en Timer er festet til røret.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Timer-puls",
+      "Utløseren blir aktiv på verdensticks som er delelige med 200. Koble den til porthandlinger som skal gjentas med et fast intervall."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "En pålitelig klokke er ofte mer nyttig enn en komplisert.",
+      "Denne utløseren pulserer én gang hvert 15. sekund mens en Timer er festet til røret.",
+      "<bold>Tips:</bold> Koble først utløseren til en midlertidig lampe. Når aktiv og inaktiv tilstand er bekreftet, kan du sende det samme signalet videre til maskineriet.",
+      "Timer-puls",
+      "Utløseren blir aktiv på verdensticks som er delelige med 300. Koble den til porthandlinger som skal gjentas med et fast intervall."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Wood Power trekker MJ fra kompatible produsenter ved siden av og fører den inn i energirørnettet.",
+      "<bold>Tips:</bold> Bruk én treuttrekksforbindelse per planlagt kilde, og unngå lukkede løkker. Kontroller at kilden trygt kan levere ønsket MJ-rate.",
+      "Mekanikk for energirør",
+      "Standard overføringsgrense er 16 MJ per tick. Wooden Power Pipes kobler ikke direkte til et annet treuttrekksrør.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Cobblestone Power er det grunnleggende energitransportrøret med lav kapasitet.",
+      "<bold>Tips:</bold> Velg rørnivåer etter både gjennomstrømning og nettverksoppsett. Et segment på lavt nivå kan begrense en ellers oppgradert energilinje.",
+      "Mekanikk for energirør",
+      "Standard overføringsgrense er 4 MJ per tick. Det kobler ikke til Stone Power Pipes, slik at nabolinjer kan holdes adskilt.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Stone Power er et generelt energitransportrør med lav kapasitet.",
+      "<bold>Tips:</bold> Velg rørnivåer etter både gjennomstrømning og nettverksoppsett. Et segment på lavt nivå kan begrense en ellers oppgradert energilinje.",
+      "Mekanikk for energirør",
+      "Standard overføringsgrense er 8 MJ per tick. Det kobler ikke til Cobblestone Power Pipes.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Sandstone Power transporterer energi mellom rør uten å koble direkte til nabomaskiner.",
+      "<bold>Tips:</bold> Bruk Sandstone Power Pipes nær maskiner som ikke skal kobles direkte til linjen. Kontroller at den planlagte rør-til-rør-stammen forblir sammenhengende.",
+      "Mekanikk for energirør",
+      "Standard overføringsgrense er 16 MJ per tick. Bruk det til å føre en linje forbi maskiner som ikke skal bli energiendepunkter.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Quartz Power er et transportrør med middels kapasitet, adskilt fra familiene av stein- og brosteinsrør.",
+      "<bold>Tips:</bold> Bruk forskjellige materialer til å merke separate spennings- eller arbeidsbelastningssoner, selv når gjennomstrømningen er lik.",
+      "Mekanikk for energirør",
+      "Standard overføringsgrense er 32 MJ per tick.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Gold Power er et energitransportrør med høy kapasitet.",
+      "<bold>Tips:</bold> Oppgrader lange eller tungt belastede stamlinjer først. Korte grener som mater én maskin, har ofte ingen fordel av samme nivå.",
+      "Mekanikk for energirør",
+      "Standard overføringsgrense er 64 MJ per tick.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Iron Power er en konfigurerbar energibegrenser.",
+      "<bold>Tips:</bold> Kontroller retningsbestemte energiutganger på nytt etter at røret er rotert eller flyttet. Én feil side kan sulte en hel gren.",
+      "Mekanikk for energirør",
+      "Full overføringsgrense er 32 MJ per tick. Bruk en Wrench til å halvere grensen gjentatte ganger ned til en sekstifjerdedel, deaktiver deretter overføringen helt før den går tilbake til full effekt.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Diamond Power er en konfigurerbar energibegrenser med svært høy kapasitet.",
+      "<bold>Tips:</bold> Bruk Diamond Power Pipes til stamlinjer og forgreningspunkter med høy etterspørsel, ikke som erstatning for balansering av forbrukerne på hver gren.",
+      "Mekanikk for energirør",
+      "Full overføringsgrense er 256 MJ per tick. Bruk en Wrench til å halvere grensen gjentatte ganger eller deaktivere overføringen helt.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Energi er bare nyttig etter at den når maskinen som skulle motta den.",
+      "Diamond Wood Power er et treuttrekksrør med høy kapasitet.",
+      "<bold>Tips:</bold> Koble uttrekk med høy kapasitet bare til kilder og nettverk som er konstruert for det. Test grenen med en kontrollert forbruker før full produksjon.",
+      "Mekanikk for energirør",
+      "Standard overføringsgrense er 256 MJ per tick. Som det vanlige Wooden Power Pipe mottar det MJ fra kompatible produsenter og kobler ikke til et annet treuttrekksrør.\n\nEnergi som kommer inn i et knutepunkt, fordeles proporsjonalt mellom utganger som ber om den. En seksjon godtar ikke mer enn sin nåværende frie kapasitet, og nettverket bevarer energi som ikke ble godtatt, i stedet for å duplisere eller forkaste den under normal overføring.\n\nBruk Pipe Plugs eller mal naborør i forskjellige farger for å hindre uønskede forbindelser. Grenser for energirør konfigureres når nettverket endres og gjenopprettes etter at en verden er lastet."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Et trerør er utmerket til å flytte gjenstander og langt mindre utmerket til å holde vann inni seg.",
+      "Pipe Sealant er en crafting-komponent som brukes til å omdanne transportmaterialer til komponenter for væskerør.",
+      "<bold>Tips:</bold> Kontroller både Oppskrifter- og Bruksområder-delen før masseproduksjon; denne gjenstanden kan være en mellomkomponent for flere senere maskiner.",
+      "Crafting av væskerør",
+      "Bruk Pipe Sealant i oppskriftene som vises i guiden, for å lage eller oppgradere Fluid Pipes. Det har ingen egen transportatferd og forbrukes som crafting-materiale."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "En buffer er mest nyttig når den vet hvilke gjenstander som faktisk er velkomne inni den.",
+      "Filtered Buffer er en beholdning med ni felt der de virkelige feltene styres av tilsvarende fantomfiltre.",
+      "<bold>Tips:</bold> Bruk Filtered Buffer mellom raske rør og langsommere maskiner. Den jevner ut topper og gir filtrene en stabil beholdning å arbeide mot.",
+      "Filtrering",
+      "Konfigurer de ni fantomfilterfeltene i grensesnittet. Hvert tilsvarende virkelig beholdningsfelt godtar bare gjenstanden som er valgt av filteret. Rør og andre gjenstandsbehandlere kan sette inn i eller trekke ut fra den virkelige beholdningen gjennom den eksponerte gjenstandsfunksjonen.\n\nBruk bufferen mellom sorteringstrinn for å reservere egne lagerplasser til forskjellige gjenstander og hindre uvedkommende stabler i å komme inn på linjen."
+    ],
+    "buildcraftenergy/item/oil": [
+      "En mørk væske som bobler opp av bakken, er enten en verdifull energiressurs eller et svært kostbart miljøproblem.",
+      "Oil er det naturlig genererte startmaterialet i BuildCrafts brenselbehandlingskjede.",
+      "<bold>Tips:</bold> Hold rå Oil i sin egen tank, og la det være plass til mellomprodukter før et automatisk raffineri startes.",
+      "Samle Oil",
+      "Oil-forekomster genereres i verden og kan samles med Buckets, en Pump eller andre kompatible væskebehandlere. Oppbevar den i Tanks og flytt den med Fluid Pipes.",
+      "Bruk og raffinering",
+      "Cool Oil er et skittent drivstoff for Combustion Engine som produserer 3 MJ/t og Residue. Raffinering er vanligvis mer verdifullt.\n\nDistiller bruker gjeldende temperatur til å velge rute: Cool Oil skilles i Gaseous Fuel og Heavy Oil; Hot Oil i Mixed Light Fuel og Dense Oil; Searing Oil i Distilled Oil og Residue."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Enhver elegant raffineringskjede produserer til slutt noe klebrig som ingen ønsket å lagre.",
+      "Residue er det tunge biproduktet fra skitne drivstoffer og flere destillasjonsruter ved høy temperatur.",
+      "<bold>Tips:</bold> Residue er et ekte utgangsprodukt, ikke avfall som kan ignoreres. Sørg for en egen tank eller kontrollert avfallsrute, slik at raffineringen ikke stopper.",
+      "Produksjon",
+      "Crude Oil, Heavy Oil og Dense Oil produserer Residue når de brennes i en Combustion Engine. Det er også væskeutgangen fra flere Searing-destillasjonsoppskrifter.\n\nResidue er ikke registrert som drivstoff for Combustion Engine. Tøm det fra motorer og maskiner med Fluid Pipes eller beholdere, slik at Residue-tanker ikke blokkeres.",
+      "Temperatur",
+      "Som de andre oljeproduktene i BuildCraft har Residue tilstandene Cool, Hot og Searing og kan utveksle varme i en Heat Exchanger. I det nåværende prosjektet er det først og fremst et biprodukt og en transportabel prosessvæske."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "De lettere fraksjonene har forlatt tanken. Det som er igjen, er fortsatt energirikt, men betydelig mindre samarbeidsvillig.",
+      "Heavy Oil er et skittent mellomdrivstoff som produseres ved destillasjon av Cool Oil.",
+      "<bold>Tips:</bold> Merk Heavy Oil-linjer tydelig, og hold dem adskilt fra drivstoffer; mellomvæsker kan se like ut i rør og tanker.",
+      "Drivstoff",
+      "Heavy Oil brenner i en Combustion Engine med 2 MJ/t og produserer Residue. Det kan brukes direkte, men videre raffinering gir renere produkter.",
+      "Raffinering",
+      "Hot Heavy Oil destilleres til Light Fuel og Dense Oil. Searing Heavy Oil destilleres til Mixed Heavy Fuel og Residue. Bruk en Heat Exchanger til å velge nødvendig temperatur før væsken sendes til Distiller."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Dense Oil inneholder delen av den opprinnelige blandingen som sterkt motsetter seg å bevege seg raskt gjennom maskiner.",
+      "Dense Oil er et skittent mellomdrivstoff som fås fra Hot Oil eller Hot Distilled Oil.",
+      "<bold>Tips:</bold> Oppbevar Dense Oil separat til neste behandlingstrinn er klart. Mating til feil temperaturtrinn sløser med raffineringskapasitet.",
+      "Drivstoff",
+      "Dense Oil brenner med 4 MJ/t i en Combustion Engine og produserer Residue. Den høyere effekten er nyttig når umiddelbar energi er viktigere enn ren drift.",
+      "Raffinering",
+      "Varm Dense Oil til Searing-tilstanden og destiller den for å skille Dense Fuel fra Residue. Dette er siste raffineringssteg for denne grenen av behandlingskjeden."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Første passering fjernet de verste urenhetene. Flere nyttige fraksjoner deler fortsatt samme tank.",
+      "Distilled Oil er et rentbrennende mellomprodukt som inneholder gassformige, lette og tette drivstofffraksjoner.",
+      "<bold>Tips:</bold> Distilled Oil er et mellomprodukt. Buffer det slik at den foregående Distiller kan fortsette mens etterfølgende kjøling eller raffinering tar pause.",
+      "Drivstoff",
+      "Distilled Oil brenner uten Residue med 1 MJ/t. Den direkte effekten er beskjeden, men det er et fleksibelt råstoff for videre separasjon.",
+      "Raffinering",
+      "Cool Distilled Oil destilleres til Gaseous Fuel og Mixed Heavy Fuel. Hot Distilled Oil destilleres til Mixed Light Fuel og Dense Fuel. Endre temperaturen i en Heat Exchanger før neste rute velges."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Den letteste fraksjonen er ivrig etter å forlate både Distiller og ethvert dårlig planlagt rørnett.",
+      "Gaseous Fuel er det raffinerte drivstoffet med høyest effekt for Combustion Engine og produserer 8 MJ/t uten Residue.",
+      "<bold>Tips:</bold> Reserver verdifullt drivstoff for motorer som kan bruke det effektivt, og sørg for automatisk avstenging når forbrukeren stopper.",
+      "Produksjon",
+      "Gaseous Fuel er topputgangen fra destillasjon av Cool Oil, Cool Distilled Oil eller Cool Mixed Light Fuel. Det har formene Cool, Hot og Searing for transport gjennom Heat Exchanger, selv om videre destillasjon ikke er nødvendig.",
+      "Energi",
+      "Bruk det når en maskin trenger størst mulig øyeblikkelig effekt fra én Combustion Engine. Høy effekt tilfører også varme raskt, så oppretthold en pålitelig kjølevæskeforsyning og en MJ-forbruker som kan ta imot energien."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Light Fuel er den fornuftige mellomveien mellom et kort energisk utbrudd og et fat som varer hele uken.",
+      "Light Fuel er et rent raffinert drivstoff som produserer 6 MJ/t i en Combustion Engine.",
+      "<bold>Tips:</bold> Bruk separate drivstofftanker for hver kvalitet. Det gjør motorens driftstid og raffineriets gjennomstrømning enklere å sammenligne.",
+      "Produksjon",
+      "Destiller Cool Mixed Light Fuel, Hot Heavy Oil eller Hot Mixed Heavy Fuel for å få Light Fuel. Det produserer ikke Residue når det brennes.",
+      "Energi",
+      "Light Fuel kombinerer høy effekt med ren drift. Hold motoren avkjølt, og sørg for at det tilkoblede MJ-nettverket kan ta imot 6 MJ hvert tick."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Dense Fuel verdsetter utholdenhet fremfor entusiasme og holder gjerne en motor i gang lenge.",
+      "Dense Fuel er et rent raffinert drivstoff som produserer 4 MJ/t med lang brenntid.",
+      "<bold>Tips:</bold> Dense Fuel er verdifullt nok til å rettferdiggjøre bufret levering og en utløser for motorstans før drift uten tilsyn.",
+      "Produksjon",
+      "Hot Distilled Oil, Hot Mixed Heavy Fuel og Searing Dense Oil kan produsere Dense Fuel. Dense Oil-ruten skiller også ut Residue som sitt andre produkt.",
+      "Energi",
+      "Dense Fuel brenner uten å skape Residue. Moderat effekt og høy total energi gjør det egnet til vedvarende maskindrift fremfor korte topplaster."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "To nyttige drivstoffer deler én tank. Distiller kan avgjøre eierskapstvisten.",
+      "Mixed Light Fuel er et rent mellomprodukt og et brukbart drivstoff på 3 MJ/t for Combustion Engine.",
+      "<bold>Tips:</bold> Behandle blandede drivstoffer som separate produkter, og unngå å koble dem tilbake til linjer med mellomoljer.",
+      "Produksjon",
+      "Hot Oil og Hot Distilled Oil produserer Mixed Light Fuel som gassformig utgang. Det inneholder gassformige og lette drivstofffraksjoner.",
+      "Raffinering",
+      "Destiller Cool Mixed Light Fuel for å skille Gaseous Fuel og Light Fuel. Det kan også brennes direkte uten å produsere Residue."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Lett og tett drivstoff kan dele tank, men separering gjør de forskjellige styrkene enklere å bruke.",
+      "Mixed Heavy Fuel er et rent mellomprodukt og et brukbart drivstoff på 5 MJ/t for Combustion Engine.",
+      "<bold>Tips:</bold> Buffer tungt blandet drivstoff nær forbrukerne, men hold hovedutgangene fra raffineriet adskilt for enklere feilsøking.",
+      "Produksjon",
+      "Cool Distilled Oil og Searing Heavy Oil kan produsere Mixed Heavy Fuel. Det inneholder lette og tette drivstofffraksjoner.",
+      "Raffinering",
+      "Destiller Hot Mixed Heavy Fuel for å skille Light Fuel og Dense Fuel. Direkte forbrenning av blandingen skaper ingen Residue og gir en effekt mellom de to sluttproduktene."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Å sortere bier etter farge ville aldri bli presist nok for en seriøs bigård.",
+      "Apiarist's Pipe er et Forestry-kompatibelt gjenstandsrør som ruter genetiske gjenstander med et eget filter for hver side.",
+      "<bold>Tips:</bold> Bruk et Apiarist's Pipe ved et eget knutepunkt for bibehandling. Behold en vanlig overløpsrute slik at uventede bietyper ikke blokkerer nettverket.",
+      "Genetiske filtre",
+      "Åpne røret for å konfigurere hver utgangsside. Forestrys filterregler kan matche genetiske gjenstander etter art, artsfamilie og livsstadium. Opptil tre valgte arter kan tildeles en side, og hver oppføring kan aktiveres eller deaktiveres uavhengig.\n\nGjenstander rutes gjennom den første kompatible utgangen i henhold til de konfigurerte Forestry-reglene. Utganger uten en aktiv passende regel tar ikke den genetiske gjenstanden. Røret kan males og kobles som andre BuildCraft-gjenstandsrør.\n\nDenne siden lastes bare når Forestry er installert og kompatibilitetsgjenstanden er registrert."
+    ]
+  }
+}

@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "hr_hr",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "U pokušaju stvaranja jednostavne automatizacije pronašli ste koristan dio: zupčanik koji se može okretati!\nBudući da je izrađen samo od drva, mora se unaprijediti za zahtjevnije zadatke...",
+      "Drveni zupčanik prvi je korak izrade pri ulasku u BuildCraft i služi kao osnova za mnoge stvari.",
+      "<bold>Savjet:</bold> Izrađujte drvene zupčanike u planiranim serijama. Zupčanici više razine troše prethodnu razinu, zato sačuvajte nekoliko zupčanika niže razine za strojeve i alate."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Drvo se pokazalo neprikladnim za prave strojeve, pa odlučujete napraviti novi zupčanik od kamena.\nDodatna je prednost što se uopće ne može zapaliti.",
+      "Kameni zupčanik u osnovi je nadogradnja drvenog zupčanika i zbog tvrdoće kamena služi za izradu snažnijih strojeva.",
+      "<bold>Savjet:</bold> Izrađujte kamene zupčanike u planiranim serijama. Zupčanici više razine troše prethodnu razinu, zato sačuvajte nekoliko zupčanika niže razine za strojeve i alate."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Kamen je koristan za jednostavne strojeve, ali ne podnosi dobro velika opterećenja i temperature u motorima i složenim strojevima.\nŽeljezo je mnogo prikladnije za takve zahtjevnije zadatke.",
+      "Ponovnom nadogradnjom zupčanika možete izrađivati složenije strojeve zahvaljujući svojstvima metala.",
+      "<bold>Savjet:</bold> Izrađujte željezne zupčanike u planiranim serijama. Zupčanici više razine troše prethodnu razinu, zato sačuvajte nekoliko zupčanika niže razine za strojeve i alate."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Složeniji zadaci zahtijevaju mnogo vrlo malih zupčanika koji se međusobno zahvaćaju, a željezni se zupčanici pri takvoj uporabi lako lome.\nZlato se ne lomi kada se oblikuje u sitne zupčanike, pa se može koristiti u složenim mehanizmima.",
+      "Zlatni zupčanik sljedeća je razina zupčanika i koristi se u strojevima koji rade na velikim područjima.",
+      "<bold>Savjet:</bold> Izrađujte zlatne zupčanike u planiranim serijama. Zupčanici više razine troše prethodnu razinu, zato sačuvajte nekoliko zupčanika niže razine za strojeve i alate."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Duboko u svojim rudarskim iskopima otkrivate najrjeđi, ali i najčvršći materijal: dijamante.\nZahvaljujući svojoj čvrstoći, dijamantni zupčanici mogu obavljati najzahtjevnije zadatke bez lomljenja i trošenja.",
+      "Dijamantni zupčanik posljednja je i najčvršća razina zupčanika, potrebna za najsloženije strojeve.",
+      "<bold>Savjet:</bold> Izrađujte dijamantne zupčanike u planiranim serijama. Zupčanici više razine troše prethodnu razinu, zato sačuvajte nekoliko zupčanika niže razine za strojeve i alate."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Stvaranje i uporaba strojeva vrlo su korisni, ali ponekad je potrebno promijeniti njihov način rada ili ih okrenuti u drugom smjeru.\nKljuč je rješenje: jednim udarcem može promijeniti stanje stroja ili mnogih drugih blokova.",
+      "Ključ je osnovni alat kojim se klikom okreću i podešavaju blokovi, strojevi i neki entiteti.",
+      "<bold>Savjet:</bold> Nosite ključ dok sastavljate strojarnicu. Mnogi BuildCraft blokovi i usmjerene cijevi mogu se okretati ili ponovno podešavati bez razbijanja."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Količina boja i šarenila u svijetu doista je zadivljujuća, ali zamislite da jednim potezom možete promijeniti boju određenih blokova.\nBojanje blokova lijepo je za ukrašavanje, ali može imati i praktičnu namjenu, primjerice za odvajanje cijevi.",
+      "Kistovima se razni blokovi mogu obojiti u jednu od 16 boja.\nBojanje bloka obično služi samo ukrašavanju, ali neki blokovi nakon bojanja dobivaju posebna svojstva.\nPrimjerice, cijevi se neće povezati s drugim cijevima ako su obojene različitim bojama.",
+      "<bold>Savjet:</bold> Držite odvojene kistove za trajne mreže cijevi. Obično je lakše održavati sustav ako obojite samo grane koje se ne smiju povezati nego svaku cijev."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Precizna kontrola područja na kojem strojevi rade ključna je u svakom velikom inženjerskom projektu, pa vam je potreban odgovarajući alat.",
+      "Povezivač oznaka služi za promjenu veličine okvira volumena ili smjera povezane oznake putanje.",
+      "<bold>Savjet:</bold> Povežite oznake tek kada se sve krajnje točke nalaze na konačnim položajima. Brže je ponovno povezati dovršen oblik nego poslije popravljati iskrivljeno ili nepotpuno područje.",
+      "Informacije",
+      "Za uporabu povezivača oznaka držite ga u ruci i kliknite bilo koji laserski okvir koji želite prilagoditi, a zatim pomičite pokazivač kako biste ga podesili. Kliknite ponovno da biste završili prilagodbu.\nLaserski okvir možete ukloniti Shift-klikom dok držite povezivač oznaka."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Ravne linije korisne su, ali veliki projekti često trebaju rutu koja zaobilazi teren i strojeve.",
+      "Oznake putanje određuju uređenu rutu za strojeve koji podržavaju rad duž putanje.",
+      "<bold>Savjet:</bold> Postavite oznake putanje redoslijedom kretanja i držite svaki odsječak slobodnim. Korisno je isprobati kratku putanju prije nego što joj dodijelite robote ili automatizirane graditelje.",
+      "Stvaranje putanje",
+      "Postavite oznake putanje na točke kroz koje ruta treba prolaziti. Povežite ih redom pomoću povezivača oznaka. Vidljiva laserska linija prikazuje putanju koju će slijediti kompatibilni Builder ili drugi stroj.\n\nPutanja je usmjerena: redoslijed povezivanja oznaka određuje redoslijed točaka. Razbijte ili ponovno povežite oznake kako biste promijenili rutu.",
+      "Uporaba putanje",
+      "Postavite kompatibilni stroj uz jednu od povezanih oznaka putanje. Stroj čita cijelu povezanu rutu i ponavlja svoj rad na svakom položaju duž putanje."
+    ],
+    "buildcraftcore/item/list": [
+      "Devet mjesta za filtre nije od velike pomoći kada sustav za razvrstavanje mora prepoznati cijelu radionicu povezanih materijala.",
+      "Popis sprema filtre predmeta koji se mogu ponovno upotrebljavati u cijevima, logičkim vratima i robotskim stanicama.",
+      "<bold>Savjet:</bold> Koristite popise za višekratne filtre koje dijeli više dijamantnih cijevi ili logičkih vrata. Sigurnije je ažurirati jedan popis nego uređivati mnogo pojedinačnih mjesta za filtre.",
+      "Uređivanje popisa",
+      "Držite popis i kliknite desnom tipkom da biste ga otvorili. Dodijelite mu naziv, postavite referentne predmete u prividna mjesta i odaberite način usporedbe svake stavke.\n\nTočno podudaranje zadržava podatke predmeta i druge važne pojedinosti. Širi načini mogu podudarati povezane vrste predmeta ili materijale ako to podržava trenutačni registar predmeta.",
+      "Uporaba popisa",
+      "Postavite podešeni popis u mjesto za parametar ili filtar koje ga prihvaća. Cijev, logička vrata ili robotska radnja koja ga prima tretira stavke kao jedan višekratni filtar. Popis se ne troši pri uporabi kao filtar."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "U potrazi za energijom otkrili ste način stvaranja male količine energije samo pomoću redstone signala.",
+      "Redstone motor osnovni je motor kojem je za rad potreban samo redstone signal. Proizvodi tek vrlo malu količinu energije.",
+      "<bold>Savjet:</bold> Redstone motor najbolje služi za izvlačenje s malom potrošnjom i za logička vrata. Ne može zamijeniti snažniji motor kada stroj ima značajan zahtjev za MJ po ticku.",
+      "Informacije",
+      "Zbog male količine MJ koju proizvode prikladni su samo za jednostavne uređaje, poput cijevi za izvlačenje ili pumpi.",
+      "Mehanika motora",
+      "BuildCraft motori imaju pet temperaturnih stupnjeva koji određuju brzinu rada: plavi, zeleni, žuti, crveni i crni.\nZa razliku od snažnijih motora, redstone motori <bold>ne mogu se pregrijati</bold>. Kada energija nema kamo otići, postaju crni i nastavljaju raditi.\nMotori se uvijek povezuju s najbližim kompatibilnim potrošačem MJ-a, ali redstone motori ne povezuju se s kinesis cijevima i povezuju se samo s određenim strojevima.\nKljučem možete okrenuti motor i promijeniti blok koji napaja.\n\nKao i svi motori, <bold>za rad zahtijeva redstone signal.</bold>\nLogička vrata mogu otkriti temperaturne stupnjeve motora i pomoći pri njegovu upravljanju."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Bez obzira na okolnosti, ovaj je okidač uvijek uključen.",
+      "Uvijek uključeno okidač je logičkih vrata dostupan na svim postavljenim logičkim vratima.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane su radnje uvijek aktivirane."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Primaju li logička vrata redstone signal?",
+      "Redstone signal uključen okidač je logičkih vrata dostupan na svim postavljenim logičkim vratima.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane se radnje aktiviraju samo kada blok na kojem su vrata postavljena prima redstone signal.",
+      "Parametri",
+      "Kada je odabrano Redstone signal uključen, a ugrađena logička vrata imaju dostupne parametre, Samo strana vrata postaje dostupna kao parametar.\nOdabirom Samo strana vrata provjerava se prima li redstone signal samo strana na kojoj su vrata postavljena."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Ne primaju li logička vrata redstone signal?",
+      "Redstone signal isključen okidač je logičkih vrata dostupan na svim postavljenim logičkim vratima.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane se radnje aktiviraju samo kada blok na kojem su vrata postavljena ne prima redstone signal.",
+      "Parametri",
+      "Kada je odabrano Redstone signal isključen, a ugrađena logička vrata imaju dostupne parametre, Samo strana vrata postaje dostupna kao parametar.\nOdabirom Samo strana vrata provjerava se samo da strana na kojoj su vrata postavljena ne prima redstone signal."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Kad bi barem postojao način da se provjeri je li škrinja prazna.",
+      "Inventar prazan okidač je logičkih vrata dostupan na svim vratima uz koja se nalazi inventar.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane se radnje aktiviraju samo kada sva mjesta povezanog inventara sadrže nula predmeta.",
+      "Smjerovi okidača",
+      "Logička vrata mogu više puta prikazati okidač Inventar prazan u različitim bojama kako bi predstavila svaki povezani inventar.\nBoja okidača označava smjer inventara u odnosu na cijev, pa možete razlikovati svaki inventar."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Sadrži li susjedna škrinja ovaj predmet?",
+      "Predmeti u inventaru okidač je logičkih vrata dostupan na svim vratima uz koja se nalazi inventar.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane se radnje aktiviraju samo kada povezani inventar sadrži predmete.",
+      "Parametri",
+      "Kada je odabrano Predmeti u inventaru, a ugrađena logička vrata imaju dostupne parametre, mjesta za filtre pokraj njega postaju dostupna kao parametar.\nPostavljanjem predmeta u mjesta za filtre možete prije aktiviranja provjeriti sadrži li inventar neki od odabranih predmeta.",
+      "Smjerovi okidača",
+      "Logička vrata mogu više puta prikazati okidač Predmeti u inventaru u različitim bojama kako bi predstavila svaki povezani inventar.\nBoja okidača označava smjer inventara u odnosu na cijev, pa možete razlikovati svaki inventar."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Ima li susjedna škrinja mjesta za još predmeta?",
+      "Prostor u inventaru okidač je logičkih vrata dostupan na svim vratima uz koja se nalazi inventar.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane se radnje aktiviraju samo kada povezani inventar ima prazna mjesta koja mogu prihvatiti predmete.",
+      "Parametri",
+      "Kada je odabrano Prostor u inventaru, a ugrađena logička vrata imaju dostupne parametre, mjesta za filtre pokraj njega postaju dostupna kao parametar.\nPostavljanjem predmeta u mjesta za filtre možete prije aktiviranja provjeriti ima li inventar praznih ili nepotpunih mjesta koja mogu prihvatiti odabrane predmete.",
+      "Smjerovi okidača",
+      "Logička vrata mogu više puta prikazati okidač Prostor u inventaru u različitim bojama kako bi predstavila svaki povezani inventar.\nBoja okidača označava smjer inventara u odnosu na cijev, pa možete razlikovati svaki inventar."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Kad bi barem postojao način da se provjeri je li škrinja puna.",
+      "Inventar pun okidač je logičkih vrata dostupan na svim vratima uz koja se nalazi inventar.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane se radnje aktiviraju samo kada svako mjesto povezanog inventara sadrži predmet.",
+      "Smjerovi okidača",
+      "Logička vrata mogu više puta prikazati okidač Inventar pun u različitim bojama kako bi predstavila svaki povezani inventar.\nBoja okidača označava smjer inventara u odnosu na cijev, pa možete razlikovati svaki inventar."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Ima li škrinja manje od 25 % predmeta koje bi mogla sadržavati?",
+      "Sadrži manje od 25 % okidač je vrata dostupan na svim vratima uz koja je postavljen inventar.",
+      "<bold>Savjet:</bold> Koristite pragovne okidače uzlaznim redoslijedom i privremenom svjetiljkom provjerite točnu granicu. Tako se susjedna pravila za 25 %, 50 % i 75 % neće međusobno nadmetati.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je povezani inventar popunjen manje od 25 %.",
+      "Parametri",
+      "Kada je odabrano Sadrži manje od 25 %, a ugrađena vrata imaju dostupne parametre, utori filtra pokraj njega postaju dostupni kao parametar.\nPostavljanjem predmeta u utore filtra možete prije aktiviranja provjeriti sadrži li inventar manje od 25 % predmeta odabranih u utorima filtra.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Sadrži manje od 25 % više puta u različitim bojama, po jednom za svaki povezani inventar.\nBoja okidača označava smjer inventara u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Ima li škrinja manje od 50 % predmeta koje bi mogla sadržavati?",
+      "Sadrži manje od 50 % okidač je vrata dostupan na svim vratima uz koja je postavljen inventar.",
+      "<bold>Savjet:</bold> Koristite pragovne okidače uzlaznim redoslijedom i privremenom svjetiljkom provjerite točnu granicu. Tako se susjedna pravila za 25 %, 50 % i 75 % neće međusobno nadmetati.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je povezani inventar popunjen manje od 50 %.",
+      "Parametri",
+      "Kada je odabrano Sadrži manje od 50 %, a ugrađena vrata imaju dostupne parametre, utori filtra pokraj njega postaju dostupni kao parametar.\nPostavljanjem predmeta u utore filtra možete prije aktiviranja provjeriti sadrži li inventar manje od 50 % predmeta odabranih u utorima filtra.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Sadrži manje od 50 % više puta u različitim bojama, po jednom za svaki povezani inventar.\nBoja okidača označava smjer inventara u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Ima li škrinja manje od 75 % predmeta koje bi mogla sadržavati?",
+      "Sadrži manje od 75 % okidač je vrata dostupan na svim vratima uz koja je postavljen inventar.",
+      "<bold>Savjet:</bold> Koristite pragovne okidače uzlaznim redoslijedom i privremenom svjetiljkom provjerite točnu granicu. Tako se susjedna pravila za 25 %, 50 % i 75 % neće međusobno nadmetati.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je povezani inventar popunjen manje od 75 %.",
+      "Parametri",
+      "Kada je odabrano Sadrži manje od 75 %, a ugrađena vrata imaju dostupne parametre, utori filtra pokraj njega postaju dostupni kao parametar.\nPostavljanjem predmeta u utore filtra možete prije aktiviranja provjeriti sadrži li inventar manje od 75 % predmeta odabranih u utorima filtra.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Sadrži manje od 75 % više puta u različitim bojama, po jednom za svaki povezani inventar.\nBoja okidača označava smjer inventara u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Je li spremnik pokraj vrata prazan?",
+      "Prazan spremnik okidač je vrata dostupan na svim vratima uz koja je postavljen spremnik.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada svi povezani spremnici ne sadrže nimalo tekućine.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Prazan spremnik više puta u različitim bojama, po jednom za svaki povezani spremnik.\nBoja okidača označava smjer spremnika u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Sadrži li susjedni spremnik ikakvu tekućinu?",
+      "Tekućina u spremniku okidač je vrata dostupan na svim vratima uz koja je postavljen spremnik.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada povezani spremnik sadrži tekućinu.",
+      "Parametri",
+      "Kada je odabrana Tekućina u spremniku, a ugrađena vrata imaju dostupne parametre, utori filtra pokraj njega postaju dostupni kao parametar.\nPostavljanjem spremnika tekućine u utor filtra možete prije aktiviranja provjeriti sadrži li spremnik tekućinu odabranu u filtru.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Tekućina u spremniku više puta u različitim bojama, po jednom za svaki povezani spremnik.\nBoja okidača označava smjer spremnika u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Ima li spremnik pokraj vrata mjesta za još tekućine?",
+      "Mjesto za tekućinu okidač je vrata dostupan na svim vratima uz koja je postavljen spremnik.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada povezani spremnik ima mjesta za primanje dodatne tekućine.",
+      "Parametri",
+      "Kada je odabrano Mjesto za tekućinu, a ugrađena vrata imaju dostupne parametre, utor filtra pokraj njega postaje dostupan kao parametar.\nPostavljanjem spremnika tekućine u utor filtra možete prije aktiviranja provjeriti postoji li spremnik koji može prihvatiti tekućinu odabranu u filtru.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Mjesto za tekućinu više puta u različitim bojama, po jednom za svaki povezani spremnik.\nBoja okidača označava smjer spremnika u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Je li spremnik pokraj vrata pun?",
+      "Pun spremnik okidač je vrata dostupan na svim vratima uz koja je postavljen spremnik.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada susjedni spremnik više nema mjesta za tekućinu.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Pun spremnik više puta u različitim bojama, po jednom za svaki povezani spremnik.\nBoja okidača označava smjer spremnika u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Sadrži li spremnik pokraj vrata manje od četvrtine svojeg kapaciteta?",
+      "Sadrži manje od 25 % okidač je vrata dostupan na svim vratima uz koja je postavljen spremnik.",
+      "<bold>Savjet:</bold> Koristite pragovne okidače uzlaznim redoslijedom i privremenom svjetiljkom provjerite točnu granicu. Tako se susjedna pravila za 25 %, 50 % i 75 % neće međusobno nadmetati.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je povezani spremnik popunjen manje od 25 %.",
+      "Parametri",
+      "Kada je odabrano Sadrži manje od 25 %, a ugrađena vrata imaju dostupne parametre, utor filtra pokraj njega postaje dostupan kao parametar.\nPostavljanjem spremnika tekućine u utor filtra možete prije aktiviranja provjeriti ima li spremnik manje od 25 % tekućine odabrane u filtru.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Sadrži manje od 25 % više puta u različitim bojama, po jednom za svaki povezani spremnik.\nBoja okidača označava smjer spremnika u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Sadrži li spremnik pokraj vrata manje od polovice svojeg kapaciteta?",
+      "Sadrži manje od 50 % okidač je vrata dostupan na svim vratima uz koja je postavljen spremnik.",
+      "<bold>Savjet:</bold> Koristite pragovne okidače uzlaznim redoslijedom i privremenom svjetiljkom provjerite točnu granicu. Tako se susjedna pravila za 25 %, 50 % i 75 % neće međusobno nadmetati.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je povezani spremnik popunjen manje od 50 %.",
+      "Parametri",
+      "Kada je odabrano Sadrži manje od 50 %, a ugrađena vrata imaju dostupne parametre, utor filtra pokraj njega postaje dostupan kao parametar.\nPostavljanjem spremnika tekućine u utor filtra možete prije aktiviranja provjeriti ima li spremnik manje od 50 % tekućine odabrane u filtru.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Sadrži manje od 50 % više puta u različitim bojama, po jednom za svaki povezani spremnik.\nBoja okidača označava smjer spremnika u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Sadrži li spremnik pokraj vrata manje od tri četvrtine svojeg kapaciteta?",
+      "Sadrži manje od 75 % okidač je vrata dostupan na svim vratima uz koja je postavljen spremnik.",
+      "<bold>Savjet:</bold> Koristite pragovne okidače uzlaznim redoslijedom i privremenom svjetiljkom provjerite točnu granicu. Tako se susjedna pravila za 25 %, 50 % i 75 % neće međusobno nadmetati.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je povezani spremnik popunjen manje od 75 %.",
+      "Parametri",
+      "Kada je odabrano Sadrži manje od 75 %, a ugrađena vrata imaju dostupne parametre, utor filtra pokraj njega postaje dostupan kao parametar.\nPostavljanjem spremnika tekućine u utor filtra možete prije aktiviranja provjeriti ima li spremnik manje od 75 % tekućine odabrane u filtru.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Sadrži manje od 75 % više puta u različitim bojama, po jednom za svaki povezani spremnik.\nBoja okidača označava smjer spremnika u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Koje je boje motor pokraj vrata? Je li plav?",
+      "Plavi motor okidač je vrata dostupan na svim vratima uz koja se nalazi motor.",
+      "<bold>Savjet:</bold> Kombinirajte okidače stanja motora s radnjom automatskog isključivanja. Vidljiva upozoravajuća svjetiljka korisna je prije nego što isti signal povjerite upravljanju gorivom ili rashladnom tekućinom.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je susjedni motor u plavoj fazi temperature.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Plavi motor više puta u različitim bojama, po jednom za svaki povezani motor.\nBoja okidača označava smjer motora u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Koje je boje motor pokraj vrata? Je li zelen?",
+      "Zeleni motor okidač je vrata dostupan na svim vratima uz koja se nalazi motor.",
+      "<bold>Savjet:</bold> Kombinirajte okidače stanja motora s radnjom automatskog isključivanja. Vidljiva upozoravajuća svjetiljka korisna je prije nego što isti signal povjerite upravljanju gorivom ili rashladnom tekućinom.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je susjedni motor u zelenoj fazi temperature.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Zeleni motor više puta u različitim bojama, po jednom za svaki povezani motor.\nBoja okidača označava smjer motora u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Koje je boje motor pokraj vrata? Je li žut?",
+      "Žuti motor okidač je vrata dostupan na svim vratima uz koja se nalazi motor.",
+      "<bold>Savjet:</bold> Kombinirajte okidače stanja motora s radnjom automatskog isključivanja. Vidljiva upozoravajuća svjetiljka korisna je prije nego što isti signal povjerite upravljanju gorivom ili rashladnom tekućinom.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je susjedni motor u žutoj fazi temperature.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Žuti motor više puta u različitim bojama, po jednom za svaki povezani motor.\nBoja okidača označava smjer motora u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Koje je boje motor pokraj vrata? Je li plav?",
+      "Crveni motor okidač je vrata dostupan na svim vratima uz koja se nalazi motor.",
+      "<bold>Savjet:</bold> Kombinirajte okidače stanja motora s radnjom automatskog isključivanja. Vidljiva upozoravajuća svjetiljka korisna je prije nego što isti signal povjerite upravljanju gorivom ili rashladnom tekućinom.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je susjedni motor u crvenoj fazi temperature.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Crveni motor više puta u različitim bojama, po jednom za svaki povezani motor.\nBoja okidača označava smjer motora u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Koje je boje motor pokraj vrata? Je li crn i pregrijava se?",
+      "Pregrijavanje motora okidač je vrata dostupan na svim vratima uz koja se nalazi motor.",
+      "<bold>Savjet:</bold> Kombinirajte okidače stanja motora s radnjom automatskog isključivanja. Vidljiva upozoravajuća svjetiljka korisna je prije nego što isti signal povjerite upravljanju gorivom ili rashladnom tekućinom.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je susjedni motor u fazi pregrijavanja.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati okidač Pregrijavanje motora više puta u različitim bojama, po jednom za svaki povezani motor.\nBoja okidača označava smjer motora u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Ima li susjedni stroj doista posla koji bi mogao obavljati?",
+      "Ima posla okidač je vrata dostupan na svim vratima postavljenima uz stroj koji bi mogao raditi.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada susjedni stroj ima posao koji može obaviti.\n\nNapomena: Ne podržavaju svi strojevi okidač Ima posla."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Je li susjedni stroj doista završio sav posao koji je mogao obaviti?",
+      "Posao završen okidač je vrata dostupan na svim vratima postavljenima uz stroj koji je završio svoj radni ciklus.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabrano, povezane radnje aktiviraju se samo kada je susjedni stroj završio sav posao koji je mogao obaviti.\n\nNapomena: Ne podržavaju svi strojevi okidač Posao završen."
+    ],
+    "buildcraftcore/action/redstone": [
+      "Kada se aktivira, emitirat će se redstone signal.",
+      "Redstone signal radnja je vrata dostupna na svim postavljenim vratima.",
+      "<bold>Savjet:</bold> Obojenom žicom cijevi odvojite ovaj signal od nepovezane automatizacije i izbjegnite povratne petlje između susjednih vrata.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, emitira redstone signal.",
+      "Parametri",
+      "Kada je odabran Redstone signal, a ugrađena vrata imaju dostupne parametre, Samo strana vrata postaje dostupan parametar.\nOdabir Samo strana vrata znači da će redstone signal biti emitiran samo s određene strane na kojoj su vrata postavljena."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Ovo će uključiti stroj.",
+      "Uključi radnja je vrata dostupna na svim vratima postavljenima uz stroj koji može raditi.",
+      "<bold>Savjet:</bold> Uparite ovu radnju s najužim korisnim okidačem i stanje isključenosti testirajte jednako pažljivo kao stanje uključenosti.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, stroj će početi raditi.\nNapomena: Ne podržavaju svi strojevi radnju Uključi.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati radnju Uključi više puta u različitim bojama, po jednom za svaki povezani stroj.\nBoja radnje označava smjer stroja u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Ovo će isključiti stroj.",
+      "Isključi radnja je vrata dostupna na svim vratima postavljenima uz stroj koji može raditi.",
+      "<bold>Savjet:</bold> Uparite ovu radnju s najužim korisnim okidačem i stanje isključenosti testirajte jednako pažljivo kao stanje uključenosti.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, stroj će prestati raditi.\nNapomena: Ne podržavaju svi strojevi radnju Isključi.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati radnju Isključi više puta u različitim bojama, po jednom za svaki povezani stroj.\nBoja radnje označava smjer stroja u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Stroj će raditi iznova i iznova.",
+      "Ponavljanje radnja je vrata dostupna na svim vratima postavljenima uz stroj koji može raditi.",
+      "<bold>Savjet:</bold> Uparite ovu radnju s najužim korisnim okidačem i stanje isključenosti testirajte jednako pažljivo kao stanje uključenosti.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, stroj će opetovano završavati svoj radni ciklus.\nNapomena: Ne podržavaju svi strojevi radnju Ponavljanje.",
+      "Smjerovi okidača",
+      "Vrata mogu prikazati radnju Ponavljanje više puta u različitim bojama, po jednom za svaki povezani stroj.\nBoja radnje označava smjer stroja u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "Peć koja pomiče klip umjesto da kuha večeru i dalje je sasvim ugledna peć.",
+      "Stirlingov motor sagorijeva uobičajena goriva za peć i proizvodi između jedne trećine i jednog MJ-a po ticku.",
+      "<bold>Savjet:</bold> Ostavite način za isključivanje Stirlingova motora kada se potrošač zaustavi. Vrata koja prate aktivnost stroja ili potražnju za energijom čine sustave bez nadzora mnogo sigurnijima.",
+      "Gorivo i izlaz",
+      "Stavite bilo koje valjano gorivo za peć u jedini utor za gorivo i dovedite redstone signal. Motor prilagođava izlaz između približno 0,33 MJ/t i 1 MJ/t prema količini MJ-a koja se već nalazi u njegovom unutarnjem spremniku od 1.000 MJ.\n\nMotor troši ista goriva za peć koja prepoznaje Minecraft. Spremnici koje gorivo vrati, poput prazne kante, ostaju dostupni u inventaru motora.",
+      "Mehanika motora",
+      "Postavite motor uz MJ prijamnik. Pri postavljanju odabire kompatibilnu izlaznu stranu; ključem ga zakrenite kada energiju treba slati s druge strane.\n\nPlava, zelena, žuta, crvena i crna faza prikazuju trenutačnu unutarnju temperaturu motora koja prati popunjenost energetskog međuspremnika. Ako je izlaz blokiran, međuspremnik se puni, motor doseže fazu pregrijavanja i prestaje proizvoditi. Uklonite redstone signal ili osigurajte odredište za pohranjeni MJ kako bi se motor ponovno ohladio."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Prerada nafte korisna je. Pretvaranje u dovoljno energije za industrijsku nesreću znatno je korisnije.",
+      "Motor s unutarnjim izgaranjem sagorijeva tekuća goriva BuildCrafta, rashladnom tekućinom nadzire toplinu i sprema talog nastao iz prljavih goriva.",
+      "<bold>Savjet:</bold> Osigurajte pouzdano hlađenje i uvjet automatskog isključivanja prije nego što motor s unutarnjim izgaranjem ostavite bez nadzora. Ispitajte cijelu opskrbu gorivom i rashladnom tekućinom pod punim opterećenjem.",
+      "Spremnici i goriva",
+      "Motor ima odvojene spremnike za gorivo, rashladnu tekućinu i talog. Cijevi za tekućinu ili spremnici mogu ih izravno puniti i prazniti. Dovedite redstone signal za sagorijevanje umetnutog goriva; izlaz ovisi o odabranom gorivu i kreće se od naftnih proizvoda male snage do Plinovitog goriva od 8 MJ/t.\n\nSirova nafta, teška nafta i gusta nafta prljava su goriva. Njihovim sagorijevanjem postupno nastaje talog, a pun spremnik taloga sprječava prihvat tog nusproizvoda. Prerađena goriva izgaraju bez taloga.",
+      "Hlađenje",
+      "Voda je standardna tekuća rashladna tvar. Led i zbijeni led također se mogu umetnuti kao krute rashladne tvari te se pretvaraju u vodu s većom snagom hlađenja. Vrući biomi ubrzavaju zagrijavanje motora i smanjuju učinkovitost hlađenja, dok hladni biomi djeluju suprotno.\n\nKada se ukloni redstone signal, motor zastaje, primjenjuje kratku kaznu hlađenja pri ponovnom pokretanju i počinje otpuštati višak topline. Osigurajte stalnu zalihu rashladne tekućine prije dugotrajnog rada s gorivima velike snage.",
+      "Mehanika motora",
+      "Postavite motor uz MJ prijamnik i po potrebi ga zakrenite ključem. Obojene faze prikazuju razinu topline. Pohranjeni MJ prenosi se samo kada ga susjedni prijamnik prihvaća; neprihvaćena energija ostaje u motoru umjesto da bude uklonjena dvaput."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Sirova nafta složena je zbirka korisnih tekućina koje samo čekaju da ih netko razdvoji.",
+      "Destilator troši MJ i razdvaja tekućinu na jedan plinoviti i jedan tekući izlaz.",
+      "<bold>Savjet:</bold> Svaki izlaz destilatora spremite u zaseban spremnik. Miješanje međutekućina ili usmjeravanje oba izlaza kroz jednu nefiltriranu liniju otežava dijagnosticiranje kasnijih faza prerade.",
+      "Priključci",
+      "Umetnite izvornu tekućinu u ulazni spremnik. Plinoviti proizvod izvlači se odozgo, a tekući odozdo. Održavajte oba izlaza slobodnima: stroj ne može završiti novu operaciju ako ijedno odredište nema mjesta.\n\nDovedite MJ preko kompatibilnog energetskog priključka. Više dostupne energije ubrzava trenutačnu operaciju, sve do ograničenja obrade stroja.",
+      "Temperatura odabire recept",
+      "Hladan, vruć i užaren oblik istog naftnog proizvoda može imati različite recepte destilacije. Izlazi zadržavaju temperaturu ulaza, pa se između faza destilacije koristi izmjenjivač topline kada sljedeći recept zahtijeva drugu razinu topline.\n\nSirova nafta može započeti tri različita puta prerade. Daljnja destilacija destilirane nafte, teške nafte, guste nafte i miješanih goriva razdvaja ih na plinovito, lako i gusto gorivo te talog."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Neki recepti zahtijevaju strpljenje, a drugi prvo zahtijevaju znatno topliju sirovinu.",
+      "Izmjenjivač topline prenosi toplinu između dviju struja tekućine i pretvara BuildCraftove tekućine između hladnog, vrućeg i užarenog stanja.",
+      "<bold>Savjet:</bold> Oko izmjenjivača topline koristite namjenske vruće i hladne vodove. Kratke i jasno označene petlje olakšavaju pronalaženje pogrešaka temperature.",
+      "Izgradnja višeblokovne strukture",
+      "Izmjenjivač topline sastoji se od početka, jednog ili više srednjih dijelova i kraja povezanih u ravnoj liniji. Mogu se upotrijebiti najviše tri srednja dijela; dodatni valjani dijelovi povećavaju količinu koju sastavljeni stroj može obraditi.",
+      "Korištenje topline",
+      "Dovedite tekućinu koja se može zagrijavati na grijaću stranu, a tekućinu koja se može hladiti na rashladnu stranu. Toplina se prenosi, a ne stvara besplatno: jedna se struja zagrijava dok se druga hladi. BuildCraftovi naftni proizvodi prelaze između hladnog, vrućeg i užarenog stanja u jedinicama recepta od deset milibucketa.\n\nVoda može upijati toplinu, dok je lava može dovoditi. Smjer tekućine i slobodan izlazni prostor određuju može li izmjenjivač nastaviti obradu.\n\nOdabrana temperatura važna je destilatoru, stoga tekućine po potrebi provedite kroz izmjenjivač topline prije sljedeće faze prerade."
+    ],
+    "buildcraftfactory/block/tank": [
+      "Dok pokušavate prikupiti tekućine pronađene u svijetu, pojavljuje se potreba za njihovim spremanjem bez kanta.",
+      "Spremnik omogućuje izravno spremanje tekućina bez potrebe za kantama i škrinjama.",
+      "<bold>Savjet:</bold> Ostavite barem jednu stranu stupa spremnika dostupnom za pregled i hitno pražnjenje. Nepovezane tekućine držite u vidljivo odvojenim skupinama spremnika.",
+      "Informacije",
+      "Svaki blok spremnika može pohraniti do 16 kanta jedne tekućine, a spremnici se mogu neograničeno slagati okomito u jedan veliki spremnik.",
+      "Kao ni škrinje, spremnici ne zadržavaju sadržaj kada se razbiju, ali ne ispuštaju ni tekućine.\n\nNemojte ih razbijati dok sadrže tekućinu jer je nećete dobiti natrag."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Ručno prikupljanje tekućina može biti zamorno i ponekad opasno, pa je potreban automatizirani način njihova prikupljanja.",
+      "Pumpa automatski prikuplja sve izvore tekućine neposredno ispod sebe i izvore povezane s njima.",
+      "<bold>Savjet:</bold> Postavite pumpu iznad stabilnog područja izvora i osigurajte izlaz dovoljnog kapaciteta prije napajanja. Začepljen vod tekućine gubi vrijeme i može zaustaviti koristan rad.",
+      "Za prikupljanje tekućine iz svijeta postavite pumpu iznad izvornog bloka željene tekućine i dovedite energiju.\nIzvori tekućine ispod bit će 'usisani' od gornjeg izvora prema dolje i automatski poslani u susjedne cijevi ili spremnike.\nPumpa tekućine u polumjeru od 64 bloka, od vrha prema dnu i od vanjskih rubova povezane tekućine prema unutra.",
+      "Mehanika stroja",
+      "Kao i većina strojeva, zahtijeva energiju. Što više energije dobiva, to brže pumpa.\nRedstone signal zaustavit će pumpu, zato pazite gdje postavljate poluge."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "Kod mnogih velikih građevinskih projekata poplavljivanje velikih područja tekućinom zamoran je zadatak koji biste rado izbjegli.",
+      "Koristi se za automatsko postavljanje tekućina u svijet bez ručnog rada kantama.",
+      "<bold>Savjet:</bold> Najprije ispitajte poplavna vrata u zatvorenom bazenu. Njihovo ponašanje postavljanja mnogo je lakše razumjeti prije spajanja na veliki spremnik ili otvoreni krajolik.",
+      "Informacije",
+      "Poplavna vrata stroj su bez potrebe za energijom koji tekućine dovedene cijevima postavlja prema dolje u svijet.",
+      "Poplavna vrata postavljaju tekućine u polumjeru od 64 bloka, od dna prema vrhu i od središta prema van."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "U pokušaju dubljeg kopanja počinjete istraživati nove strojeve i sastavljati stroj koji može automatski kopati umjesto vas.\nIma jedan nedostatak: može kopati samo ravno prema dolje i ne može razbiti temeljnu stijenu.",
+      "Rudarsko okno stroj je koji automatski kopa ravno prema dolje sve do temeljne stijene.",
+      "<bold>Savjet:</bold> Rudarsko okno koristite za uske okomite tunele i brza ispitivanja. Za velika područja usporedite trošak njegova ponovnog postavljanja s kamenolomom prije ulaganja resursa.",
+      "Informacije",
+      "Kopa izravno prema dolje ispod mjesta na kojem je postavljeno i automatski izbacuje razbijene blokove u susjedne inventare ili cijevi. Ako ne pronađe cijev ni inventar, predmete baca u svijet.\nŠto je blok tvrđi, to njegovo kopanje traje dulje.",
+      "Mehanika stroja",
+      "Kao i većina strojeva, zahtijeva energiju. Što više energije dobiva, to brže kopa.\nAko primi redstone signal, rudarsko okno prestaje raditi."
+    ],
+    "buildcraftfactory/block/chute": [
+      "Obični lijevak je zgodan, ali nije osobito funkcionalan ni originalan.",
+      "Žlijeb je sličan lijevku, ali ima više mogućnosti.",
+      "<bold>Savjet:</bold> Žljebovi su najpouzdaniji kada odredište ispod njih uvijek ima mjesta. Dodajte međuspremni inventar ako prijamni stroj radi povremeno.",
+      "Informacije",
+      "Žlijeb, prije poznat kao lijevak, brz je inventar veličine jednog bloka koji može izravno umetati predmete u cijevi i više inventara istodobno u svim smjerovima, uključujući prema gore.",
+      "Kao i lijevak, žlijeb može polako pokupiti predmete sa zemlje ako se nalaze iznad ili ispod njega i ako je okrenut prema njima. Rad se može ubrzati napajanjem redstone motorom."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "Kao što je dužnost svakog inženjera, otkrivate potrebu za automatizacijom svega. Ručna izrada može biti zamorna, pa zašto je ne automatizirati?",
+      "Automatski radni stol izrađuje predmete automatski bez potrebe za ručnim radom.",
+      "<bold>Savjet:</bold> Osigurajte međuspremnike i za sastojke i za izlaz oko automatskog radnog stola. Nedostajući sastojak može zaustaviti naizgled valjanu automatizaciju bez ikakva proizvoda.",
+      "Informacije",
+      "Automatski radni stol izrađuje predmete bez vašeg ručnog rada. Jednostavno postavite recept željenog predmeta i cijevima dovedite sastojke.",
+      "Samo cijevima dovedite resurse koje recept zahtijeva u automatski radni stol i on će polako, bez energije, izraditi predmet ili blok."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Registar vodiča sadržaj je iza knjige: odlučuje što postoji, gdje se prikazuje i koja ga ikona predstavlja.",
+      "Ova stranica opisuje jezično neutralan manifest Vodiča BuildCraft Community Editiona.",
+      "<bold>Savjet:</bold> Nakon izdanja zadržite stabilne ID-ove stranica; promjena prikazanog teksta sigurna je, dok promjena ID-a može poništiti spremljenu povijest knjige i vanjske poveznice.",
+      "Metapodaci unosa",
+      "Svaki unos ima <code>id</code> i jezično neutralan ključ <code>page</code>. Neobavezna polja određuju modul, vrstu, podvrstu, zamjenski prikazni naziv, knjigu, stanje popisa, hrpu predmeta, NBT inačicu, izjavu i potreban mod.",
+      "Razdvajanje odgovornosti",
+      "Manifest nikada ne sadrži prevedenu prozu. Mehanika stranica nalazi se u <code>page_layouts.json</code>; engleski i prevedeni nizovi nalaze se u datotekama pod <code>text/</code>. Paketi resursa mogu neovisno zamijeniti svaki sloj.",
+      "Provjera valjanosti",
+      "Svaki ključ stranice manifesta mora postojati u zajedničkim rasporedima i u zadanom engleskom tekstnom paketu. Prijevodi mogu izostaviti stranice ili pojedina mjesta kada je podešen zamjenski jezik."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Upute vođene podacima korisne su kada paket resursa mora prilagoditi registar bez prevođenja Java koda.",
+      "Ova tehnička stranica sažima naslijeđeni BuildCraftov jezik JSON uputa zadržan radi kompatibilnosti resursa.",
+      "<bold>Savjet:</bold> Za nove stranice Vodiča prednost dajte zapakiranom manifestu i tekstnim resursima; skripte uputa koristite samo pri izmjeni naslijeđene registarske skripte.",
+      "Zaglavlje",
+      "Datoteke uputa počinju oznakom ispod. Uvezene datoteke biblioteke umjesto nje koriste <code>~{buildcraft/json/lib}</code> i mogu navesti broj argumenata pomoću <code>~args N</code>.",
+      "Funkcije",
+      "Parser prihvaća komentare i pozive funkcija kao što su <code>add</code>, <code>remove</code>, <code>replace</code>, <code>modify</code>, <code>overwrite</code>, <code>alias</code> i <code>import</code>. Argumenti mogu biti brojevi, nizovi u navodnicima ili višeredni nizovi omeđeni obrnutim apostrofima.",
+      "Trenutačni resursi Vodiča",
+      "Vodič Community Editiona više ne učitava po jednu Markdown datoteku za svaki unos. Metapodaci indeksa nalaze se u <code>original_manifest.json</code>, zajednički predlošci u <code>page_layouts.json</code>, a prevedeni nizovi mjesta u <code>text/&lt;language&gt;.json</code>."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "Stranicu vodiča lakše je održavati kada se mehanika i prijevodi ne kopiraju u svaki jezik.",
+      "Ova stranica opisuje zapakirani i lokalizirani format resursa Vodiča koji koristi BuildCraft Community Edition.",
+      "<bold>Savjet:</bold> Nakon izmjene rasporeda testirajte postavke Lore i Hints te otvorite stranicu na engleskom i barem jednom prevedenom jeziku.",
+      "Zajednički rasporedi stranica",
+      "Jezično neutralna struktura stranice sprema se jednom u <code>assets/buildcraft/guide/page_layouts.json</code>. Svaka stranica ima Markdown predložak i numerirana mjesta <code>{{bc_text:index}}</code>. Recepti, poveznice, slike, oznake vidljivosti i druga mehanika pripadaju predlošku.",
+      "Lokalizirani tekstni paketi",
+      "Vidljivi tekst sprema se u jednu sažetu datoteku po jeziku pod <code>assets/buildcraft/guide/text/&lt;language&gt;.json</code>. Vrijednost stranice niz je čiji indeksi odgovaraju mjestima u predlošku. Tako tehnička struktura ostaje izvan prijevoda, a cijeli se jezik može komprimirati kao jedan unos JAR-a.",
+      "Zamjenski jezik i pseudonimi",
+      "<code>assets/buildcraft/guide/languages.json</code> određuje zadani jezik, regionalne pseudonime i lance zamjenskih jezika. Nedostajuća stranica ili mjesto <code>null</code> nasljeđuje nadređeni jezik; prazan niz namjerno skriva to mjesto.",
+      "Manifest",
+      "<code>original_manifest.json</code> sadrži samo metapodatke indeksa: ID stranice, ključ stranice, modul, vrstu, podvrstu, vidljivost i neobavezne reference predmeta ili izjava. Ključ <code>page</code> povezuje unos s rasporedom i lokaliziranim tekstom.",
+      "Podržane oznake",
+      "Podržani su običan Markdown tekst, naslovi i oznake oblikovanja. Oznake ispod jezično su neutralne i trebaju ostati u zajedničkom rasporedu."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Ne uklapaju li se cijevi u temu vaše građevine? Samo postavite fasadu odgovarajućeg bloka kako biste ih sakrili.",
+      "Fasada je priključni dio koji prekriva cijevi kako bi odgovarale građevini.",
+      "<bold>Savjet:</bold> Podesite priključni dio prije kopiranja ili postavljanja velikog broja. Najprije ispitajte jednu stranu cijevi kako biste potvrdili orijentaciju i ponašanje vrata.",
+      "Inačice fasade",
+      "Gotovo svaki blok u igri može se pretvoriti u fasadu i postaviti na stranu cijevi.\nPuna fasada prekida sve veze cijevi ako je postavljena između njih.\nŠuplja fasada dopušta povezivanje cijevi kroz sebe."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Redstone danas zauzima mnogo prostora. Zašto ne biste preciznije upravljali sustavom u kompaktnijem prostoru pomoću cijevi? Samo postavite vrata na cijev i počnite razmišljati.",
+      "Vrata su nadogradivi priključni dio koji pruža logistički okvir za upravljanje sustavom cijevi.",
+      "<bold>Savjet:</bold> Podesite priključni dio prije kopiranja ili postavljanja velikog broja. Najprije ispitajte jednu stranu cijevi kako biste potvrdili orijentaciju i ponašanje vrata.",
+      "Postavljanje vrata",
+      "Vrata su priključni dio pa se mogu postaviti samo na cijevi, ali na bilo koju stranu cijevi.\nCijev postavljena uz tu stranu neće se povezati.",
+      "Razine vrata",
+      "Vrata postoje u različitim razinama koje nude različit broj mjesta:\nOsnovna vrata – 1 skup mjesta (ne može se mijenjati).\nŽeljezna vrata – 2 skupa mjesta.\nVrata od nether opeke – 4 skupa mjesta.\nZlatna vrata – 8 skupova mjesta.",
+      "Modifikatori vrata",
+      "Vrata se mogu izmijeniti kako bi dobila mjesta parametara:\nLapis proširenje – daje 1 mjesto parametra svakom okidaču.\nKvarcno proširenje – daje 1 mjesto parametra svakom skupu (prepolovit će broj mjesta vrata).\nDijamantno proširenje – daje 3 mjesta parametra svakom skupu (prepolovit će broj mjesta vrata).",
+      "Inačice vrata",
+      "Vrata I osiguravaju da su </bold>svi</bold> povezani okidači aktivni prije aktiviranja veze s radnjama.\nVrata ILI osiguravaju da je </bold>jedan ili više</bold> povezanih okidača aktivno prije aktiviranja veze s radnjama.",
+      "Okidači",
+      "Ikone s lijeve strane zovu se okidači. Povlače se u mjesta na lijevoj strani sučelja.\nRazličiti okidači otkrivaju različite uvjete, svaki prema vlastitim kriterijima. Kada je kriterij okidača ispunjen, susjedna veza postaje aktivna.",
+      "Radnje",
+      "Ikone s desne strane zovu se radnje. Povlače se u mjesta na desnoj strani sučelja.\nRazličite radnje izvršavaju različite zadatke. Kada je susjedna veza aktivna, povezane se radnje izvršavaju.",
+      "Parametri",
+      "Kada su ugrađena mjesta parametara, pojavljuju se dodatna mjesta pokraj nekih okidača i radnji.\nTa dodatna mjesta omogućuju preciznije podešavanje okidača i radnji.\nU njima možete kliknuti za dodatne mogućnosti ili staviti predmete kao filtar.",
+      "Priključci",
+      "Crte u sredini povezuju okidače s radnjama kako bi mogli raditi zajedno.\nKlikom ih možete spojiti ili odspojiti kako bi se zahtijevalo više okidača ili radnji.\nKada se okidač ispuni, crta u sredini zasvijetli, samo djelomično ako je potrebno više okidača.\nKada crta svijetli, izvršavaju se radnje s kojima je povezana."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Besplatno napajanje cijevi bez velikog motora? Kako je to dobro!",
+      "<bold>Savjet:</bold> Podesite priključni dio prije kopiranja ili postavljanja velikog broja. Najprije ispitajte jednu stranu cijevi kako biste potvrdili orijentaciju i ponašanje vrata.",
+      "Pulsator cijevi priključni je dio koji daje male količine energije cijevima koje je mogu primiti.",
+      "Mehanika čepa",
+      "Može se postaviti samo na cijev koja prihvaća energiju i aktivirati desnim klikom.\nPulsator cijevi može aktivirati i vrata pomoću radnji pulsatora.",
+      "Veze cijevi",
+      "Priključni dijelovi mogu se postaviti samo na cijevi i na bilo koju stranu cijevi.\nKada se postavi između dviju cijevi, zaustavlja druge veze cijevi i žica između njih."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Pomoću svjetlosnog senzora možete iskoristiti snagu svjetla za upravljanje vratima.",
+      "Svjetlosni senzor priključni je dio koji otkriva razinu svjetla bloka ispred sebe i šalje podatke vratima na susjednoj strani iste cijevi.",
+      "<bold>Savjet:</bold> Podesite priključni dio prije kopiranja ili postavljanja velikog broja. Najprije ispitajte jednu stranu cijevi kako biste potvrdili orijentaciju i ponašanje vrata.",
+      "Mehanika čepa",
+      "Ti podaci omogućuju susjednim vratima da okidačima Svijetlo i Tamno otkriju je li svijetlo ili mračno.\nTi okidači mogu pokrenuti radnju kroz vrata.",
+      "Veze cijevi",
+      "Priključni dijelovi mogu se postaviti samo na cijevi i na bilo koju stranu cijevi.\nKada se postavi između dviju cijevi, zaustavlja druge veze cijevi i žica između njih."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Signale je lakše razumjeti kada su vidljivi i lakše nadzirati kada se mogu filtrirati.",
+      "Leće i filtri obojeni su priključni dijelovi cijevi spremljeni kao inačice istog predmeta.",
+      "<bold>Savjet:</bold> Podesite priključni dio prije kopiranja ili postavljanja velikog broja. Najprije ispitajte jednu stranu cijevi kako biste potvrdili orijentaciju i ponašanje vrata.",
+      "Leće",
+      "Leća prikazuje i projicira svoju boju kada je signal povezane žice cijevi aktivan. Koristite je kao kompaktan vizualni pokazivač na bilo kojoj slobodnoj strani cijevi.",
+      "Filtri",
+      "Inačice filtra koriste istih šesnaest boja, ali djeluju kao parametri izjava i priključni filtri gdje je to podržano. Boja i stanje filtra spremljeni su u inačici predmeta, pa kopiranje samo osnovnog ID-a registra nije dovoljno za određivanje određenog filtra."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Je li ispred vrata svijetlo? Ako jest, okidač će se aktivirati.",
+      "Svijetlo je okidač vrata dostupan na svim vratima uz koja je na istoj cijevi pričvršćen svjetlosni senzor iste boje.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabran, povezane radnje aktiviraju se samo kada je razina svjetla bloka ispred svjetlosnog senzora visoka."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Je li ispred vrata svijetlo? Ako nije, okidač će se aktivirati.",
+      "Tamno je okidač vrata dostupan na svim vratima uz koja je na istoj cijevi pričvršćen svjetlosni senzor iste boje.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabran, povezane radnje aktiviraju se samo kada je razina svjetla bloka ispred svjetlosnog senzora niska."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "Jeste li znali da vratima možete aktivno upravljati povezanim pulsatorom cijevi?",
+      "Uključi pulsator cijevi radnja je vrata dostupna na svim vratima uz koja je pulsator cijevi pričvršćen na istu cijev.",
+      "<bold>Savjet:</bold> Uparite ovu radnju s najužim korisnim okidačem i stanje isključenosti testirajte jednako pažljivo kao stanje uključenosti.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, pulsator cijevi uključuje se i cijev prima energiju.",
+      "Smjerovi",
+      "Vrata mogu prikazati radnju Uključi pulsator cijevi više puta u različitim bojama, po jednom za svaki povezani pulsator.\nBoja radnje označava smjer pulsatora u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "Jeste li znali da povezani pulsator cijevi može dati samo jedan impuls?",
+      "Jedan energetski impuls radnja je vrata dostupna na svim vratima uz koja je pulsator cijevi pričvršćen na istu cijev.",
+      "<bold>Savjet:</bold> Uparite ovu radnju s najužim korisnim okidačem i stanje isključenosti testirajte jednako pažljivo kao stanje uključenosti.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, pulsator cijevi uključuje se nakratko i cijev prima dovoljno energije za dovršetak jedne operacije.",
+      "Smjerovi",
+      "Vrata mogu prikazati radnju Uključi pulsator cijevi više puta u različitim bojama, po jednom za svaki povezani pulsator.\nBoja radnje označava smjer pulsatora u odnosu na cijev kako biste ih mogli razlikovati."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Želite prenositi signale cijevi bez prolaska predmeta? Samo je napunite šljunkom.",
+      "Strukturna cijev može nositi vrata i žice cijevi, ali se kroz nju ništa ne može transportirati.",
+      "<bold>Savjet:</bold> Strukturne cijevi korisne su točke za postavljanje žica, vrata i čepova ondje gdje prijevoz predmeta nije potreban.",
+      "Mehanika cijevi",
+      "Kao i na običnu cijev, na nju se mogu postaviti priključni dijelovi i žice cijevi, ali ne prenosi predmete, tekućine, energiju i slično."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Želite izvaditi predmete i prevesti ih drugamo? Dovedite energiju i gledajte kako teku.",
+      "Drvena transportna cijev izvlači predmete iz inventara kada primi energiju.",
+      "<bold>Savjet:</bold> Energija se koristi za izvlačenje samo kada odredišna mreža ima kamo poslati predmet. Obližnji međuspremnik sprječava opetovano izbacivanje iz začepljene linije.",
+      "Mehanika cijevi",
+      "Kada dobiva energiju, cijev izvlači predmete i prenosi ih u druge povezane inventare ili cijevi.\nPredmeti se izvlače kroz punu stranu cijevi i prenose prema prozirnim stranama.\nAko ima više prozirnih strana, predmeti se između njih kreću nasumično.\nAko predmeti nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u Wooden Transport Pipe bez napajanja cijevi.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Napajanje",
+      "Može primati energiju iz bilo kojeg izvora MJ energije, primjerice motora, prilagodnika energije ili Pipe Pulsara.",
+      "Za svaki primljeni impuls energije izvlači predmete iz susjednog inventara.\nŠto je impuls snažniji, više će predmeta biti izvučeno po impulsu."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Prenosi predmete polako i ravnomjerno kamo želite.",
+      "Cobblestone Transport Pipe služi za prijenos predmeta iz cijevi u povezane cijevi ili inventare.",
+      "<bold>Savjet:</bold> Kombinirajte Cobblestone i Stone cijevi kada susjedne linije moraju ostati odvojene bez boje ili čepova.",
+      "Mehanika cijevi",
+      "Cobblestone Transport Pipe pruža velik otpor predmetima pa brzo usporava ubrzane predmete.\n\nCobblestone Transport Pipes ne spajaju se na Stone ili Quartz Transport Pipes.\n\nAko cijev ima više priključaka, predmeti putuju nasumičnim smjerom.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Prenosi predmete umjerenim tempom kamo želite.",
+      "Stone Transport Pipe služi za prijenos predmeta iz cijevi u povezane cijevi ili inventare.",
+      "<bold>Savjet:</bold> Kombinirajte Stone i Cobblestone cijevi kada susjedne linije moraju ostati odvojene bez boje ili čepova.",
+      "Mehanika cijevi",
+      "Stone Transport Pipe pruža srednji otpor predmetima pa usporava ubrzane predmete.\n\nStone Transport Pipes ne spajaju se na Cobblestone ili Quartz Transport Pipes.\n\nAko cijev ima više priključaka, predmeti putuju nasumičnim smjerom.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Prenosi predmete bržim tempom kamo želite.",
+      "Quartz Transport Pipe služi za prijenos predmeta iz cijevi u povezane cijevi ili inventare.",
+      "<bold>Savjet:</bold> Quartz cijevi praktične su za vizualno prepoznatljive glavne vodove. Posebno sortiranje držite uz mjesta grananja, a ne duž cijelog glavnog voda.",
+      "Mehanika cijevi",
+      "Quartz Transport Pipe pruža mali otpor predmetima pa samo blago usporava ubrzane predmete.\n\nQuartz Transport Pipes ne spajaju se na Cobblestone ili Stone Transport Pipes.\n\nAko cijev ima više priključaka, predmeti putuju nasumičnim smjerom.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Želite prenositi predmete samo u jednom smjeru? Namjestite smjer cijevi i pošaljite ih kroz nju.",
+      "Iron Transport Pipe služi za prijenos predmeta iz cijevi u jednom smjeru prema povezanoj cijevi ili inventaru.",
+      "<bold>Savjet:</bold> Nakon svakog okretanja ili premještanja namjestite izlazni smjer ključem. Pogrešna strelica može stvoriti tihi slijepi završetak.",
+      "Mehanika cijevi",
+      "Predmeti ulaze kroz pune strane i izlaze prema prozirnoj strani.\nSmjer se može promijeniti udaranjem ključem po strani Iron Transport Pipea prema kojoj predmeti trebaju ići, redstone signalom ili vratima.\n\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, odbijaju se naprijed-natrag i stalno pokušavaju krenuti u postavljenom smjeru.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Prenosi predmete vrlo brzo kamo želite.",
+      "Gold Transport Pipe služi za brz prijenos predmeta u povezane cijevi ili inventare.",
+      "<bold>Savjet:</bold> Koristite Gold Pipes na dugim ravnim dionicama, a zatim usporite ili privremeno pohranite predmete prije složenih raskrižja gdje brzi naleti mogu preopteretiti inventare.",
+      "Mehanika cijevi",
+      "Gold Transport Pipe daje predmetima veliko ubrzanje pa kroz cijevi putuju brže.\n\nAko cijev ima više priključaka, predmeti putuju nasumičnim smjerom.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Odabir predmeta koji smiju putovati određenim putem može biti koristan za vaš sustav.",
+      "Diamond Transport Pipe prenosi predmete iz cijevi u smjeru određenom filtrom, u susjednu cijev ili inventar.",
+      "<bold>Savjet:</bold> Nefiltriranu stranu ostavite samo kada je namijenjena preljevu. Filtrirane strane imaju prednost, pa testirajte rijetke predmete prije spajanja velikog prometa.",
+      "Postavljanje filtra",
+      "Svaka strana Diamond Transport Pipea označena je drugom bojom.\nOtvorite sučelje Diamond Transport Pipea kako biste postavili filtar.\nStavite željene predmete u utore određene boje da biste odredili koji predmeti mogu ići u kojem smjeru.\nViše istih predmeta u jednoj boji povećava 'težinu' tog smjera.\n\nPopis se može staviti u filtrirni utor za proširene mogućnosti filtriranja.",
+      "Mehanika cijevi",
+      "Ako predmet može ići u više smjerova, raspodijelit će se među njima ovisno o dodijeljenoj težini.\nSvaki valjani smjer bez filtra propušta bilo koji predmet, ali filtrirani smjerovi imaju prednost.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nema spojene cijevi ili je susjedni inventar pun, a predmet nema drugi izlaz, ispada iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u Diamond Transport Pipe bez cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Skupljanje predmeta iz svijeta i njihovo premještanje je budućnost!",
+      "Obsidian Transport Pipe skuplja predmete iz svijeta i prenosi ih u povezanu cijev ili inventar.",
+      "<bold>Savjet:</bold> Energija poboljšava skupljanje. Postavite cijev tako da ne može povlačiti rasute predmete iz područja koja igrači još ručno koriste.",
+      "Rad cijevi",
+      "Kada dobiva energiju, može skupljati predmete u području 3x4x3 iznad sebe.\nBez energije i dalje skuplja svaki predmet koji dotakne cijev.",
+      "Smjer cijevi",
+      "Obsidian Transport Pipe mora biti 'usmjeren' kako bi imao područje djelovanja.\nAko cijev ima više spojeva, gubi mogućnost skupljanja predmeta iz svijeta.",
+      "Mehanika cijevi",
+      "Ako primljeni predmeti nemaju kamo otići, ispadaju iz cijevi na tlo.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Napajanje",
+      "Može primati energiju iz bilo kojeg izvora MJ energije, primjerice motora, prilagodnika energije ili Pipe Pulsara.",
+      "Za svaki primljeni impuls energije skuplja predmete s tla.\nŠto je impuls snažniji, više se predmeta pokupi po impulsu."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Dosta vam je Pipe Plugova? Ova cijev spaja se samo na druge cijevi i ništa drugo.",
+      "Sandstone Transport Pipe služi za prijenos predmeta iz cijevi u povezane cijevi.",
+      "<bold>Savjet:</bold> Sandstone Pipes korisne su uz guste zidove strojeva jer izbjegavaju neželjeno spajanje s inventarima. Provjerite da su sva namjeravana odredišta i dalje spojena.",
+      "Mehanika cijevi",
+      "Ne spaja se ni na jedan stroj, nego samo na druge cijevi.\n\nAko cijev ima više priključaka, predmeti putuju nasumičnim smjerom.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Uz Clay Pipe predmeti više nikada neće promašiti sanduk.",
+      "Clay Transport Pipe služi za prijenos predmeta iz cijevi u povezane cijevi ili inventare.",
+      "<bold>Savjet:</bold> Koristite Clay Pipes na krajnjim mjestima isporuke gdje inventari trebaju imati prednost pred nastavkom kroz mrežu cijevi.",
+      "Mehanika cijevi",
+      "Clay Transport Pipe daje prednost umetanju predmeta u inventar prije nastavka putovanja.\n\nAko ima više povezanih strana, predmeti prvo biraju povezani inventar, a zatim nasumični smjer.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Kada pošaljete predmete unutra, više neće izaći.",
+      "Void Transport Pipe uništava predmete koji se u njega pošalju.",
+      "<bold>Savjet:</bold> Postavite filtar prije Void Pipea kad vrijedni i otpadni predmeti dijele mrežu. Nikada ne koristite put u prazninu kao neispitani preljev.",
+      "Mehanika cijevi",
+      "Predmeti ne mogu proći kroz cijev jer se svaki predmet koji dođe do središta automatski uništava.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Zamislite cijev koja može postavljati i razbijati blokove te koristiti predmete. To je upravo ova cijev.",
+      "Striped Transport Pipe razbija blokove, postavlja blokove, koristi predmete koji se kroz njega šalju i prenosi ih u povezanu cijev ili inventar.",
+      "<bold>Savjet:</bold> Koristite Stripes Pipes na kontroliranim završecima i ručno ispitajte ciljnu plohu. Njihovo djelovanje na svijet razornije je od običnog transporta.",
+      "Rad cijevi",
+      "Kada dobiva energiju, razbija blok izravno ispred sebe i šalje ga u susjednu cijev ili inventar.\nKada se kroz njega pošalje blok, postavlja blok izravno ispred sebe.\nKada se kroz njega pošalje predmet, pokušava ga 'upotrijebiti' na bloku ili entitetu ispred sebe.",
+      "Smjer cijevi",
+      "Striped Transport Pipe mora biti 'usmjeren' kako bi djelovao na blok ispred sebe.\nAko je spojeno više cijevi ili inventara, gubi mogućnost djelovanja na svijet.",
+      "Mehanika cijevi",
+      "Ako predmeti nemaju kamo otići, ispadaju iz cijevi na tlo.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Napajanje",
+      "Može primati energiju iz bilo kojeg izvora MJ energije, primjerice motora, prilagodnika energije ili Pipe Pulsara.",
+      "Za svaki primljeni impuls energije koristi dobivenu energiju kako bi pokušao razbiti blok ispred sebe.\nŠto je impuls snažniji, više će se energije koristiti za razbijanje bloka."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Želite izvući određene predmete i prenijeti ih drugdje? Dajte cijevi energiju i gledajte kako teku.",
+      "Wooden Diamond Transport Pipe izvlači predmete odabrane filtrom iz inventara kada dobiva energiju.",
+      "<bold>Savjet:</bold> Postavite filtar za izvlačenje prije uključivanja energije. Prazan ili preširok filtar može isprazniti inventar mnogo brže nego što očekujete.",
+      "Mehanika cijevi",
+      "Kada dobiva energiju, izvlači predmete odabrane filtrom i prenosi ih u druge povezane inventare ili cijevi.\nPredmeti se izvlače kroz punu stranu cijevi i prenose prema prozirnim stranama.\nAko ima više prozirnih strana, predmeti se kreću nasumičnim smjerom.\nAko predmet nema kamo otići, ispada iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u Wooden Diamond Transport Pipe bez napajanja cijevi (tada se filtar ne poštuje).\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Filtriranje",
+      "Otvorite sučelje Wooden Diamond Transport Pipea kako biste postavili filtar.\nStavite željene predmete u utore kako biste odredili što će izvlačiti.\nOpcijama Whitelist, Blacklist i Round Robin možete promijeniti ponašanje filtra:\nWhitelist: Izvlače se samo odabrani predmeti.\nBlacklist: Izvlače se svi predmeti osim odabranih.\nRound Robin: Predmeti se izvlače točno redoslijedom odabranim u gornjim filtrirnim utorima, slijeva nadesno.\n\nPopis se može staviti u filtrirni utor za proširene mogućnosti filtriranja.",
+      "Napajanje",
+      "Može primati energiju iz bilo kojeg izvora MJ energije, primjerice motora, prilagodnika energije ili Pipe Pulsara.",
+      "Za svaki primljeni impuls energije izvlači predmete iz susjednog inventara.\nŠto je impuls snažniji, više će predmeta biti izvučeno po impulsu."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Želite obojiti predmete? Odaberite boju i oni će je dobiti.",
+      "Lazuli Transport Pipe boji predmete i prenosi ih u povezane cijevi ili inventare.",
+      "<bold>Savjet:</bold> Dokumentirajte usmjeravanje bojama pokraj mreže. Promjena boje uzvodno može promijeniti sve kasnije odluke usmjeravanja.",
+      "Bojanje predmeta",
+      "Predmet koji prolazi kroz cijev obojit će se postavljenom bojom.\nBoja se mijenja udaranjem cijevi ključem ili pomoću vrata.",
+      "Mehanika cijevi",
+      "Ako ima više prozirnih strana, predmeti se kreću nasumičnim smjerom.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Želite razvrstati obojene predmete? Odaberite boju i smjer te ih pošaljite kroz cijev.",
+      "Daizuli Transport Pipe šalje primljene obojene predmete u jednom smjeru prema povezanoj cijevi ili inventaru.",
+      "<bold>Savjet:</bold> Koristite Daizuli usmjeravanje uz jasan sustav boja. Jednu boju rezervirajte za preljev ili nerazvrstane predmete.",
+      "Mehanika cijevi",
+      "Predmeti ulaze kroz pune strane i izlaze prema prozirnoj strani.\nPredmeti se ne vraćaju u smjeru iz kojeg su došli, nego biraju drugi smjer.\nAko nemaju kamo otići, ispadaju iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Postavljanje boje i smjera",
+      "Smjer kojim obojeni predmeti putuju mijenja se udaranjem ključem po strani cijevi prema kojoj trebaju ići ili pomoću vrata.\nBoju koja se šalje tim smjerom možete promijeniti udaranjem središta cijevi ključem ili pomoću vrata."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Korištenje vrata za izvlačenje određenih predmeta najnovija je tehnička revolucija u tehnologiji filtriranja.",
+      "Emzuli Transport Pipe je cijev upravljana vratima koja uz energiju izvlači iz inventara predmete odabrane filtrom.",
+      "<bold>Savjet:</bold> Najprije ispitajte izvlačenje upravljano redstoneom na malom inventaru. Provjerite odgovara li neaktivno stanje očekivanom ponašanju pri nestanku energije.",
+      "Mehanika cijevi",
+      "Kada dobiva energiju, izvlači predmete odabrane filtrom i prenosi ih u druge povezane inventare ili cijevi.\nPredmeti se izvlače kroz punu stranu cijevi i prenose prema prozirnim stranama.\nAko ima više prozirnih strana, predmeti se kreću nasumičnim smjerom.\nAko predmet nema kamo otići, ispada iz cijevi na tlo.\n\nNeki strojevi mogu automatski slati predmete izravno u Emzuli Pipe bez napajanja cijevi (filtri se tada ne poštuju).\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Filtriranje",
+      "Sučelje Emzuli Transport Pipea prikazuje četiri boje za četiri zasebna filtra.\nPredmeti u utorima određuju što svaki filtar izvlači.\nBoja kistova uz utore određuje kojom će se bojom predmeti obojiti pri izvlačenju, a mijenja se klikom.\nZa odabir jednog od četiri filtra potrebno je na cijev postaviti vrata s obojenom radnjom Extraction Preset. Primjer: Redstone signal -> Red Extraction Preset.\n\nPopis se može staviti u filtrirni utor za proširene mogućnosti filtriranja.",
+      "Napajanje",
+      "Može primati energiju iz bilo kojeg izvora MJ energije, primjerice motora, prilagodnika energije ili Pipe Pulsara.",
+      "Za svaki primljeni impuls energije izvlači predmete iz susjednog inventara.\nŠto je impuls snažniji, više će predmeta biti izvučeno po impulsu."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Želite izvući tekućinu i prenijeti je drugdje? Dajte cijevi energiju i gledajte kako teče.",
+      "Wooden Fluid Pipe izvlači tekućine iz spremnika kada dobiva energiju.",
+      "<bold>Savjet:</bold> Izvlačenje spojite samo na jedan namjeravani spremnik ili stranu stroja i odmah osigurajte kapacitet nizvodno. Začepljena linija zaustavlja korisno pumpanje.",
+      "Mehanika cijevi",
+      "Kada dobiva energiju, izvlači tekućinu i prenosi je u druge povezane spremnike ili cijevi.\nNeki strojevi mogu slati tekućine izravno u Wooden Fluid Pipe bez energije.\nTekućina se izvlači kroz punu stranu cijevi prema prozirnim stranama.\nAko ima više prozirnih strana, tekućina se ravnomjerno dijeli po svim smjerovima.\n\nNeki strojevi mogu slati tekućine izravno u Wooden Fluid Pipe bez energije.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Napajanje",
+      "Može primati energiju iz bilo kojeg izvora MJ energije, primjerice motora, prilagodnika energije ili Pipe Pulsara.",
+      "Za svaki primljeni impuls energije izvlači tekućinu iz susjednog spremnika.\nŠto je impuls snažniji, više se tekućine izvlači po impulsu.",
+      "Wooden Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 0,2 kante u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Prenosi tekućine prilično polako kamo želite.",
+      "Cobblestone Fluid Pipe prenosi tekućine iz cijevi u povezane cijevi ili spremnike.",
+      "<bold>Savjet:</bold> Iskoristite pravilo da se Stone i Cobblestone cijevi ne spajaju kako biste odvojene linije tekućine vodili jednu uz drugu bez slučajnog miješanja.",
+      "Mehanika cijevi",
+      "Cobblestone Fluid Pipes najsporije su cijevi za prijenos tekućina.\n\nCobblestone Fluid Pipes ne spajaju se na Stone Fluid Pipes ili Quartz Fluid Pipes.\n\nTekućina se ne vraća u smjeru iz kojeg je došla, nego ide drugim smjerom.\nAko postoji više smjerova, tekućina se ravnomjerno raspodjeljuje između njih.\n\nNeki strojevi mogu slati tekućinu izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Cobblestone Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 0,2 kante u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Prenosi tekućine razumnom brzinom kamo želite.",
+      "Stone Fluid Pipe prenosi tekućine iz cijevi u povezane cijevi ili spremnike.",
+      "<bold>Savjet:</bold> Iskoristite pravilo da se Stone i Cobblestone cijevi ne spajaju kako biste odvojene linije tekućine vodili jednu uz drugu bez slučajnog miješanja.",
+      "Mehanika cijevi",
+      "Stone Fluid Pipes prenose tekućine prosječnom brzinom.\n\nStone Fluid Pipes ne spajaju se na Cobblestone Fluid Pipes ili Quartz Fluid Pipes.\n\nTekućina se ne vraća u smjeru iz kojeg je došla, nego ide drugim smjerom.\nAko postoji više smjerova, tekućina se ravnomjerno raspodjeljuje između njih.\n\nNeki strojevi mogu slati tekućinu izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Stone Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 0,4 kante u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Prenosi tekućine poželjnijom brzinom kamo želite.",
+      "Quartz Fluid Pipe prenosi tekućine iz cijevi u povezane cijevi ili spremnike.",
+      "<bold>Savjet:</bold> Za važne faze prerade koristite vizualno različite materijale cijevi. Jasno odvojene linije olakšavaju uočavanje pogrešnih spojeva tekućina.",
+      "Mehanika cijevi",
+      "Quartz Fluid Pipes prenose tekućine dobrom brzinom.\n\nQuartz Fluid Pipes ne spajaju se na Cobblestone Fluid Pipes ili Stone Fluid Pipes.\n\nTekućina se ne vraća u smjeru iz kojeg je došla, nego ide drugim smjerom.\nAko postoji više smjerova, tekućina se ravnomjerno raspodjeljuje između njih.\n\nNeki strojevi mogu slati tekućinu izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Quartz Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 0,8 kante u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Želite prenositi tekućine samo u jednom smjeru? Namjestite smjer cijevi i pošaljite ih kroz nju.",
+      "Iron Fluid Pipe prenosi tekućine u jednom smjeru iz cijevi u povezanu cijev ili spremnik.",
+      "<bold>Savjet:</bold> Provjerite jednosmjerni izlaz nakon okretanja cijevi. Pogrešan smjer može zarobiti tekućinu u grani koja izgleda spojeno.",
+      "Mehanika cijevi",
+      "Smjer tekućine postavlja se udaranjem ključem po strani cijevi prema kojoj treba ići, redstone signalom ili vratima.\n\nTekućina ulazi kroz pune strane cijevi i izlazi prema prozirnoj strani.\nNe vraća se u smjeru iz kojeg je došla, nego ide samo u postavljenom smjeru.\n\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Iron Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 0,8 kante u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Brzo prenosi tekućine kamo želite.",
+      "Gold Fluid Pipe brzo prenosi tekućine u povezane cijevi ili spremnike.",
+      "<bold>Savjet:</bold> Koristite dijelove većeg protoka blizu pumpi i velikih spremnika, ali ostavite dovoljno prijamnog kapaciteta za nalete.",
+      "Mehanika cijevi",
+      "Gold Fluid Pipes najbrže su cijevi za prijenos tekućina.\n\nTekućina se ne vraća u smjeru iz kojeg je došla, nego ide drugim smjerom.\nAko postoji više smjerova, tekućina se ravnomjerno raspodjeljuje između njih.\n\nNeki strojevi mogu slati tekućinu izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Gold Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 1,6 kanti u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Razvrstavanje tekućina tako da se cjevovodi mogu križati? Ludost.",
+      "Diamond Fluid Pipe prenosi tekućine iz cijevi u smjeru određenom filtrom, u povezanu cijev ili spremnik.",
+      "<bold>Savjet:</bold> Podesite svaku korištenu stranu prije spajanja više tekućina. Rezervirajte jasan put preljeva umjesto slučajnog oslanjanja na prazan filtar.",
+      "Filtriranje",
+      "Svaka strana Diamond Fluid Pipea označena je drugom bojom.\nOtvorite sučelje Diamond Fluid Pipea kako biste postavili filtar.\nStavite kantu ili drugi spremnik željene tekućine u utor određene boje da biste odredili koja tekućina može ići u kojem smjeru.\nViše iste tekućine u jednoj boji povećava 'težinu' tog smjera.",
+      "Mehanika cijevi",
+      "Svaki valjani smjer bez filtra propušta bilo koju tekućinu, ali filtrirani smjerovi imaju prednost.\nTekućina se ne vraća u smjeru iz kojeg je došla.\n\nNeki strojevi mogu slati tekućinu izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Diamond Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 1,6 kanti u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Dosta vam je Pipe Plugova? Ova cijev spaja se samo na druge cijevi i ništa drugo.",
+      "Sandstone Fluid Pipe prenosi tekućine iz cijevi u povezane cijevi.",
+      "<bold>Savjet:</bold> Koristite Sandstone Fluid Pipes gdje se obližnji spremnici ne smiju automatski povezati. Nakon ponovne gradnje zida strojeva provjerite svaku stranu.",
+      "Mehanika cijevi",
+      "Ne spaja se ni na jedan stroj, nego samo na druge cijevi.\n\nTekućina se ne vraća u smjeru iz kojeg je došla, nego ide drugim smjerom.\nAko postoji više smjerova, tekućina se ravnomjerno raspodjeljuje između njih.\n\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Sandstone Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 0,4 kante u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Zašto bi tekućina išla u sljedeću cijev kad je spremnik upravo ondje?",
+      "<bold>Savjet:</bold> Postavite Clay Fluid Pipes blizu krajnjih potrošača kada tekućina treba dati prednost ulasku u spremnik ili stroj umjesto nastavku kroz mrežu.",
+      "Clay Fluid Pipe prenosi tekućine iz cijevi u povezane cijevi ili spremnike.",
+      "Mehanika cijevi",
+      "Clay Fluid Pipe daje prednost umetanju tekućine u susjedni spremnik prije nastavka u sljedeću cijev.\nTekućina se ne vraća u smjeru iz kojeg je došla, nego ide drugim smjerom.\nAko postoji više smjerova, tekućina se ravnomjerno raspodjeljuje između njih uz prednost spremnicima.\n\nNeki strojevi mogu slati tekućinu izravno u nju bez napajane cijevi za izvlačenje.\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Clay Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 0,8 kante u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Uništavanje tekućina jednu kantu po jednu",
+      "Void Fluid Pipe uništava tekućine koje se u njega pošalju.",
+      "<bold>Savjet:</bold> Filtrirajte i izolirajte Void Fluid Pipes. Pogrešan spoj može uništiti cijelu pohranjenu količinu tekućine bez predmeta koje je moguće vratiti.",
+      "Mehanika cijevi",
+      "Tekućina ne može proći kroz cijev jer se sva tekućina koja dođe do središta automatski uništava.\n\nNeki strojevi mogu slati tekućinu izravno u Void Fluid Pipe bez cijevi za izvlačenje.",
+      "Cijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Želite izvući određenu tekućinu i prenijeti je drugdje? Dajte cijevi energiju i gledajte kako teče.",
+      "Wooden Diamond Fluid Pipe izvlači odabrane tekućine iz spremnika kada dobiva energiju.",
+      "<bold>Savjet:</bold> Postavite filtar za izvlačenje prije spajanja više spremnika. Time se sprječava pražnjenje pogrešne tekućine kada zajednički izvor promijeni sadržaj.",
+      "Mehanika cijevi",
+      "Kada dobiva energiju, izvlači tekućinu odabranu filtrom i šalje je u druge povezane spremnike ili cijevi.\nTekućina se izvlači kroz punu stranu cijevi prema prozirnim stranama.\nAko ima više prozirnih strana, tekućina se ravnomjerno dijeli po smjerovima.\n\nNeki strojevi mogu slati tekućinu izravno u nju bez energije (filtar se tada ne poštuje).\nPipe Plugovi ili bojanje cijevi različitim bojama mogu spriječiti njihovo spajanje.",
+      "Filtriranje",
+      "Otvorite sučelje Wooden Diamond Fluid Pipea kako biste postavili filtar.\nStavite kantu ili drugi spremnik željene tekućine u utore kako biste odredili što će izvlačiti.\nOpcijama Whitelist i Blacklist mijenja se ponašanje filtra:\nWhitelist: Izvlače se samo odabrane tekućine.\nBlacklist: Izvlače se sve tekućine osim odabrane.",
+      "Napajanje",
+      "Može primati energiju iz bilo kojeg izvora MJ energije, primjerice motora, prilagodnika energije ili Pipe Pulsara.",
+      "Za svaki primljeni impuls energije izvlači tekućinu iz susjednog spremnika.\nŠto je impuls snažniji, više se tekućine izvlači po impulsu.",
+      "Wooden Diamond Fluid Pipe prenosi tekućine u susjedne cijevi i spremnike brzinom od 1,6 kanti u sekundi.\nCijevi za tekućinu imaju unutarnji spremnik kapaciteta 1 kante po strani i 1 kante u sredini."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Redstone: Doseže samo 15 blokova, prenosi samo jedan signal po bloku i postoji samo u crvenoj boji — dosadno.\nPipe Wire: Putuje neograničeno, prenosi mnogo signala po cijevi i dostupan je u mnogo boja.",
+      "Pipe Wire je priključni sustav za cijevi koji neograničeno prenosi podatkovne signale kroz sustav cijevi.",
+      "<bold>Savjet:</bold> Prije masovne izrade zajedno provjerite odjeljke Recepti i Uporabe; ovaj predmet može biti međukomponenta za nekoliko kasnijih strojeva.",
+      "Mehanika žice",
+      "Vrata daju signal Pipe Wireu, koji se prenosi drugim povezanim Pipe Wireovima iste boje.\nSignal može biti samo uključen ili isključen i putuje neograničenom udaljenošću, za razliku od redstonea.\nPipe Wire dostupan je u svih 16 boja.",
+      "Postavljanje žice",
+      "Pipe Wire može se postaviti u svaki kut cijevi i spaja se samo na Pipe Wireove iste boje u glavnom smjeru.\nŽice iste boje mogu se povezati preko različitih cijevi čak i kada same cijevi nisu spojene."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "Pipe Pulsar je korisna nadogradnja u odnosu na napajanje Wooden Pipes motorima, ali djeluje ograničeno. Bilo bi korisno koristiti postojeću energetsku mrežu i motore za brže napajanje cijevi za izvlačenje.",
+      "Pipe Adapter je priključak koji omogućuje napajanje cijevi koje primaju energiju kroz Kinesis Pipe.",
+      "<bold>Savjet:</bold> Prije masovne izrade zajedno provjerite odjeljke Recepti i Uporabe; ovaj predmet može biti međukomponenta za nekoliko kasnijih strojeva.",
+      "Mehanika čepa",
+      "Može se postaviti samo na cijev koja prima energiju, a svaki susjedni Kinesis Pipe spojit će se na njega.\n\nEnergija dovedena kroz povezani Kinesis Pipe može napajati povezanu transportnu cijev ili cijev za tekućinu koja prihvaća energiju.",
+      "Spojevi cijevi",
+      "Priključci se mogu postaviti samo na cijevi i na bilo koju stranu cijevi.\nKada se postavi između dvije cijevi, zaustavlja sve druge spojeve cijevi i Pipe Wireova između njih, osim Kinesis Pipes i samog adaptera."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "Zašto se moje cijevi stalno spajaju? Kako to zaustaviti? Jednostavno postavite Pipe Plug između njih.",
+      "Pipe Plug je priključak koji sprječava međusobno spajanje cijevi i/ili Pipe Wireova.",
+      "<bold>Savjet:</bold> Prije masovne izrade zajedno provjerite odjeljke Recepti i Uporabe; ovaj predmet može biti međukomponenta za nekoliko kasnijih strojeva.",
+      "Veze cijevi",
+      "Postavlja se izravno na bilo koju stranu cijevi i cijev postavljena uz tu stranu neće se spojiti.\n\nPriključci se mogu postaviti samo na cijevi i na bilo koju stranu cijevi."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "Kada predmeti putuju kroz cijev, okidač se aktivira.",
+      "Items Traversing je okidač vrata dostupan na svim vratima postavljenima na transportnu cijev.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabran, povezane radnje aktiviraju se samo dok predmet putuje kroz cijev.",
+      "Parametri",
+      "Kada je odabran Items Traversing i instalirana vrata imaju dostupne parametre, filtrirni utor pokraj njega postaje parametar.\nStavite predmet u filtrirni utor kako biste prije aktiviranja provjerili putuje li odabrani predmet kroz cijev."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Tekućina putuje kroz cijev na kojoj su postavljena vrata.",
+      "Fluid Traversing je okidač vrata dostupan na svim vratima postavljenima na cijev za tekućinu.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabran, povezane radnje aktiviraju se samo dok tekućina putuje kroz cijev."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "Kada kroz cijev ne putuju predmeti, okidač se aktivira.",
+      "Pipe Empty je okidač vrata dostupan na svim vratima postavljenima na transportnu cijev ili cijev za tekućinu.",
+      "<bold>Savjet:</bold> Isprobajte ovaj okidač na točnoj strani i inventaru ili spremniku koji se koristi u proizvodnji. Mogućnosti ovisne o strani mogu uzrokovati da dvije strane istog bloka prijavljuju različita stanja.",
+      "Zahtjevi",
+      "Kada je odabran, povezane radnje aktiviraju se samo dok kroz cijev ne putuju ni predmeti ni tekućine."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Povezani Pipe Wire jarko svijetli.",
+      "Pipe Signal On je okidač vrata dostupan kada je Pipe Wire iste boje pričvršćen na istu cijev.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabran, povezane radnje aktiviraju se samo dok je povezani Pipe Wire iste boje uključen.",
+      "Parametri",
+      "Kada je odabran Pipe Signal On i vrata imaju dostupne parametre, Pipe Signal On i Pipe Signal Off drugih povezanih boja Pipe Wirea postaju parametri.\nOdabirom Pipe Signal On ili Pipe Signal Off možete zahtijevati više signala žice prije aktiviranja."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Povezani Pipe Wire ne svijetli.",
+      "Pipe Signal Off je okidač vrata dostupan kada je Pipe Wire iste boje pričvršćen na istu cijev.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Zahtjevi",
+      "Kada je odabran, povezane radnje aktiviraju se samo dok povezani Pipe Wire iste boje nije uključen.",
+      "Parametri",
+      "Kada je odabran Pipe Signal Off i vrata imaju dostupne parametre, Pipe Signal On i Pipe Signal Off drugih povezanih boja Pipe Wirea postaju parametri.\nOdabirom Pipe Signal On ili Pipe Signal Off kao parametra možete zahtijevati više signala žice prije aktiviranja."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Kamo želite da cijev radi ili prenosi? Sjeverno? Odaberite ovu radnju.",
+      "Face the North Side je radnja vrata dostupna na cijevi kojoj je za rad potreban smjer, kada je sjever valjan smjer.",
+      "<bold>Savjet:</bold> Na vratima koristite samo jednu usmjerenu radnju odjednom i osigurajte sigurnu rezervnu rutu. Sukobljeni smjerovi otežavaju predviđanje toka predmeta.",
+      "Postavljanje smjera",
+      "Kada se radnja aktivira, cijev postavlja sjever kao svoj smjer.\nTo znači da sadržaj šalje prema sjeveru ili izvodi radnju u svijetu na svojoj sjevernoj strani."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Kamo želite da cijev radi ili prenosi? Istočno? Odaberite ovu radnju.",
+      "Face the East Side je radnja vrata dostupna na cijevi kojoj je za rad potreban smjer, kada je istok valjan smjer.",
+      "<bold>Savjet:</bold> Na vratima koristite samo jednu usmjerenu radnju odjednom i osigurajte sigurnu rezervnu rutu. Sukobljeni smjerovi otežavaju predviđanje toka predmeta.",
+      "Postavljanje smjera",
+      "Kada se radnja aktivira, cijev postavlja istok kao svoj smjer.\nTo znači da sadržaj šalje prema istoku ili izvodi radnju u svijetu na svojoj istočnoj strani."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Kamo želite da cijev radi ili prenosi? Južno? Odaberite ovu radnju.",
+      "Face the South Side je radnja vrata dostupna na cijevi kojoj je za rad potreban smjer, kada je jug valjan smjer.",
+      "<bold>Savjet:</bold> Na vratima koristite samo jednu usmjerenu radnju odjednom i osigurajte sigurnu rezervnu rutu. Sukobljeni smjerovi otežavaju predviđanje toka predmeta.",
+      "Postavljanje smjera",
+      "Kada se radnja aktivira, cijev postavlja jug kao svoj smjer.\nTo znači da sadržaj šalje prema jugu ili izvodi radnju u svijetu na svojoj južnoj strani."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Kamo želite da cijev radi ili prenosi? Zapadno? Odaberite ovu radnju.",
+      "Face the West Side je radnja vrata dostupna na cijevi kojoj je za rad potreban smjer, kada je zapad valjan smjer.",
+      "<bold>Savjet:</bold> Na vratima koristite samo jednu usmjerenu radnju odjednom i osigurajte sigurnu rezervnu rutu. Sukobljeni smjerovi otežavaju predviđanje toka predmeta.",
+      "Postavljanje smjera",
+      "Kada se radnja aktivira, cijev postavlja zapad kao svoj smjer.\nTo znači da sadržaj šalje prema zapadu ili izvodi radnju u svijetu na svojoj zapadnoj strani."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Kamo želite da cijev radi ili prenosi? Gore? Odaberite ovu radnju.",
+      "Face the Top Side je radnja vrata dostupna na cijevi kojoj je za rad potreban smjer, kada je gore valjan smjer.",
+      "<bold>Savjet:</bold> Na vratima koristite samo jednu usmjerenu radnju odjednom i osigurajte sigurnu rezervnu rutu. Sukobljeni smjerovi otežavaju predviđanje toka predmeta.",
+      "Postavljanje smjera",
+      "Kada se radnja aktivira, cijev postavlja gornju stranu kao svoj smjer.\nTo znači da sadržaj šalje prema gore ili izvodi radnju u svijetu iznad sebe."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Kamo želite da cijev radi ili prenosi? Dolje? Odaberite ovu radnju.",
+      "Face the Bottom Side je radnja vrata dostupna na cijevi kojoj je za rad potreban smjer, kada je dolje valjan smjer.",
+      "<bold>Savjet:</bold> Na vratima koristite samo jednu usmjerenu radnju odjednom i osigurajte sigurnu rezervnu rutu. Sukobljeni smjerovi otežavaju predviđanje toka predmeta.",
+      "Postavljanje smjera",
+      "Kada se radnja aktivira, cijev postavlja donju stranu kao svoj smjer.\nTo znači da sadržaj šalje prema dolje ili izvodi radnju u svijetu ispod sebe."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Odaberite ovo kako bi povezani Pipe Wire zasvijetlio.",
+      "Pipe Signal On je radnja vrata dostupna kada je Pipe Wire iste boje pričvršćen na istu cijev.",
+      "<bold>Savjet:</bold> Obojenom žicom cijevi odvojite ovaj signal od nepovezane automatizacije i izbjegnite povratne petlje između susjednih vrata.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, povezani Pipe Wire iste boje uključuje se.",
+      "Parametar",
+      "Kada je odabran Pipe Signal On i vrata imaju dostupne parametre, Pipe Signal On i Pipe Signal Off drugih povezanih boja Pipe Wirea postaju parametri.\nOdabirom Pipe Signal On uz početni okidač možete uključiti više Pipe Wireova kada se početni okidači aktiviraju."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Lazuli i Daizuli Transport Pipe omogućuju bojanje i razvrstavanje obojenih predmeta; ova radnja mijenja boju koja se koristi.",
+      "Paint Items je radnja vrata dostupna na vratima postavljenima na Lazuli ili Daizuli Transport Pipe.",
+      "<bold>Savjet:</bold> Uparite ovu radnju s najužim korisnim okidačem i stanje isključenosti testirajte jednako pažljivo kao stanje uključenosti.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, vrata podešavaju cijev ovako:\nLazuli Pipe boji predmete koji prolaze kroz njega bojom odabranom radnjom Paint Items.\nDaizuli Pipe šalje samo predmete te boje u odabranom smjeru."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Emzuli Transport Pipe ima više filtara za izvlačenje; u vratima samo odaberite onaj koji treba koristiti.",
+      "Extraction Preset je radnja vrata dostupna na vratima postavljenima na Emzuli Transport Pipe.",
+      "<bold>Savjet:</bold> Uparite ovu radnju s najužim korisnim okidačem i stanje isključenosti testirajte jednako pažljivo kao stanje uključenosti.",
+      "Zahtjevi",
+      "Kada se radnja aktivira, vrata omogućuju Emzuli Pipeu izvlačenje prema boji odabranog Extraction Preseta.\nBez postavke izvlačenja koju daju vrata, Emzuli Pipe ne može izvući nijedan predmet."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Osnove motora"
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Premještanje četiriju Land Markova svaki put kada projekt promijeni veličinu brzo postaje projekt za sebe.",
+      "Volume Box je pomični označivač područja kojim se upravlja Marker Connectorom.",
+      "<bold>Savjet:</bold> Volume Boxes praktične su za premještanje završene definicije područja između strojeva. Preimenujte ih ili pohranite odvojeno kada više projekata koristi slične dimenzije.",
+      "Postavljanje i promjena veličine",
+      "Upotrijebite predmet na bloku kako biste stvorili Volume Box pokraj njega. Kliknite jednu od ručki Marker Connectorom, pomaknite odabrani kut, a zatim ponovno kliknite za završetak promjene veličine.\n\nPrikriveno upotrijebite Marker Connector na kutiji kako biste je uklonili. Strojevi uz kutiju mogu koristiti odabrani volumen kao područje Land Marka.",
+      "Dodaci",
+      "Volume Box može držati kompatibilne dodatke za planiranje. Filler Planner sprema uzorak Fillera i stanje inverzije u kutiju kako bi ih obližnji Filler automatski preuzeo."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Veliki strojevi trebaju točnu granicu, inače je njihov apetit za blokovima teško kontrolirati.",
+      "Land Marks određuju pravokutna radna područja za strojeve kao što su Quarry, Filler i Architect Table.",
+      "<bold>Savjet:</bold> Provjerite obojene granične linije s više strana prije pokretanja Quarryja, Buildera ili Fillera. Jedan pogrešno postavljen marker može odabrati mnogo veće područje od očekivanog.",
+      "Određivanje područja",
+      "Postavite Land Marks na usklađene X, Y ili Z osi i spojite ih Marker Connectorom. Povezane oznake tvore rubove pravokutne kutije. Većini strojeva trebaju samo vodoravni kutovi, ali može se definirati i puna trodimenzionalna kutija.\n\nRedstone napajanje Land Marka prikazuje laserske vodilice duž osi i olakšava poravnanje.",
+      "Uporaba područja",
+      "Postavite stroj uz jednu od povezanih oznaka. Stroj preuzima označenu kutiju i koristi je kao radno područje. Ako ne pronađe valjane oznake, neki strojevi koriste vlastito zadano područje."
+    ],
+    "buildcraftlib/item/guide": [
+      "Veliku radionicu lakše je graditi kada svaki stroj dolazi s bilješkama umjesto nagađanja.",
+      "Ova knjiga sadrži dokumentaciju u igri za BuildCraft Community Edition.",
+      "<bold>Savjet:</bold> Uključite Prikaži savjete za praktične preporuke postavljanja i koristite pretraživanje kada znate naziv bloka ili mehanike.",
+      "Uporaba knjige",
+      "Sadržaj objedinjuje blokove, predmete, cijevi, okidače i radnje iz svih učitanih BuildCraft modula. Razvrstavanje mijenja samo kazalo; poveznice, recepti i posljednja otvorena stranica spremaju se u ovu pojedinačnu knjigu.\n\n$[special.all_crafting](buildcraftlib:guide)\n\n$[special.new_page]"
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Samo crveno obojeni predmeti prolaze kroz njega, naravno ako je filtar crven.",
+      "Filter je priključak koji privlači sve predmete u cijevi obojene istom bojom kao on i propušta samo tu boju.",
+      "Mehanika čepa",
+      "Samo predmeti obojeni istom bojom kao filtar mogu proći; svaki drugačije obojeni predmet pokušava otići u drugom smjeru.\nFiltri se mogu postaviti samo na transportne cijevi za predmete jer se samo predmeti mogu bojiti.",
+      "Veze cijevi",
+      "Priključci se mogu postaviti samo na cijevi i na bilo koju stranu cijevi.\nKada se postavi između dvije cijevi, ne zaustavlja druge spojeve cijevi ni Pipe Wireova."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Robotima i strojevima mnogo je lakše zapovijedati kada se mjesto, put ili radna zona mogu nositi u džepu.",
+      "Map Location sprema točku, područje, put ili Robotics zonu za kasniju uporabu.",
+      "<bold>Savjet:</bold> Snimite lokaciju dok stojite na točnom bloku i gledate u namjeravanom smjeru. Time se izbjegava pomak od jednog bloka kada automatizacija ponovno koristi lokaciju.",
+      "Snimanje lokacija",
+      "Upotrijebite praznu Map Location na običnom bloku kako biste spremili točku i kliknutu stranu. Upotrijebite je na povezanom Land Marku, Volume Boxu ili drugom izvoru područja kako biste spremili kutiju. Upotrijebite je na mreži Path Markova kako biste spremili put.\n\nPrikriveno kliknite desnom tipkom u zrak kako biste izbrisali spremljene podatke. Prazne lokacije slažu se u hrpu, dok se snimljene čuvaju odvojeno.",
+      "Robotics zone",
+      "Zone Planner može zapisati obojenu radnu zonu od šesnaest slojeva u Map Location. Vrata i Docking Stations zatim mogu koristiti tu kartu za ograničavanje rada povezanih robota."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Neki blokovi sadrže tekućinu koja ne bi trebala jednostavno nestati kada se blok razbije.",
+      "Fragile Fluid Shard privremeni je jednosmjerni spremnik koji drži do 500 mB tekućine.",
+      "<bold>Savjet:</bold> Držite ovaj alat ili komponentu blizu strojeva koji je koriste i provjerite odjeljak Uporabe prije izrade velikih količina.",
+      "Povrat tekućine",
+      "Podržani blokovi mogu ispustiti ove krhotine kada se razbiju dok još sadrže tekućinu. Svaka krhotina sprema do pola kante. Rukovatelji tekućinom mogu je isprazniti i potrošiti sadržaj.\n\nKrhotina se ne može ručno puniti i nije namijenjena kao višekratni spremnik. Premjestite sadržaj u kompatibilni spremnik ili cijev prije nego što je tretirate kao običan materijal."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Pri ispitivanju tvornice čekanje goriva rijetko je dio koji itko želi ispitivati.",
+      "Creative Engine proizvodi podesivu MJ energiju bez goriva i namijenjen je testiranju u kreativnom načinu.",
+      "<bold>Savjet:</bold> Creative Engine koristite samo u kontroliranim testnim sustavima. Odvojite ga od normalnih energetskih mreža kako neograničeni izvor ne bi prikrio probleme protoka ili međuspremnika.",
+      "Izlaz",
+      "Dovedite redstone signal za pokretanje motora. Ključem mijenjajte izlaz između 1, 2, 4, 8, 16, 32, 64, 128 i 256 MJ po ticku.\n\nMotor ne troši gorivo i ne eksplodira. Okrenite ga ključem tako da pomični kraj gleda prema stroju ili energetskoj cijevi koja treba primiti energiju."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "Dovršena građevina korisna je jednom; Blueprint omogućuje ponovnu gradnju istog dizajna.",
+      "Blueprint sprema točne blokove, stanja blokova i podržane podatke blok-entiteta iz skeniranog područja.",
+      "<bold>Savjet:</bold> Imenujte važne Blueprints i čuvajte čistu glavnu kopiju u Libraryju. Na gradilištu koristite kopije kako slučajno prepisivanje ne bi uništilo originalni plan.",
+      "Snimanje",
+      "Umetnite prazan Blueprint u Architect Table uz područje Land Markova ili Volume Boxa. Stol postupno skenira odabrani volumen i vraća iskorišten Blueprint. Prazni Blueprints slažu se do šesnaest; snimljeni se ne slažu.\n\nBlueprint pamti stvarne materijale i orijentaciju skenirane građevine. Podržani podaci blok-entiteta i entiteti uključuju se kada to trenutni rukovatelji shemama dopuštaju.",
+      "Gradnja",
+      "Stavite iskorišten Blueprint u Builder. Dovedite tražene blokove, tekućine i MJ. Builder ponovno gradi snimljenu građevinu te je može okretati ili iskopavati ako su te opcije bile dopuštene pri snimanju."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Ponekad je oblik važniji od točnog kamena, drva ili metala kojim je ispunjen.",
+      "Template snima samo popunjeni oblik područja, dopuštajući Builderu da ga ispuni dostavljenim materijalima.",
+      "<bold>Savjet:</bold> Templates snimaju oblik, a ne točan identitet bloka. Koristite ih kada istu građevinu treba ponovno graditi lokalno dostupnim materijalima.",
+      "Snimanje",
+      "Snimite Template u Architect Tableu kao i Blueprint. Skeniranje pamti popunjene i prazne položaje, ali ne čuva izvorne vrste blokova ni podatke blok-entiteta.",
+      "Gradnja",
+      "Umetnite iskorišten Template u Builder i dostavite blokove koje želite koristiti. Builder troši dostupne materijale kako bi ponovno stvorio snimljeni oblik. Templates su korisni za ceste, zidove, ljuske i ponavljane građevine gdje se završni materijal može mijenjati."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Ručno mijenjanje svake kopije jednog bloka u velikom nacrtu loše je korištenje arhitektova vremena.",
+      "Single Block Schematic snima jedno stanje bloka za uporabu u Replaceru.",
+      "<bold>Savjet:</bold> Single Block Schematics korisni su za provjeru pravila postavljanja i rotacija prije predavanja velikog Blueprinta Builderu.",
+      "Snimanje bloka",
+      "Upotrijebite praznu shemu na bloku kako biste ga snimili. Snimljena shema sprema stanje bloka i podržane zahtjeve potrebne za njegovu reprodukciju. Prikriveno kliknite desnom tipkom da je očistite.",
+      "Zamjena Blueprint blokova",
+      "Replacer prihvaća iskorišten Blueprint, izvornu shemu i odredišnu shemu. Svaki odgovarajući izvorni blok u Blueprintu mijenja se u odredišni blok bez izravne promjene svijeta."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "Građevinska kutija korisnija je kada pamti ne samo gdje raditi, nego i koji posao treba obaviti.",
+      "Filler Planner sprema Filler uzorak i parametre kao dodatak za Volume Box.",
+      "<bold>Savjet:</bold> Pregledajte odabrani oblik i dimenzije prije spremanja Filler uzorka. Male pogreške koordinata postaju skupe kada se ponove u velikom volumenu.",
+      "Planiranje",
+      "Pričvrstite planer na Volume Box i podesite uzorak, parametre i stanje inverzije. Filler koji koristi tu kutiju može pročitati spremljeni plan umjesto ponovnog podešavanja.\n\nPregled prati Volume Box, pa se planirana radnja može promijeniti i pregledati prije trošenja materijala i MJ-a."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Prije nego što stroj može ponovno izgraditi građevinu, netko ga mora naučiti što je ta građevina.",
+      "Architect Table skenira označeno područje u Blueprint ili Template.",
+      "<bold>Savjet:</bold> Najprije skenirajte malu reprezentativnu građevinu kako biste provjerili rotacije, blok-entitete i posebne blokove. Veća snimanja radite tek kada pregled izgleda ispravno.",
+      "Postavljanje područja",
+      "Postavite stol uz povezano područje Land Markova ili Volume Box. Odabrana kutija čita se od davatelja područja iza ili pokraj stola.",
+      "Skeniranje",
+      "Umetnite prazan Blueprint za snimanje točnih blokova, stanja i podržanih podataka ili prazan Template za snimanje samo oblika. Odaberite smije li se rezultat okretati, iskopavati postojeće blokove ili koristiti postavljanje samo u kreativnom načinu, zatim pokrenite skeniranje.\n\nSkeniranje je postupno, pa velika područja zahtijevaju vrijeme umjesto zamrzavanja poslužitelja. Držite područje učitanim dok se iskorištena snimka ne pojavi na izlazu."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "Plan je samo zbirka ideja dok nešto ne počne postavljati blokove.",
+      "Builder troši MJ i resurse za gradnju iskorištenog Blueprinta ili Templatea.",
+      "<bold>Savjet:</bold> Ostavite slobodan izlazni prostor dok Builder radi. Ako se zadatak otkaže, rezervirani predmeti mogu se vratiti u inventar ili ispasti u blizini kada nema slobodnog utora.",
+      "Opskrba Buildera",
+      "Umetnite iskorišten Blueprint ili Template u utor snimke. Prikaz zahtjeva pokazuje potrebne materijale. Predmete dovedite kroz inventar resursa ili povezane cijevi, tekućine kroz unutarnje spremnike, a MJ kroz kompatibilni energetski priključak.\n\nBlueprints traže snimljene blokove. Templates koriste prikladne dostavljene blokove za reprodukciju oblika.",
+      "Postavljanje i opcije",
+      "Građevina se postavlja u odnosu na smjer Buildera. Rotacija i iskopavanje dostupni su samo ako ih zaglavlje snimke dopušta. Kada je spojena ruta Path Markova, Builder može ponavljati dizajn na položajima duž puta.\n\nStanje rada i rezervirani resursi spremaju se. Nakon ponovnog učitavanja nedovršeni se zadaci ponovno provjeravaju, a rezervirani predmeti, tekućine i energija sigurno vraćaju prije nastavka rada."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Nije za svaki građevinski posao potreban detaljan Blueprint. Mnogi su samo kutije, zidovi, podovi ili mnogo praznog prostora.",
+      "Filler primjenjuje podesivi geometrijski uzorak unutar označenog područja.",
+      "<bold>Savjet:</bold> Počnite s malim označenim područjem i jeftinim materijalom. Kada su uzorak i orijentacija točni, isti sustav premjestite na konačno mjesto.",
+      "Područje i resursi",
+      "Postavite Filler uz Land Marks ili Volume Box, zatim otvorite sučelje za osvježavanje radnog područja. Građevne blokove stavite u utore resursa, a MJ u unutarnju bateriju. Uzorci iskopavanja mogu ukloniti postojeće blokove kada je iskopavanje uključeno.",
+      "Uzorci",
+      "Dostupni uzorci uključuju čišćenje, ispunu, kutiju, okvir, horizont, poravnavanje, cilindar, piramidu i stube. Dvodimenzionalni oblici uključuju trokute, pravilne poligone, lukove i krugove. Trodimenzionalni uključuju kugle i djelomične kugle.\n\nParametri uzorka upravljaju smjerom, rotacijom, orijentacijom, osi, središtem i šupljim inačicama. Inverzija zamjenjuje unutrašnjost i vanjštinu stvorenog uzorka."
+    ],
+    "buildcraftbuilders/block/library": [
+      "Dobar dizajn trebao bi trajati dulje od jednog komada papira na kojem je prvi put snimljen.",
+      "Electronic Library prenosi podatke Blueprinta i Templatea između predmeta snimke i spremljene baze snimki.",
+      "<bold>Savjet:</bold> Jedan Library koristite kao projektni arhiv, a drugi blizu gradilišta. Tako su zaštićeni glavni planovi odvojeni od privremenih radnih kopija.",
+      "Preuzimanje",
+      "Umetnite iskorišten Blueprint ili Template čiji dizajn postoji u svjetskoj bazi snimki. Nakon prijenosa dizajn se kopira u lokalne podatke knjižnice koje koristi klijentsko sučelje.",
+      "Slanje",
+      "Odaberite spremljeni dizajn u sučelju Libraryja i umetnite čist Blueprint ili Template u utor za slanje. Library prenosi odabranu snimku na poslužitelj i proizvodi iskorišten predmet snimke.\n\nSvaki prijenos traje 50 tickova. Ne uklanjajte ulaz dok se traka napretka pomiče."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Promjena materijala dovršenog dizajna ne bi trebala zahtijevati ponovnu gradnju iz sjećanja.",
+      "Replacer mijenja svaki odgovarajući blok u iskorištenom Blueprintu iz jednog snimljenog stanja bloka u drugo.",
+      "<bold>Savjet:</bold> Pravila zamjene ispitajte na malom probnom zidu. Uključite sva važna stanja blokova, posebno orijentaciju i inačice koje u inventaru izgledaju slično.",
+      "Zamjena blokova",
+      "Stavite iskorišten Blueprint u utor Blueprinta. Blok koji treba pronaći snimite u jednu Single Block Schematic, a zamjenski blok u drugu. Replacer uređuje podatke Blueprinta i vraća izmijenjeni dizajn.\n\nStroj mijenja plan, a ne blokove već postavljene u svijetu. Obje sheme troše se dovršenom zamjenom."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "Builder robot treba plan i mjesto s kojeg preuzima posao čak i kada nijedan nepomični Builder ne izvodi samu gradnju.",
+      "Construction Marker izlaže zadatke gradnje Blueprinta Builder Robotima.",
+      "<bold>Savjet:</bold> Construction Markers najbolje je koristiti za pregled plana prije opskrbe resursima. Ispravite sidro i orijentaciju dok su promjene još besplatne.",
+      "Robotska gradnja",
+      "Postavite Construction Marker i umetnite iskorišten Blueprint. Marker stvara građevinske zadatke, ali sam ne troši MJ niti postavlja blokove. Obližnji Builder Robots mogu rezervirati zadatke, dohvatiti materijale i izvesti gradnju.\n\nMarker koristi postavke rotacije, iskopavanja i vlasništva iz snimke. Ograničite Builder Robote radnom zonom kada je više projekata blizu."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "Velika pokretna bušilica mnogo je manje zastrašujuća kada oko radnog područja ima vidljivu skelu.",
+      "Frames su lagani konstrukcijski blokovi koje koriste Quarry i građevinski sustavi.",
+      "<bold>Savjet:</bold> Frames su privremeni radni blokovi. Držite gradilište čistim kako bi ih strojevi mogli graditi i uklanjati bez zapreka.",
+      "Okvir Quarryja",
+      "Quarry automatski postavlja Frames oko odabranog područja prije početka rudarenja. Okvir pokazuje radnu granicu i podupire pomični sklop bušilice.\n\nFrames se mogu koristiti i kao jeftina otvorena skela, ali Quarry upravlja svojim okvirnim blokovima i uklanja ih tijekom radnog ciklusa."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Ručno rudarenje nagrađuje sve dok željena ruda nije ispod nekoliko milijuna blokova koji nisu željena ruda.",
+      "Quarry gradi okvir i automatski rudari svaki dopušteni blok unutar odabranog područja.",
+      "<bold>Savjet:</bold> Izlaz Quarryja usmjerite u međuspremnik prije konačnog sustava razvrstavanja. Međuspremnik sprječava da kratki zastoji inventara zaustave rudarenje i čini preljev vidljivim.",
+      "Odabir područja",
+      "Postavite Quarry uz povezane Land Marks kako biste odredili vodoravno radno područje. Bez valjanog označenog područja stvara manji zadani Quarry ispred sebe. Tijekom rada učitava chunkove potrebne za preuzeto područje.",
+      "Rudarenje",
+      "Dovedite MJ. Quarry najprije skenira i gradi okvir, zatim pomiče bušilicu po području i rudari prema dolje do postavljene dubine ili dna svijeta. Više dostupne energije omogućuje više rada po ticku, do granice stroja.\n\nIskopani predmeti nude se susjednim inventarima i cijevima. Ostavite dovoljno izlaznog prostora: blokiran izlaz može zaustaviti koristan napredak. Zaštićeni blokovi provjeravaju se lažnim igračem vlasnika Quarryja i zaštita se ne zaobilazi potajno."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Cijevi premještaju resurse. Roboti premještaju sebe, resurse i ponekad sve što im stoji na putu.",
+      "Robot je mobilni radnik čije ponašanje određuje instalirani Redstone Board.",
+      "<bold>Savjet:</bold> Počnite s jednim robotom, dvjema dostupnim Docking Stations i malom radnom zonom. Širite sustav tek kada punjenje, preuzimanje alata i istovar rade pouzdano.",
+      "Stvaranje robota",
+      "Programirajte prazan Redstone Board u Programming Tableu, zatim ga ugradite u prazan Robot pomoću Integration Tablea. Različite ploče stvaraju različita robotska zanimanja.",
+      "Postavljanje i punjenje",
+      "Pričvrstite Docking Station na cijev, zatim upotrijebite programirani Robot na stanici. Igrač koji ga postavi postaje vlasnik. Stanica spojena na MJ može puniti usidrenog robota.\n\nRoboti čuvaju sigurnosnu zalihu energije i vraćaju se na odgovarajuću stanicu radi punjenja, utovara ili istovara. Radnje vrata na Docking Stations upravljaju filtrima, rutama, radnim zonama i resursima."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "Stroj se može kretati, ali bez ploče ne zna treba li nositi, saditi, rudariti ili pobjeći od najbliže krave.",
+      "Redstone Board sprema program zanimanja ugrađen u Robot.",
+      "<bold>Savjet:</bold> Programirane ploče čuvajte po zanimanjima u odvojeno označenim inventarima. Prazna ploča u blizini ubrzava prekonfiguriranje.",
+      "Programiranje",
+      "Stavite praznu ploču u Programming Table, odaberite zanimanje i dovedite lasersku energiju. Prazne ploče slažu se do šesnaest, programirane do jedne.\n\nCijena ovisi o zanimanju: osnovna logistika 8.000 MJ, uobičajeni poslovi 32.000 MJ, napredna borba ili dostava 64.000 MJ, a Builder 128.000 MJ.",
+      "Ugradnja",
+      "Integration Tableom spojite programiranu ploču s praznim Robotom. Ugradnja košta 10.000 MJ. Robot zadržava zanimanje dok se ne obnovi drugom pločom."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Čak i najsamostalniji robot treba mjesto za punjenje, spavanje i upute o tome što ne smije uzeti.",
+      "Docking Station je priključak za cijev koji povezuje, puni i upravlja Robotima.",
+      "<bold>Savjet:</bold> Svakom području dajte barem jednu stanicu za punjenje i jasnu rutu za utovar ili istovar. Filtri sprječavaju uzimanje pogrešnih zaliha.",
+      "Postavljanje",
+      "Postavite stanicu na slobodnu stranu cijevi. Upotrijebite programirani Robot na stanici da ga rasporedite. Stanicu može zauzeti samo jedan robot.\n\nMreža cijevi s MJ-om može puniti usidrenog robota. Prikriveno upotrijebite ključ na povezanoj glavnoj stanici kako biste robota vratili u oblik predmeta kada stanje stanice to dopušta.",
+      "Upravljanje vratima",
+      "Pričvrstite vrata na cijev i koristite Robotics radnje stanice za prihvat ili pružanje predmeta i tekućina, zahtjeve resursa, zabranu ili prisilu robota te prikaz zahtjeva strojeva. Map Locations ograničavaju radne ili utovarne zone."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "Robot kojem kažete da radi posvuda na kraju će pronaći mjesto na kojem niste željeli da radi.",
+      "Zone Planner crta detaljne višeslojne robotske radne zone na Map Locations.",
+      "<bold>Savjet:</bold> Koristite male zone koje sadrže samo željene ciljeve. Velike preklapajuće zone otežavaju predviđanje koji će robot preuzeti zadatak.",
+      "Crtanje zone",
+      "Umetnite praznu Map Location i uredite zonu u planeru. Karta podržava šesnaest zasebno uredljivih slojeva na mreži 2048 x 2048. Slojevi se mogu birati, spajati i imenovati.\n\nNakon 120 tickova izlaz prima Map Location s trenutnim Zone Planom. Spremljena zona može se uvesti za daljnje uređivanje.",
+      "Uporaba zone",
+      "Stavite Map Location u kompatibilni parametar vrata ili radnju Docking Stationa. Povezani roboti zatim ograničavaju pretragu i rad na obojenu zonu."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Skladište je korisnije kada može zatražiti robu prije nego netko primijeti praznu policu.",
+      "Requester održava zadane količine predmeta i izlaže nedostajuće količine Delivery Robotima.",
+      "<bold>Savjet:</bold> Najprije tražite male količine i provjerite dostupnost pružatelja i ruta. Veliki trajni zahtjevi mogu zauzeti nosače i skladište.",
+      "Podešavanje zahtjeva",
+      "Gornjih dvadeset fantomskih utora određuje traženi predmet i količinu. Odgovarajući pravi utor ispod prihvaća samo taj predmet ili odgovarajući List.\n\nDelivery Robots provjeravaju nedostatak i dostavljaju dok zahtjev nije ispunjen. Već prisutni predmeti smanjuju aktivni zahtjev.",
+      "Redstone izlaz",
+      "Comparator prijavljuje prosječnu popunjenost podešenih zahtjeva. Prazna konfiguracija ne daje signal; potpuniji zahtjevi podižu signal prema petnaest."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Picker Robot skuplja ispuštene predmete u svojoj zoni, primjenjuje filtar stanice i vraća se na istovar.",
+      "<bold>Savjet:</bold> Zonu skupljanja držite malom i osigurajte blisku stanicu za istovar; inače robot većinu vremena putuje.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 8.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot skuplja ispuštene predmete u zoni, primjenjuje filtar stanice i vraća se na istovar. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nFiltrima vrata i Lists ograničite predmete."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Carrier Robot utovaruje odgovarajuće predmete s pružateljske stanice i nosi ih na stanicu koja ih može prihvatiti.",
+      "<bold>Savjet:</bold> Stanice za utovar i istovar postavite na kratku, slobodnu rutu. Filtri na oba kraja sprječavaju prijenos pogrešnog predmeta.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 8.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot utovaruje odgovarajuće predmete s pružateljske stanice i nosi ih na prihvatnu stanicu. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nFiltrima vrata i Lists ograničite predmete."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Tank Robot premješta tekućine između stanica i spremnika koristeći filtre stanica.",
+      "<bold>Savjet:</bold> Koristite namjenske stanice za tekućine i ne miješajte poslove u istoj zoni. Odvojene rute odmah otkrivaju pogrešan spremnik.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 8.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot premješta tekućine između stanica i spremnika prema filtrima stanica. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nFiltrima tekućina spriječite ulazak nepovezanih tekućina."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Lumberjack Robot uzima prikladnu sjekiru i siječe povezane trupce u radnoj zoni.",
+      "<bold>Savjet:</bold> Spojite Lumberjack s Planterom i osigurajte stanicu alata. Ostavite dovoljno prostora iznad sadnica.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot uzima sjekiru i siječe povezane trupce u zoni. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nAlat uzima sa stanice; filtrima odredite dopuštene alate i povrat oštećenih."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Harvester Robot pronalazi zrele usjeve, bere ih i vraća plodove na stanicu.",
+      "<bold>Savjet:</bold> Zonu ograničite na zrele usjeve i osigurajte istovar sa sjemenjem. Tako neće skupljati nepovezane biljke.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot pronalazi zrele usjeve, bere ih i vraća plodove na stanicu. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Miner Robot uzima pijuk i rudari dostupne rude u radnoj zoni.",
+      "<bold>Savjet:</bold> Osigurajte pouzdanu zalihu pijuka i blizak istovar. Kompaktna zona rude smanjuje putovanje kroz očišćene tunele.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot uzima pijuk i rudari dostupne rude u zoni. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nAlat uzima sa stanice; filtrima odredite alate i povrat."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Planter Robot utovaruje odgovarajuće sjeme i sadi ga na valjano tlo u radnoj zoni.",
+      "<bold>Savjet:</bold> Filtrirajte opskrbu na željene sadnice ili sjeme. Miješana zaliha može stvoriti neujednačenu farmu.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot utovaruje sjeme i sadi ga na valjano tlo. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nFiltrima vrata i Lists ograničite predmete."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Farmer Robot uzima motiku i priprema prikladnu zemlju ili travu za sadnju.",
+      "<bold>Savjet:</bold> Koristite stabilan raspored i odvojite sjeme od uroda kako robot ne bi trošio proizvode za izvoz.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot uzima motiku i priprema prikladnu zemlju ili travu. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nAlat uzima sa stanice; filtrima odredite alate i povrat."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Leaf Cutter Robot uzima alat za rezanje i uklanja lišće u radnoj zoni.",
+      "<bold>Savjet:</bold> Leaf Cutter pokrenite nakon Lumberjacka samo kada želite kapljice lišća. Zona ne smije obuhvatiti ukrasna stabla.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot uzima alat za rezanje i uklanja lišće u zoni. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Butcher Robot uzima mač i lovi dopuštene pasivne životinje, izbjegavajući mačke, pse i zaštićene pitome životinje.",
+      "<bold>Savjet:</bold> Zonu držite dalje od rasplodnih i zaštićenih životinja. Uska zona čini ciljeve predvidljivima.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot uzima mač i lovi dopuštene pasivne životinje, izbjegavajući zaštićene pitome životinje. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nAlat uzima sa stanice; filtrima odredite alate i povrat."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Shovelman Robot uzima lopatu i kopa blokove pogodne za lopatu u svojoj radnoj zoni.",
+      "<bold>Savjet:</bold> Osigurajte prikladne lopate i točne granice iskopa. Široke zone mogu ukloniti staze, obradivo tlo ili ukrase.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot uzima lopatu i kopa blokove pogodne za lopatu. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nAlat uzima sa stanice; filtrima odredite alate i povrat."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Pump Robot crpi odgovarajuće blokove tekućine u unutarnji spremnik i vraća se na istovar.",
+      "<bold>Savjet:</bold> Prije pokretanja osigurajte prazno odredište tekućine. Puna stanica može ostaviti robota da putuje bez korisnog rada.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 32.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot crpi odgovarajuću tekućinu u unutarnji spremnik i vraća se na istovar. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nFiltrima spriječite ulazak nepovezanih tekućina."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Delivery Robot ispunjava zahtjeve predmeta koje izlažu Requesters i radnje stanica.",
+      "<bold>Savjet:</bold> Koristite umjerene serije i dostupnu pružateljsku stanicu. Time se smanjuju duga putovanja za pojedinačne predmete.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 64.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot ispunjava zahtjeve predmeta Requestera i stanica. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nFiltrima vrata i Lists ograničite predmete."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Knight Robot uzima oružje i napada neprijateljske mobove u dodijeljenoj zoni.",
+      "<bold>Savjet:</bold> Borbenu zonu držite dalje od krhkih strojeva i osigurajte sigurnu stanicu za punjenje. Ispitajte pristup mobova prije oslanjanja na obranu.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 64.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot uzima oružje i napada neprijateljske mobove u zoni. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nAlat uzima sa stanice; filtrima odredite alate i povrat."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Bomber Robot utovaruje TNT, leti nad valjanim tlom i ispušta aktivirane eksplozive.",
+      "<bold>Savjet:</bold> Bomber koristite samo u pažljivo izoliranoj zoni. Provjerite zaštitu od eksplozija i dopuštenja prije opskrbe eksplozivom.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 64.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot utovaruje TNT, leti nad valjanim tlom i ispušta aktivirane eksplozive. Vraća se na kompatibilne Docking Stations radi punjenja, utovara ili istovara."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Stripes Robot utovaruje upotrebljive predmete i na slobodne ciljne blokove primjenjuje iste rukovatelje uporabom predmeta kao Stripes Transport Pipe.",
+      "<bold>Savjet:</bold> Ručno ispitajte svaku stripes-interakciju prije dodjele robota. Neki rukovatelji troše, postavljaju ili pretvaraju predmete na način koji je teško poništiti.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 64.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot utovaruje upotrebljive predmete i na slobodne ciljne blokove primjenjuje iste rukovatelje uporabom predmeta kao Stripes Transport Pipe. Po potrebi se vraća na kompatibilne Docking Stations radi punjenja, utovara ili istovara."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "Specijalizirani radnik obično je pouzdaniji od robota koji odlučuje je li današnji prioritet stablo, sanduk ili creeper.",
+      "Builder Robot pronalazi obližnje Buildere ili Construction Markere, rezervira građevinske zadatke, dohvaća materijale i obavlja posao.",
+      "<bold>Savjet:</bold> Dajte Builder Robotu obližnju opskrbnu stanicu i počnite s malim Blueprintom. Prije većih poslova provjerite ponašaju li se zaštićeni blokovi i rotacije ispravno.",
+      "Zanimanje",
+      "Ovo se zanimanje programira u Redstone Board za 128.000 MJ i ugrađuje u prazan Robot pomoću Integration Tablea.\n\nDok je aktivan, robot pronalazi obližnje Buildere ili Construction Markere, rezervira građevinske zadatke, dohvaća materijale i obavlja posao. Po potrebi se vraća na kompatibilne Docking Stations radi punjenja, utovara ili istovara.\n\nBuilder Roboti mogu raditi i za nepomične Buildere i za Construction Markere. Držite projekt i opskrbne stanice unutar dosega robota."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Okidač je aktivan dok je robot usidren na stanici.",
+      "<bold>Savjet:</bold> Upotrijebite obojenu žicu kako biste logiku stanja robota odvojili od automatizacije predmeta i tekućina na istoj mreži cijevi.",
+      "Ponašanje okidača",
+      "Okidač je aktivan dok je robot usidren na stanici."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Okidač je aktivan dok povezani robot spava i čeka posao.",
+      "<bold>Savjet:</bold> Upotrijebite obojenu žicu kako biste logiku stanja robota odvojili od automatizacije predmeta i tekućina na istoj mreži cijevi.",
+      "Ponašanje okidača",
+      "Okidač je aktivan dok povezani robot spava i čeka posao.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Okidač je aktivan kada stanica ima povezanog robota, bez obzira je li trenutačno usidren.",
+      "<bold>Savjet:</bold> Upotrijebite obojenu žicu kako biste logiku stanja robota odvojili od automatizacije predmeta i tekućina na istoj mreži cijevi.",
+      "Ponašanje okidača",
+      "Okidač je aktivan kada stanica ima povezanog robota, bez obzira je li trenutačno usidren.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Okidač je aktivan dok je stanica ili robot rezerviran za radnju.",
+      "<bold>Savjet:</bold> Upotrijebite obojenu žicu kako biste logiku stanja robota odvojili od automatizacije predmeta i tekućina na istoj mreži cijevi.",
+      "Ponašanje okidača",
+      "Okidač je aktivan dok je stanica ili robot rezerviran za radnju.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Postavlja filtar predmeta ili tekućine za rad robota i utovar na stanici. Dodajte parametre predmeta, tekućine ili Lista kako biste suzili filtar.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Postavlja filtar predmeta ili tekućine za rad robota i utovar na stanici. Dodajte parametre predmeta, tekućine ili Lista kako biste suzili filtar."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Ograničava koje alate robot smije dohvatiti za zanimanje koje koristi alat.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Ograničava koje alate robot smije dohvatiti za zanimanje koje koristi alat.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Naređuje povezanom robotu da se vrati na ovaj Docking Station kada je uvjet vrata aktivan.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Naređuje povezanom robotu da se vrati na ovaj Docking Station kada je uvjet vrata aktivan.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Budi uspavanog povezanog robota kako bi ponovno mogao tražiti posao.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Budi uspavanog povezanog robota kako bi ponovno mogao tražiti posao.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Dodjeljuje zonu Map Location kao radno područje robota.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Dodjeljuje zonu Map Location kao radno područje robota.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Ograničava područje u kojem robot smije tražiti stanice za utovar i istovar.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Ograničava područje u kojem robot smije tražiti stanice za utovar i istovar.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Omogućuje robotima istovar odgovarajućih tekućina u ovu stanicu ili povezane rukovatelje.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Omogućuje robotima istovar odgovarajućih tekućina u ovu stanicu ili povezane rukovatelje.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Omogućuje robotima istovar odgovarajućih predmeta u ovu stanicu ili povezani inventar.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Omogućuje robotima istovar odgovarajućih predmeta u ovu stanicu ili povezani inventar.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Sprječava robote da odaberu ovu stanicu dok je radnja aktivna.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Sprječava robote da odaberu ovu stanicu dok je radnja aktivna.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Navodi povezanog robota da daje prednost ovoj stanici ili joj se vrati dok je radnja aktivna.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Navodi povezanog robota da daje prednost ovoj stanici ili joj se vrati dok je radnja aktivna.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Oglašava odgovarajuće tekućine na ovoj stanici robotima koji ih trebaju utovariti.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Oglašava odgovarajuće tekućine na ovoj stanici robotima koji ih trebaju utovariti.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Oglašava odgovarajuće predmete na ovoj stanici robotima koji ih trebaju utovariti.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Oglašava odgovarajuće predmete na ovoj stanici robotima koji ih trebaju utovariti.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Stvara zahtjeve za predmetima koje Delivery Roboti mogu ispuniti.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Stvara zahtjeve za predmetima koje Delivery Roboti mogu ispuniti.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Logistika robota postaje mnogo korisnija kada stanice mogu opisati svoje stanje i izdavati precizne upute.",
+      "Izlaže zahtjeve za predmetima koje proizvodi susjedni kompatibilni stroj Delivery Robotima.",
+      "<bold>Savjet:</bold> Primjenjujte robotske radnje kroz usko filtriranu stanicu ili radnu zonu. Široka pravila mogu utjecati na više robota nego što je namjeravano kada se mreže preklapaju.",
+      "Ponašanje radnje",
+      "Izlaže zahtjeve za predmetima koje proizvodi susjedni kompatibilni stroj Delivery Robotima.\n\nUpotrijebite ovaj statement na Gateu pričvršćenom na istu cijev kao odgovarajući Docking Station. Parametri poput predmeta, tekućina, Lists i Map Locations dostupni su samo kada ih statement podržava."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Isušivanje oceana je učinkovito, ali ponekad je zabavnije pretvoriti površinu u nešto čvrsto.",
+      "Water Gelifier pretvara povezanu izvorsku vodu i vodene biljke u privremeni Water Gel.",
+      "<bold>Savjet:</bold> Prije masovne izrade zajedno provjerite odjeljke Recepti i Uporabe; ovaj predmet može biti međukomponenta za nekoliko kasnijih strojeva.",
+      "Uporaba Gelifiera",
+      "Upotrijebite predmet dok pokazujete prema vodi. Prvi blok gela postavlja se na ciljanu poziciju vode i počinje se širiti kroz susjednu izvorsku vodu i podržane vodene biljke.\n\nWater Gel prolazi kroz nekoliko faza i na kraju se stvrdne. Dodir s okolnom vodom usporava završno stvrdnjavanje, pa se fronta gela može proširiti prije nego što postane stabilna.",
+      "Prikupljanje gela",
+      "Razbijanje stvrdnutog Water Gela ispušta Gelled Water predmete. Postupak je namijenjen kontroliranom uklanjanju vode i privremenoj gradnji, pa ga isprobajte na malom bazenu prije oceana."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Izgleda kao voda, znatno manje se osjeća kao voda i više se uopće ne ponaša kao voda.",
+      "Gelled Water je čvrsti materijal dobiven iz Water Gela.",
+      "<bold>Savjet:</bold> Prije masovne izrade zajedno provjerite odjeljke Recepti i Uporabe; ovaj predmet može biti međukomponenta za nekoliko kasnijih strojeva.",
+      "Dobivanje",
+      "Upotrijebite Water Gelifier na izvorskoj vodi i pričekajte da se gel koji se širi stvrdne. Razbijanje gotovog gela daje Gelled Water."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Neki recepti zahtijevaju preciznost koju peć, crafting-mreža i optimističan čekić ne mogu pružiti.",
+      "Laser pretvara MJ u lasersku energiju za obližnje kompatibilne BuildCraft stolove.",
+      "<bold>Savjet:</bold> Više Lasera može raditi na jednom kompatibilnom stolu. Dodajte ih postupno i pratite međuspremnik stola kako ne biste gradili suvišnu lasersku snagu bez koristi.",
+      "Napajanje stolova",
+      "Postavite Lasere unutar šest blokova od Assembly, Charging, Integration, Advanced Crafting ili Programming Tablea i dovedite im MJ. Svaki Laser automatski traži kompatibilan stol koji trenutačno traži energiju.\n\nLaser može prenijeti do 6,4 MJ po ticku. Više Lasera može raditi na istom stolu, a njihove se zrake pomiču kako se potražnja stola mijenja."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Redstone i dijamanti korisni su sastojci, ali neke komponente zahtijevaju mnogo precizniji raspored energije.",
+      "Assembly Table koristi lasersku energiju za izradu BuildCraft komponenti i dodataka za cijevi.",
+      "<bold>Savjet:</bold> Odaberite samo recepte koji se trebaju izvoditi automatski. Ostavljanje nepovezanih recepata uključenima može potrošiti zajedničke sastojke kada je moguće više izlaza.",
+      "Sastavljanje",
+      "Umetnite potrebne sastojke i odaberite jedan ili više dostupnih recepata sastavljanja. Obližnji napajani Laseri ispunjavaju energetski zahtjev odabranog recepta. Po završetku izlaz se stavlja u stol ili nudi susjednim inventarima i cijevima.\n\nViše odabranih recepata može se automatski izmjenjivati kada su njihovi sastojci dostupni. Stol čuva djelomični laserski napredak pa se prekinuti rad može nastaviti kasnije."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Prijenosni stroj bez energije samo je ukrasni stroj koji je nezgodno nositi.",
+      "Charging Table koristi lasersku energiju za punjenje Forge Energy predmeta.",
+      "<bold>Savjet:</bold> Upotrijebite filtrirane ulazne i izlazne inventare oko Charging Tablea kako napunjeni i prazni predmeti ne bi beskonačno kružili istom petljom.",
+      "Punjenje",
+      "Stavite predmet koji se može puniti u jedini utor. Obližnji Laseri napajaju stol, koji prenosi cijele jedinice energije u predmete s mogućnošću Forge Energy.\n\nStol traži samo količinu koju predmet još može primiti i zaustavlja se kada je predmet pun. Predmeti koji ne mogu primati energiju odbijaju se."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Neki se strojevi grade u jednom komadu. Drugi postaju korisni tek nakon ugradnje važnog dijela.",
+      "Integration Table ugrađuje kompatibilne nadogradnje ili komponente u ciljni predmet pomoću laserske energije.",
+      "<bold>Savjet:</bold> Pripremite točnu varijantu vrata, ploče ili robota prije umetanja. Integracijski recepti često čuvaju ili mijenjaju podatke predmeta koje je lakše provjeriti prije automatizacije.",
+      "Integracija",
+      "Stavite ciljni predmet u središnji utor, a potrebne komponente u okolne utore. Ako se podudara registrirani integracijski recept, obližnji Laseri daju potrebnu energiju i gotov predmet pojavljuje se na izlazu.\n\nVažna uporaba Roboticsa je ugradnja programiranog Redstone Boarda u prazan Robot. Ta radnja zahtijeva 10.000 MJ."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Ponavljanje istog crafting-recepta nije teško, ali upravo bi takav posao trebao obavljati stroj.",
+      "Advanced Crafting Table automatski ponavlja podešeni crafting-recept koristeći isporučene materijale i MJ.",
+      "<bold>Savjet:</bold> Držite zalihu svakog sastojka i zasebno izvlačite gotove rezultate. Vraćanje izlaza na stranu sastojaka može blokirati složene recepte.",
+      "Automatski crafting",
+      "Složite željeni recept u fantomskoj Blueprint-mreži 3 puta 3, zatim dovedite odgovarajuće sastojke u inventar materijala. Stol izrađuje rezultat u svoj izlazni inventar kada je recept valjan i ima dovoljno prostora.\n\nSvaka radnja traži 500 MJ. Stol može primati MJ izravno i također sudjeluje u sustavu laserskih stolova."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Prazna ploča sadrži mnoge mogućnosti i baš nikakve korisne upute.",
+      "Programming Table zapisuje odabrano robotsko zanimanje na prazan Redstone Board pomoću laserske energije.",
+      "<bold>Savjet:</bold> Programirajte često korištene ploče u serijama i označite njihovo spremište. Ploče zanimanja mogu izgledati slično dok se ne ugrade u robota.",
+      "Programiranje ploča",
+      "Umetnite prazan Redstone Board, odaberite zanimanje među dostupnim mogućnostima i napajajte obližnje Lasere. Stol daje programiranu ploču kada se dostigne energetska cijena zanimanja.\n\nMogućnosti su poredane prema cijeni energije i nazivu. Osnovna logistička zanimanja koštaju 8.000 MJ, uobičajena radna 32.000 MJ, napredna 64.000 MJ, a Builder 128.000 MJ."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Obična redstone-prašina je energična, ali kristal je mnogo lakše uklopiti u precizne strojeve.",
+      "Redstone Crystal je komponenta Assembly Tablea koja se koristi u naprednim BuildCraft receptima.",
+      "<bold>Savjet:</bold> Prije masovne proizvodnje provjerite recepte i uporabe. Silicon dijelove često dijeli više strojeva, vrata i nadogradnji robota.",
+      "Proizvodnja",
+      "Proizvedite Redstone Crystals u Assembly Tableu sa sastojcima prikazanima u prikazu recepta. Koriste se u laserskim strojevima, vratima i drugim komponentama visoke razine."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Složen program vrata mnogo je lakše kopirati nego savršeno zapamtiti šesnaest puta.",
+      "Gate Copier sprema jednu konfiguraciju vrata i primjenjuje je na kompatibilna vrata.",
+      "<bold>Savjet:</bold> Sačuvajte jedna provjerena vrata kao glavni primjerak i kopirajte s njih. Tako se eksperimentalne postavke neće proširiti kroz cijelu mrežu cijevi.",
+      "Kopiranje i lijepljenje",
+      "Upotrijebite kopirni uređaj na podešenom Gateu kako biste spremili podatke okidača, radnje, veze i parametara. Ispunjeni kopirni uređaj upotrijebite na drugom kompatibilnom Gateu za kopiranje spremljenog programa.\n\nŠuljajte se i kliknite desnom tipkom u zrak kako biste izbrisali spremljene podatke. Model predmeta i opis pokazuju je li program trenutačno spremljen."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Kompaktna mreža cijevi nema mnogo mjesta za toranj repetitora i satova.",
+      "Timer je dodatak za cijev koji dodaje periodične okidače vrata od 5, 10 i 15 sekundi.",
+      "<bold>Savjet:</bold> Podesite priključni dio prije kopiranja ili postavljanja velikog broja. Najprije ispitajte jednu stranu cijevi kako biste potvrdili orijentaciju i ponašanje vrata.",
+      "Okidači Timera",
+      "Pričvrstite Timer na cijev. Vrata na toj cijevi dobivaju tri unutarnja okidača koji pulsiraju svakih 5, 10 ili 15 sekundi prema vremenu igre u svijetu.\n\nTimer zauzima i blokira svoju stranu cijevi kao i drugi dodaci."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "Precizan logički sklop lakše je sastaviti kada je njegov redstone uvjeren da ostane u jednom pažljivo proizvedenom komadu.",
+      "Red Chipset je osnovna redstone-logička komponenta koju koriste vrata i drugi Silicon recepti.",
+      "<bold>Savjet:</bold> Prije masovne proizvodnje provjerite recepte i uporabe. Silicon dijelove često dijeli više strojeva, vrata i nadogradnji robota.",
+      "Sastavljanje",
+      "Izradite ovaj chipset u Assembly Tableu laserskom energijom. Točne uporabe navedene su u prikazu recepta i mogu uključivati vrata, proširenja, Robotics komponente i laserske strojeve."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "Precizan logički sklop lakše je sastaviti kada je njegov redstone uvjeren da ostane u jednom pažljivo proizvedenom komadu.",
+      "Iron Chipset je željezna logička komponenta koju koriste snažnija vrata i strojevi.",
+      "<bold>Savjet:</bold> Prije masovne proizvodnje provjerite recepte i uporabe. Silicon dijelove često dijeli više strojeva, vrata i nadogradnji robota.",
+      "Sastavljanje",
+      "Izradite ovaj chipset u Assembly Tableu laserskom energijom. Točne uporabe navedene su u prikazu recepta i mogu uključivati vrata, proširenja, Robotics komponente i laserske strojeve."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "Precizan logički sklop lakše je sastaviti kada je njegov redstone uvjeren da ostane u jednom pažljivo proizvedenom komadu.",
+      "Gold Chipset je zlatna logička komponenta koja se koristi u receptima za vrata i strojeve velikog kapaciteta.",
+      "<bold>Savjet:</bold> Prije masovne proizvodnje provjerite recepte i uporabe. Silicon dijelove često dijeli više strojeva, vrata i nadogradnji robota.",
+      "Sastavljanje",
+      "Izradite ovaj chipset u Assembly Tableu laserskom energijom. Točne uporabe navedene su u prikazu recepta i mogu uključivati vrata, proširenja, Robotics komponente i laserske strojeve."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "Precizan logički sklop lakše je sastaviti kada je njegov redstone uvjeren da ostane u jednom pažljivo proizvedenom komadu.",
+      "Quartz Chipset je kvarcna logička komponenta za recepte usmjerene na parametre i mjerenje vremena.",
+      "<bold>Savjet:</bold> Prije masovne proizvodnje provjerite recepte i uporabe. Silicon dijelove često dijeli više strojeva, vrata i nadogradnji robota.",
+      "Sastavljanje",
+      "Izradite ovaj chipset u Assembly Tableu laserskom energijom. Točne uporabe navedene su u prikazu recepta i mogu uključivati vrata, proširenja, Robotics komponente i laserske strojeve."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "Precizan logički sklop lakše je sastaviti kada je njegov redstone uvjeren da ostane u jednom pažljivo proizvedenom komadu.",
+      "Diamond Chipset je najviši standardni chipset koji se koristi u naprednim proširenjima vrata i preciznim strojevima.",
+      "<bold>Savjet:</bold> Prije masovne proizvodnje provjerite recepte i uporabe. Silicon dijelove često dijeli više strojeva, vrata i nadogradnji robota.",
+      "Sastavljanje",
+      "Izradite ovaj chipset u Assembly Tableu laserskom energijom. Točne uporabe navedene su u prikazu recepta i mogu uključivati vrata, proširenja, Robotics komponente i laserske strojeve."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "Pouzdan sat često je korisniji od složenog.",
+      "Ovaj okidač pulsira jednom svakih 5 sekundi dok je Timer pričvršćen na cijev.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Puls Timera",
+      "Okidač postaje aktivan na tickovima svijeta djeljivima sa 100. Spojite ga s radnjama vrata koje se trebaju ponavljati u stalnom intervalu."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "Pouzdan sat često je korisniji od složenog.",
+      "Ovaj okidač pulsira jednom svakih 10 sekundi dok je Timer pričvršćen na cijev.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Puls Timera",
+      "Okidač postaje aktivan na tickovima svijeta djeljivima s 200. Spojite ga s radnjama vrata koje se trebaju ponavljati u stalnom intervalu."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "Pouzdan sat često je korisniji od složenog.",
+      "Ovaj okidač pulsira jednom svakih 15 sekundi dok je Timer pričvršćen na cijev.",
+      "<bold>Savjet:</bold> Najprije spojite okidač na privremenu svjetiljku. Nakon što potvrdite njegovo aktivno i neaktivno stanje, isti signal usmjerite prema strojevima.",
+      "Puls Timera",
+      "Okidač postaje aktivan na tickovima svijeta djeljivima s 300. Spojite ga s radnjama vrata koje se trebaju ponavljati u stalnom intervalu."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Wood Power izvlači MJ iz kompatibilnih susjednih proizvođača i ubacuje ga u mrežu energetskih cijevi.",
+      "<bold>Savjet:</bold> Upotrijebite jedan drveni priključak za izvlačenje po namjeravanom izvoru i izbjegavajte zatvorene petlje. Provjerite može li izvor sigurno davati traženu stopu MJ-a.",
+      "Mehanika energetskih cijevi",
+      "Zadano ograničenje prijenosa je 16 MJ po ticku. Wooden Power Pipes ne spajaju se izravno na drugu drvenu cijev za izvlačenje.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Cobblestone Power je osnovna energetska cijev malog kapaciteta.",
+      "<bold>Savjet:</bold> Birajte razine cijevi prema protoku i rasporedu mreže. Segment niske razine može ograničiti inače nadograđenu energetsku liniju.",
+      "Mehanika energetskih cijevi",
+      "Zadano ograničenje prijenosa je 4 MJ po ticku. Ne spaja se na Stone Power Pipes, pa susjedne linije mogu ostati odvojene.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Stone Power je opća energetska cijev malog kapaciteta.",
+      "<bold>Savjet:</bold> Birajte razine cijevi prema protoku i rasporedu mreže. Segment niske razine može ograničiti inače nadograđenu energetsku liniju.",
+      "Mehanika energetskih cijevi",
+      "Zadano ograničenje prijenosa je 8 MJ po ticku. Ne spaja se na Cobblestone Power Pipes.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Sandstone Power prenosi energiju između cijevi bez izravnog spajanja na susjedne strojeve.",
+      "<bold>Savjet:</bold> Upotrijebite Sandstone Power Pipes blizu strojeva koji se ne smiju izravno spojiti na liniju. Provjerite ostaje li planirana okosnica cijev-na-cijev neprekinuta.",
+      "Mehanika energetskih cijevi",
+      "Zadano ograničenje prijenosa je 16 MJ po ticku. Upotrijebite ga za provođenje linije pokraj strojeva koji ne smiju postati energetske završne točke.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Quartz Power je transportna cijev srednjeg kapaciteta odvojena od obitelji kamenih i kaldrmenih cijevi.",
+      "<bold>Savjet:</bold> Različitim materijalima označite odvojene zone napona ili opterećenja, čak i kada im je trenutačni protok sličan.",
+      "Mehanika energetskih cijevi",
+      "Zadano ograničenje prijenosa je 32 MJ po ticku.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Gold Power je energetska cijev velikog kapaciteta.",
+      "<bold>Savjet:</bold> Najprije nadogradite duge ili jako opterećene okosnice. Kratke grane koje napajaju jedan stroj često nemaju korist od iste razine.",
+      "Mehanika energetskih cijevi",
+      "Zadano ograničenje prijenosa je 64 MJ po ticku.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Iron Power je podesivi ograničivač energije.",
+      "<bold>Savjet:</bold> Ponovno provjerite usmjerene izlaze energije nakon okretanja ili premještanja cijevi. Jedna pogrešna strana može ostaviti cijelu granu bez energije.",
+      "Mehanika energetskih cijevi",
+      "Puno ograničenje prijenosa je 32 MJ po ticku. Wrenchom uzastopno prepolovljavajte ograničenje do jedne šezdesetčetvrtine, zatim potpuno onemogućite prijenos prije povratka na punu snagu.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Diamond Power je podesivi ograničivač energije vrlo velikog kapaciteta.",
+      "<bold>Savjet:</bold> Upotrijebite Diamond Power Pipes za okosnice i razdjelnike velike potražnje, a ne kao zamjenu za uravnoteženje potrošača na svakoj grani.",
+      "Mehanika energetskih cijevi",
+      "Puno ograničenje prijenosa je 256 MJ po ticku. Wrenchom uzastopno prepolovljavajte ograničenje ili potpuno onemogućite prijenos.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Energija je korisna tek nakon što dođe do stroja koji ju je trebao primiti.",
+      "Diamond Wood Power je drvena cijev za izvlačenje velikog kapaciteta.",
+      "<bold>Savjet:</bold> Izvlačenje velikog kapaciteta spajajte samo na izvore i mreže predviđene za njega. Prije pune proizvodnje ispitajte granu kontroliranim potrošačem.",
+      "Mehanika energetskih cijevi",
+      "Zadano ograničenje prijenosa je 256 MJ po ticku. Kao obični Wooden Power Pipe, prima MJ od kompatibilnih proizvođača i ne spaja se na drugu drvenu cijev za izvlačenje.\n\nEnergija koja ulazi u spoj razmjerno se raspodjeljuje među izlazima koji je traže. Odsjek prihvaća najviše svoj trenutačni slobodni kapacitet, a mreža čuva neprihvaćenu energiju umjesto da je umnožava ili odbacuje tijekom normalnog prijenosa.\n\nUpotrijebite Pipe Plugs ili obojite susjedne cijevi različitim bojama kako biste spriječili neželjene veze. Ograničenja energetskih cijevi podešavaju se kada se mreža promijeni i obnavljaju nakon učitavanja svijeta."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Drvena cijev izvrsno premješta predmete, a znatno lošije zadržava vodu u sebi.",
+      "Pipe Sealant je crafting-komponenta koja transportne materijale pretvara u komponente cijevi za tekućine.",
+      "<bold>Savjet:</bold> Prije masovne izrade zajedno provjerite odjeljke Recepti i Uporabe; ovaj predmet može biti međukomponenta za nekoliko kasnijih strojeva.",
+      "Crafting cijevi za tekućine",
+      "Upotrijebite Pipe Sealant u receptima prikazanima u vodiču za stvaranje ili nadogradnju Fluid Pipes. Nema vlastito transportno ponašanje i troši se kao crafting-materijal."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "Međuspremnik je najkorisniji kada zna koji su predmeti zapravo dobrodošli u njemu.",
+      "Filtered Buffer je inventar s devet utora čije stvarne utore nadziru odgovarajući fantomski filtri.",
+      "<bold>Savjet:</bold> Upotrijebite Filtered Buffer između brzih cijevi i sporijih strojeva. Ublažava nalete i daje filtrima stabilan inventar za rad.",
+      "Filtriranje",
+      "Podesite devet fantomskih filtarskih utora u sučelju. Svaki odgovarajući stvarni utor inventara prihvaća samo predmet koji je odabrao njegov filtar. Cijevi i drugi rukovatelji predmetima mogu umetati u stvarni inventar ili izvlačiti iz njega kroz izloženu mogućnost predmeta.\n\nUpotrijebite međuspremnik između faza razvrstavanja kako biste rezervirali odvojena mjesta za različite predmete i spriječili ulazak nepovezanih stogova u liniju."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Tamna tekućina koja izvire iz tla ili je vrijedan izvor energije ili vrlo skup ekološki problem.",
+      "Oil je prirodno generirani početni materijal za BuildCraftov lanac obrade goriva.",
+      "<bold>Savjet:</bold> Držite sirovi Oil u zasebnom spremniku i ostavite prostora za međuproizvode prije pokretanja automatizirane rafinerije.",
+      "Prikupljanje Oila",
+      "Nalazišta Oila stvaraju se u svijetu i mogu se prikupljati Bucketsima, Pumpom ili drugim kompatibilnim rukovateljima tekućinama. Čuvajte ga u Tanksima i pomičite Fluid Pipesima.",
+      "Uporaba i rafiniranje",
+      "Cool Oil je prljavo gorivo za Combustion Engine koje proizvodi 3 MJ/t i Residue. Rafiniranje je obično vrijednije.\n\nDistiller prema trenutačnoj temperaturi bira put: Cool Oil razdvaja se na Gaseous Fuel i Heavy Oil; Hot Oil na Mixed Light Fuel i Dense Oil; Searing Oil na Distilled Oil i Residue."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Svaki elegantan rafinerijski lanac na kraju proizvede nešto ljepljivo što nitko nije htio pohraniti.",
+      "Residue je teški nusproizvod prljavih goriva i nekoliko putova destilacije pri visokim temperaturama.",
+      "<bold>Savjet:</bold> Residue je stvarni izlaz, a ne otpad koji se može zanemariti. Osigurajte poseban spremnik ili kontrolirani put zbrinjavanja kako se rafiniranje ne bi zaustavilo.",
+      "Proizvodnja",
+      "Crude Oil, Heavy Oil i Dense Oil proizvode Residue dok izgaraju u Combustion Engineu. To je također tekući izlaz nekoliko Searing recepata destilacije.\n\nResidue nije registriran kao gorivo za Combustion Engine. Odvodite ga iz motora i strojeva pomoću Fluid Pipes ili spremnika kako se spremnici Residuea ne bi začepili.",
+      "Temperatura",
+      "Kao i drugi BuildCraftovi naftni proizvodi, Residue ima stanja Cool, Hot i Searing te može izmjenjivati toplinu u Heat Exchangeru. U trenutačnom je projektu prvenstveno nusproizvod i prenosiva procesna tekućina."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Lakše frakcije su otišle. Ono što je ostalo još je energično, ali znatno manje suradljivo.",
+      "Heavy Oil je prljavo međugorivo nastalo destilacijom Cool Oila.",
+      "<bold>Savjet:</bold> Jasno označite vodove Heavy Oila i držite ih odvojene od goriva; međutekućine mogu izgledati slično u cijevima i spremnicima.",
+      "Gorivo",
+      "Heavy Oil izgara u Combustion Engineu pri 2 MJ/t i proizvodi Residue. Može se koristiti izravno, ali daljnje rafiniranje daje čišće proizvode.",
+      "Rafiniranje",
+      "Hot Heavy Oil destilira se u Light Fuel i Dense Oil. Searing Heavy Oil destilira se u Mixed Heavy Fuel i Residue. Heat Exchangerom odaberite potrebnu temperaturu prije slanja u Distiller."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Dense Oil sadrži dio izvorne smjese koji se snažno protivi brzom kretanju kroz strojeve.",
+      "Dense Oil je prljavo međugorivo dobiveno iz Hot Oila ili Hot Distilled Oila.",
+      "<bold>Savjet:</bold> Čuvajte Dense Oil odvojeno dok sljedeći korak obrade ne bude spreman. Dovođenje u pogrešnu temperaturnu fazu rasipa kapacitet rafinerije.",
+      "Gorivo",
+      "Dense Oil izgara pri 4 MJ/t u Combustion Engineu i proizvodi Residue. Veći izlaz koristan je kada je trenutačna energija važnija od čistog rada.",
+      "Rafiniranje",
+      "Zagrijte Dense Oil do stanja Searing i destilirajte ga kako biste odvojili Dense Fuel od Residuea. To je završni korak rafiniranja ove grane lanca obrade."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Prvi prolaz uklonio je najgore nečistoće. Nekoliko korisnih frakcija još dijeli isti spremnik.",
+      "Distilled Oil je čisto izgarajuće međugorivo koje sadrži plinovite, lake i guste frakcije goriva.",
+      "<bold>Savjet:</bold> Distilled Oil je međuproizvod. Spremite ga u međuspremnik kako bi prethodni Distiller mogao nastaviti dok se nizvodno hlađenje ili rafiniranje zaustavi.",
+      "Gorivo",
+      "Distilled Oil izgara bez Residuea pri 1 MJ/t. Izravni izlaz mu je skroman, ali je fleksibilna sirovina za daljnje razdvajanje.",
+      "Rafiniranje",
+      "Cool Distilled Oil destilira se u Gaseous Fuel i Mixed Heavy Fuel. Hot Distilled Oil destilira se u Mixed Light Fuel i Dense Fuel. Promijenite temperaturu u Heat Exchangeru prije odabira sljedećeg puta."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Najlakša frakcija jedva čeka napustiti i Distiller i svaku loše planiranu mrežu cijevi.",
+      "Gaseous Fuel je rafinirano gorivo najveće snage za Combustion Engine, s 8 MJ/t bez Residuea.",
+      "<bold>Savjet:</bold> Sačuvajte vrijedno gorivo za motore koji ga mogu učinkovito koristiti i osigurajte automatsko gašenje kada potrošač stane.",
+      "Proizvodnja",
+      "Gaseous Fuel je gornji izlaz destilacije Cool Oila, Cool Distilled Oila ili Cool Mixed Light Fuela. Ima oblike Cool, Hot i Searing za prijenos kroz Heat Exchanger, iako mu nije potrebna daljnja destilacija.",
+      "Energija",
+      "Upotrijebite ga kada stroj treba najveći trenutačni izlaz jednog Combustion Enginea. Visoka snaga brzo dodaje toplinu, pa održavajte pouzdanu opskrbu rashladnom tekućinom i MJ potrošača koji može prihvatiti proizvedenu energiju."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Light Fuel je razumna sredina između kratkog energetskog naleta i bačve koja traje cijeli tjedan.",
+      "Light Fuel je čisto rafinirano gorivo koje u Combustion Engineu proizvodi 6 MJ/t.",
+      "<bold>Savjet:</bold> Za svaku kvalitetu upotrijebite zasebne spremnike goriva. Tako se lakše uspoređuju vrijeme rada motora i protok rafinerije.",
+      "Proizvodnja",
+      "Destilirajte Cool Mixed Light Fuel, Hot Heavy Oil ili Hot Mixed Heavy Fuel kako biste dobili Light Fuel. Pri izgaranju ne proizvodi Residue.",
+      "Energija",
+      "Light Fuel spaja visoku snagu s čistim radom. Držite motor ohlađenim i osigurajte da povezana MJ mreža može prihvatiti 6 MJ svakog ticka."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Dense Fuel cijeni izdržljivost više od oduševljenja i rado dugo održava motor u radu.",
+      "Dense Fuel je čisto rafinirano gorivo koje proizvodi 4 MJ/t uz dugo trajanje izgaranja.",
+      "<bold>Savjet:</bold> Dense Fuel dovoljno je vrijedan da opravda isporuku preko međuspremnika i okidač gašenja motora prije rada bez nadzora.",
+      "Proizvodnja",
+      "Hot Distilled Oil, Hot Mixed Heavy Fuel i Searing Dense Oil mogu proizvesti Dense Fuel. Put Dense Oila također odvaja Residue kao drugi izlaz.",
+      "Energija",
+      "Dense Fuel izgara bez stvaranja Residuea. Umjeren izlaz i visoka ukupna energija čine ga prikladnim za dugotrajan rad strojeva, a ne kratka vršna opterećenja."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Dva korisna goriva dijele jedan spremnik. Distiller može riješiti spor oko vlasništva.",
+      "Mixed Light Fuel je čisti međuproizvod i upotrebljivo gorivo od 3 MJ/t za Combustion Engine.",
+      "<bold>Savjet:</bold> Miješana goriva tretirajte kao zasebne proizvode i nemojte ih ponovno spajati na vodove međuuља.",
+      "Proizvodnja",
+      "Hot Oil i Hot Distilled Oil proizvode Mixed Light Fuel kao plinoviti izlaz. Sadrži plinovite i lake frakcije goriva.",
+      "Rafiniranje",
+      "Destilirajte Cool Mixed Light Fuel kako biste odvojili Gaseous Fuel i Light Fuel. Može se i izravno spaliti bez stvaranja Residuea."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Lako i gusto gorivo mogu dijeliti spremnik, ali razdvajanje olakšava uporabu njihovih različitih prednosti.",
+      "Mixed Heavy Fuel je čisti međuproizvod i upotrebljivo gorivo od 5 MJ/t za Combustion Engine.",
+      "<bold>Savjet:</bold> Spremite teško miješano gorivo blizu potrošača, ali glavne izlaze rafinerije držite odvojene radi lakšeg otkrivanja problema.",
+      "Proizvodnja",
+      "Cool Distilled Oil i Searing Heavy Oil mogu proizvesti Mixed Heavy Fuel. Sadrži lake i guste frakcije goriva.",
+      "Rafiniranje",
+      "Destilirajte Hot Mixed Heavy Fuel kako biste odvojili Light Fuel i Dense Fuel. Izravno izgaranje smjese ne stvara Residue i daje izlaz između ta dva završna goriva."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Razvrstavanje pčela prema boji nikada nije moglo biti dovoljno precizno za ozbiljan pčelinjak.",
+      "Apiarist's Pipe je cijev za predmete kompatibilna s Forestryjem koja usmjerava genetske predmete zasebnim filtrom za svaku stranu.",
+      "<bold>Savjet:</bold> Upotrijebite Apiarist's Pipe na namjenskom spoju za obradu pčela. Zadržite normalan preljevni put kako neočekivane vrste pčela ne bi blokirale mrežu.",
+      "Genetski filtri",
+      "Otvorite cijev kako biste podesili svaku izlaznu stranu. Pravila Forestry filtra mogu uskladiti genetske predmete prema vrsti, obitelji vrste i životnoj fazi. Do tri odabrane vrste mogu se dodijeliti jednoj strani, a svaki unos može se zasebno uključiti ili isključiti.\n\nPredmeti se usmjeravaju kroz prvi kompatibilni izlaz prema podešenim Forestry pravilima. Izlazi bez aktivnog odgovarajućeg pravila ne preuzimaju genetski predmet. Cijev se može bojiti i spajati kao druge BuildCraft cijevi za predmete.\n\nOva se stranica učitava samo kada je Forestry instaliran i kompatibilni predmet registriran."
+    ]
+  }
+}

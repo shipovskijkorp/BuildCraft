@@ -1,0 +1,1691 @@
+{
+  "format": 1,
+  "language": "sv_se",
+  "pages": {
+    "buildcraftcore/item/gear_wood": [
+      "I dina försök att skapa enkel automatisering har du hittat en användbar del: ett vridbart kugghjul!\nDet är bara gjort av trä och måste därför uppgraderas för mer krävande uppgifter...",
+      "Träkugghjulet är det första tillverkningssteget när du börjar med BuildCraft och används som grund till många saker.",
+      "<bold>Tips:</bold> Tillverka träkugghjul i planerade omgångar. Kugghjul på högre nivå förbrukar den föregående nivån, så spara några enklare kugghjul till maskiner och verktyg."
+    ],
+    "buildcraftcore/item/gear_stone": [
+      "Trä har visat sig vara svårt att använda i riktiga maskiner, så du bestämmer dig för att göra ett nytt kugghjul av sten.\nSom en extra fördel kan det inte börja brinna.",
+      "Stenkugghjulet är i princip en uppgradering av träkugghjulet och används för att bygga starkare maskiner tack vare stenens hårdhet.",
+      "<bold>Tips:</bold> Tillverka stenkugghjul i planerade omgångar. Kugghjul på högre nivå förbrukar den föregående nivån, så spara några enklare kugghjul till maskiner och verktyg."
+    ],
+    "buildcraftcore/item/gear_iron": [
+      "Sten fungerar bra i enkla maskiner men klarar inte de höga belastningar och temperaturer som förekommer i motorer och avancerade maskiner.\nJärn lämpar sig mycket bättre för dessa krävande uppgifter.",
+      "Genom att uppgradera kugghjulen igen kan du bygga mer avancerade maskiner tack vare metallens egenskaper.",
+      "<bold>Tips:</bold> Tillverka järnkugghjul i planerade omgångar. Kugghjul på högre nivå förbrukar den föregående nivån, så spara några enklare kugghjul till maskiner och verktyg."
+    ],
+    "buildcraftcore/item/gear_gold": [
+      "Mer avancerade uppgifter kräver många små kugghjul som griper i varandra, och järnkugghjul går lätt sönder när de används på det sättet.\nGuld håller bättre när det formas till mycket små kugghjul och kan därför användas i komplicerade mekanismer.",
+      "Guldkugghjulet är nästa nivå och används av maskiner som arbetar över stora områden.",
+      "<bold>Tips:</bold> Tillverka guldkugghjul i planerade omgångar. Kugghjul på högre nivå förbrukar den föregående nivån, så spara några enklare kugghjul till maskiner och verktyg."
+    ],
+    "buildcraftcore/item/gear_diamond": [
+      "Djupt nere i gruvorna hittar du det sällsyntaste och starkaste materialet av dem alla: diamant.\nTack vare sin styrka klarar diamantkugghjul de mest krävande uppgifterna utan att brytas ned eller slitas ut.",
+      "Diamantkugghjulet är den sista och starkaste nivån och krävs av de mest avancerade maskinerna.",
+      "<bold>Tips:</bold> Tillverka diamantkugghjul i planerade omgångar. Kugghjul på högre nivå förbrukar den föregående nivån, så spara några enklare kugghjul till maskiner och verktyg."
+    ],
+    "buildcraftcore/item/wrench": [
+      "Det är mycket användbart att bygga maskiner, men ibland behöver deras arbetssätt ändras eller så måste de vridas åt ett annat håll.\nSkiftnyckeln löser problemet genom att ändra tillståndet eller riktningen på många maskiner och block.",
+      "Skiftnyckeln är grundverktyget för att rotera och justera block, maskiner och vissa entiteter med ett klick.",
+      "<bold>Tips:</bold> Bär med dig skiftnyckeln när du bygger ett maskinrum. Många BuildCraft-block och riktade rör kan roteras eller ställas om utan att förstöras."
+    ],
+    "buildcraftcore/item/paintbrush": [
+      "Världen är redan full av färg, men tänk om du kunde ändra färgen på vissa block med ett enda penseldrag.\nMålning är inte bara dekorativt utan kan även användas praktiskt, exempelvis för att skilja rörledningar åt.",
+      "Penslar kan måla olika block i någon av 16 färger.\nOftast är färgen dekorativ, men vissa block får särskilda egenskaper när de målas.\nRör med olika färger ansluter exempelvis inte till varandra.",
+      "<bold>Tips:</bold> Använd separata penslar för permanenta rörnät. Det är oftast enklare att bara färga de grenar som inte får ansluta än att färga varje rör."
+    ],
+    "buildcraftcore/item/marker_connector": [
+      "Noggrann kontroll över maskinernas arbetsområden är avgörande i stora ingenjörsprojekt, och därför behövs ett särskilt verktyg.",
+      "Marköranslutaren används för att ändra storleken på en volymlåda eller riktningen på en ansluten vägmarkör.",
+      "<bold>Tips:</bold> Anslut markörerna först när varje slutpunkt står på sin slutliga plats. Det går snabbare att ansluta en färdig form än att rätta ett vridet eller ofullständigt område senare.",
+      "Information",
+      "Håll marköranslutaren och klicka på en laserlinje som ska justeras. Flytta markören för att ändra den och klicka igen för att avsluta.\nSkiftklicka på laserlinjen med marköranslutaren för att ta bort den."
+    ],
+    "buildcraftcore/item/marker_path": [
+      "Raka linjer är användbara, men stora projekt behöver ofta en rutt som böjer sig runt terräng och maskiner.",
+      "Vägmarkörer definierar en ordnad rutt för maskiner som stöder vägbaserat arbete.",
+      "<bold>Tips:</bold> Placera vägmarkörerna i färdriktningen och håll varje sträcka fri. Prova en kort väg innan robotar eller automatiska byggare får använda den.",
+      "Skapa en väg",
+      "Placera vägmarkörer där rutten ska passera och koppla ihop dem i ordning med marköranslutaren. Den synliga laserlinjen visar vägen som en kompatibel byggare eller annan maskin följer.\n\nVägen är riktad: ordningen som markörerna kopplas samman i bestämmer punktordningen. Bryt eller återanslut markörer för att ändra rutten.",
+      "Använda vägen",
+      "Placera en kompatibel maskin bredvid en av de anslutna vägmarkörerna. Maskinen läser hela rutten och upprepar sitt arbete vid varje position längs vägen."
+    ],
+    "buildcraftcore/item/list": [
+      "Nio filterplatser räcker inte långt när ett sorteringssystem måste känna igen en hel verkstad av besläktade material.",
+      "En lista lagrar återanvändbara föremålsfilter för rör, grindar och robotstationer.",
+      "<bold>Tips:</bold> Använd listor för filter som delas av flera diamantrör eller grindar. Det är säkrare att uppdatera en lista än att redigera många separata filterplatser.",
+      "Redigera en lista",
+      "Håll listan och högerklicka för att öppna den. Ge den ett namn, lägg referensföremål i fantomplatserna och välj hur varje post ska jämföras.\n\nExakt jämförelse behåller föremålsdata och andra relevanta detaljer. Bredare lägen kan matcha besläktade föremålstyper eller material när det stöds av det aktuella föremålsregistret.",
+      "Använda en lista",
+      "Placera den konfigurerade listan i en parameter- eller filterplats som accepterar den. Röret, grinden eller robotåtgärden behandlar posterna som ett gemensamt återanvändbart filter. Listan förbrukas inte."
+    ],
+    "buildcraftcore/block/engine_wood": [
+      "I jakten på energi har du hittat ett sätt att skapa en liten mängd kraft med enbart en redstonesignal.",
+      "Redstonemotorn är en enkel motor som bara behöver en redstonesignal för att köras. Den producerar mycket lite kraft.",
+      "<bold>Tips:</bold> Redstonemotorn passar bäst för resurssnål utmatning och grindar. Den kan inte ersätta en starkare motor när en maskin har ett tydligt MJ-per-tick-krav.",
+      "Information",
+      "På grund av den lilla mängden MJ är motorn bara lämplig för enkla enheter, till exempel utvinningsrör eller pumpar.",
+      "Motormekanik",
+      "BuildCraft-motorer har fem temperatursteg som styr hastigheten: blått, grönt, gult, rött och svart.\nTill skillnad från starkare motorer kan redstonemotorn <bold>inte överhettas</bold>. Den blir svart när kraften inte kan ta vägen någonstans men fortsätter att arbeta.\nMotorer ansluter till närmaste kompatibla MJ-mottagare, men redstonemotorer ansluter inte till kinesisrör och fungerar endast med vissa maskiner.\nAnvänd en skiftnyckel för att rotera motorn och välja vilket block som får kraft.\n\nLiksom andra motorer <bold>kräver den en redstonesignal för att köras.</bold>\nGrindar kan avläsa motorns temperatursteg och användas för automatisk styrning."
+    ],
+    "buildcraftcore/trigger/always_on": [
+      "Oavsett vad som händer är denna utlösare alltid aktiv.",
+      "Alltid på är en grindutlösare som finns på alla placerade grindar.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en tillfällig lampa. När både aktivt och inaktivt läge är bekräftade kan samma signal kopplas till maskinerna.",
+      "Krav",
+      "När den väljs är de anslutna åtgärderna alltid aktiverade."
+    ],
+    "buildcraftcore/trigger/redstone_active": [
+      "Tar grinden emot en redstonesignal?",
+      "Redstonesignal på är en grindutlösare som finns på alla placerade grindar.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en tillfällig lampa. När både aktivt och inaktivt läge är bekräftade kan samma signal kopplas till maskinerna.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när blocket som grinden sitter på tar emot en redstonesignal.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir Endast grindsidan tillgänglig för Redstonesignal på.\nMed denna parameter kontrolleras bara om sidan där grinden sitter tar emot en redstonesignal."
+    ],
+    "buildcraftcore/trigger/redstone_inactive": [
+      "Saknar grinden en redstonesignal?",
+      "Redstonesignal av är en grindutlösare som finns på alla placerade grindar.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en tillfällig lampa. När både aktivt och inaktivt läge är bekräftade kan samma signal kopplas till maskinerna.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när blocket som grinden sitter på inte tar emot någon redstonesignal.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir Endast grindsidan tillgänglig för Redstonesignal av.\nMed denna parameter kontrolleras bara om sidan där grinden sitter saknar en redstonesignal."
+    ],
+    "buildcraftcore/trigger/inventory_empty": [
+      "Tänk om det fanns ett sätt att kontrollera om kistan är tom.",
+      "Tomt förråd är en grindutlösare som visas när ett förråd finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när alla platser i det anslutna förrådet är tomma.",
+      "Utlösarriktningar",
+      "Grinden kan visa Tomt förråd flera gånger i olika färger för olika anslutna förråd.\nUtlösarens färg motsvarar förrådets riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/inventory_contains": [
+      "Finns det här föremålet i kistan bredvid?",
+      "Föremål i förråd är en grindutlösare som visas när ett förråd finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när det anslutna förrådet innehåller föremål.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatserna tillgängliga för Föremål i förråd.\nLägg föremål i filterplatserna för att bara utlösa när förrådet innehåller något av de valda föremålen.",
+      "Utlösarriktningar",
+      "Grinden kan visa Föremål i förråd flera gånger i olika färger för olika anslutna förråd.\nUtlösarens färg motsvarar förrådets riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/inventory_space": [
+      "Finns det plats för fler föremål i kistan bredvid?",
+      "Plats i förråd är en grindutlösare som visas när ett förråd finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när det anslutna förrådet har tomma platser som kan ta emot föremål.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatserna tillgängliga för Plats i förråd.\nLägg föremål i filtren för att kontrollera om en tom eller ofullständig plats kan ta emot något av de valda föremålen.",
+      "Utlösarriktningar",
+      "Grinden kan visa Plats i förråd flera gånger i olika färger för olika anslutna förråd.\nUtlösarens färg motsvarar förrådets riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/inventory_full": [
+      "Tänk om det fanns ett sätt att kontrollera om kistan är full.",
+      "Fullt förråd är en grindutlösare som visas när ett förråd finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när alla platser i det anslutna förrådet innehåller ett föremål.",
+      "Utlösarriktningar",
+      "Grinden kan visa Fullt förråd flera gånger i olika färger för olika anslutna förråd.\nUtlösarens färg motsvarar förrådets riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/inventory_below_25": [
+      "Innehåller kistan mindre än 25 procent av vad den kan rymma?",
+      "Mindre än 25 procent är en grindutlösare som visas när ett förråd finns bredvid grinden.",
+      "<bold>Tips:</bold> Använd tröskelutlösare i stigande ordning och prova den exakta gränsen med en tillfällig lampa. Då motarbetar inte reglerna för 25, 50 och 75 procent varandra.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när det anslutna förrådet är fyllt till mindre än 25 procent.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatserna tillgängliga för Mindre än 25 procent.\nLägg föremål i filtren för att kontrollera om förrådet innehåller mindre än 25 procent av de valda föremålen.",
+      "Utlösarriktningar",
+      "Grinden kan visa Mindre än 25 procent flera gånger i olika färger för olika anslutna förråd.\nUtlösarens färg motsvarar förrådets riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/inventory_below_50": [
+      "Innehåller kistan mindre än 50 procent av vad den kan rymma?",
+      "Mindre än 50 procent är en grindutlösare som visas när ett förråd finns bredvid grinden.",
+      "<bold>Tips:</bold> Använd tröskelutlösare i stigande ordning och prova den exakta gränsen med en tillfällig lampa. Då motarbetar inte reglerna för 25, 50 och 75 procent varandra.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när det anslutna förrådet är fyllt till mindre än 50 procent.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatserna tillgängliga för Mindre än 50 procent.\nLägg föremål i filtren för att kontrollera om förrådet innehåller mindre än 50 procent av de valda föremålen.",
+      "Utlösarriktningar",
+      "Grinden kan visa Mindre än 50 procent flera gånger i olika färger för olika anslutna förråd.\nUtlösarens färg motsvarar förrådets riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/inventory_below_75": [
+      "Innehåller kistan mindre än 75 procent av vad den kan rymma?",
+      "Mindre än 75 procent är en grindutlösare som visas när ett förråd finns bredvid grinden.",
+      "<bold>Tips:</bold> Använd tröskelutlösare i stigande ordning och prova den exakta gränsen med en tillfällig lampa. Då motarbetar inte reglerna för 25, 50 och 75 procent varandra.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när det anslutna förrådet är fyllt till mindre än 75 procent.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatserna tillgängliga för Mindre än 75 procent.\nLägg föremål i filtren för att kontrollera om förrådet innehåller mindre än 75 procent av de valda föremålen.",
+      "Utlösarriktningar",
+      "Grinden kan visa Mindre än 75 procent flera gånger i olika färger för olika anslutna förråd.\nUtlösarens färg motsvarar förrådets riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/fluid_empty": [
+      "Är tanken bredvid grinden tom?",
+      "Tom tank är en grindutlösare som visas när en tank finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den anslutna tanken inte innehåller någon vätska.",
+      "Utlösarriktningar",
+      "Grinden kan visa Tom tank flera gånger i olika färger för olika anslutna tankar.\nUtlösarens färg motsvarar tankens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/fluid_contains": [
+      "Innehåller tanken bredvid någon vätska?",
+      "Vätska i tank är en grindutlösare som visas när en tank finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den anslutna tanken innehåller vätska.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatsen tillgänglig för Vätska i tank.\nPlacera en vätskebehållare i filtret för att bara utlösa när tanken innehåller den valda vätskan.",
+      "Utlösarriktningar",
+      "Grinden kan visa Vätska i tank flera gånger i olika färger för olika anslutna tankar.\nUtlösarens färg motsvarar tankens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/fluid_space": [
+      "Finns det plats för mer vätska i tanken bredvid?",
+      "Plats för vätska är en grindutlösare som visas när en tank finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den anslutna tanken kan ta emot mer vätska.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatsen tillgänglig för Plats för vätska.\nPlacera en vätskebehållare i filtret för att kontrollera om tanken kan ta emot den valda vätskan.",
+      "Utlösarriktningar",
+      "Grinden kan visa Plats för vätska flera gånger i olika färger för olika anslutna tankar.\nUtlösarens färg motsvarar tankens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/fluid_full": [
+      "Är tanken bredvid grinden full?",
+      "Full tank är en grindutlösare som visas när en tank finns bredvid grinden.",
+      "<bold>Tips:</bold> Prova utlösaren mot exakt den sida och det förråd eller den tank som används i produktionen. Sidoriktade förmågor kan göra att två sidor av samma block rapporterar olika tillstånd.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande tanken inte kan ta emot mer vätska.",
+      "Utlösarriktningar",
+      "Grinden kan visa Full tank flera gånger i olika färger för olika anslutna tankar.\nUtlösarens färg motsvarar tankens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/fluid_below_25": [
+      "Innehåller tanken bredvid mindre än en fjärdedel av sin kapacitet?",
+      "Mindre än 25 procent är en grindutlösare som visas när en tank finns bredvid grinden.",
+      "<bold>Tips:</bold> Använd tröskelutlösare i stigande ordning och prova den exakta gränsen med en tillfällig lampa. Då motarbetar inte reglerna för 25, 50 och 75 procent varandra.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den anslutna tanken är fylld till mindre än 25 procent.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatsen tillgänglig för Mindre än 25 procent.\nPlacera en vätskebehållare i filtret för att kontrollera om tanken innehåller mindre än 25 procent av den valda vätskan.",
+      "Utlösarriktningar",
+      "Grinden kan visa Mindre än 25 procent flera gånger i olika färger för olika anslutna tankar.\nUtlösarens färg motsvarar tankens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/fluid_below_50": [
+      "Innehåller tanken bredvid mindre än hälften av sin kapacitet?",
+      "Mindre än 50 procent är en grindutlösare som visas när en tank finns bredvid grinden.",
+      "<bold>Tips:</bold> Använd tröskelutlösare i stigande ordning och prova den exakta gränsen med en tillfällig lampa. Då motarbetar inte reglerna för 25, 50 och 75 procent varandra.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den anslutna tanken är fylld till mindre än 50 procent.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatsen tillgänglig för Mindre än 50 procent.\nPlacera en vätskebehållare i filtret för att kontrollera om tanken innehåller mindre än 50 procent av den valda vätskan.",
+      "Utlösarriktningar",
+      "Grinden kan visa Mindre än 50 procent flera gånger i olika färger för olika anslutna tankar.\nUtlösarens färg motsvarar tankens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/fluid_below_75": [
+      "Innehåller tanken bredvid mindre än tre fjärdedelar av sin kapacitet?",
+      "Mindre än 75 procent är en grindutlösare som visas när en tank finns bredvid grinden.",
+      "<bold>Tips:</bold> Använd tröskelutlösare i stigande ordning och prova den exakta gränsen med en tillfällig lampa. Då motarbetar inte reglerna för 25, 50 och 75 procent varandra.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den anslutna tanken är fylld till mindre än 75 procent.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir filterplatsen tillgänglig för Mindre än 75 procent.\nPlacera en vätskebehållare i filtret för att kontrollera om tanken innehåller mindre än 75 procent av den valda vätskan.",
+      "Utlösarriktningar",
+      "Grinden kan visa Mindre än 75 procent flera gånger i olika färger för olika anslutna tankar.\nUtlösarens färg motsvarar tankens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/engine_blue": [
+      "Vilken färg har motorn bredvid grinden? Är den blått?",
+      "Motor Blått är en grindutlösare som visas när en motor finns bredvid grinden.",
+      "<bold>Tips:</bold> Kombinera motorutlösare med en automatisk avstängningsåtgärd. En synlig varningslampa är bra innan samma signal får styra bränsle eller kylmedel.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande motorn befinner sig i sitt blå temperatursteg.",
+      "Utlösarriktningar",
+      "Grinden kan visa Motor Blått flera gånger i olika färger för olika anslutna motorer.\nUtlösarens färg motsvarar motorns riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/engine_green": [
+      "Vilken färg har motorn bredvid grinden? Är den grönt?",
+      "Motor Grönt är en grindutlösare som visas när en motor finns bredvid grinden.",
+      "<bold>Tips:</bold> Kombinera motorutlösare med en automatisk avstängningsåtgärd. En synlig varningslampa är bra innan samma signal får styra bränsle eller kylmedel.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande motorn befinner sig i sitt gröna temperatursteg.",
+      "Utlösarriktningar",
+      "Grinden kan visa Motor Grönt flera gånger i olika färger för olika anslutna motorer.\nUtlösarens färg motsvarar motorns riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/engine_yellow": [
+      "Vilken färg har motorn bredvid grinden? Är den gult?",
+      "Motor Gult är en grindutlösare som visas när en motor finns bredvid grinden.",
+      "<bold>Tips:</bold> Kombinera motorutlösare med en automatisk avstängningsåtgärd. En synlig varningslampa är bra innan samma signal får styra bränsle eller kylmedel.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande motorn befinner sig i sitt gula temperatursteg.",
+      "Utlösarriktningar",
+      "Grinden kan visa Motor Gult flera gånger i olika färger för olika anslutna motorer.\nUtlösarens färg motsvarar motorns riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/engine_red": [
+      "Vilken färg har motorn bredvid grinden? Är den rött?",
+      "Motor Rött är en grindutlösare som visas när en motor finns bredvid grinden.",
+      "<bold>Tips:</bold> Kombinera motorutlösare med en automatisk avstängningsåtgärd. En synlig varningslampa är bra innan samma signal får styra bränsle eller kylmedel.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande motorn befinner sig i sitt röda temperatursteg.",
+      "Utlösarriktningar",
+      "Grinden kan visa Motor Rött flera gånger i olika färger för olika anslutna motorer.\nUtlösarens färg motsvarar motorns riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/engine_overheat": [
+      "Vilken färg har motorn bredvid grinden? Är den svart och överhettad?",
+      "Motor överhettad är en grindutlösare som visas när en motor finns bredvid grinden.",
+      "<bold>Tips:</bold> Kombinera motorutlösare med en automatisk avstängningsåtgärd. En synlig varningslampa är bra innan samma signal får styra bränsle eller kylmedel.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande motorn befinner sig i överhettningssteget.",
+      "Utlösarriktningar",
+      "Grinden kan visa Motor överhettad flera gånger i olika färger för olika anslutna motorer.\nUtlösarens färg motsvarar motorns riktning i förhållande till röret."
+    ],
+    "buildcraftcore/trigger/machine_active": [
+      "Har maskinen bredvid verkligen arbete som den kan utföra?",
+      "Har arbete är en grindutlösare som visas bredvid en maskin som kan arbeta.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en tillfällig lampa. När både aktivt och inaktivt läge är bekräftade kan samma signal kopplas till maskinerna.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande maskinen har arbete att utföra.\n\nObs: Alla maskiner stöder inte utlösaren Har arbete."
+    ],
+    "buildcraftcore/trigger/machine_inactive": [
+      "Har maskinen bredvid verkligen inget mer arbete kvar?",
+      "Arbete klart är en grindutlösare som visas när en intilliggande maskin har slutfört sin drift.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en tillfällig lampa. När både aktivt och inaktivt läge är bekräftade kan samma signal kopplas till maskinerna.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när den intilliggande maskinen har slutfört allt arbete den kan utföra.\n\nObs: Alla maskiner stöder inte utlösaren Arbete klart."
+    ],
+    "buildcraftcore/action/redstone": [
+      "När den utlöses skickas en redstonesignal ut.",
+      "Redstonesignal är en grindåtgärd som finns på alla placerade grindar.",
+      "<bold>Tips:</bold> Använd färgad rörtråd för att skilja signalen från annan automatisering och undvika återkopplingsslingor mellan närliggande grindar.",
+      "Krav",
+      "När åtgärden aktiveras skickar den ut en redstonesignal.",
+      "Parametrar",
+      "Om grinden stöder parametrar blir Endast grindsidan tillgänglig för Redstonesignal.\nMed den parametern skickas signalen endast från den sida där grinden sitter."
+    ],
+    "buildcraftcore/action/machine_control_on": [
+      "Detta slår på maskinen.",
+      "På är en grindåtgärd som visas bredvid en maskin som kan arbeta.",
+      "<bold>Tips:</bold> Koppla åtgärden till den snävaste användbara utlösaren och prova av-läget lika noggrant som på-läget.",
+      "Krav",
+      "När åtgärden aktiveras kommer maskinen att börja arbeta.\nObs: Alla maskiner stöder inte åtgärden På.",
+      "Utlösarriktningar",
+      "Grinden kan visa åtgärden På flera gånger i olika färger för olika anslutna maskiner.\nÅtgärdens färg motsvarar maskinens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/action/machine_control_off": [
+      "Detta stänger av maskinen.",
+      "Av är en grindåtgärd som visas bredvid en maskin som kan arbeta.",
+      "<bold>Tips:</bold> Koppla åtgärden till den snävaste användbara utlösaren och prova av-läget lika noggrant som på-läget.",
+      "Krav",
+      "När åtgärden aktiveras kommer maskinen att sluta arbeta.\nObs: Alla maskiner stöder inte åtgärden Av.",
+      "Utlösarriktningar",
+      "Grinden kan visa åtgärden Av flera gånger i olika färger för olika anslutna maskiner.\nÅtgärdens färg motsvarar maskinens riktning i förhållande till röret."
+    ],
+    "buildcraftcore/action/machine_control_loop": [
+      "Detta får maskinen att köra om och om igen.",
+      "Upprepa är en grindåtgärd som visas bredvid en maskin som kan arbeta.",
+      "<bold>Tips:</bold> Koppla åtgärden till den snävaste användbara utlösaren och prova av-läget lika noggrant som på-läget.",
+      "Krav",
+      "När åtgärden aktiveras kommer maskinen att upprepa sin arbetscykel om och om igen.\nObs: Alla maskiner stöder inte åtgärden Upprepa.",
+      "Utlösarriktningar",
+      "Grinden kan visa åtgärden Upprepa flera gånger i olika färger för olika anslutna maskiner.\nÅtgärdens färg motsvarar maskinens riktning i förhållande till röret."
+    ],
+    "buildcraftenergy/block/engine_stone": [
+      "En ugn som driver en kolv i stället för att laga middag är fortfarande en fullt respektabel ugn.",
+      "Stirlingmotorn förbränner vanligt ugnsbränsle och producerar mellan ungefär en tredjedels och en MJ per tick.",
+      "<bold>Tips:</bold> Se till att Stirlingmotorn kan stängas av när mottagaren stannar. En grind som övervakar maskinarbete eller kraftbehov gör obevakade system betydligt säkrare.",
+      "Bränsle och utmatning",
+      "Placera ett giltigt ugnsbränsle i motorns enda bränsleplats och ge den en redstonesignal. Motorn anpassar utmatningen mellan cirka 0,33 MJ/t och 1 MJ/t efter mängden MJ i den interna bufferten på 1 000 MJ.\n\nMotorn använder samma bränslen som en vanlig Minecraft-ugn. Behållare som lämnas tillbaka av bränslet, till exempel en tom hink, finns kvar i motorns förråd.",
+      "Motormekanik",
+      "Placera motorn mot en MJ-mottagare. Den väljer en kompatibel utgångssida när den placeras; använd en skiftnyckel för att rotera den.\n\nDe blå, gröna, gula, röda och svarta stegen visar intern värme och följer hur fylld kraftbufferten är. Om utmatningen blockeras fylls bufferten, motorn överhettas och slutar generera. Ta bort redstonesignalen eller låt lagrad MJ förbrukas så att motorn kan kylas."
+    ],
+    "buildcraftenergy/block/engine_iron": [
+      "Det är användbart att raffinera olja. Att omvandla den till nog med kraft för en industriell olycka är ännu mer användbart.",
+      "Förbränningsmotorn bränner flytande BuildCraft-bränslen, använder kylmedel för att kontrollera värmen och lagrar rester från smutsiga bränslen.",
+      "<bold>Tips:</bold> Ordna tillförlitlig kylning och ett automatiskt avstängningsvillkor innan en förbränningsmotor lämnas obevakad. Prova hela bränsle- och kylmedelsförsörjningen under full belastning.",
+      "Tanker och bränslen",
+      "Motorn har separata tankar för bränsle, kylmedel och rester. Vätskerör eller behållare kan fylla och tömma dem direkt. En redstonesignal startar förbränningen; uteffekten beror på bränslet och kan nå 8 MJ/t med gasformigt bränsle.\n\nRåolja, tung olja och tät olja är smutsiga bränslen och producerar gradvis rester. En full resttank hindrar fortsatt drift. Raffinerade bränslen brinner utan rester.",
+      "Kylning",
+      "Vatten är det vanliga flytande kylmedlet. Is och packad is kan också matas in och omvandlas till vatten med större kylverkan. Varma biomer får motorn att värmas snabbare och kylas sämre, medan kalla biomer gör motsatsen.\n\nNär redstonesignalen tas bort pausar motorn, får ett kort kylavdrag vid omstart och börjar avge överskottsvärme. Håll kylmedel tillgängligt vid långvarig drift med starka bränslen.",
+      "Motormekanik",
+      "Placera motorn mot en MJ-mottagare och rotera den vid behov med en skiftnyckel. Färgstadierna visar värmenivån. Lagrad MJ överförs endast när den intilliggande mottagaren accepterar den; kraft som inte tas emot stannar kvar i motorn."
+    ],
+    "buildcraftfactory/block/distiller": [
+      "Råolja är en komplicerad blandning av användbara vätskor som väntar på att separeras.",
+      "Destillatorn förbrukar MJ och delar en vätska i en gasformig och en flytande produkt.",
+      "<bold>Tips:</bold> Lagra destillatorns båda produkter i separata tankar. Blandade mellanprodukter eller två utgångar i samma ofiltrerade ledning gör senare steg svåra att felsöka.",
+      "Anslutningar",
+      "Mata källvätskan till ingångstanken. Den gasformiga produkten tas ut upptill och den flytande nedtill. Håll båda utgångarna fria; maskinen kan inte avsluta nästa körning om någon destination är full.\n\nTillför MJ via en kompatibel kraftanslutning. Mer tillgänglig kraft ökar hastigheten upp till maskinens gräns.",
+      "Temperaturen väljer recept",
+      "Svala, heta och brännande former av samma oljeprodukt kan ha olika destillationsrecept. Produkterna behåller inmatningens temperatur, så en värmeväxlare används mellan steg när nästa recept kräver en annan nivå.\n\nRåolja kan inleda tre olika raffineringsvägar. Ytterligare destillation av destillerad, tung och tät olja samt blandbränslen ger gasformigt, lätt och tätt bränsle plus rester."
+    ],
+    "buildcraftfactory/block/heat_exchange": [
+      "Vissa recept kräver tålamod, andra kräver att råvaran först blir betydligt varmare.",
+      "Värmeväxlaren flyttar värme mellan två vätskeströmmar och växlar BuildCraft-vätskor mellan sval, het och brännande temperatur.",
+      "<bold>Tips:</bold> Använd separata heta och kalla ledningar runt värmeväxlaren. Korta, tydligt märkta slingor gör temperaturfel lättare att hitta.",
+      "Bygga multiblocket",
+      "En värmeväxlare består av en startdel, en eller flera mittdelar och en slutdel i rak linje. Upp till tre mittdelar kan användas; fler giltiga delar ökar mängden som den sammansatta maskinen kan bearbeta.",
+      "Använda värme",
+      "Mata en vätska som kan värmas till uppvärmningssidan och en vätska som kan kylas till kylsidan. Värmen överförs i stället för att skapas gratis: en ström blir varmare och den andra kallare. BuildCrafts oljeprodukter växlar mellan sval, het och brännande form i receptenheter om tio millihinkar.\n\nVatten kan ta upp värme och lava kan tillföra den. Flödesriktning och ledigt utgångsutrymme avgör om processen kan fortsätta.\n\nTemperaturen påverkar destillatorns recept, så led vätskan genom värmeväxlaren före nästa raffineringssteg när det behövs."
+    ],
+    "buildcraftfactory/block/tank": [
+      "När du försöker samla vätskor från världen behöver du lagra dem utan en mängd hinkar.",
+      "Tanken lagrar vätskor direkt utan att hinkar och kistor behövs.",
+      "<bold>Tips:</bold> Lämna minst en sida av en tankkolonn åtkomlig för inspektion och nödtömning. Håll olika vätskor i tydligt åtskilda grupper.",
+      "Information",
+      "Varje tankblock rymmer upp till 16 hinkar av en vätska. Tankar kan staplas lodrätt utan fast höjdgräns och bildar då en gemensam större tank.",
+      "Liksom kistor behåller tankar inte innehållet när de förstörs, men de släpper inte heller vätskan.\n\nBryt därför inte en fylld tank om du vill behålla innehållet."
+    ],
+    "buildcraftfactory/block/pump": [
+      "Att samla vätskor för hand kan vara både långsamt och farligt, så ett automatiskt alternativ behövs.",
+      "Pumpen samlar automatiskt källblock direkt under sig och anslutna källor i samma vätskemassa.",
+      "<bold>Tips:</bold> Placera pumpen ovanför ett stabilt källområde och ordna en utgång med tillräcklig kapacitet innan den får kraft. En blockerad vätskeledning stoppar nyttigt arbete.",
+      "Placera pumpen ovanför ett källblock och tillför kraft. Källorna under pumpen sugs upp uppifrån och ned och skickas automatiskt till intilliggande rör eller tankar.\nPumpen söker anslutna vätskor inom 64 block, uppifrån och ned samt från ytterkanterna inåt.",
+      "Maskinmekanik",
+      "Liksom de flesta maskiner behöver pumpen kraft; mer kraft ger snabbare pumpning.\nEn redstonesignal stoppar pumpen, så placera spakar och signaler med omsorg."
+    ],
+    "buildcraftfactory/block/flood_gate": [
+      "I stora byggprojekt är det tröttsamt att fylla vidsträckta områden med vätska för hand.",
+      "Flodgrinden placerar automatiskt vätskor i världen utan att hinkar behöver användas manuellt.",
+      "<bold>Tips:</bold> Prova flodgrinden i en avgränsad bassäng först. Placeringen blir lättare att förstå innan den kopplas till en stor tank eller ett öppet landskap.",
+      "Information",
+      "Flodgrinden behöver ingen kraft. När vätska leds in placerar den vätskan nedåt i världen.",
+      "Den placerar vätskor inom 64 block, nedifrån och upp samt från mitten och utåt."
+    ],
+    "buildcraftfactory/block/mining_well": [
+      "I jakten på större djup bygger du en maskin som gräver automatiskt. Den har en begränsning: den gräver bara rakt ned och kan inte bryta berggrund.",
+      "Gruvbrunnen är en maskin som automatiskt bryter block rakt ned till berggrunden.",
+      "<bold>Tips:</bold> Använd gruvbrunnen för smala schakt och snabba provhål. Jämför upprepade uppställningar med kostnaden för ett stenbrott innan stora områden bearbetas.",
+      "Information",
+      "Maskinen bryter block direkt under sig och skickar dem till intilliggande förråd eller rör. Om ingen mottagare finns kastas föremålen ut i världen.\nHårdare block tar längre tid att bryta.",
+      "Maskinmekanik",
+      "Gruvbrunnen behöver kraft och arbetar snabbare med större tillförsel.\nEn redstonesignal stoppar maskinen."
+    ],
+    "buildcraftfactory/block/chute": [
+      "En vanlig tratt är användbar men varken särskilt flexibel eller originell.",
+      "Rännan liknar en tratt men har fler funktioner.",
+      "<bold>Tips:</bold> Rännor fungerar bäst när destinationen under dem alltid har ledigt utrymme. Lägg till ett buffertförråd om mottagaren arbetar periodvis.",
+      "Information",
+      "Rännan, tidigare kallad Hopper, är ett snabbt förråd i ett block som kan mata föremål direkt till rör och flera förråd samtidigt i alla riktningar, även uppåt.",
+      "Liksom en tratt kan rännan långsamt plocka upp föremål från marken ovanför eller under när den är riktad mot dem. En redstonemotor kan öka hastigheten."
+    ],
+    "buildcraftfactory/block/auto_workbench": [
+      "En ingenjör vill automatisera allt. Manuell tillverkning blir snabbt enformig, så varför inte automatisera även den?",
+      "Det automatiska arbetsbordet tillverkar föremål utan att du behöver göra det manuellt.",
+      "<bold>Tips:</bold> Buffra både ingredienser och produkter runt arbetsbordet. En saknad ingrediens kan få ett till synes korrekt system att stanna utan resultat.",
+      "Information",
+      "Ställ in receptet som ska tillverkas och led sedan ingredienserna till arbetsbordet med rör.",
+      "När resurserna för receptet finns tillgängliga tillverkar arbetsbordet långsamt föremålet eller blocket utan kraft."
+    ],
+    "buildcraftlib/config/registry_overview": [
+      "Guideregistret är bokens innehållsförteckning bakom kulisserna: det avgör vad som finns, var det visas och vilken ikon som representerar det.",
+      "Den här sidan beskriver det språkneutrala manifestet för Guide Book i BuildCraft Community Edition.",
+      "<bold>Tips:</bold> Behåll sid-ID:n oförändrade efter en utgåva. Visningstext kan ändras säkert, men ett ändrat ID kan ogiltigförklara sparad bokhistorik och externa länkar.",
+      "Postmetadata",
+      "Varje post har ett <code>id</code> och en språkneutral <code>page</code>-nyckel. Valfria fält anger modul, typ, undertyp, reservnamn, bok, listningstillstånd, föremålsstack, NBT-variant, sats och nödvändig mod.",
+      "Ansvarsuppdelning",
+      "Manifestet innehåller aldrig översatt brödtext. Sidmekaniken ligger i <code>page_layouts.json</code>; engelska och översatta strängar finns under <code>text/</code>. Resurspaket kan ersätta varje lager oberoende.",
+      "Validering",
+      "Varje sidnyckel i manifestet måste finnas i de delade layouterna och i det engelska standardpaketet. Översättningar får utelämna sidor eller enskilda platser när en reservkedja är konfigurerad."
+    ],
+    "buildcraftlib/config/json_insn_format": [
+      "Datadrivna instruktioner är användbara när ett resurspaket måste ändra ett register utan att Java-kod kompileras.",
+      "Den här tekniska sidan sammanfattar BuildCrafts äldre JSON-instruktionsspråk som finns kvar för resurskompatibilitet.",
+      "<bold>Tips:</bold> Använd det packade manifestet och textresurserna för nya guidesidor. Instruktionsskript bör bara användas för att ändra äldre registerskript.",
+      "Rubrik",
+      "Instruktionsfiler börjar med markören nedan. Importerade biblioteksfiler använder i stället <code>~{buildcraft/json/lib}</code> och kan ange antalet argument med <code>~args N</code>.",
+      "Funktioner",
+      "Parsern accepterar kommentarer och funktionsanrop som <code>add</code>, <code>remove</code>, <code>replace</code>, <code>modify</code>, <code>overwrite</code>, <code>alias</code> och <code>import</code>. Argument kan vara tal, citerade strängar eller flerradiga strängar mellan grava accenter.",
+      "Nuvarande guideresurser",
+      "Community Edition-guiden läser inte längre en Markdown-fil per post. Indexmetadata finns i <code>original_manifest.json</code>, delade mallar i <code>page_layouts.json</code> och översatta platslistor i <code>text/&lt;language&gt;.json</code>."
+    ],
+    "buildcraftlib/config/guide_page_format": [
+      "En guidesida förblir underhållbar när mekanik och översättningar inte kopieras till varje språk.",
+      "Den här sidan beskriver det packade och lokaliserade Guide Book-formatet i BuildCraft Community Edition.",
+      "<bold>Tips:</bold> När en layout har ändrats bör både Lore- och Hints-inställningarna provas, och sidan öppnas på engelska samt minst ett översatt språk.",
+      "Delade sidlayouter",
+      "Den språkneutrala sidstrukturen lagras en gång i <code>assets/buildcraft/guide/page_layouts.json</code>. Varje sida har en Markdown-mall och numrerade <code>{{bc_text:index}}</code>-platser. Recept, länkar, bilder, synlighetstaggar och annan mekanik hör hemma i mallen.",
+      "Lokaliserade textpaket",
+      "Synlig text lagras i en kompakt fil per språk under <code>assets/buildcraft/guide/text/&lt;language&gt;.json</code>. Sidvärdet är en lista vars index motsvarar mallplatserna. Därmed hålls teknisk struktur borta från översättningarna och hela språket kan komprimeras som en JAR-post.",
+      "Reservspråk och alias",
+      "<code>assets/buildcraft/guide/languages.json</code> väljer standardspråk, regionala alias och reservkedjor. En saknad sida eller en <code>null</code>-plats ärver från sitt moderspråk; en tom sträng döljer avsiktligt platsen.",
+      "Manifest",
+      "<code>original_manifest.json</code> innehåller endast indexmetadata: sid-ID, sidnyckel, modul, typ, undertyp, synlighet och valfria föremåls- eller satsreferenser. Nyckeln <code>page</code> kopplar posten till layouten och den lokaliserade texten.",
+      "Markup som stöds",
+      "Vanlig Markdown-text, rubriker och formateringstaggar stöds. Taggarna nedan är språkneutrala och ska ligga kvar i den delade layouten."
+    ],
+    "buildcraftsilicon/item/plug_facade": [
+      "Passar rören inte byggnadens stil? Täck dem med en fasad som ser ut som ett passande block.",
+      "En fasad är ett rörtillbehör som döljer rör och får dem att passa in i bygget.",
+      "<bold>Tips:</bold> Konfigurera tillbehöret innan många kopior installeras. Prova först en rörsida för att bekräfta riktning och samspel med grindar.",
+      "Fasadvarianter",
+      "Nästan vilket block som helst kan göras till en fasad och placeras på sidan av ett rör.\nEn solid fasad stoppar röranslutningar genom sidan.\nEn ihålig fasad låter röranslutningar passera."
+    ],
+    "buildcraftsilicon/item/plug_gate": [
+      "Redstone tar mycket plats. En grind på ett rör ger kompakt och noggrann styrning av hela systemet.",
+      "Grinden är ett uppgraderingsbart rörtillbehör som tillhandahåller logiken för att hantera ett rörnät.",
+      "<bold>Tips:</bold> Konfigurera tillbehöret innan många kopior installeras. Prova först en rörsida för att bekräfta riktning och samspel med grindar.",
+      "Placering av grindar",
+      "En grind är ett rörtillbehör och kan bara placeras på en rörsida. Ett annat rör på samma sida ansluter inte.",
+      "Grindnivåer",
+      "Olika grindnivåer ger olika många platsgrupper:\nGrundgrind: 1 grupp som inte kan ändras.\nJärngrind: 2 grupper.\nNethertegelgrind: 4 grupper.\nGuldgrind: 8 grupper.",
+      "Grindmodifierare",
+      "Utökningar lägger till parameterplatser:\nLapisutökning: 1 parameterplats per utlösare.\nKvartsutökning: 1 parameterplats per grupp men halverar antalet grupper.\nDiamantutökning: 3 parameterplatser per grupp men halverar antalet grupper.",
+      "Grindvarianter",
+      "En OCH-grind kräver att <bold>alla</bold> anslutna utlösare är aktiva. En ELLER-grind kräver att <bold>minst en</bold> ansluten utlösare är aktiv.",
+      "Utlösare",
+      "Ikonerna till vänster är utlösare och dras till vänstersidans platser. Varje utlösare kontrollerar ett villkor; när villkoret uppfylls aktiveras den intilliggande kopplingen.",
+      "Åtgärder",
+      "Ikonerna till höger är åtgärder och dras till högersidans platser. När en koppling är aktiv utförs de anslutna åtgärderna.",
+      "Parametrar",
+      "Installerade parameterplatser visas bredvid vissa utlösare och åtgärder. De gör reglerna mer specifika: klicka på en plats för fler val eller lägg in föremål som filter.",
+      "Anslutningar",
+      "Linjerna i mitten kopplar utlösare till åtgärder. Klicka på dem för att ansluta eller frånkoppla och bygga regler med flera villkor. En linje lyser när villkoren uppfylls; då utförs de anslutna åtgärderna."
+    ],
+    "buildcraftsilicon/item/plug_pulsar": [
+      "Att driva rör utan en stor motor är både praktiskt och förvånansvärt smidigt.",
+      "<bold>Tips:</bold> Konfigurera tillbehöret innan många kopior installeras. Prova först en rörsida för att bekräfta riktning och samspel med grindar.",
+      "Rörpulsaren är ett tillbehör som ger små mängder kraft till rör som kan ta emot den.",
+      "Tillbehörsmekanik",
+      "Den kan placeras på ett kraftmottagande rör och aktiveras med högerklick. En grind kan också styra pulsaren med pulsaråtgärder.",
+      "Röranslutningar",
+      "Tillbehör kan placeras på valfri sida av ett rör. Om ett tillbehör sitter mellan två rör stoppar det rör- och rörtrådsanslutningen på den sidan."
+    ],
+    "buildcraftsilicon/item/plug_light_sensor": [
+      "Med en ljussensor kan omgivningens ljus styra grindarna.",
+      "Ljussensorn är ett rörtillbehör som mäter ljusnivån framför sig och skickar informationen till en grind på samma rör.",
+      "<bold>Tips:</bold> Konfigurera tillbehöret innan många kopior installeras. Prova först en rörsida för att bekräfta riktning och samspel med grindar.",
+      "Tillbehörsmekanik",
+      "Den intilliggande grinden kan använda utlösarna Ljust och Mörkt för att reagera på sensorns mätning och starta en åtgärd.",
+      "Röranslutningar",
+      "Tillbehör kan placeras på valfri sida av ett rör. Om ett tillbehör sitter mellan två rör stoppar det rör- och rörtrådsanslutningen på den sidan."
+    ],
+    "buildcraftsilicon/item/plug_lens": [
+      "Signaler är lättare att förstå när de syns och lättare att styra när de kan filtreras.",
+      "Linser och filter är färgade rörtillbehör som lagras som varianter av samma föremål.",
+      "<bold>Tips:</bold> Konfigurera tillbehöret innan många kopior installeras. Prova först en rörsida för att bekräfta riktning och samspel med grindar.",
+      "Linser",
+      "En lins visar och projicerar sin färg när den anslutna rörtrådens signal är aktiv. Den fungerar som en kompakt indikator på en ledig rörsida.",
+      "Filter",
+      "Filtervarianter använder samma sexton färger men fungerar som satsparametrar och tillbehörsfilter där det stöds. Färg och filtertillstånd lagras i föremålsvarianten, så grund-ID:t räcker inte för att identifiera ett visst filter."
+    ],
+    "buildcraftsilicon/trigger/light_high": [
+      "Är det ljust framför grinden? Då aktiveras utlösaren.",
+      "Ljust är en grindutlösare som finns när en ljussensor med samma färg sitter på samma rör.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en tillfällig lampa. När både aktivt och inaktivt läge är bekräftade kan samma signal kopplas till maskinerna.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när ljusnivån framför sensorn är hög."
+    ],
+    "buildcraftsilicon/trigger/light_low": [
+      "Är det mörkt framför grinden? Då aktiveras utlösaren.",
+      "Mörkt är en grindutlösare som finns när en ljussensor med samma färg sitter på samma rör.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en tillfällig lampa. När både aktivt och inaktivt läge är bekräftade kan samma signal kopplas till maskinerna.",
+      "Krav",
+      "De anslutna åtgärderna aktiveras endast när ljusnivån framför sensorn är låg."
+    ],
+    "buildcraftsilicon/action/pulsar_constant": [
+      "En grind kan styra en ansluten rörpulsar kontinuerligt.",
+      "Rörpulsar på är en grindåtgärd som finns när en rörpulsar sitter på samma rör.",
+      "<bold>Tips:</bold> Koppla åtgärden till den snävaste användbara utlösaren och prova av-läget lika noggrant som på-läget.",
+      "Krav",
+      "När åtgärden aktiveras slås rörpulsaren på och röret får kraft.",
+      "Riktningar",
+      "Grinden kan visa åtgärden Rörpulsar på flera gånger i olika färger för olika pulsarer. Åtgärdens färg motsvarar pulsarens riktning i förhållande till röret."
+    ],
+    "buildcraftsilicon/action/pulsar_single": [
+      "En grind kan få en ansluten rörpulsar att ge en enda puls.",
+      "Enkel kraftpuls är en grindåtgärd som finns när en rörpulsar sitter på samma rör.",
+      "<bold>Tips:</bold> Koppla åtgärden till den snävaste användbara utlösaren och prova av-läget lika noggrant som på-läget.",
+      "Krav",
+      "När åtgärden aktiveras slås rörpulsaren på en kort stund och ger nog med kraft för en operation.",
+      "Riktningar",
+      "Grinden kan visa pulsaråtgärden flera gånger i olika färger för olika pulsarer. Åtgärdens färg motsvarar pulsarens riktning i förhållande till röret."
+    ],
+    "buildcrafttransport/pipe/structure": [
+      "Strukturröret är en bärare för logik där inga föremål, vätskor eller någon kraft ska transporteras.",
+      "Ett strukturrör kan bära grindar och rörtrådar men transporterar ingenting genom mitten.",
+      "<bold>Tips:</bold> Använd strukturrör som monteringspunkter för trådar, grindar och tillbehör där ingen transport behövs.",
+      "Rörmekanik",
+      "Tillbehör och rörtrådar placeras på samma sätt som på andra rör, men föremål, vätskor och MJ kan inte passera genom röret."
+    ],
+    "buildcrafttransport/pipe/wood_item": [
+      "Transportröret av trä ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av trä används för att dra ut föremål ur ett intilliggande förråd när det får kraft.",
+      "<bold>Tips:</bold> Ge bara utvinningsröret kraft när nätet har en giltig destination. En buffert hindrar att föremål kastas ut från en blockerad linje.",
+      "Rörmekanik",
+      "Kraften drar ut föremål från den solida sidan och skickar dem mot öppna anslutningar. Vid flera utgångar väljs en riktning slumpmässigt.",
+      "Kraftförsörjning",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar.",
+      "Maskiner som stöder direkt utmatning kan i vissa fall mata föremål till röret utan ett separat utvinningsrör."
+    ],
+    "buildcrafttransport/pipe/cobble_item": [
+      "Transportröret av kullersten ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av kullersten används för att transportera föremål långsamt mellan rör och förråd.",
+      "<bold>Tips:</bold> Kombinera kullerstens- och stenrör när närliggande ledningar ska hållas separata utan färg eller pluggar.",
+      "Rörmekanik",
+      "Röret ger föremål stor friktion och bromsar därför snabbt upp föremål som har accelererats. Det ansluter inte till transportrör av sten eller kvarts."
+    ],
+    "buildcrafttransport/pipe/stone_item": [
+      "Transportröret av sten ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av sten används för att transportera föremål med medelhastighet mellan rör och förråd.",
+      "<bold>Tips:</bold> Kombinera sten- och kullerstensrör när närliggande ledningar ska hållas separata utan färg eller pluggar.",
+      "Rörmekanik",
+      "Röret ger medelhög friktion. Det ansluter inte till transportrör av kullersten eller kvarts."
+    ],
+    "buildcrafttransport/pipe/quartz_item": [
+      "Transportröret av kvarts ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av kvarts används för att transportera föremål snabbare mellan rör och förråd.",
+      "<bold>Tips:</bold> Kvartsrör passar som tydliga huvudledningar. Placera specialiserad sortering nära förgreningarna i stället för längs hela stammen.",
+      "Rörmekanik",
+      "Röret ger liten friktion och bromsar därför accelererade föremål mindre. Det ansluter inte till sten- eller kullerstensrör."
+    ],
+    "buildcrafttransport/pipe/iron_item": [
+      "Transportröret av järn ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av järn används för att skicka föremål i en enda vald riktning.",
+      "<bold>Tips:</bold> Kontrollera utgångspilen efter varje rotation eller flytt. En felaktig riktning kan skapa en tyst återvändsgränd.",
+      "Rörmekanik",
+      "Föremål går in genom de solida sidorna och ut genom den genomskinliga sidan. Slå på önskad sida med en skiftnyckel eller styr riktningen med redstone eller en grind."
+    ],
+    "buildcrafttransport/pipe/gold_item": [
+      "Transportröret av guld ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av guld används för att accelerera föremål och transportera dem snabbt.",
+      "<bold>Tips:</bold> Använd guldrör på långa raka sträckor och bromsa eller buffra föremål före komplexa korsningar.",
+      "Rörmekanik",
+      "Röret ger passerande föremål en stor hastighetsökning. Vid komplicerade korsningar bör mottagare eller buffertar kunna hantera snabba skurar."
+    ],
+    "buildcrafttransport/pipe/diamond_item": [
+      "Transportröret av diamant ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av diamant används för att sortera föremål till färgkodade sidor med filter.",
+      "<bold>Tips:</bold> Lämna bara en ofiltrerad sida när den verkligen ska vara överflödesväg. Prova sällsynta föremål innan massflödet ansluts.",
+      "Ställa in filtret",
+      "Varje sida har en färg och egna filterplatser. Flera kopior av samma föremål ger sidan större vikt. Filtrerade sidor prioriteras, medan en tom sida fungerar som generell väg. Listor kan användas som utökade filter.",
+      "Rörmekanik",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar."
+    ],
+    "buildcrafttransport/pipe/obsidian_item": [
+      "Transportröret av obsidian ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av obsidian används för att samla upp lösa föremål från världen och föra dem till ett rör eller förråd.",
+      "<bold>Tips:</bold> Kraft förbättrar insamlingen. Placera röret så att lösa föremål inte sugs bort från områden som spelare använder manuellt.",
+      "Rördrift",
+      "Utan kraft plockar röret upp föremål som rör vid det. Med kraft samlar det från ett område på 3 × 4 × 3 block framför röret. Det måste ha en tydlig riktning; flera anslutningar avaktiverar världsupptagningen.",
+      "Rörriktning",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar.",
+      "Rörmekanik",
+      "Maskiner som stöder direkt utmatning kan i vissa fall mata föremål till röret utan ett separat utvinningsrör.",
+      "Kraftförsörjning",
+      "Röret kan ta emot MJ från en motor, en energiadapter eller en rörpulsar när funktionen kräver kraft.",
+      "Utan kraft plockar röret upp föremål som rör vid det. Med kraft samlar det från ett område på 3 × 4 × 3 block framför röret. Det måste ha en tydlig riktning; flera anslutningar avaktiverar världsupptagningen."
+    ],
+    "buildcrafttransport/pipe/sandstone_item": [
+      "Transportröret av sandsten ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av sandsten används för att transportera föremål mellan rör utan att ansluta direkt till maskiner eller förråd.",
+      "<bold>Tips:</bold> Använd sandstensrör nära maskiner när oönskade förrådsanslutningar ska undvikas. Kontrollera att varje avsedd slutpunkt fortfarande är ansluten.",
+      "Rörmekanik",
+      "Röret ansluter endast till andra rör och är därför användbart nära täta maskinväggar."
+    ],
+    "buildcrafttransport/pipe/clay_item": [
+      "Transportröret av lera ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av lera används för att prioritera intilliggande förråd framför fortsatt transport i rörnätet.",
+      "<bold>Tips:</bold> Använd lerör vid slutliga leveranspunkter där förråd ska prioriteras framför fortsatt transport.",
+      "Rörmekanik",
+      "När flera vägar finns försöker röret först mata ett anslutet förråd och väljer därefter bland andra rör."
+    ],
+    "buildcrafttransport/pipe/void_item": [
+      "Transportröret av tomhet ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av tomhet används för att förstöra alla föremål som når dess centrum.",
+      "<bold>Tips:</bold> Placera alltid ett filter före ett tomrör när värdefulla och kasserade föremål delar nät. Använd aldrig tomvägen som oprövad överfyllnad.",
+      "Rörmekanik",
+      "Föremål kan inte passera genom röret; de raderas automatiskt när de når mitten."
+    ],
+    "buildcrafttransport/pipe/stripes_item": [
+      "Det randiga transportröret ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Det randiga transportröret används för att bryta block, placera block och använda föremål framför rörets riktade sida.",
+      "<bold>Tips:</bold> Använd randiga rör vid kontrollerade slutpunkter och prova målsidan manuellt. Deras påverkan på världen är mer destruktiv än vanlig transport.",
+      "Rördrift",
+      "När röret får kraft försöker det bryta blocket framför sig. Ett block som matas genom röret placeras framför det, och andra föremål används mot blocket eller entiteten framför. Röret måste ha en tydlig riktning och förlorar världsfunktionen med flera anslutningar.",
+      "Rörriktning",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar.",
+      "Rörmekanik",
+      "Maskiner som stöder direkt utmatning kan i vissa fall mata föremål till röret utan ett separat utvinningsrör.",
+      "Kraftförsörjning",
+      "Röret kan ta emot MJ från en motor, en energiadapter eller en rörpulsar när funktionen kräver kraft.",
+      "När röret får kraft försöker det bryta blocket framför sig. Ett block som matas genom röret placeras framför det, och andra föremål används mot blocket eller entiteten framför. Röret måste ha en tydlig riktning och förlorar världsfunktionen med flera anslutningar."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_item": [
+      "Transportröret av trädiamant ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av trädiamant används för att dra ut valda föremål ur ett förråd enligt vitlista, svartlista eller turordning.",
+      "<bold>Tips:</bold> Ställ in utvinningsfiltret innan kraft ansluts. Ett tomt eller brett filter kan tömma ett förråd mycket snabbare än väntat.",
+      "Rörmekanik",
+      "Filtret ställs in i rörets gränssnitt. Vitlista drar bara ut valda föremål, svartlista drar ut allt annat och turordning följer filterplatserna från vänster till höger. En lista kan användas för större filter.",
+      "Filtrering",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar.",
+      "Kraftförsörjning",
+      "Maskiner som stöder direkt utmatning kan i vissa fall mata föremål till röret utan ett separat utvinningsrör.",
+      "Röret kan ta emot MJ från en motor, en energiadapter eller en rörpulsar när funktionen kräver kraft."
+    ],
+    "buildcrafttransport/pipe/lapis_item": [
+      "Transportröret av lazuli ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av lazuli används för att färga passerande föremål och transportera dem vidare.",
+      "<bold>Tips:</bold> Dokumentera färgreglerna nära nätet. En färgändring uppströms kan påverka all senare sortering.",
+      "Färga föremål",
+      "Alla föremål som passerar får rörets valda färg. Färgen ändras med en skiftnyckel eller en grindåtgärd.",
+      "Rörmekanik",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar."
+    ],
+    "buildcrafttransport/pipe/daizuli_item": [
+      "Transportröret av diazuli ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av diazuli används för att skicka målade föremål med vald färg mot en bestämd utgång.",
+      "<bold>Tips:</bold> Använd en tydlig färgkonvention tillsammans med diazuliröret och reservera gärna en färg för överflöd eller osorterade föremål.",
+      "Rörmekanik",
+      "Föremål går in genom solida sidor och ut genom den genomskinliga sidan. Slå på en sida med skiftnyckeln för riktning och på mitten för att välja vilken föremålsfärg som ska använda vägen. Grindar kan också styra båda.",
+      "Ställa in färg och riktning",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar."
+    ],
+    "buildcrafttransport/pipe/emzuli_item": [
+      "Transportröret av emzuli ger föremålstransporten en särskild funktion och gör rörnätet lättare att styra.",
+      "Transportröret av emzuli används för att dra ut föremål med ett av fyra grindstyrda filter.",
+      "<bold>Tips:</bold> Prova grindstyrd utvinning med ett litet förråd och kontrollera att inaktivt läge beter sig rätt vid strömavbrott.",
+      "Rörmekanik",
+      "Gränssnittet innehåller fyra färgade filter. En grind med motsvarande Utvinningsförinställning väljer vilket filter som används. De utvunna föremålen kan samtidigt få filterfärgen. Listor stöds som utökade filter.",
+      "Filtrering",
+      "Föremål färdas inte tillbaka längs sidan de kom från. Om ingen giltig destination finns kan de kastas ut ur röret. Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar.",
+      "Kraftförsörjning",
+      "Maskiner som stöder direkt utmatning kan i vissa fall mata föremål till röret utan ett separat utvinningsrör.",
+      "Röret kan ta emot MJ från en motor, en energiadapter eller en rörpulsar när funktionen kräver kraft."
+    ],
+    "buildcrafttransport/pipe/wood_fluid": [
+      "Vätskeröret av trä ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av trä används för att dra ut vätska ur en intilliggande tank när det får kraft.",
+      "<bold>Tips:</bold> Ge bara röret kraft när mottagande tankar eller ledningar har utrymme.",
+      "Rörmekanik",
+      "Vätska tas från den solida sidan och skickas mot öppna sidor. Vid flera utgångar delas flödet jämnt. Vissa maskiner kan mata röret direkt utan kraft.",
+      "Kraftförsörjning",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet.",
+      "Röret transporterar vätska med ungefär 0,2 hinkar per sekund. Varje vätskerör har intern kapacitet på en hink per sida och en hink i mitten.",
+      "Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar."
+    ],
+    "buildcrafttransport/pipe/cobble_fluid": [
+      "Vätskeröret av kullersten ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av kullersten används för att transportera vätskor långsamt.",
+      "<bold>Tips:</bold> Använd regeln att sten och kullersten inte ansluter för separata ledningar sida vid sida.",
+      "Rörmekanik",
+      "Det är den långsammaste vanliga vätskerörstypen och ansluter inte till rör av sten eller kvarts.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/stone_fluid": [
+      "Vätskeröret av sten ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av sten används för att transportera vätskor med normal hastighet.",
+      "<bold>Tips:</bold> Använd regeln att sten och kullersten inte ansluter för separata ledningar sida vid sida.",
+      "Rörmekanik",
+      "Röret ansluter inte till vätskerör av kullersten eller kvarts.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/quartz_fluid": [
+      "Vätskeröret av kvarts ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av kvarts används för att transportera vätskor med högre hastighet.",
+      "<bold>Tips:</bold> Använd visuellt olika rörmaterial för viktiga raffineringssteg så att fel vätskeanslutning syns tydligt.",
+      "Rörmekanik",
+      "Röret ansluter inte till vätskerör av kullersten eller sten.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/iron_fluid": [
+      "Vätskeröret av järn ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av järn används för att leda vätska i en enda vald riktning.",
+      "<bold>Tips:</bold> Kontrollera envägsutgången efter varje rotation. Ett riktfel kan få vätska att fastna i en gren som ser ansluten ut.",
+      "Rörmekanik",
+      "Vätska går in genom de solida sidorna och ut genom den genomskinliga sidan. Riktningen ändras med skiftnyckel, redstone eller grind.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/gold_fluid": [
+      "Vätskeröret av guld ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av guld används för att transportera vätskor snabbt.",
+      "<bold>Tips:</bold> Använd hög kapacitet nära pumpar och stora tankar, men se till att mottagarna klarar flödestoppar.",
+      "Rörmekanik",
+      "Det är ett snabbt vätskerör som passar nära pumpar och stora tankar.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/diamond_fluid": [
+      "Vätskeröret av diamant ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av diamant används för att sortera vätskor till färgkodade sidor med filter.",
+      "<bold>Tips:</bold> Konfigurera varje använd sida innan flera vätskor ansluts och skapa en uttrycklig överflödesväg.",
+      "Filtrering",
+      "Varje sida har en färg och ett filter. Placera en hink eller annan vätskebehållare i filtret. Flera kopior ger större vikt. Filtrerade sidor prioriteras och ofiltrerade sidor tar emot övriga vätskor.",
+      "Rörmekanik",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet.",
+      "Röret transporterar vätska med ungefär 1,6 hinkar per sekund. Varje vätskerör har intern kapacitet på en hink per sida och en hink i mitten."
+    ],
+    "buildcrafttransport/pipe/sandstone_fluid": [
+      "Vätskeröret av sandsten ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av sandsten används för att transportera vätska endast mellan rör.",
+      "<bold>Tips:</bold> Använd sandstensvätskerör där närliggande tankar inte ska ansluta automatiskt.",
+      "Rörmekanik",
+      "Det ansluter inte direkt till maskiner eller tankar och undviker därför oavsiktliga sidokopplingar.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/clay_fluid": [
+      "Vätskeröret av lera ger vätskenätet en särskild transportfunktion.",
+      "<bold>Tips:</bold> Placera lerör nära slutliga förbrukare när vätska ska föredra en tank eller maskin framför fortsatt transport.",
+      "Vätskeröret av lera används för att prioritera intilliggande tankar eller maskiner framför nästa rör.",
+      "Rörmekanik",
+      "När flera vägar finns skickas vätskan först till en tank eller maskin och därefter vidare i nätet.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/void_fluid": [
+      "Vätskeröret av tomhet ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av tomhet används för att förstöra all vätska som matas in.",
+      "<bold>Tips:</bold> Placera ett vätskefilter före tomröret och prova ledningen med en liten mängd innan den kopplas till värdefulla tankar.",
+      "Rörmekanik",
+      "Vätskan raderas när den når röret och kan inte hämtas tillbaka.",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fluid": [
+      "Vätskeröret av trädiamant ger vätskenätet en särskild transportfunktion.",
+      "Vätskeröret av trädiamant används för att dra ut valda vätskor ur en tank med filter.",
+      "<bold>Tips:</bold> Ställ in filtret före kraftanslutningen så att fel vätska inte töms ur tanken.",
+      "Rörmekanik",
+      "Filtret ställs in med vätskebehållare. Vitlista tar bara valda vätskor och svartlista tar övriga. Kraftpulser styr hur mycket som dras ut.",
+      "Filtrering",
+      "Vätska går inte tillbaka genom ingångssidan och delas jämnt mellan flera giltiga utgångar om inget filter eller någon prioritet styr flödet.",
+      "Kraftförsörjning",
+      "Röret transporterar vätska med ungefär 0,2 hinkar per sekund. Varje vätskerör har intern kapacitet på en hink per sida och en hink i mitten.",
+      "Rörpluggar och olika rörfärger kan användas för att hindra oönskade anslutningar.",
+      "När kraft krävs kan röret ta emot MJ från en motor, en energiadapter eller en rörpulsar."
+    ],
+    "buildcrafttransport/item/wire": [
+      "Redstone når bara femton block och bär en signal. Rörtråd kan bära flera färgade signaler längs samma nät.",
+      "Rörtråd är ett rörtillbehör som överför färgkodade grindsignaler längs anslutna rör utan vanlig redstonebegränsning.",
+      "<bold>Tips:</bold> Använd olika trådfärger för oberoende signaler och märk viktiga linjer nära korsningar.",
+      "Rörtråd placeras på rör och kopplas över anslutna rörsidor. Varje färg är en separat signalkanal.",
+      "Grindar kan läsa och skriva signaler på tråden. Pluggar eller blockerade sidor bryter också trådanslutningen.",
+      "Tråden transporterar bara logiksignaler; den transporterar inte föremål, vätska eller MJ.",
+      "Rörtråd placeras på rör och kopplas över anslutna rörsidor. Varje färg är en separat signalkanal."
+    ],
+    "buildcrafttransport/item/plug_power_adaptor": [
+      "En rörpulsar ger lite kraft, men större nät behöver en riktig anslutning till ett kinesisrör.",
+      "Energiadaptern är ett rörtillbehör som matar ett kraftmottagande rör från ett anslutet kinesisrör.",
+      "<bold>Tips:</bold> Kontrollera mottagarens kapacitet och riktning innan adaptern kopplas till en stark kraftledning.",
+      "Tillbehörsmekanik",
+      "Placera adaptern på sidan av ett rör som kan ta emot kraft och anslut ett kinesisrör på utsidan.",
+      "Adaptern omvandlar den anslutna kinesislinjens MJ till pulser som röret kan använda.",
+      "Som andra tillbehör blockerar den vanliga rör- och trådanslutningar genom den upptagna sidan."
+    ],
+    "buildcrafttransport/item/plug_blocker": [
+      "När rör fortsätter att ansluta där de inte ska behövs en enkel fysisk spärr.",
+      "Rörpluggen är ett tillbehör som stoppar rör och rörtråd från att ansluta genom den valda sidan.",
+      "<bold>Tips:</bold> Placera pluggen på den exakta sida som ska isoleras och kontrollera både transport- och trådanslutningen.",
+      "Röranslutningar",
+      "Pluggen kan placeras på valfri rörsida och blockerar alla anslutningar genom den sidan."
+    ],
+    "buildcrafttransport/trigger/items_traversing": [
+      "När föremål färdas genom röret blir utlösaren aktiv.",
+      "Föremål passerar är en grindutlösare för transportrör.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en lampa så att korta föremålspassager blir synliga.",
+      "Krav",
+      "Utlösaren är aktiv medan minst ett föremål befinner sig i röret.",
+      "Parametrar",
+      "Om parametrar finns kan filterplatser begränsa vilka passerande föremål som räknas."
+    ],
+    "buildcrafttransport/trigger/fluids_traversing": [
+      "Vätska färdas genom röret som grinden sitter på.",
+      "Vätska passerar är en grindutlösare för vätskerör.",
+      "<bold>Tips:</bold> Anslut först utlösaren till en lampa och kontrollera den med både små och kontinuerliga flöden.",
+      "Krav",
+      "Utlösaren är aktiv när vätska förflyttas genom röret."
+    ],
+    "buildcrafttransport/trigger/pipe_empty": [
+      "När inga föremål eller vätskor färdas genom röret blir utlösaren aktiv.",
+      "Tomt rör är en grindutlösare för transport- och vätskerör.",
+      "<bold>Tips:</bold> Prova utlösaren efter att nätet har stannat helt; interna buffertar kan hålla den inaktiv en kort stund.",
+      "Krav",
+      "Utlösaren aktiveras när röret inte innehåller någon pågående transport."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_active": [
+      "Den anslutna rörtråden lyser och bär en aktiv signal.",
+      "Rörsignal på är en grindutlösare för en trådfärg på samma rör.",
+      "<bold>Tips:</bold> Använd färgad tråd för att hålla signalen skild från annan automation och undvik återkopplingsslingor.",
+      "Krav",
+      "Utlösaren aktiveras när rörtråden med den valda färgen är aktiv.",
+      "Parametrar",
+      "Om flera trådfärger finns väljs den färg som motsvarar utlösaren."
+    ],
+    "buildcrafttransport/trigger/pipe_signal_inactive": [
+      "Den anslutna rörtråden lyser inte.",
+      "Rörsignal av är en grindutlösare för en trådfärg på samma rör.",
+      "<bold>Tips:</bold> Använd färgad tråd för att hålla signalen skild från annan automation och undvik återkopplingsslingor.",
+      "Krav",
+      "Utlösaren aktiveras när rörtråden med den valda färgen är inaktiv.",
+      "Parametrar",
+      "Om flera trådfärger finns väljs den färg som motsvarar utlösaren."
+    ],
+    "buildcrafttransport/action/pipe_direction_north": [
+      "Ska röret arbeta eller transportera mot norr? Välj denna åtgärd.",
+      "Rikta mot norr är en grindåtgärd för rör med valbar riktning.",
+      "<bold>Tips:</bold> Använd bara en riktningsåtgärd åt gången och ordna en säker reservväg.",
+      "Ställa in riktningen",
+      "När åtgärden är aktiv ställs rörets arbets- eller utgångsriktning mot norr."
+    ],
+    "buildcrafttransport/action/pipe_direction_east": [
+      "Ska röret arbeta eller transportera mot öster? Välj denna åtgärd.",
+      "Rikta mot öster är en grindåtgärd för rör med valbar riktning.",
+      "<bold>Tips:</bold> Använd bara en riktningsåtgärd åt gången och ordna en säker reservväg.",
+      "Ställa in riktningen",
+      "När åtgärden är aktiv ställs rörets arbets- eller utgångsriktning mot öster."
+    ],
+    "buildcrafttransport/action/pipe_direction_south": [
+      "Ska röret arbeta eller transportera mot söder? Välj denna åtgärd.",
+      "Rikta mot söder är en grindåtgärd för rör med valbar riktning.",
+      "<bold>Tips:</bold> Använd bara en riktningsåtgärd åt gången och ordna en säker reservväg.",
+      "Ställa in riktningen",
+      "När åtgärden är aktiv ställs rörets arbets- eller utgångsriktning mot söder."
+    ],
+    "buildcrafttransport/action/pipe_direction_west": [
+      "Ska röret arbeta eller transportera mot väster? Välj denna åtgärd.",
+      "Rikta mot väster är en grindåtgärd för rör med valbar riktning.",
+      "<bold>Tips:</bold> Använd bara en riktningsåtgärd åt gången och ordna en säker reservväg.",
+      "Ställa in riktningen",
+      "När åtgärden är aktiv ställs rörets arbets- eller utgångsriktning mot väster."
+    ],
+    "buildcrafttransport/action/pipe_direction_above": [
+      "Ska röret arbeta eller transportera mot uppåt? Välj denna åtgärd.",
+      "Rikta mot uppåt är en grindåtgärd för rör med valbar riktning.",
+      "<bold>Tips:</bold> Använd bara en riktningsåtgärd åt gången och ordna en säker reservväg.",
+      "Ställa in riktningen",
+      "När åtgärden är aktiv ställs rörets arbets- eller utgångsriktning mot uppåt."
+    ],
+    "buildcrafttransport/action/pipe_direction_below": [
+      "Ska röret arbeta eller transportera mot nedåt? Välj denna åtgärd.",
+      "Rikta mot nedåt är en grindåtgärd för rör med valbar riktning.",
+      "<bold>Tips:</bold> Använd bara en riktningsåtgärd åt gången och ordna en säker reservväg.",
+      "Ställa in riktningen",
+      "När åtgärden är aktiv ställs rörets arbets- eller utgångsriktning mot nedåt."
+    ],
+    "buildcrafttransport/action/pipe_signal_active": [
+      "Välj denna åtgärd för att aktivera den anslutna rörtråden.",
+      "Rörsignal på är en grindåtgärd för en trådfärg på samma rör.",
+      "<bold>Tips:</bold> Använd färgad rörtråd för att skilja signalen från annan automation och undvika återkoppling.",
+      "Krav",
+      "När åtgärden är aktiv skickas en signal på den valda trådfärgen.",
+      "Färgen på åtgärden anger vilken rörtråd som styrs.",
+      "Flera grindar kan dela samma tråd; kontrollera därför att deras villkor inte motarbetar varandra."
+    ],
+    "buildcrafttransport/action/pipe_colour": [
+      "Lazuli- och diazulirör kan färga eller sortera målade föremål; denna åtgärd väljer färgen.",
+      "Färga föremål är en grindåtgärd för lazuli- och diazulirör.",
+      "<bold>Tips:</bold> Dokumentera färgvalet och prova det med ett enskilt föremål innan massflöde ansluts.",
+      "Krav",
+      "När åtgärden är aktiv använder röret den valda färgen för målning eller riktad sortering."
+    ],
+    "buildcrafttransport/action/extraction_preset": [
+      "Emzuliröret har flera utvinningsfilter och denna grindåtgärd väljer vilket som används.",
+      "Utvinningsförinställning är en grindåtgärd för ett emzulirör.",
+      "<bold>Tips:</bold> Kontrollera att varje färgad förinställning har rätt filter och att inaktivt läge inte tömmer förrådet.",
+      "Krav",
+      "När åtgärden är aktiv väljer röret den motsvarande färgade filtergruppen för utvinning."
+    ],
+    "buildcraftcore/block/engine_basics": [
+      "Grundläggande motorer"
+    ],
+    "buildcraftcore/item/box_volume": [
+      "Att flytta fyra landmärken varje gång ett projekt ändrar storlek blir snabbt ett eget projekt.",
+      "Volymlådan är en flyttbar områdesmarkör som styrs med marköranslutaren.",
+      "<bold>Tips:</bold> Placera lådan nära projektet och kontrollera alla hörn innan den kopplas till en maskin.",
+      "Placering och storleksändring",
+      "Placera volymlådan och använd marköranslutaren på dess laserkanter för att flytta eller ändra storlek på området.",
+      "Tillägg",
+      "Volymlådan kan bära tillägg, exempelvis en ifyllarplan, så att både område och arbetsinställningar flyttas tillsammans."
+    ],
+    "buildcraftcore/item/marker_land": [
+      "Stora maskiner behöver en exakt gräns, annars blir deras aptit på block svår att kontrollera.",
+      "Landmärken definierar rektangulära arbetsområden för bland annat stenbrottet, ifyllaren och arkitektbänken.",
+      "<bold>Tips:</bold> Placera alla markörer i samma plan där det krävs och kontrollera laserlinjerna innan maskinen startas.",
+      "Definiera ett område",
+      "Placera landmärken längs områdets kanter och koppla dem samman. Laserlinjerna visar den valda volymen.",
+      "Använda området",
+      "Placera en kompatibel maskin intill en ansluten markör. Maskinen använder det markerade området och tar bort eller ignorerar markörerna enligt sin egen mekanik."
+    ],
+    "buildcraftlib/item/guide": [
+      "En stor verkstad är lättare att bygga när varje maskin har anteckningar i stället för gissningar.",
+      "Den här boken innehåller dokumentationen i spelet för BuildCraft Community Edition.",
+      "<bold>Tips:</bold> Använd innehållsförteckningen och sökningen för att hitta blocket, föremålet, röret eller grindvillkoret som används just nu.",
+      "Använda boken",
+      "Högerklicka med boken för att öppna den. Följ länkar, recept och användningsreferenser mellan sidorna."
+    ],
+    "buildcraftsilicon/item/plug_filter": [
+      "Ett rött målat föremål ska bara passera ett rött filter; samma regel gäller för de andra färgerna.",
+      "Filtret är ett färgat rörtillbehör som bara släpper igenom föremål målade i samma färg.",
+      "Tillbehörsmekanik",
+      "Filtret sitter på en rörsida och påverkar föremål som försöker passera genom den sidan.",
+      "Röranslutningar",
+      "Endast föremål med samma färg som filtret får passera. Övriga föremål måste hitta en annan giltig väg."
+    ],
+    "buildcraftcore/item/map_location": [
+      "Robotar och maskiner är lättare att styra när en punkt, väg eller arbetszon kan bäras i fickan.",
+      "Kartplatsen registrerar en punkt, ett område, en väg eller en robotzon för senare användning.",
+      "<bold>Tips:</bold> Ge registreringarna tydliga namn och kontrollera dimensionen innan de används i automatisering.",
+      "Registrera platser",
+      "Använd föremålet på en kompatibel markör eller plats för att registrera dess koordinater och typ.",
+      "Robotzoner",
+      "Områden och vägar kan sparas från anslutna markörer. Robotzoner kan skrivas från zonplaneraren."
+    ],
+    "buildcraftcore/item/fragile_fluid_shard": [
+      "Vissa block innehåller vätska som inte bör försvinna bara för att själva blocket bryts.",
+      "Den sköra vätskeskärvan är en tillfällig envägsbehållare för upp till 500 mB vätska.",
+      "<bold>Tips:</bold> Flytta skärvan direkt till en kompatibel tank eller maskin; den är inte avsedd som permanent lagring.",
+      "Återvinna vätska",
+      "Skärvan skapas när en kompatibel vätskeinnehållande del bryts och håller den återvunna vätskan."
+    ],
+    "buildcraftcore/block/engine_creative": [
+      "Vid fabrikstester är väntan på bränsle sällan den del som någon faktiskt vill prova.",
+      "Den kreativa motorn producerar konfigurerbar MJ utan bränsle och är avsedd för tester i kreativt läge.",
+      "<bold>Tips:</bold> Börja med låg uteffekt och höj gradvis så att rör- och maskinkapacitet kan observeras säkert.",
+      "Utmatning",
+      "Placera motorn mot en MJ-mottagare och använd dess inställningar för att välja uteffekt."
+    ],
+    "buildcraftbuilders/item/blueprint": [
+      "En färdig byggnad är användbar en gång; en ritning låter samma design byggas om och om igen.",
+      "En ritning lagrar exakta block, blocktillstånd och stödda blockentitetsdata från ett skannat område.",
+      "<bold>Tips:</bold> Skanna först en liten provbyggnad och kontrollera roterade block samt förrådsdata innan stora projekt registreras.",
+      "Registrering",
+      "Placera ritningen i en arkitektbänk som är kopplad till ett markerat område. Bänken registrerar varje block och skapar en använd ritning.",
+      "Byggande",
+      "En byggare läser den använda ritningen, visar nödvändiga material och placerar blocken med rätt tillstånd när resurser och MJ finns."
+    ],
+    "buildcraftbuilders/item/template": [
+      "Ibland är formen viktigare än exakt vilken sten, träsort eller metall som fyller den.",
+      "En mall registrerar bara områdets upptagna form och låter en byggare fylla den med tillgängliga material.",
+      "<bold>Tips:</bold> Använd mallen när blocktypen får variera; använd en ritning när exakta material och tillstånd måste bevaras.",
+      "Registrering",
+      "Skanna ett markerat område i arkitektbänken med en tom mall. Endast vilka positioner som är fyllda registreras.",
+      "Byggande",
+      "Byggaren använder levererade block för att fylla mallens form och kan därför bygga samma geometri av olika material."
+    ],
+    "buildcraftbuilders/item/schematic_single": [
+      "Att ersätta varje kopia av ett block i en stor design för hand är ett dåligt sätt att använda en arkitekts tid.",
+      "En enkelblocksskiss registrerar ett blocktillstånd för användning i ersättaren.",
+      "<bold>Tips:</bold> Registrera käll- och målblocken noggrant och prova ersättningen på en kopia av ritningen först.",
+      "Registrera ett block",
+      "Använd skissen på blocket som ska registreras. Blockets tillstånd och relevanta variantdata lagras i föremålet.",
+      "Ersätta block i ritningen",
+      "Placera registrerade skisser i ersättaren för att ange vilket block i ritningen som ska bytas och vad det ska ersättas med."
+    ],
+    "buildcraftbuilders/item/filler_planner": [
+      "En bygglåda är mer användbar när den minns både var och vilket arbete som ska göras.",
+      "Ifyllarplanen lagrar ett ifyllarmönster och dess parametrar som tillägg till en volymlåda.",
+      "<bold>Tips:</bold> Ställ in mönstret i ett litet område innan planen kopplas till ett större projekt.",
+      "Planering",
+      "Kombinera planen med en volymlåda och välj önskat mönster samt parametrar."
+    ],
+    "buildcraftbuilders/block/architect": [
+      "Innan en maskin kan återskapa en byggnad måste någon först lära den hur byggnaden ser ut.",
+      "Arkitektbänken skannar ett markerat område till en ritning eller mall.",
+      "<bold>Tips:</bold> Håll området inläst och kontrollera att alla markörer är anslutna innan skanningen startas.",
+      "Områdesinställning",
+      "Definiera ett område med landmärken eller en volymlåda och placera arkitektbänken intill en markör.",
+      "Skanning",
+      "Sätt in en tom ritning för exakt blockregistrering eller en tom mall för enbart formen."
+    ],
+    "buildcraftbuilders/block/builder": [
+      "En plan är bara en samling idéer tills något börjar placera block.",
+      "Byggaren förbrukar MJ och resurser för att konstruera en använd ritning eller mall.",
+      "<bold>Tips:</bold> Börja med en liten design och lägg en buffert för material nära byggaren innan full kraft ansluts.",
+      "Försörja byggaren",
+      "Placera en använd ritning eller mall i byggaren och välj placering, rotation och andra tillgängliga alternativ.",
+      "Placering och alternativ",
+      "Byggaren visar eller begär de resurser som saknas. Mata material via förråd, rör eller robotsystem."
+    ],
+    "buildcraftbuilders/block/filler": [
+      "Alla byggjobb behöver inte en detaljerad ritning. Många är bara lådor, väggar, golv eller mycket tomrum.",
+      "Ifyllaren tillämpar ett konfigurerbart geometriskt mönster i ett markerat område.",
+      "<bold>Tips:</bold> Prova mönstret i liten skala och kontrollera vilken del som fylls eller tas bort innan ett stort område körs.",
+      "Område och resurser",
+      "Definiera arbetsområdet med markörer eller en volymlåda och placera ifyllaren vid området.",
+      "Mönster",
+      "Välj ett mönster och dess parametrar. Mönster kan bland annat fylla, rensa, plana ut eller skapa geometriska former."
+    ],
+    "buildcraftbuilders/block/library": [
+      "En bra design bör leva längre än det enda pappersföremål där den först sparades.",
+      "Det elektroniska biblioteket överför ritnings- och malldata mellan föremål och den sparade ögonblicksbildsdatabasen.",
+      "<bold>Tips:</bold> Ge ögonblicksbilder tydliga namn och behåll säkerhetskopior av världen innan stora bibliotek flyttas.",
+      "Hämta data",
+      "Sätt in en använd ritning eller mall för att ladda upp dess ögonblicksbild till bibliotekets databas.",
+      "Lagra data",
+      "Välj en sparad post och sätt in ett lämpligt tomt föremål för att hämta designen igen."
+    ],
+    "buildcraftbuilders/block/replacer": [
+      "Att byta material i en färdig design ska inte kräva att hela designen byggs om ur minnet.",
+      "Ersättaren ändrar alla matchande block i en använd ritning från ett registrerat blocktillstånd till ett annat.",
+      "<bold>Tips:</bold> Arbeta på en kopia av ritningen och kontrollera block med riktning eller blockentitetsdata efter ersättningen.",
+      "Ersätta block",
+      "Sätt in ritningen och registrerade enkelblocksskisser för käll- och målblock."
+    ],
+    "buildcraftbuilders/block/marker_construction": [
+      "En byggrobot behöver både en plan och en plats att hämta arbete även när ingen stationär byggare utför projektet.",
+      "Byggmarkören gör bygguppgifter från en ritning tillgängliga för byggrobotar.",
+      "<bold>Tips:</bold> Håll ritningen, markören och materialstationerna inom robotarnas nåbara zon.",
+      "Robotbyggande",
+      "Placera markören vid projektet och tilldela en använd ritning samt placering."
+    ],
+    "buildcraftbuilders/block/frame": [
+      "En stor rörlig borr känns mindre oroande när en synlig ställning omger arbetsområdet.",
+      "Ramar är lätta konstruktionsblock som används av stenbrottet och byggsystemen.",
+      "<bold>Tips:</bold> Låt maskinen skapa och ta bort sina egna ramar; manuella ändringar kan blockera rörelsen.",
+      "Stenbrottets ram",
+      "Ramar visar maskinens arbetsvolym och fungerar som räls eller stöd för rörliga delar."
+    ],
+    "buildcraftbuilders/block/quarry": [
+      "Handbrytning är givande tills malmen ligger under flera miljoner block som inte är den önskade malmen.",
+      "Stenbrottet bygger en ram och bryter automatiskt alla tillåtna block i det valda området.",
+      "<bold>Tips:</bold> Kontrollera områdesstorlek, chunkinläsning, föremålsutgång och kraftförsörjning innan ett stort stenbrott startas.",
+      "Välja området",
+      "Utan externa markörer använder stenbrottet sitt standardområde. Landmärken kan definiera ett större rektangulärt område före placering.",
+      "Brytning",
+      "När maskinen får MJ bygger den en ram och flyttar borrhuvudet över området. Brutna block skickas till anslutna förråd eller transportrör."
+    ],
+    "buildcraftrobotics/item/robot": [
+      "Rör flyttar resurser. Robotar flyttar sig själva, resurserna och ibland allt som står i vägen.",
+      "En robot är en mobil arbetare vars beteende bestäms av ett installerat redstonekort.",
+      "<bold>Tips:</bold> Programmera och prova roboten i en avgränsad zon med en närliggande laddstation innan den släpps i ett stort nät.",
+      "Skapa en robot",
+      "Tillverka ett tomt robotchassi och installera ett programmerat redstonekort i integrationsbordet.",
+      "Driftsättning och laddning",
+      "Placera roboten på en dockningsstation. Stationen länkar roboten, laddar den med MJ och tillhandahåller filter och arbetsregler."
+    ],
+    "buildcraftrobotics/item/redstone_board": [
+      "En maskin kan röra sig, men utan ett kort vet den inte om den ska bära, plantera, bryta eller fly från närmaste ko.",
+      "Redstonekortet lagrar yrkesprogrammet som installeras i en robot.",
+      "<bold>Tips:</bold> Programmera bara de yrken som behövs och märk korten innan de läggs i ett gemensamt förråd.",
+      "Programmering",
+      "Ett tomt kort programmeras i programmeringsbordet med laserenergi.",
+      "Installation",
+      "Det programmerade kortet installeras i en tom robot med integrationsbordet och bestämmer robotens uppgifter."
+    ],
+    "buildcraftrobotics/item/robot_station": [
+      "Även den mest självständiga roboten behöver en plats att laddas, sova och få veta vad den inte ska plocka upp.",
+      "Dockningsstationen är ett rörtillbehör som länkar, laddar och styr robotar.",
+      "<bold>Tips:</bold> Ge varje station en tydlig roll och använd filter eller kartplatser så att överlappande nät inte delar fel robotar.",
+      "Placering",
+      "Placera stationen på ett rör och sätt en robot på den för att länka roboten till stationen.",
+      "Grindstyrning",
+      "Stationen överför MJ, ger en sovplats och fungerar som lastnings- eller lossningspunkt beroende på intilliggande förråd och grindåtgärder."
+    ],
+    "buildcraftrobotics/block/zone_planner": [
+      "En robot som får arbeta överallt hittar förr eller senare en plats där den inte borde arbeta.",
+      "Zonplaneraren målar detaljerade robotzoner i flera lager på kartplatser.",
+      "<bold>Tips:</bold> Rita en liten testzon och kontrollera höjdlagren innan den används av destruktiva robotyrken.",
+      "Rita en zon",
+      "Sätt in en kartplats och använd redigeringsvyn för att måla tillåtna eller definierade områden lager för lager.",
+      "Använda zonen",
+      "Zonen kan representera oregelbundna former som vanliga landmärken inte kan beskriva."
+    ],
+    "buildcraftrobotics/block/requester": [
+      "Ett förråd är mer användbart när det kan beställa saknat lager innan någon upptäcker den tomma hyllan.",
+      "Beställaren upprätthåller konfigurerade föremålsmängder och visar de saknade mängderna för leveransrobotar.",
+      "<bold>Tips:</bold> Börja med små målkvantiteter och kontrollera leveransvägen innan dyra föremål beställs automatiskt.",
+      "Konfigurera beställningar",
+      "Konfigurera önskade föremål och målantal i beställaren. Den jämför dem med det anslutna förrådet.",
+      "Redstoneutmatning",
+      "När antal saknas skapas beställningar som leveransrobotar kan hämta från stationer som erbjuder matchande föremål."
+    ],
+    "buildcraftrobotics/robot/picker": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Plockarrobot samlar lösa föremål i arbetszonen, tillämpar stationens föremålsfilter och återvänder för att lossa dem.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv samlar lösa föremål i arbetszonen, tillämpar stationens föremålsfilter och återvänder för att lossa dem. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/carrier": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Bärarrobot lastar matchande föremål från en tillhandahållande station och transporterar dem till en station som kan ta emot dem.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv lastar matchande föremål från en tillhandahållande station och transporterar dem till en station som kan ta emot dem. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/fluid_carrier": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Tankrobot flyttar vätskor mellan stationer och tankar enligt stationernas vätskefilter.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv flyttar vätskor mellan stationer och tankar enligt stationernas vätskefilter. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/lumberjack": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Skogshuggarrobot hämtar en lämplig yxa och fäller sammanhängande stockar i träd inom arbetszonen.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hämtar en lämplig yxa och fäller sammanhängande stockar i träd inom arbetszonen. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/harvester": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Skördarrobot hittar fullvuxna grödor, skördar dem och lämnar produkterna vid en station.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hittar fullvuxna grödor, skördar dem och lämnar produkterna vid en station. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/miner": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Gruvarrobot hämtar en hacka och bryter nåbara malmblock inom arbetszonen.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hämtar en hacka och bryter nåbara malmblock inom arbetszonen. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/planter": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Planteringsrobot lastar matchande frön och planterar dem på giltig jord i arbetszonen.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv lastar matchande frön och planterar dem på giltig jord i arbetszonen. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/farmer": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Jordbruksrobot hämtar en hacka och bearbetar lämplig jord eller gräs för plantering.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hämtar en hacka och bearbetar lämplig jord eller gräs för plantering. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/leave_cutter": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Lövklipparrobot hämtar ett lämpligt verktyg och tar bort lövblock i arbetszonen.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hämtar ett lämpligt verktyg och tar bort lövblock i arbetszonen. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/butcher": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Slaktarrobot hämtar ett svärd och jagar tillåtna passiva djur men undviker skyddade tama djur.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hämtar ett svärd och jagar tillåtna passiva djur men undviker skyddade tama djur. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/shovelman": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Grävarrobot hämtar en spade och bryter block som lämpar sig för spade inom arbetszonen.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hämtar en spade och bryter block som lämpar sig för spade inom arbetszonen. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/pump": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Pumprobot tömmer matchande vätskeblock i världen till sin interna tank och återvänder för lossning.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv tömmer matchande vätskeblock i världen till sin interna tank och återvänder för lossning. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/delivery": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Leveransrobot uppfyller föremålsbeställningar från beställare och stationsåtgärder.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv uppfyller föremålsbeställningar från beställare och stationsåtgärder. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/knight": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Riddarrobot hämtar ett vapen och angriper fientliga varelser i arbetszonen.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hämtar ett vapen och angriper fientliga varelser i arbetszonen. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/bomber": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Bombrobot lastar TNT, flyger över giltig mark och släpper aktiverade sprängladdningar.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 128,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv lastar TNT, flyger över giltig mark och släpper aktiverade sprängladdningar. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/stripes": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Randig robot lastar användbara föremål och använder samma interaktioner som ett randigt transportrör mot fria målblock.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 64,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv lastar användbara föremål och använder samma interaktioner som ett randigt transportrör mot fria målblock. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/robot/builder": [
+      "En specialiserad arbetare är oftast pålitligare än en robot som själv försöker avgöra om dagens prioritet är ett träd, en kista eller en creeper.",
+      "Byggrobot hittar byggare eller byggmarkörer, reserverar uppgifter, hämtar material och utför arbetet.",
+      "<bold>Tips:</bold> Ge roboten en avgränsad arbetszon, rätt stationer och bara de verktyg eller resurser som yrket behöver.",
+      "Yrke",
+      "Yrket programmeras på ett redstonekort för 128,000 MJ och installeras i en tom robot med integrationsbordet.\n\nNär roboten är aktiv hittar byggare eller byggmarkörer, reserverar uppgifter, hämtar material och utför arbetet. Den återvänder till kompatibla dockningsstationer för laddning, lastning eller lossning."
+    ],
+    "buildcraftrobotics/trigger/in_station": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Utlösaren är aktiv medan en robot är dockad vid stationen.",
+      "<bold>Tips:</bold> Använd färgad rörtråd för att hålla robottillstånd åtskilda från föremåls- och vätskeautomation i samma rörnät.",
+      "Utlösarens beteende",
+      "Utlösaren är aktiv medan en robot är dockad vid stationen.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/trigger/sleep": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Utlösaren är aktiv medan den länkade roboten sover och väntar på arbete.",
+      "<bold>Tips:</bold> Använd färgad rörtråd för att hålla robottillstånd åtskilda från föremåls- och vätskeautomation i samma rörnät.",
+      "Utlösarens beteende",
+      "Utlösaren är aktiv medan den länkade roboten sover och väntar på arbete.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/trigger/linked": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Utlösaren är aktiv när stationen har en länkad robot, oavsett om den är dockad.",
+      "<bold>Tips:</bold> Använd färgad rörtråd för att hålla robottillstånd åtskilda från föremåls- och vätskeautomation i samma rörnät.",
+      "Utlösarens beteende",
+      "Utlösaren är aktiv när stationen har en länkad robot, oavsett om den är dockad.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/trigger/reserved": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Utlösaren är aktiv medan stationen eller roboten är reserverad för en operation.",
+      "<bold>Tips:</bold> Använd färgad rörtråd för att hålla robottillstånd åtskilda från föremåls- och vätskeautomation i samma rörnät.",
+      "Utlösarens beteende",
+      "Utlösaren är aktiv medan stationen eller roboten är reserverad för en operation.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/work_filter": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden ställer in föremåls- eller vätskefiltret för robotarbete och stationslastning; lägg till föremål, vätskor eller listor för att begränsa det.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden ställer in föremåls- eller vätskefiltret för robotarbete och stationslastning; lägg till föremål, vätskor eller listor för att begränsa det.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/work_filter_tool": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden begränsar vilka verktyg en robot får hämta för ett verktygsberoende yrke.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden begränsar vilka verktyg en robot får hämta för ett verktygsberoende yrke.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/goto_station": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden beordrar den länkade roboten att återvända till denna dockningsstation när grindvillkoret är aktivt.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden beordrar den länkade roboten att återvända till denna dockningsstation när grindvillkoret är aktivt.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/wakeup": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden väcker en sovande länkad robot så att den söker arbete igen.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden väcker en sovande länkad robot så att den söker arbete igen.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/work_in_area": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden anger en zon från en kartplats som robotens arbetsområde.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden anger en zon från en kartplats som robotens arbetsområde.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/load_unload_area": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden begränsar området där roboten får söka lastnings- och lossningsstationer.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden begränsar området där roboten får söka lastnings- och lossningsstationer.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/accept_fluids": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden låter robotar lossa matchande vätskor till stationen eller anslutna vätskemottagare.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden låter robotar lossa matchande vätskor till stationen eller anslutna vätskemottagare.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/accept_items": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden låter robotar lossa matchande föremål till stationen eller anslutet förråd.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden låter robotar lossa matchande föremål till stationen eller anslutet förråd.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/forbid_robot": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden hindrar robotar från att välja stationen medan åtgärden är aktiv.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden hindrar robotar från att välja stationen medan åtgärden är aktiv.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/force_robot": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden får den länkade roboten att föredra eller återvända till stationen medan åtgärden är aktiv.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden får den länkade roboten att föredra eller återvända till stationen medan åtgärden är aktiv.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/provide_fluids": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden annonserar matchande vätskor vid stationen för robotar som behöver lasta dem.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden annonserar matchande vätskor vid stationen för robotar som behöver lasta dem.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/provide_items": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden annonserar matchande föremål vid stationen för robotar som behöver lasta dem.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden annonserar matchande föremål vid stationen för robotar som behöver lasta dem.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/request_items": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden skapar föremålsbeställningar som leveransrobotar kan uppfylla.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden skapar föremålsbeställningar som leveransrobotar kan uppfylla.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftrobotics/action/provide_machine_request": [
+      "Robotlogistik blir mycket bättre när stationer kan beskriva sitt tillstånd och ge precisa instruktioner.",
+      "Åtgärden visar föremålsbeställningar från en intilliggande kompatibel maskin för leveransrobotar.",
+      "<bold>Tips:</bold> Tillämpa robotåtgärder genom en noggrant filtrerad station eller arbetszon. Breda regler kan påverka fler robotar än avsett när nät överlappar.",
+      "Åtgärdens beteende",
+      "Åtgärden visar föremålsbeställningar från en intilliggande kompatibel maskin för leveransrobotar.\n\nAnvänd satsen på en grind på samma rör som den aktuella dockningsstationen. Parametrar som föremål, vätskor, listor och kartplatser är bara tillgängliga när satsen stöder dem."
+    ],
+    "buildcraftfactory/item/water_gel": [
+      "Att tömma ett hav fungerar, men ibland är det roligare att göra ytan fast.",
+      "Vattengelifieraren omvandlar anslutet källvatten och vattenväxter till tillfällig vattengel.",
+      "<bold>Tips:</bold> Avgränsa området och ordna en säker väg för återvinning innan stora vattenytor gelifieras.",
+      "Använda gelifieraren",
+      "Använd gelifieraren på ett anslutet vattenområde. Den sprider omvandlingen genom giltiga källblock och förbrukar lämpliga vattenväxter där receptet kräver det.",
+      "Återvinna gel",
+      "Vattengelen kan brytas och samlas som gelat vatten. Den tillfälliga ytan gör arbete i eller över vatten enklare."
+    ],
+    "buildcraftfactory/item/gel": [
+      "Det ser ut som vatten, känns betydligt mindre som vatten och beter sig inte längre som vatten.",
+      "Gelat vatten är det fasta material som återvinns från vattengel.",
+      "<bold>Tips:</bold> Samla gelen systematiskt så att inga tillfälliga block lämnas kvar i vattenområdet.",
+      "Framställning",
+      "Bryt vattengel för att återvinna gelat vatten enligt den aktuella gelmekaniken."
+    ],
+    "buildcraftsilicon/block/laser": [
+      "Vissa uppgifter kräver mer precision än ett vanligt arbetsbord eller en ugn kan ge.",
+      "Lasern omvandlar MJ till laserenergi för kompatibla BuildCraft-bord i närheten.",
+      "<bold>Tips:</bold> Ordna kraftförsörjning och fri sikt innan flera lasrar placeras; kontrollera värme och effekt under full belastning.",
+      "Driva borden",
+      "Placera lasern med fri sikt mot ett kompatibelt bord och mata den med MJ. Flera lasrar kan arbeta på samma mål och ökar den tillgängliga laserenergin."
+    ],
+    "buildcraftsilicon/block/assembly_table": [
+      "Vissa uppgifter kräver mer precision än ett vanligt arbetsbord eller en ugn kan ge.",
+      "Monteringsbänken använder laserenergi för att tillverka BuildCraft-komponenter och rörtillbehör.",
+      "<bold>Tips:</bold> Placera maskinen där flera lasrar kan nå den och prova receptet med en liten sats först.",
+      "Montering",
+      "Lägg ingredienserna i bänken, välj ett eller flera tillgängliga recept och tillför laserenergi. Färdiga produkter placeras i utgången."
+    ],
+    "buildcraftsilicon/block/charging_table": [
+      "Vissa uppgifter kräver mer precision än ett vanligt arbetsbord eller en ugn kan ge.",
+      "Laddningsbordet använder laserenergi för att ladda föremål som lagrar Forge Energy.",
+      "<bold>Tips:</bold> Placera maskinen där flera lasrar kan nå den och prova receptet med en liten sats först.",
+      "Laddning",
+      "Placera ett kompatibelt energiföremål i laddningsplatsen. Lasrarna omvandlar sin energi till föremålets Forge Energy tills det är fullt eller tas bort."
+    ],
+    "buildcraftsilicon/block/integration_table": [
+      "Vissa uppgifter kräver mer precision än ett vanligt arbetsbord eller en ugn kan ge.",
+      "Integrationsbordet installerar kompatibla uppgraderingar eller komponenter i ett målföremål med laserenergi.",
+      "<bold>Tips:</bold> Placera maskinen där flera lasrar kan nå den och prova receptet med en liten sats först.",
+      "Integrering",
+      "Placera målföremålet och den kompatibla komponenten i rätt platser. När laserenergin räcker skapas den integrerade varianten, exempelvis en robot med programmerat kort."
+    ],
+    "buildcraftsilicon/block/advanced_crafting_table": [
+      "Vissa uppgifter kräver mer precision än ett vanligt arbetsbord eller en ugn kan ge.",
+      "Det avancerade arbetsbordet upprepar automatiskt ett konfigurerat tillverkningsrecept med levererade material och MJ.",
+      "<bold>Tips:</bold> Buffra ingredienser och resultat så att ett fullt mål eller en saknad komponent inte stoppar hela linjen.",
+      "Automatisk tillverkning",
+      "Ställ in ett giltigt recept i fantomrutnätet och mata in ingredienser. Bordet drar resurser, förbrukar MJ och placerar resultatet i sin utgång."
+    ],
+    "buildcraftsilicon/block/programming_table": [
+      "Vissa uppgifter kräver mer precision än ett vanligt arbetsbord eller en ugn kan ge.",
+      "Programmeringsbordet skriver ett valt robotyrke till ett tomt redstonekort med laserenergi.",
+      "<bold>Tips:</bold> Placera maskinen där flera lasrar kan nå den och prova receptet med en liten sats först.",
+      "Programmera kort",
+      "Sätt in ett tomt redstonekort, välj önskat yrke och tillför laserenergi. Kostnaden varierar mellan yrken och det färdiga kortet installeras i en robot."
+    ],
+    "buildcraftsilicon/item/redstone_crystal": [
+      "Vanligt redstonedamm är energiskt, men en kristall passar bättre i precisionsmaskiner.",
+      "Redstonekristallen är en komponent från monteringsbänken som används i avancerade BuildCraft-recept.",
+      "<bold>Tips:</bold> Kontrollera både recept och användningar innan många kristaller tillverkas.",
+      "Tillverkning",
+      "Tillverka kristallen i monteringsbänken med de angivna ingredienserna och laserenergin. Den används vidare i maskiner, grindar och andra kiselkomponenter."
+    ],
+    "buildcraftsilicon/item/gate_copier": [
+      "Ett komplicerat grindprogram är lättare att kopiera än att minnas perfekt sexton gånger.",
+      "Grindkopieraren lagrar en grindkonfiguration och applicerar den på kompatibla grindar.",
+      "<bold>Tips:</bold> Prova kopian på en reservgrind och kontrollera nivå, utökningar och parameterplatser.",
+      "Kopiera och klistra in",
+      "Använd kopieraren på källgrinden för att lagra logiken och därefter på målgrinden för att klistra in den. Varningar visas om målet har färre platser eller saknar utlösare, åtgärder eller parametrar."
+    ],
+    "buildcraftsilicon/item/plug_timer": [
+      "Ett kompakt rörnät har sällan plats för ett torn av repeaters och klockor.",
+      "Timern är ett rörtillbehör som ger periodiska grindutlösare på 5, 10 och 15 sekunder.",
+      "<bold>Tips:</bold> Använd separata trådfärger om flera timerperioder styr samma nät.",
+      "Timerutlösare",
+      "Placera timern på ett rör med en grind. Grinden får tillgång till tre timerutlösare som pulserar med sina fasta intervall."
+    ],
+    "buildcraftsilicon/item/chipset_red": [
+      "En exakt logikkrets är lättare att montera när redstonen hålls i en noggrant tillverkad komponent.",
+      "Rött chipset är den grundläggande redstonelogikkomponenten för grindar och kiselrecept.",
+      "<bold>Tips:</bold> Kontrollera både recept och användningar innan komponenten massproduceras.",
+      "Montering",
+      "Tillverka chipsetet i monteringsbänken med laserenergi. Dess exakta användningar visas i receptvyn och kan omfatta grindar, utökningar, robotikdelar och lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_iron": [
+      "En exakt logikkrets är lättare att montera när redstonen hålls i en noggrant tillverkad komponent.",
+      "Järnchipset är en järnkomponent för starkare grindar och maskiner.",
+      "<bold>Tips:</bold> Kontrollera både recept och användningar innan komponenten massproduceras.",
+      "Montering",
+      "Tillverka chipsetet i monteringsbänken med laserenergi. Dess exakta användningar visas i receptvyn och kan omfatta grindar, utökningar, robotikdelar och lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_gold": [
+      "En exakt logikkrets är lättare att montera när redstonen hålls i en noggrant tillverkad komponent.",
+      "Guldchipset är en guldkomponent för grindar och maskinrecept med hög kapacitet.",
+      "<bold>Tips:</bold> Kontrollera både recept och användningar innan komponenten massproduceras.",
+      "Montering",
+      "Tillverka chipsetet i monteringsbänken med laserenergi. Dess exakta användningar visas i receptvyn och kan omfatta grindar, utökningar, robotikdelar och lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_quartz": [
+      "En exakt logikkrets är lättare att montera när redstonen hålls i en noggrant tillverkad komponent.",
+      "Kvartschipset är en kvartskomponent för parameter- och tidsinriktade recept.",
+      "<bold>Tips:</bold> Kontrollera både recept och användningar innan komponenten massproduceras.",
+      "Montering",
+      "Tillverka chipsetet i monteringsbänken med laserenergi. Dess exakta användningar visas i receptvyn och kan omfatta grindar, utökningar, robotikdelar och lasermaskiner."
+    ],
+    "buildcraftsilicon/item/chipset_diamond": [
+      "En exakt logikkrets är lättare att montera när redstonen hålls i en noggrant tillverkad komponent.",
+      "Diamantchipset är det högsta standardchipsetet för avancerade grindutökningar och precisionsmaskiner.",
+      "<bold>Tips:</bold> Kontrollera både recept och användningar innan komponenten massproduceras.",
+      "Montering",
+      "Tillverka chipsetet i monteringsbänken med laserenergi. Dess exakta användningar visas i receptvyn och kan omfatta grindar, utökningar, robotikdelar och lasermaskiner."
+    ],
+    "buildcraftsilicon/trigger/timer_short": [
+      "En pålitlig klocka är ofta mer användbar än en komplicerad.",
+      "Utlösaren ger en puls var 5:e sekund medan en timer sitter på röret.",
+      "<bold>Tips:</bold> Anslut först pulsen till en lampa och kontrollera intervallet innan den styr en viktig maskin.",
+      "Timerpuls",
+      "När en timer är ansluten aktiveras utlösaren kort en gång var 5:e sekund."
+    ],
+    "buildcraftsilicon/trigger/timer_medium": [
+      "En pålitlig klocka är ofta mer användbar än en komplicerad.",
+      "Utlösaren ger en puls var 10:e sekund medan en timer sitter på röret.",
+      "<bold>Tips:</bold> Anslut först pulsen till en lampa och kontrollera intervallet innan den styr en viktig maskin.",
+      "Timerpuls",
+      "När en timer är ansluten aktiveras utlösaren kort en gång var 10:e sekund."
+    ],
+    "buildcraftsilicon/trigger/timer_long": [
+      "En pålitlig klocka är ofta mer användbar än en komplicerad.",
+      "Utlösaren ger en puls var 15:e sekund medan en timer sitter på röret.",
+      "<bold>Tips:</bold> Anslut först pulsen till en lampa och kontrollera intervallet innan den styr en viktig maskin.",
+      "Timerpuls",
+      "När en timer är ansluten aktiveras utlösaren kort en gång var 15:e sekund."
+    ],
+    "buildcrafttransport/pipe/wood_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av trä drar ut MJ från kompatibla intilliggande producenter och matar in den i kinesisnätet.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Det är ett utvinningsrör och ska placeras direkt mot kraftkällan. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/cobblestone_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av kullersten är ett enkelt kinesisrör med låg kapacitet.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Det ansluter enligt materialreglerna och passar små kraftnät. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/stone_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av sten är ett allmänt kinesisrör med låg kapacitet.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Det passar små nät och kan hållas åtskilt från kullerstensfamiljen. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/sandstone_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av sandsten transporterar MJ mellan rör utan att ansluta direkt till intilliggande maskiner.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Använd det nära täta maskinväggar för att undvika oavsiktlig kraftmatning. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/quartz_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av kvarts är ett kinesisrör med medelhög kapacitet som är separerat från sten- och kullerstensfamiljerna.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Det passar tydliga huvudlinjer med måttlig kraft. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/gold_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av guld är ett kinesisrör med hög kapacitet.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Det passar huvudledningar som samlar kraft från flera källor. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/iron_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av järn är en konfigurerbar effektbegränsare.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Ställ in gränsen med rörets gränssnitt eller grindåtgärder så att känsliga grenar inte övermatas. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/diamond_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av diamant är en konfigurerbar effektbegränsare med mycket hög kapacitet.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Det är avsett för kraftiga huvudnät och stora, styrda utgångar. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_power": [
+      "Kraft är bara användbar när den når maskinen som faktiskt skulle ta emot den.",
+      "Kinesisröret av trä och diamant är ett träbaserat utvinningsrör med hög kapacitet.",
+      "<bold>Tips:</bold> Välj rörnivå efter både kapacitet och nätets layout. Ett enda lågkapacitetssegment kan begränsa hela kraftlinjen.",
+      "Kinesisrörens mekanik",
+      "Placera det direkt mot en stark kraftproducent och kontrollera att nätet kan ta emot hela flödet. Kinesisrör överför MJ mellan anslutna sidor och buffrar kraft enligt sin nivå. Överskriden kapacitet eller en blockerad mottagare kan begränsa flödet."
+    ],
+    "buildcrafttransport/item/waterproof": [
+      "Ett trärör är utmärkt för föremål men betydligt sämre på att hålla vatten inne.",
+      "Rörtätning är en tillverkningskomponent som omvandlar transportmaterial till delar för vätskerör.",
+      "<bold>Tips:</bold> Tillverka tätning i omgångar när ett helt vätskenät planeras, men kontrollera varje recept eftersom olika rör kan kräva olika basdelar.",
+      "Tillverkning av vätskerör",
+      "Kombinera rörtätningen med rätt transportkomponent enligt receptet för att skapa motsvarande vätskerör eller vätskerörsdel."
+    ],
+    "buildcrafttransport/block/filtered_buffer": [
+      "En buffert är mest användbar när den vet vilka föremål som faktiskt är välkomna.",
+      "Den filtrerade bufferten är ett förråd med nio riktiga platser som styrs av motsvarande fantomfilter.",
+      "<bold>Tips:</bold> Ställ in filtren innan föremålsrör ansluts och lämna en tydlig väg för material som inte matchar.",
+      "Filtrering",
+      "Varje fantomplats anger vilket föremål den motsvarande riktiga platsen får ta emot. Föremål kan matas in och tas ut av rör eller andra förrådshanterare enligt sidreglerna."
+    ],
+    "buildcraftenergy/item/oil": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Olja är det naturligt genererade startmaterialet för BuildCrafts bränsleprocess.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Samla olja",
+      "Olja samlas från oljekällor och kan brännas direkt som ett smutsigt lågprestandabränsle eller raffineras.",
+      "Användning och raffinering",
+      "Olja: sval, het eller brännande beroende på värmeväxling."
+    ],
+    "buildcraftenergy/item/oil_residue": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Rester är den tunga biprodukten från smutsiga bränslen och flera heta destillationsvägar.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Produktion",
+      "Rester måste tömmas från förbränningsmotorns resttank för att smutsiga bränslen ska fortsätta brinna.",
+      "Temperatur",
+      "Rester: temperaturen följer processen som skapade den."
+    ],
+    "buildcraftenergy/item/oil_heavy": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Tung olja är ett smutsigt mellanbränsle från destillation av sval olja.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Bränsle",
+      "Tung olja kan användas i en förbränningsmotor men skapar rester och kan raffineras vidare.",
+      "Raffinering",
+      "Tung olja: kan förekomma i flera temperaturtillstånd."
+    ],
+    "buildcraftenergy/item/oil_dense": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Tät olja är ett smutsigt mellanbränsle från het olja eller het destillerad olja.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Bränsle",
+      "Tät olja brinner länge men skapar rester och används som råvara för tätare bränsle.",
+      "Raffinering",
+      "Tät olja: kan förekomma i flera temperaturtillstånd."
+    ],
+    "buildcraftenergy/item/oil_distilled": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Destillerad olja är ett renare mellanmaterial som innehåller gasformiga, lätta och täta bränslefraktioner.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Bränsle",
+      "Destillerad olja kan brännas eller destilleras vidare utan samma mängd smutsiga restprodukter.",
+      "Raffinering",
+      "Destillerad olja: kan förekomma i flera temperaturtillstånd."
+    ],
+    "buildcraftenergy/item/fuel_gaseous": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Gasformigt bränsle är det raffinerade bränslet med högst uteffekt och ger 8 MJ/t utan rester.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Produktion",
+      "Gasformigt bränsle är rent och lämpar sig för korta, kraftiga belastningar.",
+      "Kraft",
+      "Gasformigt bränsle: temperaturen påverkar hur det framställs och leds vidare."
+    ],
+    "buildcraftenergy/item/fuel_light": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Lätt bränsle är ett rent raffinerat bränsle som ger 6 MJ/t i en förbränningsmotor.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Produktion",
+      "Lätt bränsle ger en balanserad kombination av effekt och brinntid utan rester.",
+      "Kraft",
+      "Lätt bränsle: temperaturen påverkar raffineringsvägen."
+    ],
+    "buildcraftenergy/item/fuel_dense": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Tätt bränsle är ett rent raffinerat bränsle som ger 4 MJ/t med lång brinntid.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Produktion",
+      "Tätt bränsle prioriterar uthållighet framför maximal uteffekt och bildar inga rester.",
+      "Kraft",
+      "Tätt bränsle: temperaturen påverkar raffineringsvägen."
+    ],
+    "buildcraftenergy/item/fuel_mixed_light": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Lätt blandbränsle är ett rent mellanmaterial och ett användbart bränsle på 3 MJ/t.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Produktion",
+      "Lätt blandbränsle kan brännas direkt eller destilleras för att skilja de ingående fraktionerna.",
+      "Raffinering",
+      "Lätt blandbränsle: temperaturen styr vilket separationsrecept som är tillgängligt."
+    ],
+    "buildcraftenergy/item/fuel_mixed_heavy": [
+      "Raffinering blir enklare när varje vätska lagras och leds som en tydligt märkt produkt.",
+      "Tungt blandbränsle är ett rent mellanmaterial och ett användbart bränsle på 5 MJ/t.",
+      "<bold>Tips:</bold> Använd separata, märkta tankar och kontrollera temperatur samt produktutgångar innan nästa raffineringssteg startas.",
+      "Produktion",
+      "Tungt blandbränsle kan brännas direkt eller separeras så att fraktionernas olika egenskaper utnyttjas bättre.",
+      "Raffinering",
+      "Tungt blandbränsle: temperaturen styr vilket separationsrecept som är tillgängligt."
+    ],
+    "buildcraftcompat/pipe/propolis_item": [
+      "Att sortera bin enbart efter färg blir aldrig tillräckligt exakt för en seriös bigård.",
+      "Biodlarröret är ett kompatibilitetsrör för Forestry som sorterar genetiska föremål med ett separat filter för varje sida.",
+      "<bold>Tips:</bold> Prova filtret med ett fåtal bin och produkter innan värdefulla avelslinjer ansluts.",
+      "Genetiska filter",
+      "Öppna rörets gränssnitt och ställ in genetiska eller biodlingsrelaterade villkor för varje färgkodad sida."
+    ]
+  }
+}
