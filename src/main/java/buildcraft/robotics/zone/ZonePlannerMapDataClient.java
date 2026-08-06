@@ -27,6 +27,11 @@ public class ZonePlannerMapDataClient extends ZonePlannerMapData {
     }
 
 
+    public boolean isChunkAvailable(ZonePlannerMapChunkKey key) {
+        ZonePlannerMapChunk chunk = data.getIfPresent(key);
+        return chunk != null && chunk.isAvailable();
+    }
+
     public void clearCache() {
         pending.clear();
         data.invalidateAll();

@@ -6,7 +6,9 @@
 
 package buildcraft.builders.snapshot;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.zip.GZIPInputStream;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
@@ -15,6 +17,8 @@ import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.handler.codec.DecoderException;
 import io.netty.handler.codec.EncoderException;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,6 +27,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class MessageSnapshotResponse {
     private static final int MAX_COMPRESSED_SNAPSHOT_BYTES = 8 * 1024 * 1024;
+    private static final long MAX_UNCOMPRESSED_SNAPSHOT_BYTES = 64L * 1024L * 1024L;
 
     private Snapshot snapshot;
 
@@ -62,11 +67,17 @@ public class MessageSnapshotResponse {
             throw new DecoderException("Invalid BuildCraft snapshot payload size: " + readable);
         }
         try {
-//            snapshot = Snapshot.readFromNBT(NbtSquisher.expand(buf.readBytes(buf.readInt()).array()));
-//            snapshot = Snapshot.readFromNBT(CompressedStreamTools.read(new ByteBufInputStream(buf), NBTSizeTracker.INFINITE));
-            snapshot = Snapshot.readFromNBT(NbtIo.readCompressed(new ByteBufInputStream(buf)));
+            snapshot = Snapshot.readFromNBT(readCompressedLimited(buf));
         } catch (IOException | RuntimeException e) {
             throw new DecoderException("Failed to decode BuildCraft snapshot", e);
+        }
+    }
+
+
+    private static CompoundTag readCompressedLimited(FriendlyByteBuf buf) throws IOException {
+        ByteBufInputStream byteStream = new ByteBufInputStream(buf);
+        try (DataInputStream input = new DataInputStream(new GZIPInputStream(byteStream))) {
+            return NbtIo.read(input, new NbtAccounter(MAX_UNCOMPRESSED_SNAPSHOT_BYTES));
         }
     }
 

@@ -13,6 +13,9 @@ public class ZonePlannerMapDataServer extends ZonePlannerMapData {
 
     @Override
     public ZonePlannerMapChunk loadChunk(Level world, ZonePlannerMapChunkKey key) {
+        if (world.getChunkSource().getChunkNow(key.chunkPos.x, key.chunkPos.z) == null) {
+            return null;
+        }
         return new ZonePlannerMapChunk(world, key);
     }
 }

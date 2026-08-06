@@ -58,14 +58,16 @@ public abstract class BCLibProxy {
             MessageObjectCacheRequest.class,
             MessageObjectCacheRequest.HANDLER,
             MessageObjectCacheRequest::toBytes,
-            MessageObjectCacheRequest::new
+            MessageObjectCacheRequest::new,
+            Dist.DEDICATED_SERVER
         );
         MessageManager.registerMessageClass(
             BCModules.LIB,
             MessageObjectCacheResponse.class,
             MessageObjectCacheResponse.HANDLER,
             MessageObjectCacheResponse::toBytes,
-            MessageObjectCacheResponse::new
+            MessageObjectCacheResponse::new,
+            Dist.CLIENT
         );
         MessageManager.registerMessageClass(
             BCModules.LIB,

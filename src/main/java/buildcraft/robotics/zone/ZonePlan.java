@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import com.google.common.collect.ImmutableList;
 
@@ -80,6 +81,16 @@ public class ZonePlan implements IZone {
             }
         });
         return builder.build();
+    }
+
+    public ZonePlan copyChunksMatching(Predicate<ChunkPos> predicate) {
+        ZonePlan filtered = new ZonePlan();
+        chunkMapping.forEach((chunkPos, zoneChunk) -> {
+            if (predicate.test(chunkPos)) {
+                filtered.chunkMapping.put(chunkPos, new ZoneChunk(zoneChunk));
+            }
+        });
+        return filtered;
     }
 
     public ZonePlan getWithOffset(int offsetX, int offsetY) {

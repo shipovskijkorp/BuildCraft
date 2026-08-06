@@ -28,6 +28,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -158,9 +159,8 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
         }
         IZone zone = map.getZone(stack);
         if (zone instanceof ZonePlan plan) {
-            layers[currentSelectedArea] = new ZonePlan(plan);
-            setChanged();
-            sendNetworkUpdate(NET_RENDER_DATA);
+            // Imported plans obey the same loaded-chunk boundary as plans drawn in the GUI.
+            setArea(currentSelectedArea, plan);
         }
     }
 
@@ -179,7 +179,13 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
         if (index < 0 || index >= layers.length) {
             return;
         }
-        layers[index] = area == null ? new ZonePlan() : new ZonePlan(area);
+        ZonePlan requested = area == null ? new ZonePlan() : area;
+        if (level instanceof ServerLevel serverLevel) {
+            layers[index] = requested.copyChunksMatching(chunkPos ->
+                    serverLevel.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z) != null);
+        } else {
+            layers[index] = new ZonePlan(requested);
+        }
         setChanged();
         sendNetworkUpdate(NET_RENDER_DATA);
     }

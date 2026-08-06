@@ -22,7 +22,7 @@ import net.minecraftforge.network.NetworkEvent;
  */
 public class MessageObjectCacheRequest {
 
-    private static final int MAX_IDS = 4096;
+    static final int MAX_IDS = 4096;
 
     private int cacheId;
 

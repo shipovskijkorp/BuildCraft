@@ -13,62 +13,77 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MaterialColor;
 
 public class ZonePlannerMapChunk {
     private final MapColourData[][] data = new MapColourData[16][16];
+    private final boolean available;
+
+    /** Creates a negative-cache entry for a chunk that is not currently loaded. */
+    public ZonePlannerMapChunk() {
+        available = false;
+    }
 
     public ZonePlannerMapChunk(Level world, ZonePlannerMapChunkKey key) {
+        LevelChunk chunk = world.getChunkSource().getChunkNow(key.chunkPos.x, key.chunkPos.z);
+        available = chunk != null;
+        if (chunk == null) {
+            return;
+        }
+
         int baseX = key.chunkPos.x << 4;
         int baseZ = key.chunkPos.z << 4;
+        SurfaceSample[][] samples = new SurfaceSample[16][16];
 
-        // Vanilla maps shade each pixel against the previous pixel in the same column. Keep one extra
-        // surface sample north of the chunk so the first row does not produce a visible chunk seam.
-        SurfaceSample[][] samples = new SurfaceSample[16][17];
-        for (int x = 0; x < 16; x++) {
-            int worldX = baseX + x;
-            for (int z = -1; z < 16; z++) {
-                samples[x][z + 1] = sampleSurface(world, worldX, baseZ + z);
+        // Read only from the already-loaded target chunk. In particular, do not sample z = -1 from the
+        // northern neighbour, because that seemingly harmless map shading lookup can load or generate it.
+        for (int localX = 0; localX < 16; localX++) {
+            for (int localZ = 0; localZ < 16; localZ++) {
+                samples[localX][localZ] = sampleSurface(world, chunk, localX, localZ, baseX, baseZ);
             }
         }
 
-        for (int x = 0; x < 16; x++) {
-            int worldX = baseX + x;
-            for (int z = 0; z < 16; z++) {
-                SurfaceSample current = samples[x][z + 1];
+        for (int localX = 0; localX < 16; localX++) {
+            int worldX = baseX + localX;
+            for (int localZ = 0; localZ < 16; localZ++) {
+                SurfaceSample current = samples[localX][localZ];
                 if (current == null) {
                     continue;
                 }
 
-                SurfaceSample previous = samples[x][z];
-                int worldZ = baseZ + z;
+                SurfaceSample previous = localZ == 0 ? null : samples[localX][localZ - 1];
+                int worldZ = baseZ + localZ;
                 MaterialColor.Brightness brightness = getVanillaBrightness(current, previous, worldX, worldZ);
                 int colour = current.mapColor.calculateRGBColor(brightness);
-                data[x][z] = new MapColourData(current.posY, toGuiArgb(colour));
+                data[localX][localZ] = new MapColourData(current.posY, toGuiArgb(colour));
             }
         }
     }
 
     @Nullable
-    private static SurfaceSample sampleSurface(Level world, int worldX, int worldZ) {
+    private static SurfaceSample sampleSurface(Level world, LevelChunk chunk, int localX, int localZ,
+            int baseX, int baseZ) {
         int maxY = world.getMaxBuildHeight() - 1;
         int minY = world.getMinBuildHeight();
         int topY = Math.min(maxY, Math.max(minY,
-                world.getHeight(Heightmap.Types.WORLD_SURFACE, worldX, worldZ) - 1));
+                chunk.getHeight(Heightmap.Types.WORLD_SURFACE, localX, localZ) - 1));
+        int worldX = baseX + localX;
+        int worldZ = baseZ + localZ;
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(worldX, topY, worldZ);
 
         for (int y = topY; y >= minY; y--) {
             pos.setY(y);
-            BlockState state = getMapState(world, pos, world.getBlockState(pos));
+            BlockState state = getMapState(world, pos, chunk.getBlockState(pos));
             MaterialColor mapColor = state.getMapColor(world, pos);
             if (mapColor == null || mapColor == MaterialColor.NONE) {
                 continue;
             }
 
             int waterDepth = mapColor == MaterialColor.WATER
-                    ? countFluidDepth(world, worldX, y, worldZ, minY)
+                    ? countFluidDepth(chunk, worldX, y, worldZ, minY)
                     : 0;
             return new SurfaceSample(y, mapColor, waterDepth);
         }
@@ -87,12 +102,12 @@ public class ZonePlannerMapChunk {
         return state;
     }
 
-    private static int countFluidDepth(Level world, int worldX, int topY, int worldZ, int minY) {
+    private static int countFluidDepth(LevelChunk chunk, int worldX, int topY, int worldZ, int minY) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(worldX, topY, worldZ);
         int depth = 0;
         for (int y = topY; y >= minY; y--) {
             pos.setY(y);
-            if (world.getFluidState(pos).isEmpty()) {
+            if (chunk.getFluidState(pos).isEmpty()) {
                 break;
             }
             depth++;
@@ -126,6 +141,10 @@ public class ZonePlannerMapChunk {
     }
 
     public ZonePlannerMapChunk(FriendlyByteBuf buffer) {
+        available = buffer.readBoolean();
+        if (!available) {
+            return;
+        }
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 if (buffer.readBoolean()) {
@@ -138,6 +157,10 @@ public class ZonePlannerMapChunk {
     }
 
     public void write(FriendlyByteBuf buffer) {
+        buffer.writeBoolean(available);
+        if (!available) {
+            return;
+        }
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 MapColourData colour = data[x][z];
@@ -148,6 +171,10 @@ public class ZonePlannerMapChunk {
                 }
             }
         }
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 
     public int getColour(int x, int z) {

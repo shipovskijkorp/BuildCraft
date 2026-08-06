@@ -408,14 +408,30 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
         selectionEndXZ = end;
     }
 
-    private static void applySelection(ZonePlan area, BlockPos start, BlockPos end, boolean value) {
+    private void applySelection(ZonePlan area, BlockPos start, BlockPos end, boolean value) {
         int minX = Math.min(start.getX(), end.getX());
         int maxX = Math.max(start.getX(), end.getX());
         int minZ = Math.min(start.getZ(), end.getZ());
         int maxZ = Math.max(start.getZ(), end.getZ());
-        for (int x = minX; x <= maxX; x++) {
-            for (int z = minZ; z <= maxZ; z++) {
-                area.set(x, z, value);
+        int dimension = getDimensionId();
+        int mapLevel = getMapLevel();
+
+        for (int chunkX = minX >> 4; chunkX <= maxX >> 4; chunkX++) {
+            for (int chunkZ = minZ >> 4; chunkZ <= maxZ >> 4; chunkZ++) {
+                if (value && !ZonePlannerMapDataClient.INSTANCE.isChunkAvailable(
+                        new ZonePlannerMapChunkKey(new ChunkPos(chunkX, chunkZ), dimension, mapLevel))) {
+                    continue;
+                }
+
+                int chunkMinX = Math.max(minX, chunkX << 4);
+                int chunkMaxX = Math.min(maxX, (chunkX << 4) + 15);
+                int chunkMinZ = Math.max(minZ, chunkZ << 4);
+                int chunkMaxZ = Math.min(maxZ, (chunkZ << 4) + 15);
+                for (int x = chunkMinX; x <= chunkMaxX; x++) {
+                    for (int z = chunkMinZ; z <= chunkMaxZ; z++) {
+                        area.set(x, z, value);
+                    }
+                }
             }
         }
     }

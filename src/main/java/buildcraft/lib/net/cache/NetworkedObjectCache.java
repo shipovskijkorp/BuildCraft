@@ -39,6 +39,8 @@ public abstract class NetworkedObjectCache<T> {
      * dynamic-NBT items from growing the server heap forever while still leaving ample time for those requests.
      */
     private static final int MAX_SERVER_ENTRIES = 65_536;
+    private static final int MAX_CLIENT_ENTRIES = 65_536;
+    private static final int MAX_REQUEST_BATCHES_PER_TICK = 4;
 
     static final boolean DEBUG_LOG = BCDebugging.shouldDebugLog("lib.net.cache");
     static final boolean DEBUG_CPLX = BCDebugging.shouldDebugComplex("lib.net.cache");
@@ -62,6 +64,8 @@ public abstract class NetworkedObjectCache<T> {
     private final Int2ObjectMap<Link> clientObjects = new Int2ObjectOpenHashMap<>();
     /** The list of all links that are currently unknown. */
     private final Queue<Link> clientUnknowns = new LinkedList<>();
+    /** Insertion order for bounded eviction of resolved client cache entries. */
+    private final Queue<Integer> clientInsertionOrder = new LinkedList<>();
 
     /** A server view of this cache. Contains methods specific to */
     private final ServerView serverView = new ServerView();
@@ -104,7 +108,7 @@ public abstract class NetworkedObjectCache<T> {
         private ServerView() {}
 
         /** Stores the given object in this cache, returning its ID.
-         * 
+         *
          * @param value The object to store
          * @return The id that maps back to the canonicalised version of the value. */
         public int store(T value) {
@@ -113,7 +117,7 @@ public abstract class NetworkedObjectCache<T> {
 
         /** Gets the ID for the given object, or -1 if this was not stored in the cache. {@link #store(Object)} is
          * preferred to this, as most uses (such as network sending) want the value to be stored and get a valid ID.
-         * 
+         *
          * @param value The value to get an id for
          * @return */
         public int getId(T value) {
@@ -160,13 +164,13 @@ public abstract class NetworkedObjectCache<T> {
     // Abstract overridable methods
 
     /** Writes the specified object out to the buffer.
-     * 
+     *
      * @param obj The object to write.
      * @param buffer The buffer to write into. */
     protected abstract void writeObject(T obj, FriendlyByteBuf buffer);
 
     /** Reads the specified object from the buffer.
-     * 
+     *
      * @param buffer The buffer to read from
      * @return */
     protected abstract T readObject(FriendlyByteBuf buffer) throws IOException;
@@ -179,7 +183,7 @@ public abstract class NetworkedObjectCache<T> {
     // Internal logic
 
     /** Stores the given object in this cache, returning its ID. SERVER SIDE.
-     * 
+     *
      * @param object
      * @return */
     private int serverStore(T object) {
@@ -226,7 +230,7 @@ public abstract class NetworkedObjectCache<T> {
     /** Gets the ID for the given object, or -1 if this was not stored in the cache. SERVER SIDE.
      * {@link #serverStore(Object)} if preferred to this, as most uses (such as network sending) want the value to be
      * stored and get a valid ID.
-     * 
+     *
      * @param object
      * @return */
     private int serverGetId(T object) {
@@ -234,12 +238,23 @@ public abstract class NetworkedObjectCache<T> {
     }
 
     /** Retrieves a link to the specified ID. CLIENT SIDE.
-     * 
+     *
      * @param id
      * @return */
     private Link clientRetrieve(int id) {
+        if (id < 0) {
+            return new Link(id);
+        }
+
         Link current = clientObjects.get(id);
         if (current == null) {
+            evictOldClientEntries();
+            if (clientObjects.size() >= MAX_CLIENT_ENTRIES) {
+                // All retained entries are still awaiting a response. Do not let a hostile or broken server grow
+                // the client heap without bound; this uncached link safely resolves to the default object.
+                return new Link(id);
+            }
+
             if (DEBUG_CPLX) {
                 BCLog.logger.info("[lib.net.cache] The cache " + getNameAndId() + " tried to retrieve #" + id
                     + " for the first time");
@@ -247,8 +262,30 @@ public abstract class NetworkedObjectCache<T> {
             current = new Link(id);
             clientUnknowns.add(current);
             clientObjects.put(id, current);
+            clientInsertionOrder.add(id);
         }
         return current;
+    }
+
+    private void evictOldClientEntries() {
+        int attempts = clientInsertionOrder.size();
+        while (clientObjects.size() >= MAX_CLIENT_ENTRIES && attempts-- > 0) {
+            Integer oldestId = clientInsertionOrder.poll();
+            if (oldestId == null) {
+                return;
+            }
+            Link oldest = clientObjects.get(oldestId.intValue());
+            if (oldest == null) {
+                continue;
+            }
+            if (!oldest.hasBeenReceived()) {
+                // Never evict an unresolved link: another game object may be holding that exact Link instance and
+                // expects the response to update it in place. Rotate it to the back instead.
+                clientInsertionOrder.add(oldestId);
+                continue;
+            }
+            clientObjects.remove(oldestId.intValue());
+        }
     }
 
     /** Used by {@link MessageObjectCacheRequest#HANDLER} to write the actual object out. */
@@ -263,7 +300,7 @@ public abstract class NetworkedObjectCache<T> {
     }
 
     /** Used by {@link MessageObjectCacheResponse#HANDLER} to read an object in.
-     * 
+     *
      * @param id
      * @param buffer
      * @throws IOException */
@@ -289,11 +326,13 @@ public abstract class NetworkedObjectCache<T> {
     }
 
     void onClientWorldTick() {
-        int[] ids = new int[clientUnknowns.size()];
-        for (int i = 0; i < ids.length; i++) {
-            ids[i] = clientUnknowns.remove().id;
-        }
-        if (ids.length > 0) {
+        int batches = 0;
+        while (!clientUnknowns.isEmpty() && batches++ < MAX_REQUEST_BATCHES_PER_TICK) {
+            int count = Math.min(clientUnknowns.size(), MessageObjectCacheRequest.MAX_IDS);
+            int[] ids = new int[count];
+            for (int i = 0; i < count; i++) {
+                ids[i] = clientUnknowns.remove().id;
+            }
             if (DEBUG_CPLX) {
                 BCLog.logger
                     .info("[lib.net.cache] The cache " + getNameAndId() + " requests ID's " + Arrays.toString(ids));
@@ -305,5 +344,6 @@ public abstract class NetworkedObjectCache<T> {
     void onClientJoinServer() {
         clientObjects.clear();
         clientUnknowns.clear();
+        clientInsertionOrder.clear();
     }
 }

@@ -6,7 +6,6 @@
 
 package buildcraft.factory.block;
 
-import buildcraft.api.core.BCLog;
 import buildcraft.factory.tile.TileMiner;
 import buildcraft.factory.tile.TilePump;
 import buildcraft.lib.block.BlockBCBase_Neptune;
@@ -15,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -42,48 +40,51 @@ public class BlockTube extends BlockBCBase_Neptune {
 	public boolean isOcclusionShapeFullBlock(BlockState p_222959_, BlockGetter p_222960_, BlockPos p_222961_) {
 		return false;
 	}
-
     @Override
-	public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest,
-			FluidState fluid) {
-    	BlockPos currentPos = pos;
-    	// noinspection StatementWithEmptyBody
-        while (world.getBlockState(currentPos = currentPos.above()).getBlock() == this) {
+    public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest,
+            FluidState fluid) {
+        BlockPos currentPos = pos.above();
+        while (currentPos.getY() < world.getMaxBuildHeight()
+                && world.getBlockState(currentPos).getBlock() == this) {
+            currentPos = currentPos.above();
         }
         if (!(world.getBlockEntity(currentPos) instanceof TileMiner)) {
             return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
         }
         return false;
-    	
-	}
+    }
 
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter source, BlockPos pos,
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter source, BlockPos pos,
 			CollisionContext context) {
 		return BOUNDING_BOX;
 	}
 
-	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block,
-			BlockPos fromPos, boolean p_60514_) {
-		if(pos.getY() - 1 == fromPos.getY() && BlockUtil.getFluid(block) != Fluids.EMPTY && block != level.getBlockState(fromPos).getBlock()) {
-			BlockPos p = pos.above();
-			while(true) {
-				BlockEntity be = level.getBlockEntity(p);
-				if(be instanceof TilePump pump) {
-					pump.neighbourBlockChanged(level.getBlockState(p), fromPos, true);
-					BCLog.logger.debug("111");
-					break;
-				}
-				if(be instanceof TileMiner ) {
-					break;
-				}
-				p = p.above();
-			}
-		}
-		super.neighborChanged(state, level, pos, block, fromPos, p_60514_);
-	}
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block,
+            BlockPos fromPos, boolean moving) {
+        if (pos.getY() - 1 == fromPos.getY()
+                && BlockUtil.getFluid(block) != Fluids.EMPTY
+                && block != level.getBlockState(fromPos).getBlock()) {
+            BlockPos currentPos = pos.above();
+            while (currentPos.getY() < level.getMaxBuildHeight()) {
+                BlockEntity blockEntity = level.getBlockEntity(currentPos);
+                if (blockEntity instanceof TilePump pump) {
+                    pump.neighbourBlockChanged(level.getBlockState(currentPos), fromPos, true);
+                    break;
+                }
+                if (blockEntity instanceof TileMiner) {
+                    break;
+                }
+                if (level.getBlockState(currentPos).getBlock() != this) {
+                    break;
+                }
+                currentPos = currentPos.above();
+            }
+        }
+        super.neighborChanged(state, level, pos, block, fromPos, moving);
+    }
 
-	
-    
+
+
 }

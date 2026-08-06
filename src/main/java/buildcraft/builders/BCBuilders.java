@@ -1,5 +1,5 @@
 /* Copyright (c) 2016 SpaceToad and the BuildCraft team
- * 
+ *
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.builders;
@@ -50,10 +50,14 @@ public class BCBuilders {
     	BCBuildersRegistries.preInit();
     	BCBuildersGuis.preInit(modEventBus);
     	ModLoadingContext.get().registerConfig(Type.COMMON, BCBuildersConfig.config);
-    	
-        MessageManager.registerMessageClass(BCModules.BUILDERS, MessageSnapshotRequest.class, MessageSnapshotRequest.HANDLER, MessageSnapshotRequest::toBytes, MessageSnapshotRequest::new);
-        MessageManager.registerMessageClass(BCModules.BUILDERS, MessageSnapshotResponse.class, MessageSnapshotResponse.HANDLER, MessageSnapshotResponse::toBytes, MessageSnapshotResponse::new);
-    	
+
+        MessageManager.registerMessageClass(BCModules.BUILDERS, MessageSnapshotRequest.class,
+                MessageSnapshotRequest.HANDLER, MessageSnapshotRequest::toBytes, MessageSnapshotRequest::new,
+                Dist.DEDICATED_SERVER);
+        MessageManager.registerMessageClass(BCModules.BUILDERS, MessageSnapshotResponse.class,
+                MessageSnapshotResponse.HANDLER, MessageSnapshotResponse::toBytes, MessageSnapshotResponse::new,
+                Dist.CLIENT);
+
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(BCBuildersEventDist.class);
         BCBuildersStatements.preInit();
@@ -66,7 +70,7 @@ public class BCBuilders {
     	RulesLoader.loadAll();
     }
 
-    
+
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
@@ -76,7 +80,7 @@ public class BCBuilders {
         	BCBuildersClientGuis.clientInit(event);
         	event.enqueueWork(BCBuildersItems::registerItemProperties);
         }
-        
+
         @SubscribeEvent
         public static void registryRender(EntityRenderersEvent.RegisterRenderers e) {
 
@@ -86,9 +90,9 @@ public class BCBuilders {
         	e.registerBlockEntityRenderer(BCBuildersBlocks.BUILDER_TILE_BC8.get(), RenderBuilder::new);
             e.registerBlockEntityRenderer(BCBuildersBlocks.CONSTRUCTION_MARKER_TILE_BC8.get(), RenderConstructionMarker::new);
         }
-        
+
         @SubscribeEvent
-        public static void registryTexture(TextureStitchEvent.Pre e){ 
+        public static void registryTexture(TextureStitchEvent.Pre e){
         	BCBuildersSprites.onTextureStitchPre(e);
         }
     }

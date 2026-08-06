@@ -116,9 +116,11 @@ public class BCRobotics {
 
         // Keep zone planner network messages available for the partially ported robotics zone code.
         buildcraft.lib.net.MessageManager.registerMessageClass(BCModules.ROBOTICS, MessageZoneMapRequest.class,
-                MessageZoneMapRequest.HANDLER, MessageZoneMapRequest::toBytes, MessageZoneMapRequest::new);
+                MessageZoneMapRequest.HANDLER, MessageZoneMapRequest::toBytes, MessageZoneMapRequest::new,
+                Dist.DEDICATED_SERVER);
         buildcraft.lib.net.MessageManager.registerMessageClass(BCModules.ROBOTICS, MessageZoneMapResponse.class,
-                MessageZoneMapResponse.HANDLER, MessageZoneMapResponse::toBytes, MessageZoneMapResponse::new);
+                MessageZoneMapResponse.HANDLER, MessageZoneMapResponse::toBytes, MessageZoneMapResponse::new,
+                Dist.CLIENT);
 
         RobotManager.registryProvider = SimpleRobotRegistryProvider.INSTANCE;
         MinecraftForge.EVENT_BUS.register(SimpleRobotRegistryProvider.INSTANCE);

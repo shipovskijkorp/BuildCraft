@@ -39,19 +39,19 @@ public class MessageManager {
 
     private static final Map<IBuildCraftMod, PerModHandler> MOD_HANDLERS;
     private static final Map<Class<?>, PerMessageInfo<?>> MESSAGE_HANDLERS = new HashMap<>();
-    public static final String PROTOCOL_VERSION = "BC8.0.x-1.19.2";
+    public static final String PROTOCOL_VERSION = "BC8.0.x-1.19.2-net2";
     private static int id = 34;
 
     static {
         MOD_HANDLERS = new TreeMap<>(MessageManager::compareMods);
     }
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     static class PerModHandler {
         final IBuildCraftMod module;
         final SimpleChannel netWrapper;
@@ -98,7 +98,7 @@ public class MessageManager {
     public static <I> void registerMessageClass(IBuildCraftMod module, Class<I> clazz, BiConsumer<I, FriendlyByteBuf> enCoder, Function<FriendlyByteBuf, I> deCoder, Dist... sides) {
         registerMessageClass(module, clazz, null, enCoder, deCoder, sides);
     }
-    
+
 
     public static <I> void registerMessageClass(IBuildCraftMod module, Class<I> messageClass,
     	BiConsumer<I, Supplier<NetworkEvent.Context>> messageHandler,
@@ -146,7 +146,7 @@ public class MessageManager {
     }
 
     /** Sets the handler for the specified handler.
-     * 
+     *
      * @param side The side that the given handler will receive messages on. */
     public static <I> void setHandler(Class<I> messageClass,
     	BiConsumer<I, Supplier<NetworkEvent.Context>> messageHandler, Dist side) {
@@ -154,7 +154,7 @@ public class MessageManager {
         if (messageInfo == null) {
             throw new IllegalArgumentException("Cannot set handler for unregistered message: " + messageClass);
         }
-        
+
         registerMessageClass(messageInfo.modHandler.module, messageClass, messageHandler, messageInfo.enCoder, messageInfo.deCoder, side);
     }
 
@@ -185,16 +185,32 @@ public class MessageManager {
         }
 
         Class<I> msgClass = info.messageClass;
-        if(info.clientHandler == info.serverHandler) {
-//        	handler.netWrapper.registerMessage(id++, msgClass, info.enCoder, info.deCoder, wrapHandler(info.clientHandler, msgClass, false));
-        	handler.netWrapper.registerMessage(id++, msgClass, info.enCoder, info.deCoder, info.clientHandler);
-        	BCLog.logger.debug("trying to registry message for "+ info.messageClass.getSimpleName());
+        if (cl && sv && info.clientHandler == info.serverHandler) {
+            handler.netWrapper.registerMessage(id++, msgClass, info.enCoder, info.deCoder, info.clientHandler);
+        } else {
+            if (cl) {
+                handler.netWrapper.registerMessage(
+                    id++,
+                    msgClass,
+                    info.enCoder,
+                    info.deCoder,
+                    wrapHandler(info.clientHandler, msgClass, true),
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT)
+                );
+            }
+            if (sv) {
+                handler.netWrapper.registerMessage(
+                    id++,
+                    msgClass,
+                    info.enCoder,
+                    info.deCoder,
+                    wrapHandler(info.serverHandler, msgClass, false),
+                    Optional.of(NetworkDirection.PLAY_TO_SERVER)
+                );
+            }
         }
-        else {
-        	handler.netWrapper.registerMessage(id++, msgClass, info.enCoder, info.deCoder, wrapHandler(info.clientHandler, msgClass, true), Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-        	handler.netWrapper.registerMessage(id++, msgClass, info.enCoder, info.deCoder, wrapHandler(info.serverHandler, msgClass, false), Optional.of(NetworkDirection.PLAY_TO_SERVER));
-        	BCLog.logger.debug("trying to registry message for "+ info.messageClass.getSimpleName());
-        }
+        BCLog.logger.debug("Registered network message {} for client={} server={}",
+            info.messageClass.getSimpleName(), cl, sv);
         if (DEBUG) {
             String sides = cl ? (sv ? "{client, server}" : "{client}") : "{server}";
             BCLog.logger.info("[lib.messages]      " + id + ": " + msgClass + " on sides: " + sides);
@@ -211,7 +227,7 @@ public class MessageManager {
                     BCLog.logger.warn(
                         "[lib.messages] The client " + player.getName() + " (ID = " + player.getGameProfile().getId()
                             + ") sent an invalid message " + messageClass + ", when they should only receive them!");
-                    
+
                 } else {
                     BCLog.logger.error("Received message " + messageClass
                         + " on the client, when it should only be sent by the client and received on the server!");
@@ -219,18 +235,17 @@ public class MessageManager {
                 context.get().setPacketHandled(true);
             };
         } else {
-        	if(isToClient) {
-        		return (message, context) ->{
-	                ServerPlayer player = context.get().getSender();
-	                if (player == null || player.level == null) {
-	                    return;
-	                }
-	                context.get().enqueueWork(() ->
-	                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> messageHandler.accept(message, context)));
-	                context.get().setPacketHandled(true);
-        		};
-        	}
-        	else{
+            if (isToClient) {
+                return (message, context) -> {
+                    context.get().enqueueWork(() ->
+                        DistExecutor.unsafeRunWhenOn(
+                            Dist.CLIENT,
+                            () -> () -> messageHandler.accept(message, context)
+                        )
+                    );
+                    context.get().setPacketHandled(true);
+                };
+            } else {
 	            return (message, context) -> {
 	                ServerPlayer player = context.get().getSender();
 	                if (player == null || player.level == null) {
@@ -276,7 +291,7 @@ public class MessageManager {
     public static void sendToServer(Object message) {
         getSimpleNetworkWrapper(message).sendToServer(message);
     }
-    
+
     public static void sendToAllWatching(Object message, LevelChunk levelChunk) {
     	getSimpleNetworkWrapper(message).send(PacketDistributor.TRACKING_CHUNK.with(() -> levelChunk), message);
     }
