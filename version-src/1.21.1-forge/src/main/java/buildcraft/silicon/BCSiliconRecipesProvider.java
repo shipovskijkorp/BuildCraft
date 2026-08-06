@@ -50,6 +50,10 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
         super(output, registries);
     }
 
+    private static long assemblyCost(long wholeMj) {
+        return wholeMj * MjAPI.MJ / 2L;
+    }
+
 	@Override
 	protected void buildRecipes(RecipeOutput writer) {
 		if (BCSiliconItems.PLUG_GATE_ITEM.isPresent()) {

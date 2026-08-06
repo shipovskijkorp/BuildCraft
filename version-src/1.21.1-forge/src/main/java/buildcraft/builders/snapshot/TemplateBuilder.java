@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.Containers;
 
 public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
     private static final IStackFilter PLACEABLE_BLOCK_FILTER = stack -> stack.getItem() instanceof BlockItem;

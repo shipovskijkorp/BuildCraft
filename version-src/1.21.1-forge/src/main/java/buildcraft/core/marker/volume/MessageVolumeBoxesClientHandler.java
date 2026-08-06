@@ -20,6 +20,8 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
 
 @OnlyIn(Dist.CLIENT)
 public class MessageVolumeBoxesClientHandler {
+    private record DecodedVolumeBox(byte[] payload, VolumeBox box) {}
+
     public static void handle(MessageVolumeBoxes message, Supplier<CustomPayloadEvent.Context> ctx) {
         CustomPayloadEvent.Context context = ctx.get();
         context.enqueueWork(() -> {

@@ -44,6 +44,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
@@ -624,9 +625,8 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		}
 		return voxelShape;
 	}
-
 	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos,
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos,
 			Player player) {
 		TilePipeHolder tile = getPipe(world, pos, false);
 		if (tile == null) {
@@ -653,6 +653,8 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 				PipeDefinition def = pipe.getDefinition();
 				Item item = (Item) PipeApi.pipeRegistry.getItemForPipe(def);
 				if (item != null) {
+					CompoundTag tag = new CompoundTag();
+					tag.putInt("color", pipe.getColour() == null ? 0 : pipe.getColour().getId() + 1);
 					ItemStack stack = new ItemStack(item, 1);
 					ItemStackUtil.setCustomData(stack, tag);
 					return stack;
@@ -1041,11 +1043,24 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 			return InteractionResult.SUCCESS;
 		}
 	}
-
 	@Override
-	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {//TODO return pluggable
-		return new ItemStack(
-				BCTransportItems.PIPE_MAP.get(((TilePipeHolder) level.getBlockEntity(pos)).getPipe().definition).get());
+	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+		if (!(level.getBlockEntity(pos) instanceof TilePipeHolder tile)) {
+			return ItemStack.EMPTY;
+		}
+		Pipe pipe = tile.getPipe();
+		if (pipe == Pipe.EMPTY) {
+			return ItemStack.EMPTY;
+		}
+		Item item = (Item) PipeApi.pipeRegistry.getItemForPipe(pipe.getDefinition());
+		if (item == null) {
+			return ItemStack.EMPTY;
+		}
+		ItemStack stack = new ItemStack(item);
+		CompoundTag tag = new CompoundTag();
+		tag.putInt("color", pipe.getColour() == null ? 0 : pipe.getColour().getId() + 1);
+		ItemStackUtil.setCustomData(stack, tag);
+		return stack;
 	}
 
 	@Override

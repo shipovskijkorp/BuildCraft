@@ -246,7 +246,6 @@ public final class GuiGuide extends Screen {
     @Override
     public void tick() {
         tick++;
-        if (searchBox != null) searchBox.tick();
     }
 
     private void restoreInitialState() {
@@ -516,7 +515,7 @@ public final class GuiGuide extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         hoveredStack = null;
         hoveredText = null;
         clickRegions.clear();
@@ -1665,12 +1664,12 @@ public final class GuiGuide extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-        if (delta != 0) {
-            changeSpread(delta < 0 ? 1 : -1);
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if (scrollY != 0) {
+            changeSpread(scrollY < 0 ? 1 : -1);
             return true;
         }
-        return super.mouseScrolled(mouseX, mouseY, delta);
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     @Override

@@ -28,6 +28,7 @@ import buildcraft.lib.gui.IGuiElement;
 import buildcraft.lib.gui.ledger.Ledger_Neptune;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.ItemStackKey;
+import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.recipe.AssemblyRecipeBasic;
 import buildcraft.lib.recipe.ChangingItemStack;
@@ -700,7 +701,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class AssemblyCategory implements IRecipeCategory<AssemblyRecipeBasic> {
-        private static final ResourceLocation SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+                "buildcraftsilicon", "textures/gui/assembly_table.png");
+        private static final ResourceLocation JEI_BACKGROUND = ResourceLocation.fromNamespaceAndPath(
+                "buildcraftsilicon", "textures/gui/jei/assembly_table_bc8.png");
+        private final IGuiHelper guiHelper;
         private final IDrawable background;
         private final IDrawable icon;
         private final IDrawableStatic progressDrawable;
@@ -996,7 +1001,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class ProgrammingCategory implements IRecipeCategory<ProgrammingRecipeView> {
-        private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+                "buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation JEI_BACKGROUND = ResourceLocation.fromNamespaceAndPath(
+                "buildcraftsilicon", "textures/gui/jei/programming_table_bc7.png");
+        private final IGuiHelper guiHelper;
         private final IDrawable background;
         private final IDrawable icon;
         private final IDrawableStatic progressDrawable;
@@ -1071,8 +1080,9 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class IntegrationCategory implements IRecipeCategory<IntegrationRecipeView> {
-        private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "textures/gui/integration_table.png");
-        private static final ResourceLocation SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+                "buildcraftsilicon", "textures/gui/jei/integration_table_bc7.png");
+        private final IGuiHelper guiHelper;
         private final IDrawable background;
         private final IDrawable icon;
         private final IDrawableStatic progressDrawable;
@@ -1130,7 +1140,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class DistillationCategory implements IRecipeCategory<IRefineryRecipeManager.IDistillationRecipe> {
-        private static final ResourceLocation SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+                "buildcraftfactory", "textures/gui/distiller.png");
         private final IDrawable background;
         private final IDrawable icon;
         private final IDrawable machineBody;
@@ -1186,7 +1197,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static class HeatExchangeCategory implements IRecipeCategory<HeatExchangeRecipeView> {
-        private static final ResourceLocation SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "textures/gui/programming_table.png");
+        private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+                "buildcraftfactory", "textures/gui/heat_exchanger.png");
         private final IDrawable background;
         private final IDrawable icon;
         private final IDrawable exchanger;

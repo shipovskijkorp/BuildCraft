@@ -406,8 +406,8 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
 		public void fillCraftSlotsStackedContents(StackedContents stackedContents) {
             // The blueprint is a phantom recipe and must not make recipes appear craftable. Count only the actual
             // material inventory here; RecipeBookComponent adds the player's inventory separately.
-            for (int slot = 0; slot < recipeBookMaterials.getSlots(); slot++) {
-                ItemStack stack = recipeBookMaterials.getStackInSlot(slot);
+            for (int slot = 0; slot < invMaterials.getSlots(); slot++) {
+                ItemStack stack = invMaterials.getStackInSlot(slot);
                 if (!stack.isEmpty()) {
                     stackedContents.accountStack(stack);
                 }

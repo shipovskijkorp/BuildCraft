@@ -177,13 +177,15 @@ public class BCEnergyConfig {
             if (entry.isEmpty()) {
                 continue;
             }
-            try {
-                destination.add(ResourceLocation.parse(id));
-            } catch (ResourceLocationException exception) {
-                BCLog.logger.warn("Ignoring invalid biome id in BuildCraft Energy config: " + id);
+            hasConfiguredEntries = true;
+            ResourceLocation location = ResourceLocation.tryParse(entry);
+            if (location == null) {
+                BCLog.logger.warn("Ignoring invalid resource location '{}' in BuildCraft Energy option {}", entry, optionName);
+                continue;
             }
             destination.add(location);
         }
+        return hasConfiguredEntries;
     }
 
     /** Dynamic biome registries are server-owned in 1.21.1, so validation is performed while parsing IDs. */

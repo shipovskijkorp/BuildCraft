@@ -33,7 +33,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import buildcraft.lib.gui.help.GuiHelpUtil;
 
-public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTable> {
+public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTable> implements RecipeUpdateListener {
     private static final ResourceLocation TEXTURE_BASE = ResourceLocation.parse("buildcraftsilicon:textures/gui/advanced_crafting_table.png");
     private static final int SIZE_X = 176, SIZE_Y = 241;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
@@ -114,7 +114,7 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
         super.init();
         widthTooNarrow = this.width < SIZE_X + 176;
         if (recipeBook != null) {
-            recipeBook.init(width, height, minecraft, widthTooNarrow, container.tile.getWorkbenchCrafting().getCraftingMenu(menu, container.materialInv));
+            recipeBook.init(width, height, minecraft, widthTooNarrow, container.tile.getWorkbenchCrafting().getCraftingMenu(menu));
             leftPos = recipeBook.updateScreenPosition(width, imageWidth);
             recipeButton = new ImageButton(
                 leftPos + 5, height / 2 - 90, 20, 18,

@@ -232,6 +232,16 @@ def main() -> None:
             fail(f"temporary network debug logging remains in {path}")
         if "getCloneItemStack(null" in text:
             fail(f"unsafe null-context clone-stack call remains in {path}")
+        if "recipeBookMaterials" in text:
+            fail(f"stale recipe-book inventory identifier remains in {path}")
+        if "getCraftingMenu(menu," in text:
+            fail(f"obsolete two-argument recipe-book menu call remains in {path}")
+        if "renderBackground(guiGraphics);" in text:
+            fail(f"obsolete one-argument renderBackground call remains in {path}")
+        if re.search(r"mouseScrolled\(double mouseX, double mouseY, double (?:delta|amount)\)", text):
+            fail(f"obsolete three-argument mouseScrolled override remains in {path}")
+        if "HitResult target, BlockGetter world" in text:
+            fail(f"Forge 1.21.1 clone-stack override still uses BlockGetter in {path}")
 
     for path in src.rglob("*.json"):
         try:
@@ -292,9 +302,56 @@ def main() -> None:
             "getAutomationPlayer",
         ],
         "src/main/java/buildcraft/builders/snapshot/RequiredExtractorItemFromBlock.java": [
-            "SingleBlockAccess access",
-            "getCloneItemStack(",
+            "getCloneItemStack(level, BlockPos.ZERO, blockState)",
             "if (result.isEmpty())",
+        ],
+        "src/main/java/buildcraft/builders/snapshot/TemplateBuilder.java": [
+            "Containers.dropItemStack",
+        ],
+        "src/main/java/buildcraft/robotics/entity/EntityRobot.java": [
+            "com.mojang.authlib.GameProfile",
+            "buildcraft.lib.misc.LocaleUtil",
+            "buildcraft.robotics.DockingStationPipe",
+        ],
+        "src/main/java/buildcraft/compat/jei/AdvancedCraftingRecipeTransferHandler.java": [
+            "RecipeHolder<CraftingRecipe>",
+        ],
+        "src/main/java/buildcraft/compat/jei/AutoWorkbenchRecipeTransferHandler.java": [
+            "RecipeHolder<CraftingRecipe>",
+        ],
+        "src/main/java/buildcraft/compat/jei/BuildCraftJeiPlugin.java": [
+            "buildcraft.lib.misc.LocaleUtil",
+            "private final IGuiHelper guiHelper;",
+            "textures/gui/jei/assembly_table_bc8.png",
+            "textures/gui/jei/programming_table_bc7.png",
+            "textures/gui/jei/integration_table_bc7.png",
+        ],
+        "src/main/java/buildcraft/core/marker/volume/MessageVolumeBoxesClientHandler.java": [
+            "private record DecodedVolumeBox",
+        ],
+        "src/main/java/buildcraft/energy/BCEnergyConfig.java": [
+            "ResourceLocation.tryParse(entry)",
+            "return hasConfiguredEntries;",
+        ],
+        "src/main/java/buildcraft/factory/tile/TileAutoWorkbenchBase.java": [
+            "saveAdditional(CompoundTag nbt, HolderLookup.Provider registries)",
+            "loadAdditional(CompoundTag nbt, HolderLookup.Provider registries)",
+        ],
+        "src/main/java/buildcraft/lib/tile/craft/WorkbenchCrafting.java": [
+            "invMaterials.getSlots()",
+            "invMaterials.getStackInSlot(slot)",
+        ],
+        "src/main/java/buildcraft/silicon/BCSiliconRecipesProvider.java": [
+            "private static long assemblyCost",
+        ],
+        "src/main/java/buildcraft/silicon/gui/GuiAdvancedCraftingTable.java": [
+            "implements RecipeUpdateListener",
+            "getCraftingMenu(menu)",
+        ],
+        "src/main/java/buildcraft/transport/block/BlockPipeHolder.java": [
+            "HitResult target, LevelReader world",
+            'tag.putInt("color"',
+            "ItemStackUtil.setCustomData(stack, tag)",
         ],
         "src/main/java/buildcraft/core/client/RenderTickListener.java": [
             "event.getText()",

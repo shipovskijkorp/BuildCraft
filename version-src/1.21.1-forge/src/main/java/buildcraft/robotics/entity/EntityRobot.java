@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import com.mojang.authlib.GameProfile;
+
 import javax.annotation.Nullable;
 
 import buildcraft.api.boards.RedstoneBoardRobot;
@@ -27,9 +29,11 @@ import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.lib.misc.ItemStackUtil;
+import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import buildcraft.robotics.BCRoboticsEntities;
+import buildcraft.robotics.DockingStationPipe;
 import buildcraft.robotics.RoboticsNbtUtil;
 import buildcraft.robotics.ai.AIRobotMain;
 import buildcraft.robotics.ai.AIRobotReturnToLostStation;

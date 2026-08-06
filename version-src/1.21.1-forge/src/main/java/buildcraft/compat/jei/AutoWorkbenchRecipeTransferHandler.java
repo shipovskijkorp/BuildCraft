@@ -14,9 +14,10 @@ import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 final class AutoWorkbenchRecipeTransferHandler
-        implements IRecipeTransferHandler<ContainerAutoCraftItems, CraftingRecipe> {
+        implements IRecipeTransferHandler<ContainerAutoCraftItems, RecipeHolder<CraftingRecipe>> {
     @Override
     public Class<? extends ContainerAutoCraftItems> getContainerClass() {
         return ContainerAutoCraftItems.class;
@@ -28,13 +29,13 @@ final class AutoWorkbenchRecipeTransferHandler
     }
 
     @Override
-    public RecipeType<CraftingRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<CraftingRecipe>> getRecipeType() {
         return RecipeTypes.CRAFTING;
     }
 
     @Nullable
     @Override
-    public IRecipeTransferError transferRecipe(ContainerAutoCraftItems container, CraftingRecipe recipe,
+    public IRecipeTransferError transferRecipe(ContainerAutoCraftItems container, RecipeHolder<CraftingRecipe> recipe,
             IRecipeSlotsView recipeSlots, Player player, boolean maxTransfer, boolean doTransfer) {
         if (doTransfer) {
             container.sendSetPhantomSlots(container.blueprintInv,

@@ -119,7 +119,7 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
         widthTooNarrow = this.width < SIZE_X + 176;
         if (recipeBook != null) {
         	WorkbenchCrafting invCraft = container.tile.getWorkbenchCrafting();
-            recipeBook.init(width, height, minecraft, widthTooNarrow, invCraft.getCraftingMenu(menu, container.materialInv));
+            recipeBook.init(width, height, minecraft, widthTooNarrow, invCraft.getCraftingMenu(menu));
             leftPos = recipeBook.updateScreenPosition(width, imageWidth);
             recipeButton = new ImageButton(
                 leftPos + 5, height / 2 - 66, 20, 18,
@@ -144,7 +144,7 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
             return;
         }
         if (recipeBook.isVisible() && widthTooNarrow) {
-            renderBackground(guiGraphics);
+            renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
             drawBackgroundLayer(guiGraphics.pose(), mouseX, mouseY, partialTicks);
             recipeBook.render(guiGraphics, mouseX, mouseY, partialTicks);
             renderTooltip(guiGraphics, mouseX, mouseY);
