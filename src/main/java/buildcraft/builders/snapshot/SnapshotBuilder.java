@@ -532,7 +532,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             (long) (
                 maxPowerPerTick *
                     (double) (tile.getBattery().getStored() + maxPowerPerTick / 10) /
-                    (tile.getBattery().getCapacity() * 2)
+                    Math.max(1.0, tile.getBattery().getCapacity() / 2.0)
             ),
             maxPowerPerTick
         );

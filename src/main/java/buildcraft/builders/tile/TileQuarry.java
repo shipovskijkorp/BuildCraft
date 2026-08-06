@@ -455,8 +455,10 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (state.getDestroySpeed(level, blockPos) < 0) {
             return false;
         }
-        Fluid fluid = BlockUtil.getFluidWithFlowing(level, blockPos);
-        return fluid == Fluids.EMPTY || fluid.getFluidType().getViscosity() <= 1000;
+        // Any breakable block or fluid must remain visible to the quarry. Whether the drill may simply move through
+        // a low-viscosity fluid is handled separately by canMoveThrough(). High-viscosity fluids such as lava are
+        // therefore mined instead of being silently skipped by the iterator.
+        return true;
     }
 
     private boolean canMoveThrough(BlockPos blockPos) {
@@ -467,7 +469,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (level.isEmptyBlock(blockPos)) {
             return true;
         }
-        Fluid fluid = BlockUtil.getFluidWithFlowing(level, blockPos);
+        // Only standalone fluid blocks are passable. Waterlogged blocks still contain a real block that must be mined.
+        Fluid fluid = BlockUtil.getFluidWithFlowing(state.getBlock());
         return fluid != Fluids.EMPTY && fluid.getFluidType().getViscosity() <= 1000;
     }
 

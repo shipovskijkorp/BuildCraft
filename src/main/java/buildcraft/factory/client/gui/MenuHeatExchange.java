@@ -8,6 +8,7 @@ import buildcraft.factory.tile.TileHeatExchange;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.gui.IMenuBCTile;
 import buildcraft.lib.gui.MenuBC_Neptune;
+import buildcraft.lib.gui.TankContainerData;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,17 +25,22 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class MenuHeatExchange extends MenuBC_Neptune implements IMenuBCTile {
 
+    private static final int TANK_COUNT = 4;
+    private static final int TANK_DATA_COUNT = TANK_COUNT * TankContainerData.LEN;
+
     private final ContainerLevelAccess access;
     protected ContainerData data;
     @Nullable
     public final TileHeatExchange tile;
 
     public MenuHeatExchange(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(containerId, playerInventory, new ItemStackHandler(4), new SimpleContainerData(8), DataSlot.standalone(), createLevelAccess(playerInventory, buf));
+        this(containerId, playerInventory, new ItemStackHandler(TANK_COUNT),
+            new SimpleContainerData(TANK_DATA_COUNT), DataSlot.standalone(), createLevelAccess(playerInventory, buf));
     }
 
     public MenuHeatExchange(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, new ItemStackHandler(4), new SimpleContainerData(8), DataSlot.standalone(), ContainerLevelAccess.NULL);
+        this(containerId, playerInventory, new ItemStackHandler(TANK_COUNT),
+            new SimpleContainerData(TANK_DATA_COUNT), DataSlot.standalone(), ContainerLevelAccess.NULL);
     }
 
     public MenuHeatExchange(int containerId, Inventory playerInventory, IItemHandler item,
@@ -99,7 +105,7 @@ public class MenuHeatExchange extends MenuBC_Neptune implements IMenuBCTile {
         return access.evaluate((level, pos) -> {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof TileHeatExchange heatExchange) {
-                Tank tank = heatExchange.getSectionTank(index / 2);
+                Tank tank = heatExchange.getSectionTank(index / TankContainerData.LEN);
                 if (tank != null) {
                     tank.onGuiClicked(this, player);
                 }

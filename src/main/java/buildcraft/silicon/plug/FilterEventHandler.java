@@ -42,6 +42,8 @@ public class FilterEventHandler {
                         event.increasePriority(side);
                     } else if (colourAt == null) {
                         event.decreasePriority(side);
+                    } else {
+                        event.disallow(side);
                     }
                 }
             }

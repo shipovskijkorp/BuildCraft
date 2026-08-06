@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import buildcraft.factory.BCFactorySprites;
 import buildcraft.lib.gui.BuildCraftGui;
 import buildcraft.lib.gui.ContainerScreenBase;
+import buildcraft.lib.gui.TankContainerData;
 import buildcraft.lib.gui.component.TankComponent;
 import buildcraft.lib.gui.help.GuiHelpUtil;
 import buildcraft.lib.gui.ledger.LedgerHelp;
@@ -19,10 +20,10 @@ public class ScreenHeatExchange extends ContainerScreenBase<MenuHeatExchange> {
     private static final ResourceLocation TEXTURE_BASE = BCFactorySprites.HEAT_EXCHANGE;
 
     protected static final TankComponent[] tanks = {
-        new TankComponent(44, 12, 16, 38, 2000, -1, -1),
-        new TankComponent(44, 64, 33, 16, 2000, -1, -1),
-        new TankComponent(98, 12, 33, 16, 2000, -1, -1),
-        new TankComponent(116, 43, 16, 38, 2000, -1, -1),
+        new TankComponent(44, 12, 16, 38, 0, -1, -1, TankContainerData.LEN - 1),
+        new TankComponent(44, 64, 33, 16, 0, -1, -1, TankContainerData.LEN - 1),
+        new TankComponent(98, 12, 33, 16, 0, -1, -1, TankContainerData.LEN - 1),
+        new TankComponent(116, 43, 16, 38, 0, -1, -1, TankContainerData.LEN - 1),
     };
 
     private final BuildCraftGui mainGui;

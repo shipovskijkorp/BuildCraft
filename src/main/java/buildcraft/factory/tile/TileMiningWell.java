@@ -19,6 +19,7 @@ import buildcraft.lib.mj.MjBatteryReceiver;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,6 +29,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 
 public class TileMiningWell extends TileMiner {
@@ -104,12 +106,19 @@ public class TileMiningWell extends TileMiner {
     }
 
     private boolean canBreak() {
-        if (level.getBlockState(currentPos).isAir() || BlockUtil.isUnbreakableBlock(level, currentPos, getOwner())) {
+        BlockState state = level.getBlockState(currentPos);
+        if (state.isAir() || isStandaloneWaterBlock(state)
+            || BlockUtil.isUnbreakableBlock(level, currentPos, getOwner())) {
             return false;
         }
 
         Fluid fluid = BlockUtil.getFluidWithFlowing(level, currentPos);
-        return fluid == null || fluid.getFluidType().getViscosity() <= 1000;
+        return fluid == Fluids.EMPTY || fluid.getFluidType().getViscosity() <= 1000;
+    }
+
+    private static boolean isStandaloneWaterBlock(BlockState state) {
+        Fluid fluid = BlockUtil.getFluidWithFlowing(state.getBlock());
+        return fluid != Fluids.EMPTY && fluid.defaultFluidState().is(FluidTags.WATER);
     }
 
     private void nextPos() {
@@ -122,10 +131,13 @@ public class TileMiningWell extends TileMiner {
             if (worldPosition.getY() - currentPos.getY() > BCCoreConfig.miningMaxDepth) {
                 break;
             }
+            BlockState state = level.getBlockState(currentPos);
             if (canBreak()) {
                 updateLength();
                 return;
-            } else if (!level.getBlockState(currentPos).isAir() && level.getBlockState(currentPos).getBlock() != BCFactoryBlocks.TUBE_BLOCK.get()) {
+            } else if (isStandaloneWaterBlock(state)) {
+                continue;
+            } else if (!state.isAir() && state.getBlock() != BCFactoryBlocks.TUBE_BLOCK.get()) {
                 break;
             }
         }
