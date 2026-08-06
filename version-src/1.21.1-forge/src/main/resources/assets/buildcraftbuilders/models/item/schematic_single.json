@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "buildcraftbuilders:items/schematic_single/clean"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "buildcraftbuilders:used": 1
+      },
+      "model": "buildcraftbuilders:item/schematic_single/used"
+    }
+  ]
+}

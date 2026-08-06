@@ -65,7 +65,10 @@ def sourceRootProperty = optionalProperty('source.root')
 def targetSourceRoot = sourceRootProperty ? rootProject.file(sourceRootProperty) : rootProject.projectDir
 def usesVersionSourceRoot = !sourceRootProperty.isEmpty()
 def targetAccessTransformer = new File(targetSourceRoot, 'src/main/resources/META-INF/accesstransformer.cfg')
+def jeiCompatEnabled = booleanProperty('compat.jei.enabled', true)
+def jadeCompatEnabled = booleanProperty('compat.jade.enabled', true)
 def ic2CompatEnabled = booleanProperty('compat.ic2.enabled', true)
+def forestryCompatEnabled = booleanProperty('compat.forestry.enabled', true)
 
 if (usesVersionSourceRoot && !targetSourceRoot.isDirectory()) {
     throw new GradleException("Configured source.root '${sourceRootProperty}' for '${targetName}' does not exist")
@@ -110,8 +113,17 @@ sourceSets {
     }
 }
 
+if (!jeiCompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/jei/**'
+}
+if (!jadeCompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/jade/**'
+}
 if (!ic2CompatEnabled) {
     sourceSets.main.java.exclude 'buildcraft/compat/ic2/**'
+}
+if (!forestryCompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/forestry/**'
 }
 
 configurations {
@@ -251,14 +263,20 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}"
 
-    compileOnly fg.deobf(requiredProperty('deps.jei'))
-    if (runtimeEnabled('jei', true)) {
-        runtimeOnly fg.deobf(requiredProperty('deps.jei'))
+    def jeiDependency = optionalProperty('deps.jei')
+    if (jeiCompatEnabled && jeiDependency) {
+        compileOnly fg.deobf(jeiDependency)
+        if (runtimeEnabled('jei', true)) {
+            runtimeOnly fg.deobf(jeiDependency)
+        }
     }
 
-    compileOnly fg.deobf(requiredProperty('deps.jade'))
-    if (runtimeEnabled('jade', true)) {
-        runtimeOnly fg.deobf(requiredProperty('deps.jade'))
+    def jadeDependency = optionalProperty('deps.jade')
+    if (jadeCompatEnabled && jadeDependency) {
+        compileOnly fg.deobf(jadeDependency)
+        if (runtimeEnabled('jade', true)) {
+            runtimeOnly fg.deobf(jadeDependency)
+        }
     }
 
     def ic2Dependency = optionalProperty('deps.ic2')
@@ -277,7 +295,7 @@ dependencies {
     }
 
     def forestryDependency = optionalProperty('deps.forestry')
-    if (forestryDependency) {
+    if (forestryCompatEnabled && forestryDependency) {
         compileOnly fg.deobf(forestryDependency)
         if (runtimeEnabled('forestry', true)) {
             runtimeOnly fg.deobf(forestryDependency)
@@ -285,7 +303,7 @@ dependencies {
     }
 
     def patchouliDependency = optionalProperty('deps.patchouli')
-    if (patchouliDependency) {
+    if (forestryCompatEnabled && patchouliDependency) {
         compileOnly fg.deobf(patchouliDependency)
         if (runtimeEnabled('forestry', true)) {
             runtimeOnly fg.deobf(patchouliDependency)
@@ -297,9 +315,18 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${requiredProperty('deps.junit')}"
 }
 
-// ForgeGradle 6 deobfuscates mod dependencies through fg.deobf and
-// reobfuscates the release jar with the standard reobfJar task.
-def productionJar = tasks.named('jar', Jar)
+// ForgeGradle 6 deobfuscates mod dependencies through fg.deobf.
+// Older Forge targets expose reobfJar; Forge 1.21.1 already produces a
+// distributable Mojmap jar and does not register that legacy task. Resolve the
+// optional task only after this project has finished evaluating: configuring a
+// TaskProvider from inside TaskCollection.configureEach is rejected by Gradle
+// 8.8 as a nested task-container mutation.
+afterEvaluate {
+    def reobfTask = tasks.findByName('reobfJar')
+    if (reobfTask != null) {
+        tasks.getByName('jar').finalizedBy(reobfTask)
+    }
+}
 
 tasks.named('test', Test) {
     useJUnitPlatform()
@@ -340,7 +367,6 @@ tasks.named('processResources', ProcessResources) {
 
 tasks.named('jar', Jar) {
     archiveClassifier = ''
-    finalizedBy 'reobfJar'
     manifest {
         attributes([
                 'Specification-Title': requiredProperty('mod.name'),

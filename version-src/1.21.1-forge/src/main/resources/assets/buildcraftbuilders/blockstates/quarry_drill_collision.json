@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "mask=1": { "model": "buildcraftbuilders:block/quarry_drill_collision" },
+    "mask=2": { "model": "buildcraftbuilders:block/quarry_drill_collision" },
+    "mask=3": { "model": "buildcraftbuilders:block/quarry_drill_collision" },
+    "mask=4": { "model": "buildcraftbuilders:block/quarry_drill_collision" },
+    "mask=5": { "model": "buildcraftbuilders:block/quarry_drill_collision" },
+    "mask=6": { "model": "buildcraftbuilders:block/quarry_drill_collision" },
+    "mask=7": { "model": "buildcraftbuilders:block/quarry_drill_collision" }
+  }
+}

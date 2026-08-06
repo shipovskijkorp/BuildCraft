@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "buildcrafttransport:emzuli_item"
+    },
+    "title": {
+      "translate": "advancements.buildcrafttransport.categorizing_with_colors.title"
+    },
+    "description": {
+      "translate": "advancements.buildcrafttransport.categorizing_with_colors.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "buildcrafttransport:plugging_the_gap",
+  "criteria": {
+    "has_emzuli_pipe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "buildcrafttransport:emzuli_item"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_emzuli_pipe"
+    ]
+  ]
+}

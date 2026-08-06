@@ -1,0 +1,13 @@
+{
+  "parent": "forge:item/default",
+  "loader": "buildcraftcore:fragile_fluid_container",
+  "fluid": "minecraft:empty",
+  "flip_gas": true,
+  "cover_is_mask": false,
+  "apply_fluid_luminosity": true,
+  "textures": {
+    "particle": "buildcraftcore:items/fragile_fluid_shard_base",
+    "base": "buildcraftcore:items/fragile_fluid_shard_base",
+    "fluid": "buildcraftcore:items/fragile_fluid_shard_fluid"
+  }
+}

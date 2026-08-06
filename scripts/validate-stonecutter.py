@@ -49,8 +49,6 @@ FORGE_REQUIRED = (
     "compat.jade.range",
     "compat.ic2.range",
     "compat.forestry.range",
-    "deps.jei",
-    "deps.jade",
 )
 
 
@@ -182,8 +180,16 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
         fail("Forge targets must explicitly use ForgeGradle 6.x")
     if "net.minecraftforge.renamer" in root_build_text or "net.minecraftforge.renamer" in forge_build_text:
         fail("standalone Renamer must not be used with ForgeGradle 6")
-    if "fg.deobf" not in forge_build_text or "finalizedBy 'reobfJar'" not in forge_build_text:
-        fail("ForgeGradle 6 build must use fg.deobf and reobfJar")
+    if "fg.deobf" not in forge_build_text:
+        fail("ForgeGradle 6 build must use fg.deobf for mod dependencies")
+    if "afterEvaluate {" not in forge_build_text \
+            or "tasks.findByName('reobfJar')" not in forge_build_text \
+            or "tasks.getByName('jar').finalizedBy(reobfTask)" not in forge_build_text:
+        fail("reobfJar must be attached conditionally after project evaluation")
+    if "tasks.matching { it.name == 'reobfJar' }.configureEach" in forge_build_text:
+        fail("nested TaskProvider configuration breaks Gradle 8.8 task creation")
+    if "finalizedBy 'reobfJar'" in forge_build_text:
+        fail("unconditional reobfJar dependency breaks the Forge 1.21.1 target")
     if "stonecutter-targets.properties" not in forge_build_text:
         fail("Forge build must load the Gradle-8-compatible target configuration")
     if "targetAccessTransformer = new File(targetSourceRoot" not in forge_build_text \
@@ -218,6 +224,18 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
         loader = target.rsplit("-", 1)[1]
         for key in TARGET_REQUIRED + (FORGE_REQUIRED if loader == "forge" else ()):
             target_value(properties, target, key)
+
+        if loader == "forge":
+            for compat in ("jei", "jade"):
+                enabled = properties.get(
+                    f"target.{target}.compat.{compat}.enabled", "true"
+                ).strip().lower() != "false"
+                dependency = target_value(properties, target, f"deps.{compat}", allow_empty=True)
+                if enabled and not dependency:
+                    fail(
+                        f"target {target!r} enables {compat} compatibility but "
+                        f"target.{target}.deps.{compat} is empty"
+                    )
 
         configured_minecraft = target_value(properties, target, "deps.minecraft")
         if not target.startswith(configured_minecraft + "-"):

@@ -1,0 +1,101 @@
+/*
+ * Copyright (c) 2017 SpaceToad and the BuildCraft team
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
+ * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/
+ */
+
+package buildcraft.factory.gui;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
+
+import buildcraft.factory.container.ContainerTank;
+import buildcraft.lib.gui.GuiBC8;
+import buildcraft.lib.gui.GuiIcon;
+import buildcraft.lib.gui.component.TankComponent;
+import buildcraft.lib.gui.help.DummyHelpElement;
+import buildcraft.lib.gui.pos.GuiRectangle;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.fluids.FluidType;
+import buildcraft.lib.gui.help.GuiHelpUtil;
+
+public class GuiTank extends GuiBC8<ContainerTank> {
+    private static final ResourceLocation TEXTURE_BASE = ResourceLocation.parse("buildcraftfactory:textures/gui/tank.png");
+    private static final int SIZE_X = 176;
+    private static final int SIZE_Y = 181;
+    private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
+
+    private final TankComponent tankComponent = new TankComponent(
+        80, 18, 16, 64,
+        16 * FluidType.BUCKET_VOLUME,
+        176, 0,
+        2
+    );
+
+    public GuiTank(ContainerTank menu, Inventory inventory, Component title) {
+        super(menu, inventory, title);
+        imageWidth = SIZE_X;
+        imageHeight = SIZE_Y;
+        inventoryLabelX = 8;
+        inventoryLabelY = SIZE_Y - 96;
+
+        tankComponent.setDataoffset(0);
+        tankComponent.setup(this, menu.data);
+
+        GuiHelpUtil.addRoot(mainGui, 80, 18, 16, 64, "buildcraft.help.tank.slot.title", 0xFF_55_BB_DD, "buildcraft.help.tank.slot.desc");
+
+        if (menu.tile != null) {
+            mainGui.shownElements.add(new DummyHelpElement(
+                new GuiRectangle(80, 18, 16, 64).offset(mainGui.rootElement).expand(4),
+                menu.tile.tank.helpInfo
+            ));
+        }
+    }
+
+    @Override
+    protected void drawBackgroundLayer(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
+        GuiGraphics guiGraphics = getActiveGraphics();
+        ICON_GUI.drawAt(guiGraphics, mainGui.rootElement);
+        tankComponent.render(guiGraphics, mouseX, mouseY, partialTicks, this);
+        RenderSystem.setShaderTexture(0, TEXTURE_BASE);
+        tankComponent.postRender(guiGraphics, mouseX, mouseY, partialTicks, this);
+    }
+
+    @Override
+    protected void drawForegroundLayer(PoseStack pose, int mouseX, int mouseY) {
+        GuiGraphics guiGraphics = getActiveGraphics();
+        int rootX = (int) mainGui.rootElement.getX();
+        int rootY = (int) mainGui.rootElement.getY();
+        guiGraphics.drawString(font, title, rootX + (imageWidth - font.width(title)) / 2, rootY + 6, 0x404040, false);
+        guiGraphics.drawString(font, playerInventoryTitle, rootX + inventoryLabelX, rootY + inventoryLabelY, 0x404040, false);
+    }
+
+    @Override
+    protected void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        tankComponent.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.renderTooltip(guiGraphics, mouseX, mouseY);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (tankComponent.onClick(mouseX, mouseY, button)) {
+            return true;
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        tankComponent.mouseRelease(mouseX, mouseY, button);
+        return super.mouseReleased(mouseX, mouseY, button);
+    }
+
+    @Override
+    public void onClose() {
+        tankComponent.onClose();
+        super.onClose();
+    }
+}
