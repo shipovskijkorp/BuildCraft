@@ -20,8 +20,10 @@ import java.util.stream.IntStream;
 import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.BCLog;
+import buildcraft.api.inventory.IItemTransactor;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.lib.misc.BlockUtil;
+import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import net.minecraft.core.BlockPos;
@@ -178,6 +180,33 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     public void resetWorkRendering() {
         renderWork = false;
+    }
+
+    /** Keeps excavation drops instead of letting the drop-capture helper delete them. */
+    protected final void handleExcavationDrops(List<ItemStack> drops) {
+        if (drops == null || drops.isEmpty()) {
+            return;
+        }
+
+        IItemTransactor resources = null;
+        if (tile instanceof ITileForBlueprintBuilder) {
+            resources = ((ITileForBlueprintBuilder) tile).getInvResources();
+        } else if (tile instanceof ITileForTemplateBuilder) {
+            resources = ((ITileForTemplateBuilder) tile).getInvResources();
+        }
+
+        for (ItemStack drop : drops) {
+            if (drop == null || drop.isEmpty()) {
+                continue;
+            }
+            ItemStack remainder = drop.copy();
+            if (resources != null) {
+                remainder = resources.insert(remainder, false, false);
+            }
+            if (!remainder.isEmpty()) {
+                InventoryUtil.addToBestAcceptor(tile.getWorldBC(), tile.getBuilderPos(), null, remainder);
+            }
+        }
     }
 
     /**
@@ -569,6 +598,8 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                     tile.getWorldBC().getProfiler().pop();
                     if (!stacks.isPresent()) {
                         cancelBreakTask(breakTask);
+                    } else {
+                        handleExcavationDrops(stacks.get());
                     }
                     if (check(breakTask.pos)) {
                         checkResultsChanged = true;

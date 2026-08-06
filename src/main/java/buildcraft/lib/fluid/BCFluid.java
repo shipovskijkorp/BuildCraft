@@ -15,6 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -224,8 +225,13 @@ public abstract class BCFluid extends ForgeFlowingFluid {
 	@Override
 	protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluidIn,
 			Direction direction) {
-		return fluidIn.getFluidType().getDensity() > this.getFluidType().getDensity();// 1.19.2:this should be forge
-																						// work
+		// Water updates used to overwrite oil and fuel because their density is lower than water's. Keep BC fluids
+		// stable in oceans and only allow a genuinely denser, non-water fluid to displace them from above.
+		if (fluidIn == Fluids.EMPTY || fluidIn.defaultFluidState().is(FluidTags.WATER)) {
+			return false;
+		}
+		return direction == Direction.DOWN
+			&& fluidIn.getFluidType().getDensity() > this.getFluidType().getDensity();
 	}
 
 	@Override

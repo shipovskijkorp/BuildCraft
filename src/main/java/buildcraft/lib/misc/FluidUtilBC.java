@@ -19,6 +19,7 @@ import buildcraft.core.BCCoreItems;
 import buildcraft.core.item.ItemFragileFluidContainer;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.fluid.Tank;
+import buildcraft.lib.fluid.TankManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,37 +41,45 @@ import net.minecraftforge.items.ItemHandlerHelper;
 public class FluidUtilBC {
 
     public static void pushFluidAround(BlockGetter world, BlockPos pos, Tank tank) {
-        FluidStack potential = tank.drain(tank.getFluidAmount(), FluidAction.SIMULATE);
-        int drained = 0;
-        if (potential == FluidStack.EMPTY || potential.getAmount() <= 0) {
-            return;
-        }
-        FluidStack working = potential.copy();
         for (Direction side : Direction.values()) {
-            if (potential.getAmount() <= 0) {
-                break;
+            FluidStack available = tank.drainInternal(tank.getFluidAmount(), FluidAction.SIMULATE);
+            if (available.isEmpty() || available.getAmount() <= 0) {
+                return;
             }
-            BlockEntity target = world.getBlockEntity(pos.offset(side.getNormal()));
+
+            BlockEntity target = world.getBlockEntity(pos.relative(side));
             if (target == null) {
                 continue;
             }
-            IFluidHandler handler = CompatCapTransfromer.INSTANCE.getCap(target, CapUtil.CAP_FLUIDS, side.getOpposite()).orElse(null);
-            if (handler != null) {
-                int used = handler.fill(potential.copy(), FluidAction.EXECUTE);
-
-                if (used > 0) {
-                    drained += used;
-                    potential.setAmount(potential.getAmount() - used);
-                }
+            IFluidHandler handler = CompatCapTransfromer.INSTANCE
+                .getCap(target, CapUtil.CAP_FLUIDS, side.getOpposite())
+                .orElse(null);
+            if (handler == null) {
+                continue;
             }
-        }
-        if (drained > 0) {
-            FluidStack actuallyDrained = tank.drain(drained, FluidAction.EXECUTE);
-            if (actuallyDrained == FluidStack.EMPTY || actuallyDrained.getAmount() != drained) {
-                String strWorking = StringUtilBC.fluidToString(working);
-                String strActual = StringUtilBC.fluidToString(actuallyDrained);
-                throw new IllegalStateException("Bad tank! Could drain " + strWorking + " but only drained " + strActual
-                    + "( tank " + tank.getClass() + ")");
+
+            int accepted = Math.min(available.getAmount(), Math.max(0,
+                handler.fill(available.copy(), FluidAction.SIMULATE)));
+            if (accepted <= 0) {
+                continue;
+            }
+
+            // Drain the source before filling the destination. The old order could create fluid when the source
+            // changed between simulation and execution.
+            FluidStack drained = tank.drainInternal(new FluidStack(available, accepted), FluidAction.EXECUTE);
+            if (drained.isEmpty() || drained.getAmount() <= 0) {
+                continue;
+            }
+
+            int actuallyAccepted = Math.min(drained.getAmount(), Math.max(0,
+                handler.fill(drained.copy(), FluidAction.EXECUTE)));
+            if (actuallyAccepted < drained.getAmount()) {
+                FluidStack remainder = new FluidStack(drained, drained.getAmount() - actuallyAccepted);
+                int restored = tank.fillInternal(remainder, FluidAction.EXECUTE);
+                if (restored != remainder.getAmount()) {
+                    BCLog.logger.error("Failed to roll back {} mB after a destination fluid handler accepted only {} mB",
+                        remainder.getAmount(), actuallyAccepted);
+                }
             }
         }
     }
@@ -113,45 +122,113 @@ public class FluidUtilBC {
      * @return The fluidstack that was moved, or null if no fluid was moved. */
     @Nullable
     public static FluidStack move(IFluidHandler from, IFluidHandler to, int max) {
-        if (from == null || to == null) {
+        if (from == null || to == null || max <= 0) {
             return FluidStack.EMPTY;
         }
-        FluidStack toDrainPotential;
+
+        FluidStack potential;
         if (from instanceof IFluidHandlerAdv) {
-            IFluidFilter filter = f -> to.fill(f, FluidAction.SIMULATE) > 0;
-            toDrainPotential = ((IFluidHandlerAdv) from).drain(filter, max, FluidAction.SIMULATE);
+            IFluidFilter filter = fluid -> to.fill(fluid, FluidAction.SIMULATE) > 0;
+            potential = ((IFluidHandlerAdv) from).drain(filter, max, FluidAction.SIMULATE);
         } else {
-            toDrainPotential = from.drain(max, FluidAction.SIMULATE);
+            potential = from.drain(max, FluidAction.SIMULATE);
         }
-        if (toDrainPotential == FluidStack.EMPTY) {
+        if (potential.isEmpty() || potential.getAmount() <= 0) {
             return FluidStack.EMPTY;
         }
-        int accepted = to.fill(toDrainPotential.copy(), FluidAction.SIMULATE);
+
+        int accepted = Math.min(potential.getAmount(), Math.max(0,
+            to.fill(potential.copy(), FluidAction.SIMULATE)));
         if (accepted <= 0) {
             return FluidStack.EMPTY;
         }
-        FluidStack toDrain = new FluidStack(toDrainPotential, accepted);
-        if (accepted < toDrainPotential.getAmount()) {
-            toDrainPotential = from.drain(toDrain, FluidAction.SIMULATE);
-            if (toDrainPotential == FluidStack.EMPTY || toDrainPotential.getAmount() < accepted) {
-                return FluidStack.EMPTY;
+
+        FluidStack requested = new FluidStack(potential, accepted);
+        FluidStack stillAvailable = from.drain(requested.copy(), FluidAction.SIMULATE);
+        if (!sameFluidAndAmount(requested, stillAvailable)) {
+            return FluidStack.EMPTY;
+        }
+
+        // Source-first execution removes the old fill-before-drain duplication path. If the destination accepts less
+        // than it simulated, return the remainder to the source.
+        FluidStack drained = from.drain(requested.copy(), FluidAction.EXECUTE);
+        if (drained.isEmpty() || drained.getAmount() <= 0) {
+            return FluidStack.EMPTY;
+        }
+        if (!FluidCompatRegistry.areEquivalent(requested, drained)) {
+            restoreFluid(from, drained, "source returned a different fluid");
+            return FluidStack.EMPTY;
+        }
+
+        int actuallyAccepted;
+        try {
+            actuallyAccepted = to.fill(drained.copy(), FluidAction.EXECUTE);
+        } catch (RuntimeException exception) {
+            restoreFluid(from, drained, "destination threw while accepting fluid");
+            BCLog.logger.warn("A destination fluid handler threw while BuildCraft was moving fluid", exception);
+            return FluidStack.EMPTY;
+        }
+        actuallyAccepted = Math.min(drained.getAmount(), Math.max(0, actuallyAccepted));
+
+        if (actuallyAccepted < drained.getAmount()) {
+            FluidStack remainder = new FluidStack(drained, drained.getAmount() - actuallyAccepted);
+            restoreFluid(from, remainder, "destination accepted less than it simulated");
+        }
+        return actuallyAccepted <= 0 ? FluidStack.EMPTY : new FluidStack(drained, actuallyAccepted);
+    }
+
+    private static boolean sameFluidAndAmount(FluidStack expected, FluidStack actual) {
+        return !expected.isEmpty() && !actual.isEmpty()
+            && expected.getAmount() == actual.getAmount()
+            && FluidCompatRegistry.areEquivalent(expected, actual);
+    }
+
+    private static void restoreFluid(IFluidHandler handler, FluidStack fluid, String reason) {
+        if (fluid.isEmpty() || fluid.getAmount() <= 0) {
+            return;
+        }
+        int restored;
+        try {
+            if (handler instanceof Tank) {
+                restored = ((Tank) handler).fillInternal(fluid.copy(), FluidAction.EXECUTE);
+            } else if (handler instanceof TankManager) {
+                restored = restoreToTankManager((TankManager) handler, fluid);
+            } else {
+                restored = handler.fill(fluid.copy(), FluidAction.EXECUTE);
             }
+            restored = Math.min(fluid.getAmount(), Math.max(0, restored));
+        } catch (RuntimeException exception) {
+            BCLog.logger.error("Failed to roll back fluid after {}", reason, exception);
+            return;
         }
-        FluidStack drained = from.drain(toDrain.copy(), FluidAction.EXECUTE);
-        if (drained == FluidStack.EMPTY || toDrain.getAmount() != drained.getAmount() || !FluidCompatRegistry.areEquivalent(toDrain, drained)) {
-            String detail = "(To Drain = " + StringUtilBC.fluidToString(toDrain);
-            detail += ",\npotential drain = " + StringUtilBC.fluidToString(toDrainPotential) + ")";
-            detail += ",\nactually drained = " + StringUtilBC.fluidToString(drained) + ")";
-            detail += ",\nIFluidHandler (from) = " + from.getClass() + "(" + from + ")";
-            detail += ",\nIFluidHandler (to) = " + to.getClass() + "(" + to + ")";
-            throw new IllegalStateException("Drained fluid did not equal expected fluid!\n" + detail);
+        if (restored != fluid.getAmount()) {
+            BCLog.logger.error("Restored only {} of {} mB after {}", restored, fluid.getAmount(), reason);
         }
-        int actuallyAccepted = to.fill(drained, FluidAction.EXECUTE);
-        if (actuallyAccepted != accepted) {
-            String detail = "(actually accepted = " + actuallyAccepted + ", accepted = " + accepted + ")";
-            throw new IllegalStateException("Mismatched IFluidHandler implementations!\n" + detail);
+    }
+
+    private static int restoreToTankManager(TankManager manager, FluidStack fluid) {
+        FluidStack remaining = fluid.copy();
+        int restored = 0;
+
+        // Prefer the tank that already contains this fluid, which is normally the exact tank the transfer drained.
+        for (Tank tank : manager) {
+            if (remaining.isEmpty() || tank.getFluid().isEmpty()
+                || !FluidCompatRegistry.areEquivalent(tank.getFluid(), remaining)) {
+                continue;
+            }
+            int filled = tank.fillInternal(remaining, FluidAction.EXECUTE);
+            restored += filled;
+            remaining.shrink(filled);
         }
-        return new FluidStack(drained, accepted);
+        for (Tank tank : manager) {
+            if (remaining.isEmpty() || !tank.getFluid().isEmpty()) {
+                continue;
+            }
+            int filled = tank.fillInternal(remaining, FluidAction.EXECUTE);
+            restored += filled;
+            remaining.shrink(filled);
+        }
+        return restored;
     }
 
     public static boolean onTankActivated(Player player, BlockPos pos, InteractionHand hand,
@@ -184,7 +261,9 @@ public class FluidUtilBC {
         FluidStack moved;
         if ((moved = FluidUtilBC.move(flItem, fluidHandler)) != FluidStack.EMPTY) {
             SoundUtil.playBucketEmpty(world, pos, moved);
-        } else if ((moved = FluidUtilBC.move(fluidHandler, flItem)) != FluidStack.EMPTY) {
+        } else if (replace && (moved = FluidUtilBC.move(fluidHandler, flItem)) != FluidStack.EMPTY) {
+            // In creative mode the temporary item handler is discarded, so draining the tank here would delete fluid
+            // without changing the player's held container.
             SoundUtil.playBucketFill(world, pos, moved);
         } else {
             changed = false;

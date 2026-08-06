@@ -31,6 +31,7 @@ import buildcraft.core.BCCoreConfig;
 import buildcraft.energy.BCEnergyFluids;
 import buildcraft.energy.tile.ITileOilSpring;
 import buildcraft.factory.BCFactoryBlocks;
+import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.BlockUtil;
@@ -313,16 +314,45 @@ public class TilePump extends TileMiner {
                     }
                     break drain_attempt;
                 }
-                tank.fillInternal(drain, FluidAction.EXECUTE);
-                progress = 0;
-                isInfiniteWaterSource &= !BCCoreConfig.pumpsConsumeWater;
-                if (isInfiniteWaterSource) {
-                    isInfiniteWaterSource = FluidUtilBC.areFluidsEqual(drain.getFluid(), Fluids.WATER);
+                int canAccept = tank.fillInternal(drain, FluidAction.SIMULATE);
+                if (canAccept != drain.getAmount()) {
+                    break drain_attempt;
                 }
+
+                boolean keepSource = isInfiniteWaterSource
+                    && !BCCoreConfig.pumpsConsumeWater
+                    && FluidUtilBC.areFluidsEqual(drain.getFluid(), Fluids.WATER);
+
+                FluidStack actualDrain = drain;
+                if (!keepSource) {
+                    actualDrain = BlockUtil.drainBlock(level, currentPos, true);
+                    if (actualDrain.isEmpty()
+                        || actualDrain.getAmount() <= 0
+                        || !FluidCompatRegistry.areEquivalent(drain, actualDrain)) {
+                        if (DEBUG_PUMP) {
+                            BCLog.logger.info(
+                                "Pump @ " + getBlockPos() + " simulated " + drain + " at " + currentPos
+                                    + " but the executed drain returned " + actualDrain
+                            );
+                        }
+                        break drain_attempt;
+                    }
+                }
+
+                int accepted = tank.fillInternal(actualDrain, FluidAction.EXECUTE);
+                if (accepted != actualDrain.getAmount()) {
+                    BCLog.logger.error(
+                        "Pump @ {} drained {} mB at {} but its internal tank accepted only {} mB",
+                        getBlockPos(), actualDrain.getAmount(), currentPos, accepted
+                    );
+                    break drain_attempt;
+                }
+
+                progress = 0;
+                isInfiniteWaterSource = keepSource;
                 AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_DRAIN_ANY);
-                if (!isInfiniteWaterSource) {
-                    BlockUtil.drainBlock(level, currentPos, true);
-                    if (isOil(drain.getFluid())) {
+                if (!keepSource) {
+                    if (isOil(actualDrain.getFluid())) {
                         AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_DRAIN_OIL);
                         if (oilSpringPos != null) {
                             BlockEntity tile = level.getBlockEntity(oilSpringPos);

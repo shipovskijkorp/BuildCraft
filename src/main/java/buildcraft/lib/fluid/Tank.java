@@ -410,7 +410,11 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
                 return original;
             }
         }
-        // Now try to drain the fluid into the item
+        // Now try to drain the fluid into the item. A creative player's temporary copy is discarded below, so
+        // executing this branch would delete fluid from the tank without changing the held container.
+        if (isCreative) {
+            return original;
+        }
         IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(copy).orElse(null);
         if (fluidHandler == null) return stack;
         FluidStack drained = drain(capacity, FluidAction.SIMULATE);

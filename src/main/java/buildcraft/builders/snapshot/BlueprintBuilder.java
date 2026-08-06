@@ -371,13 +371,18 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                     || BlockUtil.isUnbreakableBlock(tile.getWorldBC(), blockPos, tile.getOwner())) {
                     return false;
                 }
-                boolean broken = tile.getWorldBC() instanceof ServerLevel serverLevel
-                    && BlockUtil.breakBlockAndGetDrops(
+                Optional<List<ItemStack>> drops = tile.getWorldBC() instanceof ServerLevel serverLevel
+                    ? BlockUtil.breakBlockAndGetDrops(
                         serverLevel,
                         blockPos,
                         new ItemStack(Items.DIAMOND_PICKAXE),
                         tile.getOwner()
-                    ).isPresent();
+                    )
+                    : Optional.empty();
+                boolean broken = drops.isPresent();
+                if (broken) {
+                    handleExcavationDrops(drops.get());
+                }
                 if (broken && check(blockPos)) {
                     afterChecks();
                 }
