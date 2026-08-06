@@ -4,6 +4,7 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
         maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
+        maven("https://maven.minecraftforge.net/") { name = "MinecraftForge" }
     }
 }
 
@@ -28,9 +29,9 @@ stonecutter {
         }
 
         target("1.19.2", "forge")
+        target("1.20.1", "forge")
 
         // Future examples:
-        // target("1.20.1", "forge")
         // target("1.21.1", "forge", "neoforge")
         // target("1.20.1", "fabric")
 

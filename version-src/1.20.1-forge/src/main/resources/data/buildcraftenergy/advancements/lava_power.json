@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "title": {
+      "translate": "advancements.buildcraftenergy.lava_power.title"
+    },
+    "description": {
+      "translate": "advancements.buildcraftenergy.lava_power.description"
+    }
+  },
+  "parent": "buildcraftenergy:engine",
+  "criteria": {
+    "code_trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "code_trigger"
+    ]
+  ]
+}

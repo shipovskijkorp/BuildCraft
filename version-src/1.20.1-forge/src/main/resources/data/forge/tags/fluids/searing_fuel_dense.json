@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "buildcraftenergy:fuel_dense_heat_2",
+    "buildcraftenergy:fuel_dense_heat_2_flowing"
+  ]
+}

@@ -1,0 +1,17 @@
+~{buildcraft/json/insn}
+
+import "buildcraftlib:util" "buildcraftcore:main"
+
+item "blueprint" "blueprint" "buildcraftbuilders:blueprint"
+item "blueprint" "template" "buildcraftbuilders:template"
+item "blueprint" "schematic_single" "buildcraftbuilders:schematic_single"
+item "area" "filler_planner" "buildcraftbuilders:filler_planner"
+
+block "construction" "architect"
+block "construction" "builder"
+block "construction" "filler"
+block "construction" "library"
+block "construction" "replacer"
+block "construction" "marker_construction"
+block "construction" "frame"
+block "mining" "quarry"

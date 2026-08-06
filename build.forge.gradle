@@ -3,9 +3,7 @@ plugins {
     id 'idea'
     id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.accesstransformers'
-    id 'net.minecraftforge.gradle'
-    id 'net.minecraftforge.renamer'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
 def requiredProperty = { String key ->
@@ -13,6 +11,10 @@ def requiredProperty = { String key ->
         throw new GradleException("Missing Stonecutter property '${key}' for target '${project.name}'")
     }
     project.property(key).toString()
+}
+
+def optionalProperty = { String key ->
+    project.hasProperty(key) ? project.property(key).toString().trim() : ''
 }
 
 def targetName = sc.current.project
@@ -25,7 +27,19 @@ def archiveName = requiredProperty('mod.archive_name')
 def javaVersion = Integer.parseInt(requiredProperty('java.version'))
 
 def booleanProperty = { String key, boolean fallback ->
+    if (project.hasProperty(key)) {
+        return project.property(key).toString().toBoolean()
+    }
     providers.gradleProperty(key).map { it.toBoolean() }.getOrElse(fallback)
+}
+
+def sourceRootProperty = optionalProperty('source.root')
+def targetSourceRoot = sourceRootProperty ? rootProject.file(sourceRootProperty) : project.projectDir
+def usesVersionSourceRoot = !sourceRootProperty.isEmpty()
+def ic2CompatEnabled = booleanProperty('compat.ic2.enabled', true)
+
+if (usesVersionSourceRoot && !targetSourceRoot.isDirectory()) {
+    throw new GradleException("Configured source.root '${sourceRootProperty}' for '${targetName}' does not exist")
 }
 
 version = "${modVersion}+${targetName.replace('-', '+')}"
@@ -41,15 +55,34 @@ println "Target: ${targetName}; Java: ${providers.systemProperty('java.version')
         "Arch: ${providers.systemProperty('os.arch').get()}"
 
 // Keep world-dependent Forge GameTests separate from fast JUnit tests.
+// A target may point at a complete version source root when the Minecraft API
+// difference is too large for readable inline Stonecutter conditions.
 sourceSets {
+    main {
+        if (usesVersionSourceRoot) {
+            java.setSrcDirs([new File(targetSourceRoot, 'src/main/java')])
+            resources.setSrcDirs([new File(targetSourceRoot, 'src/main/resources')])
+        }
+    }
+    test {
+        if (usesVersionSourceRoot) {
+            java.setSrcDirs([new File(targetSourceRoot, 'src/test/java')])
+            resources.setSrcDirs([new File(targetSourceRoot, 'src/test/resources')])
+        }
+    }
     gameTest {
-        java.setSrcDirs([file('src/gametest/java')])
-        resources.setSrcDirs([file('src/gametest/resources')])
+        def sourceBase = usesVersionSourceRoot ? targetSourceRoot : project.projectDir
+        java.setSrcDirs([new File(sourceBase, 'src/gametest/java')])
+        resources.setSrcDirs([new File(sourceBase, 'src/gametest/resources')])
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         // ForgeGradle supplies the game launch classpath. Keep compile-only
         // compatibility mods out of the dedicated GameTest runtime.
         runtimeClasspath += output + sourceSets.main.output
     }
+}
+
+if (!ic2CompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/ic2/**'
 }
 
 configurations {
@@ -96,7 +129,7 @@ tasks.named('compileJava') { dependsOn(generateBuildCraftTarget) }
 
 // CI can launch a minimal server or one selected compatibility stack without
 // changing the normal development runtime.
-def enableIc2Runtime = booleanProperty('enable_ic2_runtime', false)
+def enableIc2Runtime = ic2CompatEnabled && booleanProperty('enable_ic2_runtime', false)
 def ciRuntimeProfile = providers.gradleProperty('ci_runtime_profile')
         .map { it.trim().toLowerCase() }
         .getOrElse('default')
@@ -120,16 +153,17 @@ def generatedResources = rootProject.layout.projectDirectory.dir("src/generated/
 
 minecraft {
     mappings channel: 'official', version: minecraftVersion
-    accessTransformer = true
+    accessTransformer = new File(targetSourceRoot, 'src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         configureEach {
-            workingDir.convention runDirectory
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            systemProperty 'forge.logging.console.level', 'debug'
-            systemProperty 'forge.enabledGameTestNamespaces', 'forge,buildcraftlib'
+            workingDirectory runDirectory.asFile
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'forge,buildcraftlib'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
 
-            // Minecraft 1.20.4 and older use legacy mod source declarations.
             mods {
                 buildcraft {
                     source sourceSets.main
@@ -137,26 +171,26 @@ minecraft {
             }
         }
 
-        register('client')
+        client { }
 
-        register('server') {
+        server {
             args '--nogui'
         }
 
-        register('gameTestServer') {
-            classpath sourceSets.gameTest.runtimeClasspath
+        gameTestServer {
             mods {
                 buildcraft {
+                    source sourceSets.main
                     source sourceSets.gameTest
                 }
             }
         }
 
-        register('data') {
-            workingDir = dataRunDirectory
+        data {
+            workingDirectory dataRunDirectory.asFile
             args '--mod', requiredProperty('mod.id'), '--all',
-                    '--output', generatedResources,
-                    '--existing', layout.projectDirectory.dir('src/main/resources')
+                    '--output', generatedResources.asFile,
+                    '--existing', new File(targetSourceRoot, 'src/main/resources')
         }
     }
 }
@@ -164,10 +198,7 @@ minecraft {
 sourceSets.main.resources.srcDir(generatedResources)
 
 repositories {
-    minecraft.mavenizer(it)
-    maven fg.forgeMaven
-    maven fg.minecraftLibsMaven
-
+    // ForgeGradle supplies the Forge and Minecraft repositories.
     exclusiveContent {
         forRepository {
             maven {
@@ -175,6 +206,8 @@ repositories {
                 url = 'https://api.modrinth.com/maven'
             }
         }
+        // fg.deobf stores remapped module variants in ForgeGradle's local repo.
+        forRepositories(fg.repository)
         filter { includeGroup 'maven.modrinth' }
     }
 
@@ -187,33 +220,47 @@ repositories {
 }
 
 dependencies {
-    implementation minecraft.dependency("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
+    minecraft "net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}"
 
-    compileOnly renamer.dependency(requiredProperty('deps.jei'))
+    compileOnly fg.deobf(requiredProperty('deps.jei'))
     if (runtimeEnabled('jei', true)) {
-        runtimeOnly renamer.dependency(requiredProperty('deps.jei'))
+        runtimeOnly fg.deobf(requiredProperty('deps.jei'))
     }
 
-    compileOnly renamer.dependency(requiredProperty('deps.jade'))
+    compileOnly fg.deobf(requiredProperty('deps.jade'))
     if (runtimeEnabled('jade', true)) {
-        runtimeOnly renamer.dependency(requiredProperty('deps.jade'))
+        runtimeOnly fg.deobf(requiredProperty('deps.jade'))
     }
 
-    compileOnly renamer.dependency(requiredProperty('deps.ic2'))
-    compileOnly renamer.dependency(requiredProperty('deps.carbon_config'))
-    if (runtimeEnabled('ic2', enableIc2Runtime)) {
-        runtimeOnly renamer.dependency(requiredProperty('deps.ic2'))
-        runtimeOnly renamer.dependency(requiredProperty('deps.carbon_config'))
+    def ic2Dependency = optionalProperty('deps.ic2')
+    def carbonConfigDependency = optionalProperty('deps.carbon_config')
+    if (ic2CompatEnabled && ic2Dependency) {
+        compileOnly fg.deobf(ic2Dependency)
+        if (runtimeEnabled('ic2', enableIc2Runtime)) {
+            runtimeOnly fg.deobf(ic2Dependency)
+            if (carbonConfigDependency) {
+                runtimeOnly fg.deobf(carbonConfigDependency)
+            }
+        }
+    }
+    if (ic2CompatEnabled && carbonConfigDependency) {
+        compileOnly fg.deobf(carbonConfigDependency)
     }
 
-    compileOnly renamer.dependency(requiredProperty('deps.forestry'))
-    if (runtimeEnabled('forestry', true)) {
-        runtimeOnly renamer.dependency(requiredProperty('deps.forestry'))
+    def forestryDependency = optionalProperty('deps.forestry')
+    if (forestryDependency) {
+        compileOnly fg.deobf(forestryDependency)
+        if (runtimeEnabled('forestry', true)) {
+            runtimeOnly fg.deobf(forestryDependency)
+        }
     }
 
-    compileOnly renamer.dependency(requiredProperty('deps.patchouli'))
-    if (runtimeEnabled('forestry', true)) {
-        runtimeOnly renamer.dependency(requiredProperty('deps.patchouli'))
+    def patchouliDependency = optionalProperty('deps.patchouli')
+    if (patchouliDependency) {
+        compileOnly fg.deobf(patchouliDependency)
+        if (runtimeEnabled('forestry', true)) {
+            runtimeOnly fg.deobf(patchouliDependency)
+        }
     }
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${requiredProperty('deps.junit')}"
@@ -221,14 +268,9 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${requiredProperty('deps.junit')}"
 }
 
-// FG7 delegates third-party dependency deobfuscation and legacy production
-// obfuscation to the standalone Renamer plugin.
-renamer.mappings.from minecraft.dependency.toSrgFile
-
-def productionJar = renamer.classes(tasks.named('jar', Jar)) {
-    map.from minecraft.dependency.toSrgFile
-    archiveClassifier = ''
-}
+// ForgeGradle 6 deobfuscates mod dependencies through fg.deobf and
+// reobfuscates the release jar with the standard reobfJar task.
+def productionJar = tasks.named('jar', Jar)
 
 tasks.named('test', Test) {
     useJUnitPlatform()
@@ -263,7 +305,8 @@ tasks.named('processResources', ProcessResources) {
 }
 
 tasks.named('jar', Jar) {
-    archiveClassifier = 'slim'
+    archiveClassifier = ''
+    finalizedBy 'reobfJar'
     manifest {
         attributes([
                 'Specification-Title': requiredProperty('mod.name'),
@@ -275,8 +318,6 @@ tasks.named('jar', Jar) {
         ])
     }
 }
-
-tasks.named('assemble') { dependsOn(productionJar) }
 
 // Builds this target and copies its production jar to one shared release folder.
 tasks.register('buildAndCollect', Copy) {
@@ -292,7 +333,7 @@ tasks.register('buildAndCollect', Copy) {
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            artifact productionJar
+            artifact jar
         }
     }
     repositories {

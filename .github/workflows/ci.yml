@@ -14,9 +14,9 @@ concurrency:
 
 jobs:
   build-test-server:
-    name: Build all targets, tests and active server
+    name: Build, test and smoke all targets
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
 
@@ -38,32 +38,48 @@ jobs:
       - name: Validate Stonecutter target matrix
         run: python scripts/validate-stonecutter.py
 
+      - name: Validate Forge 1.20.1 8.0.12 port invariants
+        run: python scripts/validate-8.0.12-port.py --source-root version-src/1.20.1-forge
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
       - name: Make scripts executable
-        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/validate-stonecutter.py
+        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/validate-stonecutter.py scripts/validate-8.0.12-port.py
 
       - name: Build and test all Stonecutter targets
         run: ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect
 
-      - name: Run active Forge GameTests
+      - name: Run Forge GameTests for every registered target
         shell: bash
         run: |
           set -euo pipefail
-          active_target="$(sed -nE 's/.*stonecutter active "([^"]+)".*/\1/p' stonecutter.gradle.kts | head -n 1)"
-          if [[ "$active_target" == *-forge ]] \
-            && grep -R -q -E --include='*.java' '@GameTest|GameTestHolder' src 2>/dev/null; then
-            timeout 15m ./gradlew --no-daemon --console=plain --stacktrace runActiveGameTests
-          else
-            echo "No active Forge GameTests detected; skipping."
-          fi
+          mapfile -t targets < <(sed -nE 's/^[[:space:]]*target\("([^"]+)",[[:space:]]*"forge"\).*/\1-forge/p' settings.gradle.kts)
+          for target in "${targets[@]}"; do
+            source_root="."
+            if [[ -d "version-src/${target}/src" ]]; then
+              source_root="version-src/${target}"
+            fi
+            if grep -R -q -E --include='*.java' '@GameTest|GameTestHolder' "${source_root}/src" 2>/dev/null; then
+              echo "Running GameTests for ${target}"
+              timeout 15m ./gradlew --no-daemon --console=plain --stacktrace ":${target}:runGameTestServer"
+            else
+              echo "No GameTests detected for ${target}; skipping."
+            fi
+          done
 
-      - name: Smoke-test active dedicated server
+      - name: Smoke-test every registered dedicated server
+        shell: bash
         env:
           SERVER_STARTUP_TIMEOUT: '360'
           SERVER_RUNTIME_PROFILE: base
-        run: bash scripts/ci-server-smoke.sh
+        run: |
+          set -euo pipefail
+          mapfile -t targets < <(sed -nE 's/^[[:space:]]*target\("([^"]+)",[[:space:]]*"forge"\).*/\1-forge/p' settings.gradle.kts)
+          for target in "${targets[@]}"; do
+            echo "Smoke-testing ${target}"
+            STONECUTTER_TARGET="$target" bash scripts/ci-server-smoke.sh
+          done
 
       - name: Upload build products and diagnostics
         if: always()

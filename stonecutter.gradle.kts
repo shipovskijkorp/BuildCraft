@@ -2,11 +2,6 @@
 
 plugins {
     id("dev.kikugie.stonecutter")
-
-    // Access Transformers must be present before ForgeGradle is loaded.
-    id("net.minecraftforge.accesstransformers") version "5.0.3" apply false
-    id("net.minecraftforge.gradle") version "7.0.32" apply false
-    id("net.minecraftforge.renamer") version "1.1.7" apply false
 }
 
 stonecutter active "1.19.2-forge" /* [SC] DO NOT EDIT */

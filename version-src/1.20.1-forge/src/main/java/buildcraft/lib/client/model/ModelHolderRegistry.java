@@ -1,0 +1,73 @@
+/*
+ * Copyright (c) 2017 SpaceToad and the BuildCraft team
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
+ * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/
+ */
+
+package buildcraft.lib.client.model;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.List;
+
+import buildcraft.api.core.BCDebugging;
+import buildcraft.api.core.BCLog;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
+import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
+
+public class ModelHolderRegistry {
+    public static final boolean DEBUG = BCDebugging.shouldDebugLog("lib.model.holder");
+
+    static final List<ModelHolder> HOLDERS_JSONBAKE = new ArrayList<>();
+    static final List<ModelHolder> HOLDERS_VANILLABAKE = new ArrayList<>();
+
+	public static void preModelBake(RegisterAdditional event) {
+        bootstrapBuiltinHolders();
+        for (ModelHolder holder : HOLDERS_VANILLABAKE) {
+            holder.onModelBakePre(event);
+        }
+	}
+
+    /**
+     * Reloads BuildCraft's variable JSON models once the block atlas and resource manager are ready.
+     * Their textures are registered through atlas JSON on 1.20.1, so the collected set is only
+     * retained for validation and compatibility with the existing model parser.
+     */
+    public static void reloadVariableModels() {
+        Set<ResourceLocation> referencedSprites = new HashSet<>();
+        for (ModelHolder holder : HOLDERS_JSONBAKE) {
+            holder.onTextureStitch(referencedSprites);
+        }
+    }
+    
+    public static void onModelBake(BakingCompleted event) {
+        for (ModelHolder holder : HOLDERS_JSONBAKE) {
+            holder.onModelBake(event);
+        }
+        for (ModelHolder holder : HOLDERS_VANILLABAKE) {
+            holder.onModelBake(event);
+        }
+        if (DEBUG) {
+            BCLog.logger.info("[lib.model.holder] List of registered Models:");
+            List<ModelHolder> holders = new ArrayList<>();
+            holders.addAll(HOLDERS_JSONBAKE);
+            holders.sort(Comparator.comparing(a -> a.modelLocation.toString()));
+
+            for (ModelHolder holder : holders) {
+                String status = "  ";
+                if (holder.failReason != null) {
+                    status += "(" + holder.failReason + ")";
+                } else if (!holder.hasBakedQuads()) {
+                    status += "(Model was registered too late)";
+                }
+
+                BCLog.logger.info("  - " + holder.modelLocation + status);
+            }
+            BCLog.logger.info("[lib.model.holder] Total of " + HOLDERS_JSONBAKE.size() + " models");
+        }
+    }
+}

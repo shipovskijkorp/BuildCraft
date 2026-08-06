@@ -1,0 +1,173 @@
+{
+  "display": {
+    "icon": {
+      "item": "buildcraftsilicon:plug/light_sensor"
+    },
+    "title": {
+      "translate": "advancements.buildcrafttransport.all_plugged_up.title"
+    },
+    "description": {
+      "translate": "advancements.buildcrafttransport.all_plugged_up.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "buildcrafttransport:pipe_logic",
+  "criteria": {
+    "has_all_pluggables": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:plug_blocker"
+            ]
+          },
+          {
+            "items": [
+              "buildcrafttransport:plug_power_adaptor"
+            ]
+          },
+          {
+            "items": [
+              "buildcraftsilicon:plug/gate"
+            ]
+          },
+          {
+            "items": [
+              "buildcraftsilicon:plug/facade"
+            ]
+          },
+          {
+            "items": [
+              "buildcraftsilicon:plug/lens"
+            ]
+          },
+          {
+            "items": [
+              "buildcraftsilicon:plug/light_sensor"
+            ]
+          },
+          {
+            "items": [
+              "buildcraftsilicon:plug/pulsar"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_blocker": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:plug_blocker"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_power_adaptor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcrafttransport:plug_power_adaptor"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_gate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/gate"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_facade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/facade"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_lens": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/lens"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_light_sensor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/light_sensor"
+            ]
+          }
+        ]
+      }
+    },
+    "plug_pulsar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "buildcraftsilicon:plug/pulsar"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_all_pluggables",
+      "plug_blocker"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_power_adaptor"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_gate"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_facade"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_lens"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_light_sensor"
+    ],
+    [
+      "has_all_pluggables",
+      "plug_pulsar"
+    ]
+  ]
+}
