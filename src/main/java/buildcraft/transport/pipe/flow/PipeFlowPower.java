@@ -351,7 +351,11 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
                             leftover = Math.max(0, Math.min(offeredAfterLoss, leftover));
                             long delivered = offeredAfterLoss - leftover;
-                            long consumed = getInputForDelivered(delivered, offeredInput);
+                            // A fully accepted transfer consumes the entire offered input. Reconstructing it from the
+                            // resistance-rounded output can be one microjoule short and leave permanent power dust.
+                            long consumed = delivered == offeredAfterLoss
+                                ? offeredInput
+                                : getInputForDelivered(delivered, offeredInput);
                             if (consumed <= 0) {
                                 continue;
                             }

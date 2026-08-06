@@ -1,5 +1,7 @@
 package buildcraft.transport.pipe.flow;
 
+import java.math.BigInteger;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -320,6 +322,7 @@ public final class PipeFluidPowerGameTests {
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
     public static void powerReceiverSimulationAndDistributionAreConservative(GameTestHelper helper) {
         long mj = MjAPI.MJ;
+        PipeApi.PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
         FakeReceiver east = new FakeReceiver(4 * mj);
         FakeReceiver south = new FakeReceiver(12 * mj);
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.woodPower)
@@ -337,7 +340,7 @@ public final class PipeFluidPowerGameTests {
             flow.onTick();
             PipeFlowPower.Section input = flow.getSection(Direction.WEST);
             long offered = 20 * mj;
-            long expectedAccepted = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower).transferPerTick;
+            long expectedAccepted = transferInfo.transferPerTick;
 
             long simulatedLeftover = input.receivePower(offered, FluidAction.SIMULATE);
             require(helper, input.internalNextPower == 0, "simulated MJ insertion mutated the power buffer");
@@ -353,11 +356,14 @@ public final class PipeFluidPowerGameTests {
 
         helper.runAfterDelay(3, () -> {
             flow.onTick();
-            require(helper, east.accepted == 4 * mj, "east receiver got " + east.accepted + " instead of 4 MJ");
-            require(helper, south.accepted == 12 * mj, "south receiver got " + south.accepted + " instead of 12 MJ");
-            require(helper, east.accepted + south.accepted
-                    == PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower).transferPerTick,
-                "power distribution created or lost MJ");
+            long expectedEast = applyPowerResistance(4 * mj, transferInfo);
+            long expectedSouth = applyPowerResistance(12 * mj, transferInfo);
+            require(helper, east.accepted == expectedEast,
+                "east receiver got " + east.accepted + " instead of " + expectedEast + " microjoules after resistance");
+            require(helper, south.accepted == expectedSouth,
+                "south receiver got " + south.accepted + " instead of " + expectedSouth + " microjoules after resistance");
+            require(helper, east.accepted + south.accepted == expectedEast + expectedSouth,
+                "power distribution created energy or applied the wrong resistance");
             require(helper, flow.getSection(Direction.WEST).internalPower == 0,
                 "input section retained power after satisfying all requests");
             helper.succeed();
@@ -366,7 +372,8 @@ public final class PipeFluidPowerGameTests {
 
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
     public static void powerDistributionAbovePipeLimitDoesNotDivideByZero(GameTestHelper helper) {
-        long maxPower = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower).transferPerTick;
+        PipeApi.PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
+        long maxPower = transferInfo.transferPerTick;
         FakeReceiver up = new FakeReceiver(maxPower);
         FakeReceiver south = new FakeReceiver(maxPower);
         FakeReceiver east = new FakeReceiver(maxPower);
@@ -391,8 +398,15 @@ public final class PipeFluidPowerGameTests {
         helper.runAfterDelay(3, () -> {
             flow.onTick();
             long accepted = up.accepted + south.accepted + east.accepted;
-            require(helper, accepted == maxPower,
-                "oversubscribed power distribution transferred " + accepted + " of " + maxPower + " microjoules");
+            long firstShare = maxPower / 3;
+            long secondShare = (maxPower - firstShare) / 2;
+            long thirdShare = maxPower - firstShare - secondShare;
+            long expectedAccepted = applyPowerResistance(firstShare, transferInfo)
+                + applyPowerResistance(secondShare, transferInfo)
+                + applyPowerResistance(thirdShare, transferInfo);
+            require(helper, accepted == expectedAccepted,
+                "oversubscribed power distribution transferred " + accepted + " instead of " + expectedAccepted
+                    + " microjoules after resistance");
             require(helper, up.accepted > 0 && south.accepted > 0 && east.accepted > 0,
                 "oversubscribed power distribution starved one of the requested outputs");
             require(helper, flow.getSection(Direction.WEST).internalPower == 0,
@@ -404,6 +418,10 @@ public final class PipeFluidPowerGameTests {
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 40)
     public static void powerTraversesNonReceiverPipeAndReachesSink(GameTestHelper helper) {
         long requested = 8 * MjAPI.MJ;
+        PipeApi.PowerTransferInfo sourceTransferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
+        PipeApi.PowerTransferInfo transportTransferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.stonePower);
+        long expectedAtTransport = applyPowerResistance(requested, sourceTransferInfo);
+        long expectedAtSink = applyPowerResistance(expectedAtTransport, transportTransferInfo);
         FakeReceiver sink = new FakeReceiver(requested);
 
         TestPipe sourcePipe = new TestPipe(helper.getLevel(), BCTransportPipes.woodPower)
@@ -437,13 +455,15 @@ public final class PipeFluidPowerGameTests {
         });
         helper.runAfterDelay(4, () -> {
             source.onTick();
-            require(helper, transport.getSection(Direction.WEST).internalNextPower == requested,
-                "non-receiver transport pipe refused power from its neighbour");
+            require(helper, transport.getSection(Direction.WEST).internalNextPower == expectedAtTransport,
+                "non-receiver transport pipe queued " + transport.getSection(Direction.WEST).internalNextPower
+                    + " instead of " + expectedAtTransport + " microjoules after source-pipe resistance");
         });
         helper.runAfterDelay(5, () -> {
             transport.onTick();
-            require(helper, sink.accepted == requested,
-                "sink received " + sink.accepted + " of " + requested + " microjoules");
+            require(helper, sink.accepted == expectedAtSink,
+                "sink received " + sink.accepted + " instead of " + expectedAtSink
+                    + " microjoules after two pipe hops");
             require(helper, source.getSection(Direction.WEST).internalPower == 0,
                 "source retained power after forwarding it");
             require(helper, transport.getSection(Direction.WEST).internalPower == 0,
@@ -556,6 +576,24 @@ public final class PipeFluidPowerGameTests {
 
     private static boolean containsOnlyFluid(PipeFlowFluids flow, net.minecraft.world.level.material.Fluid fluid) {
         return totalFluid(flow) == 0 || containsFluid(flow, fluid);
+    }
+
+    private static long applyPowerResistance(long amount, PipeApi.PowerTransferInfo transferInfo) {
+        if (amount <= 0) {
+            return 0;
+        }
+        long resistance = Math.max(0, Math.min(MjAPI.MJ, transferInfo.resistancePerTick));
+        if (resistance <= 0) {
+            return amount;
+        }
+        if (resistance >= MjAPI.MJ) {
+            return 0;
+        }
+        long retained = BigInteger.valueOf(amount)
+            .multiply(BigInteger.valueOf(MjAPI.MJ - resistance))
+            .divide(BigInteger.valueOf(MjAPI.MJ))
+            .longValue();
+        return Math.max(1, retained);
     }
 
     private static void require(GameTestHelper helper, boolean condition, String message) {
