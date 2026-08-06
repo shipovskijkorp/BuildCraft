@@ -1,14 +1,14 @@
 modLoader="javafml"
-loaderVersion="[43,)"
-license="MPL-2.0"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
 showAsResourcePack=false
 
 [[mods]]
     modId="buildcraftlib"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Library"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Shared library code and runtime helpers used by the BuildCraft Community Edition modules.
     '''
@@ -17,51 +17,51 @@ Shared library code and runtime helpers used by the BuildCraft Community Edition
 [[dependencies.buildcraftlib]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftlib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftlib]]
     modId="jei"
     mandatory=false
-    versionRange="[11,)"
+    versionRange="${jei_version_range}"
     ordering="AFTER"
     side="CLIENT"
 
 [[dependencies.buildcraftlib]]
     modId="jade"
     mandatory=false
-    versionRange="[8,)"
+    versionRange="${jade_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftlib]]
     modId="ic2"
     mandatory=false
-    versionRange="[1.19.2-2.1.2.1,)"
+    versionRange="${ic2_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftlib]]
     modId="forestry"
     mandatory=false
-    versionRange="[1.0.0,)"
+    versionRange="${forestry_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcraftcore"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Core"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Core BuildCraft content: common items, gears, engines, markers and shared gameplay systems.
     '''
@@ -70,30 +70,30 @@ Core BuildCraft content: common items, gears, engines, markers and shared gamepl
 [[dependencies.buildcraftcore]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftcore]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftcore]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcraftfactory"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Factory"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Factory machines and fluid infrastructure, including tanks, pumps, mining wells and processing blocks.
     '''
@@ -102,37 +102,37 @@ Factory machines and fluid infrastructure, including tanks, pumps, mining wells 
 [[dependencies.buildcraftfactory]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftfactory]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftfactory]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftfactory]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcrafttransport"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Transport"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Item, fluid and power pipes, gates, wires, facades, plugs and transport automation.
     '''
@@ -141,37 +141,37 @@ Item, fluid and power pipes, gates, wires, facades, plugs and transport automati
 [[dependencies.buildcrafttransport]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcrafttransport]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcrafttransport]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcrafttransport]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcraftenergy"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Energy"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Oil, fuels, power generation and energy-related BuildCraft mechanics.
     '''
@@ -180,37 +180,37 @@ Oil, fuels, power generation and energy-related BuildCraft mechanics.
 [[dependencies.buildcraftenergy]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftenergy]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftenergy]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftenergy]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcraftbuilders"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Builders"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Builder module content such as quarries, fillers, frames, markers, templates and construction machines.
     '''
@@ -219,37 +219,37 @@ Builder module content such as quarries, fillers, frames, markers, templates and
 [[dependencies.buildcraftbuilders]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftbuilders]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftbuilders]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftbuilders]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcraftsilicon"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Silicon"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Silicon technology: lasers, assembly tables, integration tables, programming tables, chipsets and gates.
     '''
@@ -258,37 +258,37 @@ Silicon technology: lasers, assembly tables, integration tables, programming tab
 [[dependencies.buildcraftsilicon]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftsilicon]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftsilicon]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftsilicon]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcraftrobotics"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Robotics"
     credits="Special thanks to the original BuildCraft team and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Robots, docking stations, redstone boards, zones and robotic automation.
     '''
@@ -297,51 +297,51 @@ Robots, docking stations, redstone boards, zones and robotic automation.
 [[dependencies.buildcraftrobotics]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftrobotics]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftrobotics]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftrobotics]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftrobotics]]
     modId="buildcraftsilicon"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftrobotics]]
     modId="buildcrafttransport"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[mods]]
     modId="buildcraftcompat"
-    version="${file.jarVersion}"
+    version="${mod_version}"
     displayName="BuildCraft Community Edition - Compat"
     credits="Special thanks to the original BuildCraft and Forestry teams and all contributors."
-    authors="CurativeTree, ShipovskijKorp"
+    authors="${mod_authors}"
     description='''
 Optional cross-mod content for BuildCraft Community Edition, including the Forestry Apiarist's Pipe.
     '''
@@ -350,41 +350,41 @@ Optional cross-mod content for BuildCraft Community Edition, including the Fores
 [[dependencies.buildcraftcompat]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.0,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftcompat]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.buildcraftcompat]]
     modId="buildcraftlib"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftcompat]]
     modId="buildcraftcore"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftcompat]]
     modId="buildcrafttransport"
     mandatory=true
-    versionRange="[8.0.0.0,)"
+    versionRange="${buildcraft_version_range}"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.buildcraftcompat]]
     modId="forestry"
     mandatory=false
-    versionRange="[1.0.0,)"
+    versionRange="${forestry_version_range}"
     ordering="AFTER"
     side="BOTH"

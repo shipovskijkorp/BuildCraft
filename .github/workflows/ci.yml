@@ -8,6 +8,167 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: buildcraft-stonecutter-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
-    uses: CurativeTree/BuildCraft/.github/workflows/reusable-gradle-ci.yml@main
+  build-test-server:
+    name: Build all targets, tests and active server
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate Stonecutter target matrix
+        run: python scripts/validate-stonecutter.py
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make scripts executable
+        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/validate-stonecutter.py
+
+      - name: Build and test all Stonecutter targets
+        run: ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect
+
+      - name: Run active Forge GameTests
+        shell: bash
+        run: |
+          set -euo pipefail
+          active_target="$(sed -nE 's/.*stonecutter active "([^"]+)".*/\1/p' stonecutter.gradle.kts | head -n 1)"
+          if [[ "$active_target" == *-forge ]] \
+            && grep -R -q -E --include='*.java' '@GameTest|GameTestHolder' src 2>/dev/null; then
+            timeout 15m ./gradlew --no-daemon --console=plain --stacktrace runActiveGameTests
+          else
+            echo "No active Forge GameTests detected; skipping."
+          fi
+
+      - name: Smoke-test active dedicated server
+        env:
+          SERVER_STARTUP_TIMEOUT: '360'
+          SERVER_RUNTIME_PROFILE: base
+        run: bash scripts/ci-server-smoke.sh
+
+      - name: Upload build products and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildcraft-multiversion-${{ github.run_number }}-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            build/libs/**
+            versions/*/build/libs/**
+            versions/*/build/reports/tests/**
+            versions/*/build/test-results/**
+            run/*/logs/**
+            run/*/crash-reports/**
+            ci-server-*.log
+
+  compatibility-server:
+    name: Active target compatibility (${{ matrix.profile }})
+    needs: build-test-server
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - forestry
+          - ic2
+    env:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect profile support
+        id: support
+        shell: bash
+        env:
+          PROFILE: ${{ matrix.profile }}
+        run: |
+          set -euo pipefail
+          active_target="$(sed -nE 's/.*stonecutter active "([^"]+)".*/\1/p' stonecutter.gradle.kts | head -n 1)"
+          loader="${active_target##*-}"
+          build_script="build.${loader}.gradle"
+          supported=false
+          if [[ -f "$build_script" && -f scripts/ci-server-smoke.sh ]] \
+            && grep -q "ci_runtime_profile" "$build_script" \
+            && grep -q "SERVER_RUNTIME_PROFILE" scripts/ci-server-smoke.sh; then
+            case "$PROFILE" in
+              forestry) grep -q "deps.forestry" "$build_script" && supported=true ;;
+              ic2) grep -q "deps.ic2" "$build_script" && supported=true ;;
+            esac
+          fi
+          echo "supported=$supported" >> "$GITHUB_OUTPUT"
+          if [[ "$supported" != true ]]; then
+            echo "Compatibility profile '$PROFILE' is not configured for $active_target; skipping."
+          fi
+
+      - name: Set up Java
+        if: steps.support.outputs.supported == 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        if: steps.support.outputs.supported == 'true'
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make scripts executable
+        if: steps.support.outputs.supported == 'true'
+        run: chmod +x gradlew scripts/ci-server-smoke.sh
+
+      - name: Smoke-test compatibility server
+        if: steps.support.outputs.supported == 'true'
+        id: smoke
+        continue-on-error: true
+        env:
+          SERVER_STARTUP_TIMEOUT: '360'
+          SERVER_RUNTIME_PROFILE: ${{ matrix.profile }}
+        run: bash scripts/ci-server-smoke.sh
+
+      - name: Report compatibility result
+        if: steps.support.outputs.supported == 'true' && always()
+        shell: bash
+        env:
+          PROFILE: ${{ matrix.profile }}
+          OUTCOME: ${{ steps.smoke.outcome }}
+        run: |
+          if [[ "$OUTCOME" == success ]]; then
+            echo "### $PROFILE compatibility: passed" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning title=$PROFILE compatibility failed::The optional $PROFILE server stack did not reach the ready state."
+            echo "### $PROFILE compatibility: failed (advisory)" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload compatibility diagnostics
+        if: steps.support.outputs.supported == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildcraft-compat-${{ matrix.profile }}-${{ github.run_number }}-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            run/*/logs/**
+            run/*/crash-reports/**
+            ci-server-*.log

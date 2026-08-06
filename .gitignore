@@ -1,40 +1,35 @@
-# eclipse
-bin
+# Eclipse
+bin/
 *.launch
-.settings
-.metadata
+.settings/
+.metadata/
 .classpath
 .project
 
-# idea
-out
+# IntelliJ IDEA
+out/
 *.ipr
 *.iws
 *.iml
-.idea
+.idea/
 
-# gradle
-build
-.gradle
+# Gradle / Stonecutter generated projects
+.gradle/
+build/
+versions/
 
-# other
-eclipse
-run
+# Development runs and generated data
+run/
+run-data/
+logs/
+mcmodsrepo/
+src/generated/
+src/main/resources/.cache/
 
-# Files from Forge MDK
+# Forge MDK files
 forge*changelog.txt
 
-# Development
+# Local scratch files
 src.zip
-src/main/resources/.cache/
-src/generated/resources/.cache/
 sub_projects/
-1.12.2-forge
-1.19.2-forge
-1.20.1-forge
-1.21.1-forge
-1.21.1-neoforge
-1.20.1-fabric
-1.21.1-fabric
-logs/
-.gradle-bootstrap
+.gradle-bootstrap/

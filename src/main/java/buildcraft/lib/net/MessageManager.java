@@ -39,7 +39,7 @@ public class MessageManager {
 
     private static final Map<IBuildCraftMod, PerModHandler> MOD_HANDLERS;
     private static final Map<Class<?>, PerMessageInfo<?>> MESSAGE_HANDLERS = new HashMap<>();
-    public static final String PROTOCOL_VERSION = "BC8.0.x-1.19.2-net2";
+    public static final String PROTOCOL_VERSION = BuildCraftTarget.NETWORK_PROTOCOL;
     private static int id = 34;
 
     static {

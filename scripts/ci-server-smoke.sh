@@ -3,12 +3,19 @@ set -Eeuo pipefail
 
 startup_timeout="${SERVER_STARTUP_TIMEOUT:-360}"
 runtime_profile="${SERVER_RUNTIME_PROFILE:-base}"
-server_log="${SERVER_LOG_FILE:-ci-server-${runtime_profile}.log}"
-latest_log="run/logs/latest.log"
+active_target="$(sed -nE 's/.*stonecutter active "([^"]+)".*/\1/p' stonecutter.gradle.kts | head -n 1)"
+target="${STONECUTTER_TARGET:-$active_target}"
+if [[ -z "$target" ]]; then
+  echo "Unable to determine the active Stonecutter target" >&2
+  exit 2
+fi
+server_log="${SERVER_LOG_FILE:-ci-server-${target}-${runtime_profile}.log}"
+run_dir="run/${target}"
+latest_log="${run_dir}/logs/latest.log"
 
-mkdir -p run
-printf 'eula=true\n' > run/eula.txt
-cat > run/server.properties <<'PROPERTIES'
+mkdir -p "$run_dir"
+printf 'eula=true\n' > "${run_dir}/eula.txt"
+cat > "${run_dir}/server.properties" <<'PROPERTIES'
 online-mode=false
 server-ip=127.0.0.1
 server-port=25565
@@ -20,13 +27,11 @@ max-tick-time=-1
 PROPERTIES
 
 : > "$server_log"
-# The previous GameTest invocation uses the same run directory. Remove its log so
-# a stale fatal message cannot be mistaken for a failure of this runServer process.
 rm -f "$latest_log"
 
-echo "Starting dedicated server smoke test (profile: ${runtime_profile}, timeout: ${startup_timeout}s)."
+echo "Starting dedicated server smoke test (target: ${target}, profile: ${runtime_profile}, timeout: ${startup_timeout}s)."
 setsid ./gradlew --no-daemon --console=plain --stacktrace \
-  -Pci_runtime_profile="${runtime_profile}" runServer > "$server_log" 2>&1 &
+  -Pci_runtime_profile="${runtime_profile}" ":${target}:runServer" > "$server_log" 2>&1 &
 server_pid=$!
 
 cleanup() {
@@ -51,7 +56,7 @@ show_log_tail() {
   tail -n 200 "$server_log" 2>/dev/null || true
 
   if [[ -f "$latest_log" ]]; then
-    echo '--- run/logs/latest.log (last 200 lines) ---'
+    echo "--- ${latest_log} (last 200 lines) ---"
     tail -n 200 "$latest_log" 2>/dev/null || true
   fi
 }
