@@ -66,7 +66,7 @@ public class FluidUtilBC {
 
             // Drain the source before filling the destination. The old order could create fluid when the source
             // changed between simulation and execution.
-            FluidStack drained = tank.drainInternal(new FluidStack(available, accepted), FluidAction.EXECUTE);
+            FluidStack drained = tank.drainInternal(available.copyWithAmount(accepted), FluidAction.EXECUTE);
             if (drained.isEmpty() || drained.getAmount() <= 0) {
                 continue;
             }
@@ -74,7 +74,7 @@ public class FluidUtilBC {
             int actuallyAccepted = Math.min(drained.getAmount(), Math.max(0,
                 handler.fill(drained.copy(), FluidAction.EXECUTE)));
             if (actuallyAccepted < drained.getAmount()) {
-                FluidStack remainder = new FluidStack(drained, drained.getAmount() - actuallyAccepted);
+                FluidStack remainder = drained.copyWithAmount(drained.getAmount() - actuallyAccepted);
                 int restored = tank.fillInternal(remainder, FluidAction.EXECUTE);
                 if (restored != remainder.getAmount()) {
                     BCLog.logger.error("Failed to roll back {} mB after a destination fluid handler accepted only {} mB",
@@ -143,7 +143,7 @@ public class FluidUtilBC {
             return FluidStack.EMPTY;
         }
 
-        FluidStack requested = new FluidStack(potential, accepted);
+        FluidStack requested = potential.copyWithAmount(accepted);
         FluidStack stillAvailable = from.drain(requested.copy(), FluidAction.SIMULATE);
         if (!sameFluidAndAmount(requested, stillAvailable)) {
             return FluidStack.EMPTY;
@@ -171,10 +171,10 @@ public class FluidUtilBC {
         actuallyAccepted = Math.min(drained.getAmount(), Math.max(0, actuallyAccepted));
 
         if (actuallyAccepted < drained.getAmount()) {
-            FluidStack remainder = new FluidStack(drained, drained.getAmount() - actuallyAccepted);
+            FluidStack remainder = drained.copyWithAmount(drained.getAmount() - actuallyAccepted);
             restoreFluid(from, remainder, "destination accepted less than it simulated");
         }
-        return actuallyAccepted <= 0 ? FluidStack.EMPTY : new FluidStack(drained, actuallyAccepted);
+        return actuallyAccepted <= 0 ? FluidStack.EMPTY : drained.copyWithAmount(actuallyAccepted);
     }
 
     private static boolean sameFluidAndAmount(FluidStack expected, FluidStack actual) {

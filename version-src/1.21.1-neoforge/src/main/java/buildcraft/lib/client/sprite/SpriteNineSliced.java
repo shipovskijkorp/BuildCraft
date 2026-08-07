@@ -15,6 +15,7 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import org.joml.Matrix4f;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 
 import buildcraft.api.core.render.ISprite;
@@ -58,6 +59,14 @@ public class SpriteNineSliced {
         this.yMax = yMax;
         this.xScale = xScale;
         this.yScale = yScale;
+    }
+
+    public void draw(GuiGraphics guiGraphics, IGuiArea element) {
+        draw(guiGraphics.pose(), element.getX(), element.getY(), element.getWidth(), element.getHeight());
+    }
+
+    public void draw(GuiGraphics guiGraphics, double x, double y, double width, double height) {
+        draw(guiGraphics.pose(), x, y, width, height);
     }
 
     public void draw(PoseStack pose, IGuiArea element) {

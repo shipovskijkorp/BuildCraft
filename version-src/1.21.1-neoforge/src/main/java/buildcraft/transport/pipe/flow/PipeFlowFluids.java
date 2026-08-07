@@ -1022,7 +1022,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             if (tank != 0 || amount <= 0 || currentFluid.isEmpty()) {
                 return FluidStack.EMPTY;
             }
-            return new FluidStack(currentFluid, amount);
+            return currentFluid.copyWithAmount(amount);
         }
 
         @Override

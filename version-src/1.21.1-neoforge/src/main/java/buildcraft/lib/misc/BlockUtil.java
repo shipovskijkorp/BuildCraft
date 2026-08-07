@@ -134,12 +134,12 @@ public final class BlockUtil {
         Player placementActor = actor != null
             ? actor
             : BuildCraftAPI.fakePlayerProvider.getFakePlayer(serverLevel, FakePlayerProvider.NULL_PROFILE, pos);
-        BlockSnapshot snapshot = BlockSnapshot.create(serverLevel.dimension(), serverLevel, pos);
+        BlockSnapshot snapshot = BlockSnapshot.create(serverLevel.dimension(), serverLevel, pos, flags);
         if (!serverLevel.setBlock(pos, state, flags)) {
             return false;
         }
         if (EventHooks.onBlockPlace(placementActor, snapshot, placedAgainst)) {
-            snapshot.restore(true);
+            snapshot.restore();
             return false;
         }
         return true;

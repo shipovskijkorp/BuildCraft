@@ -236,14 +236,6 @@ public class PipeWireRenderer {
         return index;
     }*/
 
-    private static int getIndex(EnumWirePart part, DyeColor colour, boolean isOn) {
-        return part.ordinal() * 32 + colour.ordinal() * 2 + (isOn ? 1 : 0);
-    }
-
-    private static int getIndex(EnumWireBetween bet, DyeColor colour, boolean isOn) {
-        return WIRE_COUNT + bet.ordinal() * 32 + colour.ordinal() * 2 + (isOn ? 1 : 0);
-    }
-
 /*    private static int compileWire(EnumWirePart part, DyeColor colour, boolean isOn) {
         return compileQuads(getQuads(part), colour, isOn);
     }

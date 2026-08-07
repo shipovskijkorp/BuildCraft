@@ -15,8 +15,10 @@ import org.joml.Matrix4f;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.core.client.BuildCraftLaserManager;
+import buildcraft.core.item.ItemGoggles;
 import buildcraft.lib.client.render.laser.LaserData_BC8;
 import buildcraft.lib.client.render.laser.LaserRenderer_BC8;
+import buildcraft.silicon.BCSiliconConfig;
 import buildcraft.silicon.tile.TileLaser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;

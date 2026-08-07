@@ -104,7 +104,7 @@ public class AIRobotPumpBlock extends AIRobot {
         }
         FluidTank rollbackTank = new FluidTank(fluid.getAmount());
         rollbackTank.setFluid(fluid.copy());
-        return FluidUtil.tryPlaceFluid(null, robot.level, null, pos, rollbackTank, fluid.copy());
+        return FluidUtil.tryPlaceFluid(null, robot.level(), null, pos, rollbackTank, fluid.copy());
     }
 
     @Override

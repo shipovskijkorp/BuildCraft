@@ -40,7 +40,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent.ModifyBakingResult;
 import net.neoforged.neoforge.client.event.ModelEvent.RegisterAdditional;
@@ -175,13 +174,6 @@ public class BCCore {
         @SubscribeEvent
         public static void registerMenuScreens(RegisterMenuScreensEvent event) {
             event.register(LIST_MENU.get(), GuiList::new);
-        }
-
-        @SubscribeEvent
-        public static void onTextureStitchPost(TextureAtlasStitchedEvent event) {
-            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
-                RenderEngine_BC8.reloadSprites(event.getAtlas());
-            }
         }
 
         @SubscribeEvent

@@ -226,7 +226,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             for (ItemStack stack : task.items) {
                 result = 31 * result + stack.getItem().hashCode();
                 result = 31 * result + stack.getCount();
-                result = 31 * result + (stack.getTag() == null ? 0 : stack.getTag().hashCode());
+                result = 31 * result + stack.getComponents().hashCode();
             }
         }
         return result;
@@ -797,7 +797,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             .map(BreakTask::new)
             .forEach(this::cancelBreakTask);
         NBTUtilBC.readCompoundList(nbt.get("placeTasks"))
-            .map(PlaceTask::new)
+            .map(tag -> new PlaceTask(tag, registries))
             .forEach(this::cancelPlaceTask);
         forceRecheckCurrentTask();
         flushPendingPowerRefund();

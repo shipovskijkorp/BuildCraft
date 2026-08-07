@@ -43,7 +43,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.neoforge.common.crafting.IShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 import buildcraft.api.core.render.ISprite;
@@ -1437,9 +1437,9 @@ public final class GuiGuide extends Screen {
         List<Ingredient> ingredients = recipeIngredients(recipe);
         int recipeWidth = 3;
         int recipeHeight = 3;
-        if (recipe instanceof IShapedRecipe<?>) {
-            recipeWidth = Mth.clamp(((IShapedRecipe<?>) recipe).getWidth(), 1, 3);
-            recipeHeight = Mth.clamp(((IShapedRecipe<?>) recipe).getHeight(), 1, 3);
+        if (recipe instanceof ShapedRecipe shapedRecipe) {
+            recipeWidth = Mth.clamp(shapedRecipe.getWidth(), 1, 3);
+            recipeHeight = Mth.clamp(shapedRecipe.getHeight(), 1, 3);
         } else if (ingredients.size() <= 3) {
             recipeWidth = Math.max(1, ingredients.size());
             recipeHeight = 1;

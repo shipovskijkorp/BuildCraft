@@ -1544,7 +1544,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
 
     /** Called after a player shift-wrenches the robot's home station. */
     public void releaseMainStationForPlayer(DockingStation station) {
-        if (level.isClientSide || station == null) {
+        if (level().isClientSide || station == null) {
             return;
         }
 

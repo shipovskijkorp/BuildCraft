@@ -651,23 +651,22 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     }
 
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag nbt = super.serializeNBT();
+    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+        CompoundTag nbt = super.serializeNBT(registries);
         nbt.put("pendingFluidRefunds", NBTUtilBC.writeObjectList(
-            pendingFluidRefunds.stream().map(stack -> stack.writeToNBT(new CompoundTag()))
+            pendingFluidRefunds.stream().map(stack -> FluidStackUtil.saveOptional(stack, registries))
         ));
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
         pendingFluidRefunds.clear();
         NBTUtilBC.readCompoundList(nbt.get("pendingFluidRefunds"))
-            .map(FluidStack::loadFluidStackFromNBT)
-            .filter(Objects::nonNull)
+            .map(tag -> FluidStackUtil.parseOptional(registries, tag))
             .filter(stack -> !stack.isEmpty())
             .forEach(pendingFluidRefunds::add);
-        super.deserializeNBT(nbt);
+        super.deserializeNBT(registries, nbt);
     }
 
 

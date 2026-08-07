@@ -21,6 +21,7 @@ import buildcraft.lib.gui.pos.GuiRectangle;
 import buildcraft.lib.gui.recipe.GuiRecipeBookPhantom;
 import buildcraft.silicon.container.ContainerAdvancedCraftingTable;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
