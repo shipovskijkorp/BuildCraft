@@ -53,7 +53,7 @@ public class ItemWrench extends Item implements IToolWrench {
         }
 
         InteractionResult result = CustomRotationHelper.INSTANCE.attemptRotateBlock(level, pos, state, side);
-        if (result.consumesAction() && player != null) {
+        if (result == InteractionResult.SUCCESS && player != null) {
             wrenchUsed(player, hand, player.getItemInHand(hand), BlockHitResult.miss(click, side, pos));
         }
         SoundUtil.playSlideSound(level, pos, state, result);
@@ -67,6 +67,6 @@ public class ItemWrench extends Item implements IToolWrench {
 
     @Override
     public void wrenchUsed(Player player, InteractionHand hand, ItemStack wrench, HitResult rayTrace) {
-        player.swing(hand, true);
+        player.swingingArm = hand;
     }
 }

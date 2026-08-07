@@ -41,23 +41,24 @@ public class ItemPaintbrush_BC8 extends ItemByEnum<DyeColor> {
         InteractionResult result = CustomPaintHelper.INSTANCE.attemptPaintBlock(
             level, pos, level.getBlockState(pos), hitPos, ctx.getClickedFace(), type
         );
-        if (!result.consumesAction()) {
-            return result;
+        if (result != InteractionResult.SUCCESS) {
+            return InteractionResult.FAIL;
+        }
+        if (player == null) {
+            return InteractionResult.SUCCESS;
         }
 
-        if (player != null && !level.isClientSide) {
-            CompoundTag tag = ItemStackUtil.getCustomDataOrNull(stack);
-            stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-            if (stack.isEmpty()) {
-                ItemStack cleanBrush = new ItemStack(BCCoreItems.PAINT_BRUSH.get());
-                if (tag != null) {
-                    ItemStackUtil.setCustomData(cleanBrush, tag);
-                }
-                player.setItemInHand(hand, cleanBrush);
+        CompoundTag tag = ItemStackUtil.getCustomDataOrNull(stack);
+        stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+        if (stack.isEmpty()) {
+            ItemStack cleanBrush = new ItemStack(BCCoreItems.PAINT_BRUSH.get());
+            if (tag != null) {
+                ItemStackUtil.setCustomData(cleanBrush, tag);
             }
-            player.inventoryMenu.broadcastChanges();
+            player.setItemInHand(hand, cleanBrush);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        player.inventoryMenu.broadcastChanges();
+        return InteractionResult.SUCCESS;
     }
 
     public boolean tryBrush(ItemStack stack, Level world, BlockPos pos, BlockState state, Vec3 hitPos, Direction side, Player player) {

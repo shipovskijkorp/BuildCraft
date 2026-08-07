@@ -1368,7 +1368,6 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void dock(DockingStation station) {
         dockingStation = station;
         if (station != null) {
-            mainStationReleasedManually = false;
             station.setLevel(level());
             dockingStationIndex = station.index();
             dockingStationSide = station.side();

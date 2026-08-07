@@ -1040,7 +1040,6 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
         if (damageEvent.isCanceled()) {
             return false;
         }
-        amount = damageEvent.getAmount();
         if (!level().isClientSide) {
             hurtTime = hurtDuration = 10;
             int mul = 2600;

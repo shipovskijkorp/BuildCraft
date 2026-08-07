@@ -67,6 +67,11 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     public static final int NET_CREATE_ITEM = 2;
 
     private final DelayedList<TravellingItem> items = new DelayedList<>();
+    /** Raw travelling-item NBT loaded before Minecraft attaches a Level to the block entity. */
+    @Nullable
+    private ListTag pendingItems;
+    /** Entries that still cannot be decoded are kept verbatim so a save never destroys them. */
+    private final ListTag unreadableItems = new ListTag();
 
     public PipeFlowItems(IPipe pipe) {
         super(pipe);
@@ -74,16 +79,40 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     public PipeFlowItems(IPipe pipe, CompoundTag nbt) {
         super(pipe, nbt);
-        ListTag list = nbt.getList("items", Tag.TAG_COMPOUND);
+        pendingItems = nbt.getList("items", Tag.TAG_COMPOUND).copy();
+        loadPendingItems();
+    }
+
+    /**
+     * Block entities are deserialized before their Level is assigned. The 1.19.2
+     * implementation could read ItemStacks without registry access; 1.21.1 cannot,
+     * so defer decoding until the first tick instead of dropping the whole pipe.
+     */
+    private void loadPendingItems() {
+        if (pendingItems == null) {
+            return;
+        }
         Level level = pipe.getHolder().getPipeWorld();
         if (level == null) {
-            throw new IllegalStateException("Cannot deserialize travelling items without a pipe world");
+            return;
         }
+
+        ListTag list = pendingItems;
+        pendingItems = null;
         long tickNow = level.getGameTime();
         for (int i = 0; i < list.size(); i++) {
-            TravellingItem item = new TravellingItem(list.getCompound(i), tickNow, level.registryAccess());
-            if (!item.stack.isEmpty()) {
-                items.add(item.getCurrentDelay(tickNow), item);
+            CompoundTag itemTag = list.getCompound(i);
+            try {
+                TravellingItem item = new TravellingItem(itemTag, tickNow, level.registryAccess());
+                if (!item.stack.isEmpty()) {
+                    items.add(item.getCurrentDelay(tickNow), item);
+                }
+            } catch (RuntimeException ex) {
+                unreadableItems.add(itemTag.copy());
+                buildcraft.api.core.BCLog.logger.warn(
+                    "Could not migrate a travelling item at {}. Preserving its original NBT.",
+                    pipe.getHolder().getPipePos(), ex
+                );
             }
         }
     }
@@ -91,18 +120,25 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     @Override
     public CompoundTag writeToNbt() {
         CompoundTag nbt = super.writeToNbt();
-        List<List<TravellingItem>> allItems = items.getAllElements();
-        ListTag list = new ListTag();
-
         Level level = pipe.getHolder().getPipeWorld();
         if (level == null) {
-            throw new IllegalStateException("Cannot serialize travelling items without a pipe world");
+            if (pendingItems != null) {
+                nbt.put("items", pendingItems.copy());
+            } else if (!unreadableItems.isEmpty()) {
+                nbt.put("items", unreadableItems.copy());
+            }
+            return nbt;
+        }
+
+        loadPendingItems();
+        ListTag list = new ListTag();
+        for (int i = 0; i < unreadableItems.size(); i++) {
+            list.add(unreadableItems.getCompound(i).copy());
         }
         long tickNow = level.getGameTime();
-        int i = 0;
-        for (List<TravellingItem> l : allItems) {
-            for (TravellingItem item : l) {
-                list.add(i++, item.writeToNbt(tickNow, level.registryAccess()));
+        for (List<TravellingItem> itemList : items.getAllElements()) {
+            for (TravellingItem item : itemList) {
+                list.add(item.writeToNbt(tickNow, level.registryAccess()));
             }
         }
         nbt.put("items", list);
@@ -170,6 +206,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     @Override
     public void addDrops(NonNullList<ItemStack> toDrop, int fortune) {
+        loadPendingItems();
         super.addDrops(toDrop, fortune);
         for (List<TravellingItem> list : items.getAllElements()) {
             for (TravellingItem item : list) {
@@ -184,6 +221,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     @Override
     public int tryExtractItems(int count, Direction from, DyeColor colour, IStackFilter filter, FluidAction simulate) {
+        loadPendingItems();
         if (pipe.getHolder().getPipeWorld().isClientSide()) {
             throw new IllegalStateException("Cannot extract items on the client side!");
         }
@@ -230,6 +268,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     @Override
     public void sendPhantomItem(ItemStack stack, Direction from, Direction to, DyeColor colour) {
+        loadPendingItems();
         if (from == null && to == null) {
             return;
         }
@@ -289,6 +328,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     @Override
     public void onTick() {
+        loadPendingItems();
         Level world = pipe.getHolder().getPipeWorld();
  //       if(world.isClientSide)return;
  /*       if(items.getAllElements().isEmpty() | !world.isClientSide)
@@ -531,6 +571,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     @Override
     public ItemStack injectItem(@Nonnull ItemStack stack, boolean doAdd, Direction from, DyeColor colour,
         double speed) {
+        loadPendingItems();
         if (pipe.getHolder().getPipeWorld().isClientSide()) {
             throw new IllegalStateException("Cannot inject items on the client side!");
         }
@@ -566,6 +607,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     @Override
     public void insertItemsForce(@Nonnull ItemStack stack, Direction from, DyeColor colour, double speed) {
+        loadPendingItems();
         Level world = pipe.getHolder().getPipeWorld();
         if (world.isClientSide()) {
             throw new IllegalStateException("Cannot inject items on the client side!");
@@ -592,6 +634,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
      */
     public ItemStack injectItemFromRobotStation(@Nonnull ItemStack stack, boolean doAdd, Direction from,
         DyeColor colour, double speed) {
+        loadPendingItems();
         if (pipe.getHolder().getPipeWorld().isClientSide()) {
             throw new IllegalStateException("Cannot inject items on the client side!");
         }
@@ -735,6 +778,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     }
 
     public boolean doesContainItems() {
+        loadPendingItems();
         // Note that this counts all items
         // (including phantom items, which is fine)
         // This only works because this list is only expanded to add elements
@@ -743,6 +787,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     }
 
     public boolean containsItemMatching(ItemStack filter) {
+        loadPendingItems();
         if (filter.isEmpty()) {
             return doesContainItems();
         }
@@ -783,6 +828,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     @OnlyIn(Dist.CLIENT)
     public List<TravellingItem> getAllItemsForRender() {
+        loadPendingItems();
         List<TravellingItem> all = new ArrayList<>();
         for (List<TravellingItem> innerList : items.getAllElements()) {
             all.addAll(innerList);

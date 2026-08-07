@@ -134,13 +134,6 @@ public class OilGenerator {
 
 
         boolean oilBiome = config.surfaceDepositBiomes().contains(key);
-        boolean excessive = config.excessiveBiomes().stream().anyMatch(entry -> entry.biome().equals(key));
-        boolean vanillaBiome = "minecraft".equals(key.getNamespace());
-        if (!oilBiome && !excessive
-            && ((vanillaBiome && !config.genOilInEveryVanillaBiomes())
-                || (!vanillaBiome && !config.genOilInEveryModBiomes()))) {
-            return ImmutableList.of();
-        }
 
         double bonus = oilBiome ? 3.0 : 1.0;
         bonus *= config.oilWellGenerationRate();

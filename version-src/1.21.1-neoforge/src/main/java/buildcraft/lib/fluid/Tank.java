@@ -130,13 +130,14 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
     }
 
     public final void readFromNBT(CompoundTag nbt) {
+        FluidStack fluid = FluidCompatRegistry.canonicalize(FluidStackUtil.parseOptional(nbt));
         if (nbt.contains(name, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
-            // Older BuildCraft versions wrapped the actual fluid data in the tank name.
+            // Match the 1.19.2 loader exactly: only auxiliary tank data comes from the named child.
             CompoundTag tankData = nbt.getCompound(name);
-            this.fluid = FluidCompatRegistry.canonicalize(FluidStackUtil.parseOptional(tankData));
+            this.fluid = fluid;
             readTankFromNBT(tankData);
         } else {
-            this.fluid = FluidCompatRegistry.canonicalize(FluidStackUtil.parseOptional(nbt));
+            this.fluid = fluid;
             readTankFromNBT(nbt);
         }
     }

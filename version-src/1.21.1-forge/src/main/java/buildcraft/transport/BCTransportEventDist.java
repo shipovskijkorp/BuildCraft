@@ -85,10 +85,24 @@ public class BCTransportEventDist {
         
     }
     @SubscribeEvent
+    public static void onWorldTick(TickEvent.LevelTickEvent.Pre event) {
+        tickWorld(event.level);
+    }
+
+    @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent.Post event) {
-        if (!event.level.isClientSide && event.level.getServer() != null) {
-            WorldSavedDataWireSystems.get(event.level).tick();
+        tickWorld(event.level);
+    }
+
+    private static void tickWorld(net.minecraft.world.level.Level level) {
+        if (!level.isClientSide && level.getServer() != null) {
+            WorldSavedDataWireSystems.get(level).tick();
         }
+    }
+
+    @SubscribeEvent
+    public static void onServerTick(TickEvent.ServerTickEvent.Pre event) {
+        PipeItemMessageQueue.serverTick();
     }
 
     @SubscribeEvent

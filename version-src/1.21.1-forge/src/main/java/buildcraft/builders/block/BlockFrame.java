@@ -77,9 +77,7 @@ public class BlockFrame extends BlockBCBase_Neptune {
 		Block b = level.getBlockState(fromPos).getBlock();
 		BlockPos delta = fromPos.subtract(pos);
 		Direction d = Direction.fromDelta(delta.getX(), delta.getY(), delta.getZ());
-		if (d != null) {
-			level.setBlockAndUpdate(pos, state.setValue(CONNECTED_MAP.get(d), b instanceof BlockFrame || b instanceof BlockQuarry));
-		}
+		level.setBlockAndUpdate(pos, state.setValue(CONNECTED_MAP.get(d), b instanceof BlockFrame || b instanceof BlockQuarry));
 	}
 
 	@Override

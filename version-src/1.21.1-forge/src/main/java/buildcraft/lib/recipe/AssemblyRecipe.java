@@ -168,7 +168,7 @@ public class AssemblyRecipe extends AssemblyRecipeBasic {
 
     @Override
     public Set<ItemStack> getOutputPreviews() {
-        return ImmutableSet.of(output.copy());
+        return ImmutableSet.of();
     }
 
     @Override

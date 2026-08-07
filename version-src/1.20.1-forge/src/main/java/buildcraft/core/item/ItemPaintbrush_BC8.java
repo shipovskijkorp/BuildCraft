@@ -39,23 +39,22 @@ public class ItemPaintbrush_BC8 extends ItemByEnum<DyeColor> {
         InteractionResult result = CustomPaintHelper.INSTANCE.attemptPaintBlock(
             level, pos, level.getBlockState(pos), hitPos, ctx.getClickedFace(), type
         );
-        if (!result.consumesAction()) {
-            return result;
+        if (result != InteractionResult.SUCCESS) {
+            return InteractionResult.FAIL;
+        }
+        if (player == null) {
+            return InteractionResult.SUCCESS;
         }
 
-        if (player != null && !level.isClientSide) {
-            CompoundTag tag = stack.getTag() == null ? null : stack.getTag().copy();
-            stack.hurtAndBreak(1, player, broken -> broken.broadcastBreakEvent(hand));
-            if (stack.isEmpty()) {
-                ItemStack cleanBrush = new ItemStack(BCCoreItems.PAINT_BRUSH.get());
-                if (tag != null) {
-                    cleanBrush.setTag(tag);
-                }
-                player.setItemInHand(hand, cleanBrush);
-            }
-            player.inventoryMenu.broadcastChanges();
+        CompoundTag tag = stack.getTag();
+        stack.hurtAndBreak(1, player, broken -> broken.broadcastBreakEvent(hand));
+        if (stack.isEmpty()) {
+            ItemStack cleanBrush = new ItemStack(BCCoreItems.PAINT_BRUSH.get());
+            cleanBrush.setTag(tag);
+            player.setItemInHand(hand, cleanBrush);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        player.inventoryMenu.broadcastChanges();
+        return InteractionResult.SUCCESS;
     }
 
     @Override

@@ -38,7 +38,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.DistanceManager;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ChunkPos;
@@ -189,13 +190,12 @@ public final class WireSystem {
     
 
     public boolean isPlayerWatching(Player player) {
-        if (!(player instanceof ServerPlayer serverPlayer)) {
-            return false;
+        if (player.level() instanceof ServerLevel world) {
+            DistanceManager manager = world.getChunkSource().chunkMap.getDistanceManager();
+            return elements.stream()
+                .anyMatch(element -> manager.inBlockTickingRange(ChunkPos.asLong(element.blockPos)));
         }
-        return elements.stream()
-            .map(element -> new ChunkPos(element.blockPos))
-            .anyMatch(chunkPos -> serverPlayer.serverLevel().getChunkSource().chunkMap
-                .getPlayers(chunkPos, false).contains(serverPlayer));
+        return false;
     }
 
     public int getWiresHashCode() {

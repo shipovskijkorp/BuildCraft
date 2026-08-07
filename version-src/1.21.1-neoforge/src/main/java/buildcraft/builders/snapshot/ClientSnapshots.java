@@ -76,6 +76,9 @@ public enum ClientSnapshots {
 
     @OnlyIn(Dist.CLIENT)
     public void renderSnapshot(PoseStack ignoredPose, Snapshot snapshot, int offsetX, int offsetY, int sizeX, int sizeY) {
+        if (1 == 1) {
+            return;
+        }
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || snapshot == null || snapshot.size == null) {
             return;

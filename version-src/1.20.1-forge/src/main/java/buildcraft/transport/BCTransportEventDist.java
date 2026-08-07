@@ -86,16 +86,14 @@ public class BCTransportEventDist {
     }
     @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && !event.level.isClientSide && event.level.getServer() != null) {
+        if (!event.level.isClientSide && event.level.getServer() != null) {
             WorldSavedDataWireSystems.get(event.level).tick();
         }
     }
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            PipeItemMessageQueue.serverTick();
-        }
+        PipeItemMessageQueue.serverTick();
     }
 
     @SubscribeEvent

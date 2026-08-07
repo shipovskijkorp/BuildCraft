@@ -158,6 +158,11 @@ public abstract class BCFluid extends BaseFlowingFluid {
 			return ((LiquidBlockContainer) block).canPlaceLiquid(null, p_75973_, p_75974_, p_75975_, p_75976_);
 		} else if (!(block instanceof DoorBlock) && !p_75975_.is(BlockTags.SIGNS) && !p_75975_.is(Blocks.LADDER)
 				&& !p_75975_.is(Blocks.SUGAR_CANE) && !p_75975_.is(Blocks.BUBBLE_COLUMN)) {
+			if (p_75975_.is(Blocks.NETHER_PORTAL) || p_75975_.is(Blocks.END_PORTAL)
+					|| p_75975_.is(Blocks.END_GATEWAY) || p_75975_.is(Blocks.STRUCTURE_VOID)
+					|| !p_75975_.getFluidState().isEmpty()) {
+				return false;
+			}
 			return !p_75975_.blocksMotion();
 		} else {
 			return false;

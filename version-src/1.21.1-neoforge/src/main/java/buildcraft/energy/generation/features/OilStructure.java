@@ -272,11 +272,11 @@ public abstract class OilStructure {
                 if (BlockUtil.getFluidWithoutFlowing(state) != Fluids.EMPTY) {//TODO CHECK!
                     break;
                 }
-                if (!state.getCollisionShape(world, worldTop).isEmpty()) {
+                if (state.blocksMotion()) {
                     break;
                 }
             }
-            OilStructure tubeY = OilGenerator.createTube(start, Math.max(0, worldTop.getY() - start.getY()), radius, Axis.Y);
+            OilStructure tubeY = OilGenerator.createTube(start, worldTop.getY() - start.getY(), radius, Axis.Y);
             tubeY.generate(world, tubeY.box);
             count += tubeY.countOilBlocks();
             BlockPos base = worldTop;

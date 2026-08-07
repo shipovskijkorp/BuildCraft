@@ -25,7 +25,7 @@ public class BlueprintTooltipComponent implements ClientTooltipComponent {
 
     @Override
     public int getHeight() {
-        return PREVIEW_SIZE + 10;
+        return PREVIEW_SIZE;
     }
 
     @Override

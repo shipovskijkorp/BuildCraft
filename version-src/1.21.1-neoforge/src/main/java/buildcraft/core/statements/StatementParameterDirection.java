@@ -53,15 +53,13 @@ public class StatementParameterDirection implements IStatementParameter {
     @Override
     @OnlyIn(Dist.CLIENT)
     public ISprite getSprite() {
-        Direction dir = direction;
-        return dir == null ? null : ClientSprites.SPRITES[dir.ordinal()];
+        return null;
     }
 
     @Override
     public IStatementParameter onClick(IStatementContainer source, IStatement stmt, ItemStack stack,
         StatementMouseClick mouse) {
-        Direction next = direction == null ? Direction.DOWN : Direction.values()[(direction.ordinal() + 1) % 6];
-        return new StatementParameterDirection(next);
+        return null;
     }
 
     @Override
@@ -73,8 +71,7 @@ public class StatementParameterDirection implements IStatementParameter {
 
     public void readFromNBT(CompoundTag nbt) {
         if (nbt.contains("direction")) {
-            int ordinal = nbt.getByte("direction");
-            direction = ordinal >= 0 && ordinal < Direction.values().length ? Direction.values()[ordinal] : null;
+            direction = Direction.values()[nbt.getByte("direction")];
         } else {
             direction = null;
         }
@@ -103,11 +100,12 @@ public class StatementParameterDirection implements IStatementParameter {
 
     @Override
     public IStatementParameter rotateLeft() {
-        Direction rotated = direction;
-        if (rotated != null && rotated.getAxis() != Axis.Y) {
-            rotated = rotated.getCounterClockWise();
+        StatementParameterDirection rotated = new StatementParameterDirection();
+        Direction dir = rotated.getDirection();
+        if (dir != null && dir.getAxis() != Axis.Y) {
+            rotated.direction = dir.getClockWise();
         }
-        return new StatementParameterDirection(rotated);
+        return rotated;
     }
 
     @Override

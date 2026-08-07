@@ -5,13 +5,17 @@
  */
 package buildcraft.core.item;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.Unbreakable;
 
 public class ItemGoggles extends ArmorItem {
     public ItemGoggles(String id) {
-        super(ArmorMaterials.CHAIN, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1));
+        super(ArmorMaterials.CHAIN, ArmorItem.Type.HELMET, new Item.Properties()
+            .stacksTo(1)
+            .component(DataComponents.UNBREAKABLE, new Unbreakable(false)));
     }
 
     @Override

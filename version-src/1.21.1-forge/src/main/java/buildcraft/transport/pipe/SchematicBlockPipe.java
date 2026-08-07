@@ -171,23 +171,32 @@ public class SchematicBlockPipe implements ISchematicBlock {
 
     @Override
     public boolean isBuilt(Level world, BlockPos blockPos) {
-    	CompoundTag copy = tileNbt.copy();
-    	CompoundTag tileTag = null;
-    	BlockEntity worldTile = world.getBlockEntity(blockPos);
-		if(worldTile instanceof TilePipeHolder tile) {
-	    	copy.putInt("x", blockPos.getX());
-	    	copy.putInt("y", blockPos.getY());
-	    	copy.putInt("z", blockPos.getZ());
-	    	int ordinal = tileRotation.ordinal();
-	    	int inverseId = ordinal ^ ((ordinal&1) << 1);
-			tile.rotate(Rotation.values()[inverseId]);
-            tileTag = tile.saveWithFullMetadata(world.registryAccess());
-	    	tile.rotate(tileRotation);
-    	}
-//		if(worldTile == null)
-			
-		boolean flag2 = tileTag != null && copy.equals(tileTag);
-		return flag2;
+        if (world.getBlockState(blockPos).getBlock() != BCTransportBlocks.pipeHolder.get()) {
+            return false;
+        }
+
+        BlockEntity worldTile = world.getBlockEntity(blockPos);
+        if (!(worldTile instanceof TilePipeHolder tile)) {
+            return false;
+        }
+
+        Pipe worldPipe = tile.getPipe();
+        if (worldPipe == null || worldPipe == Pipe.EMPTY || worldPipe.getDefinition() == null) {
+            return false;
+        }
+
+        CompoundTag expectedPipe = tileNbt == null ? new CompoundTag() : tileNbt.getCompound("pipe");
+        String expectedDefinition = expectedPipe.getString("def");
+        if (!expectedDefinition.isEmpty()
+                && !expectedDefinition.equals(worldPipe.getDefinition().identifier.toString())) {
+            return false;
+        }
+
+        Tag expectedColour = expectedPipe.get("col");
+        if (expectedColour == null) {
+            expectedColour = NBTUtilBC.writeEnum(null);
+        }
+        return expectedColour.equals(NBTUtilBC.writeEnum(worldPipe.getColour()));
     }
 
     @Override

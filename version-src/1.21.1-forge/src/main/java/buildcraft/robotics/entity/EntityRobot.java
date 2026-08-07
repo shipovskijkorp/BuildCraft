@@ -45,7 +45,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -824,6 +823,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         HolderLookup.Provider registries = level().registryAccess();
         tag.putString("boardId", boardEntry.id());
         tag.putLong("robotId", robotId);
+        if (isRealOwner(owner)) {
+            tag.put("owner", writeOwnerProfile(owner));
+        }
         tag.put("battery", battery.serializeNBT(registries));
         tag.putBoolean("itemActive", itemActive);
         tag.putBoolean("asleep", isAsleepForRendering());
@@ -876,6 +878,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         itemActive = tag.getBoolean("itemActive");
         ticksCharging = tag.getInt("ticksCharging");
         chargeRemainder = tag.getLong("chargeRemainder");
+        owner = tag.contains("owner") ? readOwnerProfile(tag.getCompound("owner")) : null;
         mainStationReleasedManually = tag.getBoolean("mainStationReleasedManually");
         if (tag.contains("asleep")) {
             entityData.set(ROBOT_ASLEEP, tag.getBoolean("asleep"));
@@ -917,6 +920,27 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 mainAI.start();
             }
         }
+    }
+
+    @Nullable
+    private static GameProfile readOwnerProfile(CompoundTag tag) {
+        java.util.UUID id = tag.hasUUID("Id") ? tag.getUUID("Id") : null;
+        String name = tag.contains("Name", net.minecraft.nbt.Tag.TAG_STRING) ? tag.getString("Name") : null;
+        if (id == null && (name == null || name.isBlank())) {
+            return null;
+        }
+        return new GameProfile(id, name);
+    }
+
+    private static CompoundTag writeOwnerProfile(GameProfile profile) {
+        CompoundTag tag = new CompoundTag();
+        if (profile.getId() != null) {
+            tag.putUUID("Id", profile.getId());
+        }
+        if (profile.getName() != null) {
+            tag.putString("Name", profile.getName());
+        }
+        return tag;
     }
 
     private static CompoundTag writeStation(BlockIndex index, @Nullable Direction side) {
@@ -1362,7 +1386,6 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public void dock(DockingStation station) {
         dockingStation = station;
         if (station != null) {
-            mainStationReleasedManually = false;
             station.setLevel(level());
             dockingStationIndex = station.index();
             dockingStationSide = station.side();

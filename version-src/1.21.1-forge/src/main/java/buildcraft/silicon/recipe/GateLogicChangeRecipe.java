@@ -27,8 +27,8 @@ public class GateLogicChangeRecipe extends CustomRecipe {
         ItemStack gateStack = ItemStack.EMPTY;
         for (int slot = 0; slot < container.size(); slot++) {
             ItemStack stack = container.getItem(slot);
-            if (!stack.isEmpty()) {
-                if (!(stack.getItem() instanceof ItemPluggableGate) || !gateStack.isEmpty()) {
+            if (!stack.isEmpty() && stack.getItem() instanceof ItemPluggableGate) {
+                if (!gateStack.isEmpty()) {
                     return false;
                 }
                 gateStack = stack;
@@ -42,8 +42,8 @@ public class GateLogicChangeRecipe extends CustomRecipe {
         ItemStack gateStack = ItemStack.EMPTY;
         for (int slot = 0; slot < container.size(); slot++) {
             ItemStack stack = container.getItem(slot);
-            if (!stack.isEmpty()) {
-                if (!(stack.getItem() instanceof ItemPluggableGate) || !gateStack.isEmpty()) {
+            if (!stack.isEmpty() && stack.getItem() instanceof ItemPluggableGate) {
+                if (!gateStack.isEmpty()) {
                     return ItemStack.EMPTY;
                 }
                 gateStack = stack;

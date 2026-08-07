@@ -34,7 +34,7 @@
       "surfaceDepositBiomes": [],
       "oilWellGenerationRate": 1.0,
       "genOilInEveryVanillaBiomes": true,
-      "genOilInEveryModBiomes": true,
+      "genOilInEveryModBiomes": false,
       "oilStructureSetting": {
         "genOilState": {
           "Name": "buildcraftenergy:oil"

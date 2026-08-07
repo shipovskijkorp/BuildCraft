@@ -43,10 +43,9 @@ public class TileMiningWell extends TileMiner {
     	}
     	@Override
     	public int getListenerRadius() {
-            int availableDepth = level == null
-                ? BCCoreConfig.miningMaxDepth
-                : worldPosition.getY() - level.getMinBuildHeight() + 1;
-            return Math.max(1, Math.min(BCCoreConfig.miningMaxDepth, availableDepth));
+            int limit = BCCoreConfig.miningMaxDepth;
+            int high = worldPosition.getY() + 64;
+            return high < limit ? high : limit;
     	}
     	@Override
 	public boolean handleGameEvent(ServerLevel serverLevel, Holder<GameEvent> event, GameEvent.Context context, Vec3 pos) {
