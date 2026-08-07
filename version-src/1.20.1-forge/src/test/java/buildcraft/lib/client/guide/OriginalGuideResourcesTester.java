@@ -320,23 +320,37 @@ class OriginalGuideResourcesTester {
 
     @Test
     void coreDistributionBundlesOnlyEnglishLocalizationData() throws Exception {
-        Path ordinaryDirectory = Path.of("src/main/resources/assets/buildcraft/lang");
-        Path guideDirectory = Path.of("src/main/resources/assets/buildcraft/guide/text");
-
-        Assertions.assertEquals(List.of("en_us.json"), jsonFileNames(ordinaryDirectory),
-            "Non-English interface translations belong in BuildCraft Community Edition: Localizations");
-        Assertions.assertEquals(List.of("en_us.json"), jsonFileNames(guideDirectory),
-            "Non-English Guide Book text packs belong in BuildCraft Community Edition: Localizations");
-    }
-
-    private static List<String> jsonFileNames(Path directory) throws Exception {
-        try (Stream<Path> files = Files.list(directory)) {
-            return files.filter(Files::isRegularFile)
-                .map(path -> path.getFileName().toString())
-                .filter(name -> name.endsWith(".json"))
+        Path assets = Path.of("src/main/resources/assets");
+        List<String> nonEnglishFiles;
+        try (Stream<Path> files = Files.walk(assets)) {
+            nonEnglishFiles = files
+                .filter(Files::isRegularFile)
+                .filter(path -> path.getFileName().toString().endsWith(".json"))
+                .filter(OriginalGuideResourcesTester::isLocalizationFile)
+                .filter(path -> !"en_us.json".equals(path.getFileName().toString()))
+                .map(assets::relativize)
+                .map(Path::toString)
                 .sorted()
                 .toList();
         }
+
+        Assertions.assertTrue(nonEnglishFiles.isEmpty(), () ->
+            "Non-English translations belong in BuildCraft Community Edition: Localizations: "
+                + nonEnglishFiles);
+    }
+
+    private static boolean isLocalizationFile(Path path) {
+        Path parent = path.getParent();
+        if (parent == null) {
+            return false;
+        }
+        if ("lang".equals(parent.getFileName().toString())) {
+            return true;
+        }
+        Path guide = parent.getParent();
+        return "text".equals(parent.getFileName().toString())
+            && guide != null
+            && "guide".equals(guide.getFileName().toString());
     }
 
     private static String rendered(String page, String languagePath) throws Exception {

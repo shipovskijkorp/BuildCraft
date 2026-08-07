@@ -254,6 +254,27 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
         if source_root != ROOT and (source_root / ".git").exists():
             fail(f"target {target} source root must not contain a nested .git directory")
 
+        assets_root = source_root / "src/main/resources/assets"
+        non_english_localizations = sorted(
+            path.relative_to(source_root).as_posix()
+            for path in assets_root.rglob("*.json")
+            if path.parent.name == "lang" and path.name != "en_us.json"
+        )
+        non_english_guide_text = sorted(
+            path.relative_to(source_root).as_posix()
+            for path in assets_root.rglob("*.json")
+            if path.parent.name == "text"
+            and path.parent.parent.name == "guide"
+            and path.name != "en_us.json"
+        )
+        bundled_non_english = non_english_localizations + non_english_guide_text
+        if bundled_non_english:
+            fail(
+                f"target {target} bundles non-English translations that belong in "
+                "BuildCraft Community Edition: Localizations: "
+                + ", ".join(bundled_non_english[:12])
+            )
+
         build_script = ROOT / f"build.{loader}.gradle"
         if not build_script.is_file():
             fail(f"target {target} requires missing {build_script.name}")
