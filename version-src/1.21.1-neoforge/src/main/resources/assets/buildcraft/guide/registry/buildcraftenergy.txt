@@ -1,0 +1,17 @@
+~{buildcraft/json/insn}
+
+import "buildcraftlib:util" "buildcraftcore:main"
+
+block_engine "engine_stone" "buildcraftenergy:engine_stone"
+block_engine "engine_iron" "buildcraftenergy:engine_iron"
+
+item "fluid" "oil" "buildcraftenergy:oil/cool_bucket"
+item "fluid" "oil_residue" "buildcraftenergy:oil_residue/cool_bucket"
+item "fluid" "oil_heavy" "buildcraftenergy:oil_heavy/cool_bucket"
+item "fluid" "oil_dense" "buildcraftenergy:oil_dense/cool_bucket"
+item "fluid" "oil_distilled" "buildcraftenergy:oil_distilled/cool_bucket"
+item "fluid" "fuel_gaseous" "buildcraftenergy:fuel_gaseous/cool_bucket"
+item "fluid" "fuel_light" "buildcraftenergy:fuel_light/cool_bucket"
+item "fluid" "fuel_dense" "buildcraftenergy:fuel_dense/cool_bucket"
+item "fluid" "fuel_mixed_light" "buildcraftenergy:fuel_mixed_light/cool_bucket"
+item "fluid" "fuel_mixed_heavy" "buildcraftenergy:fuel_mixed_heavy/cool_bucket"

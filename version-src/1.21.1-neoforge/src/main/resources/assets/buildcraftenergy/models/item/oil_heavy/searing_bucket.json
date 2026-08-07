@@ -1,0 +1,7 @@
+{
+  "parent": "neoforge:item/bucket",
+  "apply_tint": false,
+  "flip_gas": true,
+  "fluid": "buildcraftenergy:oil_heavy_heat_2",
+  "loader": "neoforge:fluid_container"
+}

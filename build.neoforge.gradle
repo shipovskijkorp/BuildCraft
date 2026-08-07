@@ -1,0 +1,369 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'eclipse'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.143'
+}
+
+def targetName = project.name
+
+def targetConfigFile = rootProject.file('stonecutter-targets.properties')
+if (!targetConfigFile.isFile()) {
+    throw new GradleException("Missing target configuration: ${targetConfigFile}")
+}
+
+def targetConfiguration = new Properties()
+targetConfigFile.withInputStream { targetConfiguration.load(it) }
+
+def configuredProperty = { String key ->
+    if (project.hasProperty(key)) {
+        return project.property(key).toString().trim()
+    }
+
+    def targetValue = targetConfiguration.getProperty("target.${targetName}.${key}")
+    if (targetValue != null) {
+        return targetValue.trim()
+    }
+
+    def commonValue = targetConfiguration.getProperty("common.${key}")
+    commonValue != null ? commonValue.trim() : null
+}
+
+def requiredProperty = { String key ->
+    def value = configuredProperty(key)
+    if (value == null || value.isEmpty()) {
+        throw new GradleException(
+                "Missing target property '${key}' for '${targetName}' in stonecutter-targets.properties"
+        )
+    }
+    value
+}
+
+def optionalProperty = { String key -> configuredProperty(key) ?: '' }
+
+def booleanProperty = { String key, boolean fallback ->
+    def configured = configuredProperty(key)
+    if (configured != null && !configured.isEmpty()) {
+        return configured.toBoolean()
+    }
+    providers.gradleProperty(key).map { it.toBoolean() }.getOrElse(fallback)
+}
+
+def minecraftVersion = requiredProperty('deps.minecraft')
+def neoForgeVersion = requiredProperty('deps.neoforge')
+def modVersion = requiredProperty('mod.version')
+def archiveName = requiredProperty('mod.archive_name')
+def javaVersion = Integer.parseInt(requiredProperty('java.version'))
+def sourceRootProperty = requiredProperty('source.root')
+def targetSourceRoot = rootProject.file(sourceRootProperty)
+def targetAccessTransformer = new File(targetSourceRoot, 'src/main/resources/META-INF/accesstransformer.cfg')
+def jeiCompatEnabled = booleanProperty('compat.jei.enabled', true)
+def jadeCompatEnabled = booleanProperty('compat.jade.enabled', true)
+def ic2CompatEnabled = booleanProperty('compat.ic2.enabled', false)
+def forestryCompatEnabled = booleanProperty('compat.forestry.enabled', false)
+
+if (!targetSourceRoot.isDirectory()) {
+    throw new GradleException("Configured source.root '${sourceRootProperty}' for '${targetName}' does not exist")
+}
+
+version = "${modVersion}+${targetName.replace('-', '+')}"
+group = requiredProperty('mod.group')
+base.archivesName = archiveName
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(javaVersion)
+}
+
+println "Target: ${targetName}; Java: ${providers.systemProperty('java.version').get()}, " +
+        "JVM: ${providers.systemProperty('java.vm.version').get()} (${providers.systemProperty('java.vendor').get()}), " +
+        "Arch: ${providers.systemProperty('os.arch').get()}"
+
+sourceSets {
+    main {
+        java.setSrcDirs([new File(targetSourceRoot, 'src/main/java')])
+        resources.setSrcDirs([new File(targetSourceRoot, 'src/main/resources')])
+    }
+    test {
+        java.setSrcDirs([new File(targetSourceRoot, 'src/test/java')])
+        resources.setSrcDirs([new File(targetSourceRoot, 'src/test/resources')])
+    }
+    gameTest {
+        java.setSrcDirs([new File(targetSourceRoot, 'src/gametest/java')])
+        resources.setSrcDirs([new File(targetSourceRoot, 'src/gametest/resources')])
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += output + sourceSets.main.output
+    }
+}
+
+if (!jeiCompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/jei/**'
+}
+if (!jadeCompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/jade/**'
+}
+if (!ic2CompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/ic2/**'
+}
+if (!forestryCompatEnabled) {
+    sourceSets.main.java.exclude 'buildcraft/compat/forestry/**'
+}
+
+configurations {
+    gameTestImplementation.extendsFrom implementation
+    gameTestRuntimeOnly.extendsFrom runtimeOnly
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+// Keep target-specific values out of the Java source snapshots.
+def generatedTargetSources = layout.buildDirectory.dir('generated/sources/buildcraftTarget/java')
+def targetValues = [
+        minecraft: minecraftVersion,
+        loader: 'neoforge',
+        protocol: requiredProperty('network.protocol')
+]
+
+def javaLiteral = { String value ->
+    value.replace('\\', '\\\\').replace('"', '\\"')
+}
+
+def generateBuildCraftTarget = tasks.register('generateBuildCraftTarget') {
+    inputs.properties(targetValues)
+    outputs.dir(generatedTargetSources)
+
+    doLast {
+        def outputFile = generatedTargetSources.get()
+                .file('buildcraft/lib/net/BuildCraftTarget.java').asFile
+        outputFile.parentFile.mkdirs()
+        outputFile.setText("""package buildcraft.lib.net;
+
+/** Generated by Gradle for the ${targetName} Stonecutter target. */
+public final class BuildCraftTarget {
+    public static final String MINECRAFT_VERSION = \"${javaLiteral(targetValues.minecraft)}\";
+    public static final String LOADER = \"${javaLiteral(targetValues.loader)}\";
+    public static final String NETWORK_PROTOCOL = \"${javaLiteral(targetValues.protocol)}\";
+
+    private BuildCraftTarget() {}
+}
+""", 'UTF-8')
+    }
+}
+
+sourceSets.main.java.srcDir(generatedTargetSources)
+tasks.named('compileJava') { dependsOn(generateBuildCraftTarget) }
+
+def ciRuntimeProfile = providers.gradleProperty('ci_runtime_profile')
+        .map { it.trim().toLowerCase() }
+        .getOrElse('default')
+def knownCiRuntimeProfiles = ['default', 'base', 'forestry', 'ic2', 'jei', 'jade', 'all']
+if (!knownCiRuntimeProfiles.contains(ciRuntimeProfile)) {
+    throw new GradleException("Unsupported ci_runtime_profile '${ciRuntimeProfile}'. Expected one of: ${knownCiRuntimeProfiles.sort().join(', ')}")
+}
+
+def gameTestRequested = gradle.startParameter.taskNames.any {
+    it.toLowerCase().contains('gametest')
+}
+def runtimeEnabled = { String profile, boolean defaultEnabled ->
+    if (gameTestRequested) return false
+    if (ciRuntimeProfile == 'default') return defaultEnabled
+    ciRuntimeProfile == 'all' || ciRuntimeProfile == profile
+}
+
+def buildcraftModIds = [
+        'buildcraftlib',
+        'buildcraftcore',
+        'buildcraftfactory',
+        'buildcrafttransport',
+        'buildcraftenergy',
+        'buildcraftbuilders',
+        'buildcraftsilicon',
+        'buildcraftrobotics'
+]
+def buildcraftModIdList = buildcraftModIds.join(',')
+def runDirectory = rootProject.layout.projectDirectory.dir("run/${targetName}")
+def dataRunDirectory = rootProject.layout.projectDirectory.dir("run-data/${targetName}")
+def generatedResources = rootProject.layout.projectDirectory.dir("src/generated/${targetName}/resources")
+
+neoForge {
+    version = neoForgeVersion
+    addModdingDependenciesTo sourceSets.test
+    addModdingDependenciesTo sourceSets.gameTest
+
+    if (targetAccessTransformer.isFile()) {
+        accessTransformers.from(targetAccessTransformer)
+    }
+
+    runs {
+        client {
+            client()
+            gameDirectory = runDirectory.asFile
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'buildcraftlib'
+        }
+
+        server {
+            server()
+            gameDirectory = runDirectory.asFile
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'buildcraftlib'
+        }
+
+        gameTestServer {
+            type = 'gameTestServer'
+            sourceSet = sourceSets.gameTest
+            gameDirectory = runDirectory.asFile
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'buildcraftlib'
+        }
+
+        data {
+            data()
+            gameDirectory = dataRunDirectory.asFile
+            programArguments.addAll(
+                    '--mod', buildcraftModIdList,
+                    '--all',
+                    '--output', generatedResources.asFile.absolutePath,
+                    '--existing', new File(targetSourceRoot, 'src/main/resources').absolutePath
+            )
+        }
+
+        configureEach {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        buildcraftlib {
+            sourceSet(sourceSets.main)
+            sourceSet(sourceSets.gameTest)
+        }
+    }
+}
+
+sourceSets.main.resources.srcDir(generatedResources)
+
+repositories {
+    mavenCentral()
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = 'https://api.modrinth.com/maven'
+            }
+        }
+        filter {
+            includeGroup 'maven.modrinth'
+        }
+    }
+
+    maven {
+        name = 'Sponge'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+}
+
+dependencies {
+    def jeiDependency = optionalProperty('deps.jei')
+    if (jeiCompatEnabled && jeiDependency) {
+        compileOnly jeiDependency
+        if (runtimeEnabled('jei', true)) {
+            localRuntime jeiDependency
+        }
+    }
+
+    def jadeDependency = optionalProperty('deps.jade')
+    if (jadeCompatEnabled && jadeDependency) {
+        compileOnly jadeDependency
+        if (runtimeEnabled('jade', true)) {
+            localRuntime jadeDependency
+        }
+    }
+
+    if (ic2CompatEnabled) {
+        throw new GradleException('IC2 compatibility is enabled, but no NeoForge 1.21.1 IC2 dependency is configured.')
+    }
+    if (forestryCompatEnabled) {
+        throw new GradleException('Forestry compatibility is enabled, but no NeoForge 1.21.1 Forestry dependency is configured.')
+    }
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${requiredProperty('deps.junit')}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${requiredProperty('deps.junit')}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${requiredProperty('deps.junit')}"
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    workingDir targetSourceRoot
+    systemProperty 'buildcraft.expectedPackFormat', requiredProperty('pack.format')
+    testLogging {
+        events 'failed', 'skipped'
+        exceptionFormat 'full'
+    }
+}
+
+def resourceProperties = [
+        mod_version: project.version.toString(),
+        mod_license: requiredProperty('mod.license'),
+        loader_version_range: requiredProperty('loader.version_range'),
+        neo_version_range: requiredProperty('neoforge.version_range'),
+        minecraft_version_range: requiredProperty('minecraft.version_range'),
+        pack_format: requiredProperty('pack.format'),
+        resource_pack_format: requiredProperty('pack.resource_format'),
+        data_pack_format: requiredProperty('pack.data_format')
+]
+
+tasks.named('processResources', ProcessResources) {
+    inputs.properties(resourceProperties)
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+        expand(resourceProperties)
+    }
+}
+
+tasks.named('jar', Jar) {
+    archiveClassifier = ''
+    manifest {
+        attributes([
+                'Specification-Title': requiredProperty('mod.name'),
+                'Specification-Vendor': requiredProperty('mod.authors'),
+                'Specification-Version': modVersion,
+                'Implementation-Title': requiredProperty('mod.name'),
+                'Implementation-Version': project.version,
+                'Implementation-Vendor': requiredProperty('mod.authors')
+        ])
+    }
+}
+
+tasks.register('buildAndCollect', Copy) {
+    group = 'build'
+    description = "Build and collect the ${targetName} production jar"
+    dependsOn tasks.named('build')
+    from tasks.named('jar').flatMap { it.archiveFile }
+    into rootProject.layout.buildDirectory.dir("libs/${modVersion}")
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url = rootProject.layout.projectDirectory.dir('mcmodsrepo').asFile.toURI()
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.add('-Xlint:none')
+}
+
+idea.module {
+    downloadJavadoc = true
+    downloadSources = true
+}
+
+eclipse.classpath {
+    downloadJavadoc = true
+    downloadSources = true
+}

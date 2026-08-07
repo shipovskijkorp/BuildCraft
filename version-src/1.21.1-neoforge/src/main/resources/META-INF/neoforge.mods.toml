@@ -1,0 +1,360 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+showAsResourcePack=false
+
+[[mods]]
+    modId="buildcraftlib"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Library"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Shared library code and runtime helpers used by the BuildCraft Community Edition modules.
+    '''
+
+[[dependencies.buildcraftlib]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftlib]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftlib]]
+    modId="jei"
+    type="optional"
+    versionRange="[19,)"
+    ordering="AFTER"
+    side="CLIENT"
+
+[[dependencies.buildcraftlib]]
+    modId="jade"
+    type="optional"
+    versionRange="[15.10.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftcore"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Core"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Core BuildCraft content: common items, gears, engines, markers and shared gameplay systems.
+    '''
+
+[[dependencies.buildcraftcore]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftcore]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftcore]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftfactory"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Factory"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Factory machines and fluid infrastructure, including tanks, pumps, mining wells and processing blocks.
+    '''
+
+[[dependencies.buildcraftfactory]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftfactory]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftfactory]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftfactory]]
+    modId="buildcraftcore"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcrafttransport"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Transport"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Item, fluid and power pipes, gates, wires, facades, plugs and transport automation.
+    '''
+
+[[dependencies.buildcrafttransport]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcrafttransport]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcrafttransport]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcrafttransport]]
+    modId="buildcraftcore"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftenergy"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Energy"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Oil, fuels, power generation and energy-related BuildCraft mechanics.
+    '''
+
+[[dependencies.buildcraftenergy]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftenergy]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftenergy]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftenergy]]
+    modId="buildcraftcore"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftbuilders"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Builders"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Builder module content such as quarries, fillers, frames, markers, templates and construction machines.
+    '''
+
+[[dependencies.buildcraftbuilders]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftbuilders]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftbuilders]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftbuilders]]
+    modId="buildcraftcore"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftsilicon"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Silicon"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Silicon technology: lasers, assembly tables, integration tables, programming tables, chipsets and gates.
+    '''
+
+[[dependencies.buildcraftsilicon]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftsilicon]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftsilicon]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftsilicon]]
+    modId="buildcraftcore"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftrobotics"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Robotics"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Robots, docking stations, redstone boards, zones and robotic automation.
+    '''
+
+[[dependencies.buildcraftrobotics]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftcore"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcraftsilicon"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftrobotics]]
+    modId="buildcrafttransport"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[mods]]
+    modId="buildcraftcompat"
+    version="${mod_version}"
+    displayName="BuildCraft Community Edition - Compat"
+    credits="Special thanks to the original BuildCraft team and all contributors."
+    authors="CurativeTree, ShipovskijKorp"
+    description='''
+Optional cross-mod integration hooks for BuildCraft Community Edition. Integrations without a compatible NeoForge 1.21.1 dependency remain disabled.
+    '''
+
+[[dependencies.buildcraftcompat]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="buildcraftlib"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="buildcraftcore"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.buildcraftcompat]]
+    modId="buildcrafttransport"
+    type="required"
+    versionRange="[8.0.0.0,)"
+    ordering="AFTER"
+    side="BOTH"

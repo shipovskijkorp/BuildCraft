@@ -1,0 +1,20 @@
+{
+  "type": "buildcraftsilicon:assembly",
+  "MJ": 20000000000,
+  "group": "buildcraftsilicon:chipsets",
+  "ingredient_counts": [
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "result": {
+    "item": "buildcraftsilicon:redstone_chipset/gold"
+  }
+}

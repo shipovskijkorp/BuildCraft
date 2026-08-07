@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "buildcraftenergy:fuel_dense",
+    "buildcraftenergy:fuel_dense_flowing"
+  ]
+}

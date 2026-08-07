@@ -55,10 +55,10 @@ tasks.register("runActiveServer") {
     dependsOn(activeTask("runServer"))
 }
 
-if (activeProject.substringAfterLast('-') == "forge") {
+if (activeProject.substringAfterLast('-') in setOf("forge", "neoforge")) {
     tasks.register("runActiveGameTests") {
         group = "verification"
-        description = "Run Forge GameTests for the active Stonecutter target"
+        description = "Run GameTests for the active Stonecutter target"
         dependsOn(activeTask("runGameTestServer"))
     }
 }

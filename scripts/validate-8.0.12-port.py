@@ -128,8 +128,7 @@ def main() -> None:
         text = path.read_text(encoding="utf-8", errors="strict")
         if re.search(r"^(?:<<<<<<<|>>>>>>>)(?: .*)?$", text, flags=re.MULTILINE):
             fail(f"merge marker remains in {path}")
-        is_validator_script = path.parent == root / "scripts" and path.name.startswith("validate-")
-        if path.suffix.lower() != ".md" and not is_validator_script and "8.0.11" in text:
+        if path.suffix.lower() != ".md" and path.resolve() != Path(__file__).resolve() and "8.0.11" in text:
             fail(f"old 8.0.11 version remains in {path}")
 
     java_files = list((src / "main/java").rglob("*.java"))
