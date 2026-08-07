@@ -24,8 +24,9 @@ When reporting a problem, always include:
 *   Forge release for 1.19.2 Forge (ready)
 *   Port to 1.20.1 Forge (ready)
 *   Backport to 1.12.2 (current subtask)
-*   Port to 1.21.1 Forge (beta)
-*   Port to 1.21.1 NeoForge (beta)
+*   Port to 1.21.1 Forge (ready)
+*   Port to 1.21.1 NeoForge (ready)
+*   New api system (current task)
 *   Port to Fabric
 *   Port to 1.21.11+ (maybe)
 
@@ -33,10 +34,10 @@ When reporting a problem, always include:
 
 Now in mod available 100% of content from BC8 and BC7
 
-- 1.19.2 Forge - Maintain
-- 1.20.1 Forge - Maintain
-- 1.21.1 Forge - in dev, beta
-- 1.21.1 NeoForge - in dev, beta
+- 1.19.2 Forge - maintain
+- 1.20.1 Forge - maintain
+- 1.21.1 Forge - maintain
+- 1.21.1 NeoForge - maintain
 - 1.12.2 Forge - in dev, (low priority)
 
 ## Credits
