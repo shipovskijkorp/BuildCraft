@@ -9,6 +9,7 @@ import io.netty.buffer.Unpooled;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.gametest.GameTestDontPrefix;
 
 import buildcraft.api.filler.FillerManager;
 import buildcraft.api.filler.IFilledTemplate;
@@ -49,8 +50,8 @@ import buildcraft.lib.tile.item.StackInsertionFunction;
  * of plain JUnit because Forge 1.19.2 patches Bootstrap.bootStrap() to initialize
  * networking, which is not safe in an unlaunched JUnit JVM.
  */
-@GameTestHolder(BCLib.MODID)
-@PrefixGameTestTemplate(false)
+@GameTestHolder(namespace = BCLib.MODID)
+@GameTestDontPrefix
 public final class BuildCraftLogicGameTests {
     private static final String EMPTY_TEMPLATE = "empty3x3x3";
 
@@ -65,7 +66,7 @@ public final class BuildCraftLogicGameTests {
     private BuildCraftLogicGameTests() {
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 200)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 200)
     public static void everyShapeHandlesSmallAndNonCubicTemplates(GameTestHelper helper) {
         FillerManager.registry = FillerRegistry.INSTANCE;
         List<IFillerPatternShape> patterns = Arrays.stream(BCBuildersStatements.PATTERNS)
@@ -88,7 +89,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 200)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 200)
     public static void hollowHemispheresMatchTheCorrespondingHalfOfAFullSphere(GameTestHelper helper) {
         FillerManager.registry = FillerRegistry.INSTANCE;
         for (BlockPos halfSize : SHAPE_SIZES) {
@@ -134,7 +135,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void tankManagerFillSpillsAndDrainCombines(GameTestHelper helper) {
         Tank first = new Tank("first", 3_000, null);
         Tank second = new Tank("second", 3_000, null);
@@ -157,7 +158,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void tankManagerSimulationAndNbtRoundTrip(GameTestHelper helper) {
         TankManager original = new TankManager(
             new Tank("input", 1_000, null),
@@ -171,12 +172,12 @@ public final class BuildCraftLogicGameTests {
         require(helper, original.fill(new FluidStack(Fluids.LAVA, 2_500), FluidAction.EXECUTE) == 2_500,
             "executed fill returned the wrong amount");
 
-        CompoundTag nbt = original.serializeNBT();
+        CompoundTag nbt = original.serializeNBT(helper.getLevel().registryAccess());
         TankManager restored = new TankManager(
             new Tank("input", 1_000, null),
             new Tank("output", 2_000, null)
         );
-        restored.deserializeNBT(nbt);
+        restored.deserializeNBT(helper.getLevel().registryAccess(), nbt);
 
         require(helper, restored.get(0).getFluidAmount() == 1_000, "first restored tank has wrong amount");
         require(helper, restored.get(1).getFluidAmount() == 1_500, "second restored tank has wrong amount");
@@ -185,7 +186,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void tankManagerForgeViewReportsContentsAndCapacity(GameTestHelper helper) {
         TankManager manager = new TankManager(new Tank("only", 4_000, null));
         manager.fill(new FluidStack(Fluids.WATER, 750), FluidAction.EXECUTE);
@@ -197,7 +198,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void itemTransactorInsertExtractAndSimulation(GameTestHelper helper) {
         IItemTransactor transactor = new ItemHandlerSimple(2);
         require(helper, transactor.extract(null, 1, 1, false).isEmpty(), "empty inventory returned an item");
@@ -218,7 +219,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void itemTransactorLimitedInventoryReturnsOverflow(GameTestHelper helper) {
         IItemTransactor limited = new ItemHandlerSimple(
             2,
@@ -238,18 +239,18 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void itemTransactorNbtRoundTrip(GameTestHelper helper) {
         ItemHandlerSimple original = new ItemHandlerSimple(3);
         ItemStack pickaxe = new ItemStack(Items.IRON_PICKAXE);
         pickaxe.setDamageValue(17);
-        pickaxe.setHoverName(Component.literal("test pickaxe"));
+        pickaxe.set(DataComponents.CUSTOM_NAME, Component.literal("test pickaxe"));
         original.setStackInSlot(1, pickaxe);
         original.setStackInSlot(2, new ItemStack(Items.APPLE, 12));
 
-        CompoundTag nbt = original.serializeNBT();
+        CompoundTag nbt = original.serializeNBT(helper.getLevel().registryAccess());
         ItemHandlerSimple restored = new ItemHandlerSimple(3);
-        restored.deserializeNBT(nbt);
+        restored.deserializeNBT(helper.getLevel().registryAccess(), nbt);
 
         require(helper, restored.getStackInSlot(0).isEmpty(), "empty slot was not preserved");
         require(helper, ItemStack.matches(pickaxe, restored.getStackInSlot(1)), "tagged pickaxe was not preserved");
@@ -258,7 +259,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void toolMatcherGroupsToolsByAction(GameTestHelper helper) {
         ListMatchHandlerTools matcher = new ListMatchHandlerTools();
         ItemStack woodenAxe = new ItemStack(Items.WOODEN_AXE);
@@ -279,7 +280,7 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void packetBooleansPackAcrossPrimitiveWrites(GameTestHelper helper) {
         PacketBufferBC buffer = new PacketBufferBC(Unpooled.buffer());
         try {
@@ -307,7 +308,7 @@ public final class BuildCraftLogicGameTests {
         }
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void packetFixedBitsRoundTrip(GameTestHelper helper) {
         PacketBufferBC buffer = new PacketBufferBC(Unpooled.buffer());
         try {
@@ -329,7 +330,7 @@ public final class BuildCraftLogicGameTests {
         }
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void packetEnumsUseCompactBitEncoding(GameTestHelper helper) {
         PacketBufferBC buffer = new PacketBufferBC(Unpooled.buffer());
         try {
@@ -351,7 +352,7 @@ public final class BuildCraftLogicGameTests {
         }
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void packetInvalidBitLengthsAreRejected(GameTestHelper helper) {
         PacketBufferBC buffer = new PacketBufferBC(Unpooled.buffer());
         try {

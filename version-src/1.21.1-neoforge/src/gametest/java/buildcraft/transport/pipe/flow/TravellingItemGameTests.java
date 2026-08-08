@@ -3,6 +3,7 @@ package buildcraft.transport.pipe.flow;
 import java.util.EnumSet;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +28,7 @@ public final class TravellingItemGameTests {
     public static void nbtRoundTripPreservesCargoColourMotionAndTriedSides(GameTestHelper helper) {
         ItemStack stack = new ItemStack(Items.DIAMOND_PICKAXE);
         stack.setDamageValue(37);
-        stack.setHoverName(Component.literal("in-flight test pickaxe"));
+        stack.set(DataComponents.CUSTOM_NAME, Component.literal("in-flight test pickaxe"));
         net.minecraft.nbt.CompoundTag tag = ItemStackUtil.getCustomData(stack);
         tag.putString("buildcraft_test", "travelling_item");
         ItemStackUtil.setCustomData(stack, tag);
@@ -43,8 +44,8 @@ public final class TravellingItemGameTests {
         original.tried = EnumSet.of(Direction.EAST, Direction.UP);
         original.isPhantom = true;
 
-        CompoundTag nbt = original.writeToNbt(90);
-        TravellingItem restored = new TravellingItem(nbt, 1_000);
+        CompoundTag nbt = original.writeToNbt(90, helper.getLevel().registryAccess());
+        TravellingItem restored = new TravellingItem(nbt, 1_000, helper.getLevel().registryAccess());
 
         require(helper, ItemStack.matches(original.stack, restored.stack), "cargo stack changed after NBT round-trip");
         require(helper, restored.colour == DyeColor.CYAN, "cargo colour changed after NBT round-trip");
@@ -78,7 +79,7 @@ public final class TravellingItemGameTests {
             "items four ticks apart merged");
 
         ItemStack named = new ItemStack(Items.APPLE);
-        named.setHoverName(Component.literal("different NBT"));
+        named.set(DataComponents.CUSTOM_NAME, Component.literal("different NBT"));
         require(helper, !first.canMerge(item(named, DyeColor.RED, true, Direction.WEST, 101)),
             "items with different NBT merged");
 

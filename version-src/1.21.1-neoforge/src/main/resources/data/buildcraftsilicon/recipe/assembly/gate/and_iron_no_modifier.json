@@ -7,7 +7,7 @@
   ],
   "ingredients": [
     {
-      "type": "c:nbt",
+      "type": "buildcraftlib:strict_nbt",
       "count": 1,
       "item": "buildcraftsilicon:redstone_chipset/iron"
     }

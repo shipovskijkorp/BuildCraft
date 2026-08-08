@@ -120,7 +120,7 @@ public final class BuildCraftGameTests {
             helper.fail("guide book crafting recipe was not loaded");
             return;
         }
-        if (recipe.getResultItem().getItem() != guide) {
+        if (recipe.getResultItem(helper.getLevel().registryAccess()).getItem() != guide) {
             helper.fail("guide book recipe produces the wrong item");
             return;
         }

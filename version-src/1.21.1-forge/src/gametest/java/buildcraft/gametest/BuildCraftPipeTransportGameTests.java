@@ -2,6 +2,7 @@ package buildcraft.gametest;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.gametest.GameTestDontPrefix;
 
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.api.transport.pipe.IFlowItems;
@@ -27,13 +28,13 @@ import buildcraft.transport.pipe.behaviour.PipeBehaviourDiamondItem;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
 import buildcraft.transport.tile.TilePipeHolder;
 
-@GameTestHolder(BCLib.MODID)
-@PrefixGameTestTemplate(false)
+@GameTestHolder(namespace = BCLib.MODID)
+@GameTestDontPrefix
 public final class BuildCraftPipeTransportGameTests {
     private BuildCraftPipeTransportGameTests() {
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 360)
     public static void straightItemLineConservesTaggedCargo(GameTestHelper helper) {
         BlockPos sourcePos = new BlockPos(1, 1, 3);
@@ -47,7 +48,7 @@ public final class BuildCraftPipeTransportGameTests {
         TilePipeHolder second = PipeGameTestSupport.placePipe(helper, secondPipePos, BCTransportPipes.cobbleItem);
 
         ItemStack cargo = new ItemStack(Items.APPLE, 12);
-        cargo.setHoverName(Component.literal("tagged pipe cargo"));
+        cargo.set(DataComponents.CUSTOM_NAME, Component.literal("tagged pipe cargo"));
         net.minecraft.nbt.CompoundTag tag = ItemStackUtil.getCustomData(cargo);
         tag.putString("buildcraft_test", "straight_line");
         ItemStackUtil.setCustomData(cargo, tag);
@@ -67,7 +68,7 @@ public final class BuildCraftPipeTransportGameTests {
             ItemStack delivered = firstNonEmpty(destination);
             require(helper, delivered.is(Items.APPLE), "destination received the wrong item: " + delivered);
             require(helper, delivered.getCount() == 12, "destination received " + delivered.getCount() + " of 12 items");
-            require(helper, delivered.hasCustomHoverName()
+            require(helper, delivered.has(DataComponents.CUSTOM_NAME)
                 && delivered.getHoverName().getString().equals("tagged pipe cargo"),
                 "custom name was lost in transit");
             require(helper, "straight_line".equals(ItemStackUtil.getCustomData(delivered).getString("buildcraft_test")),
@@ -81,7 +82,7 @@ public final class BuildCraftPipeTransportGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 300)
     public static void diamondFullPreferredDestinationFallsBackWithoutLoss(GameTestHelper helper) {
         BlockPos sourcePos = new BlockPos(2, 1, 3);
@@ -124,7 +125,7 @@ public final class BuildCraftPipeTransportGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 180)
     public static void itemInjectionSimulationAndAcceptedCountAreConsistent(GameTestHelper helper) {
         BlockPos sourcePos = new BlockPos(2, 1, 3);
@@ -162,7 +163,7 @@ public final class BuildCraftPipeTransportGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 320)
     public static void clayPipePrefersInventoryOverAnotherValidPipe(GameTestHelper helper) {
         BlockPos sourcePos = new BlockPos(2, 1, 3);

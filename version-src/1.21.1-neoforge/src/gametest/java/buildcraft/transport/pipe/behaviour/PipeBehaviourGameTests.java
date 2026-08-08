@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -82,7 +83,7 @@ public final class PipeBehaviourGameTests {
         original.filters.setStackInSlot(0, new ItemStack(Items.APPLE, 3));
         original.filters.setStackInSlot(17, new ItemStack(Items.IRON_INGOT, 5));
         ItemStack named = new ItemStack(Items.DIAMOND_PICKAXE);
-        named.setHoverName(net.minecraft.network.chat.Component.literal("routing filter"));
+        named.set(DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("routing filter"));
         original.filters.setStackInSlot(53, named);
 
         PipeBehaviourDiamondItem restored = new PipeBehaviourDiamondItem(pipe, original.writeToNbt());

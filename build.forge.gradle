@@ -87,6 +87,15 @@ println "Target: ${targetName}; Java: ${providers.systemProperty('java.version')
         "Arch: ${providers.systemProperty('os.arch').get()}"
 
 // Keep world-dependent Forge GameTests separate from fast JUnit tests.
+// Forge 1.21 uses JPMS for exploded development modules and rejects split
+// packages when main and gameTest are loaded as separate modules. Older Forge
+// also does not reliably discover GameTestHolder classes from a second exploded
+// mod source. For runGameTestServer only, compile the GameTest sources/resources
+// into the main output so there is exactly one BuildCraft module at runtime.
+def gameTestRunRequested = gradle.startParameter.taskNames.any {
+    it.toLowerCase().contains('rungametestserver')
+}
+
 // A target may point at a complete version source root when the Minecraft API
 // difference is too large for readable inline Stonecutter conditions.
 sourceSets {
@@ -94,6 +103,11 @@ sourceSets {
         if (usesVersionSourceRoot) {
             java.setSrcDirs([new File(targetSourceRoot, 'src/main/java')])
             resources.setSrcDirs([new File(targetSourceRoot, 'src/main/resources')])
+        }
+        if (gameTestRunRequested) {
+            def sourceBase = usesVersionSourceRoot ? targetSourceRoot : project.projectDir
+            java.srcDir(new File(sourceBase, 'src/gametest/java'))
+            resources.srcDir(new File(sourceBase, 'src/gametest/resources'))
         }
     }
     test {
@@ -219,12 +233,9 @@ minecraft {
         }
 
         gameTestServer {
-            mods {
-                buildcraft {
-                    source sourceSets.main
-                    source sourceSets.gameTest
-                }
-            }
+            // GameTest sources are merged into main only for this run. Loading
+            // sourceSets.gameTest as a second exploded module causes split-package
+            // failures on Forge 1.21 and discovery failures on older Forge.
         }
 
         data {

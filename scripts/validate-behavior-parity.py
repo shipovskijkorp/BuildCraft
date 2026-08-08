@@ -320,6 +320,118 @@ def validate_resource_parity() -> None:
             fail(f"{target}: loot-table contents differ from 1.19.2")
 
 
+
+def validate_gametest_runtime_guards() -> None:
+    expected_tests = 41
+    for target in TARGETS:
+        test_root = TARGETS[target] / "src/gametest/java"
+        count = 0
+        if test_root.is_dir():
+            for path in test_root.rglob("*.java"):
+                count += path.read_text(encoding="utf-8").count("@GameTest(")
+        if count != expected_tests:
+            fail(f"{target}: expected {expected_tests} @GameTest methods, found {count}")
+
+    # GameTest classes must be part of the same exploded module as main during
+    # runGameTestServer. Separate main/gameTest modules create split packages on
+    # Forge 1.21, while the reflection registrar cannot see the second module on
+    # older Forge. The Gradle files are checked directly below.
+    forge_gradle = (ROOT / "build.forge.gradle").read_text(encoding="utf-8")
+    require_tokens = (
+        "def gameTestRunRequested",
+        "java.srcDir(new File(sourceBase, 'src/gametest/java'))",
+        "resources.srcDir(new File(sourceBase, 'src/gametest/resources'))",
+    )
+    for token in require_tokens:
+        if token not in forge_gradle:
+            fail(f"build.forge.gradle: missing GameTest one-module guard: {token}")
+    if "source sourceSets.gameTest" in forge_gradle:
+        fail("build.forge.gradle: GameTest runtime still loads sourceSets.gameTest as a second module")
+
+    neoforge_gradle = (ROOT / "build.neoforge.gradle").read_text(encoding="utf-8")
+    for token in (
+        "def gameTestRunRequested",
+        "java.srcDir(new File(targetSourceRoot, 'src/gametest/java'))",
+        "resources.srcDir(new File(targetSourceRoot, 'src/gametest/resources'))",
+        "sourceSet = sourceSets.main",
+    ):
+        if token not in neoforge_gradle:
+            fail(f"build.neoforge.gradle: missing GameTest one-module guard: {token}")
+    if "sourceSet(sourceSets.gameTest)" in neoforge_gradle:
+        fail("build.neoforge.gradle: mod still exposes gameTest as a second source set")
+
+    for target in ("1.19.2-forge", "1.20.1-forge", "1.21.1-forge"):
+        bclib = text(target, "src/main/java/buildcraft/lib/BCLib.java")
+        if "BuildCraftGameTestRegistrar" in bclib:
+            fail(f"{target}: obsolete reflection GameTest registrar remains wired into BCLib")
+        registrar = TARGETS[target] / "src/main/java/buildcraft/lib/BuildCraftGameTestRegistrar.java"
+        if registrar.exists():
+            fail(f"{target}: obsolete reflection GameTest registrar source still exists")
+
+    for target in ("1.20.1-forge", "1.21.1-forge", "1.21.1-neoforge"):
+        silicon = text(target, "src/main/java/buildcraft/silicon/BCSilicon.java")
+        for forbidden in ("BCSiliconConfig::onLoadConfig", "BCSiliconConfig::onReloadConfig", "BCSiliconConfig.reloadConfig(MODID)"):
+            if forbidden in silicon:
+                fail(f"{target}: silicon laser config diverges from 1.19.2 reference: {forbidden}")
+    neo_silicon = text("1.21.1-neoforge", "src/main/java/buildcraft/silicon/BCSilicon.java")
+    for forbidden in ("BCSiliconConfig.preInit()", "registerConfig(Type.COMMON, BCSiliconConfig.config)"):
+        if forbidden in neo_silicon:
+            fail(f"1.21.1-neoforge: silicon config remains active unlike 1.19.2: {forbidden}")
+
+    for target in ("1.21.1-forge", "1.21.1-neoforge"):
+        base = TARGETS[target] / "src/gametest/resources/data/buildcraftlib"
+        modern = base / "structure"
+        legacy = base / "structures"
+        for name in ("empty3x3x3.nbt", "empty7x3x7.nbt"):
+            if not (modern / name).is_file():
+                fail(f"{target}: missing modern GameTest structure data/buildcraftlib/structure/{name}")
+        if legacy.exists():
+            fail(f"{target}: obsolete plural GameTest structure directory remains: {legacy.relative_to(TARGETS[target])}")
+
+    neo = TARGETS["1.21.1-neoforge"]
+    resources = neo / "src/main/resources"
+    strict_count = 0
+    for path in resources.rglob("*.json"):
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+
+        def walk(value: Any) -> None:
+            nonlocal strict_count
+            if isinstance(value, dict):
+                ingredient_type = value.get("type")
+                if ingredient_type == "c:nbt":
+                    fail(f"1.21.1-neoforge: unsupported c:nbt ingredient remains in {path.relative_to(neo)}")
+                if ingredient_type == "buildcraftlib:strict_nbt":
+                    strict_count += 1
+                    if not isinstance(value.get("item"), str):
+                        fail(f"1.21.1-neoforge: strict-NBT ingredient has no item in {path.relative_to(neo)}")
+                    if "nbt" in value and not isinstance(value.get("nbt"), str):
+                        fail(f"1.21.1-neoforge: strict-NBT ingredient has non-string NBT in {path.relative_to(neo)}")
+                for child in value.values():
+                    walk(child)
+            elif isinstance(value, list):
+                for child in value:
+                    walk(child)
+
+        walk(document)
+        if isinstance(document, dict) and document.get("type") == "buildcraftlib:assembly":
+            ingredients = document.get("ingredients")
+            counts = document.get("ingredient_counts")
+            if isinstance(ingredients, list) and isinstance(counts, list) and len(ingredients) != len(counts):
+                fail(f"1.21.1-neoforge: assembly ingredient/count length mismatch in {path.relative_to(neo)}")
+
+    if strict_count != 26:
+        fail(f"1.21.1-neoforge: expected 26 legacy strict-NBT recipe ingredients, found {strict_count}")
+
+    require("1.21.1-neoforge", "src/main/java/buildcraft/lib/recipe/LegacyStrictNbtIngredient.java",
+            "ItemStack.isSameItemSameComponents(input, displayStack)",
+            "ItemStack count is deliberately ignored")
+    require("1.21.1-neoforge", "src/main/java/buildcraft/lib/recipe/BCLibIngredientTypes.java",
+            'INGREDIENT_TYPES.register("strict_nbt"',
+            "NeoForgeRegistries.Keys.INGREDIENT_TYPES")
+
 def main() -> None:
     for target, root in TARGETS.items():
         if not (root / "src/main/java").is_dir():
@@ -332,6 +444,7 @@ def main() -> None:
     validate_worldgen_resources()
     validate_advancements()
     validate_resource_parity()
+    validate_gametest_runtime_guards()
 
     if ERRORS:
         for error in ERRORS:

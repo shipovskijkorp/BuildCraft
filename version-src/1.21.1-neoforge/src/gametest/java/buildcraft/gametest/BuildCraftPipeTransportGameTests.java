@@ -2,6 +2,7 @@ package buildcraft.gametest;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
@@ -47,7 +48,7 @@ public final class BuildCraftPipeTransportGameTests {
         TilePipeHolder second = PipeGameTestSupport.placePipe(helper, secondPipePos, BCTransportPipes.cobbleItem);
 
         ItemStack cargo = new ItemStack(Items.APPLE, 12);
-        cargo.setHoverName(Component.literal("tagged pipe cargo"));
+        cargo.set(DataComponents.CUSTOM_NAME, Component.literal("tagged pipe cargo"));
         net.minecraft.nbt.CompoundTag tag = ItemStackUtil.getCustomData(cargo);
         tag.putString("buildcraft_test", "straight_line");
         ItemStackUtil.setCustomData(cargo, tag);
@@ -67,7 +68,7 @@ public final class BuildCraftPipeTransportGameTests {
             ItemStack delivered = firstNonEmpty(destination);
             require(helper, delivered.is(Items.APPLE), "destination received the wrong item: " + delivered);
             require(helper, delivered.getCount() == 12, "destination received " + delivered.getCount() + " of 12 items");
-            require(helper, delivered.hasCustomHoverName()
+            require(helper, delivered.has(DataComponents.CUSTOM_NAME)
                 && delivered.getHoverName().getString().equals("tagged pipe cargo"),
                 "custom name was lost in transit");
             require(helper, "straight_line".equals(ItemStackUtil.getCustomData(delivered).getString("buildcraft_test")),

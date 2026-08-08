@@ -61,8 +61,6 @@ public class BCSilicon {
         modEventBus.addListener(BCSilicon::commonSetup);
         modEventBus.addListener(BCSilicon::postInit);
         modEventBus.addListener(BCSilicon::gatherData);
-        modEventBus.addListener(BCSiliconConfig::onLoadConfig);
-        modEventBus.addListener(BCSiliconConfig::onReloadConfig);
 
         FacadeAPI.registry = FacadeStateManager.INSTANCE;
 
@@ -87,7 +85,6 @@ public class BCSilicon {
                 FacadeAPI.facadeItem = BCSiliconItems.PLUG_FACADE_ITEM.get();
             }
             FacadeStateManager.init();
-            BCSiliconConfig.reloadConfig(MODID);
         });
     }
 

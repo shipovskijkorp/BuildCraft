@@ -16,6 +16,7 @@ import buildcraft.lib.misc.ExpressionCompat;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.net.MessageManager;
 import buildcraft.lib.net.cache.BuildCraftObjectCaches;
+import buildcraft.lib.recipe.BCLibIngredientTypes;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.bus.api.IEventBus;
@@ -72,6 +73,7 @@ public class BCLib {
             }
         }
         BCLibItems.registry(modEventBus);
+        BCLibIngredientTypes.register(modEventBus);
         BCLibRegistries.fmlPreInit();
         StatementManager.setRegistryProvider(ItemStackUtil::requireActiveRegistryProvider);
 

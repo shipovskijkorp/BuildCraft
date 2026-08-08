@@ -34,7 +34,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -71,13 +70,10 @@ public class BCSilicon {
         modEventBus.addListener(BCSilicon::commonSetup);
         modEventBus.addListener(BCSilicon::postInit);
         modEventBus.addListener(BCSilicon::gatherData);
-        modEventBus.addListener(BCSiliconConfig::onLoadConfig);
-        modEventBus.addListener(BCSiliconConfig::onReloadConfig);
         modEventBus.addListener(BCSilicon::registerCapabilities);
 
         FacadeAPI.registry = FacadeStateManager.INSTANCE;
 
-        BCSiliconConfig.preInit();
         BCSiliconStatements.preInit();
         BCSiliconPlugs.preInit();
         BCSiliconBlocks.registry(modEventBus);
@@ -90,7 +86,6 @@ public class BCSilicon {
         tabPlugs.addItemProvider(BCSiliconItems::getPlugTabItems);
         tabFacades.addItemProvider(BCSiliconItems::getFacadeTabItems);
 
-        modContainer.registerConfig(Type.COMMON, BCSiliconConfig.config);
     }
 
 
@@ -140,7 +135,6 @@ public class BCSilicon {
                 FacadeAPI.facadeItem = BCSiliconItems.PLUG_FACADE_ITEM.get();
             }
             FacadeStateManager.init();
-            BCSiliconConfig.reloadConfig(MODID);
         });
     }
 

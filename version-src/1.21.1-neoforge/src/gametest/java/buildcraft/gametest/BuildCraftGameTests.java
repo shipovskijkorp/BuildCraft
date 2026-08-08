@@ -5,7 +5,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
@@ -113,14 +113,14 @@ public final class BuildCraftGameTests {
             return;
         }
 
-        Recipe<?> recipe = helper.getLevel().getRecipeManager()
+        RecipeHolder<?> recipe = helper.getLevel().getRecipeManager()
             .byKey(ResourceLocation.fromNamespaceAndPath(BCLib.MODID, "guide_book"))
             .orElse(null);
         if (recipe == null) {
             helper.fail("guide book crafting recipe was not loaded");
             return;
         }
-        if (recipe.getResultItem(helper.getLevel().registryAccess()).getItem() != guide) {
+        if (recipe.value().getResultItem(helper.getLevel().registryAccess()).getItem() != guide) {
             helper.fail("guide book recipe produces the wrong item");
             return;
         }

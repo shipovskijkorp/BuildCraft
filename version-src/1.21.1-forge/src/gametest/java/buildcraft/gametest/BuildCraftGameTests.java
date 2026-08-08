@@ -5,7 +5,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.gametest.GameTestDontPrefix;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import buildcraft.energy.BCEnergyFluids;
@@ -22,15 +22,15 @@ import buildcraft.factory.tile.TileTank;
 import buildcraft.lib.BCLib;
 import buildcraft.lib.BCLibItems;
 
-@GameTestHolder(BCLib.MODID)
-@PrefixGameTestTemplate(false)
+@GameTestHolder(namespace = BCLib.MODID)
+@GameTestDontPrefix
 public final class BuildCraftGameTests {
     private static final String EMPTY_TEMPLATE = "empty3x3x3";
 
     private BuildCraftGameTests() {
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 100)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 100)
     public static void oilSourceDoesNotDestroyWater(GameTestHelper helper) {
         BlockPos waterPos = new BlockPos(1, 1, 1);
         BlockPos oilPos = waterPos.above();
@@ -51,7 +51,7 @@ public final class BuildCraftGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void tankBlockEntityAcceptsAndSimulatesFluid(GameTestHelper helper) {
         BlockPos tankPos = new BlockPos(1, 1, 1);
         helper.setBlock(tankPos, BCFactoryBlocks.TANK_BLOCK.get().defaultBlockState());
@@ -81,7 +81,7 @@ public final class BuildCraftGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void energyFluidFamiliesAreFullyRegistered(GameTestHelper helper) {
         int expected = BCEnergyFluids.NAME.length * BCEnergyFluids.HEAT_NAMES.length;
         if (BCEnergyFluids.OIL_SOURCE.size() != expected
@@ -104,7 +104,7 @@ public final class BuildCraftGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void guideBookItemAndRecipeAreRegistered(GameTestHelper helper) {
         Item guide = BCLibItems.GUIDE.get();
         ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(guide);
@@ -113,14 +113,14 @@ public final class BuildCraftGameTests {
             return;
         }
 
-        Recipe<?> recipe = helper.getLevel().getRecipeManager()
+        RecipeHolder<?> recipe = helper.getLevel().getRecipeManager()
             .byKey(ResourceLocation.fromNamespaceAndPath(BCLib.MODID, "guide_book"))
             .orElse(null);
         if (recipe == null) {
             helper.fail("guide book crafting recipe was not loaded");
             return;
         }
-        if (recipe.getResultItem().getItem() != guide) {
+        if (recipe.value().getResultItem(helper.getLevel().registryAccess()).getItem() != guide) {
             helper.fail("guide book recipe produces the wrong item");
             return;
         }

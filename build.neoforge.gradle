@@ -79,10 +79,18 @@ println "Target: ${targetName}; Java: ${providers.systemProperty('java.version')
         "JVM: ${providers.systemProperty('java.vm.version').get()} (${providers.systemProperty('java.vendor').get()}), " +
         "Arch: ${providers.systemProperty('os.arch').get()}"
 
+def gameTestRunRequested = gradle.startParameter.taskNames.any {
+    it.toLowerCase().contains('rungametestserver')
+}
+
 sourceSets {
     main {
         java.setSrcDirs([new File(targetSourceRoot, 'src/main/java')])
         resources.setSrcDirs([new File(targetSourceRoot, 'src/main/resources')])
+        if (gameTestRunRequested) {
+            java.srcDir(new File(targetSourceRoot, 'src/gametest/java'))
+            resources.srcDir(new File(targetSourceRoot, 'src/gametest/resources'))
+        }
     }
     test {
         java.setSrcDirs([new File(targetSourceRoot, 'src/test/java')])
@@ -209,7 +217,9 @@ neoForge {
 
         gameTestServer {
             type = 'gameTestServer'
-            sourceSet = sourceSets.gameTest
+            // GameTest sources are merged into main only for this run so BuildCraft
+            // is exposed as one module/source set at runtime.
+            sourceSet = sourceSets.main
             gameDirectory = runDirectory.asFile
             systemProperty 'neoforge.enabledGameTestNamespaces', 'buildcraftlib'
         }
@@ -233,7 +243,6 @@ neoForge {
     mods {
         buildcraftlib {
             sourceSet(sourceSets.main)
-            sourceSet(sourceSets.gameTest)
         }
     }
 }

@@ -8,7 +8,7 @@
   ],
   "ingredients": [
     {
-      "type": "c:nbt",
+      "type": "buildcraftlib:strict_nbt",
       "count": 1,
       "item": "buildcraftsilicon:plug/gate",
       "nbt": "{gate:{logic:0b,material:1b,modifier:0b}}"

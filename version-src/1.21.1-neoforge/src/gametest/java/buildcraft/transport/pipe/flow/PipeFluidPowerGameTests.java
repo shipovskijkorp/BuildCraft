@@ -38,6 +38,7 @@ import buildcraft.gametest.PipeGameTestSupport.TestPipe;
 import buildcraft.lib.BCLib;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.CapUtil;
+import buildcraft.lib.misc.FluidStackUtil;
 import buildcraft.transport.BCTransportConfig;
 import buildcraft.transport.BCTransportPipes;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourDiamond;
@@ -569,7 +570,7 @@ public final class PipeFluidPowerGameTests {
         if (!nbt.contains("fluid")) {
             return false;
         }
-        FluidStack stack = FluidStack.loadFluidStackFromNBT(nbt.getCompound("fluid"));
+        FluidStack stack = FluidStackUtil.parseOptional(nbt.getCompound("fluid"));
         return !stack.isEmpty() && stack.getFluid() == fluid;
     }
 

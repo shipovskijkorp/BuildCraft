@@ -9,6 +9,7 @@ import io.netty.buffer.Unpooled;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -171,12 +172,12 @@ public final class BuildCraftLogicGameTests {
         require(helper, original.fill(new FluidStack(Fluids.LAVA, 2_500), FluidAction.EXECUTE) == 2_500,
             "executed fill returned the wrong amount");
 
-        CompoundTag nbt = original.serializeNBT();
+        CompoundTag nbt = original.serializeNBT(helper.getLevel().registryAccess());
         TankManager restored = new TankManager(
             new Tank("input", 1_000, null),
             new Tank("output", 2_000, null)
         );
-        restored.deserializeNBT(nbt);
+        restored.deserializeNBT(helper.getLevel().registryAccess(), nbt);
 
         require(helper, restored.get(0).getFluidAmount() == 1_000, "first restored tank has wrong amount");
         require(helper, restored.get(1).getFluidAmount() == 1_500, "second restored tank has wrong amount");
@@ -243,13 +244,13 @@ public final class BuildCraftLogicGameTests {
         ItemHandlerSimple original = new ItemHandlerSimple(3);
         ItemStack pickaxe = new ItemStack(Items.IRON_PICKAXE);
         pickaxe.setDamageValue(17);
-        pickaxe.setHoverName(Component.literal("test pickaxe"));
+        pickaxe.set(DataComponents.CUSTOM_NAME, Component.literal("test pickaxe"));
         original.setStackInSlot(1, pickaxe);
         original.setStackInSlot(2, new ItemStack(Items.APPLE, 12));
 
-        CompoundTag nbt = original.serializeNBT();
+        CompoundTag nbt = original.serializeNBT(helper.getLevel().registryAccess());
         ItemHandlerSimple restored = new ItemHandlerSimple(3);
-        restored.deserializeNBT(nbt);
+        restored.deserializeNBT(helper.getLevel().registryAccess(), nbt);
 
         require(helper, restored.getStackInSlot(0).isEmpty(), "empty slot was not preserved");
         require(helper, ItemStack.matches(pickaxe, restored.getStackInSlot(1)), "tagged pickaxe was not preserved");

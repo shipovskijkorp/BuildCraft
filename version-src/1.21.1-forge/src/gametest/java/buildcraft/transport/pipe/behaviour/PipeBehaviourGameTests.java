@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.gametest.GameTestDontPrefix;
 
 import buildcraft.api.transport.pipe.IPipe.ConnectedType;
 import buildcraft.api.transport.pipe.PipeEventFluid;
@@ -27,13 +28,13 @@ import buildcraft.lib.BCLib;
 import buildcraft.transport.pipe.Pipe;
 import buildcraft.lib.misc.NBTUtilBC;
 
-@GameTestHolder(BCLib.MODID)
-@PrefixGameTestTemplate(false)
+@GameTestHolder(namespace = BCLib.MODID)
+@GameTestDontPrefix
 public final class PipeBehaviourGameTests {
     private PipeBehaviourGameTests() {
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void pipeColourCompatibilityIsSymmetric(GameTestHelper helper) {
         require(helper, Pipe.canColoursConnect(null, null), "two unpainted pipes did not connect");
         require(helper, Pipe.canColoursConnect(DyeColor.RED, null), "painted pipe did not connect to unpainted pipe");
@@ -43,7 +44,7 @@ public final class PipeBehaviourGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void diamondFiltersPreferExactMatchesAndKeepUnfilteredFallback(GameTestHelper helper) {
         TestPipe pipe = new TestPipe(helper.getLevel())
             .connect(Direction.EAST, ConnectedType.PIPE)
@@ -68,21 +69,21 @@ public final class PipeBehaviourGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void diamondWeightedSplitUsesFilterStackCountsAndReducesRatio(GameTestHelper helper) {
         assertDiamondSplit(helper, 2, 1, 12, 8, 4);
         assertDiamondSplit(helper, 4, 2, 12, 8, 4);
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void diamondBehaviourNbtRoundTripPreservesEveryFilterSlot(GameTestHelper helper) {
         TestPipe pipe = new TestPipe(helper.getLevel());
         PipeBehaviourDiamondItem original = new PipeBehaviourDiamondItem(pipe);
         original.filters.setStackInSlot(0, new ItemStack(Items.APPLE, 3));
         original.filters.setStackInSlot(17, new ItemStack(Items.IRON_INGOT, 5));
         ItemStack named = new ItemStack(Items.DIAMOND_PICKAXE);
-        named.setHoverName(net.minecraft.network.chat.Component.literal("routing filter"));
+        named.set(DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("routing filter"));
         original.filters.setStackInSlot(53, named);
 
         PipeBehaviourDiamondItem restored = new PipeBehaviourDiamondItem(pipe, original.writeToNbt());
@@ -97,7 +98,7 @@ public final class PipeBehaviourGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void ironPipeEnforcesOutputBounceAndFluidInputDirection(GameTestHelper helper) {
         TestPipe pipe = new TestPipe(helper.getLevel())
             .connect(Direction.EAST, ConnectedType.PIPE)
@@ -129,7 +130,7 @@ public final class PipeBehaviourGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void lapisAndDaizuliKeepTheBc8ColourContract(GameTestHelper helper) {
         for (DyeColor configured : DyeColor.values()) {
             TestPipe lapisPipe = new TestPipe(helper.getLevel());

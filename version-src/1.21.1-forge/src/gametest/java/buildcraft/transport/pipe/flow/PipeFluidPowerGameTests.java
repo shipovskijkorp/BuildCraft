@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.gametest.GameTestDontPrefix;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.IMjConnector;
@@ -48,13 +48,13 @@ import buildcraft.transport.pipe.behaviour.PipeBehaviourLimiter;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import buildcraft.transport.tile.TilePipeHolder;
 
-@GameTestHolder(BCLib.MODID)
-@PrefixGameTestTemplate(false)
+@GameTestHolder(namespace = BCLib.MODID)
+@GameTestDontPrefix
 public final class PipeFluidPowerGameTests {
     private PipeFluidPowerGameTests() {
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void fluidForceInsertionSimulationMixingAndNbtRoundTrip(GameTestHelper helper) {
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.cobbleFluid);
         PipeFlowFluids flow = new PipeFlowFluids(pipe);
@@ -90,7 +90,7 @@ public final class PipeFluidPowerGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void fluidCapabilityReportsTankContentsCapacityAndValidity(GameTestHelper helper) {
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.cobbleFluid)
             .connect(Direction.EAST, ConnectedType.PIPE);
@@ -120,7 +120,7 @@ public final class PipeFluidPowerGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void fluidForceExtractionHonoursMinMaxAndSimulation(GameTestHelper helper) {
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.stoneFluid);
         PipeFlowFluids flow = new PipeFlowFluids(pipe);
@@ -151,7 +151,7 @@ public final class PipeFluidPowerGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 220)
     public static void connectedFluidPipesConserveWaterWhileTicking(GameTestHelper helper) {
         TilePipeHolder first = PipeGameTestSupport.placePipe(helper, new BlockPos(2, 1, 3), BCTransportPipes.cobbleFluid);
@@ -185,7 +185,7 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 140)
     public static void fluidDoesNotEnterSectionTowardDisconnectedColouredPipe(GameTestHelper helper) {
         TilePipeHolder first = PipeGameTestSupport.placePipe(helper, new BlockPos(2, 1, 3), BCTransportPipes.stoneFluid);
@@ -226,7 +226,7 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 380)
     public static void poweredWoodFluidPipeMovesWaterIntoTankWithoutLoss(GameTestHelper helper) {
         TileTank source = placeTank(helper, new BlockPos(1, 1, 3));
@@ -276,7 +276,7 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void diamondFluidFiltersMatchingSidesAndKeepsUnfilteredFallback(GameTestHelper helper) {
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.diamondFluid)
             .connect(Direction.EAST, ConnectedType.PIPE)
@@ -319,7 +319,7 @@ public final class PipeFluidPowerGameTests {
         helper.succeed();
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
     public static void powerReceiverSimulationAndDistributionAreConservative(GameTestHelper helper) {
         long mj = MjAPI.MJ;
         PipeApi.PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
@@ -370,7 +370,7 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
     public static void powerDistributionAbovePipeLimitDoesNotDivideByZero(GameTestHelper helper) {
         PipeApi.PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
         long maxPower = transferInfo.transferPerTick;
@@ -415,7 +415,7 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 40)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 40)
     public static void powerTraversesNonReceiverPipeAndReachesSink(GameTestHelper helper) {
         long requested = 8 * MjAPI.MJ;
         PipeApi.PowerTransferInfo sourceTransferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
@@ -472,7 +472,7 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void passiveProviderExtractionUsesDryRunAndNeverOverfillsSection(GameTestHelper helper) {
         long maxPower = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower).transferPerTick;
         FakePassiveProvider provider = new FakePassiveProvider(maxPower * 3);
@@ -504,7 +504,7 @@ public final class PipeFluidPowerGameTests {
         });
     }
 
-    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    @GameTest(template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void powerLimiterModesClampPersistAndDisableTransfer(GameTestHelper helper) {
         long base = PipeApi.getPowerTransferInfo(BCTransportPipes.ironPower).transferPerTick;
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.ironPower);
