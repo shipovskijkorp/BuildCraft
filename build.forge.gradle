@@ -189,6 +189,22 @@ def enableIc2Runtime = ic2CompatEnabled && booleanProperty('enable_ic2_runtime',
 // classes/resources directories in userdev. CI can opt out of local source
 // injection and load the already-built production jar from run/<target>/mods.
 def useProductionJarRuntime = booleanProperty('use_production_jar_runtime', false)
+
+// ForgeGradle's RunConfig.getAllSources() falls back to sourceSets.main when a
+// run has neither explicit sources nor local mods. In production-jar smoke mode
+// that fallback would put BuildCraft's exploded classes/resources on the module
+// path next to the production jar, producing duplicate JPMS packages. Give the
+// run an explicit empty source set so ForgeGradle has nothing local to inject.
+def productionJarRuntimeSourceSet = null
+if (useProductionJarRuntime) {
+    productionJarRuntimeSourceSet = sourceSets.create('productionJarRuntime') {
+        java.setSrcDirs([])
+        resources.setSrcDirs([])
+        compileClasspath = project.files()
+        runtimeClasspath = project.files()
+    }
+}
+
 def ciRuntimeProfile = providers.gradleProperty('ci_runtime_profile')
         .map { it.trim().toLowerCase() }
         .getOrElse('default')
@@ -223,7 +239,10 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
 
-            if (!useProductionJarRuntime) {
+            if (useProductionJarRuntime) {
+                // Prevent RunConfig#getAllSources() from falling back to main.
+                source productionJarRuntimeSourceSet
+            } else {
                 mods {
                     buildcraft {
                         source sourceSets.main
