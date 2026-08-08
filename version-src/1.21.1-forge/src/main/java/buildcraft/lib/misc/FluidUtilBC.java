@@ -258,6 +258,13 @@ public class FluidUtilBC {
         }
 
         if (held.is(Items.BUCKET)) {
+            // Match the legacy interaction path: in creative the temporary filled-container state is discarded,
+            // so tank -> container transfer must not execute or it would silently delete fluid from the tank.
+            if (player.isCreative()) {
+                // Legacy 1.19.2/1.20.1 reports the interaction optimistically on the client, but the server
+                // performs no tank -> container transfer for creative players.
+                return player.level().isClientSide;
+            }
             FluidStack simulated = fluidHandler.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
             if (simulated.isEmpty() || simulated.getAmount() != FluidType.BUCKET_VOLUME
                 || simulated.getFluid().getBucket() == Items.AIR) {

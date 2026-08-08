@@ -88,6 +88,8 @@ public class BCLibEventDist {
         @SubscribeEvent
         public static void textureStitchPost(TextureStitchEvent.Post event) {
 	    	if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                // Variable models are reparsed below, so expression nodes from the old JSON generation are stale.
+                ModelVariableData.onModelBake();
                 ModelHolderRegistry.reloadVariableModels();
 	            SpriteHolderRegistry.onTextureStitchPost(event);
             SpriteUtil.clearAtlasCache();

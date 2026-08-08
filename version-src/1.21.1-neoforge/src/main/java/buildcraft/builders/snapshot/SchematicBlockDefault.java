@@ -51,6 +51,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 public class SchematicBlockDefault implements ISchematicBlock {
     @SuppressWarnings("WeakerAccess")
@@ -486,6 +487,19 @@ public class SchematicBlockDefault implements ISchematicBlock {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Returns the inventory belonging to this exact block entity. Vanilla double chests expose two
+     * separate Containers, but their block capability may resolve to one combined 54-slot handler.
+     * Deferred schematic entries store local slot numbers for each half, so use the local Container
+     * whenever one is available.
+     */
+    private static IItemHandler getDeferredInventoryHandler(Level level, BlockPos blockPos, BlockEntity blockEntity) {
+        if (blockEntity instanceof Container container) {
+            return new InvWrapper(container);
+        }
+        return level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos, null);
+    }
+
     @Nonnull
     @Override
     public List<ItemStack> computeMissingDeferredRequiredItems(Level level, BlockPos blockPos) {
@@ -496,7 +510,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
         if (blockEntity == null) {
             return computeDeferredRequiredItems(level);
         }
-        IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos, null);
+        IItemHandler handler = getDeferredInventoryHandler(level, blockPos, blockEntity);
         if (handler == null) {
             return computeDeferredRequiredItems(level);
         }
@@ -541,7 +555,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
         if (blockEntity == null) {
             return stack;
         }
-        IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos, null);
+        IItemHandler handler = getDeferredInventoryHandler(level, blockPos, blockEntity);
         if (handler == null) {
             return stack;
         }

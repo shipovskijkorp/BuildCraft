@@ -51,6 +51,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class SchematicBlockDefault implements ISchematicBlock {
@@ -484,6 +485,19 @@ public class SchematicBlockDefault implements ISchematicBlock {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Returns the inventory belonging to this exact block entity. Vanilla double chests expose two
+     * separate Containers, but their block capability may resolve to one combined 54-slot handler.
+     * Deferred schematic entries store local slot numbers for each half, so use the local Container
+     * whenever one is available.
+     */
+    private static IItemHandler getDeferredInventoryHandler(BlockEntity blockEntity) {
+        if (blockEntity instanceof Container container) {
+            return new InvWrapper(container);
+        }
+        return blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null);
+    }
+
     @Nonnull
     @Override
     public List<ItemStack> computeMissingDeferredRequiredItems(Level level, BlockPos blockPos) {
@@ -494,7 +508,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
         if (blockEntity == null) {
             return computeDeferredRequiredItems(level);
         }
-        IItemHandler handler = blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null);
+        IItemHandler handler = getDeferredInventoryHandler(blockEntity);
         if (handler == null) {
             return computeDeferredRequiredItems(level);
         }
@@ -539,7 +553,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
         if (blockEntity == null) {
             return stack;
         }
-        IItemHandler handler = blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null);
+        IItemHandler handler = getDeferredInventoryHandler(blockEntity);
         if (handler == null) {
             return stack;
         }

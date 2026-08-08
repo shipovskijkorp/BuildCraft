@@ -20,11 +20,13 @@ import buildcraft.lib.client.render.fluid.FluidRenderer;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import buildcraft.lib.debug.BCAdvDebugging;
 import buildcraft.lib.debug.ClientDebuggables;
+import buildcraft.lib.debug.DebugRenderHelper;
 import buildcraft.lib.item.ItemDebugger;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.misc.MessageUtil;
+import buildcraft.lib.misc.SpriteUtil;
 import buildcraft.lib.misc.data.ModelVariableData;
 import buildcraft.lib.net.MessageDebugRequest;
 import buildcraft.lib.net.MessageDebugResponse;
@@ -88,6 +90,8 @@ public class BCLibEventDist {
 	    	if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
                 ModelHolderRegistry.reloadVariableModels();
 	            SpriteHolderRegistry.onTextureStitchPost(event);
+                SpriteUtil.clearAtlasCache();
+                DebugRenderHelper.clearTextureCache();
 
                 // Laser vertex buffers contain absolute UV coordinates from the atlas.
                 // Rebuild them after every stitch, including extra reloads started by other mods.

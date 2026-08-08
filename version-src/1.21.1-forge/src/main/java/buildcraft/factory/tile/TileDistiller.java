@@ -154,9 +154,10 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
             nbt.put("battery", nbt.get("mjBattery"));
         }*/
         mjBattery.deserializeNBT(registries, nbt.getCompound("battery"));
-        distillPower = nbt.getLong("distillPower");
+        distillPower = Math.max(0, nbt.getLong("distillPower"));
+        pendingPowerRefund = Math.max(0, nbt.getLong("pendingPowerRefund"));
         powerAvg.readFromNbt(nbt, "powerAvg");
-		capturePersistentProgress();
+        capturePersistentProgress();
 	}
 
 

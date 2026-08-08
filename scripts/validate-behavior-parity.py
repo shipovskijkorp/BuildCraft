@@ -263,6 +263,93 @@ def validate_target_specific_persistence() -> None:
             "new TravellingItem(itemTag, tickNow, level.registryAccess())")
 
 
+def validate_legacy_itemstack_migration() -> None:
+    rel = "src/main/java/buildcraft/lib/misc/ItemStackUtil.java"
+    require("1.21.1-forge", rel,
+            "CompoundTag normalized = normalizeLegacyNbt(tag);",
+            'normalized.contains("Count", Tag.TAG_ANY_NUMERIC)',
+            'components.put("minecraft:custom_data", legacyData.copy());',
+            'fallback.set(DataComponents.DAMAGE, Math.max(0, legacyData.getInt("Damage")));')
+
+
+def validate_persistence_and_reload_invariants() -> None:
+    # Saved Builder/Filler tasks already own reserved resources. Reload must cancel them through the
+    # normal virtual cancellation path before rescanning the live world.
+    snapshot_rel = "src/main/java/buildcraft/builders/snapshot/SnapshotBuilder.java"
+    snapshot = require("1.21.1-forge", snapshot_rel,
+                       'NBTUtilBC.readCompoundList(nbt.get("breakTasks"))',
+                       ".forEach(this::cancelBreakTask);",
+                       'NBTUtilBC.readCompoundList(nbt.get("placeTasks"))',
+                       ".map(tag -> new PlaceTask(tag, registries))",
+                       ".forEach(this::cancelPlaceTask);",
+                       "forceRecheckCurrentTask();",
+                       "flushPendingPowerRefund();")
+    refund_pos = snapshot.find('NBTUtilBC.readCompoundList(nbt.get("breakTasks"))')
+    recheck_pos = snapshot.find("forceRecheckCurrentTask();", refund_pos)
+    if refund_pos < 0 or recheck_pos < 0 or refund_pos > recheck_pos:
+        fail("1.21.1-forge: saved builder tasks must be refunded before forcing a rescan")
+
+    # Unknown/custom pipe payloads must survive missing registrations and unchecked migration/codec failures.
+    holder_rel = "src/main/java/buildcraft/transport/tile/TilePipeHolder.java"
+    require("1.21.1-forge", holder_rel,
+            "else if (unknownData != null)",
+            'nbt.put("pipe", unknownData.copy());',
+            'CompoundTag pipeData = nbt.getCompound("pipe");',
+            "catch (InvalidInputDataException | RuntimeException e)",
+            "unknownData = pipeData.copy();")
+    forbid("1.21.1-forge", holder_rel, "unknownData = nbt.copy();")
+
+    # Deferred blueprint inventory slots are local to each block entity. Combined double-chest capabilities
+    # would merge both halves and make local slots 0-26 ambiguous.
+    schematic_rel = "src/main/java/buildcraft/builders/snapshot/SchematicBlockDefault.java"
+    for target in NEWER:
+        schematic = require(target, schematic_rel,
+                            "blockEntity instanceof Container container",
+                            "new InvWrapper(container)",
+                            "getDeferredInventoryHandler")
+        if schematic.count("getDeferredInventoryHandler(") < 3:
+            fail(f"{target}: deferred blueprint inventory helper must be used by both missing-item and insert paths")
+
+    # The legacy path deliberately blocks tank -> container transfer in creative. The 1.21 vanilla bucket
+    # special-case must do the same before it executes a real drain.
+    fluid_rel = "src/main/java/buildcraft/lib/misc/FluidUtilBC.java"
+    for target in ("1.21.1-forge", "1.21.1-neoforge"):
+        fluid = text(target, fluid_rel)
+        branch = re.search(
+            r"if \(held\.is\(Items\.BUCKET\)\) \{(.*?)// Fragile shards",
+            fluid,
+            re.DOTALL,
+        )
+        if not branch:
+            fail(f"{target}: cannot locate vanilla empty-bucket tank interaction")
+            continue
+        body = branch.group(1)
+        creative = body.find("if (player.isCreative())")
+        client_only_result = body.find("return player.level().isClientSide;", creative)
+        execute_drain = body.find("FluidAction.EXECUTE")
+        if creative < 0 or client_only_result < 0 or execute_drain < 0 or client_only_result > execute_drain:
+            fail(f"{target}: creative empty buckets must be client-acknowledged but server-blocked before tank drain")
+
+    # Distiller refunds and progress are persistent state, including corruption-safe non-negative clamps.
+    distiller_rel = "src/main/java/buildcraft/factory/tile/TileDistiller.java"
+    require("1.21.1-forge", distiller_rel,
+            'distillPower = Math.max(0, nbt.getLong("distillPower"));',
+            'pendingPowerRefund = Math.max(0, nbt.getLong("pendingPowerRefund"));')
+
+    # Resource reloads invalidate expression nodes before reparsing variable models.
+    event_rel = "src/main/java/buildcraft/lib/BCLibEventDist.java"
+    for target in ("1.20.1-forge", "1.21.1-forge"):
+        event_text = compact(text(target, event_rel))
+        sequence = compact("ModelVariableData.onModelBake(); ModelHolderRegistry.reloadVariableModels();")
+        if sequence not in event_text:
+            fail(f"{target}: variable-model generation must advance before variable models are reparsed")
+
+    # NeoForge's stitched-atlas event must invalidate sprite objects cached across resource generations.
+    require("1.21.1-neoforge", event_rel,
+            "SpriteUtil.clearAtlasCache();",
+            "DebugRenderHelper.clearTextureCache();")
+
+
 def validate_worldgen_resources() -> None:
     relatives = (
         "src/main/resources/data/buildcraftenergy/worldgen/configured_feature/oil_configured_feature.json",
@@ -462,6 +549,8 @@ def main() -> None:
     validate_protection_invariants()
     validate_robot_invariants()
     validate_target_specific_persistence()
+    validate_legacy_itemstack_migration()
+    validate_persistence_and_reload_invariants()
     validate_worldgen_resources()
     validate_advancements()
     validate_resource_parity()

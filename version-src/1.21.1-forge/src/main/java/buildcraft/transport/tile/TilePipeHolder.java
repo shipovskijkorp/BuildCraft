@@ -148,6 +148,9 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
             super.saveAdditional(nbt, registries);
             if (pipe != Pipe.EMPTY) {
                 nbt.put("pipe", pipe.writeToNbt());
+            } else if (unknownData != null) {
+                // Never erase a pipe merely because this version cannot decode it yet.
+                nbt.put("pipe", unknownData.copy());
             }
             CompoundTag plugs = new CompoundTag();
             for (Direction face : Direction.values()) {
@@ -172,18 +175,25 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         serializationRegistries = registries;
         try {
             super.loadAdditional(nbt, registries);
-            if (nbt.contains("pipe")) {
+            unknownData = null;
+            pipe = Pipe.EMPTY;
+            if (nbt.contains("pipe", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+                CompoundTag pipeData = nbt.getCompound("pipe");
                 try {
-                    pipe = new Pipe(this, nbt.getCompound("pipe"));
+                    pipe = new Pipe(this, pipeData);
                     eventBus.registerHandler(pipe.behaviour);
                     eventBus.registerHandler(pipe.flow);
                     if (pipe.flow instanceof IFlowItems && BCModules.SILICON.isLoaded()) {
                         eventBus.registerHandler(FilterEventHandler.class);
                     }
-                } catch (InvalidInputDataException e) {
-                    // Unfortunately we can't throw an exception because then this tile won't persist :/
-                    buildcraft.api.core.BCLog.logger.warn("Failed to load pipe data; preserving unknown pipe NBT", e);
-                    unknownData = nbt.copy();
+                } catch (InvalidInputDataException | RuntimeException e) {
+                    // A broken custom payload must not make Minecraft discard the complete
+                    // block entity (pipe, facade, gate and wire data). Keep the raw pipe NBT.
+                    buildcraft.api.core.BCLog.logger.warn(
+                        "Failed to migrate pipe at {}; preserving its original NBT", worldPosition, e
+                    );
+                    pipe = Pipe.EMPTY;
+                    unknownData = pipeData.copy();
                 }
             }
             CompoundTag plugs = nbt.getCompound("plugs");

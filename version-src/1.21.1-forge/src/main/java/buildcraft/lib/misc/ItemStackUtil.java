@@ -9,14 +9,17 @@ import javax.annotation.Nullable;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
@@ -107,9 +110,107 @@ public final class ItemStackUtil {
         return parseOptional(requireActiveRegistryProvider(), tag);
     }
 
+    /**
+     * Reads both the current component-based stack format and BuildCraft data saved
+     * by Forge/Minecraft 1.20.1 ({@code Count}/{@code tag}).
+     */
     @Nonnull
     public static ItemStack parseOptional(@Nonnull HolderLookup.Provider registries, @Nullable CompoundTag tag) {
-        return tag == null || tag.isEmpty() ? ItemStack.EMPTY : ItemStack.parseOptional(registries, tag);
+        if (tag == null || tag.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        CompoundTag normalized = normalizeLegacyNbt(tag);
+        if (!normalized.contains("id", Tag.TAG_STRING)) {
+            // Empty statement parameters legitimately contain only their BuildCraft "kind".
+            // Feeding those compounds to ItemStack's codec logs an error and can abort gate sync.
+            return ItemStack.EMPTY;
+        }
+
+        String idString = normalized.getString("id");
+        ResourceLocation id = ResourceLocation.tryParse(idString);
+        int count = normalized.contains("count", Tag.TAG_ANY_NUMERIC) ? normalized.getInt("count") : 1;
+        if (id == null || count <= 0 || "minecraft:air".equals(idString)) {
+            return ItemStack.EMPTY;
+        }
+
+        try {
+            ItemStack parsed = ItemStack.parseOptional(registries, normalized);
+            if (!parsed.isEmpty()) {
+                return parsed;
+            }
+        } catch (RuntimeException ignored) {
+            // Fall through to the conservative reader. It deliberately retains the
+            // legacy tag as custom data instead of causing the whole block entity to fail.
+        }
+
+        Item item = BuiltInRegistries.ITEM.get(id);
+        if (item == null || item == Items.AIR) {
+            return ItemStack.EMPTY;
+        }
+        ItemStack fallback = new ItemStack(item, count);
+        CompoundTag legacyData = getLegacyCustomData(tag);
+        if (!legacyData.isEmpty()) {
+            setCustomData(fallback, legacyData);
+        }
+        if (legacyData.contains("Damage", Tag.TAG_ANY_NUMERIC)) {
+            fallback.set(DataComponents.DAMAGE, Math.max(0, legacyData.getInt("Damage")));
+        }
+        return fallback;
+    }
+
+    /**
+     * Converts the pre-1.20.5 ItemStack representation ({@code Count}/{@code tag})
+     * into the representation accepted by Minecraft 1.21.1.
+     */
+    @Nonnull
+    public static CompoundTag normalizeLegacyNbt(@Nonnull CompoundTag source) {
+        if (!source.contains("id", Tag.TAG_STRING) && source.contains("stack", Tag.TAG_COMPOUND)) {
+            return normalizeLegacyNbt(source.getCompound("stack"));
+        }
+
+        CompoundTag normalized = source.copy();
+        if (!normalized.contains("id", Tag.TAG_STRING)) {
+            if (normalized.contains("Item", Tag.TAG_STRING)) {
+                normalized.putString("id", normalized.getString("Item"));
+            } else if (normalized.contains("item", Tag.TAG_STRING)) {
+                normalized.putString("id", normalized.getString("item"));
+            }
+        }
+        if (!normalized.contains("count", Tag.TAG_ANY_NUMERIC)) {
+            if (normalized.contains("Count", Tag.TAG_ANY_NUMERIC)) {
+                normalized.putInt("count", normalized.getInt("Count"));
+            } else if (normalized.contains("id", Tag.TAG_STRING)) {
+                normalized.putInt("count", 1);
+            }
+        }
+
+        CompoundTag legacyData = getLegacyCustomData(source);
+        if (!legacyData.isEmpty()) {
+            CompoundTag components = normalized.contains("components", Tag.TAG_COMPOUND)
+                ? normalized.getCompound("components").copy()
+                : new CompoundTag();
+            if (!components.contains("minecraft:custom_data")) {
+                components.put("minecraft:custom_data", legacyData.copy());
+            }
+            if (!components.contains("minecraft:damage")
+                && legacyData.contains("Damage", Tag.TAG_ANY_NUMERIC)) {
+                components.putInt("minecraft:damage", Math.max(0, legacyData.getInt("Damage")));
+            }
+            normalized.put("components", components);
+        }
+        return normalized;
+    }
+
+    @Nonnull
+    private static CompoundTag getLegacyCustomData(@Nonnull CompoundTag source) {
+        if (source.contains("tag", Tag.TAG_COMPOUND)) {
+            return source.getCompound("tag").copy();
+        }
+        if (source.contains("Tag", Tag.TAG_COMPOUND)) {
+            return source.getCompound("Tag").copy();
+        }
+        return new CompoundTag();
     }
 
     @Nonnull
@@ -124,8 +225,7 @@ public final class ItemStackUtil {
             return registryBuffer;
         }
         // BuildCraft has several length-prefixed nested payloads represented as a plain
-        // FriendlyByteBuf. Wrap the same backing buffer with the active registry lookup
-        // instead of falling back to NBT or rejecting an otherwise valid packet.
+        // FriendlyByteBuf. Wrap the same backing buffer with the active registry lookup.
         return new RegistryFriendlyByteBuf(buffer, getActiveRegistryAccess());
     }
 

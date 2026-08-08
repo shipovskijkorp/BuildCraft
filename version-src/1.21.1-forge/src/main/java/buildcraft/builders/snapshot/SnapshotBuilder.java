@@ -790,10 +790,15 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     @Override
     public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+        // Per-block completion state is intentionally rechecked against the live world, but resources already
+        // reserved by saved tasks must be returned rather than silently discarded.
         pendingPowerRefund = Math.max(0L, nbt.getLong("pendingPowerRefund"));
-        // Never trust saved per-block state after a world/chunk reload. The blocks in the current
-        // area may have changed while the builder was not ticking, so keep the restored path/base
-        // position but force this current build area to be scanned again.
+        NBTUtilBC.readCompoundList(nbt.get("breakTasks"))
+            .map(BreakTask::new)
+            .forEach(this::cancelBreakTask);
+        NBTUtilBC.readCompoundList(nbt.get("placeTasks"))
+            .map(tag -> new PlaceTask(tag, registries))
+            .forEach(this::cancelPlaceTask);
         forceRecheckCurrentTask();
         flushPendingPowerRefund();
     }
