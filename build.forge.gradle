@@ -397,7 +397,7 @@ tasks.register('buildAndCollect', Copy) {
     // `build` includes JUnit checks and `assemble`; assemble already produces
     // the renamed production jar through the dependency above.
     dependsOn tasks.named('build')
-    from productionJar.flatMap { it.archiveFile }
+    from tasks.named('jar', Jar).flatMap { it.archiveFile }
     into rootProject.layout.buildDirectory.dir("libs/${modVersion}")
 }
 
