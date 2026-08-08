@@ -14,6 +14,7 @@ import buildcraft.lib.misc.BlockUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -45,7 +46,10 @@ public enum StripesHandlerShears implements IStripesHandlerItem {
         if (block instanceof IForgeShearable) {
         	IForgeShearable shearableBlock = (IForgeShearable) block;
             if (shearableBlock.isShearable(stack, world, pos)) {
-                List<ItemStack> drops = shearableBlock.onSheared(null, stack, world, pos, 0);
+                if (!(world instanceof ServerLevel serverLevel) || !BlockUtil.canBreakBlock(serverLevel, pos, player)) {
+                    return false;
+                }
+                List<ItemStack> drops = shearableBlock.onSheared(player, stack, world, pos, 0);
                 stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                 world.setBlock(pos, Blocks.AIR.defaultBlockState(), 11); // Might become obsolete in 1.12+
                 for (ItemStack dropStack : drops) {

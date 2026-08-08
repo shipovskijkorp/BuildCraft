@@ -13,6 +13,43 @@ server_log="${SERVER_LOG_FILE:-ci-server-${target}-${runtime_profile}.log}"
 run_dir="run/${target}"
 latest_log="${run_dir}/logs/latest.log"
 
+# Forge 1.21.x userdev treats the compiled classes and processed resources as
+# separate mod files. That cannot represent BuildCraft's single jar containing
+# nine [[mods]] entries: classes/main discovers only part of the mod set while
+# resources/main has metadata but no classes. The distributable 1.21.x Forge
+# jar uses Mojmap and can be loaded directly by the userdev server, so smoke-test
+# the production artifact instead of the broken exploded-mod representation.
+use_production_jar=false
+case "$target" in
+  1.21.*-forge) use_production_jar=true ;;
+esac
+
+production_mod=""
+if [[ "$use_production_jar" == true ]]; then
+  jar_dir="versions/${target}/build/libs"
+  if [[ ! -d "$jar_dir" ]]; then
+    echo "Production jar directory does not exist: $jar_dir" >&2
+    echo "Run buildAndCollect (or :${target}:build) before the smoke test." >&2
+    exit 2
+  fi
+
+  mapfile -t production_jars < <(
+    find "$jar_dir" -maxdepth 1 -type f -name '*.jar' \
+      ! -name '*-sources.jar' ! -name '*-javadoc.jar' | sort
+  )
+  if (( ${#production_jars[@]} != 1 )); then
+    echo "Expected exactly one production jar in $jar_dir, found ${#production_jars[@]}." >&2
+    printf '  %s\n' "${production_jars[@]}" >&2
+    exit 2
+  fi
+
+  mkdir -p "${run_dir}/mods"
+  production_mod="${run_dir}/mods/$(basename "${production_jars[0]}")"
+  rm -f "${run_dir}/mods/BuildCraft"*.jar
+  cp "${production_jars[0]}" "$production_mod"
+  echo "Forge 1.21.x production-jar smoke mode: $production_mod"
+fi
+
 mkdir -p "$run_dir"
 printf 'eula=true\n' > "${run_dir}/eula.txt"
 cat > "${run_dir}/server.properties" <<'PROPERTIES'
@@ -30,8 +67,16 @@ PROPERTIES
 rm -f "$latest_log"
 
 echo "Starting dedicated server smoke test (target: ${target}, profile: ${runtime_profile}, timeout: ${startup_timeout}s)."
-setsid ./gradlew --no-daemon --console=plain --stacktrace \
-  -Pci_runtime_profile="${runtime_profile}" ":${target}:runServer" > "$server_log" 2>&1 &
+gradle_args=(
+  --no-daemon
+  --console=plain
+  --stacktrace
+  -Pci_runtime_profile="${runtime_profile}"
+)
+if [[ "$use_production_jar" == true ]]; then
+  gradle_args+=(-Puse_production_jar_runtime=true)
+fi
+setsid ./gradlew "${gradle_args[@]}" ":${target}:runServer" > "$server_log" 2>&1 &
 server_pid=$!
 
 cleanup() {
@@ -41,12 +86,19 @@ cleanup() {
 
     for _ in $(seq 1 10); do
       if ! kill -0 "$server_pid" 2>/dev/null; then
-        return
+        break
       fi
       sleep 1
     done
 
-    kill -KILL -- "-$server_pid" 2>/dev/null || kill -KILL "$server_pid" 2>/dev/null || true
+
+    if kill -0 "$server_pid" 2>/dev/null; then
+      kill -KILL -- "-$server_pid" 2>/dev/null || kill -KILL "$server_pid" 2>/dev/null || true
+    fi
+  fi
+
+  if [[ -n "$production_mod" ]]; then
+    rm -f "$production_mod"
   fi
 }
 trap cleanup EXIT

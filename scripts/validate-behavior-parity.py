@@ -205,6 +205,15 @@ def validate_java_invariants() -> None:
             "NBTUtilBC.writeEnum(worldPipe.getColour())")
 
 
+def validate_protection_invariants() -> None:
+    stripes = "src/main/java/buildcraft/transport/stripes/StripesHandlerShears.java"
+    require("1.21.1-forge", stripes,
+            "import net.minecraft.server.level.ServerLevel;",
+            "BlockUtil.canBreakBlock(serverLevel, pos, player)",
+            "shearableBlock.onSheared(player, stack, world, pos, 0)")
+    forbid("1.21.1-forge", stripes, "shearableBlock.onSheared(null")
+
+
 def validate_robot_invariants() -> None:
     rel = "src/main/java/buildcraft/robotics/entity/EntityRobot.java"
     for target in ("1.20.1-forge", "1.21.1-forge"):
@@ -218,7 +227,18 @@ def validate_robot_invariants() -> None:
             'tag.put("owner", writeOwnerProfile(owner));',
             'owner = tag.contains("owner") ? readOwnerProfile',
             "private static GameProfile readOwnerProfile",
-            "private static CompoundTag writeOwnerProfile")
+            "private static CompoundTag writeOwnerProfile",
+            "FakePlayerProvider.INSTANCE.getFakePlayer(",
+            "serverLevel, getOwnerProfile(), blockPosition()")
+    attack = re.search(
+        r"public void attackTargetEntityWithCurrentItem\(Entity target\)\s*\{(.*?)\n\s*private static float applyAttributeModifier",
+        text("1.21.1-forge", rel),
+        re.DOTALL,
+    )
+    if not attack:
+        fail("1.21.1-forge: cannot locate robot attack method")
+    elif "getBuildCraftPlayer(serverLevel)" in attack.group(1):
+        fail("1.21.1-forge: robot attacks must use the owner-aware fake player")
     forbid("1.21.1-neoforge", rel, "amount = damageEvent.getAmount();")
 
 
@@ -439,6 +459,7 @@ def main() -> None:
 
     validate_tick_cadence()
     validate_java_invariants()
+    validate_protection_invariants()
     validate_robot_invariants()
     validate_target_specific_persistence()
     validate_worldgen_resources()

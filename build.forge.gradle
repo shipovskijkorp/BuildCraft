@@ -185,6 +185,10 @@ tasks.named('compileJava') { dependsOn(generateBuildCraftTarget) }
 // CI can launch a minimal server or one selected compatibility stack without
 // changing the normal development runtime.
 def enableIc2Runtime = ic2CompatEnabled && booleanProperty('enable_ic2_runtime', false)
+// Forge 1.21.x cannot reliably represent BuildCraft's multi-mod jar as split
+// classes/resources directories in userdev. CI can opt out of local source
+// injection and load the already-built production jar from run/<target>/mods.
+def useProductionJarRuntime = booleanProperty('use_production_jar_runtime', false)
 def ciRuntimeProfile = providers.gradleProperty('ci_runtime_profile')
         .map { it.trim().toLowerCase() }
         .getOrElse('default')
@@ -219,9 +223,11 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
 
-            mods {
-                buildcraft {
-                    source sourceSets.main
+            if (!useProductionJarRuntime) {
+                mods {
+                    buildcraft {
+                        source sourceSets.main
+                    }
                 }
             }
         }

@@ -1103,8 +1103,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         }
 
         ServerLevel serverLevel = (ServerLevel) level();
-        Player fakePlayer = FakePlayerProvider.INSTANCE.getBuildCraftPlayer(serverLevel);
-        fakePlayer.setPos(getX(), getY(), getZ());
+        Player fakePlayer = FakePlayerProvider.INSTANCE.getFakePlayer(
+            serverLevel, getOwnerProfile(), blockPosition()
+        );
         if (MinecraftForge.EVENT_BUS.post(new AttackEntityEvent(fakePlayer, target))) {
             return;
         }
