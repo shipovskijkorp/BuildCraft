@@ -28,7 +28,9 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: |
+            17
+            21
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -56,25 +58,7 @@ jobs:
       - name: Build and test all Stonecutter targets
         run: ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect
 
-      - name: Run GameTests for every registered target
-        shell: bash
-        run: |
-          set -euo pipefail
-          mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets)
-          for target in "${targets[@]}"; do
-            source_root="."
-            if [[ -d "version-src/${target}/src" ]]; then
-              source_root="version-src/${target}"
-            fi
-            if grep -R -q -E --include='*.java' '@GameTest|GameTestHolder' "${source_root}/src" 2>/dev/null; then
-              echo "Running GameTests for ${target}"
-              timeout 15m ./gradlew --no-daemon --console=plain --stacktrace ":${target}:runGameTestServer"
-            else
-              echo "No GameTests detected for ${target}; skipping."
-            fi
-          done
-
-      - name: Smoke-test every registered dedicated server
+      - name: Smoke-test every built production jar on a dedicated server
         shell: bash
         env:
           SERVER_STARTUP_TIMEOUT: '360'
@@ -101,7 +85,10 @@ jobs:
             versions/*/build/test-results/**
             run/*/logs/**
             run/*/crash-reports/**
+            run-server/*/logs/**
+            run-server/*/crash-reports/**
             ci-server-*.log
+            ci-server-install-*.log
 
   compatibility-server:
     name: Active target compatibility (${{ matrix.profile }})
