@@ -41,6 +41,7 @@ public class BlockFrame extends BlockBCBase_Neptune {
 
     public BlockFrame() {
         super(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.STONE).strength(0.25f)
+                .forceSolidOn()
 				.explosionResistance(3.0f));
         this.registerDefaultState(this.stateDefinition.any()
         		.setValue(BuildCraftProperties.CONNECTED_DOWN, false)

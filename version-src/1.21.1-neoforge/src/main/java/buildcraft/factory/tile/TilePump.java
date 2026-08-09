@@ -70,6 +70,11 @@ public class TilePump extends TileMiner {
         Direction.WEST, Direction.EAST //
     };
 
+    /** Vanilla infinite-water regeneration only considers horizontal source neighbours. */
+    private static final Direction[] INFINITE_WATER_NEIGHBORS = new Direction[] {
+        Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST
+    };
+
     static final class FluidPath {
         public final BlockPos thisPos;
 
@@ -168,7 +173,10 @@ public class TilePump extends TileMiner {
         int budget = QUEUE_SCAN_BUDGET;
         while (budget-- > 0 && !scanFrontier.isEmpty() && !isInfiniteWaterSource) {
             BlockPos posToCheck = scanFrontier.removeFirst();
-            int adjacentSources = 0;
+            if (scanForInfiniteWater && isInfiniteWaterSourceAt(posToCheck)) {
+                isInfiniteWaterSource = true;
+                break;
+            }
             for (Direction side : scanDirections) {
                 BlockPos offsetPos = posToCheck.relative(side);
                 if (offsetPos.distSqr(targetPos) > scanMaxLengthSquared || !scanChecked.add(offsetPos)) {
@@ -181,21 +189,32 @@ public class TilePump extends TileMiner {
                 paths.put(offsetPos, new FluidPath(offsetPos, paths.get(posToCheck)));
                 if (fluidState.isSource()) {
                     queue.add(offsetPos);
-                    adjacentSources++;
                 }
                 scanFrontier.addLast(offsetPos);
-            }
-            if (scanForInfiniteWater && adjacentSources >= 2) {
-                BlockState below = level.getBlockState(posToCheck.below());
-                Fluid fluidBelow = BlockUtil.getFluidWithoutFlowing(below);
-                if (FluidUtilBC.areFluidsEqual(fluidBelow, Fluids.WATER) || below.isSolid()) {
-                    isInfiniteWaterSource = true;
-                }
             }
         }
         if (scanFrontier.isEmpty() || isInfiniteWaterSource) {
             finishQueueBuild();
         }
+    }
+
+    private boolean isInfiniteWaterSourceAt(BlockPos pos) {
+        int adjacentSources = 0;
+        for (Direction side : INFINITE_WATER_NEIGHBORS) {
+            FluidState neighbour = level.getFluidState(pos.relative(side));
+            if (neighbour.isSource() && FluidUtilBC.areFluidsEqual(neighbour.getType(), Fluids.WATER)) {
+                adjacentSources++;
+                if (adjacentSources >= 2) {
+                    break;
+                }
+            }
+        }
+        if (adjacentSources < 2) {
+            return false;
+        }
+        BlockState below = level.getBlockState(pos.below());
+        Fluid fluidBelow = BlockUtil.getFluidWithoutFlowing(below);
+        return FluidUtilBC.areFluidsEqual(fluidBelow, Fluids.WATER) || below.isSolid();
     }
 
     private void finishQueueBuild() {

@@ -46,6 +46,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.StructureBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
@@ -620,27 +621,17 @@ public class SchematicBlockDefault implements ISchematicBlock {
     }
 
     @Override
-    public boolean canBuild(Level Level, BlockPos blockPos) {
-        return Level.isEmptyBlock(blockPos);
-    }
-
-    @Override
-    @SuppressWarnings("Duplicates")
-    public boolean build(Level level, BlockPos blockPos) {
-        return buildInternal(level, blockPos, null, false);
-    }
-
-    @Override
-    @SuppressWarnings("Duplicates")
-    public boolean build(Level level, BlockPos blockPos, Player actor) {
-        return buildInternal(level, blockPos, actor, true);
-    }
-
-    private boolean buildInternal(Level level, BlockPos blockPos, Player actor, boolean firePlaceEvent) {
+    public boolean canBuild(Level level, BlockPos blockPos) {
+        if (!level.isEmptyBlock(blockPos)) {
+            return false;
+        }
         if (placeBlock == Blocks.AIR) {
             return true;
         }
-        level.getProfiler().push("prepare block");
+        return getPlacementState(level, blockPos).canSurvive(level, blockPos);
+    }
+
+    private BlockState getPlacementState(Level level, BlockPos blockPos) {
         BlockState newBlockState = blockState;
         if (placeBlock != blockState.getBlock()) {
             newBlockState = placeBlock.defaultBlockState();
@@ -661,11 +652,40 @@ public class SchematicBlockDefault implements ISchematicBlock {
                 placeBlock.defaultBlockState()
             );
         }
-        level.getProfiler().pop();
-        level.getProfiler().push("place block");
         if (tileRotation != Rotation.NONE) {
             newBlockState = newBlockState.rotate(level, blockPos, tileRotation);
         }
+        // Blueprint-built leaves must not immediately enter vanilla distance-decay.
+        if (newBlockState.hasProperty(BlockStateProperties.PERSISTENT)) {
+            newBlockState = newBlockState.setValue(BlockStateProperties.PERSISTENT, true);
+        }
+        return newBlockState;
+    }
+
+    @Override
+    @SuppressWarnings("Duplicates")
+    public boolean build(Level level, BlockPos blockPos) {
+        return buildInternal(level, blockPos, null, false);
+    }
+
+    @Override
+    @SuppressWarnings("Duplicates")
+    public boolean build(Level level, BlockPos blockPos, Player actor) {
+        return buildInternal(level, blockPos, actor, true);
+    }
+
+    private boolean buildInternal(Level level, BlockPos blockPos, Player actor, boolean firePlaceEvent) {
+        if (placeBlock == Blocks.AIR) {
+            return true;
+        }
+        level.getProfiler().push("prepare block");
+        BlockState newBlockState = getPlacementState(level, blockPos);
+        if (!newBlockState.canSurvive(level, blockPos)) {
+            level.getProfiler().pop();
+            return false;
+        }
+        level.getProfiler().pop();
+        level.getProfiler().push("place block");
         boolean b = firePlaceEvent
             ? BlockUtil.placeBlock(level, blockPos, newBlockState, actor, Direction.UP, 11)
             : level.setBlock(blockPos, newBlockState, 11);

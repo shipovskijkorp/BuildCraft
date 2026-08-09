@@ -12,6 +12,7 @@ import java.util.List;
 import buildcraft.api.template.TemplateApi;
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.core.BuildCraftAPI;
+import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +44,7 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
 
     @Override
     protected boolean canPlace(BlockPos blockPos) {
-        return tile.getWorldBC().isEmptyBlock(blockPos);
+        return tile.getWorldBC().isEmptyBlock(blockPos) || BlockUtil.isReplaceable(tile.getWorldBC(), blockPos);
     }
 
     @Override

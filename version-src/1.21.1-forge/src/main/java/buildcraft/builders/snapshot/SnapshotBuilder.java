@@ -695,10 +695,12 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         } else {
             if (isBlockCorrect(blockPos)) {
                 checkResults[i] = CHECK_RESULT_CORRECT;
+            } else if (canPlace(blockPos)) {
+                // Filler/template placement may replace grass, snow layers, plants and other replaceable states
+                // directly. Do not turn those into excavation tasks first.
+                checkResults[i] = CHECK_RESULT_TO_PLACE;
             } else if (!tile.getWorldBC().isEmptyBlock(blockPos)) {
                 checkResults[i] = CHECK_RESULT_TO_BREAK;
-            } else if (canPlace(blockPos)) {
-                checkResults[i] = CHECK_RESULT_TO_PLACE;
             } else {
                 checkResults[i] = CHECK_RESULT_TO_BREAK;
             }

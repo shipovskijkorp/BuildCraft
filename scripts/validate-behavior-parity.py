@@ -419,6 +419,60 @@ def validate_resource_parity() -> None:
 
 
 
+
+def validate_gameplay_gap_fixes() -> None:
+    pump = "src/main/java/buildcraft/factory/tile/TilePump.java"
+    snapshot = "src/main/java/buildcraft/builders/snapshot/SnapshotBuilder.java"
+    template = "src/main/java/buildcraft/builders/snapshot/TemplateBuilder.java"
+    block_util = "src/main/java/buildcraft/lib/misc/BlockUtil.java"
+    frame = "src/main/java/buildcraft/builders/block/BlockFrame.java"
+    schematic = "src/main/java/buildcraft/builders/snapshot/SchematicBlockDefault.java"
+
+    for target in TARGETS:
+        require(target, pump,
+                "INFINITE_WATER_NEIGHBORS",
+                "isInfiniteWaterSourceAt(posToCheck)",
+                "neighbour.isSource()",
+                "adjacentSources >= 2")
+        pump_text = text(target, pump)
+        neighbor_decl = re.search(
+            r"INFINITE_WATER_NEIGHBORS\s*=\s*new Direction\[\]\s*\{([^}]*)\}",
+            pump_text,
+            re.DOTALL,
+        )
+        if neighbor_decl is None:
+            fail(f"{target}: cannot inspect infinite-water neighbour set")
+        else:
+            directions = neighbor_decl.group(1)
+            for direction in ("Direction.NORTH", "Direction.SOUTH", "Direction.WEST", "Direction.EAST"):
+                if direction not in directions:
+                    fail(f"{target}: infinite-water detection is missing horizontal neighbour {direction}")
+            for direction in ("Direction.UP", "Direction.DOWN"):
+                if direction in directions:
+                    fail(f"{target}: infinite-water detection must not count vertical neighbour {direction}")
+
+        require(target, snapshot,
+                "else if (canPlace(blockPos))",
+                "checkResults[i] = CHECK_RESULT_TO_PLACE;")
+        snapshot_text = text(target, snapshot)
+        place_index = snapshot_text.find("else if (canPlace(blockPos))")
+        break_index = snapshot_text.find("else if (!tile.getWorldBC().isEmptyBlock(blockPos))")
+        if place_index < 0 or break_index < 0 or place_index > break_index:
+            fail(f"{target}: replaceable placement must be classified before excavation")
+
+        require(target, template, "BlockUtil.isReplaceable(tile.getWorldBC(), blockPos)")
+        require(target, block_util, "public static boolean isReplaceable(Level world, BlockPos pos)")
+        require(target, schematic,
+                "getPlacementState(Level level, BlockPos blockPos)",
+                ".canSurvive(level, blockPos)",
+                "BlockStateProperties.PERSISTENT",
+                "newBlockState.setValue(BlockStateProperties.PERSISTENT, true)",
+                "if (!newBlockState.canSurvive(level, blockPos))")
+
+    for target in ("1.20.1-forge", "1.21.1-forge", "1.21.1-neoforge"):
+        require(target, frame, ".forceSolidOn()")
+
+
 def validate_jei_facade_scalability() -> None:
     plugin = "src/main/java/buildcraft/compat/jei/BuildCraftJeiPlugin.java"
     manager = "src/main/java/buildcraft/silicon/plug/FacadeStateManager.java"
@@ -576,6 +630,7 @@ def main() -> None:
     validate_worldgen_resources()
     validate_advancements()
     validate_resource_parity()
+    validate_gameplay_gap_fixes()
     validate_jei_facade_scalability()
     validate_pipe_pluggable_contract()
     validate_gametest_runtime_guards()

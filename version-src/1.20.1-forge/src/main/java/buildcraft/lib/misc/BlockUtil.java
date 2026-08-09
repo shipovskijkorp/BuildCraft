@@ -338,6 +338,11 @@ public final class BlockUtil {
     }
 
     //Only get Source or WaterLogged block
+    /** Returns whether normal block placement may replace the current state without excavation. */
+    public static boolean isReplaceable(Level world, BlockPos pos) {
+        return world.getBlockState(pos).canBeReplaced();
+    }
+
     public static Fluid getFluid(Level world, BlockPos pos) {
         FluidStack fluid = drainBlock(world, pos, false);
         return fluid != null && !fluid.isEmpty() ? fluid.getFluid() : Fluids.EMPTY;
