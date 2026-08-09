@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 import buildcraft.api.enums.EnumPowerStage;
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.tools.IToolWrench;
+import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.lib.engine.EngineConnector;
@@ -130,7 +130,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
     @Override
 	public InteractionResult onActivated(Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!stack.isEmpty() && stack.getItem() instanceof IToolWrench) {
+        if (WrenchUtil.isWrench(stack)) {
             if (!level.isClientSide) {
                 currentOutputIndex++;
                 currentOutputIndex %= outputs.length;

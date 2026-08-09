@@ -8,8 +8,6 @@ package buildcraft.lib.misc;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.tools.IToolWrench;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionHand;
@@ -56,11 +54,11 @@ public class EntityUtil {
 
     public static InteractionHand getWrenchHand(LivingEntity entity) {
         ItemStack stack = entity.getItemInHand(InteractionHand.MAIN_HAND);
-        if (!stack.isEmpty() && stack.getItem() instanceof IToolWrench) {
+        if (WrenchUtil.isWrench(stack)) {
             return InteractionHand.MAIN_HAND;
         }
         stack = entity.getItemInHand(InteractionHand.OFF_HAND);
-        if (!stack.isEmpty() && stack.getItem() instanceof IToolWrench) {
+        if (WrenchUtil.isWrench(stack)) {
             return InteractionHand.OFF_HAND;
         }
         return null;
@@ -68,15 +66,13 @@ public class EntityUtil {
 
     public static void activateWrench(Player player, BlockHitResult trace) {
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-        if (!stack.isEmpty() && stack.getItem() instanceof IToolWrench) {
-            IToolWrench wrench = (IToolWrench) stack.getItem();
-            wrench.wrenchUsed(player, InteractionHand.MAIN_HAND, stack, trace);
+        if (WrenchUtil.isWrench(stack)) {
+            WrenchUtil.wrenchUsed(player, InteractionHand.MAIN_HAND, stack, trace);
             return;
         }
         stack = player.getItemInHand(InteractionHand.OFF_HAND);
-        if (!stack.isEmpty() && stack.getItem() instanceof IToolWrench) {
-            IToolWrench wrench = (IToolWrench) stack.getItem();
-            wrench.wrenchUsed(player, InteractionHand.OFF_HAND, stack, trace);
+        if (WrenchUtil.isWrench(stack)) {
+            WrenchUtil.wrenchUsed(player, InteractionHand.OFF_HAND, stack, trace);
         }
     }
 

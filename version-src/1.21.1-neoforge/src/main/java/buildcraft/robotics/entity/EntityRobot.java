@@ -23,7 +23,7 @@ import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.api.robots.IRobotRegistry;
 import buildcraft.api.robots.RobotManager;
 import buildcraft.api.statements.StatementSlot;
-import buildcraft.api.tools.IToolWrench;
+import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.FakePlayerProvider;
@@ -994,7 +994,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
             return InteractionResult.PASS;
         }
 
-        if (player.isShiftKeyDown() && stack.getItem() instanceof IToolWrench wrench) {
+        if (player.isShiftKeyDown() && WrenchUtil.isWrench(stack)) {
             RobotEvent.Dismantle robotDismantleEvent = new RobotEvent.Dismantle(this, player);
             NeoForge.EVENT_BUS.post(robotDismantleEvent);
             if (robotDismantleEvent.isCanceled()) {
@@ -1003,7 +1003,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
             if (!level().isClientSide) {
                 onRobotHit(false);
             } else {
-                wrench.wrenchUsed(player, hand, stack, new EntityHitResult(this));
+                WrenchUtil.wrenchUsed(player, hand, stack, new EntityHitResult(this));
             }
             return InteractionResult.sidedSuccess(level().isClientSide);
         }

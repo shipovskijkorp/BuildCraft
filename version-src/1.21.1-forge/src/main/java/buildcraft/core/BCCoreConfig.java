@@ -46,6 +46,7 @@ public class BCCoreConfig {
     private static BooleanValue propMinePlayerProtected;
     private static BooleanValue propEnableAnimatedSprites;
     private static BooleanValue propPumpsConsumeWater;
+    private static BooleanValue propUseWrenchTag;
 
     private static IntValue propGuideItemSearchLimit;
     private static IntValue propMaxGuideSearchResults;
@@ -126,6 +127,11 @@ public class BCCoreConfig {
             "but work properly with finite water mods."
         ).define("pumpsConsumeWater", false);
 
+        propUseWrenchTag = builder.comment(
+            "Allow items in the common c:tools/wrench tag to operate BuildCraft wrench interactions.",
+            "Legacy items implementing BuildCraft's IToolWrench interface remain supported even when disabled."
+        ).define("useWrenchTag", true);
+
         propMarkerMaxDistance = builder.comment("How far, in minecraft blocks, should markers (volume and path) reach?")
             .defineInRange("markerMaxDistance", 64, 16, 256);
 
@@ -185,6 +191,7 @@ public class BCCoreConfig {
         BCLibConfig.useLongLocalizedName = propUseLongLocalizedName.get();
         BCLibConfig.itemLifespan = propItemLifespan.get();
         pumpsConsumeWater = propPumpsConsumeWater.get();
+        BCLibConfig.useWrenchTag = propUseWrenchTag.get();
         markerMaxDistance = propMarkerMaxDistance.get();
         pumpMaxDistance = propPumpMaxDistance.get();
         networkUpdateRate = Mth.clamp(propNetworkUpdateRate.get(), 1, 10);

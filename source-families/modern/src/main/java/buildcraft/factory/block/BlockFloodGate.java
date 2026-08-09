@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import buildcraft.api.properties.BuildCraftProperties;
-import buildcraft.api.tools.IToolWrench;
+import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.tile.TileFloodGate;
 import buildcraft.lib.block.BlockBCTile_Neptune;
@@ -39,7 +39,7 @@ public class BlockFloodGate extends BlockBCTile_Neptune{
     @Override
     protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level world, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!(heldItem.getItem() instanceof IToolWrench)) {
+        if (!WrenchUtil.isWrench(heldItem)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 

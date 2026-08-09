@@ -7,7 +7,7 @@
 package buildcraft.builders.block;
 
 import buildcraft.builders.tile.TileConstructionMarker;
-import buildcraft.core.item.ItemWrench;
+import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.lib.block.BlockMarkerBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -46,7 +46,7 @@ public class BlockConstructionMarker extends BlockMarkerBase {
             return ItemInteractionResult.SUCCESS;
         }
 
-        if (player.isShiftKeyDown() && held.getItem() instanceof ItemWrench) {
+        if (player.isShiftKeyDown() && WrenchUtil.isWrench(held)) {
             if (!world.isClientSide()) {
                 marker.ejectBlueprint(player);
             }

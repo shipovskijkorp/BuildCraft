@@ -1,7 +1,9 @@
-
 {
   "variants": {
-    "": {
+    "waterlogged=false": {
+      "model": "buildcrafttransport:block/pipe_holder"
+    },
+    "waterlogged=true": {
       "model": "buildcrafttransport:block/pipe_holder"
     }
   }

@@ -188,8 +188,9 @@ def validate_java_invariants() -> None:
         require_compact(target, "src/main/java/buildcraft/lib/recipe/AssemblyRecipe.java",
                         "public Set<ItemStack> getOutputPreviews() { return ImmutableSet.of(); }")
 
-    require("1.21.1-neoforge", "src/main/java/buildcraft/builders/block/BlockConstructionMarker.java",
-            "held.getItem() instanceof ItemWrench")
+    for target in TARGETS:
+        require(target, "src/main/java/buildcraft/builders/block/BlockConstructionMarker.java",
+                "WrenchUtil.isWrench(held)")
     require("1.21.1-forge", "src/main/java/buildcraft/transport/pipe/SchematicBlockPipe.java",
             "worldPipe.getDefinition().identifier.toString()",
             "NBTUtilBC.writeEnum(worldPipe.getColour())")
@@ -473,6 +474,50 @@ def validate_gameplay_gap_fixes() -> None:
         require(target, frame, ".forceSolidOn()")
 
 
+def validate_modpack_interop_fixes() -> None:
+    wrench_util = "src/main/java/buildcraft/lib/misc/WrenchUtil.java"
+    core_config = "src/main/java/buildcraft/core/BCCoreConfig.java"
+    pipe_holder = "src/main/java/buildcraft/transport/block/BlockPipeHolder.java"
+
+    for target in TARGETS:
+        wrench_text = require(target, wrench_util,
+                'WRENCH_TAG_NAMESPACE = "c"',
+                'WRENCH_TAG_PATH = "tools/wrench"',
+                "stack.getItem() instanceof IToolWrench",
+                "BCLibConfig.useWrenchTag && stack.getTags().anyMatch")
+        legacy_wrench = wrench_text.find("stack.getItem() instanceof IToolWrench")
+        tagged_wrench = wrench_text.find("BCLibConfig.useWrenchTag && stack.getTags().anyMatch")
+        if legacy_wrench < 0 or tagged_wrench < 0 or legacy_wrench > tagged_wrench:
+            fail(f"{target}: IToolWrench fallback must remain independent of the common-tag config toggle")
+        require(target, core_config,
+                '.define("useWrenchTag", true)',
+                "BCLibConfig.useWrenchTag = propUseWrenchTag.get();")
+        require(target, pipe_holder,
+                "implements ICustomPaintHandler, EntityBlock, SimpleWaterloggedBlock",
+                "BlockStateProperties.WATERLOGGED",
+                "builder.add(WATERLOGGED)",
+                "fluid.getType() == Fluids.WATER",
+                "Fluids.WATER.getSource(false)",
+                "world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world))")
+
+    legacy_tag = ROOT / "source-families/legacy/src/main/resources/data/c/tags/items/tools/wrench.json"
+    modern_tag = ROOT / "source-families/modern/src/main/resources/data/c/tags/item/tools/wrench.json"
+    for tag_path in (legacy_tag, modern_tag):
+        if not tag_path.is_file():
+            fail(f"missing common wrench tag: {tag_path.relative_to(ROOT)}")
+        elif '"buildcraftcore:wrench"' not in tag_path.read_text(encoding="utf-8"):
+            fail(f"common wrench tag does not contain BuildCraft wrench: {tag_path.relative_to(ROOT)}")
+
+    blockstate = ROOT / "source-shared/src/main/resources/assets/buildcrafttransport/blockstates/pipe_holder.json"
+    if blockstate.is_file():
+        blockstate_text = blockstate.read_text(encoding="utf-8")
+        for variant in ('"waterlogged=false"', '"waterlogged=true"'):
+            if variant not in blockstate_text:
+                fail(f"pipe holder blockstate is missing {variant}")
+    else:
+        fail("missing shared pipe holder blockstate")
+
+
 def validate_jei_facade_scalability() -> None:
     plugin = "src/main/java/buildcraft/compat/jei/BuildCraftJeiPlugin.java"
     manager = "src/main/java/buildcraft/silicon/plug/FacadeStateManager.java"
@@ -631,6 +676,7 @@ def main() -> None:
     validate_advancements()
     validate_resource_parity()
     validate_gameplay_gap_fixes()
+    validate_modpack_interop_fixes()
     validate_jei_facade_scalability()
     validate_pipe_pluggable_contract()
     validate_gametest_runtime_guards()
