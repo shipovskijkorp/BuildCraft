@@ -1,7 +1,7 @@
 mod.group = "ct.buildcraft.ce"
 mod.id = "buildcraft"
 mod.name = "BuildCraft Community Edition"
-mod.version = "8.0.12"
+mod.version = "8.0.13"
 mod.archive_name = "BuildCraft-Community-Edition"
 mod.authors = "CurativeTree, ShipovskijKorp"
 mod.license = "MPL-2.0"

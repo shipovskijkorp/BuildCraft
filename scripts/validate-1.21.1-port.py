@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline validation for the BuildCraft 8.0.12 Forge 1.21.1 beta port."""
+"""Offline validation for the maintained BuildCraft Forge 1.21.1 beta port."""
 from __future__ import annotations
 
 import argparse
@@ -120,7 +120,7 @@ def require_needles(root: Path, checks: dict[str, list[str]]) -> None:
         text = path.read_text(encoding="utf-8")
         for needle in needles:
             if needle not in text:
-                fail(f"missing expected 8.0.12 invariant {needle!r} in {relative}")
+                fail(f"missing expected 1.21.1 port invariant {needle!r} in {relative}")
 
 
 def main() -> None:
@@ -162,8 +162,9 @@ def main() -> None:
     targets = [item.strip() for item in properties.get("targets", "").split(",") if item.strip()]
     if args.target not in targets:
         fail(f"{args.target} is not registered in targets")
-    if properties.get("common.mod.version") != "8.0.12":
-        fail("common.mod.version must be 8.0.12")
+    release_version = properties.get("common.mod.version", "").strip()
+    if not re.fullmatch(r"8\.\d+\.\d+(?:\.\d+)?(?:[-+][0-9A-Za-z.-]+)?", release_version):
+        fail(f"common.mod.version must be a valid BuildCraft 8.x release version, got {release_version!r}")
 
     required = [
         "PORTING.md",
@@ -181,7 +182,7 @@ def main() -> None:
     ]
     for relative in required:
         if not (root / relative).is_file():
-            fail(f"missing 1.21.1/8.0.12 port file: {relative}")
+            fail(f"missing required 1.21.1 port file: {relative}")
 
     forbidden_directories = list((src / "main/resources/data").rglob("recipes"))
     forbidden_directories += list((src / "main/resources/data").rglob("advancements"))
@@ -423,7 +424,7 @@ def main() -> None:
             fail(f"PORTING.md does not document {expected_text!r}")
 
     print(
-        "BuildCraft 8.0.12 Forge 1.21.1 beta layout OK: "
+        f"BuildCraft {release_version} Forge 1.21.1 beta layout OK: "
         f"{len(java_files)} Java files, Forge=52.1.16, Java=21, protocol=BC8.0.x-1.21.1-net2"
     )
 

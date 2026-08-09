@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+import tomllib
 from pathlib import Path
 
 from source_layout import target_layout as layered_target_layout
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SETTINGS = ROOT / "settings.gradle.kts"
 ROOT_BUILD = ROOT / "stonecutter.gradle.kts"
 TARGET_PROPERTIES = ROOT / "stonecutter-targets.properties"
+LEGACY_PROPERTIES_TOML = ROOT / "stonecutter.properties.toml"
 WRAPPER_PROPERTIES = ROOT / "gradle/wrapper/gradle-wrapper.properties"
 FORGE_BUILD = ROOT / "build.forge.gradle"
 NEOFORGE_BUILD = ROOT / "build.neoforge.gradle"
@@ -257,6 +259,22 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
 
     for key in COMMON_REQUIRED:
         required(properties, f"common.{key}")
+
+    # stonecutter.properties.toml predates the target-matrix file, but Stonecutter
+    # tooling may still discover it. Keep its release metadata synchronized so a
+    # version bump cannot leave two contradictory project versions in the repo.
+    if LEGACY_PROPERTIES_TOML.is_file():
+        try:
+            legacy_toml = tomllib.loads(LEGACY_PROPERTIES_TOML.read_text(encoding="utf-8"))
+        except Exception as exc:
+            fail(f"invalid {LEGACY_PROPERTIES_TOML.name}: {exc}")
+        legacy_version = str(legacy_toml.get("mod", {}).get("version", "")).strip()
+        canonical_version = required(properties, "common.mod.version")
+        if legacy_version != canonical_version:
+            fail(
+                f"{LEGACY_PROPERTIES_TOML.name} mod.version {legacy_version!r} does not match "
+                f"{TARGET_PROPERTIES.name} common.mod.version {canonical_version!r}"
+            )
 
     placeholder_count = 0
     for target in targets:
