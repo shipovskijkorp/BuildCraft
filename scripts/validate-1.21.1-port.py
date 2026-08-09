@@ -9,6 +9,8 @@ import sys
 import tomllib
 from pathlib import Path
 
+from source_layout import configured_layer_paths, materialize_target
+
 
 def fail(message: str) -> None:
     print(f"ERROR: {message}", file=sys.stderr)
@@ -123,20 +125,24 @@ def require_needles(root: Path, checks: dict[str, list[str]]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--source-root", type=Path, default=Path("version-src/1.21.1-forge"))
+    parser.add_argument("--source-root", type=Path, help="standalone source tree; configured family/overlay paths are merged automatically")
     parser.add_argument("--target", default="1.21.1-forge")
     args = parser.parse_args()
 
     workspace = Path(__file__).resolve().parents[1]
-    root = args.source_root.resolve()
+    properties = load_properties(workspace / "stonecutter-targets.properties")
+    configured_layers = set(configured_layer_paths(args.target, properties))
+    requested = args.source_root.resolve() if args.source_root else None
+    root = materialize_target(args.target, properties=properties) if requested is None or requested in configured_layers else requested
     src = root / "src"
     if not (src / "main/java").is_dir() or not (src / "main/resources").is_dir():
         fail(f"invalid 1.21.1 source root: {root}")
 
-    properties = load_properties(workspace / "stonecutter-targets.properties")
     prefix = f"target.{args.target}."
     expected = {
-        "source.root": "version-src/1.21.1-forge",
+        "source.family": "modern",
+        "source.root": "source-families/modern",
+        "source.overlay_root": "version-src/1.21.1-forge",
         "deps.minecraft": "1.21.1",
         "deps.forge": "52.1.16",
         "java.version": "21",

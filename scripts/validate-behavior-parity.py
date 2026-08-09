@@ -8,12 +8,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from source_layout import materialize_target
+
 ROOT = Path(__file__).resolve().parents[1]
 TARGETS = {
-    "1.19.2-forge": ROOT,
-    "1.20.1-forge": ROOT / "version-src/1.20.1-forge",
-    "1.21.1-forge": ROOT / "version-src/1.21.1-forge",
-    "1.21.1-neoforge": ROOT / "version-src/1.21.1-neoforge",
+    target: materialize_target(target)
+    for target in ("1.19.2-forge", "1.20.1-forge", "1.21.1-forge", "1.21.1-neoforge")
 }
 NEWER = ("1.20.1-forge", "1.21.1-forge", "1.21.1-neoforge")
 ERRORS: list[str] = []
@@ -446,8 +446,8 @@ def validate_gametest_runtime_guards() -> None:
     forge_gradle = (ROOT / "build.forge.gradle").read_text(encoding="utf-8")
     require_tokens = (
         "def gameTestRunRequested",
-        "java.srcDir(new File(sourceBase, 'src/gametest/java'))",
-        "resources.srcDir(new File(sourceBase, 'src/gametest/resources'))",
+        "layeredDirs('src/gametest/java').each { java.srcDir(it) }",
+        "layeredDirs('src/gametest/resources').each { resources.srcDir(it) }",
     )
     for token in require_tokens:
         if token not in forge_gradle:
@@ -458,8 +458,8 @@ def validate_gametest_runtime_guards() -> None:
     neoforge_gradle = (ROOT / "build.neoforge.gradle").read_text(encoding="utf-8")
     for token in (
         "def gameTestRunRequested",
-        "java.srcDir(new File(targetSourceRoot, 'src/gametest/java'))",
-        "resources.srcDir(new File(targetSourceRoot, 'src/gametest/resources'))",
+        "layeredDirs('src/gametest/java').each { java.srcDir(it) }",
+        "layeredDirs('src/gametest/resources').each { resources.srcDir(it) }",
         "sourceSet = sourceSets.main",
     ):
         if token not in neoforge_gradle:

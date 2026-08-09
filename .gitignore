@@ -33,3 +33,7 @@ forge*changelog.txt
 src.zip
 sub_projects/
 .gradle-bootstrap/
+
+# Python validator caches
+__pycache__/
+*.pyc

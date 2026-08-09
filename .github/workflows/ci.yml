@@ -40,6 +40,9 @@ jobs:
       - name: Validate Stonecutter target matrix
         run: python scripts/validate-stonecutter.py
 
+      - name: Validate legacy/modern source families
+        run: python scripts/validate-source-families.py
+
       - name: Validate Forge 1.20.1 8.0.12 port invariants
         run: python scripts/validate-8.0.12-port.py --source-root version-src/1.20.1-forge
 
@@ -53,7 +56,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Make scripts executable
-        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/validate-stonecutter.py scripts/validate-8.0.12-port.py scripts/validate-1.21.1-port.py scripts/validate-behavior-parity.py
+        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-source-families.py scripts/validate-stonecutter.py scripts/validate-8.0.12-port.py scripts/validate-1.21.1-port.py scripts/validate-behavior-parity.py
 
       - name: Build and test all Stonecutter targets
         run: ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect

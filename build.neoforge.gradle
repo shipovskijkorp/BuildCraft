@@ -55,16 +55,44 @@ def neoForgeVersion = requiredProperty('deps.neoforge')
 def modVersion = requiredProperty('mod.version')
 def archiveName = requiredProperty('mod.archive_name')
 def javaVersion = Integer.parseInt(requiredProperty('java.version'))
-def sourceRootProperty = requiredProperty('source.root')
-def targetSourceRoot = rootProject.file(sourceRootProperty)
-def targetAccessTransformer = new File(targetSourceRoot, 'src/main/resources/META-INF/accesstransformer.cfg')
+def sourceFamily = requiredProperty('source.family')
+def sharedSourceRootProperty = requiredProperty('source.shared_root')
+def familySourceRootProperty = requiredProperty('source.root')
+def overlaySourceRootProperty = requiredProperty('source.overlay_root')
+def sharedSourceRoot = rootProject.file(sharedSourceRootProperty)
+def familySourceRoot = rootProject.file(familySourceRootProperty)
+def targetOverlayRoot = rootProject.file(overlaySourceRootProperty)
+def sourceLayers = [sharedSourceRoot, familySourceRoot, targetOverlayRoot]
+def layeredDirs = { String relative ->
+    sourceLayers.collect { new File(it, relative) }.findAll { it.isDirectory() }
+}
+def resolveSourceFile = { String relative ->
+    [targetOverlayRoot, familySourceRoot, sharedSourceRoot]
+            .collect { new File(it, relative) }
+            .find { it.isFile() }
+}
+def targetAccessTransformer = resolveSourceFile('src/main/resources/META-INF/accesstransformer.cfg')
 def jeiCompatEnabled = booleanProperty('compat.jei.enabled', true)
 def jadeCompatEnabled = booleanProperty('compat.jade.enabled', true)
 def ic2CompatEnabled = booleanProperty('compat.ic2.enabled', false)
 def forestryCompatEnabled = booleanProperty('compat.forestry.enabled', false)
 
-if (!targetSourceRoot.isDirectory()) {
-    throw new GradleException("Configured source.root '${sourceRootProperty}' for '${targetName}' does not exist")
+for (def layer : sourceLayers) {
+    if (!layer.isDirectory()) {
+        throw new GradleException("Configured source layer '${layer}' for '${targetName}' does not exist")
+    }
+}
+if (targetAccessTransformer == null) {
+    throw new GradleException("No access transformer found in source family '${sourceFamily}' for '${targetName}'")
+}
+
+def effectiveSourceRoot = layout.buildDirectory.dir("effective-source/${targetName}")
+def prepareEffectiveSource = tasks.register('prepareEffectiveSource', Sync) {
+    group = 'build setup'
+    description = "Materialize shared + ${sourceFamily} + ${targetName} source layers"
+    sourceLayers.each { layer -> from(layer) }
+    into effectiveSourceRoot
+    duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.FAIL
 }
 
 version = "${modVersion}+${targetName.replace('-', '+')}"
@@ -85,20 +113,20 @@ def gameTestRunRequested = gradle.startParameter.taskNames.any {
 
 sourceSets {
     main {
-        java.setSrcDirs([new File(targetSourceRoot, 'src/main/java')])
-        resources.setSrcDirs([new File(targetSourceRoot, 'src/main/resources')])
+        java.setSrcDirs(layeredDirs('src/main/java'))
+        resources.setSrcDirs(layeredDirs('src/main/resources'))
         if (gameTestRunRequested) {
-            java.srcDir(new File(targetSourceRoot, 'src/gametest/java'))
-            resources.srcDir(new File(targetSourceRoot, 'src/gametest/resources'))
+            layeredDirs('src/gametest/java').each { java.srcDir(it) }
+            layeredDirs('src/gametest/resources').each { resources.srcDir(it) }
         }
     }
     test {
-        java.setSrcDirs([new File(targetSourceRoot, 'src/test/java')])
-        resources.setSrcDirs([new File(targetSourceRoot, 'src/test/resources')])
+        java.setSrcDirs(layeredDirs('src/test/java'))
+        resources.setSrcDirs(layeredDirs('src/test/resources'))
     }
     gameTest {
-        java.setSrcDirs([new File(targetSourceRoot, 'src/gametest/java')])
-        resources.setSrcDirs([new File(targetSourceRoot, 'src/gametest/resources')])
+        java.setSrcDirs(layeredDirs('src/gametest/java'))
+        resources.setSrcDirs(layeredDirs('src/gametest/resources'))
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += output + sourceSets.main.output
     }
@@ -231,7 +259,7 @@ neoForge {
                     '--mod', buildcraftModIdList,
                     '--all',
                     '--output', generatedResources.asFile.absolutePath,
-                    '--existing', new File(targetSourceRoot, 'src/main/resources').absolutePath
+                    '--existing', effectiveSourceRoot.get().dir('src/main/resources').asFile.absolutePath
             )
         }
 
@@ -248,6 +276,10 @@ neoForge {
 }
 
 sourceSets.main.resources.srcDir(generatedResources)
+
+tasks.matching { it.name == 'runData' }.configureEach {
+    dependsOn prepareEffectiveSource
+}
 
 repositories {
     mavenCentral()
@@ -301,7 +333,8 @@ dependencies {
 
 tasks.named('test', Test) {
     useJUnitPlatform()
-    workingDir targetSourceRoot
+    dependsOn prepareEffectiveSource
+    workingDir effectiveSourceRoot.get().asFile
     systemProperty 'buildcraft.expectedPackFormat', requiredProperty('pack.format')
     testLogging {
         events 'failed', 'skipped'

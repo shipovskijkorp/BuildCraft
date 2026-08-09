@@ -1,6 +1,0 @@
-{
-  "parent": "buildcraftrobotics:robot",
-  "textures": {
-    "all": "buildcraftrobotics:entities/robot_picker_active"
-  }
-}

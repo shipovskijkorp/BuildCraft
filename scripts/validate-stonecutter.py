@@ -8,12 +8,15 @@ import re
 import sys
 from pathlib import Path
 
+from source_layout import target_layout as layered_target_layout
+
 ROOT = Path(__file__).resolve().parents[1]
 SETTINGS = ROOT / "settings.gradle.kts"
 ROOT_BUILD = ROOT / "stonecutter.gradle.kts"
 TARGET_PROPERTIES = ROOT / "stonecutter-targets.properties"
 WRAPPER_PROPERTIES = ROOT / "gradle/wrapper/gradle-wrapper.properties"
 FORGE_BUILD = ROOT / "build.forge.gradle"
+NEOFORGE_BUILD = ROOT / "build.neoforge.gradle"
 
 ACTIVE_PATTERN = re.compile(r'^\s*stonecutter\s+active\s+"([^"]+)"', re.MULTILINE)
 PLACEHOLDER_PATTERN = re.compile(r"\$\{([A-Za-z0-9_.-]+)}")
@@ -31,6 +34,10 @@ COMMON_REQUIRED = (
 )
 
 TARGET_REQUIRED = (
+    "source.family",
+    "source.shared_root",
+    "source.root",
+    "source.overlay_root",
     "deps.minecraft",
     "java.version",
     "network.protocol",
@@ -136,24 +143,26 @@ def parse_targets(properties: dict[str, str]) -> list[str]:
     return targets
 
 
-def resource_placeholders(loader: str, source_root: Path) -> set[str]:
-    candidates: dict[str, tuple[Path, ...]] = {
+def resource_placeholders(loader: str, target: str, properties: dict[str, str]) -> set[str]:
+    layout = layered_target_layout(target, properties)
+    candidates: dict[str, tuple[str, ...]] = {
         "forge": (
-            source_root / "src/main/resources/META-INF/mods.toml",
-            source_root / "src/main/resources/pack.mcmeta",
+            "src/main/resources/META-INF/mods.toml",
+            "src/main/resources/pack.mcmeta",
         ),
         "neoforge": (
-            source_root / "src/main/resources/META-INF/neoforge.mods.toml",
-            source_root / "src/main/resources/pack.mcmeta",
+            "src/main/resources/META-INF/neoforge.mods.toml",
+            "src/main/resources/pack.mcmeta",
         ),
         "fabric": (
-            source_root / "src/main/resources/fabric.mod.json",
-            source_root / "src/main/resources/pack.mcmeta",
+            "src/main/resources/fabric.mod.json",
+            "src/main/resources/pack.mcmeta",
         ),
     }
     placeholders: set[str] = set()
-    for path in candidates.get(loader, ()):
-        if path.is_file():
+    for relative in candidates.get(loader, ()):
+        path = layout.resolve(relative)
+        if path is not None:
             placeholders.update(PLACEHOLDER_PATTERN.findall(path.read_text(encoding="utf-8")))
     return placeholders
 
@@ -167,6 +176,7 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
     root_build_text = ROOT_BUILD.read_text(encoding="utf-8")
     wrapper_text = WRAPPER_PROPERTIES.read_text(encoding="utf-8")
     forge_build_text = FORGE_BUILD.read_text(encoding="utf-8")
+    neoforge_build_text = NEOFORGE_BUILD.read_text(encoding="utf-8")
 
     if 'id("dev.kikugie.stonecutter") version "0.7.11"' not in settings_text:
         fail("Stonecutter must be pinned to the Gradle-8-compatible version 0.7.11")
@@ -204,9 +214,17 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
         fail("unconditional reobfJar dependency breaks the Forge 1.21.1 target")
     if "stonecutter-targets.properties" not in forge_build_text:
         fail("Forge build must load the Gradle-8-compatible target configuration")
-    if "targetAccessTransformer = new File(targetSourceRoot" not in forge_build_text \
+    if "resolveSourceFile('src/main/resources/META-INF/accesstransformer.cfg')" not in forge_build_text \
             or "accessTransformer = targetAccessTransformer" not in forge_build_text:
-        fail("Forge build must configure the target-specific access transformer")
+        fail("Forge build must resolve the access transformer from the layered source family")
+    for token in ("sourceLayers", "layeredDirs", "prepareEffectiveSource"):
+        if token not in forge_build_text:
+            fail(f"Forge build is missing layered source support: {token}")
+    if "resolveSourceFile('src/main/resources/META-INF/accesstransformer.cfg')" not in neoforge_build_text:
+        fail("NeoForge build must resolve the access transformer from the layered source family")
+    for token in ("sourceLayers", "layeredDirs", "prepareEffectiveSource"):
+        if token not in neoforge_build_text:
+            fail(f"NeoForge build is missing layered source support: {token}")
 
     active_match = ACTIVE_PATTERN.search(root_build_text)
     if not active_match:
@@ -219,11 +237,20 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
     if vcs_target not in targets:
         fail(f"vcsTarget {vcs_target!r} is not registered")
 
+    behavior_reference = required(properties, "behaviorReference")
+    if behavior_reference != "1.19.2-forge":
+        fail(f"behaviorReference must remain '1.19.2-forge', got {behavior_reference!r}")
+    families = [item.strip() for item in required(properties, "sourceFamilies").split(",") if item.strip()]
+    if families != ["legacy", "modern"]:
+        fail(f"sourceFamilies must be legacy,modern; got {families}")
+
     if re.search(r"\bstonecutter\s+registerChiseled\b", root_build_text) \
             or "stonecutter.chiseled" in root_build_text:
         fail("Stonecutter 0.7.11 controller must not use the 0.8/0.9 chiseled task API")
     if 'tasks.register("buildAndCollect")' not in root_build_text:
         fail("root controller does not register buildAndCollect")
+    if 'val targetsByFamily' not in root_build_text or 'tasks.register("build${family.replaceFirstChar' not in root_build_text:
+        fail("root controller must expose per-family build tasks")
     if 'dependsOn(registeredTargets.map' not in root_build_text \
             or '":$target:buildAndCollect"' not in root_build_text:
         fail("root buildAndCollect must depend on every registered target task")
@@ -257,15 +284,30 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
                 "the target ID must start with the Minecraft version"
             )
 
-        source_root_value = properties.get(f"target.{target}.source.root", "").strip()
-        source_root = ROOT / source_root_value if source_root_value else ROOT
-        if not source_root.is_dir():
-            fail(f"target {target} source root does not exist: {source_root}")
-        for required_source_path in ("src/main/java", "src/main/resources"):
-            if not (source_root / required_source_path).is_dir():
-                fail(f"target {target} source root is missing {required_source_path}")
-        if source_root != ROOT and (source_root / ".git").exists():
-            fail(f"target {target} source root must not contain a nested .git directory")
+        layout = layered_target_layout(target, properties)
+        if layout.family not in {"legacy", "modern"}:
+            fail(f"target {target} has unknown source family {layout.family!r}")
+        for layer_name, source_root in (
+            ("shared", layout.shared_root),
+            ("family", layout.family_root),
+            ("overlay", layout.overlay_root),
+        ):
+            if not source_root.is_dir():
+                fail(f"target {target} {layer_name} source root does not exist: {source_root}")
+            if (source_root / ".git").exists():
+                fail(f"target {target} {layer_name} source root must not contain a nested .git directory")
+
+        source_maps = []
+        for source_root in layout.layers:
+            source_maps.append({
+                path.relative_to(source_root).as_posix()
+                for path in source_root.rglob("*") if path.is_file()
+            })
+        for index, left in enumerate(source_maps):
+            for right in source_maps[index + 1:]:
+                overlap = left & right
+                if overlap:
+                    fail(f"target {target} has files duplicated between source layers: {sorted(overlap)[0]}")
 
         build_script = ROOT / f"build.{loader}.gradle"
         if not build_script.is_file():
@@ -274,7 +316,7 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
         if "buildAndCollect" not in build_text:
             fail(f"{build_script.name} does not define buildAndCollect")
 
-        placeholders = resource_placeholders(loader, source_root)
+        placeholders = resource_placeholders(loader, target, properties)
         placeholder_count += len(placeholders)
         resource_block = re.search(
             r"def\s+resourceProperties\s*=\s*\[(.*?)\n\]",
@@ -298,6 +340,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--list-targets", action="store_true", help="print one target ID per line")
     parser.add_argument("--loader", help="filter --list-targets by loader suffix")
+    parser.add_argument("--family", choices=("legacy", "modern"), help="filter --list-targets by source family")
     args = parser.parse_args()
 
     properties = load_properties(TARGET_PROPERTIES)
@@ -305,7 +348,9 @@ def main() -> None:
 
     if args.list_targets:
         for target in targets:
-            if args.loader is None or target.rsplit("-", 1)[1] == args.loader:
+            loader_matches = args.loader is None or target.rsplit("-", 1)[1] == args.loader
+            family_matches = args.family is None or target_value(properties, target, "source.family") == args.family
+            if loader_matches and family_matches:
                 print(target)
         return
 
@@ -313,7 +358,7 @@ def main() -> None:
     print(
         "Stonecutter layout OK: "
         f"{len(targets)} target(s), active={active}, vcsTarget={vcs_target}, "
-        f"resource placeholders={placeholder_count}, Stonecutter=0.7.11, Gradle=8.8"
+        f"families=legacy/modern, resource placeholders={placeholder_count}, Stonecutter=0.7.11, Gradle=8.8"
     )
 
 

@@ -61,17 +61,47 @@ def booleanProperty = { String key, boolean fallback ->
     providers.gradleProperty(key).map { it.toBoolean() }.getOrElse(fallback)
 }
 
-def sourceRootProperty = optionalProperty('source.root')
-def targetSourceRoot = sourceRootProperty ? rootProject.file(sourceRootProperty) : rootProject.projectDir
-def usesVersionSourceRoot = !sourceRootProperty.isEmpty()
-def targetAccessTransformer = new File(targetSourceRoot, 'src/main/resources/META-INF/accesstransformer.cfg')
+def sourceFamily = requiredProperty('source.family')
+def sharedSourceRootProperty = requiredProperty('source.shared_root')
+def familySourceRootProperty = requiredProperty('source.root')
+def overlaySourceRootProperty = requiredProperty('source.overlay_root')
+def sharedSourceRoot = rootProject.file(sharedSourceRootProperty)
+def familySourceRoot = rootProject.file(familySourceRootProperty)
+def targetOverlayRoot = rootProject.file(overlaySourceRootProperty)
+def sourceLayers = [sharedSourceRoot, familySourceRoot, targetOverlayRoot]
+def layeredDirs = { String relative ->
+    sourceLayers.collect { new File(it, relative) }.findAll { it.isDirectory() }
+}
+def resolveSourceFile = { String relative ->
+    [targetOverlayRoot, familySourceRoot, sharedSourceRoot]
+            .collect { new File(it, relative) }
+            .find { it.isFile() }
+}
+def targetAccessTransformer = resolveSourceFile('src/main/resources/META-INF/accesstransformer.cfg')
 def jeiCompatEnabled = booleanProperty('compat.jei.enabled', true)
 def jadeCompatEnabled = booleanProperty('compat.jade.enabled', true)
 def ic2CompatEnabled = booleanProperty('compat.ic2.enabled', true)
 def forestryCompatEnabled = booleanProperty('compat.forestry.enabled', true)
 
-if (usesVersionSourceRoot && !targetSourceRoot.isDirectory()) {
-    throw new GradleException("Configured source.root '${sourceRootProperty}' for '${targetName}' does not exist")
+for (def layer : sourceLayers) {
+    if (!layer.isDirectory()) {
+        throw new GradleException("Configured source layer '${layer}' for '${targetName}' does not exist")
+    }
+}
+if (targetAccessTransformer == null) {
+    throw new GradleException("No access transformer found in source family '${sourceFamily}' for '${targetName}'")
+}
+
+// Tests and data generation still expect a conventional single src/ tree.
+// Materialise a build-only merged view; production compilation consumes the
+// three repository layers directly and therefore stores no duplicate sources.
+def effectiveSourceRoot = layout.buildDirectory.dir("effective-source/${targetName}")
+def prepareEffectiveSource = tasks.register('prepareEffectiveSource', Sync) {
+    group = 'build setup'
+    description = "Materialize shared + ${sourceFamily} + ${targetName} source layers"
+    sourceLayers.each { layer -> from(layer) }
+    into effectiveSourceRoot
+    duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.FAIL
 }
 
 version = "${modVersion}+${targetName.replace('-', '+')}"
@@ -96,30 +126,24 @@ def gameTestRunRequested = gradle.startParameter.taskNames.any {
     it.toLowerCase().contains('rungametestserver')
 }
 
-// A target may point at a complete version source root when the Minecraft API
-// difference is too large for readable inline Stonecutter conditions.
+// Each target is assembled from three maintained repository layers:
+// global shared files, a generation-wide family base, and a target overlay.
 sourceSets {
     main {
-        if (usesVersionSourceRoot) {
-            java.setSrcDirs([new File(targetSourceRoot, 'src/main/java')])
-            resources.setSrcDirs([new File(targetSourceRoot, 'src/main/resources')])
-        }
+        java.setSrcDirs(layeredDirs('src/main/java'))
+        resources.setSrcDirs(layeredDirs('src/main/resources'))
         if (gameTestRunRequested) {
-            def sourceBase = usesVersionSourceRoot ? targetSourceRoot : project.projectDir
-            java.srcDir(new File(sourceBase, 'src/gametest/java'))
-            resources.srcDir(new File(sourceBase, 'src/gametest/resources'))
+            layeredDirs('src/gametest/java').each { java.srcDir(it) }
+            layeredDirs('src/gametest/resources').each { resources.srcDir(it) }
         }
     }
     test {
-        if (usesVersionSourceRoot) {
-            java.setSrcDirs([new File(targetSourceRoot, 'src/test/java')])
-            resources.setSrcDirs([new File(targetSourceRoot, 'src/test/resources')])
-        }
+        java.setSrcDirs(layeredDirs('src/test/java'))
+        resources.setSrcDirs(layeredDirs('src/test/resources'))
     }
     gameTest {
-        def sourceBase = usesVersionSourceRoot ? targetSourceRoot : project.projectDir
-        java.setSrcDirs([new File(sourceBase, 'src/gametest/java')])
-        resources.setSrcDirs([new File(sourceBase, 'src/gametest/resources')])
+        java.setSrcDirs(layeredDirs('src/gametest/java'))
+        resources.setSrcDirs(layeredDirs('src/gametest/resources'))
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         // ForgeGradle supplies the game launch classpath. Keep compile-only
         // compatibility mods out of the dedicated GameTest runtime.
@@ -267,12 +291,16 @@ minecraft {
             workingDirectory dataRunDirectory.asFile
             args '--mod', requiredProperty('mod.id'), '--all',
                     '--output', generatedResources.asFile,
-                    '--existing', new File(targetSourceRoot, 'src/main/resources')
+                    '--existing', effectiveSourceRoot.get().dir('src/main/resources').asFile
         }
     }
 }
 
 sourceSets.main.resources.srcDir(generatedResources)
+
+tasks.matching { it.name == 'runData' }.configureEach {
+    dependsOn prepareEffectiveSource
+}
 
 repositories {
     // ForgeGradle supplies the Forge and Minecraft repositories.
@@ -366,10 +394,10 @@ afterEvaluate {
 
 tasks.named('test', Test) {
     useJUnitPlatform()
-    // Stonecutter nodes live under versions/<target>, while the authoritative
-    // source/resource tree remains in the configured target source root.
-    // Keep relative-path resource integrity tests anchored to that source root.
-    workingDir targetSourceRoot
+    dependsOn prepareEffectiveSource
+    // Keep legacy filesystem-based resource integrity tests working against a
+    // conventional merged src/ view without reintroducing repository copies.
+    workingDir effectiveSourceRoot.get().asFile
     systemProperty 'buildcraft.expectedPackFormat', requiredProperty('pack.format')
     testLogging {
         events 'failed', 'skipped'

@@ -9,6 +9,8 @@ import sys
 import tomllib
 from pathlib import Path
 
+from source_layout import configured_layer_paths, load_properties as load_layout_properties, materialize_target
+
 
 def fail(message: str) -> None:
     print(f"ERROR: {message}", file=sys.stderr)
@@ -99,11 +101,16 @@ def expanded_text(path: Path, numeric: bool = False) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--source-root", type=Path, default=Path("."))
+    parser.add_argument("--source-root", type=Path, help="standalone source tree; configured family/overlay paths are merged automatically")
+    parser.add_argument("--target", default="1.20.1-forge")
     parser.add_argument("--expected-minecraft", default="1.20.1")
     parser.add_argument("--expected-protocol", default="BC8.0.x-1.20.1-net2")
     args = parser.parse_args()
-    root = args.source_root.resolve()
+
+    properties = load_layout_properties()
+    configured_layers = set(configured_layer_paths(args.target, properties))
+    requested = args.source_root.resolve() if args.source_root else None
+    root = materialize_target(args.target, properties=properties) if requested is None or requested in configured_layers else requested
     src = root / "src"
     if not (src / "main/java").is_dir():
         fail(f"missing source tree: {src / 'main/java'}")
