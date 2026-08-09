@@ -23,8 +23,8 @@ public class RequiredExtractorItemFromBlock extends RequiredExtractor {
     @Override
     public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt,
         Level level) {
-        // The 1.21.1 Forge overload requires a LevelReader. We have no real placement position here,
-        // so use the state-aware vanilla/Forge overload instead of passing a fake BlockGetter or null context.
+        // The modern overload requires a LevelReader. We have no real placement position here,
+        // so use the state-aware overload instead of passing a fake BlockGetter or null context.
         ItemStack result = blockState.getBlock().getCloneItemStack(level, BlockPos.ZERO, blockState);
         if (result.isEmpty()) {
             result = new ItemStack(blockState.getBlock().asItem());

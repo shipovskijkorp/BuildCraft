@@ -49,9 +49,6 @@ jobs:
       - name: Validate Forge 1.20.1 port invariants
         run: python scripts/validate-1.20.1-port.py --source-root version-src/1.20.1-forge
 
-      - name: Validate Forge 1.21.1 beta port invariants
-        run: python scripts/validate-1.21.1-port.py --source-root version-src/1.21.1-forge
-
       - name: Validate cross-version gameplay parity
         run: python scripts/validate-behavior-parity.py
 
@@ -59,7 +56,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Make scripts executable
-        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-source-families.py scripts/validate-repository-cleanliness.py scripts/validate-stonecutter.py scripts/validate-1.20.1-port.py scripts/validate-1.21.1-port.py scripts/validate-behavior-parity.py
+        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-source-families.py scripts/validate-repository-cleanliness.py scripts/validate-stonecutter.py scripts/validate-1.20.1-port.py scripts/validate-behavior-parity.py
 
       - name: Build and test all Stonecutter targets
         run: ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect

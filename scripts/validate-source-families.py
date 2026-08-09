@@ -49,7 +49,7 @@ def main() -> None:
     expected_legacy = ["1.19.2-forge", "1.20.1-forge"]
     if grouped.get("legacy") != expected_legacy:
         fail(f"legacy: expected maintenance targets {expected_legacy}, got {grouped.get('legacy')}")
-    required_modern = {"1.21.1-forge", "1.21.1-neoforge"}
+    required_modern = {"1.21.1-neoforge"}
     modern_targets = grouped.get("modern", [])
     if not required_modern.issubset(modern_targets):
         fail(f"modern: required targets {sorted(required_modern)} are not all present: {modern_targets}")
@@ -108,7 +108,7 @@ def main() -> None:
         # A file that exists with identical bytes in every target overlay belongs
         # one level up in the family layer. For future 1.21.11/26.x targets this
         # still allows two-target subgroups to diverge without forcing conditionals.
-        if targets:
+        if len(targets) > 1:
             common_overlay_paths = set.intersection(*(set(overlay_maps[t]) for t in targets))
             escaped = []
             for rel in sorted(common_overlay_paths):
@@ -133,7 +133,7 @@ def main() -> None:
         )
 
     # Anything identical at the same relative path in both family layers is
-    # valid for all four current targets and therefore belongs in source-shared.
+    # valid for all current targets and therefore belongs in source-shared.
     escaped_global = identical_same_path(family_maps["legacy"], family_maps["modern"])
     if escaped_global:
         fail(

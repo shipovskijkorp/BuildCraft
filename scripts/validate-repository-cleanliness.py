@@ -148,7 +148,6 @@ check_resource_generation(ROOT / "source-families/legacy", "legacy")
 check_resource_generation(ROOT / "version-src/1.19.2-forge", "legacy")
 check_resource_generation(ROOT / "version-src/1.20.1-forge", "legacy")
 check_resource_generation(ROOT / "source-families/modern", "modern")
-check_resource_generation(ROOT / "version-src/1.21.1-forge", "modern")
 check_resource_generation(ROOT / "version-src/1.21.1-neoforge", "modern")
 
 # Mining tool tags belong to the minecraft namespace. Module-local copies from

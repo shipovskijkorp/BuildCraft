@@ -17,7 +17,7 @@ When reporting a problem, always include:
 
 ## Roadmap 2.0
 
-- Drop support for 1.21.1 Forge due to low usage and high maintenance overhead
+- Drop support for 1.21.1 Forge [✔]
 - New API system - in progress
 - FE/RF compat - in progress
 - Port to 1.20.1 Fabric
@@ -29,7 +29,7 @@ When reporting a problem, always include:
 - Minecraft 1.19.2 — Forge
 - Minecraft 1.20.1 — Forge
 - Minecraft 1.21.1 — NeoForge
-- Minecraft 1.21.1 — Forge (support will be discontinued)
+- Minecraft 1.21.1 — Forge (legacy)
 
 ## Multi-version source architecture
 

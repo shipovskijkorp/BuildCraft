@@ -380,8 +380,8 @@ dependencies {
 }
 
 // ForgeGradle 6 deobfuscates mod dependencies through fg.deobf.
-// Older Forge targets expose reobfJar; Forge 1.21.1 already produces a
-// distributable Mojmap jar and does not register that legacy task. Resolve the
+// Some Forge targets expose reobfJar while newer toolchains may already produce a
+// distributable Mojmap jar without that legacy task. Resolve the
 // optional task only after this project has finished evaluating: configuring a
 // TaskProvider from inside TaskCollection.configureEach is rejected by Gradle
 // 8.8 as a nested task-container mutation.

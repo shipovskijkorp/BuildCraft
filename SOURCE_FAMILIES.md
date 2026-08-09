@@ -23,7 +23,6 @@ Java 17 / classic Forge-era implementation family. `1.19.2-forge` remains the **
 
 Targets:
 
-- `1.21.1-forge`
 - `1.21.1-neoforge`
 - future `1.21.11+` / `26.x` targets while the modern implementation remains coherent
 
@@ -46,7 +45,6 @@ source-families/
 version-src/
 ├─ 1.19.2-forge/           # target-only files
 ├─ 1.20.1-forge/           # target-only files
-├─ 1.21.1-forge/           # target-only files
 └─ 1.21.1-neoforge/        # target-only files
 ```
 

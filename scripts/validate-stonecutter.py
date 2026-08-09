@@ -213,7 +213,7 @@ def validate(properties: dict[str, str], targets: list[str]) -> tuple[str, str, 
     if "tasks.matching { it.name == 'reobfJar' }.configureEach" in forge_build_text:
         fail("nested TaskProvider configuration breaks Gradle 8.8 task creation")
     if "finalizedBy 'reobfJar'" in forge_build_text:
-        fail("unconditional reobfJar dependency breaks the Forge 1.21.1 target")
+        fail("unconditional reobfJar dependency breaks Forge targets without that task")
     if "stonecutter-targets.properties" not in forge_build_text:
         fail("Forge build must load the Gradle-8-compatible target configuration")
     if "resolveSourceFile('src/main/resources/META-INF/accesstransformer.cfg')" not in forge_build_text \
