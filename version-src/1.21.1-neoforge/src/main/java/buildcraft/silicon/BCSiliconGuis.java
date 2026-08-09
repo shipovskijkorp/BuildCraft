@@ -12,8 +12,6 @@ import buildcraft.silicon.container.ContainerGate;
 import buildcraft.silicon.container.ContainerIntegrationTable;
 import buildcraft.silicon.container.ContainerProgrammingTable;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -27,21 +25,6 @@ public class BCSiliconGuis {
     public static final DeferredHolder<MenuType<?>, MenuType<ContainerGate>> MENU_GATE = MENUS.register("gate_menu", () -> BCContainerFactory.create(ContainerGate::creatClientMenu));
     public static final DeferredHolder<MenuType<?>, MenuType<ContainerIntegrationTable>> MENU_INTEGRATION_TABLE = MENUS.register("integration_table_menu", () -> BCContainerFactory.create(ContainerIntegrationTable::new));
     public static final DeferredHolder<MenuType<?>, MenuType<ContainerProgrammingTable>> MENU_PROGRAMMING_TABLE = MENUS.register("programming_table_menu", () -> BCContainerFactory.create(ContainerProgrammingTable::new));
-
-
-
-    public void openGui(Player player) {
-        openGui(player, 0, -1, 0);
-    }
-
-    public void openGui(Player player, BlockPos pos) {
-        openGui(player, pos.getX(), pos.getY(), pos.getZ());
-    }
-
-    public void openGui(Player player, int x, int y, int z) {
-//    	player.openMenu(null);
-//        player.openGui(BCTransport, ordinal(), player.getLevel(), x, y, z);
-    }
     static void preInit(IEventBus modEventBus) {
         MENUS.register(modEventBus);
     }

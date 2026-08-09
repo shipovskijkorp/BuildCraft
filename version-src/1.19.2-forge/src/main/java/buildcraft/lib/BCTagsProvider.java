@@ -3,21 +3,13 @@ package buildcraft.lib;
 import buildcraft.api.core.BCLog;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.energy.BCEnergy;
-import buildcraft.energy.BCEnergyWorldGen;
 import buildcraft.energy.BCEnergyFluids;
-import buildcraft.factory.BCFactory;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.transport.BCTransportBlocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.FluidTagsProvider;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BCTagsProvider {
@@ -46,28 +38,7 @@ public class BCTagsProvider {
 		
 	}
 	
-	public static class BiomeTag extends BiomeTagsProvider{
 
-		public BiomeTag(DataGenerator p_126511_, ExistingFileHelper existingFileHelper) {
-			super(p_126511_, BCEnergy.MODID, existingFileHelper);
-		}
-
-		@Override
-		protected void addTags() {
-//			tag(BCEnergyWorldGen.OIL_DESERT_KEY, Tags.Biomes.IS_HOT_OVERWORLD, Tags.Biomes.IS_DRY_OVERWORLD, Tags.Biomes.IS_SANDY, Tags.Biomes.IS_DESERT);
-//			tag(BCEnergyWorldGen.IS_OIL_BIOME).add(BCEnergyWorldGen.OIL_DESERT_BIOME);
-		}
-		
-	    @SafeVarargs
-	    private void tag(ResourceKey<Biome> biome, TagKey<Biome>... tags)
-	    {
-	        for(TagKey<Biome> key : tags)
-	        {
-	            tag(key).add(biome);
-	        }
-	    }
-	}
-	
 	public static class FluidTag extends FluidTagsProvider{
 
 		public FluidTag(DataGenerator p_126511_, ExistingFileHelper existingFileHelper) {

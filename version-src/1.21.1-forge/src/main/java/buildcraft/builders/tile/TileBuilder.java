@@ -182,15 +182,6 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
 			return (needMaterial ? 1 : 0) | (canRotate ? 0b10 : 0) | (canExcavate ? 0b100 : 0);
 		}
 	};
-    
-//    private final ContainerData blueprintData = new SingleProviderData(() -> snapshotType == null ? -1 : snapshotType.ordinal());
-/*    private final ContainerData remainingDisplayRequiredData = 
-    		new MutliProviderData((index) -> {
-    			ItemStack item = blueprintBuilder.remainingDisplayRequired.get(index>>1);
-    			return (index & 1) == 1 ? ((ForgeRegistry<Item>)ForgeRegistries.ITEMS).getID(item.getItem()) : item.getCount();
-    		},
-    			() -> blueprintBuilder.remainingDisplayRequired.size()*2) ;
-    */
     public final GameEventListener worldEventListener = new GameEventListener() {
     	
     	GameEventListener blueprint = blueprintBuilder.getListener();
@@ -775,28 +766,6 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     public Box getBox() {
         return currentBox;
     }
-/*
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public boolean hasFastRenderer() {
-        return true;
-    }
-*//*
-    @Nonnull
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
-        return BoundingBoxUtil.makeFrom(getBlockPos(), getBox(), path);
-    }
-   
-    
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public double getMaxRenderDistanceSquared() {
-        return Double.MAX_VALUE;
-    } */
-    
     @Nonnull
     @Override
     @OnlyIn(Dist.CLIENT)

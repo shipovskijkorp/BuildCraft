@@ -45,11 +45,7 @@ public enum BCModules implements IBuildCraftMod {
     private static synchronized void load0() {
         if (hasChecked) {
             return;
-        }/*
-        if (!Loader.instance().hasReachedState(LoaderState.PREINITIALIZATION)) {
-        	FMLLoader.
-            throw new RuntimeException("You can only use BCModules.isLoaded from pre-init onwards!");
-        }*/
+        }
         List<BCModules> found = new ArrayList<>(), missing = new ArrayList<>();
         for (BCModules module : VALUES) {
             module.loaded = ModList.get().isLoaded(module.modId);

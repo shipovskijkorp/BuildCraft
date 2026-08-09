@@ -19,37 +19,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class BlockFiller extends BlockBCTile_Neptune implements IBlockWithFacing {
-    // public static final IProperty<EnumFillerPattern> PATTERN = BuildCraftProperties.FILLER_PATTERN;
-
-    public BlockFiller() {
-        super();
-        // setDefaultState(getDefaultState().withProperty(PATTERN, EnumFillerPattern.NONE));
-    }
-
-    // BlockState
-    
-    @Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> bs) {
-		super.createBlockStateDefinition(bs);
-		// bs.add(PATTERN);
-	}
-/*
-	@Override
-    public BlockState getActualState(BlockState state, IBlockAccess world, BlockPos pos) {
-        BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileFiller) {
-            TileFiller filler = (TileFiller) tile;
-            // return state.withProperty(PATTERN, EnumFillerPattern.NONE); // FIXME
-        }
-        return state;
-    }*/
 
     // Others
 

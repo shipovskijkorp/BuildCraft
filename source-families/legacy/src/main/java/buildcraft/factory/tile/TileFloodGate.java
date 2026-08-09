@@ -234,8 +234,6 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
                 if (fluid != null && fluid.getAmount() >= FluidType.BUCKET_VOLUME) {
                     BlockPos currentPos = queue.removeLast();
                     if (hasOpenPathTo(currentPos) && canFill(currentPos)) {
-//                        FakePlayer fakePlayer =
-//                            BuildCraftAPI.fakePlayerProvider.getFakePlayer((WorldServer) level, getOwner(), currentPos);
                         if (FluidUtil.tryPlaceFluid(null, level, null, currentPos, tank, fluid)) {
                             AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_FLOOD_SINGLE);
                             for (Direction side : Direction.values()) {

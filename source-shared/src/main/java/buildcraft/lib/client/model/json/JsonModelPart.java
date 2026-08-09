@@ -45,9 +45,6 @@ public class JsonModelPart {
         }
     }
 
-/*    private JsonModelPart(JsonQuad[] quads) {
-        this.quads = quads;
-    }*/
 
     private static JsonQuad[] readFace(JsonObject obj) {
         throw new AbstractMethodError("Implement this!");

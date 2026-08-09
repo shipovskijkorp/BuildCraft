@@ -67,14 +67,12 @@ public class PluggableFacade extends PipePluggable implements IFacade {
     public static final int SIZE = 2;
     public final FacadeInstance states;
     public final boolean isSideSolid;
-//    public final BlockFaceShape blockFaceShape;
     public int activeState;
 
     public PluggableFacade(PluggableDefinition definition, IPipeHolder holder, Direction side, FacadeInstance states) {
         super(definition, holder, side);
         this.states = states;
         isSideSolid = states.areAllStatesSolid(side);
-        //blockFaceShape = states.getBlockFaceShape(side);
     }
 
     public PluggableFacade(PluggableDefinition def, IPipeHolder holder, Direction side, CompoundTag nbt) {
@@ -92,7 +90,6 @@ public class PluggableFacade extends PipePluggable implements IFacade {
         this.states = FacadeInstance.readFromNbt(nbt.getCompound("facade"));
         activeState = MathUtil.clamp(nbt.getInt("activeState"), 0, states.phasedStates.length - 1);
         isSideSolid = states.areAllStatesSolid(side);
-       // blockFaceShape = states.getBlockFaceShape(side);
     }
 
     @Override
@@ -109,14 +106,12 @@ public class PluggableFacade extends PipePluggable implements IFacade {
         super(def, holder, side);
         states = FacadeInstance.readFromBuffer(buffer);
         isSideSolid = buffer.readBoolean();
-      // blockFaceShape = buf.readEnumValue(BlockFaceShape.class);
     }
 
     @Override
     public void writeCreationPayload(FriendlyByteBuf buffer) {
         states.writeToBuffer(buffer);
         buffer.writeBoolean(isSideSolid);
-       // buf.writeEnumValue(blockFaceShape);
     }
 
     // Pluggable methods
@@ -146,11 +141,6 @@ public class PluggableFacade extends PipePluggable implements IFacade {
     	BlockState state = states.phasedStates[activeState].stateInfo.state;
         return state.getBlock().getExplosionResistance(state, new SingleBlockAccess(state), BlockPos.ZERO, explosion);
     }
-
-/*    @Override
-    public BlockFaceShape getBlockFaceShape() {
-        return blockFaceShape;
-    }*/
 
     @Override
     public ItemStack getPickStack() {

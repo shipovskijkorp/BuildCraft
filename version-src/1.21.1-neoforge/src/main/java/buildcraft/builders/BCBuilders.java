@@ -161,9 +161,6 @@ public class BCBuilders {
         
         @SubscribeEvent
         public static void onModelBakePre(RegisterAdditional event) {
-/*        	event.register(ModelBuilder.blueprint);
-        	event.register(ModelBuilder.template);
-        	event.register(ModelBuilder.empty);*/
         }
         
     }

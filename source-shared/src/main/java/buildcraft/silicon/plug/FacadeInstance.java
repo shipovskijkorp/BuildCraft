@@ -122,32 +122,6 @@ public class FacadeInstance implements IFacade {
         return true;
     }
 
-/*    public BlockFaceShape getBlockFaceShape(Direction side) {
-        if (isHollow()) {
-            return BlockFaceShape.UNDEFINED;
-        }
-        switch (type) {
-            case Basic:
-                return phasedStates[0].getBlockFaceShape(side);
-            case Phased: {
-                BlockFaceShape shape = null;
-                for (FacadePhasedState state : phasedStates) {
-                    if (shape == null) {
-                        shape = state.getBlockFaceShape(side);
-                    } else if (shape != state.getBlockFaceShape(side)) {
-                        return BlockFaceShape.UNDEFINED;
-                    }
-                }
-                if (shape == null) {
-                    return BlockFaceShape.UNDEFINED;
-                }
-                return shape;
-            }
-            default:
-                throw new IllegalStateException("Unknown FacadeType " + type);
-        }
-    }*/
-
     // IFacade
 
     @Override

@@ -72,7 +72,7 @@ public class BCLibConfig {
 
     public static TimeGap displayTimeGap = TimeGap.SECONDS;
 
-    /** If true then ItemRenderUtil.renderItemStack will use the facing parameter to rotate the item */
+    /** Controls the preferred orientation of travelling item rendering. */
     public static RenderRotation rotateTravelingItems = RenderRotation.ENABLED;
 
     public static ChunkLoaderType chunkLoadingType = ChunkLoaderType.AUTO;

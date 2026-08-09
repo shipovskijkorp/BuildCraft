@@ -20,29 +20,4 @@ public class ItemWire extends ItemByEnum<DyeColor> {
 	public String getDescriptionId() {
 		return "item.pipewire." + type.getName();
 	}
-    
-    
-    
-/*
-    @Override
-    public void addSubItems(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
-        for (int i = 0; i < 16; i++) {
-            subItems.add(new ItemStack(this, 1, i));
-        }
-    }
-/*
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void addModelVariants(TIntObjectHashMap<ModelResourceLocation> variants) {
-        for (DyeColor color : DyeColor.values()) {
-            addVariant(variants, color.getId(), color.getName());
-        }
-    }*/
-/*
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public FontRenderer getFontRenderer(ItemStack stack) {
-        return SpecialColourFontRenderer.INSTANCE;
-    }
-    */
 }

@@ -146,8 +146,6 @@ public class GuiUtil {
         if (!textLines.isEmpty()) {//TODO
         	pose.translate(0, 0, 400);
         	Matrix4f matrix = pose.last().pose();
-            //GlStateManager.disableRescaleNormal();
-            //GlStateManager.disableLighting();
         	
             RenderSystem.disableDepthTest();
             int tooltipTextWidth = 0;
@@ -209,9 +207,7 @@ public class GuiUtil {
                 tooltipY += 10;
             }
 
-            //GlStateManager.enableLighting();
             RenderSystem.enableDepthTest();
-//            GlStateManager.enableRescaleNormal();
             return tooltipHeight + 5;
         }
         return 0;

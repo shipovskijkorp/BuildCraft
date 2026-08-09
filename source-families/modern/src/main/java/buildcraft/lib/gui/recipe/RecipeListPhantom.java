@@ -11,21 +11,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class RecipeListPhantom extends RecipeCollection {
 
-    public RecipeListPhantom(RecipeCollection from)/* throws ReflectiveOperationException */{
+    public RecipeListPhantom(RecipeCollection from){
     	super(from.registryAccess(), from.getRecipes());
-/*        Class<?> clazzBitSet = Set.class;
-        boolean first = true;
-        for (Field fld : RecipeCollection.class.getDeclaredFields()) {
-            if (fld.getType() == clazzBitSet) {
-                fld.setAccessible(true);
-                Object object = fld.get(from);
-                if (first) {
-                    ((Set<Recipe<?>>) object).addAll(getRecipes());
-                }
-                fld.set(this, object);
-                first = false;
-            }
-        }*/
         RecipeBook book = new RecipeBook();
         this.getRecipes().forEach(book::add);
         this.updateKnownRecipes(book);

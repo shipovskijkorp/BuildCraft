@@ -830,10 +830,6 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftcore:items/goggles"
-    },
-    {
-      "type": "minecraft:single",
       "resource": "buildcraftcore:items/icons/energy"
     },
     {

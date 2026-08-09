@@ -21,27 +21,25 @@ import net.minecraft.nbt.CompoundTag;
 public class BoxIterator implements Iterator<BlockPos> {
     @Nonnull
     private final BlockPos min, max;
-    private final boolean invert, repeat;// TODO: remove repeat if its not used in the future
+    private final boolean invert;
     private AxisOrder order;
     private BlockPos current;
-    private boolean hasRepeated = false;
 
     public BoxIterator(IBox box, AxisOrder order, boolean invert) {
         this(box.min(), box.max(), order, invert);
     }
 
     public BoxIterator(BlockPos min, BlockPos max, AxisOrder order, boolean invert) {
-        this(min, max, invert, false, order, null);
+        this(min, max, invert, order, null);
     }
 
-    private BoxIterator(BlockPos min, BlockPos max, boolean invert, boolean repeat, AxisOrder order, BlockPos current) {
+    private BoxIterator(BlockPos min, BlockPos max, boolean invert, AxisOrder order, BlockPos current) {
         if (min == null) throw new NullPointerException("min");
         if (max == null) throw new NullPointerException("max");
         if (order == null) throw new NullPointerException("order");
         this.min = min;
         this.max = max;
         this.invert = invert;
-        this.repeat = repeat;
         this.order = order;
         this.current = current == null ? getStart() : current;
     }
@@ -50,13 +48,12 @@ public class BoxIterator implements Iterator<BlockPos> {
         BlockPos min = BlockPos.of(nbt.getLong("min"));
         BlockPos max = BlockPos.of(nbt.getLong("max"));
         boolean invert = nbt.getBoolean("invert");
-        boolean repeat = false;
         AxisOrder order = AxisOrder.readNbt(nbt.getCompound("order"));
         BlockPos current = BlockPos.of(nbt.getLong("current"));
         if (min == null || max == null || order == null) {
             return null;
         }
-        return new BoxIterator(min, max, invert, repeat, order, current);
+        return new BoxIterator(min, max, invert, order, current);
     }
 
     public CompoundTag writeToNbt() {
@@ -64,7 +61,6 @@ public class BoxIterator implements Iterator<BlockPos> {
         nbt.putLong("min", min.asLong());
         nbt.putLong("max", max.asLong());
         nbt.putBoolean("invert", invert);
-        // repeat
         nbt.put("order", order.writeNBT());
         if (current != null) {
             nbt.putLong("current", current.asLong());
@@ -102,10 +98,6 @@ public class BoxIterator implements Iterator<BlockPos> {
         return invert;
     }
 
-    public boolean isRepeat() {
-        return repeat;
-    }
-
     public AxisOrder getOrder() {
         return order;
     }
@@ -114,7 +106,7 @@ public class BoxIterator implements Iterator<BlockPos> {
     public String toString() {
         return "{BoxIterator [" + StringUtilBC.blockPosToString(min) + "] -> [" + StringUtilBC
             .blockPosToString(max) + "] @ " + StringUtilBC.blockPosToString(current) + " order: [" + order + "]"
-            + (invert ? " inverting" : "") + (repeat ? " repeating" : "") + " }";
+            + (invert ? " inverting" : "") + " }";
     }
 
     /** Moves on to the next block. Unlike {@link #next()} this returns the one AFTER that one, so you cannot use
@@ -138,15 +130,7 @@ public class BoxIterator implements Iterator<BlockPos> {
                 current = replace(current, order.second);
                 current = increment(current, order.third);
                 if (shouldReset(order.third)) {
-                    if (repeat) {
-                        if (invert) {
-                            order = order.invertThird();
-                        }
-                        current = replace(current, order.third);
-                        hasRepeated = true;
-                    } else {
-                        current = null;
-                    }
+                    current = null;
                 }
             }
         }
@@ -181,7 +165,7 @@ public class BoxIterator implements Iterator<BlockPos> {
         return true;
     }
 
-    /** Checks to see if {@link #advance()} will return the given block position before this repeats. */
+    /** Checks whether {@link #advance()} will return the given block position before this iteration completes. */
     public boolean willVisit(BlockPos pos) {
         if (!contains(pos)) {
             return false;
@@ -192,12 +176,12 @@ public class BoxIterator implements Iterator<BlockPos> {
         return compare(pos) < 0;
     }
 
-    /** Checks to see if {@link #advance()} has already returned the given block position before the last repeat. */
+    /** Checks whether {@link #advance()} has already returned the given block position in this iteration. */
     public boolean hasVisited(BlockPos pos) {
         if (!contains(pos)) {
             return false;
         }
-        if (current == null && !hasRepeated) {
+        if (current == null) {
             return false;
         }
         return compare(pos) >= 0;

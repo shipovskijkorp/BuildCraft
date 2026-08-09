@@ -319,34 +319,6 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     }
 
     // IFluidHandler
-
-/*    @Override
-    public IFluidTankProperties[] getTankProperties() {
-        List<TileTank> tanks = getConnectedTanks();
-        TileTank bottom = tanks.get(0);
-        TileTank top = tanks.get(tanks.size() - 1);
-        FluidStack total = bottom.tank.getFluid();
-        if (total == null) {
-            total = top.tank.getFluid();
-        }
-        int capacity = 0;
-        if (total == null) {
-            for (TileTank t : tanks) {
-                capacity += t.tank.getCapacity();
-            }
-        } else {
-            total = total.copy();
-            total.setAmount(0);
-            for (TileTank t : tanks) {
-                FluidStack other = t.tank.getFluid();
-                if (other != null) {
-                    total.amount += other.amount;
-                }
-                capacity += t.tank.getCapacity();
-            }
-        }
-        return new IFluidTankProperties[] { new FluidTankProperties(total, capacity) };
-    }*/
     
     public FluidStack getFluidInTank(int tank) {
         if (tank != 0) {

@@ -40,9 +40,6 @@ public class CapUtil {
 
 
     static {
-/*        if (!Loader.instance().hasReachedState(LoaderState.INITIALIZATION)) {
-            throw new IllegalStateException("Used CapUtil too early, you must wait until init or later!");
-        }*/
 
         CAP_ITEMS = getCapNonNull(ForgeCapabilities.ITEM_HANDLER, IItemHandler.class);
         CAP_FLUIDS = getCapNonNull(ForgeCapabilities.FLUID_HANDLER, IFluidHandler.class);

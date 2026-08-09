@@ -76,7 +76,6 @@ public class BCCore {
         BCCoreItems.registry(modEventBus);
 
         MENUS.register(modEventBus);
-//        BCCoreRecipes.init();
         BCCoreConfig.registry();
         ModLoadingContext.get().registerConfig(Type.COMMON, BCCoreConfig.config);
         MessageManager.registerMessageClass(BCModules.CORE, MessageVolumeBoxes.class, MessageVolumeBoxes.HANDLER, MessageVolumeBoxes::toBytes, MessageVolumeBoxes::new/*, Side.CLIENT*/);

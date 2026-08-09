@@ -84,10 +84,6 @@ public class FacadePhasedState implements IFacadePhasedState {
         return stateInfo.isSideSolid[side.ordinal()];
     }
 
-/*    public BlockFaceShape getBlockFaceShape(Direction side) {
-        return stateInfo.blockFaceShape[side.ordinal()];
-    }*/
-
     @Override
     public String toString() {
         return (activeColour == null ? "" : activeColour + " ") + getState();

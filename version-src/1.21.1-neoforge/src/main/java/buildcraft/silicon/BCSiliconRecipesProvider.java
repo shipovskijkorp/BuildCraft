@@ -93,7 +93,6 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
                 AssemblyRecipeBuilder assemblyBuilder = new AssemblyRecipeBuilder(assemblyCost(1000), input.build(), output);
                 assemblyBuilder.unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))
                 .save(writer, ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "assembly/plug_pulsar"));
-                //AssemblyRecipeRegistry.register(recipe);
             }
             if (BCSiliconItems.PLUG_GATE_ITEM.isBound()) {
                 IngredientStack lapis = new IngredientStack(Ingredient.of(Tags.Items.GEMS_LAPIS));

@@ -10,7 +10,6 @@ import buildcraft.factory.tile.TileDistiller;
 import buildcraft.factory.tile.TileTank;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelEvent.ModifyBakingResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -70,11 +69,6 @@ public class BCFactory {
             event.registerBlockEntityRenderer(BCFactoryBlocks.ENTITYBLOCKMININGWELL.get(), RenderMiningWell::new);
             event.registerBlockEntityRenderer(BCFactoryBlocks.ENTITYBLOCKDISTILLER.get(), RenderDistiller::new);
             event.registerBlockEntityRenderer(BCFactoryBlocks.ENTITYBLOCKHEATEXCHANGE.get(), RenderHeatExchange::new);
-        }
-
-        @SubscribeEvent
-        public static void onModelBake(ModifyBakingResult event) {
-            BCFactoryModels.onModelBake(event);
         }
     }
 }

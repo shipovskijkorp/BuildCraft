@@ -85,7 +85,6 @@ public class BCLib {
     public void gatherData(GatherDataEvent event) {
         event.getGenerator().addProvider(event.includeServer(), new BCTagsProvider.BlockTag(event.getGenerator(), event.getExistingFileHelper()));
         event.getGenerator().addProvider(event.includeServer(), new BCTagsProvider.FluidTag(event.getGenerator(), event.getExistingFileHelper()));
-        event.getGenerator().addProvider(event.includeServer(), new BCTagsProvider.BiomeTag(event.getGenerator(), event.getExistingFileHelper()));
     }
 
     public void init(final FMLCommonSetupEvent event) {

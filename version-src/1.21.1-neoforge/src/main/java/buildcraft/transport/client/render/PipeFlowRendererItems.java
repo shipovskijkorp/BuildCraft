@@ -8,13 +8,11 @@ package buildcraft.transport.client.render;
 
 import java.util.List;
 
-import buildcraft.api.core.BCLog;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.transport.pipe.IPipeFlowRenderer;
 import buildcraft.lib.client.model.ModelUtil;
 import buildcraft.lib.client.model.ModelUtil.UvFaceData;
 import buildcraft.lib.client.model.MutableQuad;
-import buildcraft.lib.client.render.ItemRenderUtil;
 import buildcraft.lib.misc.ColourUtil;
 import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
@@ -34,7 +32,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -73,23 +70,17 @@ public enum PipeFlowRendererItems implements IPipeFlowRenderer<PipeFlowItems> {
         Level world = flow.pipe.getHolder().getPipeWorld();
         long now = world.getGameTime();
         List<TravellingItem> toRender = flow.getAllItemsForRender();
-        VertexConsumer buffer2 = buffer.getBuffer(RenderType.cutout());
         
         matrix.translate(0.5f, 0.5f, 0.5f);
-//        BCLog.d("" + toRender.size());
         for (TravellingItem item : toRender) {
             Vec3 pos = item.getRenderPosition(BlockPos.ZERO, now, partialTicks, flow);
             
             ItemStack stack = item.clientItemLink.get();
             
             if (!stack.isEmpty()) {
-//            	BCLog.d(stack.getItem() == Items.APPLE);
             	matrix.translate(pos.x, -0.2f+pos.y, pos.z);
             	itemRender.renderStatic(stack, ItemDisplayContext.GROUND, lightc, combinedOverlay, matrix, buffer, world, 0);
-//                itemRender.getModel(stack, world, null, combinedOverlay);
                 matrix.translate(-pos.x, 0.2f-pos.y, -pos.z);
-  //              ItemRenderUtil.renderItemStack(pos.x, pos.y, pos.z, //
-  //                      stack, item.stackSize, lightc, item.getRenderDirection(now, partialTicks), buffer2);
             }
             if (item.colour != null) {
                 matrix.translate(pos.x, pos.y, pos.z);

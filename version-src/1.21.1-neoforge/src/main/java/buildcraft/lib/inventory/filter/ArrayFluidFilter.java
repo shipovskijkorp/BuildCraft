@@ -21,10 +21,6 @@ public class ArrayFluidFilter implements IFluidFilter {
 
     protected FluidStack[] fluids;
 
-/*    public ArrayFluidFilter(ItemStack... stacks) {
-//        this(StackUtil.listOf(stacks));
-    	this()
-    }*/
 
     public ArrayFluidFilter(FluidStack... iFluids) {
         fluids = iFluids;

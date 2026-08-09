@@ -269,20 +269,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 				octant[octant2] = dx > 0 ? Math.min(octant[octant2], dx) : octant[octant2];
 			}
 		}
-/*		StringBuilder s = new StringBuilder("\n");
-		if(tile.getLevel().getGameTime() % 20 == 0)
-		for(int i =0 ;i<8;i++) {//zyx
-			if(octant[i] != Double.MAX_VALUE) {
-				int directionId = (((i>>1)|(i<<2)))&0b111;//xzy
-				s.append(i);
-				for(int j = 0b0;j<5;j+=2,directionId>>=1) {
-					Direction direction = Direction.values()[(directionId&0b1)+j];
-					s.append(direction).append(", ");
-				}
-				s.append("\n");
-			}
-			BCLog.logger.debug(s);
-		}*/
+
 		
 		double closest = Double.MAX_VALUE;
 		int closestOctant = -1;//zyx
@@ -315,18 +302,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 			}
 			int partId = (~((closestOctant>>2) | (closestOctant<<2) | (closestOctant&0b010)))&0b111; 
 			parts = !caculated[6 + partId] ? EnumWirePart.VALUES[partId] : null;//xyz
-/*			if(tile.getLevel().getGameTime() % 40 == 0) {
-				StringBuilder s = new StringBuilder("\n");
-						s.append(closestOctant);
-						directionId = (((closestOctant>>1)|(closestOctant<<2)))&0b111;//xzy
-						for(int j = 0b0;j<5;j+=2,directionId>>=1) {
-							Direction direction = Direction.values()[(directionId&0b1)+j];
-							s.append(direction).append(", ");
-						s.append("\n");
-						}
-				BCLog.logger.debug(s);
-				BCLog.d((partId) + ", "+EnumWirePart.VALUES[partId]);
-			}*/
+
 			int octant1 = (~closestOctant)&0b111;
 			for(int i = 0;i<3;i++) {
 				int index = (((octant1>>(i&0b1))|(octant1>>(((~(i|(i>>>1)))&0b1)*2)))&0b11) + i *4;

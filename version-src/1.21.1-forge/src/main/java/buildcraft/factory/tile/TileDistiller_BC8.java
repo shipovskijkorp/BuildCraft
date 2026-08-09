@@ -146,19 +146,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
 	@Override
 	protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 		super.loadAdditional(nbt, registries);
-/*		 // TODO: remove in next version
-        CompoundTag tanksTag = nbt.getCompound("tanks");
-        if (tanksTag.contains("out_gas")) {
-            tanksTag.put("gasOut", tanksTag.get("out_gas"));
-        }
-        if (tanksTag.contains("out_liquid")) {
-            tanksTag.put("liquidOut", tanksTag.get("out_liquid"));
-        }*/
         tankManager.deserializeNBT(registries, nbt.getCompound("tanks"));
-        // TODO: remove in next version
-/*        if (nbt.contains("mjBattery")) {
-            nbt.put("battery", nbt.get("mjBattery"));
-        }*/
         mjBattery.deserializeNBT(registries, nbt.getCompound("battery"));
         distillPower = nbt.getLong("distillPower");
         powerAvg.readFromNbt(nbt, "powerAvg");

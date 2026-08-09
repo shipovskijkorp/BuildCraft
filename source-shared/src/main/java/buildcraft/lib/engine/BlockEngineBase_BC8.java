@@ -169,19 +169,6 @@ public abstract class BlockEngineBase_BC8<E extends Enum<E> & IEngineType & Stri
         return tile;
     }
 
-/*    @Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-        for (E engine : getEngineProperty().getAllowedValues()) {
-            if (engineTileConstructors.containsKey(engine)) {
-                list.add(new ItemStack(this, 1, engine.ordinal()));
-            }
-        }
-    }*/
-/*
-    @Override
-    public int damageDropped(BlockState state) {
-        return state.getValue(getEngineProperty()).ordinal();
-    }*/
 	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext bpc) {

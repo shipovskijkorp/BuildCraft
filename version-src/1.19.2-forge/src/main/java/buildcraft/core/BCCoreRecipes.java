@@ -128,46 +128,7 @@ public class BCCoreRecipes extends RecipeProvider{
             iron_engine.define('p', Blocks.PISTON);
             iron_engine.unlockedBy("has_"+BCCoreItems.GEAR_IRON.getId().getPath(), TriggerInstance.hasItems(BCCoreItems.GEAR_IRON.get()));
             iron_engine.save(writer);
-            
-	    	
-
-	        // if (BCItems.CORE_LIST != null) {
-	        // if (BCBlocks.SILICON_TABLE_ASSEMBLY != null) {
-	        // long mjCost = 2_000 * MjAPI.MJ;
-	        // ImmutableSet<StackDefinition> required = ImmutableSet.of(//
-	        // ArrayStackFilter.definition(8, Items.PAPER), //
-	        // OreStackFilter.definition(ColourUtil.getDyeName(DyeColor.GREEN)), //
-	        // OreStackFilter.definition("dustRedstone")//
-	        // );
-	        // BuildcraftRecipeRegistry.assemblyRecipes
-	        // .addRecipe(new AssemblyRecipe("list", mjCost, required, new ItemStack(BCItems.CORE_LIST)));
-	        // } else {
-	        // // handled in JSON
 	        // }
-	        // }
-
-	        if (false) {
-/*	            RecipeBuilderShaped builder = new RecipeBuilderShaped();
-	            builder.add("sss");
-	            builder.add("scs");
-	            builder.add("sss");
-
-	            // if (BCItems.Builders!= null) {
-	            // builder.map('s', "stone");
-	            // builder.map('c', new ItemStack(BCItems.Builders.SNAPSHOT, 1, 2));
-	            // builder.setResult(new ItemStack(BCBlocks.Core.DECORATED, 16, EnumDecoratedBlock.BLUEPRINT.ordinal()));
-	            // builder.register();
-	            //
-	            // builder.map('c', new ItemStack(BCItems.Builders.SNAPSHOT, 1, 0));
-	            // builder.setResult(new ItemStack(BCBlocks.Core.DECORATED, 16, EnumDecoratedBlock.TEMPLATE.ordinal()));
-	            // builder.register();
-	            // }
-
-	            builder.map('s', Blocks.OBSIDIAN);
-	            builder.map('c', Blocks.REDSTONE_BLOCK);
-//	            builder.setResult(new ItemStack(BCBlocks.Core.DECORATED, 16, EnumDecoratedBlock.LASER_BACK.ordinal()));
-	            builder.register();*/
-	        }
 			super.buildCraftingRecipes(writer);
 		}
     	

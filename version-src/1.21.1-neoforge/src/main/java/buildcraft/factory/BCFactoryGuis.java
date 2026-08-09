@@ -5,9 +5,7 @@ import buildcraft.factory.container.ContainerAutoCraftItems;
 import buildcraft.factory.container.ContainerChute;
 import buildcraft.factory.container.ContainerTank;
 import buildcraft.lib.gui.BCContainerFactory;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -25,17 +23,6 @@ public class BCFactoryGuis {
         MENUS.register("menu.chute", () -> BCContainerFactory.create(ContainerChute::new));
     public static final DeferredHolder<MenuType<?>, MenuType<ContainerTank>> MENU_TANK =
         MENUS.register("menu.tank", () -> BCContainerFactory.create(ContainerTank::new));
-
-    public void openGui(Player player) {
-        openGui(player, 0, -1, 0);
-    }
-
-    public void openGui(Player player, BlockPos pos) {
-        openGui(player, pos.getX(), pos.getY(), pos.getZ());
-    }
-
-    public void openGui(Player player, int x, int y, int z) {
-    }
 
     static void registry(IEventBus bus) {
         MENUS.register(bus);

@@ -131,12 +131,10 @@ def validate_tick_cadence() -> None:
 def validate_java_invariants() -> None:
     engine = "src/main/java/buildcraft/energy/tile/TileEngineIron_BC8.java"
     gate = "src/main/java/buildcraft/silicon/recipe/GateLogicChangeRecipe.java"
-    direction = "src/main/java/buildcraft/core/statements/StatementParameterDirection.java"
     mining = "src/main/java/buildcraft/factory/tile/TileMiningWell.java"
     wrench = "src/main/java/buildcraft/core/item/ItemWrench.java"
     paint = "src/main/java/buildcraft/core/item/ItemPaintbrush_BC8.java"
     snapshot = "src/main/java/buildcraft/builders/snapshot/ClientSnapshots.java"
-    tooltip = "src/main/java/buildcraft/builders/client/BlueprintTooltipComponent.java"
     wire = "src/main/java/buildcraft/transport/wire/WireSystem.java"
     oil_generator = "src/main/java/buildcraft/energy/generation/features/OilGenerator.java"
     oil_structure = "src/main/java/buildcraft/energy/generation/features/OilStructure.java"
@@ -152,11 +150,6 @@ def validate_java_invariants() -> None:
         gate_text = require(target, gate, "if (!stack.isEmpty() && stack.getItem() instanceof ItemPluggableGate)")
         if "else if (!stack.isEmpty())" in gate_text:
             fail(f"{target}: gate-logic recipe rejects unrelated occupied slots")
-        require_compact(target, direction,
-            "public ISprite getSprite() { return null; }",
-            "StatementMouseClick mouse) { return null; }",
-            'direction = Direction.values()[nbt.getByte("direction")];',
-            "Direction dir = rotated.getDirection();")
         require_compact(target, mining,
             "int limit = BCCoreConfig.miningMaxDepth; int high = worldPosition.getY() + 64; return high < limit ? high : limit;")
         require(target, wrench,
@@ -169,7 +162,6 @@ def validate_java_invariants() -> None:
             "return InteractionResult.SUCCESS;")
         forbid(target, paint, "result.consumesAction()", "InteractionResult.sidedSuccess")
         require(target, snapshot, "if (1 == 1)", "return;")
-        require(target, tooltip, "return PREVIEW_SIZE;")
         require(target, wire, "manager.inBlockTickingRange(ChunkPos.asLong(element.blockPos))")
         forbid(target, wire, "isPlayerWatchingChunk")
         forbid(target, oil_generator, "genOilInEveryVanillaBiomes", "genOilInEveryModBiomes")
@@ -193,8 +185,6 @@ def validate_java_invariants() -> None:
             fail(f"{target}: marker connector must stack to one")
 
     for target in ("1.21.1-forge", "1.21.1-neoforge"):
-        require(target, "src/main/java/buildcraft/core/item/ItemGoggles.java",
-                "DataComponents.UNBREAKABLE", "new Unbreakable(false)")
         require_compact(target, "src/main/java/buildcraft/lib/recipe/AssemblyRecipe.java",
                         "public Set<ItemStack> getOutputPreviews() { return ImmutableSet.of(); }")
 

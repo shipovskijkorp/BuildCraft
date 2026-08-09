@@ -33,16 +33,9 @@ public abstract class MarkerCache<S extends MarkerSubCache<?>> {
     }
 
     public static void registerCache(MarkerCache<?> cache) {
-/*        if (Loader.instance().hasReachedState(LoaderState.POSTINITIALIZATION)) {
-            throw new IllegalStateException("Registered too late!");
-        }*/
-/*        ModContainer mod = FMLLoader..();
-        if (mod == null) {
-            throw new IllegalStateException("Tried to register a cache without an active mod!");
-        }*/
         CACHES.add(cache);
         if (DEBUG) {
-            BCLog.logger.info("[lib.markers] Registered a cache " + cache.name + " with an ID of " + (CACHES.size() - 1) + " from "/* + mod.getModId()*/);
+            BCLog.logger.info("[lib.markers] Registered a cache " + cache.name + " with an ID of " + (CACHES.size() - 1));
         }
     }
 

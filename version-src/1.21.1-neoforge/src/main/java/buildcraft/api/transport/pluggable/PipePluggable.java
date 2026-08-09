@@ -134,42 +134,6 @@ public abstract class PipePluggable {
     public boolean canBeConnected() {
         return false;
     }
-
-    /** PipePluggable version of
-     * {@link net.minecraft.block.state.BlockState#isSideSolid(IBlockAccess, BlockPos, Direction)} */
-    public boolean isSideSolid() {
-        return false;
-    }
-
-    /** PipePluggable version of {@link Block#getExplosionResistance(World, BlockPos, Entity, Explosion)} */
-    public float getExplosionResistance(@Nullable Entity exploder, Explosion explosion) {
-        return 0;
-    }
-
-    public boolean canConnectToRedstone(@Nullable Direction to) {
-        return false;
-    }
-
-    /** PipePluggable version of
-     * {@link net.minecraft.block.state.BlockState#getBlockFaceShape(IBlockAccess, BlockPos, Direction)} */
-/*    public BlockFaceShape getBlockFaceShape() {
-        return BlockFaceShape.UNDEFINED;
-        
-    }
-    //Minecraft code
-    public enum BlockFaceShape
-    {
-        SOLID,
-        BOWL,
-        CENTER_SMALL,
-        MIDDLE_POLE_THIN,
-        CENTER,
-        MIDDLE_POLE,
-        CENTER_BIG,
-        MIDDLE_POLE_THICK,
-        UNDEFINED;
-    }*/
-
     public void onPlacedBy(Player player) {
 
     }

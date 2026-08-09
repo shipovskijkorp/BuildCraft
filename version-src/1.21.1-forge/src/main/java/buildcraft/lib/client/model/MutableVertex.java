@@ -163,25 +163,6 @@ public class MutableVertex {
     }
     
     // Rendering
-    /*
-    public void render(BufferBuilder bb) {
-        VertexFormat vf = bb.getVertexFormat();
-        if (vf == DefaultVertexFormats.BLOCK) {
-            renderAsBlock(bb);
-        } else {
-            for (VertexFormatElement vfe : vf.getElements()) {
-                if (vfe.getUsage() == EnumUsage.POSITION) renderPosition(bb);
-                else if (vfe.getUsage() == EnumUsage.NORMAL) renderNormal(bb);
-                else if (vfe.getUsage() == EnumUsage.COLOR) renderColour(bb);
-                else if (vfe.getUsage() == EnumUsage.UV) {
-                    if (vfe.getIndex() == 0) renderTex(bb);
-                    else if (vfe.getIndex() == 1) renderLightMap(bb);
-                }
-            }
-            bb.endVertex();
-        }
-    }
-    */
 
     /** Renders this vertex into the given {@link VertexConsumer}, assuming that the {@link VertexFormat} is
      * {@link DefaultVertexFormats#BLOCK}.

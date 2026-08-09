@@ -117,10 +117,6 @@ public enum ClientSnapshots {
         pose.pushPose();
         RenderSystem.enableDepthTest();
         RenderSystem.enableBlend();
- //       GlStateManager.pushMatrix();
-//       RenderSystem.matrixMode(GL11.GL_PROJECTION);
-//        GlStateManager.pushMatrix();
-//        GlStateManager.loadIdentity();
         Window window = Minecraft.getInstance().getWindow();
         int viewportX = (int) (offsetX * window.getGuiScale());
         int viewportY = (int) (window.getHeight() - (sizeY + offsetY) * window.getGuiScale());
@@ -133,15 +129,8 @@ public enum ClientSnapshots {
             viewportWidth,
             viewportHeight
         );
-//        RenderSystem.clear(GL11.GL_DEPTH_BUFFER_BIT);
         RenderSystem.disableScissor();
         RenderSystem.viewport(viewportX, viewportY, viewportWidth, viewportHeight);
- //       RenderSystem.scale(window.getGuiScale(), window.getGuiScale(), 1);
-//        GLU.gluPerspective(70.0F, (float) sizeX / sizeY, 0.1F, 1000.0F);
-/*        GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-        GlStateManager.loadIdentity();
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.pushMatrix();*/
         int snapshotSize = Math.max(Math.max(snapshot.size.getX(), snapshot.size.getY()), snapshot.size.getY());
         pose.translate(0, 0, -snapshotSize * 2d - 3);
         pose.mulPose(new Quaternion(20, 1, 0, 0));
@@ -153,7 +142,6 @@ public enum ClientSnapshots {
         RenderSystem.setShader(GameRenderer::getBlockShader);
         BufferUploader.drawWithShader(bufferBuilder);
         if (snapshotSize < 32) {
-//            Minecraft.getInstance().getBlockEntityRenderDispatcher().();
         	MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
             for (int z = 0; z < snapshot.size.getZ(); z++) {
                 for (int y = 0; y < snapshot.size.getY(); y++) {
@@ -178,38 +166,8 @@ public enum ClientSnapshots {
                 }
             }
             multibuffersource$buffersource.endBatch();
-//            TileEntityRendererDispatcher.instance.drawBatch(1);
         }
         // noinspection Guava
-/*        for (Entity entity : world.getEntitiesOfClass(Entity.class, AABB.ofSize(Vec3.ZERO, viewportWidth, viewportHeight, snapshotSize))) {
-            Vec3 pos = entity.position();
-            //GlStateManager.pushAttrib();
-            MultiBufferSource.BufferSource multibuffersource$buffersource = Minecraft.getInstance().renderBuffers().bufferSource();
-            pose.pushPose();
-            Minecraft.getInstance().getEntityRenderDispatcher().render(
-                entity,
-                pos.x - FakeWorld.BLUEPRINT_OFFSET.getX(),
-                pos.y - FakeWorld.BLUEPRINT_OFFSET.getY(),
-                pos.z - FakeWorld.BLUEPRINT_OFFSET.getZ(),
-                0,
-                0,
-                pose,
-                multibuffersource$buffersource,
-                15728880
-            );
-            pose.popPose();
-            multibuffersource$buffersource.endBatch();
-           // GlStateManager.popAttrib();
-        }*/
-/*        GlStateManager.popMatrix();
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.matrixMode(GL11.GL_PROJECTION);
-        GlStateManager.viewport(0, 0, Minecraft.getInstance().displayWidth, Minecraft.getMinecraft().displayHeight);
-        GlStateManager.popMatrix();
-        GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-        GlStateManager.popMatrix();
-        GlStateManager.disableBlend();
-        GlStateManager.disableDepth();*/
         var win = Minecraft.getInstance().getWindow();
         RenderSystem.viewport(0, 0, win.getWidth(), win.getHeight());
         RenderSystem.disableBlend();

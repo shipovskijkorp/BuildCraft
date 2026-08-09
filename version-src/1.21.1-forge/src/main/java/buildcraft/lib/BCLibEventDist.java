@@ -118,16 +118,7 @@ public class BCLibEventDist {
 
 	    
 	}
-	/*	    @SubscribeEvent
-    public static void renderWorldLast(RenderLevelLastEvent event) {
-        Minecraft mc = Minecraft.getInstance();
-        Player player = mc.player;
-        if (player == null) return;
-        float partialTicks = event.getPartialTicks();
 
-//        DetachedRenderer.INSTANCE.renderWorldLastEvent(player, partialTicks);
-    }
-*/
 	@SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void renderWorldLast(RenderLevelStageEvent event) {
@@ -169,14 +160,7 @@ public class BCLibEventDist {
             FakePlayerProvider.INSTANCE.unloadWorld((ServerLevel) event.getLevel());
         }
     }
-/*
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void onReloadFinish(EventBuildCraftReload.FinishLoad event) {
-        // Note: when you need to add server-side listeners the client listeners need to be moved to BCLibProxy
-        GuideManager.INSTANCE.onRegistryReload(event);
-    }
-*/
+
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onConnectToServer(ClientPlayerNetworkEvent.LoggingIn event) {

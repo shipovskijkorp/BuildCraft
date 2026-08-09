@@ -95,7 +95,6 @@ public class BCLib {
         var existingFiles = event.getExistingFileHelper();
         event.getGenerator().addProvider(event.includeServer(), new BCTagsProvider.BlockTag(output, lookupProvider, existingFiles));
         event.getGenerator().addProvider(event.includeServer(), new BCTagsProvider.FluidTag(output, lookupProvider, existingFiles));
-        event.getGenerator().addProvider(event.includeServer(), new BCTagsProvider.BiomeTag(output, lookupProvider, existingFiles));
     }
 
     public void init(final FMLCommonSetupEvent event) {

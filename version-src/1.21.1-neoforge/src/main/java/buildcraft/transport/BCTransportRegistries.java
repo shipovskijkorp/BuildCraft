@@ -55,7 +55,6 @@ public class BCTransportRegistries {
         PipeApi.stripeRegistry.addHandler(StripesHandlerPlant.INSTANCE);
         PipeApi.stripeRegistry.addHandler(StripesHandlerShears.INSTANCE);
         PipeApi.stripeRegistry.addHandler(new StripesHandlerPipes());
-        // PipeApi.stripeRegistry.addHandler(new StripesHandlerPipeWires());
         PipeApi.stripeRegistry.addHandler(StripesHandlerEntityInteract.INSTANCE, EnumHandlerPriority.LOW);
         PipeApi.stripeRegistry.addHandler(StripesHandlerHoe.INSTANCE);
         // PipeApi.stripeRegistry.addHandler(new StripesHandlerRightClick(), InteractionHandlerPriority.LOW);

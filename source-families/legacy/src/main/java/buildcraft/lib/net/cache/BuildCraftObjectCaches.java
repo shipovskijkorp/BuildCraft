@@ -29,9 +29,6 @@ public class BuildCraftObjectCaches {
     static final List<NetworkedObjectCache<?>> CACHES = new ArrayList<>();
 
     public static void registerCache(NetworkedObjectCache<?> cache) {
- /*       if (ModLoader.isLoadingStateValid()) {
-            throw new IllegalStateException("May only construct a cache BEFORE post-init!");
-        }*/
         BuildCraftObjectCaches.CACHES.add(cache);
     }
 
@@ -50,13 +47,13 @@ public class BuildCraftObjectCaches {
         return CACHE_ITEMS.client().retrieve(id);
     }
 
-    /** Called by BuildCraftLib in the {@link FMLPreInitializationEvent} */
+    /** Registers the built-in object caches during BuildCraftLib setup. */
     public static void fmlPreInit() {
         registerCache(CACHE_ITEMS);
         registerCache(CACHE_FLUIDS);
     }
 
-    /** Called by BuildCraftLib in the {@link FMLPostInitializationEvent} */
+    /** Finalises deterministic cache ordering after BuildCraftLib setup. */
     public static void fmlPostInit() {
         CACHES.sort(Comparator.comparing(a -> a.getClass().getSimpleName()));
         if (NetworkedObjectCache.DEBUG_LOG) {

@@ -33,26 +33,6 @@ public class GuiFilteredBuffer extends GuiBC8<ContainerFilteredBuffer_BC8> {
     @Override
     protected void drawBackgroundLayer(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
         ICON_GUI.drawAt(pose, mainGui.rootElement);
-        //RenderHelper.enableGUIStandardItemLighting();
-/*        for (int i = 0; i < 9; i++) {
-            ItemStack stack = container.tile.invFilter.getStackInSlot(i);
-            double currentX = mainGui.rootElement.getX() + 8 + i * 18;
-            double currentY = mainGui.rootElement.getY() + 61;
-            // GL11.glEnable(GL11.GL_BLEND);
-            // GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            // GL11.glColor4f(1, 1, 1, 0.5F);
-            if (!stack.isEmpty()) {
-                this.itemRenderer.renderAndDecorateItem(stack, (int) currentX, (int) currentY);
-            } else {
-                this.minecraft.getTextureManager().bindForSetup(InventoryMenu.BLOCK_ATLAS);
-                this.drawTexturedModalRect((int) currentX, (int) currentY, BCTransportSprites.NOTHING_FILTERED_BUFFER_SLOT.getSprite(), 16, 16);
-            }
-            // GL11.glColor4f(1, 1, 1, 1);
-            // GL11.glDisable(GL11.GL_BLEND);
-        }*/
-        //RenderHelper.disableStandardItemLighting();
-        // GL11.glPushMatrix();
-        // GL11.glTranslatef(0, 0, 100);
         RenderSystem.disableDepthTest();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);

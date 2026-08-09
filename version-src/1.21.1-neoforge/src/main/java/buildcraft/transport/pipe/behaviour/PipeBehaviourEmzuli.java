@@ -80,24 +80,6 @@ public class PipeBehaviourEmzuli extends PipeBehaviourWood implements MenuProvid
     private final EnumSet<SlotIndex> activeSlots;
     private final byte[] activatedTtl = new byte[SlotIndex.VALUES.length];
     private SlotIndex currentSlot = null;
-/*    private ContainerData data = new ContainerData() {
-		@Override
-		public int get(int index) {
-			DyeColor color = slotColours.get(SlotIndex.values()[index]);
-			return color == null ? 128 : color.getId();
-		}
-		@Override
-		public void set(int index, int colour) {
-			if (colour == 128) 
-                slotColours.remove(SlotIndex.values()[index]);
-            else 
-                slotColours.put(SlotIndex.values()[index], DyeColor.byId(colour));
-		}
-		@Override
-		public int getCount() {
-			return 4;
-		}
-    };*/
 
     private final IStackFilter filter = this::filterMatches;
 

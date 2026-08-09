@@ -141,12 +141,10 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         }
     }
 
-    /** Writes some additional information to the nbt, for example {@link SingleUseTank} will write out the filtering
-     * fluid. */
+    /** Writes subclass-specific information to NBT. */
     protected void writeTankToNBT(CompoundTag nbt) {}
 
-    /** Reads some additional information to the nbt, for example {@link SingleUseTank} will read in the filtering
-     * fluid. */
+    /** Reads subclass-specific information from NBT. */
     protected void readTankFromNBT(CompoundTag nbt) {}
 
     public ToolTip getToolTip() {

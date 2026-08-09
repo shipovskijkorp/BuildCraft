@@ -58,7 +58,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 public class VanillaRotationHandlers {
     /* Player friendly rotations- these only rotate through sides that are touching (only 90 degree changes, in any
      * axis), rather than jumping around. */
-    public static final OrderedEnumMap<Direction> ROTATE_HORIZONTAL, ROTATE_FACING, ROTATE_TORCH, ROTATE_HOPPER;
+    public static final OrderedEnumMap<Direction> ROTATE_HORIZONTAL, ROTATE_FACING, ROTATE_HOPPER;
 
     static {
         Direction e = Direction.EAST, w = Direction.WEST;
@@ -66,7 +66,6 @@ public class VanillaRotationHandlers {
         Direction n = Direction.NORTH, s = Direction.SOUTH;
         ROTATE_HORIZONTAL = new OrderedEnumMap<>(Direction.class, e, s, w, n);
         ROTATE_FACING = new OrderedEnumMap<>(Direction.class, e, s, d, w, n, u);
-        ROTATE_TORCH = new OrderedEnumMap<>(Direction.class, e, s, w, n, u);
         ROTATE_HOPPER = new OrderedEnumMap<>(Direction.class, e, s, w, n, d);
 
 
@@ -79,7 +78,6 @@ public class VanillaRotationHandlers {
         CustomRotationHelper.INSTANCE.registerHandler(TripWireHookBlock.class, VanillaRotationHandlers::rotateTripWireHook);
         CustomRotationHelper.INSTANCE.registerHandler(DoorBlock.class, VanillaRotationHandlers::rotateDoor);
         CustomRotationHelper.INSTANCE.registerHandler(PistonBaseBlock.class, VanillaRotationHandlers::rotatePiston);
-//        CustomRotationHelper.INSTANCE.registerHandler(LeverBlock.class, VanillaRotationHandlers::rotateLever);
         CustomRotationHelper.INSTANCE.registerHandler(ShulkerBoxBlock.class, VanillaRotationHandlers::rotateShulkerBox);
         CustomRotationHelper.INSTANCE.registerHandler(DispenserBlock.class, getHandlerFreely(DispenserBlock.class));
         CustomRotationHelper.INSTANCE.registerHandler(ObserverBlock.class, getHandlerFreely(ObserverBlock.class));
@@ -93,7 +91,6 @@ public class VanillaRotationHandlers {
         CustomRotationHelper.INSTANCE.registerHandler(EnderChestBlock.class, getHandlerHorizontalFreely(EnderChestBlock.class));
         CustomRotationHelper.INSTANCE.registerHandler(FurnaceBlock.class, getHandlerHorizontalFreely(FurnaceBlock.class));
         CustomRotationHelper.INSTANCE.registerHandler(CocoaBlock.class, VanillaRotationHandlers::rotateCocoa);
-//        CustomRotationHelper.INSTANCE.registerHandler(TorchBlock.class, VanillaRotationHandlers::rotateTorch);
         CustomRotationHelper.INSTANCE.registerHandler(LadderBlock.class, VanillaRotationHandlers::rotateLadder);
         CustomRotationHelper.INSTANCE.registerHandler(HopperBlock.class, VanillaRotationHandlers::rotateHopper);
         CustomRotationHelper.INSTANCE.registerHandler(ChestBlock.class, VanillaRotationHandlers::rotateChest);
@@ -173,13 +170,6 @@ public class VanillaRotationHandlers {
         }
         return InteractionResult.PASS;
     }
-/*
-    private static InteractionResult rotateLever(Level world, BlockPos pos, BlockState state, Direction sideWrenched) {
-        if (state.getBlock() instanceof LeverBlock) {
-            return rotateAnyTypeAuto(world, pos, state, LeverBlock.FACING, BlockStateProperties.ATTACH_FACE, EnumOrientation::getFacing);
-        }
-        return InteractionResult.PASS;
-    }*/
 
     private static InteractionResult rotateHopper(Level world, BlockPos pos, BlockState state, Direction sideWrenched) {
         if (state.getBlock() instanceof HopperBlock) {
@@ -229,31 +219,14 @@ public class VanillaRotationHandlers {
             Predicate<Direction> tester = toTry -> {
                 BlockPos offsetPos = pos.offset(toTry.getOpposite().getNormal());
                 BlockState offsetState = world.getBlockState(offsetPos);
-                return /*!offsetState &&*/ offsetState.isFaceSturdy(world, offsetPos, toTry)/*&& !BlockBCBase_Neptune.isExceptBlockForAttachWithPiston(offsetState.getBlock())*/;
+                return offsetState.isFaceSturdy(world, offsetPos, toTry);
             };
             return rotateAnyTypeManual(world, pos, state, LadderBlock.FACING, ROTATE_HORIZONTAL, tester);
         }
         return InteractionResult.PASS;
     }
 
- /*   private static InteractionResult rotateTorch(Level world, BlockPos pos, BlockState state, Direction sideWrenched) {
-        if (state.getBlock() instanceof TorchBlock) {
-            Predicate<Direction> tester = toTry -> {
-                BlockPos offsetPos = pos.offset(toTry.getOpposite().getNormal());
-                BlockState offsetState = world.getBlockState(offsetPos);
 
-                if (toTry == Direction.UP && state.canSurvive(world, pos)) {
-                    return true;
-                } else if (toTry != Direction.UP && toTry != Direction.DOWN) {
-                    return offsetState.isFaceSturdy(world, offsetPos, toTry)/*&& !BlockBCBase_Neptune.isExceptBlockForAttachWithPiston(offsetState.getBlock())*/;
-/*                }
-                return false;
-            };
-            return rotateAnyTypeManual(world, pos, state, TorchBlock., ROTATE_TORCH, tester);
-        }
-        return InteractionResult.PASS;
-    }
-    */
 
     private static InteractionResult rotateChest(Level world, BlockPos pos, BlockState state, Direction sideWrenched) {
         if (state.getBlock() instanceof ChestBlock) {

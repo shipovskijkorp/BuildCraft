@@ -170,7 +170,6 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
 
     @Override
 	protected void drawForegroundLayer(PoseStack pose, int mouseX, int mouseY) {
-        //String title = I18n.format("tile." + TagManager.getTag("block.advanced_crafting_table", TagManager.EnumTagType.UNLOCALIZED_NAME) + ".name");
         //font.drawString(title, titleLabelX + (imageWidth - font.getStringWidth(title)) / 2, titleLabelY + 5, 0x404040);
 	}
 

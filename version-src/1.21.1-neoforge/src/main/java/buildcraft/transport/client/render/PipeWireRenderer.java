@@ -219,31 +219,6 @@ public class PipeWireRenderer {
         vertex.renderNormal(normal, bb);
     }
 
-/*    private static int compileQuads(MutableQuad[] quads, DyeColor colour, boolean isOn) {
-        int index = RenderSystem.glGenBuffers(1);
-        VertexBuffer vbo = new VertexBuffer();
-        
-//TODO
-        ISprite sprite = wireSprites.get(colour);
-        /*
-         * Currently pipe wire only supports two states - on or off. However all the textures supply 16 different
-         * states, which could (possibly) be used for making pipe wire use all 16 states that normal redstone does. This
-         * just opens up the possibility in the future.
-         */
-/*        renderQuads(quads, sprite, isOn ? 15 : 0);
-
-        GL11.glEndList();
-        return index;
-    }*/
-
-/*    private static int compileWire(EnumWirePart part, DyeColor colour, boolean isOn) {
-        return compileQuads(getQuads(part), colour, isOn);
-    }
-
-    private static int compileWire(EnumWireBetween between, DyeColor colour, boolean isOn) {
-        return compileQuads(getQuads(between), colour, isOn);
-    }*/
-
     public static void renderWires(TilePipeHolder pipe, float conSize, PoseStack matrix, MultiBufferSource buffer,
 			int combinedLight, int combinedOverlay) {
         int skyLight = combinedLight >> 16 & 0xFFFF;

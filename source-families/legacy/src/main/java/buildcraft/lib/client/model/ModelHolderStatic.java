@@ -35,10 +35,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.model.data.ModelData;
 
-/** Holds a model that will never change except if the json file it is defined from is changed.
- * 
- * @deprecated Unused -- and a lot of duplicated code with ModelHolderVariable */
-@Deprecated
+/** Holds a model that will never change except if the JSON file it is defined from is changed. */
 @OnlyIn(Dist.CLIENT)
 public class ModelHolderStatic extends ModelHolder {
 	private final static RandomSource random = RandomSource.create();
@@ -88,47 +85,6 @@ public class ModelHolderStatic extends ModelHolder {
     
     @Override
     protected void onTextureStitch(Set<ResourceLocation> toRegisterSprites) {
-/*        rawModel = null;
-        quads = null;
-        failReason = null;
-        try {
-            rawModel = JsonModel.deserialize(modelLocation);
-        } catch (JsonParseException jse) {
-            rawModel = null;
-            failReason = "The model had errors: " + jse.getMessage();
-            BCLog.logger.warn("[lib.model.holder] Failed to load the model " + modelLocation + " because " + jse.getMessage());
-        } catch (IOException io) {
-            rawModel = null;
-            failReason = "The model did not exist in any resource pack: " + io.getMessage();
-            BCLog.logger.warn("[lib.model.holder] Failed to load the model " + modelLocation + " because " + io.getMessage());
-        }
-        if (rawModel != null) {
-            if (ModelHolderRegistry.DEBUG) {
-                BCLog.logger.info("[lib.model.holder] The model " + modelLocation + " requires these sprites:");
-            }
-            for (Entry<String, String> entry : rawModel.textures.entrySet()) {
-                String lookup = entry.getValue();
-                if (lookup.startsWith("#")) {
-                    // its somewhere else in the map so we don't need to register it twice
-                    continue;
-                }
-                if (lookup.startsWith("~") && textureLookup.containsKey(lookup)) {
-                    lookup = textureLookup.get(lookup);
-                }
-                if (lookup == null || lookup.startsWith("#") || lookup.startsWith("~")) {
-                    if (!allowTextureFallthrough) {
-                        failReason = "The sprite lookup '" + lookup + "' did not exist in ay of the maps";
-                        rawModel = null;
-                        break;
-                    }
-                } else {
-                    toRegisterSprites.add(new ResourceLocation(lookup));
-                }
-                if (ModelHolderRegistry.DEBUG) {
-                    BCLog.logger.info("[lib.model.holder]  - " + lookup);
-                }
-            }
-        }*/
     }
 
     @Override

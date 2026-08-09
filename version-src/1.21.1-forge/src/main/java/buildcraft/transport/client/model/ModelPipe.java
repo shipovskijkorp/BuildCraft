@@ -42,7 +42,6 @@ public enum ModelPipe implements IDynamicBakedModel {
 	INSTANCE;
 
 	public static final ModelProperty<TilePipeHolder> PipeTypeModelKey = new ModelProperty<TilePipeHolder>();
-//	public static final ModelProperty<?> PipeDataModelKey = new ModelProperty<PipeModelData>();
 /*	protected static final Direction[][] LiteraDirection = {
 			{ Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST },
 			{ Direction.WEST, Direction.EAST, Direction.DOWN, Direction.UP },
@@ -58,7 +57,6 @@ public enum ModelPipe implements IDynamicBakedModel {
 	public static void clearTextureCache() {
 		particleIcon.clear();
 	}
-//	protected static final B
 	@Override
 	public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,
 			@NotNull RandomSource rand, @NotNull ModelData data, @Nullable RenderType renderType) {
@@ -77,58 +75,9 @@ public enum ModelPipe implements IDynamicBakedModel {
             PipeAllCutoutKey realKey = new PipeAllCutoutKey(tile);
             return PipeModelCacheAll.cacheCutout.bake(realKey);
         }
-		
-		
-/*		List<BakedQuad> result = new ArrayList<BakedQuad>();
-		TilePipeHolder p = (TilePipeHolder) o;
-		Pipe pipe = p.getPipe();
-
-		float[] conSize = { pipe.getConnectedDist(Direction.DOWN), pipe.getConnectedDist(Direction.UP),
-				pipe.getConnectedDist(Direction.NORTH), pipe.getConnectedDist(Direction.SOUTH),
-				pipe.getConnectedDist(Direction.WEST), pipe.getConnectedDist(Direction.EAST) };
-		boolean[] isCon = { conSize[0] > 0, conSize[1] > 0, conSize[2] > 0, conSize[3] > 0, conSize[4] > 0,
-				conSize[5] > 0 };
-		boolean[] isTransfix = { isCon[0] && isCon[1], isCon[2] && isCon[3], isCon[4] && isCon[5] };
-		int indexOff = -1;
-
-		if (isTransfix[1]) indexOff = 2;// North and South
-		if (isTransfix[2]) indexOff = 4;// West and East
-
-//    		flag = 8;
-		result.add(facesCacheBase.get(Direction.from3DDataValue(indexOff))[5]);
-		result.add(facesCacheBase.get(Direction.from3DDataValue(indexOff + 1))[5]);
-
-		for (int i = 0; i < 4; i++) {
-			if (isCon[i]) {
-				result.add(facesCacheBase.get(Direction.from3DDataValue((i + indexOff) % 6))[5]);
-				result.add(facesCacheBase.get(Direction.from3DDataValue((i + indexOff) % 6))[0]);
-				result.add(facesCacheBase.get(Direction.from3DDataValue((i + indexOff) % 6))[1]);
-				result.add(facesCacheBase.get(Direction.from3DDataValue((i + indexOff) % 6))[2]);
-				result.add(facesCacheBase.get(Direction.from3DDataValue((i + indexOff) % 6))[3]);
-
-				result.add(facesCacheBase.get(Direction.from3DDataValue(indexOff))[i]);
-				result.add(facesCacheBase.get(Direction.from3DDataValue(indexOff + 1))[i]);
-			} else
-				result.add(facesCacheCombine.get(Direction.from3DDataValue(indexOff))[i]);
-		}
-		return result;*/
-
-		/*
-		 * for(int i=0;i<6;i++) {//default if(isCon[i]) {
-		 * result.add(facesCacheBase.get(Direction.from3DDataValue(i))[0]);
-		 * result.add(facesCacheBase.get(Direction.from3DDataValue(i))[1]);
-		 * result.add(facesCacheBase.get(Direction.from3DDataValue(i))[2]);
-		 * result.add(facesCacheBase.get(Direction.from3DDataValue(i))[3]); } else
-		 * result.add(facesCacheBase.get(Direction.from2DDataValue(i))[5]); }
-		 */
 
 	}
 	
-
-	/*
-	 * baked the model with no texture, as the texture must be put in during
-	 * rendering
-	 **/
 	
 	@Override
 	public ChunkRenderTypeSet getRenderTypes(@NotNull BlockState state, @NotNull RandomSource rand,
@@ -174,8 +123,6 @@ public enum ModelPipe implements IDynamicBakedModel {
             return SpriteUtil.missingSprite();
         }
         ResourceLocation identifier = tile.getPipe().definition.textures[0]; // TODO find correct texture
-//		return particleIcon.computeIfAbsent(ResourceLocation.fromNamespaceAndPath(identifier.getNamespace(), "pipes/" + identifier.getPath()),
-//				Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS)::apply);
 		return particleIcon.computeIfAbsent(identifier,
 				(a) -> {
 					TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(a);
@@ -189,14 +136,5 @@ public enum ModelPipe implements IDynamicBakedModel {
 	public ItemOverrides getOverrides() {
 		return ItemOverrides.EMPTY;
 	}
-
-	/*
-	 * public static class PipeModelData{ protected final Float[] conSizes;
-	 * protected final Float[] uvs;
-	 * 
-	 * public PipeModelData(Float[] conSizes) { this.conSizes = conSizes; uvs =
-	 * null; } public PipeModelData(Float[] conSizes, Float[] UVs) { this.conSizes =
-	 * conSizes; uvs = UVs; } }
-	 */
 
 }

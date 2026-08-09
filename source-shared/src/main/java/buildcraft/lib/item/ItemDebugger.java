@@ -30,10 +30,6 @@ public class ItemDebugger extends ItemBC_Neptune {
         if (tile == null) {
             return InteractionResult.FAIL;
         }
-/*        if (tile instanceof IAdvDebugTarget) {
-            BCAdvDebugging.setCurrentDebugTarget((IAdvDebugTarget) tile);
-            return InteractionResult.SUCCESS;
-        }*/
         return InteractionResult.FAIL;
 	}
 

@@ -96,20 +96,10 @@ public class BCBuilders {
 
         @SubscribeEvent
         public static void onModelBakePre(RegisterAdditional event) {
-/*        	event.register(ModelBuilder.blueprint);
-        	event.register(ModelBuilder.template);
-        	event.register(ModelBuilder.empty);*/
         }
         
         @SubscribeEvent
         public static void onModelBake(BakingCompleted event) {
-/*        	ModelBuilder.init(event.getModels().get(ModelBuilder.builder));
-        	ModelBuilder.init(event.getModels().get(ModelBuilder.blueprint));
-        	ModelBuilder.init(event.getModels().get(ModelBuilder.template));
-        	ModelBuilder.init(event.getModels().get(ModelBuilder.empty));
-        	for(ModelResourceLocation r : ModelBuilder.stateDefinetion) {
-        		event.getModels().put(r, ModelBuilder.INSTANCE);
-        	}*/
         }
         
     }

@@ -254,7 +254,7 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
     @Override
 	protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 		super.loadAdditional(nbt, registries);
-        // TODO: remove in next version
+        // Legacy save compatibility: older ports stored the MJ battery under "mj_battery".
         if (nbt.contains("mj_battery")) {
             nbt.put("battery", nbt.get("mj_battery"));
         }

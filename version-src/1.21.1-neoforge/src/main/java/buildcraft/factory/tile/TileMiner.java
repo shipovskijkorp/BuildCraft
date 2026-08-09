@@ -179,7 +179,7 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
         }
         wantedLength = nbt.getInt("wantedLength");
         progress = nbt.getInt("progress");
-        // TODO: remove in next version
+        // Legacy save compatibility: older ports stored the MJ battery under "mj_battery".
         if (nbt.contains("mj_battery")) {
             nbt.put("battery", nbt.get("mj_battery"));
         }
