@@ -38,7 +38,6 @@ import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.world.SingleBlockAccess;
-import buildcraft.silicon.recipe.FacadeSwapRecipe;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -264,7 +263,6 @@ public enum FacadeStateManager implements IFacadeRegistry {
         }
 
         previewState = validFacadeStates.get(Blocks.BRICKS.defaultBlockState());
-        FacadeSwapRecipe.genRecipes();
     }
 
     private static void scanBlock(Block block) {

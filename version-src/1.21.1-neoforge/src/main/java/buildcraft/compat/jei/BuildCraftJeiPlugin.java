@@ -29,7 +29,6 @@ import buildcraft.lib.gui.ledger.Ledger_Neptune;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.LocaleUtil;
-import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.recipe.AssemblyRecipeBasic;
 import buildcraft.lib.recipe.ChangingItemStack;
 import buildcraft.robotics.BCRoboticsBoards;
@@ -64,7 +63,6 @@ import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -79,7 +77,6 @@ import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -555,30 +552,31 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
     }
 
-    private static List<FacadeBlockStateInfo> getVisibleFacadeInfos() {
-        List<FacadeBlockStateInfo> infos = new ArrayList<>();
-        for (FacadeBlockStateInfo info : FacadeStateManager.validFacadeStates.values()) {
-            if (info.isVisible && !info.requiredStack.isEmpty()) {
-                infos.add(info);
-            }
+    private static FacadeBlockStateInfo getRepresentativeFacadeInfo() {
+        FacadeBlockStateInfo info = FacadeStateManager.previewState;
+        if (info == null || !info.isVisible || info.requiredStack.isEmpty()) {
+            return null;
         }
-        infos.sort(Comparator
-                .comparing((FacadeBlockStateInfo info) -> String.valueOf(BuiltInRegistries.BLOCK.getKey(info.state.getBlock())))
-                .thenComparing(info -> info.state.toString())
-                .thenComparing(info -> String.valueOf(BuiltInRegistries.ITEM.getKey(info.requiredStack.getItem()))));
-        return infos;
+        return info;
     }
 
     private static ItemStack createFacadeBaseRequirementStack() {
-        if (!BCTransportItems.PIPE_STRUCTURE.isBound()) {
+        if (!BCTransportItems.PIPE_STRUCTURE.isPresent()) {
             return new ItemStack(Blocks.COBBLESTONE_WALL);
         }
         return new ItemStack(BCTransportItems.PIPE_STRUCTURE.get(), 3);
     }
 
     private static String getFacadeSubtype(ItemStack stack) {
-        CompoundTag tag = ItemStackUtil.getCustomDataOrNull(stack);
-        return tag == null ? IIngredientSubtypeInterpreter.NONE : tag.toString();
+        // Facade material/state is intentionally not part of JEI's unique subtype key.
+        // Large packs can expose tens of thousands of facade ItemStacks through the creative tab;
+        // treating each NBT/component payload as a unique JEI ingredient makes world-bound JEI reloads
+        // scale with the entire block registry. The recipe itself resolves the focused material lazily.
+        var instance = ItemPluggableFacade.getStates(stack);
+        if (instance.phasedStates.length > 1) {
+            return instance.isHollow() ? "phased_hollow" : "phased_solid";
+        }
+        return instance.isHollow() ? "hollow" : "solid";
     }
 
     private static ItemStack getFocusedItemStack(IFocus<?> focus) {
@@ -607,19 +605,22 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         ItemStack baseRequirement = createFacadeBaseRequirementStack();
         baseRequirement.setCount(1);
+        ItemStackKey baseKey = new ItemStackKey(baseRequirement);
         List<FacadeBlockStateInfo> infos = new ArrayList<>();
-        for (FacadeBlockStateInfo info : getVisibleFacadeInfos()) {
-            ItemStack required = info.requiredStack.copy();
-            required.setCount(1);
-            for (ItemStack focused : focusedInputs) {
-                ItemStack focusedCopy = focused.copy();
-                focusedCopy.setCount(1);
-                if (ItemStack.isSameItemSameComponents(baseRequirement, focusedCopy)) {
-                    continue;
-                }
-                if (ItemStack.isSameItemSameComponents(required, focusedCopy)) {
+        for (ItemStack focused : focusedInputs) {
+            ItemStack focusedCopy = focused.copy();
+            focusedCopy.setCount(1);
+            ItemStackKey focusedKey = new ItemStackKey(focusedCopy);
+            if (baseKey.equals(focusedKey)) {
+                continue;
+            }
+            List<FacadeBlockStateInfo> matching = FacadeStateManager.stackFacades.get(focusedKey);
+            if (matching == null) {
+                continue;
+            }
+            for (FacadeBlockStateInfo info : matching) {
+                if (info.isVisible && !info.requiredStack.isEmpty() && !infos.contains(info)) {
                     infos.add(info);
-                    break;
                 }
             }
         }
@@ -658,28 +659,22 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             ChangingItemStack[] inputs = new ChangingItemStack[2];
             inputs[0] = new ChangingItemStack(createFacadeBaseRequirementStack());
 
-            NonNullList<ItemStack> facadeInputs = NonNullList.create();
-            for (FacadeBlockStateInfo info : getVisibleFacadeInfos()) {
-                facadeInputs.add(info.requiredStack.copy());
-            }
-            if (facadeInputs.isEmpty()) {
-                facadeInputs.add(ItemStack.EMPTY);
-            }
-            inputs[1] = new ChangingItemStack(facadeInputs);
-            inputs[1].setTimeGap(500);
+            FacadeBlockStateInfo info = getRepresentativeFacadeInfo();
+            inputs[1] = new ChangingItemStack(info == null ? ItemStack.EMPTY : info.requiredStack.copy());
             return inputs;
         }
 
         @Override
         public ChangingItemStack getRecipeOutputs() {
-            NonNullList<ItemStack> outputs = NonNullList.create();
-            for (FacadeBlockStateInfo info : getVisibleFacadeInfos()) {
-                outputs.add(FacadeAssemblyRecipes.createFacadeStack(info, false));
-                outputs.add(FacadeAssemblyRecipes.createFacadeStack(info, true));
+            FacadeBlockStateInfo info = getRepresentativeFacadeInfo();
+            if (info == null) {
+                return new ChangingItemStack(ItemStack.EMPTY);
             }
-            if (outputs.isEmpty()) {
-                return super.getRecipeOutputs();
-            }
+            NonNullList<ItemStack> outputs = NonNullList.of(
+                    ItemStack.EMPTY,
+                    FacadeAssemblyRecipes.createFacadeStack(info, false),
+                    FacadeAssemblyRecipes.createFacadeStack(info, true)
+            );
             ChangingItemStack changing = new ChangingItemStack(outputs);
             changing.setTimeGap(500);
             return changing;
@@ -687,11 +682,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public ItemStack getResultItem(HolderLookup.Provider registryAccess) {
-            List<FacadeBlockStateInfo> infos = getVisibleFacadeInfos();
-            if (infos.isEmpty()) {
+            FacadeBlockStateInfo info = getRepresentativeFacadeInfo();
+            if (info == null) {
                 return super.getResultItem(registryAccess);
             }
-            return FacadeAssemblyRecipes.createFacadeStack(infos.get(0), false);
+            return FacadeAssemblyRecipes.createFacadeStack(info, false);
         }
 
         @Override
@@ -747,8 +742,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
                 setGroupedAssemblyRecipe(builder, grouped, focuses);
                 return;
             }
-            if (recipe instanceof FacadeAssemblyRecipes facadeRecipe) {
-                setFacadeRecipe(builder, facadeRecipe, focuses);
+            if (recipe instanceof FacadeAssemblyRecipes) {
+                setFacadeRecipe(builder, focuses);
                 return;
             }
 
@@ -924,9 +919,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             builder.createFocusLink(gateSlot, modifierSlot, outputSlot);
         }
 
-        private void setFacadeRecipe(IRecipeLayoutBuilder builder, FacadeAssemblyRecipes recipe, IFocusGroup focuses) {
-            List<FacadeBlockStateInfo> infos = getVisibleFacadeInfos();
-
+        private void setFacadeRecipe(IRecipeLayoutBuilder builder, IFocusGroup focuses) {
+            List<FacadeBlockStateInfo> infos;
             FacadeBlockStateInfo focusedOutput = getFocusedFacadeInfo(focuses);
             if (focusedOutput != null) {
                 infos = List.of(focusedOutput);
@@ -934,30 +928,22 @@ public class BuildCraftJeiPlugin implements IModPlugin {
                 List<FacadeBlockStateInfo> focusedInputs = getFocusedFacadeInputInfos(focuses);
                 if (!focusedInputs.isEmpty()) {
                     infos = focusedInputs;
+                } else {
+                    FacadeBlockStateInfo representative = getRepresentativeFacadeInfo();
+                    infos = representative == null ? List.of() : List.of(representative);
                 }
+            }
+
+            if (infos.isEmpty()) {
+                return;
             }
 
             builder.addSlot(RecipeIngredientRole.INPUT, 3, 12)
                     .addItemStack(createFacadeBaseRequirementStack());
 
-            List<ItemStack> facadeInputs;
-            List<ItemStack> solidOutputs;
-            List<ItemStack> hollowOutputs;
-            if (infos.isEmpty()) {
-                ChangingItemStack[] inputs = recipe.getRecipeInputs();
-                facadeInputs = inputs.length > 1 ? expandChangingStack(inputs[1]) : List.of();
-
-                List<ItemStack> allOutputs = expandChangingStack(recipe.getRecipeOutputs());
-                solidOutputs = new ArrayList<>();
-                hollowOutputs = new ArrayList<>();
-                for (int index = 0; index < allOutputs.size(); index++) {
-                    (index % 2 == 0 ? solidOutputs : hollowOutputs).add(allOutputs.get(index));
-                }
-            } else {
-                facadeInputs = createFacadeRequirementStacks(infos);
-                solidOutputs = createFacadeOutputStacks(infos, false);
-                hollowOutputs = createFacadeOutputStacks(infos, true);
-            }
+            List<ItemStack> facadeInputs = createFacadeRequirementStacks(infos);
+            List<ItemStack> solidOutputs = createFacadeOutputStacks(infos, false);
+            List<ItemStack> hollowOutputs = createFacadeOutputStacks(infos, true);
 
             IRecipeSlotBuilder facadeInputSlot = builder.addSlot(RecipeIngredientRole.INPUT, 21, 12)
                     .addItemStacks(facadeInputs);

@@ -418,6 +418,23 @@ def validate_resource_parity() -> None:
 
 
 
+
+def validate_jei_facade_scalability() -> None:
+    plugin = "src/main/java/buildcraft/compat/jei/BuildCraftJeiPlugin.java"
+    manager = "src/main/java/buildcraft/silicon/plug/FacadeStateManager.java"
+    for target in TARGETS:
+        require(target, plugin,
+                'return instance.isHollow() ? "hollow" : "solid";',
+                'return instance.isHollow() ? "phased_hollow" : "phased_solid";',
+                "FacadeStateManager.stackFacades.get(focusedKey)",
+                "FacadeBlockStateInfo info = getRepresentativeFacadeInfo();")
+        forbid(target, plugin,
+               "getVisibleFacadeInfos()",
+               "tag.toString()",
+               "ItemStackUtil.getCustomDataOrNull(stack)",
+               "FacadeStateManager.validFacadeStates.values()")
+        forbid(target, manager, "FacadeSwapRecipe.genRecipes();")
+
 def validate_gametest_runtime_guards() -> None:
     expected_tests = 41
     for target in TARGETS:
@@ -544,6 +561,7 @@ def main() -> None:
     validate_worldgen_resources()
     validate_advancements()
     validate_resource_parity()
+    validate_jei_facade_scalability()
     validate_gametest_runtime_guards()
 
     if ERRORS:
