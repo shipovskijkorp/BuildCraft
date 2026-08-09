@@ -33,7 +33,7 @@ public final class ForestryCompatClient {
         MenuScreens.register(ForestryPipes.PROPOLIS_PIPE_MENU.get(), GuiPropolisPipe::new);
     }
 
-    private static void onModelBake(ModelEvent.BakingCompleted event) {
+    private static void onModelBake(ModelEvent.ModifyBakingResult event) {
         // Pipe items use BuildCraft's dynamic 3D model. The base transport module only replaces
         // models from its own item map, so compat-owned pipe items must opt in here explicitly.
         event.getModels().put(

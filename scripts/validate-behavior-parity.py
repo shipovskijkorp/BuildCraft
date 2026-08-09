@@ -534,6 +534,15 @@ def validate_jei_facade_scalability() -> None:
                "FacadeStateManager.validFacadeStates.values()")
         forbid(target, manager, "FacadeSwapRecipe.genRecipes();")
 
+def validate_forestry_model_bake_mutation() -> None:
+    rel = "src/main/java/buildcraft/compat/forestry/pipe/client/ForestryCompatClient.java"
+    require("1.20.1-forge", rel,
+            "private static void onModelBake(ModelEvent.ModifyBakingResult event)",
+            "event.getModels().put(")
+    forbid("1.20.1-forge", rel,
+           "private static void onModelBake(ModelEvent.BakingCompleted event)")
+
+
 def validate_pipe_pluggable_contract() -> None:
     pluggable = "src/main/java/buildcraft/api/transport/pluggable/PipePluggable.java"
     for target in TARGETS:
@@ -678,6 +687,7 @@ def main() -> None:
     validate_gameplay_gap_fixes()
     validate_modpack_interop_fixes()
     validate_jei_facade_scalability()
+    validate_forestry_model_bake_mutation()
     validate_pipe_pluggable_contract()
     validate_gametest_runtime_guards()
 
