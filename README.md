@@ -11,18 +11,18 @@ The goal of the project is to preserve and continue the classic BuildCraft exper
 When reporting a problem, always include:
 
 - the Minecraft version;
-- the mod loader and it's version;
+- the mod loader and its version;
 - the exact BuildCraft Community Edition build;
 - the relevant log or crash report.
 
 ## Roadmap 2.0
 
-*   Drop support for 1.21.1 Forge due to low usage and high maintenance overhead
-*   New API system - in progress
-*   FE/RF compat - in progress
-*   Port to 1.20.1 Fabric
-*   Port to 1.21.11 Fabric/NeoForge
-*   Port to 26.X versions Fabric/NeoForge
+- Drop support for 1.21.1 Forge due to low usage and high maintenance overhead
+- New API system - in progress
+- FE/RF compat - in progress
+- Port to 1.20.1 Fabric
+- Port to 1.21.11 Fabric/NeoForge
+- Port to 26.X Fabric/NeoForge
 
 ## Supported versions
 
@@ -40,18 +40,18 @@ BCCE is split into two generation-based Stonecutter source families:
 
 Files identical everywhere live in `source-shared`; generation-specific common code lives in `source-families/legacy` or `source-families/modern`; only real Minecraft/loader differences remain in `version-src/<target>`. The 1.19.2 implementation is the gameplay reference, but source code is allowed to differ when newer Minecraft APIs require a different implementation. The compatibility target is player-visible behaviour: **different implementation, indistinguishable BuildCraft**.
 
-See [`SOURCE_FAMILIES.md`](SOURCE_FAMILIES.md) for layout rules, parity policy and build commands.
+See `SOURCE_FAMILIES.md` for layout rules, parity policy and build commands.
 
 ## Addons developed by BCCE team:
 
-*   **BuildCraft Community Edition Localizations**
-    -   [CurseForge](https://www.curseforge.com/minecraft/mc-mods/buildcraft-community-edition-localizations) [Modrinth](https://modrinth.com/mod/buildcraft-community-edition-localizations) [GitHub](https://github.com/CurativeTree/BuildCraft/tree/Localizations)
+- **BuildCraft Community Edition Localizations**
+  - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/buildcraft-community-edition-localizations) [Modrinth](https://modrinth.com/mod/buildcraft-community-edition-localizations) [GitHub](https://github.com/CurativeTree/BuildCraft/tree/Localizations)
 
 ## Credits
 
 ### Original BuildCraft
 
-- GitHub: [BuildCraft/BuildCraft](https://github.com/BuildCraft/BuildCraft)
+- GitHub: https://github.com/BuildCraft/BuildCraft
 - CurseForge: [BuildCraft](https://www.curseforge.com/minecraft/mc-mods/buildcraft)
 - Modrinth: [BuildCraft](https://modrinth.com/mod/buildcraft)
 
@@ -66,7 +66,7 @@ Developed and ported by:
 - CurativeTree
 - ShipovskijKorp
 
-Thanks for help in development:
+Thanks for helping with development:
 
 - nightovl
 - pietruszka
