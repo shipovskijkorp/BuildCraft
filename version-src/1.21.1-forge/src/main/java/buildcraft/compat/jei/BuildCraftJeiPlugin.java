@@ -554,7 +554,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static ItemStack createFacadeBaseRequirementStack() {
-        if (!BCTransportItems.PIPE_STRUCTURE.isBound()) {
+        if (!BCTransportItems.PIPE_STRUCTURE.isPresent()) {
             return new ItemStack(Blocks.COBBLESTONE_WALL);
         }
         return new ItemStack(BCTransportItems.PIPE_STRUCTURE.get(), 3);
