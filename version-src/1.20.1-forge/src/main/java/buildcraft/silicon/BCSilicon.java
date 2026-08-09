@@ -19,6 +19,7 @@ import buildcraft.silicon.plug.FacadeStateManager;
 import buildcraft.transport.BCTransport;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -138,6 +139,14 @@ public class BCSilicon {
         @SubscribeEvent
         public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
             BCSiliconModels.registerItemColor(event);
+        }
+
+        @SubscribeEvent
+        public static void onTextureStitchPost(TextureStitchEvent.Post event) {
+            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                // Pluggable baked quads keep atlas-relative UVs, so they must not survive an atlas reload.
+                BCSiliconModels.clearAtlasDependentCaches();
+            }
         }
 
         @SubscribeEvent

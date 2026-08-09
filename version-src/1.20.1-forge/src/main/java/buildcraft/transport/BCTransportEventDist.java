@@ -20,6 +20,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
 import net.minecraftforge.client.event.ModelEvent.ModifyBakingResult;
 import net.minecraftforge.client.event.ModelEvent.RegisterAdditional;
@@ -75,11 +76,24 @@ public class BCTransportEventDist {
 
         @SubscribeEvent
         public static void onModelBakeComplete(BakingCompleted event) {
-            PipeBaseModelGenStandard.loadSpritesCache();
+            // Do not resolve sprites through Minecraft's global ModelManager here: during a reload it may still
+            // expose the previous atlas generation. The fresh atlas is captured directly in TextureStitchEvent.Post.
+            clearAtlasDependentPipeCaches();
+            BCTransportModels.onModelBakeComplete();
+        }
+
+        @SubscribeEvent
+        public static void onTextureStitchPost(TextureStitchEvent.Post event) {
+            if (InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
+                PipeBaseModelGenStandard.loadSpritesCache(event.getAtlas());
+                clearAtlasDependentPipeCaches();
+            }
+        }
+
+        private static void clearAtlasDependentPipeCaches() {
             PipeModelCacheAll.clearModels();
             ModelPipe.clearTextureCache();
             PipeFlowRendererPower.clearTextureCache();
-            BCTransportModels.onModelBakeComplete();
         }
         
         

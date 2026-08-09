@@ -145,6 +145,7 @@ def main() -> None:
         "source.overlay_root": "version-src/1.21.1-forge",
         "deps.minecraft": "1.21.1",
         "deps.forge": "52.1.16",
+        "forge.version_range": "[52.1.0,)",
         "java.version": "21",
         "network.protocol": "BC8.0.x-1.21.1-net2",
         "pack.format": "34",

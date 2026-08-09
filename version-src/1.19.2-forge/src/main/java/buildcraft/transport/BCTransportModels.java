@@ -105,7 +105,10 @@ public class BCTransportModels {
 	}
 	
     public static void onModelBake(BakingCompleted event) {
-    	putModel(event, "pipe_holder", ModelPipe.INSTANCE);
+        // BlockPipeHolder is waterloggable, so the baked block model is keyed by the full blockstate variant.
+        // Replacing only the legacy empty variant leaves the real in-world pipe on the JSON fallback model.
+        putModel(event, "pipe_holder#waterlogged=false", ModelPipe.INSTANCE);
+        putModel(event, "pipe_holder#waterlogged=true", ModelPipe.INSTANCE);
     	putModel(event, "pipe_item#inventory", ModelPipeItem.INSTANCE);
 //      putModel(event, "obsidian_item#inventory", ModelPipeItem.INSTANCE);
 

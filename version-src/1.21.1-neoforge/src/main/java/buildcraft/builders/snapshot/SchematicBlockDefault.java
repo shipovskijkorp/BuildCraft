@@ -654,9 +654,10 @@ public class SchematicBlockDefault implements ISchematicBlock {
                 placeBlock.defaultBlockState()
             );
         }
-        if (tileRotation != Rotation.NONE) {
-            newBlockState = newBlockState.rotate(level, blockPos, tileRotation);
-        }
+        // BuildingInfo already rotates the palette via getRotated(rotation). Applying tileRotation
+        // to the BlockState again here would rotate directional blocks twice and make the builder
+        // immediately classify its own placement as incorrect. tileRotation is retained for
+        // block-entity-specific rotation metadata only.
         // Blueprint-built leaves must not immediately enter vanilla distance-decay.
         if (newBlockState.hasProperty(BlockStateProperties.PERSISTENT)) {
             newBlockState = newBlockState.setValue(BlockStateProperties.PERSISTENT, true);
@@ -779,9 +780,31 @@ public class SchematicBlockDefault implements ISchematicBlock {
     @Override
     public boolean isBuilt(Level world, BlockPos blockPos) {
         BlockState blockState2 = world.getBlockState(blockPos);
-		return blockState != null &&((blockState2 == blockState) ||
-                (canBeReplacedWithBlocks.contains(blockState2.getBlock()) &&
-                        BlockUtil.blockStatesWithoutBlockEqual(blockState, blockState2, ignoredProperties)));
+        if (blockState == null) {
+            return false;
+        }
+        BlockState expectedState = getPlacementState(world, blockPos);
+        if (blockState2 == expectedState) {
+            return true;
+        }
+        if (!canBeReplacedWithBlocks.contains(blockState2.getBlock())) {
+            return false;
+        }
+        if (BlockUtil.blockStatesWithoutBlockEqual(expectedState, blockState2, ignoredProperties)) {
+            return true;
+        }
+
+        // A half of a double chest can temporarily become SINGLE while its neighbour is still
+        // being built. Treat that runtime-managed pairing property as structurally equivalent,
+        // but keep it in the placement state so the completed pair can still form correctly.
+        if (blockState2.getBlock() == expectedState.getBlock()
+                && expectedState.hasProperty(BlockStateProperties.CHEST_TYPE)
+                && blockState2.hasProperty(BlockStateProperties.CHEST_TYPE)) {
+            List<Property<?>> comparisonIgnored = new ArrayList<>(ignoredProperties);
+            comparisonIgnored.add(BlockStateProperties.CHEST_TYPE);
+            return BlockUtil.blockStatesWithoutBlockEqual(expectedState, blockState2, comparisonIgnored);
+        }
+        return false;
     }
 
     @Override

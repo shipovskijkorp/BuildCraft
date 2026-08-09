@@ -468,7 +468,11 @@ def validate_gameplay_gap_fixes() -> None:
                 ".canSurvive(level, blockPos)",
                 "BlockStateProperties.PERSISTENT",
                 "newBlockState.setValue(BlockStateProperties.PERSISTENT, true)",
-                "if (!newBlockState.canSurvive(level, blockPos))")
+                "if (!newBlockState.canSurvive(level, blockPos))",
+                "BlockState expectedState = getPlacementState(world, blockPos);",
+                "BlockUtil.blockStatesWithoutBlockEqual(expectedState, blockState2, ignoredProperties)")
+        forbid(target, schematic,
+               "newBlockState = newBlockState.rotate(level, blockPos, tileRotation);")
 
     for target in ("1.20.1-forge", "1.21.1-forge", "1.21.1-neoforge"):
         require(target, frame, ".forceSolidOn()")
@@ -517,6 +521,49 @@ def validate_modpack_interop_fixes() -> None:
     else:
         fail("missing shared pipe holder blockstate")
 
+    # Waterlogging changes the baked block-model keys. Every target must replace the
+    # two real blockstate variants with ModelPipe; replacing only the old empty
+    # variant leaves the JSON fallback model in-world and breaks pipe/pluggable rendering.
+    transport_models = "src/main/java/buildcraft/transport/BCTransportModels.java"
+    for target in TARGETS:
+        require(target, transport_models,
+                'putModel(event, "pipe_holder#waterlogged=false", ModelPipe.INSTANCE);',
+                'putModel(event, "pipe_holder#waterlogged=true", ModelPipe.INSTANCE);')
+        forbid(target, transport_models,
+               'putModel(event, "pipe_holder", ModelPipe.INSTANCE);')
+
+    # Double-chest pairing is runtime-managed. The first half can temporarily revert to
+    # SINGLE before the neighbour exists, but placement must still preserve the captured
+    # LEFT/RIGHT state so the final pair can form. Therefore this exception belongs only
+    # in structural equality, not in the generic ignoredProperties rule list.
+    schematic = "src/main/java/buildcraft/builders/snapshot/SchematicBlockDefault.java"
+    for target in TARGETS:
+        require(target, schematic,
+                "expectedState.hasProperty(BlockStateProperties.CHEST_TYPE)",
+                "blockState2.hasProperty(BlockStateProperties.CHEST_TYPE)",
+                "comparisonIgnored.add(BlockStateProperties.CHEST_TYPE)",
+                "BlockUtil.blockStatesWithoutBlockEqual(expectedState, blockState2, comparisonIgnored)")
+
+    inventory_rules = ROOT / (
+        "source-shared/src/main/resources/assets/buildcraftbuilders/compat/buildcraft/"
+        "builders/vanilla/blocks_simple_inventories.json"
+    )
+    if not inventory_rules.is_file():
+        fail("missing shared simple-inventory builder rules")
+    else:
+        try:
+            inventory_doc = json.loads(inventory_rules.read_text(encoding="utf-8"))
+        except Exception as exc:
+            fail(f"invalid simple-inventory builder rules: {exc}")
+        else:
+            selectors = inventory_doc[0].get("selectors", []) if isinstance(inventory_doc, list) and inventory_doc and isinstance(inventory_doc[0], dict) else []
+            for chest in ("minecraft:chest", "minecraft:trapped_chest"):
+                if chest not in selectors:
+                    fail(f"simple-inventory builder rules are missing {chest}")
+            ignored = inventory_doc[0].get("ignoredProperties", []) if isinstance(inventory_doc, list) and inventory_doc and isinstance(inventory_doc[0], dict) else []
+            if "type" in ignored:
+                fail("chest 'type' must not be a generic ignoredProperties entry because that also rewrites placement state")
+
 
 def validate_jei_facade_scalability() -> None:
     plugin = "src/main/java/buildcraft/compat/jei/BuildCraftJeiPlugin.java"
@@ -541,6 +588,44 @@ def validate_forestry_model_bake_mutation() -> None:
             "event.getModels().put(")
     forbid("1.20.1-forge", rel,
            "private static void onModelBake(ModelEvent.BakingCompleted event)")
+
+
+def validate_forge_atlas_reload_caches() -> None:
+    transport = "src/main/java/buildcraft/transport/BCTransportEventDist.java"
+    silicon = "src/main/java/buildcraft/silicon/BCSilicon.java"
+
+    # Forge's stitch event hands us the atlas generation that has just been rebuilt.
+    # Dynamic BuildCraft quads cache absolute atlas UVs, so never repopulate the pipe
+    # sprite table by querying Minecraft's global ModelManager from BakingCompleted.
+    for target in ("1.20.1-forge", "1.21.1-forge"):
+        require(target, transport,
+                "TextureStitchEvent.Post",
+                "InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())",
+                "PipeBaseModelGenStandard.loadSpritesCache(event.getAtlas())",
+                "clearAtlasDependentPipeCaches();")
+        forbid(target, transport, "PipeBaseModelGenStandard.loadSpritesCache();")
+
+        # Gates, lenses, facades and other pluggables also bake atlas-relative UVs.
+        # Their caches must be invalidated for every fresh block-atlas generation.
+        require(target, silicon,
+                "TextureStitchEvent.Post",
+                "InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())",
+                "BCSiliconModels.clearAtlasDependentCaches();")
+
+    # Keep the same invariant explicit for the reference/NeoForge paths so future
+    # source-family moves do not accidentally remove the already-correct handlers.
+    require("1.19.2-forge", transport,
+            "TextureStitchEvent.Post",
+            "PipeBaseModelGenStandard.loadSpritesCache(event.getAtlas())")
+    require("1.19.2-forge", silicon,
+            "TextureStitchEvent.Post",
+            "BCSiliconModels.clearAtlasDependentCaches();")
+    require("1.21.1-neoforge", transport,
+            "TextureAtlasStitchedEvent",
+            "PipeBaseModelGenStandard.loadSpritesCache(event.getAtlas())")
+    require("1.21.1-neoforge", silicon,
+            "TextureAtlasStitchedEvent",
+            "BCSiliconModels.clearAtlasDependentCaches();")
 
 
 def validate_pipe_pluggable_contract() -> None:
@@ -688,6 +773,7 @@ def main() -> None:
     validate_modpack_interop_fixes()
     validate_jei_facade_scalability()
     validate_forestry_model_bake_mutation()
+    validate_forge_atlas_reload_caches()
     validate_pipe_pluggable_contract()
     validate_gametest_runtime_guards()
 
