@@ -567,19 +567,37 @@ def validate_modpack_interop_fixes() -> None:
 
 def validate_jei_facade_scalability() -> None:
     plugin = "src/main/java/buildcraft/compat/jei/BuildCraftJeiPlugin.java"
-    manager = "src/main/java/buildcraft/silicon/plug/FacadeStateManager.java"
+    creative = "src/main/java/buildcraft/lib/CreativeTabManager.java"
     for target in TARGETS:
         require(target, plugin,
-                'return instance.isHollow() ? "hollow" : "solid";',
-                'return instance.isHollow() ? "phased_hollow" : "phased_solid";',
-                "FacadeStateManager.stackFacades.get(focusedKey)",
-                "FacadeBlockStateInfo info = getRepresentativeFacadeInfo();")
+                'return data.getCompound("facade").toString();',
+                "collectJeiFacadeInfos()",
+                "unique.putIfAbsent(new ItemStackKey(required), info)",
+                "recipe.inputStacks()",
+                "recipe.solidOutputs()",
+                "recipe.hollowOutputs()",
+                "builder.createFocusLink(facadeInputSlot, solidOutputSlot, hollowOutputSlot)")
         forbid(target, plugin,
-               "getVisibleFacadeInfos()",
-               "tag.toString()",
-               "ItemStackUtil.getCustomDataOrNull(stack)",
-               "FacadeStateManager.validFacadeStates.values()")
-        forbid(target, manager, "FacadeSwapRecipe.genRecipes();")
+               'return instance.isHollow() ? "hollow" : "solid";',
+               'return instance.isHollow() ? "phased_hollow" : "phased_solid";',
+               "getFocusedFacadeInputInfos",
+               "getRepresentativeFacadeInfo()")
+        require(target, creative,
+                "Set<ItemStackKey> seen = new HashSet<>();",
+                "seen.add(new ItemStackKey(normalized))")
+        forbid(target, creative,
+               "for (ItemStack existing : items) {\n                if (ItemStack.isSameItemSame")
+
+    hidden_tags = (
+        ROOT / "source-families/legacy/src/main/resources/data/c/tags/items/hidden_from_recipe_viewers.json",
+        ROOT / "source-families/modern/src/main/resources/data/c/tags/item/hidden_from_recipe_viewers.json",
+    )
+    for tag_path in hidden_tags:
+        if not tag_path.is_file():
+            fail(f"missing facade recipe-viewer visibility tag: {tag_path.relative_to(ROOT)}")
+        elif '"buildcraftsilicon:plug/facade"' not in tag_path.read_text(encoding="utf-8"):
+            fail(f"facade item missing from recipe-viewer visibility tag: {tag_path.relative_to(ROOT)}")
+
 
 def validate_forestry_model_bake_mutation() -> None:
     rel = "src/main/java/buildcraft/compat/forestry/pipe/client/ForestryCompatClient.java"

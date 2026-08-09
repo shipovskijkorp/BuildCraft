@@ -7,10 +7,14 @@ package buildcraft.lib;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
+
+import buildcraft.lib.misc.ItemStackKey;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -290,6 +294,13 @@ public class CreativeTabManager {
         public void fillItemList(NonNullList<ItemStack> items) {
             super.fillItemList(items);
 
+            Set<ItemStackKey> seen = new HashSet<>();
+            for (ItemStack existing : items) {
+                ItemStack normalized = existing.copy();
+                normalized.setCount(1);
+                seen.add(new ItemStackKey(normalized));
+            }
+
             for (Supplier<? extends Collection<ItemStack>> provider : itemProviders) {
                 Collection<ItemStack> provided;
                 try {
@@ -301,19 +312,7 @@ public class CreativeTabManager {
                     continue;
                 }
                 for (ItemStack stack : provided) {
-                    if (stack == null || stack.isEmpty()) {
-                        continue;
-                    }
-                    boolean duplicate = false;
-                    for (ItemStack existing : items) {
-                        if (ItemStack.isSameItemSameTags(existing, stack)) {
-                            duplicate = true;
-                            break;
-                        }
-                    }
-                    if (!duplicate) {
-                        items.add(stack.copy());
-                    }
+                    addUnique(items, seen, stack);
                 }
             }
 
@@ -326,6 +325,17 @@ public class CreativeTabManager {
             if (order != null) {
                 // List.sort is stable, so all generated variants of one item retain their original order.
                 items.sort(Comparator.comparingInt(stack -> order.getOrDefault(getRegistryName(stack), Integer.MAX_VALUE)));
+            }
+        }
+
+        private static void addUnique(List<ItemStack> items, Set<ItemStackKey> seen, ItemStack stack) {
+            if (stack == null || stack.isEmpty()) {
+                return;
+            }
+            ItemStack normalized = stack.copy();
+            normalized.setCount(1);
+            if (seen.add(new ItemStackKey(normalized))) {
+                items.add(stack.copy());
             }
         }
     }

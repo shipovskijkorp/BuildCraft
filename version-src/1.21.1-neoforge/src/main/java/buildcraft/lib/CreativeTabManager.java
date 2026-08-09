@@ -8,14 +8,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import buildcraft.lib.item.ICreativeTabItemProvider;
+import buildcraft.lib.misc.ItemStackKey;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -323,9 +327,10 @@ public final class CreativeTabManager {
          */
         public void accept(Collection<ItemStack> baseItems, Consumer<ItemStack> output) {
             List<ItemStack> items = new ArrayList<>();
+            Set<ItemStackKey> seen = new HashSet<>();
             if (baseItems != null) {
                 for (ItemStack stack : baseItems) {
-                    addUnique(items, stack);
+                    addUnique(items, seen, stack);
                 }
             }
             for (Supplier<? extends Collection<ItemStack>> provider : itemProviders) {
@@ -333,7 +338,7 @@ public final class CreativeTabManager {
                     Collection<ItemStack> provided = provider.get();
                     if (provided != null) {
                         for (ItemStack stack : provided) {
-                            addUnique(items, stack);
+                            addUnique(items, seen, stack);
                         }
                     }
                 } catch (RuntimeException ignored) {
@@ -347,16 +352,15 @@ public final class CreativeTabManager {
             items.forEach(output);
         }
 
-        private static void addUnique(List<ItemStack> items, ItemStack stack) {
+        private static void addUnique(List<ItemStack> items, Set<ItemStackKey> seen, ItemStack stack) {
             if (stack == null || stack.isEmpty()) {
                 return;
             }
-            for (ItemStack existing : items) {
-                if (ItemStack.isSameItemSameComponents(existing, stack)) {
-                    return;
-                }
+            ItemStack normalized = stack.copy();
+            normalized.setCount(1);
+            if (seen.add(new ItemStackKey(normalized))) {
+                items.add(stack.copy());
             }
-            items.add(stack.copy());
         }
     }
 }
