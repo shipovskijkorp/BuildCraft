@@ -196,6 +196,34 @@ def validate_java_invariants() -> None:
             "NBTUtilBC.writeEnum(worldPipe.getColour())")
 
 
+
+def validate_fluid_filter_safety() -> None:
+    array_filter = "src/main/java/buildcraft/lib/inventory/filter/ArrayFluidFilter.java"
+    diamond_fluid = "src/main/java/buildcraft/transport/pipe/behaviour/PipeBehaviourDiamondFluid.java"
+    diamond_wood = "src/main/java/buildcraft/transport/pipe/behaviour/PipeBehaviourWoodDiamond.java"
+
+    for target in TARGETS:
+        require(target, array_filter,
+                "FluidUtil.getFluidContained(stacks.get(i)).orElse(FluidStack.EMPTY)",
+                "if (!fluid.isEmpty() && fluid.getAmount() > 0)")
+        array_text = text(target, array_filter)
+        if re.search(r"getFluidContained\(stacks\.get\(i\)\).*?else\s+return;", array_text, re.DOTALL):
+            fail(f"{target}: ArrayFluidFilter must skip empty/non-fluid slots instead of stopping at the first gap")
+
+        require(target, diamond_fluid,
+                "FluidUtil.getFluidContained(compareTo).orElse(FluidStack.EMPTY)",
+                "if (target.isEmpty() || target.getAmount() <= 0)")
+        forbid(target, diamond_fluid, "FluidUtil.getFluidContained(compareTo).get()")
+
+        require(target, diamond_wood,
+                "ArrayFluidFilter fluidFilter = new ArrayFluidFilter(filters.stacks);",
+                "if (!fluidFilter.hasFilter())",
+                "FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY)",
+                "return FluidStack.EMPTY;")
+        forbid(target, diamond_wood,
+               "FluidUtil.getFluidContained(stack).get()",
+               "return null;")
+
 def validate_protection_invariants() -> None:
     stripes = "src/main/java/buildcraft/transport/stripes/StripesHandlerShears.java"
     require("1.21.1-forge", stripes,
@@ -779,6 +807,7 @@ def main() -> None:
 
     validate_tick_cadence()
     validate_java_invariants()
+    validate_fluid_filter_safety()
     validate_protection_invariants()
     validate_robot_invariants()
     validate_target_specific_persistence()

@@ -6,8 +6,6 @@
 
 package buildcraft.lib.inventory.filter;
 
-import java.util.Optional;
-
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 
@@ -30,12 +28,10 @@ public class ArrayFluidFilter implements IFluidFilter {
         fluids = new FluidStack[stacks.size()];
 
         for (int i = 0; i < stacks.size(); ++i) {
-            Optional<FluidStack> optional = FluidUtil.getFluidContained(stacks.get(i));
-            if (optional.isPresent()) {
-                fluids[i] = optional.get();
+            FluidStack fluid = FluidUtil.getFluidContained(stacks.get(i)).orElse(FluidStack.EMPTY);
+            if (!fluid.isEmpty() && fluid.getAmount() > 0) {
+                fluids[i] = fluid;
             }
-            else
-            	return;
         }
     }
 

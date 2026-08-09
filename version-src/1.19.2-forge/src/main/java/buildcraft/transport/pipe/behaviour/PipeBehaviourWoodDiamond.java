@@ -197,36 +197,49 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood implements MenuP
             advanceFilter();
         }
 
+        ArrayFluidFilter fluidFilter = new ArrayFluidFilter(filters.stacks);
         switch (filterMode) {
             default:
             case WHITE_LIST:
-                if (filters.extract(s -> true, 1, 1, true).isEmpty()) {
+                // Empty slots and non-fluid items are not fluid filters. If no valid fluid is configured,
+                // preserve the unfiltered wooden-pipe behaviour.
+                if (!fluidFilter.hasFilter()) {
                     return flow.tryExtractFluid(millibuckets, dir, FluidStack.EMPTY, simulate);
                 }
-                // Firstly try the advanced version - if that fails we will need to try the basic version
-                InteractionResultHolder<FluidStack> result  = flow.tryExtractFluidAdv(millibuckets, dir, new ArrayFluidFilter(filters.stacks), simulate);
+                // Firstly try the advanced version - if that fails we will need to try the basic version.
+                InteractionResultHolder<FluidStack> result =
+                    flow.tryExtractFluidAdv(millibuckets, dir, fluidFilter, simulate);
                 FluidStack extracted = result.getObject();
                 if (result.getResult() != InteractionResult.PASS) {
-                    return extracted;
+                    return extracted == null ? FluidStack.EMPTY : extracted;
                 }
 
-                if (extracted == null || extracted.getAmount() <= 0) {
-                    for (int i = 0; i < filters.getSlots(); i++) {
-                        ItemStack stack = filters.getStackInSlot(i);
-                        if (stack.isEmpty()) {
-                            continue;
-                        }
-                        extracted = flow.tryExtractFluid(millibuckets, dir, FluidUtil.getFluidContained(stack).get(), simulate);
-                        if (!extracted.isEmpty() && extracted.getAmount() > 0) {
-                            return extracted;
-                        }
+                // Some IFlowFluid implementations can only perform basic, exact-fluid extraction.
+                // Try each valid fluid filter and skip ordinary/empty filter items.
+                for (int i = 0; i < filters.getSlots(); i++) {
+                    ItemStack stack = filters.getStackInSlot(i);
+                    if (stack.isEmpty()) {
+                        continue;
+                    }
+                    FluidStack target = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+                    if (target.isEmpty() || target.getAmount() <= 0) {
+                        continue;
+                    }
+                    extracted = flow.tryExtractFluid(millibuckets, dir, target, simulate);
+                    if (extracted != null && !extracted.isEmpty() && extracted.getAmount() > 0) {
+                        return extracted;
                     }
                 }
-                return null;
+                return FluidStack.EMPTY;
             case BLACK_LIST:
-                // We cannot fallback to the basic version - only use the advanced version
-                InvertedFluidFilter filter = new InvertedFluidFilter(new ArrayFluidFilter(filters.stacks));
-                return flow.tryExtractFluidAdv(millibuckets, dir, filter, simulate).getObject();
+                // With no valid fluid entries the blacklist blocks nothing.
+                if (!fluidFilter.hasFilter()) {
+                    return flow.tryExtractFluid(millibuckets, dir, FluidStack.EMPTY, simulate);
+                }
+                // We cannot fallback to the basic version - only use the advanced version.
+                InvertedFluidFilter filter = new InvertedFluidFilter(fluidFilter);
+                FluidStack blacklistedResult = flow.tryExtractFluidAdv(millibuckets, dir, filter, simulate).getObject();
+                return blacklistedResult == null ? FluidStack.EMPTY : blacklistedResult;
             case ROUND_ROBIN:
                 // We can't do this -- amounts might differ and its just ugly
                 return FluidStack.EMPTY;
