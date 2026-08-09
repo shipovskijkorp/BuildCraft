@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,18 +12,49 @@ SOURCE_ROOTS = [ROOT / "source-shared", ROOT / "source-families", ROOT / "versio
 
 errors: list[str] = []
 
-# Files that are never valid repository sources/artifacts.
-for path in ROOT.rglob("*"):
-    if ".git" in path.parts or "build" in path.parts or ".gradle" in path.parts:
-        continue
-    if path.is_dir() and path.name == "__pycache__":
-        errors.append(f"generated Python cache directory is tracked/present: {path.relative_to(ROOT)}")
-    elif path.is_file() and (
-        path.name in {".DS_Store", "Thumbs.db"}
-        or path.suffix in {".pyc", ".class", ".orig", ".rej", ".swp", ".tmp", ".bak"}
-        or path.name.endswith("~")
-    ):
-        errors.append(f"generated/backup file is present: {path.relative_to(ROOT)}")
+
+def tracked_repository_files() -> list[Path] | None:
+    """Return Git-tracked files, or None when Git metadata is unavailable.
+
+    Generated caches created by validation/build tools are workspace state, not
+    repository debris. Only fail for generated/backup files that were actually
+    added to Git. Source-tree checks below still work from source ZIPs without
+    a .git directory.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "ls-files", "-z"],
+            cwd=ROOT,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+    files: list[Path] = []
+    for raw_path in result.stdout.split(b"\0"):
+        if not raw_path:
+            continue
+        files.append(ROOT / raw_path.decode(sys.getfilesystemencoding(), errors="surrogateescape"))
+    return files
+
+
+# Files that are never valid tracked repository sources/artifacts. Do not scan
+# arbitrary workspace files here: earlier Python/Gradle steps legitimately
+# create ignored caches and build outputs during CI.
+tracked_files = tracked_repository_files()
+if tracked_files is not None:
+    for path in tracked_files:
+        rel = path.relative_to(ROOT)
+        if "__pycache__" in rel.parts or path.suffix == ".pyc":
+            errors.append(f"generated Python cache file is tracked: {rel}")
+        elif (
+            path.name in {".DS_Store", "Thumbs.db"}
+            or path.suffix in {".class", ".orig", ".rej", ".swp", ".tmp", ".bak"}
+            or path.name.endswith("~")
+        ):
+            errors.append(f"generated/backup file is tracked: {rel}")
 
 # Porting scratch classes used '$' prefixes in the old 1.19.3/1.20 transition.
 for source_root in SOURCE_ROOTS:
@@ -164,4 +196,4 @@ if errors:
         print(f" - {error}")
     sys.exit(1)
 
-print("Repository cleanliness OK: no known porting scratch classes, obsolete lifecycle/UI shims, wrong-generation resource paths, stale module-local mining tags, stale 1.12 tooltips, or generated junk detected")
+print("Repository cleanliness OK: no tracked generated junk, known porting scratch classes, obsolete lifecycle/UI shims, wrong-generation resource paths, stale module-local mining tags, or stale 1.12 tooltips detected")
