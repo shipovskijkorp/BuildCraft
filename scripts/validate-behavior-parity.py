@@ -435,6 +435,21 @@ def validate_jei_facade_scalability() -> None:
                "FacadeStateManager.validFacadeStates.values()")
         forbid(target, manager, "FacadeSwapRecipe.genRecipes();")
 
+def validate_pipe_pluggable_contract() -> None:
+    pluggable = "src/main/java/buildcraft/api/transport/pluggable/PipePluggable.java"
+    for target in TARGETS:
+        require(target, pluggable,
+                "public boolean isSideSolid()",
+                "public float getExplosionResistance(@Nullable Entity exploder, Explosion explosion)",
+                "public boolean canConnectToRedstone(@Nullable Direction to)")
+
+    plugin = "src/main/java/buildcraft/compat/jei/BuildCraftJeiPlugin.java"
+    require("1.19.2-forge", plugin, "return super.getResultItem();")
+    forbid("1.19.2-forge", plugin, "super.getResultItem(registryAccess)")
+    require("1.21.1-neoforge", plugin, "BCTransportItems.PIPE_STRUCTURE.isBound()")
+    forbid("1.21.1-neoforge", plugin, "BCTransportItems.PIPE_STRUCTURE.isPresent()")
+
+
 def validate_gametest_runtime_guards() -> None:
     expected_tests = 41
     for target in TARGETS:
@@ -562,6 +577,7 @@ def main() -> None:
     validate_advancements()
     validate_resource_parity()
     validate_jei_facade_scalability()
+    validate_pipe_pluggable_contract()
     validate_gametest_runtime_guards()
 
     if ERRORS:

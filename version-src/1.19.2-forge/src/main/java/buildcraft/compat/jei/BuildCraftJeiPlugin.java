@@ -726,7 +726,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         public ItemStack getResultItem() {
             FacadeBlockStateInfo info = getRepresentativeFacadeInfo();
             if (info == null) {
-                return super.getResultItem(registryAccess);
+                return super.getResultItem();
             }
             return FacadeAssemblyRecipes.createFacadeStack(info, false);
         }

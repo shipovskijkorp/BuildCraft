@@ -134,6 +134,21 @@ public abstract class PipePluggable {
     public boolean canBeConnected() {
         return false;
     }
+
+    /** Returns whether this pluggable provides a solid face to the pipe holder. */
+    public boolean isSideSolid() {
+        return false;
+    }
+
+    /** Returns the explosion resistance contributed by this pluggable. */
+    public float getExplosionResistance(@Nullable Entity exploder, Explosion explosion) {
+        return 0;
+    }
+
+    /** Returns whether this pluggable exposes a redstone connection on the given side. */
+    public boolean canConnectToRedstone(@Nullable Direction to) {
+        return false;
+    }
     public void onPlacedBy(Player player) {
 
     }
