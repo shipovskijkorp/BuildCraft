@@ -7,8 +7,15 @@ from pathlib import Path
 import subprocess
 import sys
 
+from source_layout import load_properties, target_ids, target_layout
+
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_ROOTS = [ROOT / "source-shared", ROOT / "source-families", ROOT / "version-src"]
+SOURCE_ROOTS = [
+    ROOT / "source-shared",
+    ROOT / "source-families",
+    ROOT / "source-platforms",
+    ROOT / "version-src",
+]
 
 errors: list[str] = []
 
@@ -107,24 +114,18 @@ for source_root in SOURCE_ROOTS:
             errors.append(f"temporary implementation marker remains in {rel}")
 
 
-# Resource layout is generation-specific after 1.21. Keep old plural resource
-# directories out of modern sources and new singular directories out of legacy.
-def check_resource_generation(root: Path, family: str) -> None:
-    if not root.exists():
-        return
+# Resource layout is generation-specific after 1.21. Validate the effective
+# source tree of every configured target so platform layers and future targets
+# are covered without hard-coded directory lists.
+def check_resource_generation(target: str, family: str) -> None:
     legacy_only = {"advancements", "loot_tables", "recipes", "structures"}
     modern_only = {"advancement", "loot_table", "recipe", "structure"}
     legacy_tag_kinds = {"blocks", "items", "fluids"}
     modern_tag_kinds = {"block", "item", "fluid"}
 
-    for path in root.rglob("*"):
-        if not path.is_file():
-            continue
-        try:
-            rel = path.relative_to(root)
-        except ValueError:
-            continue
-        parts = rel.parts
+    layout = target_layout(target, properties)
+    for relative, source_path in layout.effective_files().items():
+        parts = Path(relative).parts
         # Expected prefix: src/<source-set>/resources/data/<namespace>/...
         if len(parts) < 7 or parts[0] != "src" or parts[2] != "resources" or parts[3] != "data":
             continue
@@ -132,23 +133,31 @@ def check_resource_generation(root: Path, family: str) -> None:
         if not data_parts:
             continue
         top = data_parts[0]
+        source_label = source_path.relative_to(ROOT)
         if family == "legacy" and top in modern_only:
-            errors.append(f"modern resource directory {top!r} remains in legacy source: {path.relative_to(ROOT)}")
+            errors.append(
+                f"{target}: modern resource directory {top!r} remains in legacy source: {source_label}"
+            )
         if family == "modern" and top in legacy_only:
-            errors.append(f"legacy resource directory {top!r} remains in modern source: {path.relative_to(ROOT)}")
+            errors.append(
+                f"{target}: legacy resource directory {top!r} remains in modern source: {source_label}"
+            )
         if len(data_parts) >= 2 and top == "tags":
             kind = data_parts[1]
             if family == "legacy" and kind in modern_tag_kinds:
-                errors.append(f"modern tag directory {kind!r} remains in legacy source: {path.relative_to(ROOT)}")
+                errors.append(
+                    f"{target}: modern tag directory {kind!r} remains in legacy source: {source_label}"
+                )
             if family == "modern" and kind in legacy_tag_kinds:
-                errors.append(f"legacy tag directory {kind!r} remains in modern source: {path.relative_to(ROOT)}")
+                errors.append(
+                    f"{target}: legacy tag directory {kind!r} remains in modern source: {source_label}"
+                )
 
 
-check_resource_generation(ROOT / "source-families/legacy", "legacy")
-check_resource_generation(ROOT / "version-src/1.19.2-forge", "legacy")
-check_resource_generation(ROOT / "version-src/1.20.1-forge", "legacy")
-check_resource_generation(ROOT / "source-families/modern", "modern")
-check_resource_generation(ROOT / "version-src/1.21.1-neoforge", "modern")
+properties = load_properties()
+for configured_target in target_ids(properties):
+    configured_layout = target_layout(configured_target, properties)
+    check_resource_generation(configured_target, configured_layout.family)
 
 # Mining tool tags belong to the minecraft namespace. Module-local copies from
 # the early ports were ignored by vanilla and drifted independently.

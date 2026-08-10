@@ -3,21 +3,78 @@ set -Eeuo pipefail
 
 startup_timeout="${SERVER_STARTUP_TIMEOUT:-360}"
 runtime_profile="${SERVER_RUNTIME_PROFILE:-base}"
-repo_root="$(pwd -P)"
-active_target="$(sed -nE 's/.*stonecutter active "([^"]+)".*/\1/p' stonecutter.gradle.kts | head -n 1)"
-target="${STONECUTTER_TARGET:-$active_target}"
-if [[ -z "$target" ]]; then
-  echo "Unable to determine the active Stonecutter target" >&2
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+repo_root="$(cd "${script_dir}/.." && pwd -P)"
+target="${STONECUTTER_TARGET:-}"
+generation="${BUILD_GENERATION:-}"
+
+if [[ -n "$target" ]]; then
+  if [[ -z "$generation" ]]; then
+    generation="$({
+      REPO_ROOT="$repo_root" TARGET_ID="$target" python3 - <<'PY'
+import os
+import sys
+from pathlib import Path
+root = Path(os.environ["REPO_ROOT"])
+sys.path.insert(0, str(root / "scripts"))
+from source_layout import load_properties, target_layout
+print(target_layout(os.environ["TARGET_ID"], load_properties()).generation)
+PY
+    })"
+  fi
+else
+  generation="${generation:-legacy}"
+  controller="${repo_root}/builds/${generation}/stonecutter.gradle.kts"
+  if [[ ! -f "$controller" ]]; then
+    echo "Unknown or unavailable build generation: ${generation}" >&2
+    exit 2
+  fi
+  target="$(sed -nE 's/.*stonecutter active "([^"]+)".*/\1/p' "$controller" | head -n 1)"
+fi
+
+if [[ -z "$target" || -z "$generation" ]]; then
+  echo "Unable to determine the BuildCraft target/build generation." >&2
   exit 2
 fi
 
-server_log="${SERVER_LOG_FILE:-${repo_root}/ci-server-${target}-${runtime_profile}.log}"
+build_root="${repo_root}/builds/${generation}"
+target_config="${build_root}/targets.properties"
+common_config="${repo_root}/build-config/common.properties"
+if [[ ! -f "$target_config" || ! -x "${build_root}/gradlew" ]]; then
+  echo "Incomplete ${generation} build root: ${build_root}" >&2
+  exit 2
+fi
+
+if ! python3 "${repo_root}/scripts/source_layout.py" --list-targets --generation "$generation" | grep -Fxq "$target"; then
+  echo "Target ${target} is not configured in the ${generation} build." >&2
+  exit 2
+fi
+
+server_log="${SERVER_LOG_FILE:-${repo_root}/ci-server-${generation}-${target}-${runtime_profile}.log}"
 server_pid=""
 latest_log=""
 
+read_property_file() {
+  local file="$1"
+  local key="$2"
+  awk -F= -v key="$key" '
+    $1 == key {
+      sub(/^[^=]*=/, "")
+      sub(/\r$/, "")
+      print
+      exit
+    }
+  ' "$file"
+}
+
 read_target_property() {
-  local key="target.${target}.$1"
-  awk -F= -v key="$key" '$1 == key { sub(/^[^=]*=/, ""); print; exit }' stonecutter-targets.properties
+  local suffix="$1"
+  local value
+  value="$(read_property_file "$target_config" "target.${target}.${suffix}")"
+  if [[ -z "$value" ]]; then
+    value="$(read_property_file "$common_config" "common.${suffix}")"
+  fi
+  printf '%s\n' "$value"
 }
 
 select_java_home() {
@@ -42,7 +99,7 @@ select_java_home() {
   fi
 
   echo "Java ${major} is required for ${target}, but ${var} is not available." >&2
-  echo "Install all target JDKs with actions/setup-java before running this script." >&2
+  echo "Install every target JDK with actions/setup-java before running this script." >&2
   return 1
 }
 
@@ -75,16 +132,23 @@ cleanup() {
 }
 trap cleanup EXIT
 
+java_version="$(read_target_property java.version)"
+if [[ -z "$java_version" ]]; then
+  echo "Missing Java version metadata for ${target}." >&2
+  exit 2
+fi
+java_home="$(select_java_home "$java_version")"
+java_bin="${java_home}/bin/java"
+
 # The blocking CI smoke test uses the actual distributable jar on an actual
-# installed dedicated server. This deliberately avoids ForgeGradle/NeoGradle
-# userdev source sets, because those are not the artifact users download.
+# installed dedicated server. Optional compatibility profiles use the userdev
+# runtime because Gradle supplies their test-only dependencies.
 if [[ "$runtime_profile" == "base" ]]; then
   minecraft_version="$(read_target_property deps.minecraft)"
-  java_version="$(read_target_property java.version)"
   loader="${target##*-}"
 
-  if [[ -z "$minecraft_version" || -z "$java_version" ]]; then
-    echo "Missing target metadata for ${target}." >&2
+  if [[ -z "$minecraft_version" ]]; then
+    echo "Missing Minecraft metadata for ${target}." >&2
     exit 2
   fi
 
@@ -98,7 +162,7 @@ if [[ "$runtime_profile" == "base" ]]; then
       installer_url="https://maven.neoforged.net/releases/net/neoforged/neoforge/${loader_version}/neoforge-${loader_version}-installer.jar"
       ;;
     *)
-      echo "Unsupported loader '${loader}' for target '${target}'." >&2
+      echo "Installed-server smoke is not yet implemented for loader '${loader}' (${target})." >&2
       exit 2
       ;;
   esac
@@ -108,13 +172,10 @@ if [[ "$runtime_profile" == "base" ]]; then
     exit 2
   fi
 
-  java_home="$(select_java_home "$java_version")"
-  java_bin="${java_home}/bin/java"
-
-  jar_dir="${repo_root}/versions/${target}/build/libs"
+  jar_dir="${build_root}/versions/${target}/build/libs"
   if [[ ! -d "$jar_dir" ]]; then
     echo "Production jar directory does not exist: $jar_dir" >&2
-    echo "Run buildAndCollect before the server smoke test." >&2
+    echo "Run the ${generation} buildAndCollect task before the server smoke test." >&2
     exit 2
   fi
 
@@ -129,8 +190,8 @@ if [[ "$runtime_profile" == "base" ]]; then
   fi
   production_jar="${production_jars[0]}"
 
-  server_dir="${repo_root}/run-server/${target}"
-  install_log="${repo_root}/ci-server-install-${target}.log"
+  server_dir="${repo_root}/run-server/${generation}/${target}"
+  install_log="${repo_root}/ci-server-install-${generation}-${target}.log"
   latest_log="${server_dir}/logs/latest.log"
 
   rm -rf "$server_dir"
@@ -181,7 +242,7 @@ PROPERTIES
 -Dfile.encoding=UTF-8
 JVMARGS
 
-  echo "Starting installed dedicated server with production jar (target: ${target}, timeout: ${startup_timeout}s)."
+  echo "Starting installed dedicated server (generation: ${generation}, target: ${target}, timeout: ${startup_timeout}s)."
   (
     cd "$server_dir"
     export JAVA_HOME="$java_home"
@@ -190,9 +251,7 @@ JVMARGS
   ) > "$server_log" 2>&1 &
   server_pid=$!
 else
-  # Optional compatibility profiles still use the existing development runtime,
-  # because Gradle supplies the requested Forestry/IC2 test dependencies there.
-  run_dir="${repo_root}/run/${target}"
+  run_dir="${repo_root}/run/${generation}/${target}"
   latest_log="${run_dir}/logs/latest.log"
   mkdir -p "$run_dir"
   printf 'eula=true\n' > "${run_dir}/eula.txt"
@@ -209,9 +268,14 @@ PROPERTIES
 
   : > "$server_log"
   rm -f "$latest_log"
-  echo "Starting compatibility userdev server (target: ${target}, profile: ${runtime_profile}, timeout: ${startup_timeout}s)."
-  setsid ./gradlew --no-daemon --console=plain --stacktrace \
-    -Pci_runtime_profile="${runtime_profile}" ":${target}:runServer" > "$server_log" 2>&1 &
+  echo "Starting compatibility userdev server (generation: ${generation}, target: ${target}, profile: ${runtime_profile}, timeout: ${startup_timeout}s)."
+  (
+    cd "$build_root"
+    export JAVA_HOME="$java_home"
+    export PATH="$JAVA_HOME/bin:$PATH"
+    exec setsid ./gradlew --no-daemon --console=plain --stacktrace \
+      -Pci_runtime_profile="${runtime_profile}" ":${target}:runServer"
+  ) > "$server_log" 2>&1 &
   server_pid=$!
 fi
 

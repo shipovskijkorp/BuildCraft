@@ -9,22 +9,59 @@ permissions:
   contents: read
 
 concurrency:
-  group: buildcraft-stonecutter-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
+  group: buildcraft-multibuild-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-test-server:
-    name: Build, test and smoke all targets
+  validate:
+    name: Validate source architecture and parity
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-    env:
-      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate independent Stonecutter builds
+        run: python scripts/validate-stonecutter.py
+
+      - name: Validate hybrid source layout
+        run: python scripts/validate-source-families.py
+
+      - name: Validate repository cleanliness
+        run: python scripts/validate-repository-cleanliness.py
+
+      - name: Validate Forge 1.20.1 port invariants
+        run: python scripts/validate-1.20.1-port.py --source-root version-src/1.20.1-forge
+
+      - name: Validate cross-version gameplay parity
+        run: python scripts/validate-behavior-parity.py
+
+  build-test-server:
+    name: Build, test and smoke ${{ matrix.generation }} targets
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        generation:
+          - legacy
+          - modern
+    env:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
+      BUILD_GENERATION: ${{ matrix.generation }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java toolchains
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -37,40 +74,29 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Validate Stonecutter target matrix
-        run: python scripts/validate-stonecutter.py
-
-      - name: Validate legacy/modern source families
-        run: python scripts/validate-source-families.py
-
-      - name: Validate repository cleanliness
-        run: python scripts/validate-repository-cleanliness.py
-
-      - name: Validate Forge 1.20.1 port invariants
-        run: python scripts/validate-1.20.1-port.py --source-root version-src/1.20.1-forge
-
-      - name: Validate cross-version gameplay parity
-        run: python scripts/validate-behavior-parity.py
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Make scripts executable
-        run: chmod +x gradlew scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-source-families.py scripts/validate-repository-cleanliness.py scripts/validate-stonecutter.py scripts/validate-1.20.1-port.py scripts/validate-behavior-parity.py
+      - name: Make build scripts executable
+        run: chmod +x builds/legacy/gradlew builds/modern/gradlew build-all.sh scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-stonecutter.py
 
-      - name: Build and test all Stonecutter targets
-        run: ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect
+      - name: Build and test generation
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "builds/${BUILD_GENERATION}"
+          ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect
 
-      - name: Smoke-test every built production jar on a dedicated server
+      - name: Smoke-test every production jar in generation
         shell: bash
         env:
           SERVER_STARTUP_TIMEOUT: '360'
           SERVER_RUNTIME_PROFILE: base
         run: |
           set -euo pipefail
-          mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets)
+          mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets --generation "$BUILD_GENERATION")
           for target in "${targets[@]}"; do
-            echo "Smoke-testing ${target}"
+            echo "Smoke-testing ${BUILD_GENERATION}/${target}"
             STONECUTTER_TARGET="$target" bash scripts/ci-server-smoke.sh
           done
 
@@ -78,24 +104,26 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: buildcraft-multiversion-${{ github.run_number }}-${{ github.run_attempt }}
+          name: buildcraft-${{ matrix.generation }}-${{ github.run_number }}-${{ github.run_attempt }}
           if-no-files-found: ignore
           retention-days: 7
           path: |
-            build/libs/**
-            versions/*/build/libs/**
-            versions/*/build/reports/tests/**
-            versions/*/build/test-results/**
-            run/*/logs/**
-            run/*/crash-reports/**
-            run-server/*/logs/**
-            run-server/*/crash-reports/**
-            ci-server-*.log
-            ci-server-install-*.log
+            build/libs/${{ matrix.generation }}/**
+            builds/${{ matrix.generation }}/versions/*/build/libs/**
+            builds/${{ matrix.generation }}/versions/*/build/reports/tests/**
+            builds/${{ matrix.generation }}/versions/*/build/test-results/**
+            run/${{ matrix.generation }}/*/logs/**
+            run/${{ matrix.generation }}/*/crash-reports/**
+            run-server/${{ matrix.generation }}/*/logs/**
+            run-server/${{ matrix.generation }}/*/crash-reports/**
+            ci-server-${{ matrix.generation }}-*.log
+            ci-server-install-${{ matrix.generation }}-*.log
 
   compatibility-server:
-    name: Active target compatibility (${{ matrix.profile }})
-    needs: build-test-server
+    name: Legacy compatibility (${{ matrix.profile }})
+    needs:
+      - validate
+      - build-test-server
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
@@ -106,6 +134,8 @@ jobs:
           - ic2
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
+      BUILD_GENERATION: legacy
+      STONECUTTER_TARGET: 1.19.2-forge
 
     steps:
       - name: Checkout
@@ -118,29 +148,29 @@ jobs:
           PROFILE: ${{ matrix.profile }}
         run: |
           set -euo pipefail
-          active_target="$(sed -nE 's/.*stonecutter active "([^"]+)".*/\1/p' stonecutter.gradle.kts | head -n 1)"
-          loader="${active_target##*-}"
-          build_script="build.${loader}.gradle"
-          supported=false
-          if [[ -f "$build_script" && -f scripts/ci-server-smoke.sh ]] \
-            && grep -q "ci_runtime_profile" "$build_script" \
-            && grep -q "SERVER_RUNTIME_PROFILE" scripts/ci-server-smoke.sh; then
-            case "$PROFILE" in
-              forestry) grep -q "deps.forestry" "$build_script" && supported=true ;;
-              ic2) grep -q "deps.ic2" "$build_script" && supported=true ;;
-            esac
-          fi
-          echo "supported=$supported" >> "$GITHUB_OUTPUT"
-          if [[ "$supported" != true ]]; then
-            echo "Compatibility profile '$PROFILE' is not configured for $active_target; skipping."
+          key="target.${STONECUTTER_TARGET}.deps.${PROFILE}"
+          dependency="$(awk -F= -v key="$key" '$1 == key { sub(/^[^=]*=/, ""); print; exit }' builds/legacy/targets.properties)"
+          if [[ -n "$dependency" ]]; then
+            echo "supported=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "supported=false" >> "$GITHUB_OUTPUT"
+            echo "Compatibility profile '$PROFILE' is not configured for $STONECUTTER_TARGET; skipping."
           fi
 
-      - name: Set up Java
+      - name: Set up Java toolchains
         if: steps.support.outputs.supported == 'true'
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: |
+            17
+            21
+
+      - name: Set up Python
+        if: steps.support.outputs.supported == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Set up Gradle
         if: steps.support.outputs.supported == 'true'
@@ -148,7 +178,7 @@ jobs:
 
       - name: Make scripts executable
         if: steps.support.outputs.supported == 'true'
-        run: chmod +x gradlew scripts/ci-server-smoke.sh
+        run: chmod +x builds/legacy/gradlew scripts/ci-server-smoke.sh scripts/source_layout.py
 
       - name: Smoke-test compatibility server
         if: steps.support.outputs.supported == 'true'
@@ -181,6 +211,6 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
           path: |
-            run/*/logs/**
-            run/*/crash-reports/**
-            ci-server-*.log
+            run/legacy/1.19.2-forge/logs/**
+            run/legacy/1.19.2-forge/crash-reports/**
+            ci-server-legacy-1.19.2-forge-${{ matrix.profile }}.log

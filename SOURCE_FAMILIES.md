@@ -1,89 +1,153 @@
-# BuildCraft source families
+# BuildCraft build generations and hybrid source layout
 
-BuildCraft Community Edition uses **generation-based source families** rather than one full source tree per Minecraft/loader target.
+BuildCraft Community Edition uses two independent Gradle/Stonecutter builds and one shared source repository.
 
 The project has one gameplay goal across every supported target:
 
 > **Different implementation. Indistinguishable BuildCraft.**
 
-Minecraft and loader APIs are implementation details. Unless a deviation is explicitly documented, a player should not be able to identify the BuildCraft target from BuildCraft gameplay, balance, persistence, UI behaviour, machine timing, routing, permissions, or resource handling.
+Minecraft versions, loaders and build toolchains are implementation details. Unless a deviation is explicitly documented, players should not be able to identify the target from BuildCraft gameplay, balance, persistence, UI behaviour, machine timing, routing, permissions or resource handling.
 
-## Families
+## Build generations
 
 ### `legacy`
 
-Targets:
+Current targets:
 
 - `1.19.2-forge`
 - `1.20.1-forge`
 
-Java 17 / classic Forge-era implementation family. `1.19.2-forge` remains the **behaviour reference**, not a requirement that newer source code look identical.
+Build root: `builds/legacy`
+
+The legacy build owns ForgeGradle-era targets and currently uses its own Gradle 8 wrapper. `1.19.2-forge` remains the behaviour reference; newer implementations are not required to look identical in source.
 
 ### `modern`
 
-Targets:
+Current target:
 
 - `1.21.1-neoforge`
-- future `1.21.11+` / `26.x` targets while the modern implementation remains coherent
 
-Java 21+ family using the modern Minecraft serialization, registry, networking and loader APIs where appropriate.
+Planned targets include Minecraft 1.21.11 and 26.x on NeoForge and Fabric.
 
-If a future Minecraft generation becomes so different that keeping it in `modern` would require large conditional blocks throughout gameplay code, it should become a new family rather than degrading the existing source tree.
+Build root: `builds/modern`
+
+The modern wrapper is independent from the legacy wrapper. It may move to a newer Gradle, Stonecutter or Java toolchain when future Minecraft/Fabric/NeoForge versions require it, without forcing those requirements onto the legacy build.
+
+If a future generation becomes structurally incompatible with the current modern family, create another independent build generation instead of forcing every version through one wrapper or filling gameplay code with large condition blocks.
 
 ## Repository layout
 
 ```text
+build-config/
+├─ common.properties              shared mod metadata
+└─ generations.properties         independent build-generation index
+
+builds/
+├─ legacy/                        legacy settings, controller and wrapper
+└─ modern/                        modern settings, controller and wrapper
+
 source-shared/
-└─ src/                    # files identical for every supported target
+└─ src/                           files valid for every target
 
 source-families/
 ├─ legacy/
-│  └─ src/                 # files identical for every legacy target only
+│  └─ src/                        generation-wide legacy implementation
 └─ modern/
-   └─ src/                 # files identical for every modern target only
+   └─ src/                        generation-wide modern implementation
+
+source-platforms/
+├─ forge/
+├─ neoforge/
+└─ fabric/                        loader-specific implementation
 
 version-src/
-├─ 1.19.2-forge/           # target-only files
-├─ 1.20.1-forge/           # target-only files
-└─ 1.21.1-neoforge/        # target-only files
+├─ 1.19.2-forge/
+├─ 1.20.1-forge/
+└─ 1.21.1-neoforge/               irreducible target-only files/resources
 ```
 
-A target is the union of three maintained layers:
+A target is materialized as:
 
 ```text
-global shared + family base + target overlay = effective target source tree
+shared + family + platform + target overlay = effective target source tree
 ```
 
-`source-shared` is deliberately conservative: a file lives there only while the exact same implementation is valid for every supported target. Moving a file out of it when generations diverge is normal and does not represent a parity failure.
+Layers use that precedence order: a different file in a later layer overrides the same logical path from an earlier layer. Byte-identical overrides are rejected by the source-layout validator.
 
-Build-only merged trees are created under `build/effective-source` / `build/effective-sources` for old tests and offline validators that expect one conventional `src/` directory. Those directories are generated and are never authoritative source.
+The generated effective tree is created under the target subproject's `build/effective-source` directory. It is build output, not authoritative source.
 
-## Where a file belongs
+## Placement rules
 
-A file belongs in `source-shared` only when its contents are valid for **every supported target**. A file belongs in `source-families/<family>` only when its contents are valid for **every target in that family**.
+Choose the narrowest layer that represents the real reason for a difference.
 
-If a globally shared file diverges between generations, remove it from `source-shared` and place the corresponding complete implementations into `source-families/legacy` and `source-families/modern` (or deeper overlays when necessary).
+### `source-shared`
 
-If a file differs between targets inside one family:
+Use for code and resources that are valid for every supported target.
 
-1. remove that relative path from the family layer;
-2. place the complete target implementation in each affected `version-src/<target>` overlay;
-3. prefer a small platform adapter over large Stonecutter condition blocks when the difference is loader-specific.
+### `source-families/<generation>`
 
-Do not keep an identical file in two overlays, or in both family bases when it is globally identical. `scripts/validate-source-families.py` rejects both forms of duplication for the current layout.
+Use for substantial Minecraft-generation differences shared by every target in one build generation. Examples include serialization models, registry architecture, networking generations or broad rendering/API changes.
 
-The maintained `source-shared`, `source-families` and `version-src` trees are compiled directly as Gradle source layers. Prefer complete target overlays or narrow platform adapters for differences; do not assume Stonecutter comment directives inside these trees will be preprocessed. Stonecutter remains responsible for the target matrix, active target and generated node/task orchestration.
+### `source-platforms/<loader>`
+
+Use for loader APIs and integration points, including:
+
+- Forge, NeoForge or Fabric registration;
+- capabilities or transfer APIs;
+- loader lifecycle and events;
+- loader networking setup;
+- access transformers/access wideners;
+- loader metadata and loader-specific compatibility glue.
+
+Loader imports must not escape into `source-shared` or `source-families`.
+
+### `version-src/<target>`
+
+Use only when a complete file or resource is genuinely target-specific and cannot remain readable in a family/platform layer. Target overlays should stay small and must not contain inline version conditions.
+
+## Localized version conditions
+
+Small Minecraft API differences may remain in a family or platform file with Stonecutter-style directives. The effective-source generator evaluates them for each target before compilation.
+
+Example:
+
+```java
+//? if <1.20 {
+player.level
+//?} else {
+/*?
+player.level()
+?*/
+//?}
+```
+
+Use inline conditions for local differences such as:
+
+- renamed methods, fields, constants or enum values;
+- a small signature change;
+- an added argument or import;
+- a short alternative branch.
+
+Do not use inline conditions for loader selection. Loader differences belong in `source-platforms`.
+
+Current policy enforced by `scripts/validate-source-families.py`:
+
+1. no loader conditions in shared gameplay source;
+2. no inline conditions in target overlays;
+3. no more than four conditional blocks in one Java file;
+4. large or deeply nested alternatives must become family/platform/target implementations;
+5. every configured target must successfully preprocess every conditional file.
 
 ## Behaviour parity
 
 `1.19.2-forge` is the reference implementation for player-visible behaviour.
 
-Parity means equivalent observable results, not source-code identity. Examples of required parity include:
+Parity means equivalent observable results, not source-code identity. It includes:
 
 - machine speed, costs, capacity and refunds;
 - MJ generation, consumption and routing;
 - item/fluid pipe routing and filtering;
-- Builder/Filler/Quarry behaviour;
+- Builder, Filler and Quarry behaviour;
 - robots, boards, stations and ownership identity;
 - gates, wires, lasers and statements;
 - save/load and chunk-unload persistence;
@@ -91,49 +155,90 @@ Parity means equivalent observable results, not source-code identity. Examples o
 - blueprint contents and resource reservations;
 - GUI semantics and user interactions.
 
-A target may use a different NBT/data-component implementation, registry API, network API, event system or capability system as long as the observable BuildCraft behaviour remains equivalent.
+A target may use different data components, registries, network APIs, events, capabilities or transfer systems as long as the observable BuildCraft behaviour remains equivalent.
 
 ### Blind-room criterion
 
-A useful design test is:
+> Put players on different supported BCCE targets in separate rooms, hide Minecraft/loader information, and give them equivalent BuildCraft scenarios. They should not be able to identify the target from BuildCraft behaviour alone.
 
-> Put players on different supported BCCE targets in separate rooms, hide Minecraft/loader version information, and give them equivalent BuildCraft scenarios. They should not be able to identify the target from BuildCraft behaviour alone.
+A visible difference is either an intentional and documented vanilla-induced deviation or a parity regression.
 
-If they can, the difference is either:
+## Build commands
 
-1. an intentional and documented vanilla-induced deviation; or
-2. a parity regression that should be fixed.
+The effective-source generator requires Python 3. Gradle, Java and loader toolchains remain isolated inside their respective build generation.
 
-## Commands
-
-Build everything:
+Build every generation with its own wrapper:
 
 ```text
+./build-all.sh
+```
+
+Windows:
+
+```text
+build-all.bat
+```
+
+PowerShell:
+
+```text
+./build-all.ps1
+```
+
+Build only one generation:
+
+```text
+cd builds/legacy
 ./gradlew buildAndCollect
 ```
 
-Build one family:
-
 ```text
-./gradlew buildLegacy
-./gradlew buildModern
+cd builds/modern
+./gradlew buildAndCollect
 ```
 
-Validate the family layout and duplicate elimination:
+Run the active target of one generation:
 
 ```text
+cd builds/legacy
+./gradlew runActiveClient
+```
+
+```text
+cd builds/modern
+./gradlew runActiveClient
+```
+
+List configured targets:
+
+```text
+python scripts/validate-stonecutter.py --list-targets
+python scripts/validate-stonecutter.py --list-targets --generation legacy
+python scripts/validate-stonecutter.py --list-targets --generation modern
+```
+
+Validate the complete architecture:
+
+```text
+python scripts/validate-stonecutter.py
 python scripts/validate-source-families.py
+python scripts/validate-repository-cleanliness.py
+python scripts/validate-behavior-parity.py
 ```
 
-List targets by family:
+Materialize one target manually:
 
 ```text
-python scripts/validate-stonecutter.py --list-targets --family legacy
-python scripts/validate-stonecutter.py --list-targets --family modern
+python scripts/source_layout.py 1.20.1-forge --output build/manual/1.20.1-forge
 ```
 
-## Future targets
+## Adding future targets
 
-New current-line ports should be added to `modern` first. Do **not** create another complete 1,400-file `version-src` copy. Start with the modern family and add only files that actually differ.
+1. Add the target to the appropriate `builds/<generation>/targets.properties` file.
+2. Add its loader build script to that generation if the loader is new there.
+3. Reuse `source-shared`, the generation family and the loader platform layer.
+4. Add only irreducible files to `version-src/<target>`.
+5. Prefer a localized version condition over copying a large file for a one-line Minecraft API change.
+6. Add a new build generation only when toolchain or architecture incompatibility makes the existing wrapper/family unsuitable.
 
-A new family is justified only when the Minecraft/platform architecture changes enough that version overlays and small adapters stop being local and readable.
+Do not create another full source-tree copy for a new port.

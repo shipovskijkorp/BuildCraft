@@ -699,29 +699,33 @@ def validate_gametest_runtime_guards() -> None:
     # runGameTestServer. Separate main/gameTest modules create split packages on
     # modern loader runtimes, while the reflection registrar cannot see the second
     # module on older Forge. The Gradle files are checked directly below.
-    forge_gradle = (ROOT / "build.forge.gradle").read_text(encoding="utf-8")
+    forge_path = ROOT / "builds/legacy/build.forge.gradle"
+    forge_gradle = forge_path.read_text(encoding="utf-8")
     require_tokens = (
         "def gameTestRunRequested",
-        "layeredDirs('src/gametest/java').each { java.srcDir(it) }",
-        "layeredDirs('src/gametest/resources').each { resources.srcDir(it) }",
+        "java.srcDir(new File(effectiveSourceDir, 'src/gametest/java'))",
+        "resources.srcDir(new File(effectiveSourceDir, 'src/gametest/resources'))",
+        "prepareEffectiveSource",
     )
     for token in require_tokens:
         if token not in forge_gradle:
-            fail(f"build.forge.gradle: missing GameTest one-module guard: {token}")
+            fail(f"{forge_path.relative_to(ROOT)}: missing GameTest one-module guard: {token}")
     if "source sourceSets.gameTest" in forge_gradle:
-        fail("build.forge.gradle: GameTest runtime still loads sourceSets.gameTest as a second module")
+        fail(f"{forge_path.relative_to(ROOT)}: GameTest runtime still loads sourceSets.gameTest as a second module")
 
-    neoforge_gradle = (ROOT / "build.neoforge.gradle").read_text(encoding="utf-8")
+    neoforge_path = ROOT / "builds/modern/build.neoforge.gradle"
+    neoforge_gradle = neoforge_path.read_text(encoding="utf-8")
     for token in (
         "def gameTestRunRequested",
-        "layeredDirs('src/gametest/java').each { java.srcDir(it) }",
-        "layeredDirs('src/gametest/resources').each { resources.srcDir(it) }",
+        "java.srcDir(new File(effectiveSourceDir, 'src/gametest/java'))",
+        "resources.srcDir(new File(effectiveSourceDir, 'src/gametest/resources'))",
         "sourceSet = sourceSets.main",
+        "prepareEffectiveSource",
     ):
         if token not in neoforge_gradle:
-            fail(f"build.neoforge.gradle: missing GameTest one-module guard: {token}")
+            fail(f"{neoforge_path.relative_to(ROOT)}: missing GameTest one-module guard: {token}")
     if "sourceSet(sourceSets.gameTest)" in neoforge_gradle:
-        fail("build.neoforge.gradle: mod still exposes gameTest as a second source set")
+        fail(f"{neoforge_path.relative_to(ROOT)}: mod still exposes gameTest as a second source set")
 
     for target in ("1.19.2-forge", "1.20.1-forge"):
         bclib = text(target, "src/main/java/buildcraft/lib/BCLib.java")

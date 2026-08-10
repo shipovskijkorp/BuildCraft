@@ -101,7 +101,7 @@ def expanded_text(path: Path, numeric: bool = False) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--source-root", type=Path, help="standalone source tree; configured family/overlay paths are merged automatically")
+    parser.add_argument("--source-root", type=Path, help="standalone source tree; configured shared/family/platform/target layers are merged automatically")
     parser.add_argument("--target", default="1.20.1-forge")
     parser.add_argument("--expected-minecraft", default="1.20.1")
     parser.add_argument("--expected-protocol", default="BC8.0.x-1.20.1-net2")

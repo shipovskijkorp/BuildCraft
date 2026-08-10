@@ -17,10 +17,14 @@ out/
 .gradle/
 build/
 versions/
+/builds/*/.gradle/
+/builds/*/build/
+/builds/*/versions/
 
 # Development runs and generated data
 run/
 run-data/
+run-server/
 logs/
 mcmodsrepo/
 src/generated/
