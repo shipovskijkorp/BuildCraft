@@ -14,7 +14,7 @@ import buildcraft.api.fuels.BuildcraftFuelRegistry;
 import buildcraft.api.fuels.IFuel;
 import buildcraft.api.fuels.IFuelManager;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.recipes.BuildcraftRecipeRegistry;
+import buildcraft.lib.recipe.RefineryRecipeRegistry;
 import buildcraft.api.recipes.IRefineryRecipeManager;
 import buildcraft.api.recipes.IRefineryRecipeManager.IHeatExchangerRecipe;
 import buildcraft.api.recipes.IngredientStack;
@@ -196,16 +196,16 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         registration.addRecipes(PROGRAMMING, programming);
         registration.addRecipes(INTEGRATION, integration);
 
-        if (BuildcraftRecipeRegistry.refineryRecipes != null) {
-            registration.addRecipes(DISTILLATION, new ArrayList<>(BuildcraftRecipeRegistry.refineryRecipes.getDistillationRegistry().getAllRecipes()));
+        if (RefineryRecipeRegistry.INSTANCE != null) {
+            registration.addRecipes(DISTILLATION, new ArrayList<>(RefineryRecipeRegistry.INSTANCE.getDistillationRegistry().getAllRecipes()));
 
             List<HeatExchangeRecipeView> heatExchange = new ArrayList<>();
-            for (IRefineryRecipeManager.IHeatableRecipe recipe : BuildcraftRecipeRegistry.refineryRecipes.getHeatableRegistry().getAllRecipes()) {
+            for (IRefineryRecipeManager.IHeatableRecipe recipe : RefineryRecipeRegistry.INSTANCE.getHeatableRegistry().getAllRecipes()) {
                 if (recipe.out() != null && !recipe.out().isEmpty()) {
                     heatExchange.add(new HeatExchangeRecipeView(recipe, true));
                 }
             }
-            for (IRefineryRecipeManager.ICoolableRecipe recipe : BuildcraftRecipeRegistry.refineryRecipes.getCoolableRegistry().getAllRecipes()) {
+            for (IRefineryRecipeManager.ICoolableRecipe recipe : RefineryRecipeRegistry.INSTANCE.getCoolableRegistry().getAllRecipes()) {
                 if (recipe.out() != null && !recipe.out().isEmpty()) {
                     heatExchange.add(new HeatExchangeRecipeView(recipe, false));
                 }

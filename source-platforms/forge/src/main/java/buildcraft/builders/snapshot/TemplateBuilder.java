@@ -9,7 +9,6 @@ package buildcraft.builders.snapshot;
 import java.util.Collections;
 import java.util.List;
 
-import buildcraft.api.template.TemplateApi;
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.lib.misc.BlockUtil;
@@ -69,7 +68,7 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
             tile.getOwner(),
             tile.getBuilderPos()
         );
-        return TemplateApi.templateRegistry.handle(
+        return TemplateRegistry.INSTANCE.handle(
             tile.getWorldBC(),
             placeTask.pos,
             fakePlayer,

@@ -12,7 +12,7 @@ import buildcraft.api.BCModules;
 import buildcraft.api.enums.EnumEngineType;
 import buildcraft.api.fuels.BuildcraftFuelRegistry;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.recipes.BuildcraftRecipeRegistry;
+import buildcraft.lib.recipe.RefineryRecipeRegistry;
 import buildcraft.api.recipes.IRefineryRecipeManager.IDistillationRecipe;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.fluid.BCFluid;
@@ -111,10 +111,10 @@ public class BCEnergyRecipes {
             addHeatExchange(BCEnergyFluids.oilResidue);
 
             FluidStack water = new FluidStack(Fluids.WATER, 10);
-            BuildcraftRecipeRegistry.refineryRecipes.addHeatableRecipe(water, null, 0, 1);
+            RefineryRecipeRegistry.INSTANCE.addHeatableRecipe(water, null, 0, 1);
 
             FluidStack lava = new FluidStack(Fluids.LAVA, 5);
-            BuildcraftRecipeRegistry.refineryRecipes.addCoolableRecipe(lava, null, 4, 2);
+            RefineryRecipeRegistry.INSTANCE.addCoolableRecipe(lava, null, 4, 2);
         }
     }
 
@@ -167,7 +167,7 @@ public class BCEnergyRecipes {
         FluidStack _outGas = outGas[heat];
         FluidStack _outLiquid = outLiquid[heat];
         IDistillationRecipe existing =
-            BuildcraftRecipeRegistry.refineryRecipes.getDistillationRegistry().getRecipeForInput(_in);
+            RefineryRecipeRegistry.INSTANCE.getDistillationRegistry().getRecipeForInput(_in);
         if (existing != null) {
             throw new IllegalStateException("Already added distillation recipe for " + _in.getFluid().getFluidType().getDescriptionId());
         }
@@ -179,7 +179,7 @@ public class BCEnergyRecipes {
             (_outLiquid = _outLiquid.copy()).setAmount(_outLiquid.getAmount() / hcf);
             mjCost /= hcf;
         }
-        BuildcraftRecipeRegistry.refineryRecipes.addDistillationRecipe(_in, _outGas, _outLiquid, mjCost);
+        RefineryRecipeRegistry.INSTANCE.addDistillationRecipe(_in, _outGas, _outLiquid, mjCost);
     }
 
     private static void addHeatExchange(BCFluid[] fluid) {
@@ -190,8 +190,8 @@ public class BCEnergyRecipes {
             FluidStack hot_f = new FluidStack(hot, 10);
             int ch = cool.getHeatValue();
             int hh = hot.getHeatValue();
-            BuildcraftRecipeRegistry.refineryRecipes.addHeatableRecipe(cool_f, hot_f, ch, hh);
-            BuildcraftRecipeRegistry.refineryRecipes.addCoolableRecipe(hot_f, cool_f, hh, ch);
+            RefineryRecipeRegistry.INSTANCE.addHeatableRecipe(cool_f, hot_f, ch, hh);
+            RefineryRecipeRegistry.INSTANCE.addCoolableRecipe(hot_f, cool_f, hh, ch);
         }
     }
     public static class BCEnergyRecipeProvider extends RecipeProvider{

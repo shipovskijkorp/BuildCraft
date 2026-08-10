@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://buildcraft.example/schema/api2/distillation-recipe.schema.json",
+  "title": "BuildCraft API 2 Distillation Recipe",
+  "type": "object",
+  "required": ["input", "power_required_micro_mj"],
+  "properties": {
+    "input": { "$ref": "#/$defs/fluidIngredient" },
+    "gas_output": { "$ref": "#/$defs/fluidVolume" },
+    "liquid_output": { "$ref": "#/$defs/fluidVolume" },
+    "power_required_micro_mj": { "type": "integer", "minimum": 0 }
+  },
+  "anyOf": [
+    { "required": ["gas_output"] },
+    { "required": ["liquid_output"] }
+  ],
+  "$defs": {
+    "fluidIngredient": {
+      "type": "object",
+      "required": ["fluid", "amount_mb"],
+      "properties": {
+        "fluid": { "type": "string", "pattern": "^[a-z0-9_.-]+:[a-z0-9_./-]+$" },
+        "amount_mb": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "fluidVolume": {
+      "type": "object",
+      "required": ["fluid", "amount_mb"],
+      "properties": {
+        "fluid": { "type": "string", "pattern": "^[a-z0-9_.-]+:[a-z0-9_./-]+$" },
+        "amount_mb": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

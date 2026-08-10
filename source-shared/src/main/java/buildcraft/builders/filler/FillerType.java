@@ -1,6 +1,6 @@
 package buildcraft.builders.filler;
 
-import buildcraft.api.filler.FillerManager;
+import buildcraft.builders.registry.FillerRegistry;
 import buildcraft.api.filler.IFillerPattern;
 import buildcraft.builders.BCBuildersStatements;
 import buildcraft.lib.statement.StatementType;
@@ -22,7 +22,7 @@ public class FillerType extends StatementType<IFillerPattern> {
     @Override
     public IFillerPattern readFromNbt(CompoundTag nbt) {
         String kind = nbt.getString("kind");
-        IFillerPattern pattern = FillerManager.registry.getPattern(kind);
+        IFillerPattern pattern = FillerRegistry.INSTANCE.getPattern(kind);
         if (pattern == null) {
             return defaultStatement;
         }
@@ -39,7 +39,7 @@ public class FillerType extends StatementType<IFillerPattern> {
     @Override
     public IFillerPattern readFromBuffer(FriendlyByteBuf buffer) {
         String kind = buffer.readUtf();
-        IFillerPattern pattern = FillerManager.registry.getPattern(kind);
+        IFillerPattern pattern = FillerRegistry.INSTANCE.getPattern(kind);
         if (pattern == null) {
             return defaultStatement;
         }

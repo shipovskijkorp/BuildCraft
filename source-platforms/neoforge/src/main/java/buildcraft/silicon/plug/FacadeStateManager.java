@@ -22,6 +22,8 @@ import java.util.TreeMap;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableSet;
@@ -38,6 +40,8 @@ import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.misc.StackUtil;
+import buildcraft.lib.api.v2.BuildCraftApiRuntime;
+import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.lib.world.SingleBlockAccess;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
@@ -70,8 +74,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
     public static final Map<ItemStackKey, List<FacadeBlockStateInfo>> stackFacades;
     public static FacadeBlockStateInfo defaultState, previewState;
 
-    private static final Map<Block, String> disabledBlocks = new HashMap<>();
-    private static final Map<BlockState, ItemStack> customBlocks = new HashMap<>();
+    private static final AtomicLong NEXT_RULE_ID = new AtomicLong();
 
     /** An array containing all mods that fail the {@link #doesPropertyConform(Property)} check, and any others.
      * <p>
@@ -105,7 +108,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
             if (block == null || block == Blocks.AIR) {
                 return;
             }
-            disabledBlocks.put(block, sender);
+            registerDisabledRule(block, sender, "imc");
         } else if (FacadeAPI.IMC_FACADE_CUSTOM.equals(id)) {
             CompoundTag nbt = getImcNbt(message);
             if (nbt == null) {
@@ -128,7 +131,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
                     state = legacy;
                 }
             }
-            customBlocks.put(state, stack.copy());
+            registerMappedRule(state, stack, sender, "imc");
         }
     }
 
@@ -191,9 +194,9 @@ public enum FacadeStateManager implements IFacadeRegistry {
      *         </ul>
      */
     private static InteractionResultHolder<String> isValidFacadeBlock(Block block) {
-        String disablingMod = disabledBlocks.get(block);
-        if (disablingMod != null) {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, "it has been disabled by " + disablingMod);
+        var disablingRule = BuildCraftApiRuntime.INSTANCE.facadeRules().disabledBy(block);
+        if (disablingRule.isPresent()) {
+            return new InteractionResultHolder<>(InteractionResult.FAIL, "it has been disabled by " + disablingRule.get().owner());
         }
         if (isUserBlacklistedFacadeBlock(block)) {
             return new InteractionResultHolder<>(InteractionResult.FAIL, "it is blacklisted for facade deduplication");
@@ -232,9 +235,9 @@ public enum FacadeStateManager implements IFacadeRegistry {
 
     @Nonnull
     private static ItemStack getRequiredStack(BlockState state) {
-        ItemStack stack = customBlocks.get(state);
+        ItemStack stack = BuildCraftApiRuntime.INSTANCE.facadeRules().mappedStack(state).orElse(null);
         if (stack != null) {
-            return stack.copy();
+            return stack;
         }
         Block block = state.getBlock();
         Item item = block.asItem();
@@ -595,13 +598,39 @@ public enum FacadeStateManager implements IFacadeRegistry {
 
     @Override
     public void disableBlock(Block block) {
-        disabledBlocks.put(block, "direct_api");
+        if (block != null) registerDisabledRule(block, "legacy-api", "direct");
     }
 
     @Override
     public void mapStateToStack(BlockState state, ItemStack stack) {
-        if (state != null && !stack.isEmpty()) {
-            customBlocks.put(state, stack.copy());
+        if (state != null && stack != null && !stack.isEmpty()) {
+            registerMappedRule(state, stack, "legacy-api", "direct");
         }
+    }
+
+    private static void registerDisabledRule(Block block, String owner, String source) {
+        long sequence = NEXT_RULE_ID.getAndIncrement();
+        BuildCraftApiRuntime.INSTANCE.facadeRules().disable(
+            legacyRuleId("disable", sequence), block, new DefinitionProvenance(owner, source, legacyPriority(sequence))
+        );
+    }
+
+    private static void registerMappedRule(BlockState state, ItemStack stack, String owner, String source) {
+        long sequence = NEXT_RULE_ID.getAndIncrement();
+        BuildCraftApiRuntime.INSTANCE.facadeRules().mapState(
+            legacyRuleId("map", sequence), state, stack, new DefinitionProvenance(owner, source, legacyPriority(sequence))
+        );
+    }
+
+    private static ResourceLocation legacyRuleId(String kind, long sequence) {
+        return java.util.Objects.requireNonNull(ResourceLocation.tryParse(
+            "buildcraft:legacy_facade/" + kind + "/" + String.format(java.util.Locale.ROOT, "%010d", sequence)
+        ));
+    }
+
+    private static int legacyPriority(long sequence) {
+        // Legacy maps used last-write-wins. Increasing priority preserves that behavior
+        // while the API 2 rule service remains deterministic for explicit addon rules.
+        return sequence >= Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) sequence;
     }
 }

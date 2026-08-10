@@ -1,6 +1,6 @@
 package buildcraft.builders.snapshot.pattern;
 
-import buildcraft.api.filler.FillerManager;
+import buildcraft.builders.registry.FillerRegistry;
 import buildcraft.api.filler.IFillerPattern;
 import buildcraft.api.statements.IActionExternal;
 import buildcraft.api.statements.IStatementContainer;
@@ -18,7 +18,7 @@ public abstract class Pattern extends BCStatement implements IFillerPattern, IAc
     public Pattern(String tag) {
         super("buildcraft:" + tag);
         desc = "fillerpattern." + tag;
-        FillerManager.registry.addPattern(this);
+        FillerRegistry.INSTANCE.addPattern(this);
     }
 
     @Override

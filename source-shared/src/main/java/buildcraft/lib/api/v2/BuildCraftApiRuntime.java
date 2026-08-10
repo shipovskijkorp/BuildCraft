@@ -18,10 +18,20 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final Map<ServiceKey<?>, Object> services = new LinkedHashMap<>();
     private final PermissionServiceRegistryImpl permissions = new PermissionServiceRegistryImpl();
     private final EnergyFluidRegistryImpl energyFluids = new EnergyFluidRegistryImpl();
+    private final MachineRecipeRegistryImpl machineRecipes = new MachineRecipeRegistryImpl();
+    private final CropServiceImpl crops = new CropServiceImpl();
+    private final TemplateServiceImpl templates = new TemplateServiceImpl();
+    private final FacadeRuleRegistryImpl facadeRules = new FacadeRuleRegistryImpl();
+    private final WorldPropertyServiceImpl worldProperties = new WorldPropertyServiceImpl();
 
     private BuildCraftApiRuntime() {
         services.put(BuildCraftServices.PERMISSIONS, permissions);
         services.put(BuildCraftServices.ENERGY_FLUIDS, energyFluids);
+        services.put(BuildCraftServices.MACHINE_RECIPES, machineRecipes);
+        services.put(BuildCraftServices.CROPS, crops);
+        services.put(BuildCraftServices.TEMPLATES, templates);
+        services.put(BuildCraftServices.FACADE_RULES, facadeRules);
+        services.put(BuildCraftServices.WORLD_PROPERTIES, worldProperties);
     }
 
     public static synchronized void install() {
@@ -44,7 +54,10 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         return Optional.ofNullable((T) services.get(key));
     }
 
-    public EnergyFluidRegistryImpl energyFluids() {
-        return energyFluids;
-    }
+    public EnergyFluidRegistryImpl energyFluids() { return energyFluids; }
+    public MachineRecipeRegistryImpl machineRecipes() { return machineRecipes; }
+    public CropServiceImpl crops() { return crops; }
+    public TemplateServiceImpl templates() { return templates; }
+    public FacadeRuleRegistryImpl facadeRules() { return facadeRules; }
+    public WorldPropertyServiceImpl worldProperties() { return worldProperties; }
 }

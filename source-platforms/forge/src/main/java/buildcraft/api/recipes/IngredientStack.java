@@ -21,6 +21,8 @@ public final class IngredientStack {
     public final int count;
 
     public IngredientStack(Ingredient ingredient, int count) {
+        if (ingredient == null) throw new NullPointerException("ingredient");
+        if (count <= 0) throw new IllegalArgumentException("count must be > 0");
         this.ingredient = ingredient;
         this.count = count;
     }
@@ -40,6 +42,7 @@ public final class IngredientStack {
     }
     
     public static IngredientStack of(Object o) {
+        if (o == null) throw new IllegalArgumentException("IngredientStack: ingredient must not be null");
     	if(o instanceof ItemLike item) {
     		return new IngredientStack(Ingredient.of(item));
     	}
@@ -52,6 +55,6 @@ public final class IngredientStack {
     	if(o instanceof TagKey item) {
     		return new IngredientStack(Ingredient.of(item));
     	}
-    	throw new IllegalArgumentException("IngredientStack:not a valid Ingredient parm "+o.getClass().descriptorString());
+        throw new IllegalArgumentException("IngredientStack: not a valid ingredient parameter " + o.getClass().getName());
     }
 }

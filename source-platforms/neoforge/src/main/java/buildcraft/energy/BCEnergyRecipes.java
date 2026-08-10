@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import buildcraft.api.BCModules;
 import buildcraft.api.fuels.BuildcraftFuelRegistry;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.recipes.BuildcraftRecipeRegistry;
+import buildcraft.lib.recipe.RefineryRecipeRegistry;
 import buildcraft.api.recipes.IRefineryRecipeManager.IDistillationRecipe;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.fluid.BCFluid;
@@ -105,8 +105,8 @@ public final class BCEnergyRecipes {
         addHeatExchange(BCEnergyFluids.fuelDense);
         addHeatExchange(BCEnergyFluids.oilResidue);
 
-        BuildcraftRecipeRegistry.refineryRecipes.addHeatableRecipe(new FluidStack(Fluids.WATER, 10), null, 0, 1);
-        BuildcraftRecipeRegistry.refineryRecipes.addCoolableRecipe(new FluidStack(Fluids.LAVA, 5), null, 4, 2);
+        RefineryRecipeRegistry.INSTANCE.addHeatableRecipe(new FluidStack(Fluids.WATER, 10), null, 0, 1);
+        RefineryRecipeRegistry.INSTANCE.addCoolableRecipe(new FluidStack(Fluids.LAVA, 5), null, 4, 2);
     }
 
     private static FluidStack[] createFluidStack(Fluid[] fluids, int amount) {
@@ -155,7 +155,7 @@ public final class BCEnergyRecipes {
         FluidStack gasStack = outputGas[heat];
         FluidStack liquidStack = outputLiquid[heat];
         IDistillationRecipe existing =
-            BuildcraftRecipeRegistry.refineryRecipes.getDistillationRegistry().getRecipeForInput(inputStack);
+            RefineryRecipeRegistry.INSTANCE.getDistillationRegistry().getRecipeForInput(inputStack);
         if (existing != null) {
             throw new IllegalStateException(
                 "Already added distillation recipe for " + inputStack.getFluid().getFluidType().getDescriptionId()
@@ -173,7 +173,7 @@ public final class BCEnergyRecipes {
             liquidStack.setAmount(liquidStack.getAmount() / hcf);
             mjCost /= hcf;
         }
-        BuildcraftRecipeRegistry.refineryRecipes.addDistillationRecipe(inputStack, gasStack, liquidStack, mjCost);
+        RefineryRecipeRegistry.INSTANCE.addDistillationRecipe(inputStack, gasStack, liquidStack, mjCost);
     }
 
     private static void addHeatExchange(BCFluid[] fluids) {
@@ -184,8 +184,8 @@ public final class BCEnergyRecipes {
             FluidStack hotStack = new FluidStack(hot, 10);
             int coolHeat = cool.getHeatValue();
             int hotHeat = hot.getHeatValue();
-            BuildcraftRecipeRegistry.refineryRecipes.addHeatableRecipe(coolStack, hotStack, coolHeat, hotHeat);
-            BuildcraftRecipeRegistry.refineryRecipes.addCoolableRecipe(hotStack, coolStack, hotHeat, coolHeat);
+            RefineryRecipeRegistry.INSTANCE.addHeatableRecipe(coolStack, hotStack, coolHeat, hotHeat);
+            RefineryRecipeRegistry.INSTANCE.addCoolableRecipe(hotStack, coolStack, hotHeat, coolHeat);
         }
     }
 

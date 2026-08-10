@@ -13,7 +13,7 @@ import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.mj.MjBattery;
 import buildcraft.api.mj.MjCapabilityHelper;
-import buildcraft.api.recipes.BuildcraftRecipeRegistry;
+import buildcraft.lib.recipe.RefineryRecipeRegistry;
 import buildcraft.api.recipes.IRefineryRecipeManager;
 import buildcraft.api.recipes.IRefineryRecipeManager.IDistillationRecipe;
 import buildcraft.api.tiles.IDebuggable;
@@ -120,7 +120,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
     }
 
     private boolean isDistillableFluid(FluidStack fluid) {
-        IRefineryRecipeManager manager = BuildcraftRecipeRegistry.refineryRecipes;
+        IRefineryRecipeManager manager = RefineryRecipeRegistry.INSTANCE;
         IDistillationRecipe recipe = manager.getDistillationRegistry().getRecipeForInput(fluid);
         return recipe != null;
     }
@@ -244,7 +244,7 @@ public class TileDistiller extends TileBC_Neptune implements IDebuggable {
         }
 
         currentRecipe =
-            BuildcraftRecipeRegistry.refineryRecipes.getDistillationRegistry().getRecipeForInput(tankIn.getFluid());
+            RefineryRecipeRegistry.INSTANCE.getDistillationRegistry().getRecipeForInput(tankIn.getFluid());
         boolean completedOperation = false;
         if (currentRecipe == null) {
             queueProgressRefund();

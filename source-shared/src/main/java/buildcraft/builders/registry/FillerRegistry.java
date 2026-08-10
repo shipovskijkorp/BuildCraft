@@ -8,7 +8,9 @@ package buildcraft.builders.registry;
 
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -23,11 +25,16 @@ import net.minecraft.core.BlockPos;
 public enum FillerRegistry implements IFillerRegistry {
     INSTANCE;
 
-    private final Map<String, IFillerPattern> patterns = new HashMap<>();
+    private final Map<String, IFillerPattern> patterns = new LinkedHashMap<>();
 
     @Override
-    public void addPattern(IFillerPattern pattern) {
-        patterns.put(pattern.getUniqueTag(), pattern);
+    public synchronized void addPattern(IFillerPattern pattern) {
+        Objects.requireNonNull(pattern, "pattern");
+        String id = Objects.requireNonNull(pattern.getUniqueTag(), "pattern unique tag");
+        // Legacy IFillerRegistry historically used last-write-wins for duplicate
+        // statement tags. Preserve that compatibility behavior until filler
+        // patterns move to the typed API 2 statements domain.
+        patterns.put(id, pattern);
     }
 
     @Override
@@ -37,8 +44,8 @@ public enum FillerRegistry implements IFillerRegistry {
     }
 
     @Override
-    public Collection<IFillerPattern> getPatterns() {
-        return patterns.values();
+    public synchronized Collection<IFillerPattern> getPatterns() {
+        return List.copyOf(patterns.values());
     }
 
     @Override

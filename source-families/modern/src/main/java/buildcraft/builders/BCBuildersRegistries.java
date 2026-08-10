@@ -25,6 +25,6 @@ public class BCBuildersRegistries {
     }
 
     public static void init() {
-        TemplateApi.templateRegistry.addHandler(TemplateHandlerDefault.INSTANCE);
+        TemplateRegistry.INSTANCE.addHandler(TemplateHandlerDefault.INSTANCE);
     }
 }

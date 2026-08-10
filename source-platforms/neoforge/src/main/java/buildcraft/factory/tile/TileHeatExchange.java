@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 
 import buildcraft.api.blocks.ICustomRotationHandler;
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.recipes.BuildcraftRecipeRegistry;
+import buildcraft.lib.recipe.RefineryRecipeRegistry;
 import buildcraft.api.recipes.IRefineryRecipeManager;
 import buildcraft.api.recipes.IRefineryRecipeManager.ICoolableRecipe;
 import buildcraft.api.recipes.IRefineryRecipeManager.IHeatableRecipe;
@@ -735,7 +735,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         }
 
         private boolean isHeatant(FluidStack fluid) {
-            return BuildcraftRecipeRegistry.refineryRecipes.getHeatableRegistry().getRecipeForInput(fluid) != null;
+            return RefineryRecipeRegistry.INSTANCE.getHeatableRegistry().getRecipeForInput(fluid) != null;
         }
 
         private IFluidHandler getTankForSide(Direction side) {
@@ -798,7 +798,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             Tank c_out = tankOutput;
             Tank h_in = tankInput;
             Tank h_out = endSection.tankOutput;
-            IRefineryRecipeManager reg = BuildcraftRecipeRegistry.refineryRecipes;
+            IRefineryRecipeManager reg = RefineryRecipeRegistry.INSTANCE;
             ICoolableRecipe c_recipe = reg.getCoolableRegistry().getRecipeForInput(c_in.getFluid());
             IHeatableRecipe h_recipe = reg.getHeatableRegistry().getRecipeForInput(h_in.getFluid());
             if (h_recipe == null || c_recipe == null) {
@@ -991,7 +991,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         }
 
         private boolean isCoolant(FluidStack fluid) {
-            return BuildcraftRecipeRegistry.refineryRecipes.getCoolableRegistry().getRecipeForInput(fluid) != null;
+            return RefineryRecipeRegistry.INSTANCE.getCoolableRegistry().getRecipeForInput(fluid) != null;
         }
 
         private IFluidHandler getTankForSide(Direction side) {

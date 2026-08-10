@@ -1,12 +1,12 @@
 package buildcraft.builders.filler;
 
+import buildcraft.builders.registry.FillerRegistry;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.filler.FillerManager;
 import buildcraft.api.filler.IFillerPattern;
 import buildcraft.builders.BCBuildersStatements;
 import buildcraft.builders.snapshot.pattern.PatternShape2d;
@@ -26,7 +26,7 @@ public enum FillerStatementContext implements StatementContext<IFillerPattern> {
         for (Group group : Group.values()) {
             group.patterns.clear();
         }
-        for (IFillerPattern pattern : FillerManager.registry.getPatterns()) {
+        for (IFillerPattern pattern : FillerRegistry.INSTANCE.getPatterns()) {
             if (pattern instanceof PatternShape2d) {
                 Group.SHAPES_2D.patterns.add(pattern);
             } else {

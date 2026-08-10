@@ -9,6 +9,8 @@ Current implemented foundation:
 - loader-neutral item/fluid transfer and fluid identity/value model;
 - automation actor / deterministic permission-provider registry;
 - first production domain: fuels and coolants through `EnergyFluidService`;
+- authoritative machine recipes with atomic reload and typed item/fluid ingredients;
+- deterministic crop, template, facade-rule and world-property services;
 - isolated API-v2/API-v2-sources artifacts, compile-only addon fixture and API boundary validator.
 
 The legacy `buildcraft.api` tree remains a compatibility surface and is migrated
