@@ -11,6 +11,7 @@ import buildcraft.api.crops.CropManager;
 import buildcraft.api.fuels.BuildcraftFuelRegistry;
 import buildcraft.api.recipes.BuildcraftRecipeRegistry;
 import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.lib.api.v2.BuildCraftApiRuntime;
 import buildcraft.lib.crops.CropHandlerPlantable;
 import buildcraft.lib.crops.CropHandlerReeds;
 import buildcraft.lib.fluid.CoolantRegistry;
@@ -35,6 +36,7 @@ public class BCLibRegistries {
     }
 
     public static void fmlPreInit() {
+        BuildCraftApiRuntime.install();
         BuildcraftRecipeRegistry.integrationRecipes = IntegrationRecipeRegistry.INSTANCE;
         BuildcraftRecipeRegistry.refineryRecipes = RefineryRecipeRegistry.INSTANCE;
         BuildcraftFuelRegistry.fuel = FuelRegistry.INSTANCE;

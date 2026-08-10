@@ -33,6 +33,9 @@ jobs:
       - name: Validate hybrid source layout
         run: python scripts/validate-source-families.py
 
+      - name: Validate API v2 boundary
+        run: python scripts/validate-api-v2.py
+
       - name: Validate repository cleanliness
         run: python scripts/validate-repository-cleanliness.py
 
@@ -78,7 +81,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Make build scripts executable
-        run: chmod +x builds/legacy/gradlew builds/modern/gradlew build-all.sh scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-stonecutter.py
+        run: chmod +x builds/legacy/gradlew builds/modern/gradlew build-all.sh scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-stonecutter.py scripts/validate-api-v2.py
 
       - name: Build and test generation
         shell: bash

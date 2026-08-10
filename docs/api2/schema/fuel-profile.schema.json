@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://buildcraft.example/schema/api2/fuel-profile.schema.json",
+  "title": "BuildCraft API 2 Fuel Profile",
+  "type": "object",
+  "required": ["selector", "power_per_tick_micro_mj", "burn_ticks_per_bucket"],
+  "properties": {
+    "selector": { "$ref": "#/$defs/fluidSelector" },
+    "power_per_tick_micro_mj": { "type": "integer", "minimum": 1 },
+    "burn_ticks_per_bucket": { "type": "integer", "minimum": 1 },
+    "residue": {
+      "type": "object",
+      "required": ["fluid", "amount_mb"],
+      "properties": {
+        "fluid": { "type": "string", "pattern": "^[a-z0-9_.-]+:[a-z0-9_./-]+$" },
+        "amount_mb": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "fluidSelector": {
+      "oneOf": [
+        { "type": "object", "required": ["fluid"], "properties": { "fluid": { "type": "string" } }, "additionalProperties": false },
+        { "type": "object", "required": ["tag"], "properties": { "tag": { "type": "string" } }, "additionalProperties": false }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

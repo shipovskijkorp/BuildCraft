@@ -140,6 +140,23 @@ sourceSets {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += output + sourceSets.main.output
     }
+    // API 2 is compiled a second time as an isolated surface. This proves that
+    // the public API does not require BuildCraft implementation classes.
+    apiV2 {
+        java.setSrcDirs(effectiveDirs('src/main/java'))
+        java.include 'buildcraft/api/v2/**'
+        resources.setSrcDirs([])
+        compileClasspath = sourceSets.main.compileClasspath
+        runtimeClasspath = output + compileClasspath
+    }
+    // The consumer fixture intentionally excludes sourceSets.main.output. If it
+    // imports implementation code, compilation must fail.
+    addonFixture {
+        java.setSrcDirs([new File(repositoryRoot, 'addon-fixture/src/main/java')])
+        resources.setSrcDirs([])
+        compileClasspath = sourceSets.apiV2.output + sourceSets.apiV2.compileClasspath
+        runtimeClasspath = output + compileClasspath
+    }
 }
 
 if (!jeiCompatEnabled) {
@@ -392,10 +409,55 @@ tasks.register('buildAndCollect', Copy) {
     into new File(repositoryRoot, "build/libs/${buildGeneration}/${modVersion}")
 }
 
+// Compile-only SDK artifact. API 2 remains bundled in the normal BuildCraft
+// jar at runtime; this classifier gives addon projects a boundary-clean
+// dependency that cannot accidentally expose BuildCraft implementation.
+def apiV2Jar = tasks.register('apiV2Jar', Jar) {
+    group = 'build'
+    description = "Package the isolated BuildCraft API 2 surface for ${targetName}"
+    dependsOn tasks.named('compileApiV2Java')
+    archiveClassifier = 'api-v2'
+    from sourceSets.apiV2.output
+    manifest {
+        attributes([
+                'Specification-Title': 'BuildCraft Extension API 2',
+                'Specification-Version': modVersion,
+                'Implementation-Title': 'BuildCraft Extension API 2',
+                'Implementation-Version': project.version,
+                'BuildCraft-Target': targetName
+        ])
+    }
+}
+
+def apiV2SourcesJar = tasks.register('apiV2SourcesJar', Jar) {
+    group = 'build'
+    description = "Package BuildCraft API 2 sources for ${targetName}"
+    dependsOn prepareEffectiveSource
+    archiveClassifier = 'api-v2-sources'
+    from(new File(effectiveSourceDir, 'src/main/java')) {
+        include 'buildcraft/api/v2/**'
+    }
+}
+
+tasks.named('assemble') {
+    dependsOn apiV2Jar
+    dependsOn apiV2SourcesJar
+}
+
+tasks.named('buildAndCollect', Copy) {
+    dependsOn apiV2Jar
+    dependsOn apiV2SourcesJar
+    from apiV2Jar.flatMap { it.archiveFile }
+    from apiV2SourcesJar.flatMap { it.archiveFile }
+}
+
+
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
             artifact jar
+            artifact apiV2Jar
+            artifact apiV2SourcesJar
         }
     }
     repositories {
@@ -406,6 +468,24 @@ publishing {
 }
 
 
+
+
+
+def validateApiV2Boundary = tasks.register('validateApiV2Boundary', Exec) {
+    group = 'verification'
+    description = 'Validate API v2 loader/implementation boundary and consumer fixture imports'
+    workingDir repositoryRoot
+    environment 'PYTHONDONTWRITEBYTECODE', '1'
+    commandLine pythonExecutable, new File(repositoryRoot, 'scripts/validate-api-v2.py').absolutePath
+}
+
+tasks.named('compileApiV2Java') { dependsOn prepareEffectiveSource }
+tasks.named('compileAddonFixtureJava') { dependsOn tasks.named('compileApiV2Java') }
+tasks.named('check') {
+    dependsOn validateApiV2Boundary
+    dependsOn tasks.named('compileApiV2Java')
+    dependsOn tasks.named('compileAddonFixtureJava')
+}
 
 tasks.withType(ProcessResources).configureEach {
     dependsOn prepareEffectiveSource
