@@ -90,16 +90,17 @@ public class RenderDynamoMJ implements BlockEntityRenderer<TileDynamoMJ> {
         float u0 = sprite.getU(0), u12 = sprite.getU(12);
         float v0 = sprite.getV(0), v12 = sprite.getV(12), v16 = sprite.getV(16);
 
-        // down / up: uv 0,0 -> 12,12
+        // down / up: uv 0,0 -> 12,12. Keep the winding consistent with the outward normal.
+        // RenderType.solid() culls back faces, so reversed cap winding makes the moving-head lid disappear.
         vertex(builder, pose, normal, x0, y0, z0, u0, v0, light, overlay, 0, -1, 0);
-        vertex(builder, pose, normal, x0, y0, z1, u0, v12, light, overlay, 0, -1, 0);
-        vertex(builder, pose, normal, x1, y0, z1, u12, v12, light, overlay, 0, -1, 0);
         vertex(builder, pose, normal, x1, y0, z0, u12, v0, light, overlay, 0, -1, 0);
+        vertex(builder, pose, normal, x1, y0, z1, u12, v12, light, overlay, 0, -1, 0);
+        vertex(builder, pose, normal, x0, y0, z1, u0, v12, light, overlay, 0, -1, 0);
 
-        vertex(builder, pose, normal, x0, y1, z1, u0, v12, light, overlay, 0, 1, 0);
         vertex(builder, pose, normal, x0, y1, z0, u0, v0, light, overlay, 0, 1, 0);
-        vertex(builder, pose, normal, x1, y1, z0, u12, v0, light, overlay, 0, 1, 0);
+        vertex(builder, pose, normal, x0, y1, z1, u0, v12, light, overlay, 0, 1, 0);
         vertex(builder, pose, normal, x1, y1, z1, u12, v12, light, overlay, 0, 1, 0);
+        vertex(builder, pose, normal, x1, y1, z0, u12, v0, light, overlay, 0, 1, 0);
 
         // Four sides use the bottom 4 px of the original front texture: uv 0,12 -> 12,16.
         side(builder, pose, normal, x0, y1, z0, x1, y1, z0, x1, y0, z0, x0, y0, z0,

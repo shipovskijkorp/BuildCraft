@@ -63,19 +63,6 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
                 tooltips.add(new ToolTip(lines));
             }
         });
-        mainGui.shownElements.add(new GuiElementSimple(mainGui, RECT_UPGRADE_TYPES.offset(mainGui.rootElement)) {
-            @Override
-            public void drawBackground(PoseStack pose, float partialTicks) {
-                RenderSystem.enableDepthTest();
-                itemRenderer.renderAndDecorateItem(new ItemStack(BCCoreItems.GEAR_IRON.get()), leftPos + 60, topPos + 22);
-                itemRenderer.renderAndDecorateItem(new ItemStack(BCCoreItems.GEAR_GOLD.get()), leftPos + 83, topPos + 22);
-                RenderSystem.disableDepthTest();
-                RenderSystem.setShaderColor(1, 1, 1, 0.65f);
-                OVERLAY.drawAt(pose, mainGui.rootElement.offset(39, 18));
-                RenderSystem.setShaderColor(1, 1, 1, 1);
-                RenderSystem.enableDepthTest();
-            }
-        });
         mainGui.shownElements.add(new GuiElementSimple(mainGui, RECT_FE_BATTERY.offset(mainGui.rootElement)) {
             @Override
             public void addHelpElements(List<HelpPosition> elements) {
@@ -107,6 +94,20 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
             height = Math.round(height * scale) / scale;
             FE.drawCutInside(pose, new GuiRectangle(139, 78 - height, 6, height).offset(mainGui.rootElement));
         }
+
+        // Original BC8 draw order: base GUI -> gear icons -> translucent slot overlay.
+        // Keeping this in the screen background layer avoids the item icons being lost behind GUI depth state.
+        RenderSystem.enableDepthTest();
+        itemRenderer.renderAndDecorateItem(new ItemStack(BCCoreItems.GEAR_IRON.get()), leftPos + 60, topPos + 22);
+        itemRenderer.renderAndDecorateItem(new ItemStack(BCCoreItems.GEAR_GOLD.get()), leftPos + 83, topPos + 22);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.disableDepthTest();
+        RenderSystem.setShaderColor(1, 1, 1, 0.65f);
+        OVERLAY.drawAt(pose, mainGui.rootElement.offset(39, 18));
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        RenderSystem.enableDepthTest();
+        RenderSystem.disableBlend();
 
     }
 }

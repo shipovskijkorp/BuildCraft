@@ -121,6 +121,9 @@ public class BCTransportSprites {
     public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
     	if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
 //    		PIPE_TEX.values().forEach(event::addSprite);
+    		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/power_flow"));
+    		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/power_flow_overload"));
+    		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/power_top"));
     		PipeBaseModelGenStandard.INSTANCE.onTextureStitchPre(event);
 /*    		event.addSprite(DIAWOOD_GUI);
     		event.addSprite(DIAWOOD_BUTTON_GUI);

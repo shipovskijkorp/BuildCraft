@@ -217,7 +217,19 @@ for path in (
     "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/render/RenderDynamoMJ.java",
     "source-platforms/neoforge/src/main/java/buildcraft/energy/client/render/RenderDynamoMJ.java",
 ):
-    require(path, "class RenderDynamoMJ", "12x12", "renderMovingHead", "renderChamber", "getTrunkLightSprite")
+    require(
+        path,
+        "class RenderDynamoMJ",
+        "12x12",
+        "renderMovingHead",
+        "renderChamber",
+        "getTrunkLightSprite",
+        "winding consistent with the outward normal",
+        "x0, y1, z0",
+        "x0, y1, z1",
+        "x1, y1, z1",
+        "x1, y1, z0",
+    )
 for path in (
     "version-src/1.19.2-forge/src/main/java/buildcraft/energy/BCEnergyClientProxy.java",
     "version-src/1.20.1-forge/src/main/java/buildcraft/energy/BCEnergyClientProxy.java",
@@ -231,13 +243,19 @@ for path in (
     "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/gui/GuiEngineFE.java",
     "source-families/modern/src/main/java/buildcraft/energy/client/gui/GuiEngineFE.java",
 ):
-    require(path, "LedgerEngine", "RECT_FE_BATTERY", "FE_UPGRADES", "OVERLAY", "GEAR_IRON", "GEAR_GOLD", "getMjPerTick(container.upgrades)")
+    require(
+        path, "LedgerEngine", "RECT_FE_BATTERY", "FE_UPGRADES", "OVERLAY", "GEAR_IRON", "GEAR_GOLD",
+        "getMjPerTick(container.upgrades)", "Original BC8 draw order: base GUI -> gear icons -> translucent slot overlay"
+    )
 for path in (
     "version-src/1.19.2-forge/src/main/java/buildcraft/energy/client/gui/GuiDynamoMJ.java",
     "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/gui/GuiDynamoMJ.java",
     "source-families/modern/src/main/java/buildcraft/energy/client/gui/GuiDynamoMJ.java",
 ):
-    require(path, "LedgerDynamoMJ", "RECT_FE_BATTERY", "FE_UPGRADES", "OVERLAY", "GEAR_IRON", "GEAR_GOLD", "getMjPerTick(container.upgrades)")
+    require(
+        path, "LedgerDynamoMJ", "RECT_FE_BATTERY", "FE_UPGRADES", "OVERLAY", "GEAR_IRON", "GEAR_GOLD",
+        "getMjPerTick(container.upgrades)", "Original BC8 draw order: base GUI -> gear icons -> translucent slot overlay"
+    )
 for path in (
     "version-src/1.19.2-forge/src/main/java/buildcraft/energy/client/gui/LedgerDynamoMJ.java",
     "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/gui/LedgerDynamoMJ.java",

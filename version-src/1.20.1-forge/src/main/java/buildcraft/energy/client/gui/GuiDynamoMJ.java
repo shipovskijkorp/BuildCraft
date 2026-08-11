@@ -64,19 +64,6 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
                 tooltips.add(new ToolTip(lines));
             }
         });
-        mainGui.shownElements.add(new GuiElementSimple(mainGui, RECT_UPGRADE_TYPES.offset(mainGui.rootElement)) {
-            @Override
-            public void drawBackground(GuiGraphics guiGraphics, float partialTicks) {
-                RenderSystem.enableDepthTest();
-                guiGraphics.renderItem(new ItemStack(BCCoreItems.GEAR_IRON.get()), leftPos + 60, topPos + 22);
-                guiGraphics.renderItem(new ItemStack(BCCoreItems.GEAR_GOLD.get()), leftPos + 83, topPos + 22);
-                RenderSystem.disableDepthTest();
-                RenderSystem.setShaderColor(1, 1, 1, 0.65f);
-                OVERLAY.drawAt(guiGraphics, mainGui.rootElement.offset(39, 18));
-                RenderSystem.setShaderColor(1, 1, 1, 1);
-                RenderSystem.enableDepthTest();
-            }
-        });
         mainGui.shownElements.add(new GuiElementSimple(mainGui, RECT_FE_BATTERY.offset(mainGui.rootElement)) {
             @Override
             public void addHelpElements(List<HelpPosition> elements) {
@@ -108,6 +95,18 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
             height = Math.round(height * scale) / scale;
             FE.drawCutInside(getActiveGraphics(), new GuiRectangle(139, 78 - height, 6, height).offset(mainGui.rootElement));
         }
+
+        // Original BC8 draw order: base GUI -> gear icons -> translucent slot overlay.
+        // Draw directly in the screen layer so GuiGraphics item depth is deterministic.
+        GuiGraphics guiGraphics = getActiveGraphics();
+        guiGraphics.renderItem(new ItemStack(BCCoreItems.GEAR_IRON.get()), leftPos + 60, topPos + 22);
+        guiGraphics.renderItem(new ItemStack(BCCoreItems.GEAR_GOLD.get()), leftPos + 83, topPos + 22);
+        RenderSystem.disableDepthTest();
+        RenderSystem.setShaderColor(1, 1, 1, 0.65f);
+        OVERLAY.drawAt(guiGraphics, mainGui.rootElement.offset(39, 18));
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        RenderSystem.enableDepthTest();
+        RenderSystem.disableBlend();
 
     }
 }
