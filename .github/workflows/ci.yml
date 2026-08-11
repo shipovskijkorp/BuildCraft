@@ -36,6 +36,9 @@ jobs:
       - name: Validate API v2 boundary
         run: python scripts/validate-api-v2.py
 
+      - name: Validate API v2 migration surface
+        run: python scripts/validate-api-v2-migration-surface.py
+
       - name: Validate repository cleanliness
         run: python scripts/validate-repository-cleanliness.py
 
@@ -81,7 +84,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Make build scripts executable
-        run: chmod +x builds/legacy/gradlew builds/modern/gradlew build-all.sh scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-stonecutter.py scripts/validate-api-v2.py
+        run: chmod +x builds/legacy/gradlew builds/modern/gradlew build-all.sh scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-stonecutter.py scripts/validate-api-v2.py scripts/validate-api-v2-migration-surface.py
 
       - name: Build and test generation
         shell: bash

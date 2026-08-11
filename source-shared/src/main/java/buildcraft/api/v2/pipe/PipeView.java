@@ -1,0 +1,25 @@
+package buildcraft.api.v2.pipe;
+
+import buildcraft.api.v2.energy.MjPort;
+import buildcraft.api.v2.fluid.FluidPort;
+import buildcraft.api.v2.item.ItemPort;
+import buildcraft.api.v2.platform.ExternalEnergyPort;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+
+public interface PipeView {
+    ResourceLocation typeId();
+    BlockPos position();
+    Set<Direction> connectedSides();
+    Collection<PipeComponent> components();
+    Optional<PipeComponent> component(ResourceLocation typeId);
+    default Optional<ItemPort> itemPort(Direction side) { return Optional.empty(); }
+    default Optional<ItemPipePort> itemPipePort(Direction side) { return Optional.empty(); }
+    default Optional<FluidPort> fluidPort(Direction side) { return Optional.empty(); }
+    default Optional<MjPort> mjPort(Direction side) { return Optional.empty(); }
+    default Optional<ExternalEnergyPort> externalEnergyPort(Direction side) { return Optional.empty(); }
+}

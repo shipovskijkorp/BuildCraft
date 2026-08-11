@@ -467,10 +467,19 @@ def validateApiV2Boundary = tasks.register('validateApiV2Boundary', Exec) {
     commandLine pythonExecutable, new File(repositoryRoot, 'scripts/validate-api-v2.py').absolutePath
 }
 
+def validateApiV2MigrationSurface = tasks.register('validateApiV2MigrationSurface', Exec) {
+    group = 'verification'
+    description = 'Require every remaining legacy API import to have a v2 migration or internalization disposition'
+    workingDir repositoryRoot
+    environment 'PYTHONDONTWRITEBYTECODE', '1'
+    commandLine pythonExecutable, new File(repositoryRoot, 'scripts/validate-api-v2-migration-surface.py').absolutePath
+}
+
 tasks.named('compileApiV2Java') { dependsOn prepareEffectiveSource }
 tasks.named('compileAddonFixtureJava') { dependsOn tasks.named('compileApiV2Java') }
 tasks.named('check') {
     dependsOn validateApiV2Boundary
+    dependsOn validateApiV2MigrationSurface
     dependsOn tasks.named('compileApiV2Java')
     dependsOn tasks.named('compileAddonFixtureJava')
 }

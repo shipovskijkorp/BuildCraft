@@ -12,6 +12,8 @@ API_ROOTS = [
     ROOT / "source-families/modern/src/main/java/buildcraft/api/v2",
 ]
 FIXTURE_ROOT = ROOT / "addon-fixture/src/main/java"
+REGISTRY_KEYS_FILE = ROOT / "source-shared/src/main/java/buildcraft/api/v2/BuildCraftRegistries.java"
+RUNTIME_FILE = ROOT / "source-shared/src/main/java/buildcraft/lib/api/v2/BuildCraftApiRuntime.java"
 
 FORBIDDEN_API_IMPORT_PREFIXES = (
     "net.minecraftforge.",
@@ -24,6 +26,11 @@ PUBLIC_STATIC_FIELD_RE = re.compile(
     r"\bpublic\s+static\s+(?!final\b)(?:[\w<>?,.\[\] ]+\s+)?[A-Za-z_$][\w$]*\s*(?:=|;)",
     re.MULTILINE,
 )
+REGISTRY_KEY_RE = re.compile(
+    r"^\s*public\s+static\s+final\s+RegistryKey<.*>\s+([A-Z0-9_]+)\s*=",
+    re.MULTILINE,
+)
+RUNTIME_REGISTRY_RE = re.compile(r"registerRegistry\(BuildCraftRegistries\.([A-Z0-9_]+)\)\s*;")
 
 
 def java_files(root: Path):
@@ -60,6 +67,16 @@ def main() -> int:
                 errors.append(f"{rel}: fixture imports non-v2 BuildCraft class {imported}")
             if imported.startswith(("net.minecraftforge.", "net.neoforged.", "net.fabricmc.")):
                 errors.append(f"{rel}: fixture common code imports loader API {imported}")
+
+    if REGISTRY_KEYS_FILE.is_file() and RUNTIME_FILE.is_file():
+        registry_keys = set(REGISTRY_KEY_RE.findall(REGISTRY_KEYS_FILE.read_text(encoding="utf-8")))
+        runtime_keys = set(RUNTIME_REGISTRY_RE.findall(RUNTIME_FILE.read_text(encoding="utf-8")))
+        for name in sorted(registry_keys - runtime_keys):
+            errors.append(f"BuildCraftRegistries.{name} is not created by BuildCraftApiRuntime")
+        for name in sorted(runtime_keys - registry_keys):
+            errors.append(f"BuildCraftApiRuntime registers unknown BuildCraftRegistries.{name}")
+    else:
+        errors.append("BuildCraftRegistries.java or BuildCraftApiRuntime.java is missing")
 
     if errors:
         print("API v2 boundary validation FAILED:")
