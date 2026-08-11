@@ -3214,6 +3214,14 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/fe_flow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/fe_top"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/quartz_fluid"
     },
     {

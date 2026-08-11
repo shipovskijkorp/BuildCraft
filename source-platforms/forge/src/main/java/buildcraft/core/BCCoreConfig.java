@@ -96,8 +96,10 @@ public class BCCoreConfig {
         propUseLongLocalizedName = builder.comment("Should localised strings be displayed in long or short form (10 mB / t vs 10 milli buckets per tick)")
             .define("useLongLocalizedName", true);
 
-        propDisplayTimeGap = builder.comment("Should localised strings be displayed in terms of seconds (20 MJ/s) or ticks (1 MJ/t)")
-            .defineEnum("timeGap", TimeGap.SECONDS, TimeGap.values());
+        propDisplayTimeGap = builder.comment(
+            "Flow-rate display unit for BuildCraft energy values.",
+            "TICKS displays values as unit/t; SECONDS displays values as unit/s."
+        ).defineEnum("timeGap", TimeGap.SECONDS, TimeGap.values());
 
         propUseSwappableSprites = builder.comment(
             "Disable this if you get texture errors with optifine. Disables some texture switching functionality",

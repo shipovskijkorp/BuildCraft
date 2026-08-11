@@ -124,6 +124,8 @@ public class BCTransportSprites {
     		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/power_flow"));
     		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/power_flow_overload"));
     		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/power_top"));
+    		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/fe_flow"));
+    		event.addSprite(new ResourceLocation("buildcrafttransport:pipes/fe_top"));
     		PipeBaseModelGenStandard.INSTANCE.onTextureStitchPre(event);
 /*    		event.addSprite(DIAWOOD_GUI);
     		event.addSprite(DIAWOOD_BUTTON_GUI);

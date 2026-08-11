@@ -66,11 +66,9 @@ public class ItemHandlerManager implements ICapabilityProvider, INBTSerializable
         }
         IItemHandlerModifiable external = handler;
         if (access == EnumAccess.NONE || access == EnumAccess.PHANTOM) {
+            // Internal/phantom inventories are never exposed through sided item capabilities.
+            // Ignore accidental side arguments instead of crashing block-entity construction.
             external = null;
-            if (parts.length > 0) {
-                throw new IllegalArgumentException(
-                    "Completely useless to not allow access to multiple sides! Just don't pass any sides!");
-            }
         } else if (access == EnumAccess.EXTRACT) {
             external = new WrappedItemHandlerExtract(handler);
         } else if (access == EnumAccess.INSERT) {

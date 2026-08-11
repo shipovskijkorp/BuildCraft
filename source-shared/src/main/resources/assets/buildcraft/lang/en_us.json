@@ -1961,5 +1961,6 @@
   "buildcraft.help.mj_dynamo.fe_battery.title": "FE Battery",
   "buildcraft.help.mj_dynamo.fe_battery.desc": "Converts between BuildCraft MJ and Forge Energy.",
   "buildcraft.help.fe_engine.fe_battery.title": "FE Battery",
-  "buildcraft.help.fe_engine.fe_battery.desc": "Converts between Forge Energy and BuildCraft MJ."
+  "buildcraft.help.fe_engine.fe_battery.desc": "Converts between Forge Energy and BuildCraft MJ.",
+  "config.display.timeGap": "Flow rate units (/t or /s)"
 }

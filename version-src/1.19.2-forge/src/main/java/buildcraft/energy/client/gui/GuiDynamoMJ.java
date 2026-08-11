@@ -86,6 +86,18 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
     }
 
     @Override
+    protected void drawForegroundLayer(PoseStack pose, int mouseX, int mouseY) {
+        // BuildCraftGui temporarily removes AbstractContainerScreen's GUI translation before this hook.
+        // Draw labels in the same absolute root coordinates used by the original BC8 GUI.
+        double titleX = mainGui.rootElement.getCenterX() - font.width(title) / 2.0;
+        double titleY = mainGui.rootElement.getY() + 6;
+        font.draw(pose, title, (int) titleX, (int) titleY, 0x404040);
+        font.draw(pose, playerInventoryTitle,
+            (int) mainGui.rootElement.getX() + inventoryLabelX,
+            (int) mainGui.rootElement.getY() + inventoryLabelY, 0x404040);
+    }
+
+    @Override
     protected void drawBackgroundLayer(PoseStack pose, int mouseX, int mouseY, float partialTicks) {
         GUI.drawAt(pose, mainGui.rootElement);
         if (container.tile != null) {

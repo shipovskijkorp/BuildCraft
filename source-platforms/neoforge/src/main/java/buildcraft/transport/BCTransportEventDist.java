@@ -11,6 +11,7 @@ import buildcraft.transport.client.PipeRegistryClient;
 import buildcraft.transport.client.model.ModelPipe;
 import buildcraft.transport.client.model.PipeBaseModelGenStandard;
 import buildcraft.transport.client.model.PipeModelCacheAll;
+import buildcraft.transport.client.render.PipeFlowRendererFE;
 import buildcraft.transport.client.render.PipeFlowRendererPower;
 import buildcraft.transport.net.PipeItemMessageQueue;
 import buildcraft.transport.wire.WorldSavedDataWireSystems;
@@ -102,6 +103,7 @@ public class BCTransportEventDist {
             PipeModelCacheAll.clearModels();
             ModelPipe.clearTextureCache();
             PipeFlowRendererPower.clearTextureCache();
+            PipeFlowRendererFE.clearTextureCache();
         }
         
         

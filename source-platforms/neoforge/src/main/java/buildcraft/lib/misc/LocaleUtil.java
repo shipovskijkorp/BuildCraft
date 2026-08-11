@@ -59,7 +59,8 @@ public class LocaleUtil {
         localeKeyFluidStaticEmpty = "buildcraft.fluid.empty." + (bucketStatic ? "bucket." : "milli.") + longName;
         localeKeyFluidStaticFull = "buildcraft.fluid.full." + (bucketStatic ? "bucket." : "milli.") + longName;
         localeKeyMjStatic = "buildcraft.mj.static." + longName;
-        localeKeyMjFlow = "buildcraft.mj.flow." + timeGap + longName;
+        // Flow rates are always compact: MJ/t or MJ/s. The long-name option still applies to stored MJ values.
+        localeKeyMjFlow = "buildcraft.mj.flow." + timeGap + "short";
     }
 
     /** Localizes the give key to the current locale.
