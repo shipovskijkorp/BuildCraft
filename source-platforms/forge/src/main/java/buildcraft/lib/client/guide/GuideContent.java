@@ -37,6 +37,12 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import buildcraft.api.core.BCLog;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.guide.GuideEntry;
+import buildcraft.api.v2.guide.GuidePage;
+import buildcraft.api.v2.guide.GuideSection;
+import buildcraft.api.v2.guide.GuideService;
 import buildcraft.api.statements.IStatement;
 import buildcraft.api.statements.StatementManager;
 
@@ -117,11 +123,72 @@ public final class GuideContent {
                     text
                 ));
             }
+            appendApiEntries(entries);
             return new GuideContent(entries);
         } catch (Exception ex) {
             BCLog.logger.error("[lib.guide] Failed to load the BuildCraft guide", ex);
             return new GuideContent(new ArrayList<>());
         }
+    }
+
+
+    private static void appendApiEntries(List<Entry> entries) {
+        Optional<GuideService> optional = BuildCraftApi.runtime().service(BuildCraftServices.GUIDE);
+        if (optional.isEmpty()) return;
+        GuideService guide = optional.get();
+        for (GuideEntry apiEntry : guide.entries()) {
+            boolean duplicate = entries.stream().anyMatch(existing -> existing.id.equals(apiEntry.id()));
+            if (duplicate) {
+                BCLog.logger.warn("[lib.guide] Ignoring API v2 guide entry {} because that id is already present", apiEntry.id());
+                continue;
+            }
+            GuideSection section = guide.section(apiEntry.section()).orElse(null);
+            String subtype = section == null ? apiEntry.section().getPath() : translateOrLiteral(section.titleKey());
+            String title = translateOrLiteral(apiEntry.titleKey());
+            String stackId = apiEntry.icon().map(ResourceLocation::toString).orElse(null);
+            entries.add(new Entry(
+                apiEntry.id(),
+                apiEntry.id().toString(),
+                apiEntry.id().getNamespace(),
+                "addon",
+                subtype,
+                title,
+                "buildcraftcore:main",
+                true,
+                stackId,
+                null,
+                resolveStack(stackId, null),
+                renderApiPages(apiEntry)
+            ));
+        }
+    }
+
+    private static String renderApiPages(GuideEntry entry) {
+        StringBuilder markdown = new StringBuilder();
+        markdown.append("# ").append(translateOrLiteral(entry.titleKey())).append('\n');
+        boolean first = true;
+        for (GuidePage page : entry.pages()) {
+            if (!first) markdown.append("<new_page/>\n");
+            first = false;
+            if (page instanceof GuidePage.Text text) {
+                markdown.append(text.translatable() ? translateOrLiteral(text.value()) : text.value()).append('\n');
+            } else if (page instanceof GuidePage.Image image) {
+                markdown.append("<image src=\"").append(image.texture()).append("\" width=\"")
+                    .append(image.width()).append("\" height=\"").append(image.height()).append("\"/>\n");
+                if (image.captionKey() != null && !image.captionKey().isBlank()) {
+                    markdown.append(translateOrLiteral(image.captionKey())).append('\n');
+                }
+            } else if (page instanceof GuidePage.Link link) {
+                markdown.append('[').append(translateOrLiteral(link.labelKey())).append("](")
+                    .append(link.targetEntry()).append(")\n");
+            } else if (page instanceof GuidePage.Item item) {
+                markdown.append(translateOrLiteral(item.textKey())).append('\n')
+                    .append("<recipes_usages stack=\"").append(item.itemId()).append("\"/>\n");
+            } else if (page instanceof GuidePage.Recipe recipe) {
+                markdown.append("Recipe: ").append(recipe.recipeId()).append('\n');
+            }
+        }
+        return markdown.toString();
     }
 
     private static String readText(ResourceManager resources, ResourceLocation location) throws IOException {

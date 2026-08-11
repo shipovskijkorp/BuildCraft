@@ -21,6 +21,7 @@ import buildcraft.api.v2.machine.ChipsetType;
 import buildcraft.api.v2.machine.EngineType;
 import buildcraft.api.v2.machine.MachineComponentType;
 import buildcraft.api.v2.machine.MachineType;
+import buildcraft.api.v2.machine.MachineProperty;
 import buildcraft.api.v2.machine.LaserTableType;
 import buildcraft.api.v2.network.PayloadType;
 import buildcraft.api.v2.pipe.PipeAttachmentType;
@@ -50,6 +51,7 @@ public final class BuildCraftRegistries {
     public static final RegistryKey<EngineType> ENGINE_TYPES = key("engine_types");
     public static final RegistryKey<MachineType> MACHINE_TYPES = key("machine_types");
     public static final RegistryKey<MachineComponentType<?>> MACHINE_COMPONENT_TYPES = key("machine_component_types");
+    public static final RegistryKey<MachineProperty<?>> MACHINE_PROPERTIES = key("machine_properties");
     public static final RegistryKey<ChipsetType> CHIPSET_TYPES = key("chipset_types");
     public static final RegistryKey<LaserTableType> LASER_TABLE_TYPES = key("laser_table_types");
     public static final RegistryKey<MjConnectionRule> MJ_CONNECTION_RULES = key("mj_connection_rules");

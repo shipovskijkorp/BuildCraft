@@ -28,6 +28,8 @@ public final class PipeType {
     }
 
     public static Builder builder(ResourceLocation id) { return new Builder(id); }
+    public static Builder variant(ResourceLocation id, PipeType base) { return new Builder(id).copyFrom(base); }
+    public Builder copyAs(ResourceLocation newId) { return variant(newId, this); }
     public ResourceLocation id() { return id; }
     public Set<PipeMedium> media() { return media; }
     public Set<ResourceLocation> defaultComponents() { return defaultComponents; }
@@ -46,8 +48,22 @@ public final class PipeType {
         private ExternalEnergyTransportProfile externalEnergyProfile;
 
         private Builder(ResourceLocation id) { this.id = Objects.requireNonNull(id, "id"); }
+        public Builder copyFrom(PipeType base) {
+            Objects.requireNonNull(base, "base");
+            media.clear();
+            media.addAll(base.media);
+            defaultComponents.clear();
+            defaultComponents.addAll(base.defaultComponents);
+            itemProfile = base.itemProfile;
+            fluidProfile = base.fluidProfile;
+            mjProfile = base.mjProfile;
+            externalEnergyProfile = base.externalEnergyProfile;
+            return this;
+        }
         public Builder medium(PipeMedium medium) { media.add(Objects.requireNonNull(medium, "medium")); return this; }
         public Builder component(ResourceLocation componentId) { defaultComponents.add(Objects.requireNonNull(componentId, "componentId")); return this; }
+        public Builder removeComponent(ResourceLocation componentId) { defaultComponents.remove(Objects.requireNonNull(componentId, "componentId")); return this; }
+        public Builder clearComponents() { defaultComponents.clear(); return this; }
         public Builder itemProfile(ItemTransportProfile profile) { itemProfile = Objects.requireNonNull(profile, "profile"); return medium(PipeMedium.ITEM); }
         public Builder fluidProfile(FluidTransportProfile profile) { fluidProfile = Objects.requireNonNull(profile, "profile"); return medium(PipeMedium.FLUID); }
         public Builder mjProfile(PowerTransportProfile profile) { mjProfile = Objects.requireNonNull(profile, "profile"); return medium(PipeMedium.MJ); }

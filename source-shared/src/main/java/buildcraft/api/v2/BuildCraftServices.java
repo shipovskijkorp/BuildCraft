@@ -18,6 +18,7 @@ import buildcraft.api.v2.facade.FacadeService;
 import buildcraft.api.v2.filler.FillerPatternService;
 import buildcraft.api.v2.fuels.EnergyFluidService;
 import buildcraft.api.v2.gate.GateService;
+import buildcraft.api.v2.guide.GuideService;
 import buildcraft.api.v2.list.ItemListService;
 import buildcraft.api.v2.machine.MachineService;
 import buildcraft.api.v2.machine.LaserTargetService;
@@ -37,6 +38,7 @@ import buildcraft.api.v2.template.TemplateService;
 import buildcraft.api.v2.tool.WrenchService;
 import buildcraft.api.v2.world.WorldPropertyService;
 import buildcraft.api.v2.world.WorldRuleService;
+import buildcraft.api.v2.worldgen.WorldgenService;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 
@@ -51,6 +53,8 @@ public final class BuildCraftServices {
     public static final ServiceKey<FacadeRuleService> FACADE_RULES = ServiceKey.of(id("facade_rules"));
     public static final ServiceKey<WorldPropertyService> WORLD_PROPERTIES = ServiceKey.of(id("world_properties"));
     public static final ServiceKey<WorldRuleService> WORLD_RULES = ServiceKey.of(id("world_rules"));
+    public static final ServiceKey<GuideService> GUIDE = ServiceKey.of(id("guide"));
+    public static final ServiceKey<WorldgenService> WORLDGEN = ServiceKey.of(id("worldgen"));
 
     public static final ServiceKey<ModuleService> MODULES = ServiceKey.of(id("modules"));
     public static final ServiceKey<ActorService> ACTORS = ServiceKey.of(id("actors"));

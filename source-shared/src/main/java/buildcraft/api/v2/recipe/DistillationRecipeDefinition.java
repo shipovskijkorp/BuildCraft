@@ -3,6 +3,7 @@ package buildcraft.api.v2.recipe;
 import buildcraft.api.v2.fluid.FluidAmount;
 import buildcraft.api.v2.fluid.FluidVariant;
 import buildcraft.api.v2.fluid.FluidVolume;
+import buildcraft.api.v2.energy.MjAmount;
 import buildcraft.api.v2.persistence.ApiCodec;
 import buildcraft.api.v2.persistence.CodecResult;
 import java.util.Objects;
@@ -78,9 +79,58 @@ public final class DistillationRecipeDefinition implements RecipeDefinition {
         this.powerRequiredMicroMj = powerRequiredMicroMj;
     }
 
+    public static Builder builder() { return new Builder(); }
+
     @Override public Kind kind() { return Kind.DISTILLATION; }
     public FluidIngredient input() { return input; }
     public FluidVolume gasOutput() { return gasOutput; }
     public FluidVolume liquidOutput() { return liquidOutput; }
     public long powerRequiredMicroMj() { return powerRequiredMicroMj; }
+    public MjAmount powerRequired() { return MjAmount.ofMicro(powerRequiredMicroMj); }
+
+    /** Fluent builder intended for addon registrations and datapack adapters. */
+    public static final class Builder {
+        private FluidIngredient input;
+        private FluidVolume gasOutput = FluidVolume.empty();
+        private FluidVolume liquidOutput = FluidVolume.empty();
+        private MjAmount powerRequired = MjAmount.ZERO;
+
+        public Builder input(FluidIngredient input) {
+            this.input = Objects.requireNonNull(input, "input");
+            return this;
+        }
+
+        public Builder gas(FluidVolume output) {
+            this.gasOutput = Objects.requireNonNull(output, "output");
+            return this;
+        }
+
+        public Builder gas(FluidVariant variant, long milliBuckets) {
+            return gas(FluidVolume.of(Objects.requireNonNull(variant, "variant"), FluidAmount.of(milliBuckets)));
+        }
+
+        public Builder liquid(FluidVolume output) {
+            this.liquidOutput = Objects.requireNonNull(output, "output");
+            return this;
+        }
+
+        public Builder liquid(FluidVariant variant, long milliBuckets) {
+            return liquid(FluidVolume.of(Objects.requireNonNull(variant, "variant"), FluidAmount.of(milliBuckets)));
+        }
+
+        public Builder power(MjAmount amount) {
+            this.powerRequired = Objects.requireNonNull(amount, "amount");
+            return this;
+        }
+
+        public Builder powerMj(long mj) {
+            return power(MjAmount.ofMj(mj));
+        }
+
+        public DistillationRecipeDefinition build() {
+            if (input == null) throw new IllegalStateException("Distillation recipe input is required");
+            return new DistillationRecipeDefinition(input, gasOutput, liquidOutput, powerRequired.microMj());
+        }
+    }
 }
+

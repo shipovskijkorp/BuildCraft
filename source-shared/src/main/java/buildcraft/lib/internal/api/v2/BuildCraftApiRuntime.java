@@ -10,6 +10,8 @@ import buildcraft.api.v2.BuildCraftFeatures;
 import buildcraft.api.v2.BuildCraftRegistries;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.registry.ApiRegistry;
+import buildcraft.api.v2.machine.BuiltInMachineProperties;
+import buildcraft.api.v2.machine.MachineProperty;
 import buildcraft.api.v2.registry.RegistryKey;
 import buildcraft.lib.internal.api.v2.registry.ApiRegistryImpl;
 import buildcraft.api.v2.service.ServiceKey;
@@ -42,7 +44,10 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         new ApiFeature(BuildCraftFeatures.SCHEMATICS, 1),
         new ApiFeature(BuildCraftFeatures.MACHINES, 1),
         new ApiFeature(BuildCraftFeatures.NETWORK, 1),
-        new ApiFeature(BuildCraftFeatures.CLIENT_PRESENTATION, 1)
+        new ApiFeature(BuildCraftFeatures.CLIENT_PRESENTATION, 1),
+        new ApiFeature(BuildCraftFeatures.CONTENT_EXTENSION, 1),
+        new ApiFeature(BuildCraftFeatures.GUIDE, 1),
+        new ApiFeature(BuildCraftFeatures.WORLDGEN, 1)
     ));
 
     private final EnergyServiceImpl energy = new EnergyServiceImpl();
@@ -53,6 +58,8 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final TemplateServiceImpl templates = new TemplateServiceImpl();
     private final FacadeRuleRegistryImpl facadeRules = new FacadeRuleRegistryImpl();
     private final WorldPropertyServiceImpl worldProperties = new WorldPropertyServiceImpl();
+    private final GuideServiceImpl guide = new GuideServiceImpl();
+    private final WorldgenServiceImpl worldgen = new WorldgenServiceImpl();
 
     private BuildCraftApiRuntime() {
         services.put(BuildCraftServices.ENERGY, energy);
@@ -63,10 +70,13 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         services.put(BuildCraftServices.TEMPLATES, templates);
         services.put(BuildCraftServices.FACADE_RULES, facadeRules);
         services.put(BuildCraftServices.WORLD_PROPERTIES, worldProperties);
+        services.put(BuildCraftServices.GUIDE, guide);
+        services.put(BuildCraftServices.WORLDGEN, worldgen);
 
         registerRegistry(BuildCraftRegistries.ENGINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_COMPONENT_TYPES);
+        registerRegistry(BuildCraftRegistries.MACHINE_PROPERTIES);
         registerRegistry(BuildCraftRegistries.CHIPSET_TYPES);
         registerRegistry(BuildCraftRegistries.LASER_TABLE_TYPES);
         registerRegistry(BuildCraftRegistries.MJ_CONNECTION_RULES);
@@ -105,6 +115,17 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         registerRegistry(BuildCraftRegistries.PIPE_PRESENTATIONS);
         registerRegistry(BuildCraftRegistries.STATEMENT_PRESENTATIONS);
         registerRegistry(BuildCraftRegistries.PARAMETER_PRESENTATIONS);
+
+        registerBuiltInMachineProperties();
+    }
+
+
+    private void registerBuiltInMachineProperties() {
+        ApiRegistry<MachineProperty<?>> registry = registry(BuildCraftRegistries.MACHINE_PROPERTIES)
+            .orElseThrow(() -> new IllegalStateException("Machine property registry was not created"));
+        for (MachineProperty<?> property : BuiltInMachineProperties.values()) {
+            registry.register(property.id(), property, () -> "buildcraft");
+        }
     }
 
     private <T> void registerRegistry(RegistryKey<T> key) {
