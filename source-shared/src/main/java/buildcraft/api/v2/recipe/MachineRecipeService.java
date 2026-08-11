@@ -6,7 +6,6 @@ import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.api.v2.reload.DefinitionSnapshot;
 import buildcraft.api.v2.reload.ResolvedDefinition;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -15,13 +14,17 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-/** Authoritative API 2 registry for BuildCraft machine recipes. */
+/**
+ * Authoritative addon-facing registry for BuildCraft machine recipes.
+ *
+ * Addons may register code-owned recipes. Datapack reload publication remains an
+ * internal BuildCraft responsibility so external code cannot replace the live
+ * registry snapshot out from under other consumers.
+ */
 public interface MachineRecipeService {
     DefinitionSnapshot<RecipeDefinition> snapshot();
 
     void register(ResourceLocation id, RecipeDefinition definition, DefinitionProvenance provenance);
-
-    MachineRecipeReloadResult reloadData(Collection<MachineRecipeRegistration> definitions);
 
     default Optional<RecipeMatch<IntegrationRecipeDefinition>> findIntegration(
         ItemStack target, NonNullList<ItemStack> toIntegrate

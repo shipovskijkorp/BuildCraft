@@ -12,7 +12,7 @@ import buildcraft.api.v2.recipe.HeatExchangeRecipeDefinition;
 import buildcraft.api.v2.recipe.RecipeDefinition;
 import buildcraft.api.v2.recipe.RecipeMatch;
 import buildcraft.api.v2.reload.DefinitionProvenance;
-import buildcraft.lib.api.v2.BuildCraftApiRuntime;
+import buildcraft.lib.internal.api.v2.BuildCraftApiRuntime;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.fluid.FuelApiBridge;
 import java.util.ArrayList;

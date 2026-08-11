@@ -63,8 +63,8 @@ public class PermissionServiceTester {
 
     @Test
     public void runtimeRegistryOrdersProvidersAndRejectsDuplicateIds() {
-        buildcraft.lib.api.v2.PermissionServiceRegistryImpl registry =
-            new buildcraft.lib.api.v2.PermissionServiceRegistryImpl();
+        buildcraft.lib.internal.api.v2.PermissionServiceRegistryImpl registry =
+            new buildcraft.lib.internal.api.v2.PermissionServiceRegistryImpl();
         java.util.ArrayList<String> calls = new java.util.ArrayList<>();
         registry.register(id("low"), 0, context -> {
             calls.add("low");

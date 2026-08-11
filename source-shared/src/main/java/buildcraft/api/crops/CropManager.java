@@ -1,7 +1,7 @@
 package buildcraft.api.crops;
 
 import buildcraft.api.v2.crops.CropAdapter;
-import buildcraft.lib.api.v2.BuildCraftApiRuntime;
+import buildcraft.lib.internal.api.v2.BuildCraftApiRuntime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;

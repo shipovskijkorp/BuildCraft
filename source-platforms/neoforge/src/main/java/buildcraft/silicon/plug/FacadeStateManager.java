@@ -40,7 +40,7 @@ import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.misc.StackUtil;
-import buildcraft.lib.api.v2.BuildCraftApiRuntime;
+import buildcraft.lib.internal.api.v2.BuildCraftApiRuntime;
 import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.lib.world.SingleBlockAccess;
 import io.netty.buffer.Unpooled;

@@ -11,3 +11,9 @@ client presentation metadata.
 
 If any of those examples starts requiring an implementation import, the
 `addonFixture` compile task fails.
+
+
+The fixture is also the API/Lib boundary canary: imports from `buildcraft.lib.*`, or
+BuildCraft gameplay-module packages are forbidden.
+If an addon needs one of those packages, the public extension API is missing a
+contract and should be expanded instead of exposing the implementation class.

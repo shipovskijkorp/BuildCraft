@@ -43,7 +43,7 @@ import buildcraft.builders.snapshot.Template;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterFacing;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterHollow;
 import buildcraft.lib.BCLib;
-import buildcraft.lib.api.v2.FacadeRuleRegistryImpl;
+import buildcraft.lib.internal.api.v2.FacadeRuleRegistryImpl;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.fluid.TankManager;
 import buildcraft.lib.list.ListMatchHandlerTools;

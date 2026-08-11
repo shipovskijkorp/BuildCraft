@@ -22,7 +22,7 @@ destination.
 | `IRequestProvider` and index-based robot requests | `ItemRequest`, `RequestProvider`, `RequestService` |
 | `IDebuggable` | `DebugContributor`, `DebugService` |
 | `FluidItemDrops` / fluid shard hooks | `FluidDropProvider`, `FluidDropService` |
-| old MJ capability family / `MjBattery` | `MjPort`, `MjBuffer`, `MjPortDescriptor`, `MjConnectionRule`, `EnergyService` |
+| old MJ capability family / `MjBattery` | `MjPort`, `MjStorage / EnergyService.createStorage`, `MjPortDescriptor`, `MjConnectionRule`, `EnergyService` |
 | MJ display/effects | `MjFormatter`, `PowerLossEffectService` |
 | Forge/NeoForge item/fluid/energy capabilities | platform bridges to `ItemPort`, `FluidPort`, `ExternalEnergyPort` |
 | fuels/coolants | `EnergyFluidService` and immutable profiles |

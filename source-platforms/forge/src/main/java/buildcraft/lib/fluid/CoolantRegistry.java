@@ -14,7 +14,7 @@ import buildcraft.api.v2.fuels.EnergyFluidService;
 import buildcraft.api.v2.fuels.ProfileMatch;
 import buildcraft.api.v2.fuels.SolidCoolantProfile;
 import buildcraft.api.v2.reload.DefinitionProvenance;
-import buildcraft.lib.api.v2.LegacyEnergyFluidIds;
+import buildcraft.lib.internal.api.v2.LegacyEnergyFluidIds;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

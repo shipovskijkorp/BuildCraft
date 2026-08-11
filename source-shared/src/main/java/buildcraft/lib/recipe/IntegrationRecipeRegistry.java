@@ -12,7 +12,7 @@ import buildcraft.api.v2.recipe.CountedIngredient;
 import buildcraft.api.v2.recipe.IntegrationRecipeDefinition;
 import buildcraft.api.v2.recipe.RecipeMatch;
 import buildcraft.api.v2.reload.DefinitionProvenance;
-import buildcraft.lib.api.v2.BuildCraftApiRuntime;
+import buildcraft.lib.internal.api.v2.BuildCraftApiRuntime;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Iterator;

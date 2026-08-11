@@ -22,4 +22,18 @@ public interface EnergyService {
     default Optional<MjPortDescriptor> descriptor(Level level, BlockPos pos, Direction side) {
         return Optional.empty();
     }
+
+    /**
+     * Creates the standard BuildCraft MJ storage implementation without exposing Lib internals.
+     */
+    default MjStorage createStorage(MjAmount capacity) {
+        return createStorage(capacity, MjAmount.ZERO);
+    }
+
+    /**
+     * Creates the standard BuildCraft MJ storage implementation with an initial amount.
+     */
+    default MjStorage createStorage(MjAmount capacity, MjAmount initial) {
+        throw new UnsupportedOperationException("This EnergyService does not provide MJ storage construction");
+    }
 }

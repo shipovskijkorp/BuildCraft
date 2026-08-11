@@ -86,7 +86,7 @@ buildcraft.api.mj.IMjReceiver,MIGRATE,MjPort
 buildcraft.api.mj.IMjRedstoneReceiver,MIGRATE,MjPort + REDSTONE_RECEIVER role
 buildcraft.api.mj.IMjToFeStatus,MIGRATE,EnergyService / EnergyConversionStatus
 buildcraft.api.mj.MjAPI,MIGRATE,MjAmount / EnergyService / BuildCraftServices
-buildcraft.api.mj.MjBattery,MIGRATE,MjBuffer
+buildcraft.api.mj.MjBattery,MIGRATE,MjStorage / EnergyService.createStorage
 buildcraft.api.mj.MjCapabilityHelper,MIGRATE,EnergyService / platform bridge
 buildcraft.api.mj.MjFeConversion,MIGRATE,EnergyConversion
 buildcraft.api.mj.MjToFeAutoConverter,MIGRATE,platform ExternalEnergyPort bridge

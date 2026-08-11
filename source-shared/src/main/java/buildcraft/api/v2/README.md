@@ -3,6 +3,19 @@
 API 2 now contains the complete public contract surface required to migrate the
 current BCCE codebase away from the legacy `buildcraft.api` tree.
 
+
+## API / Lib boundary
+
+Only `buildcraft.api.v2` is supported addon surface. Concrete runtime machinery
+lives under `buildcraft.lib.internal.api.v2`; other `buildcraft.lib.*` and gameplay
+module packages are implementation details and may change without an API-major
+bump. API2 must never import Lib, gameplay modules, loader APIs or Minecraft
+client classes. See `docs/api2/API_LIB_BOUNDARY.md`.
+
+Runtime attachment uses Java `ServiceLoader` with the read-only `ApiRuntime`
+contract as the service type. The concrete provider lives in Lib; there is no
+implementation-only SPI package in the supported addon API.
+
 ## Implemented foundation
 
 - write-once runtime facade, API version/features and monotonic bootstrap lifecycle;

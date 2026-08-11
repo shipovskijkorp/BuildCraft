@@ -14,8 +14,12 @@ fragment during every migration PR.
 The dependency target is:
 
 ```text
-addon -> buildcraft.api.v2 <- BCCE implementation
+addon -> buildcraft.api.v2 <- buildcraft.lib.internal.api.v2 <- BCCE modules
 ```
+
+`buildcraft.api.v2` is contract-only. Registry/reload/persistence engines and
+concrete service backends belong to Lib, even when Java visibility must be
+`public` for cross-package use inside BCCE. See `API_LIB_BOUNDARY.md`.
 
 and never:
 

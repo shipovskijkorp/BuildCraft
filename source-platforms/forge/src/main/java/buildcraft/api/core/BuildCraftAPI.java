@@ -4,7 +4,7 @@
  * should be located as "LICENSE.API" in the BuildCraft source code distribution. */
 package buildcraft.api.core;
 
-import buildcraft.lib.api.v2.LegacyWorldPropertyMap;
+import buildcraft.lib.internal.api.v2.LegacyWorldPropertyMap;
 
 import java.util.HashMap;
 import java.util.Optional;

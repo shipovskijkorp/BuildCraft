@@ -12,7 +12,6 @@ import buildcraft.api.v2.pipe.PipeMedium;
 import buildcraft.api.v2.pipe.PipeType;
 import buildcraft.api.v2.registry.ApiRegistry;
 import buildcraft.api.v2.registry.RegistryKey;
-import buildcraft.api.v2.registry.SimpleApiRegistry;
 import buildcraft.api.v2.robot.RobotEventDecision;
 import buildcraft.api.v2.testkit.TestApiRuntime;
 import java.util.List;
@@ -22,7 +21,9 @@ import org.junit.jupiter.api.Test;
 public class ApiV2CompleteSurfaceTester {
     @Test
     void registryAliasesPreserveCanonicalIdentityAndFreeze() {
-        SimpleApiRegistry<String> registry = new SimpleApiRegistry<>();
+        TestApiRuntime runtime = new TestApiRuntime(BuildCraftApi.VERSION, ApiFeatureSet.EMPTY);
+        RegistryKey<String> key = new RegistryKey<>(id("strings"));
+        ApiRegistry<String> registry = runtime.addRegistry(key);
         ResourceLocation canonical = id("canonical");
         ResourceLocation alias = id("legacy_name");
         registry.register(canonical, "value", () -> "fixture");
@@ -32,7 +33,8 @@ public class ApiV2CompleteSurfaceTester {
         assertEquals("value", registry.get(alias));
         assertEquals("fixture", registry.entry(alias).orElseThrow().owner());
 
-        registry.freeze();
+        runtime.lifecycle(ApiLifecycle.FROZEN);
+        assertTrue(registry.frozen());
         assertThrows(IllegalStateException.class, () -> registry.register(id("late"), "late"));
     }
 
@@ -51,7 +53,7 @@ public class ApiV2CompleteSurfaceTester {
 
     @Test
     void featureNegotiationUsesMinimumLevels() {
-        ApiFeatureSet features = new ImmutableApiFeatureSet(List.of(new ApiFeature(id("pipes"), 2)));
+        ApiFeatureSet features = ApiFeatureSet.of(List.of(new ApiFeature(id("pipes"), 2)));
         assertTrue(features.supports(id("pipes")));
         assertTrue(features.supports(id("pipes"), 2));
         assertFalse(features.supports(id("pipes"), 3));

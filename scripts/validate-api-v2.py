@@ -13,7 +13,11 @@ API_ROOTS = [
 ]
 FIXTURE_ROOT = ROOT / "addon-fixture/src/main/java"
 REGISTRY_KEYS_FILE = ROOT / "source-shared/src/main/java/buildcraft/api/v2/BuildCraftRegistries.java"
-RUNTIME_FILE = ROOT / "source-shared/src/main/java/buildcraft/lib/api/v2/BuildCraftApiRuntime.java"
+RUNTIME_FILE = ROOT / "source-shared/src/main/java/buildcraft/lib/internal/api/v2/BuildCraftApiRuntime.java"
+PUBLIC_API_FILE = ROOT / "source-shared/src/main/java/buildcraft/api/v2/BuildCraftApi.java"
+PROVIDER_FILE = ROOT / "source-shared/src/main/java/buildcraft/lib/internal/api/v2/BuildCraftApiRuntimeProvider.java"
+PROVIDER_DESCRIPTOR = ROOT / "source-shared/src/main/resources/META-INF/services/buildcraft.api.v2.ApiRuntime"
+OLD_IMPL_ROOT = ROOT / "source-shared/src/main/java/buildcraft/lib/api/v2"
 
 FORBIDDEN_API_IMPORT_PREFIXES = (
     "net.minecraftforge.",
@@ -22,6 +26,7 @@ FORBIDDEN_API_IMPORT_PREFIXES = (
     "net.minecraft.client.",
 )
 IMPORT_RE = re.compile(r"^\s*import\s+(?:static\s+)?([\w.]+)", re.MULTILINE)
+PACKAGE_RE = re.compile(r"^\s*package\s+([\w.]+)\s*;", re.MULTILINE)
 PUBLIC_STATIC_FIELD_RE = re.compile(
     r"\bpublic\s+static\s+(?!final\b)(?:[\w<>?,.\[\] ]+\s+)?[A-Za-z_$][\w$]*\s*(?:=|;)",
     re.MULTILINE,
@@ -31,6 +36,28 @@ REGISTRY_KEY_RE = re.compile(
     re.MULTILINE,
 )
 RUNTIME_REGISTRY_RE = re.compile(r"registerRegistry\(BuildCraftRegistries\.([A-Z0-9_]+)\)\s*;")
+
+# These used to be public API2 implementations. Their presence under buildcraft.api.v2 is a regression.
+INTERNALIZED_PUBLIC_FILENAMES = {
+    "ImmutableApiFeatureSet.java",
+    "MjBuffer.java",
+    "SimpleApiRegistry.java",
+    "SimpleRegistryBuilder.java",
+    "RegistryBuilder.java",
+    "RegistrySnapshot.java",
+    "ReloadTransaction.java",
+    "ReloadableDefinitionRegistry.java",
+    "ReloadPhase.java",
+    "DefinitionValidator.java",
+    "PersistenceRegistryBuilder.java",
+    "PersistenceRegistrySnapshot.java",
+    "EnergyFluidRegistration.java",
+    "EnergyFluidReloadResult.java",
+    "MachineRecipeRegistration.java",
+    "MachineRecipeReloadResult.java",
+}
+
+EXPECTED_PROVIDER = "buildcraft.lib.internal.api.v2.BuildCraftApiRuntimeProvider"
 
 
 def java_files(root: Path):
@@ -47,6 +74,11 @@ def main() -> int:
     for path in api_files:
         text = path.read_text(encoding="utf-8")
         rel = path.relative_to(ROOT)
+        if path.name in INTERNALIZED_PUBLIC_FILENAMES:
+            errors.append(f"{rel}: implementation type must live in BuildCraft Lib, not public API2")
+        package_match = PACKAGE_RE.search(text)
+        if not package_match or not package_match.group(1).startswith("buildcraft.api.v2"):
+            errors.append(f"{rel}: API v2 source has an invalid package declaration")
         for imported in IMPORT_RE.findall(text):
             if imported.startswith(FORBIDDEN_API_IMPORT_PREFIXES):
                 errors.append(f"{rel}: forbidden loader/client import {imported}")
@@ -55,6 +87,12 @@ def main() -> int:
         for match in PUBLIC_STATIC_FIELD_RE.finditer(text):
             line = text.count("\n", 0, match.start()) + 1
             errors.append(f"{rel}:{line}: public writable static field is forbidden")
+        if path.name.endswith("Impl.java"):
+            errors.append(f"{rel}: implementation class name is forbidden in public API2")
+        if re.search(r"\b(?:public\s+)?(?:default\s+)?[^;{]+\s+reloadData\s*\(", text):
+            errors.append(f"{rel}: bulk reload publication belongs in BuildCraft Lib")
+        if path.name == "ApiRegistry.java" and re.search(r"\bvoid\s+freeze\s*\(", text):
+            errors.append(f"{rel}: registry freeze control belongs in BuildCraft Lib")
 
     fixture_files = list(java_files(FIXTURE_ROOT))
     if not fixture_files:
@@ -68,6 +106,9 @@ def main() -> int:
             if imported.startswith(("net.minecraftforge.", "net.neoforged.", "net.fabricmc.")):
                 errors.append(f"{rel}: fixture common code imports loader API {imported}")
 
+    if OLD_IMPL_ROOT.is_dir() and any(OLD_IMPL_ROOT.rglob("*.java")):
+        errors.append("Legacy implementation namespace buildcraft.lib.api.v2 still contains Java sources; use buildcraft.lib.internal.api.v2")
+
     if REGISTRY_KEYS_FILE.is_file() and RUNTIME_FILE.is_file():
         registry_keys = set(REGISTRY_KEY_RE.findall(REGISTRY_KEYS_FILE.read_text(encoding="utf-8")))
         runtime_keys = set(RUNTIME_REGISTRY_RE.findall(RUNTIME_FILE.read_text(encoding="utf-8")))
@@ -76,15 +117,37 @@ def main() -> int:
         for name in sorted(runtime_keys - registry_keys):
             errors.append(f"BuildCraftApiRuntime registers unknown BuildCraftRegistries.{name}")
     else:
-        errors.append("BuildCraftRegistries.java or BuildCraftApiRuntime.java is missing")
+        errors.append("BuildCraftRegistries.java or internal BuildCraftApiRuntime.java is missing")
+
+    if PUBLIC_API_FILE.is_file():
+        public_api = PUBLIC_API_FILE.read_text(encoding="utf-8")
+        if re.search(r"\b(?:public\s+)?static\s+void\s+install\s*\(", public_api):
+            errors.append("BuildCraftApi exposes runtime installation; bootstrap must stay in Lib/internal SPI")
+    else:
+        errors.append("BuildCraftApi.java is missing")
+
+    if (ROOT / "source-shared/src/main/java/buildcraft/api/v2/spi").exists():
+        errors.append("Implementation-only buildcraft.api.v2.spi namespace must not exist")
+    if not PROVIDER_FILE.is_file():
+        errors.append("Internal BuildCraftApiRuntimeProvider.java is missing")
+    if not PROVIDER_DESCRIPTOR.is_file():
+        errors.append("ApiRuntime ServiceLoader descriptor is missing")
+    else:
+        providers = [line.strip() for line in PROVIDER_DESCRIPTOR.read_text(encoding="utf-8").splitlines() if line.strip() and not line.lstrip().startswith("#")]
+        if providers != [EXPECTED_PROVIDER]:
+            errors.append(f"ApiRuntime descriptor must contain exactly {EXPECTED_PROVIDER}, found {providers}")
 
     if errors:
-        print("API v2 boundary validation FAILED:")
+        print("API v2 / Lib boundary validation FAILED:")
         for error in errors:
             print(f" - {error}")
         return 1
 
-    print(f"API v2 boundary OK: {len(api_files)} API file(s), {len(fixture_files)} fixture file(s)")
+    internal_count = len(list(java_files(ROOT / "source-shared/src/main/java/buildcraft/lib/internal/api/v2")))
+    print(
+        f"API v2 / Lib boundary OK: {len(api_files)} public API file(s), "
+        f"{internal_count} internal API backend file(s), {len(fixture_files)} fixture file(s)"
+    )
     return 0
 
 

@@ -15,9 +15,16 @@ public final class DefinitionSnapshot<V> {
     private final ReloadGeneration generation;
     private final Map<ResourceLocation, ResolvedDefinition<V>> definitions;
 
-    DefinitionSnapshot(ReloadGeneration generation, Map<ResourceLocation, ResolvedDefinition<V>> definitions) {
+    private DefinitionSnapshot(ReloadGeneration generation, Map<ResourceLocation, ResolvedDefinition<V>> definitions) {
         this.generation = Objects.requireNonNull(generation, "generation");
         this.definitions = Collections.unmodifiableMap(new LinkedHashMap<>(definitions));
+    }
+
+
+    public static <V> DefinitionSnapshot<V> of(
+        ReloadGeneration generation, Map<ResourceLocation, ResolvedDefinition<V>> definitions
+    ) {
+        return new DefinitionSnapshot<>(generation, definitions);
     }
 
     public static <V> DefinitionSnapshot<V> empty() {

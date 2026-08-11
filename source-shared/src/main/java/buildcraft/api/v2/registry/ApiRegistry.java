@@ -32,5 +32,4 @@ public interface ApiRegistry<T> {
     Collection<RegistryEntry<T>> entries();
 
     boolean frozen();
-    void freeze();
 }

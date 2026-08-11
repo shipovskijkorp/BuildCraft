@@ -7,7 +7,7 @@ package buildcraft.builders.snapshot;
 import buildcraft.api.core.EnumHandlerPriority;
 import buildcraft.api.template.ITemplateHandler;
 import buildcraft.api.template.ITemplateRegistry;
-import buildcraft.lib.api.v2.BuildCraftApiRuntime;
+import buildcraft.lib.internal.api.v2.BuildCraftApiRuntime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;

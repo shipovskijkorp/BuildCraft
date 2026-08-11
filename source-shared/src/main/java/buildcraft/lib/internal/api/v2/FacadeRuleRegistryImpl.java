@@ -1,0 +1,77 @@
+package buildcraft.lib.internal.api.v2;
+
+import buildcraft.api.v2.facade.FacadeRuleService;
+import buildcraft.api.v2.reload.DefinitionProvenance;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+
+public final class FacadeRuleRegistryImpl implements FacadeRuleService {
+    private record DisabledRule(ResourceLocation id, DefinitionProvenance provenance) {}
+    private record MappingRule(ResourceLocation id, ItemStack stack, DefinitionProvenance provenance) {}
+
+    private final Set<ResourceLocation> ruleIds = new HashSet<>();
+    private final Map<Block, DisabledRule> disabled = new LinkedHashMap<>();
+    private final Map<BlockState, MappingRule> mappings = new LinkedHashMap<>();
+
+    @Override
+    public synchronized void disable(ResourceLocation ruleId, Block block, DefinitionProvenance provenance) {
+        Objects.requireNonNull(ruleId, "ruleId");
+        Objects.requireNonNull(block, "block");
+        Objects.requireNonNull(provenance, "provenance");
+        ensureNewRuleId(ruleId);
+        DisabledRule candidate = new DisabledRule(ruleId, provenance);
+        disabled.merge(block, candidate, this::winningDisabled);
+    }
+
+    @Override
+    public synchronized void mapState(
+        ResourceLocation ruleId, BlockState state, ItemStack stack, DefinitionProvenance provenance
+    ) {
+        Objects.requireNonNull(ruleId, "ruleId");
+        Objects.requireNonNull(state, "state");
+        Objects.requireNonNull(stack, "stack");
+        Objects.requireNonNull(provenance, "provenance");
+        if (stack.isEmpty()) throw new IllegalArgumentException("Facade mapped stack must not be empty");
+        ensureNewRuleId(ruleId);
+        MappingRule candidate = new MappingRule(ruleId, stack.copy(), provenance);
+        mappings.merge(state, candidate, this::winningMapping);
+    }
+
+    @Override
+    public synchronized Optional<DefinitionProvenance> disabledBy(Block block) {
+        DisabledRule value = disabled.get(block);
+        return value == null ? Optional.empty() : Optional.of(value.provenance());
+    }
+
+    @Override
+    public synchronized Optional<ItemStack> mappedStack(BlockState state) {
+        MappingRule value = mappings.get(state);
+        return value == null ? Optional.empty() : Optional.of(value.stack().copy());
+    }
+
+    private void ensureNewRuleId(ResourceLocation id) {
+        if (!ruleIds.add(id)) throw new IllegalStateException("Duplicate facade rule id: " + id);
+    }
+
+    private DisabledRule winningDisabled(DisabledRule current, DisabledRule candidate) {
+        return compare(current.provenance(), current.id(), candidate.provenance(), candidate.id()) >= 0 ? current : candidate;
+    }
+
+    private MappingRule winningMapping(MappingRule current, MappingRule candidate) {
+        return compare(current.provenance(), current.id(), candidate.provenance(), candidate.id()) >= 0 ? current : candidate;
+    }
+
+    private static int compare(DefinitionProvenance left, ResourceLocation leftId, DefinitionProvenance right, ResourceLocation rightId) {
+        int priority = Integer.compare(left.priority(), right.priority());
+        if (priority != 0) return priority;
+        return -leftId.toString().compareTo(rightId.toString());
+    }
+}

@@ -5,7 +5,6 @@ import buildcraft.api.v2.fluid.FluidVariant;
 import buildcraft.api.v2.reload.DefinitionSnapshot;
 import buildcraft.api.v2.reload.ResolvedDefinition;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -16,15 +15,14 @@ import net.minecraft.world.item.ItemStack;
 /**
  * Authoritative API 2 view of BuildCraft combustion fuels and coolants.
  *
- * Code registrations form a persistent baseline. {@link #reloadData} replaces
- * only reload-owned entries and publishes the combined view atomically.
+ * Addons may contribute code-owned definitions through {@link #register}.
+ * Datapack reload publication is owned by BuildCraft internals and is deliberately
+ * not part of the supported addon API.
  */
 public interface EnergyFluidService {
     DefinitionSnapshot<EnergyFluidDefinition> snapshot();
 
     void register(ResourceLocation id, EnergyFluidDefinition definition, buildcraft.api.v2.reload.DefinitionProvenance provenance);
-
-    EnergyFluidReloadResult reloadData(Collection<EnergyFluidRegistration> definitions);
 
     default Optional<ProfileMatch<FuelProfile>> findFuel(FluidVariant fluid, FluidMatchContext context) {
         return findFluidProfile(FuelProfile.class, fluid, context);
