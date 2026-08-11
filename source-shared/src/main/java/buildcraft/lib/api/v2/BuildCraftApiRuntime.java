@@ -16,6 +16,7 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
 
     private final Map<ResourceLocation, ApiRegistry<?>> registries = new LinkedHashMap<>();
     private final Map<ServiceKey<?>, Object> services = new LinkedHashMap<>();
+    private final EnergyServiceImpl energy = new EnergyServiceImpl();
     private final PermissionServiceRegistryImpl permissions = new PermissionServiceRegistryImpl();
     private final EnergyFluidRegistryImpl energyFluids = new EnergyFluidRegistryImpl();
     private final MachineRecipeRegistryImpl machineRecipes = new MachineRecipeRegistryImpl();
@@ -25,6 +26,7 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final WorldPropertyServiceImpl worldProperties = new WorldPropertyServiceImpl();
 
     private BuildCraftApiRuntime() {
+        services.put(BuildCraftServices.ENERGY, energy);
         services.put(BuildCraftServices.PERMISSIONS, permissions);
         services.put(BuildCraftServices.ENERGY_FLUIDS, energyFluids);
         services.put(BuildCraftServices.MACHINE_RECIPES, machineRecipes);

@@ -9,7 +9,8 @@ public enum EnumEngineType implements IEngineType, StringRepresentable, IExtensi
     WOOD("buildcraftcore", "wood"),
     STONE("buildcraftenergy", "stone"),
     IRON("buildcraftenergy", "iron"),
-    CREATIVE("buildcraftenergy", "creative");
+    CREATIVE("buildcraftenergy", "creative"),
+    FE("buildcraftenergy", "fe");
 
     public final String unlocalizedTag;
     public final String resourceLocation;

@@ -70,8 +70,16 @@ public class LedgerHelp extends Ledger_Neptune {
             return;
         }
 
-        if (selected != null && positions.stream().noneMatch(this::sameAsSelected)) {
-            clearSelected();
+        if (selected != null) {
+            HelpPosition replacement = positions.stream().filter(this::sameTargetAsSelected).findFirst().orElse(null);
+            if (replacement == null) {
+                clearSelected();
+            } else if (!sameContent(replacement, selected)) {
+                setSelected(replacement);
+            } else {
+                // Keep the freshest HelpPosition instance so dynamic providers can replace their object safely.
+                selected = replacement;
+            }
         }
     }
 
@@ -120,14 +128,14 @@ public class LedgerHelp extends Ledger_Neptune {
                 break;
             }
         }
-        if (hovered != null && !same(hovered, selected)) {
+        if (hovered != null && (!sameTarget(hovered, selected) || !sameContent(hovered, selected))) {
             setSelected(hovered);
         }
 
         for (HelpPosition info : positions) {
             IGuiArea rect = info.target;
             boolean isHovered = rect.contains(gui.mouse);
-            boolean isSelected = same(info, selected);
+            boolean isSelected = sameTarget(info, selected);
             SpriteNineSliced split = SPRITE_HELP_SPLIT[isHovered ? 1 : 0][isSelected ? 1 : 0];
             RenderUtil.setGLColorFromInt(info.info.colour);
             split.draw(pose, rect);
@@ -171,15 +179,20 @@ public class LedgerHelp extends Ledger_Neptune {
         }
     }
 
-    private boolean sameAsSelected(HelpPosition other) {
-        return same(other, selected);
+    private boolean sameTargetAsSelected(HelpPosition other) {
+        return sameTarget(other, selected);
     }
 
-    private static boolean same(HelpPosition a, HelpPosition b) {
-        return a != null && b != null && a.info == b.info &&
+    private static boolean sameTarget(HelpPosition a, HelpPosition b) {
+        return a != null && b != null &&
+            a.info.title.equals(b.info.title) &&
             a.target.getX() == b.target.getX() &&
             a.target.getY() == b.target.getY() &&
             a.target.getWidth() == b.target.getWidth() &&
             a.target.getHeight() == b.target.getHeight();
+    }
+
+    private static boolean sameContent(HelpPosition a, HelpPosition b) {
+        return sameTarget(a, b) && a.info.contentSignature().equals(b.info.contentSignature());
     }
 }

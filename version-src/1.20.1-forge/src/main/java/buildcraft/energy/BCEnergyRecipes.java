@@ -222,6 +222,29 @@ public final class BCEnergyRecipes {
                     TriggerInstance.hasItems(BCCoreItems.GEAR_IRON.get())
                 )
                 .save(writer, new ResourceLocation(BCEnergy.MODID, "combustion_engine"));
+
+
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCEnergyBlocks.ENGINE_FE_ITEM.get())
+                .pattern("www")
+                .pattern(" g ")
+                .pattern("GpG")
+                .define('w', Items.REDSTONE)
+                .define('g', Items.GLASS)
+                .define('G', BCCoreItems.GEAR_IRON.get())
+                .define('p', Blocks.PISTON)
+                .unlockedBy("has_" + BCCoreItems.GEAR_IRON.getId().getPath(), TriggerInstance.hasItems(BCCoreItems.GEAR_IRON.get()))
+                .save(writer, new ResourceLocation(BCEnergy.MODID, "fe_engine"));
+
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCEnergyBlocks.DYNAMO_MJ_ITEM.get())
+                .pattern("wgw")
+                .pattern(" p ")
+                .pattern("GwG")
+                .define('w', Items.REDSTONE)
+                .define('g', Items.GLASS)
+                .define('G', BCCoreItems.GEAR_IRON.get())
+                .define('p', Blocks.PISTON)
+                .unlockedBy("has_" + BCCoreItems.GEAR_IRON.getId().getPath(), TriggerInstance.hasItems(BCCoreItems.GEAR_IRON.get()))
+                .save(writer, new ResourceLocation(BCEnergy.MODID, "mj_dynamo"));
         }
     }
 }

@@ -176,7 +176,28 @@ public class LocaleUtil {
         return Component.translatable(localeKeyFluidFlow, amount);
     }
 
+    public static MutableComponent localizeFe(long fe) {
+        if (BCLibConfig.hidePowerValues) {
+            return hiddenValue();
+        }
+        return Component.translatable("buildcraft.fe.static.short", FORMAT_FLUID.format(fe));
+    }
+
+    public static MutableComponent localizeFeFlow(long fePerTick) {
+        if (BCLibConfig.hidePowerValues) {
+            return hiddenValue();
+        }
+        long value = BCLibConfig.displayTimeGap.convertTicksToGap(fePerTick);
+        String key = BCLibConfig.displayTimeGap == BCLibConfig.TimeGap.SECONDS
+            ? "buildcraft.fe.flow.seconds.short"
+            : "buildcraft.fe.flow.short";
+        return Component.translatable(key, FORMAT_FLUID.format(value));
+    }
+
     public static MutableComponent localizeMj(long mj) {
+        if (BCLibConfig.powerMode.isDisplayFe()) {
+            return localizeFe(MjAPI.getFeConversion().microMjToFe(mj));
+        }
         if (BCLibConfig.hidePowerValues) {
             return hiddenValue();
         }
@@ -184,6 +205,9 @@ public class LocaleUtil {
     }
 
     public static MutableComponent localizeMjFlow(long mj) {
+        if (BCLibConfig.powerMode.isDisplayFe()) {
+            return localizeFeFlow(MjAPI.getFeConversion().microMjToFe(mj));
+        }
         if (BCLibConfig.hidePowerValues) {
             return hiddenValue();
         }

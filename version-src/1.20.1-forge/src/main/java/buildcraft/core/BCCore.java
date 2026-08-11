@@ -136,6 +136,8 @@ public class BCCore {
         public static final ResourceLocation ENGINE_CREATIVE_TEXTURE_MODEL = new ResourceLocation("buildcraftcore:item/engine_creative");
         public static final ResourceLocation ENGINE_STONE_TEXTURE_MODEL = new ResourceLocation("buildcraftenergy:item/engine_stone");
         public static final ResourceLocation ENGINE_IRON_TEXTURE_MODEL = new ResourceLocation("buildcraftenergy:item/engine_iron");
+        public static final ResourceLocation ENGINE_FE_TEXTURE_MODEL = new ResourceLocation("buildcraftenergy:item/engine_fe");
+        public static final ResourceLocation DYNAMO_MJ_TEXTURE_MODEL = new ResourceLocation("buildcraftenergy:block/mj_dynamo_texture_probe");
         public static final ResourceLocation ENGINE_LIGHT_SPRITE_MODEL = new ResourceLocation("buildcraftcore:block/engine_trunk_light_sprite");
         public static final ResourceLocation ENGINE_CHAMBER_SPRITE_MODEL = new ResourceLocation("buildcraftlib:block/engine_chamber_sprite");
     	
@@ -171,6 +173,8 @@ public class BCCore {
             event.register(ENGINE_CREATIVE_TEXTURE_MODEL);
             event.register(ENGINE_STONE_TEXTURE_MODEL);
             event.register(ENGINE_IRON_TEXTURE_MODEL);
+            event.register(ENGINE_FE_TEXTURE_MODEL);
+            event.register(DYNAMO_MJ_TEXTURE_MODEL);
             event.register(ENGINE_LIGHT_SPRITE_MODEL);
             event.register(ENGINE_CHAMBER_SPRITE_MODEL);
         }
@@ -183,13 +187,17 @@ public class BCCore {
                 event.getModels().get(ENGINE_REDSTONE_TEXTURE_MODEL),
                 event.getModels().get(ENGINE_CREATIVE_TEXTURE_MODEL),
                 event.getModels().get(ENGINE_STONE_TEXTURE_MODEL),
-                event.getModels().get(ENGINE_IRON_TEXTURE_MODEL)
+                event.getModels().get(ENGINE_IRON_TEXTURE_MODEL),
+                event.getModels().get(ENGINE_FE_TEXTURE_MODEL)
             );
+            RenderEngine_BC8.reloadDynamoSprites(event.getModels().get(DYNAMO_MJ_TEXTURE_MODEL));
         	ModelEngine.init(event.getModels().get(ENGINE_MODEL));
         	event.getModels().put(new ModelResourceLocation(new ResourceLocation(BCCore.MODID, "engine"), "type=wood"), new ModelEngine(RenderEngine_BC8.REDSTONE_BACK, RenderEngine_BC8.REDSTONE_SIDE));
         	event.getModels().put(new ModelResourceLocation(new ResourceLocation(BCCore.MODID, "engine"), "type=creative"), new ModelEngine(RenderEngine_BC8.CREATIVE_BACK, RenderEngine_BC8.CREATIVE_SIDE));
         	event.getModels().put(new ModelResourceLocation(new ResourceLocation(BCCore.MODID, "engine"), "type=stone"), new ModelEngine(RenderEngine_BC8.STONE_BACK, RenderEngine_BC8.STONE_SIDE));
         	event.getModels().put(new ModelResourceLocation(new ResourceLocation(BCCore.MODID, "engine"), "type=iron"), new ModelEngine(RenderEngine_BC8.IRON_BACK, RenderEngine_BC8.IRON_SIDE));
+        	event.getModels().put(new ModelResourceLocation(new ResourceLocation(BCCore.MODID, "engine"), "type=fe"), new ModelEngine(RenderEngine_BC8.FE_BACK, RenderEngine_BC8.FE_SIDE));
+        	event.getModels().put(new ModelResourceLocation(new ResourceLocation("buildcraftenergy", "mj_dynamo"), ""), new ModelEngine(RenderEngine_BC8.DYNAMO_BACK, RenderEngine_BC8.DYNAMO_SIDE));
         	ModelEngine.release();
         }
         

@@ -20,9 +20,16 @@ public class BCEnergySprites {
 	public static final ResourceLocation IRON_SIDE_R = new ResourceLocation("buildcraftenergy:blocks/engine/iron/side");
 	public static final ResourceLocation STONE_BACK_R = new ResourceLocation("buildcraftenergy:blocks/engine/stone/back");
 	public static final ResourceLocation STONE_SIDE_R = new ResourceLocation("buildcraftenergy:blocks/engine/stone/side");
+	public static final ResourceLocation FE_BACK_R = new ResourceLocation("buildcraftenergy:blocks/engine/fe/back");
+	public static final ResourceLocation FE_SIDE_R = new ResourceLocation("buildcraftenergy:blocks/engine/fe/side");
+	public static final ResourceLocation DYNAMO_BACK_R = new ResourceLocation("buildcraftenergy:blocks/mj_dynamo/back");
+	public static final ResourceLocation DYNAMO_FRONT_R = new ResourceLocation("buildcraftenergy:blocks/mj_dynamo/front");
+	public static final ResourceLocation DYNAMO_SIDE_R = new ResourceLocation("buildcraftenergy:blocks/mj_dynamo/side");
 
 	public static final ResourceLocation ENGINE_IRON_GUI = new ResourceLocation("buildcraftenergy:textures/gui/combustion_engine_gui.png");
 	public static final ResourceLocation ENGINE_STONE_GUI = new ResourceLocation("buildcraftenergy:textures/gui/steam_engine_gui.png");
+	public static final ResourceLocation ENGINE_FE_GUI = new ResourceLocation("buildcraftenergy:textures/gui/fe_engine_gui.png");
+	public static final ResourceLocation DYNAMO_MJ_GUI = new ResourceLocation("buildcraftenergy:textures/gui/mj_dynamo_gui.png");
 	
     public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
        
@@ -40,6 +47,11 @@ public class BCEnergySprites {
     		event.addSprite(IRON_SIDE_R);
     		event.addSprite(STONE_BACK_R);
     		event.addSprite(STONE_SIDE_R);
+		event.addSprite(FE_BACK_R);
+		event.addSprite(FE_SIDE_R);
+		event.addSprite(DYNAMO_BACK_R);
+		event.addSprite(DYNAMO_FRONT_R);
+		event.addSprite(DYNAMO_SIDE_R);
     		
         }
     }

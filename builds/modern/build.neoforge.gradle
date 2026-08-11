@@ -308,6 +308,15 @@ tasks.matching { it.name == 'runData' }.configureEach {
     dependsOn prepareEffectiveSource
 }
 
+// NeoForge's ModDev plugin derives Minecraft artifacts from the configured main
+// source set. That source set points at the materialized effective-source tree,
+// so Gradle 8.8 requires the producer relationship to be explicit. Without
+// this dependency createMinecraftArtifacts may run before the tree exists and
+// task validation reports an implicit dependency on prepareEffectiveSource.
+tasks.matching { it.name == 'createMinecraftArtifacts' }.configureEach {
+    dependsOn prepareEffectiveSource
+}
+
 repositories {
     mavenCentral()
 
@@ -401,63 +410,42 @@ tasks.named('jar', Jar) {
     }
 }
 
+def releaseOutputDir = new File(repositoryRoot, "build/libs/${buildGeneration}/${modVersion}")
+def cleanupStandaloneApiV2Artifacts = tasks.register('cleanupStandaloneApiV2Artifacts', Delete) {
+    group = 'build'
+    description = "Remove obsolete standalone API 2 jars for ${targetName}"
+    delete fileTree(new File(project.buildDir, 'libs')) {
+        include '*-api-v2.jar'
+        include '*-api-v2-sources.jar'
+    }
+    delete fileTree(releaseOutputDir) {
+        include "${archiveName}-${project.version}-api-v2.jar"
+        include "${archiveName}-${project.version}-api-v2-sources.jar"
+    }
+}
+
+tasks.named('assemble') {
+    dependsOn cleanupStandaloneApiV2Artifacts
+}
+
 tasks.register('buildAndCollect', Copy) {
     group = 'build'
     description = "Build and collect the ${targetName} production jar"
     dependsOn tasks.named('build')
     from tasks.named('jar').flatMap { it.archiveFile }
-    into new File(repositoryRoot, "build/libs/${buildGeneration}/${modVersion}")
+    into releaseOutputDir
 }
 
-// Compile-only SDK artifact. API 2 remains bundled in the normal BuildCraft
-// jar at runtime; this classifier gives addon projects a boundary-clean
-// dependency that cannot accidentally expose BuildCraft implementation.
-def apiV2Jar = tasks.register('apiV2Jar', Jar) {
-    group = 'build'
-    description = "Package the isolated BuildCraft API 2 surface for ${targetName}"
-    dependsOn tasks.named('compileApiV2Java')
-    archiveClassifier = 'api-v2'
-    from sourceSets.apiV2.output
-    manifest {
-        attributes([
-                'Specification-Title': 'BuildCraft Extension API 2',
-                'Specification-Version': modVersion,
-                'Implementation-Title': 'BuildCraft Extension API 2',
-                'Implementation-Version': project.version,
-                'BuildCraft-Target': targetName
-        ])
-    }
-}
-
-def apiV2SourcesJar = tasks.register('apiV2SourcesJar', Jar) {
-    group = 'build'
-    description = "Package BuildCraft API 2 sources for ${targetName}"
-    dependsOn prepareEffectiveSource
-    archiveClassifier = 'api-v2-sources'
-    from(new File(effectiveSourceDir, 'src/main/java')) {
-        include 'buildcraft/api/v2/**'
-    }
-}
-
-tasks.named('assemble') {
-    dependsOn apiV2Jar
-    dependsOn apiV2SourcesJar
-}
-
-tasks.named('buildAndCollect', Copy) {
-    dependsOn apiV2Jar
-    dependsOn apiV2SourcesJar
-    from apiV2Jar.flatMap { it.archiveFile }
-    from apiV2SourcesJar.flatMap { it.archiveFile }
-}
+// API 2 is bundled directly in the normal BuildCraft production jar.
+// The isolated apiV2 source set and addonFixture remain verification-only: they
+// prove that addons can compile against the public surface without implementation
+// classes, but they intentionally do not create extra release artifacts.
 
 
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
             artifact jar
-            artifact apiV2Jar
-            artifact apiV2SourcesJar
         }
     }
     repositories {

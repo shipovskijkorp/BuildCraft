@@ -174,6 +174,8 @@ public class BCCore {
         	event.getModels().put(new ModelResourceLocation("buildcraftcore:engine#type=creative"), new ModelEngine(RenderEngine_BC8.CREATIVE_BACK, RenderEngine_BC8.CREATIVE_SIDE));
         	event.getModels().put(new ModelResourceLocation("buildcraftcore:engine#type=stone"), new ModelEngine(RenderEngine_BC8.STONE_BACK, RenderEngine_BC8.STONE_SIDE));
         	event.getModels().put(new ModelResourceLocation("buildcraftcore:engine#type=iron"), new ModelEngine(RenderEngine_BC8.IRON_BACK, RenderEngine_BC8.IRON_SIDE));
+        	event.getModels().put(new ModelResourceLocation("buildcraftcore:engine#type=fe"), new ModelEngine(RenderEngine_BC8.FE_BACK, RenderEngine_BC8.FE_SIDE));
+        	event.getModels().put(new ModelResourceLocation("buildcraftenergy:mj_dynamo#"), new ModelEngine(RenderEngine_BC8.DYNAMO_BACK, RenderEngine_BC8.DYNAMO_SIDE));
         	ModelEngine.release();
         }
 

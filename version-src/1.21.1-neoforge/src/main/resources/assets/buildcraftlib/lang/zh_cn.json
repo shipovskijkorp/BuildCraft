@@ -244,12 +244,8 @@
   "buildcraft.help.tank.title.": "Tank",
   "buildcraft.help.tank.slot.title": "Tank contents",
   "buildcraft.help.tank.slot.desc": "Shows the fluid stored in this tank.",
-  "buildcraft.help.mj_dynamo.rf_battery.title": "RF Battery",
-  "buildcraft.help.mj_dynamo.rf_battery.desc": "Converts between BuildCraft MJ and Forge Energy.",
-  "buildcraft.help.rf_engine.rf_battery.title": "RF Battery",
-  "buildcraft.help.rf_engine.rf_battery.desc": "Converts between Forge Energy and BuildCraft MJ.",
-  "buildcraft.help.rf_engine.upgrades.title": "Upgrades",
-  "buildcraft.help.rf_engine.upgrades.desc": "Add compatible gears to increase conversion rate. Max 1 gear per slot.",
+  "buildcraft.help.fe_engine.upgrades.title": "Upgrades",
+  "buildcraft.help.fe_engine.upgrades.desc": "Add compatible gears to increase conversion rate. Max 1 gear per slot.",
   "buildcraft.help.architect.mode.title": "Recording mode",
   "buildcraft.help.architect.mode.desc": "Creative mode records creative-only and otherwise unsupported blocks. Survival mode skips unsupported blocks.",
   "buildcraft.help.architect.rotate.title": "Rotation",
@@ -321,5 +317,9 @@
   "plugin_buildcraftlib.jade_owner": "BuildCraft owner",
   "plugin_buildcraftlib.jade_pipe_details": "BuildCraft pipe details",
   "plugin_buildcraftlib.jade_robot": "BuildCraft robot",
-  "plugin_buildcraftlib.jade_robot_details": "BuildCraft robot details"
+  "plugin_buildcraftlib.jade_robot_details": "BuildCraft robot details",
+  "buildcraft.help.mj_dynamo.fe_battery.title": "FE Battery",
+  "buildcraft.help.mj_dynamo.fe_battery.desc": "Converts between BuildCraft MJ and Forge Energy.",
+  "buildcraft.help.fe_engine.fe_battery.title": "FE Battery",
+  "buildcraft.help.fe_engine.fe_battery.desc": "Converts between Forge Energy and BuildCraft MJ."
 }

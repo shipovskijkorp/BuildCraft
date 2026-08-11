@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,6 +57,7 @@ public class PermissionServiceTester {
         assertTrue(context.isSimulation());
         assertTrue(context.actor().representsPlayer());
         assertEquals(ActorType.MACHINE_OWNER, context.actor().type());
+        assertEquals(id("test_dimension"), context.dimensionId());
         assertFalse(context.target().blockPos().isEmpty());
     }
 
@@ -86,10 +86,9 @@ public class PermissionServiceTester {
     }
 
     private static WorldOperationContext context(OperationMode mode, AutomationActor actor) {
-        Level level = new Level();
-        return new WorldOperationContext(
+        return WorldOperationContext.detachedForTesting(
             actor,
-            level,
+            id("test_dimension"),
             BlockPos.ZERO,
             WorldOperationTarget.block(new BlockPos(1, 2, 3)),
             WorldOperationKind.BLOCK_BREAK,

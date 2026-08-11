@@ -77,6 +77,8 @@ public class BCEnergy {
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
         registerEngineCapabilities(event, BCEnergyBlocks.ENGINE_STONE_TILE_BC8.get());
         registerEngineCapabilities(event, BCEnergyBlocks.ENGINE_IRON_TILE_BC8.get());
+        registerEngineCapabilities(event, BCEnergyBlocks.ENGINE_FE_TILE_BC8.get());
+        registerEngineCapabilities(event, BCEnergyBlocks.DYNAMO_MJ_TILE.get());
 
         BCCapabilityRegistration.registerBlockEntity(
             event, Capabilities.ItemHandler.BLOCK, BCEnergyBlocks.ENGINE_STONE_TILE_BC8.get()

@@ -56,6 +56,19 @@ public class ElementHelpInfo {
         return Component.literal(resolve(title));
     }
 
+    /**
+     * Stable description of the currently rendered help text. Dynamic help providers
+     * may create a new ElementHelpInfo each frame; the help ledger uses this value
+     * to refresh the selected page only when its visible content actually changes.
+     */
+    public String contentSignature() {
+        StringBuilder builder = new StringBuilder(title).append('\0').append(preTranslated);
+        for (String line : localeKeys) {
+            builder.append('\0').append(line);
+        }
+        return builder.toString();
+    }
+
     @OnlyIn(Dist.CLIENT)
     public void addGuiElements(GuiElementContainerHelp container) {
         BuildCraftGui gui = container.gui;

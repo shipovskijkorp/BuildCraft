@@ -27,6 +27,7 @@ public enum PipeRegistry implements IPipeRegistry {
     INSTANCE;
 
     private final Map<ResourceLocation, PipeDefinition> definitions = new HashMap<>();
+    private final Map<ResourceLocation, PipeDefinition> aliases = new HashMap<>();
     private final Map<PipeDefinition, IItemPipe> pipeItems = new IdentityHashMap<>();
 
     @Override
@@ -70,10 +71,26 @@ public enum PipeRegistry implements IPipeRegistry {
         return pipeItems.get(definition);
     }
 
+    /** Registers a read-only compatibility alias for pipe definition IDs stored in world NBT. */
+    public void registerAlias(String identifier, PipeDefinition target) {
+        if (identifier == null) throw new NullPointerException("identifier");
+        if (target == null) throw new NullPointerException("target");
+        ResourceLocation id = new ResourceLocation(identifier);
+        PipeDefinition canonical = definitions.get(id);
+        if (canonical != null && canonical != target) {
+            throw new IllegalStateException("Pipe alias shadows a registered definition: " + id);
+        }
+        PipeDefinition previous = aliases.putIfAbsent(id, target);
+        if (previous != null && previous != target) {
+            throw new IllegalStateException("Conflicting pipe alias " + id);
+        }
+    }
+
     @Override
     @Nullable
     public PipeDefinition getDefinition(ResourceLocation identifier) {
-        return definitions.get(identifier);
+        PipeDefinition definition = definitions.get(identifier);
+        return definition != null ? definition : aliases.get(identifier);
     }
 
     @Nonnull

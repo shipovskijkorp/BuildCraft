@@ -49,6 +49,8 @@ public class BCTransportSprites {
 
     public static final SpriteHolder POWER_FLOW;
     public static final SpriteHolder POWER_FLOW_OVERLOAD;
+    public static final SpriteHolder[] POWER_LIMIT;
+    public static final SpriteHolder[] FE_LIMIT;
     
     static {
         PIPE_COLOUR = getHolder("pipes/overlay_stained");
@@ -83,6 +85,26 @@ public class BCTransportSprites {
 
         POWER_FLOW = getHolder("pipes/power_flow");
         POWER_FLOW_OVERLOAD = getHolder("pipes/power_flow_overload");
+
+        POWER_LIMIT = new SpriteHolder[] {
+            getHolder("triggers/trigger_limiter_m256"),
+            getHolder("triggers/trigger_limiter_m128"),
+            getHolder("triggers/trigger_limiter_m64"),
+            getHolder("triggers/trigger_limiter_m16"),
+            getHolder("triggers/trigger_limiter_m8"),
+            getHolder("triggers/trigger_limiter_m2"),
+            getHolder("triggers/trigger_limiter_m0"),
+        };
+
+        FE_LIMIT = new SpriteHolder[] {
+            getHolder("triggers/trigger_fe_limiter_m256"),
+            getHolder("triggers/trigger_fe_limiter_m128"),
+            getHolder("triggers/trigger_fe_limiter_m64"),
+            getHolder("triggers/trigger_fe_limiter_m16"),
+            getHolder("triggers/trigger_fe_limiter_m8"),
+            getHolder("triggers/trigger_fe_limiter_m2"),
+            getHolder("triggers/trigger_fe_limiter_m0"),
+        };
 
         TRIGGER_POWER_REQUESTED = getHolder("transport", "triggers/trigger_pipecontents_requestsenergy");
         TRIGGER_ITEMS_TRAVERSING = getHolder("transport", "triggers/trigger_pipecontents_containsitems");

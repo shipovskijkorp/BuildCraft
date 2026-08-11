@@ -47,6 +47,6 @@
   "item.buildcraftcore.spring_oil": "Źródło ropy",
   "item.buildcraftcore.marker_path": "Znacznik ścieżki",
   "item.buildcraftcore.marker_volume": "Znacznik obszaru",
-  "chat.pipe.power.iron.mode": "Ograniczono do %d RF/t",
+  "chat.pipe.power.iron.mode": "Ograniczono do %d FE/t",
   "chat.pipe.power.iron.mode.numberless": "Switched to %s limit"
 }

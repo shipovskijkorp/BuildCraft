@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.common.util.LazyOptional;
 
 /** Provides a quick way to return all types of a single {@link IMjConnector} for all the different capabilities. */
@@ -26,12 +28,16 @@ public class MjCapabilityHelper implements ICapabilityProvider {
     @Nullable
     private final LazyOptional<IMjPassiveProvider> provider;
 
+    @Nonnull
+    private final LazyOptional<IEnergyStorage> feReceiver;
+
     public MjCapabilityHelper(@Nonnull IMjConnector mj) {
         this.connector = LazyOptional.of(() -> mj);
         this.receiver = mj instanceof IMjReceiver ? LazyOptional.of(() -> (IMjReceiver)mj) : LazyOptional.empty();
         this.rsReceiver = mj instanceof IMjRedstoneReceiver ? LazyOptional.of(() -> (IMjRedstoneReceiver)mj) : LazyOptional.empty();
         this.readable = mj instanceof IMjReadable ? LazyOptional.of(() -> (IMjReadable)mj) : LazyOptional.empty();
         this.provider = mj instanceof IMjPassiveProvider ? LazyOptional.of(() -> (IMjPassiveProvider)mj) : LazyOptional.empty();
+        this.feReceiver = mj instanceof IMjReceiver ? LazyOptional.of(() -> new MjReceiverEnergyStorage((IMjReceiver) mj)) : LazyOptional.empty();
     }
 
 
@@ -51,6 +57,9 @@ public class MjCapabilityHelper implements ICapabilityProvider {
         }
         if (capability == MjAPI.CAP_PASSIVE_PROVIDER) {
             return provider.cast();
+        }
+        if (capability == ForgeCapabilities.ENERGY && MjAPI.isFeAutoConversionEnabled()) {
+            return feReceiver.cast();
         }
         return LazyOptional.empty();
     }

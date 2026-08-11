@@ -16,6 +16,7 @@ import buildcraft.api.statements.ITriggerExternal;
 import buildcraft.api.statements.ITriggerInternal;
 import buildcraft.api.statements.ITriggerInternalSided;
 import buildcraft.api.statements.ITriggerProvider;
+import buildcraft.api.transport.pipe.IFlowForgeEnergy;
 import buildcraft.api.transport.pipe.IPipeHolder;
 import buildcraft.api.transport.pipe.PipeEventStatement;
 import buildcraft.lib.misc.ColourUtil;
@@ -43,7 +44,8 @@ public enum TriggerProviderPipes implements ITriggerProvider {
                 }
             }
 
-            if (holder.getPipe().getFlow() instanceof PipeFlowPower) {
+            if (holder.getPipe().getFlow() instanceof PipeFlowPower
+                || holder.getPipe().getFlow() instanceof IFlowForgeEnergy) {
                 triggers.add(BCTransportStatements.TRIGGER_POWER_REQUESTED);
             }
         }

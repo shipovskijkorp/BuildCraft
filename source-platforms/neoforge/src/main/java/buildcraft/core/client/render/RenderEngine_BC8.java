@@ -27,6 +27,16 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 	private static TextureAtlasSprite LIGHT;
 	private static TextureAtlasSprite TRUNK;
 	private static TextureAtlasSprite CHAMBER;
+
+	public static TextureAtlasSprite getTrunkLightSprite() {
+		if (LIGHT == null) throw new IllegalStateException("Engine trunk-light sprite has not been baked yet");
+		return LIGHT;
+	}
+
+	public static TextureAtlasSprite getChamberSprite() {
+		if (CHAMBER == null) throw new IllegalStateException("Engine chamber sprite has not been baked yet");
+		return CHAMBER;
+	}
 	public static TextureAtlasSprite REDSTONE_BACK;
 	public static TextureAtlasSprite REDSTONE_SIDE;
 	public static TextureAtlasSprite CREATIVE_BACK;
@@ -35,6 +45,11 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 	public static TextureAtlasSprite IRON_SIDE;
 	public static TextureAtlasSprite STONE_BACK;
 	public static TextureAtlasSprite STONE_SIDE;
+	public static TextureAtlasSprite FE_BACK;
+	public static TextureAtlasSprite FE_SIDE;
+	public static TextureAtlasSprite DYNAMO_BACK;
+	public static TextureAtlasSprite DYNAMO_FRONT;
+	public static TextureAtlasSprite DYNAMO_SIDE;
 
 	public static void reloadSprites(
 		BakedModel lightModel,
@@ -42,7 +57,8 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 		BakedModel redstoneModel,
 		BakedModel creativeModel,
 		BakedModel stoneModel,
-		BakedModel ironModel
+		BakedModel ironModel,
+		BakedModel feModel
 	) {
 		LIGHT = getParticleSprite(lightModel, "engine trunk light");
 		CHAMBER = getParticleSprite(chamberModel, "engine chamber");
@@ -55,6 +71,14 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 		STONE_SIDE = findSprite(stoneModel, ResourceLocation.parse("buildcraftenergy:blocks/engine/stone/side"));
 		IRON_BACK = findSprite(ironModel, ResourceLocation.parse("buildcraftenergy:blocks/engine/iron/back"));
 		IRON_SIDE = findSprite(ironModel, ResourceLocation.parse("buildcraftenergy:blocks/engine/iron/side"));
+		FE_BACK = findSprite(feModel, ResourceLocation.parse("buildcraftenergy:blocks/engine/fe/back"));
+		FE_SIDE = findSprite(feModel, ResourceLocation.parse("buildcraftenergy:blocks/engine/fe/side"));
+	}
+
+	public static void reloadDynamoSprites(BakedModel dynamoModel) {
+		DYNAMO_BACK = findSprite(dynamoModel, ResourceLocation.parse("buildcraftenergy:blocks/mj_dynamo/back"));
+		DYNAMO_FRONT = findSprite(dynamoModel, ResourceLocation.parse("buildcraftenergy:blocks/mj_dynamo/front"));
+		DYNAMO_SIDE = findSprite(dynamoModel, ResourceLocation.parse("buildcraftenergy:blocks/mj_dynamo/side"));
 	}
 
 	private static TextureAtlasSprite getParticleSprite(BakedModel model, String description) {
@@ -127,6 +151,7 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 //        float f1 = neighborcombineresult.<Float2FloatFunction>apply(ChestBlock.opennessCombiner(tile)).get(light)
 //        int i = neighborcombineresult.<Int2IntFunction>apply(new BrightnessCombiner<>()).applyAsInt(light);
         TextureAtlasSprite BACK = tile.getTextureBack();
+        TextureAtlasSprite FRONT = tile.getTextureFront();
         TextureAtlasSprite SIDE = tile.getTextureSide();
         VertexConsumer builder = buffer.getBuffer(RenderType.solid());
         int texoffset = 0;
@@ -174,7 +199,7 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
             break;
         }
 //        renderStatic(BACK,SIDE, pose, builder, light, 0,overlay);
-        renderMovingBack(BACK, pose, builder, light, offset,overlay);
+        renderMovingBack(FRONT, pose, builder, light, offset,overlay);
         for(int i=0;i<4;i++) {
         	renderLight(LIGHT, pose, builder, 15728880, offset,overlay,texoffset);
         	renderMovingSide(SIDE, pose, builder, light, offset,overlay);

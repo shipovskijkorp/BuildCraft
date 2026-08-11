@@ -16,6 +16,7 @@ import buildcraft.api.enums.EnumPowerStage;
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.IMjReceiver;
 import buildcraft.api.mj.MjAPI;
+import buildcraft.api.mj.MjToFeAutoConverter;
 import buildcraft.api.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.core.client.model.ModelEngine;
@@ -43,6 +44,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fml.LogicalSide;
@@ -444,7 +447,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         persistedRedstonePowered = isRedstonePowered;
     }
 
-    private long getPowerToExtract(boolean doExtract) {
+    protected long getPowerToExtract(boolean doExtract) {
         IMjReceiver receiver = getReceiverToPower(currentDirection);
         if (receiver == null) {
             return 0;
@@ -459,7 +462,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         // return extractEnergy(0, getActualOutput(), false); // Uncomment for constant power
     }
 
-    private void sendPower() {
+    protected void sendPower() {
         IMjReceiver receiver = getReceiverToPower(currentDirection);
         if (receiver == null) {
             return;
@@ -647,9 +650,9 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         IMjReceiver rec = tile.getCapability(MjAPI.CAP_RECEIVER, side.getOpposite()).orElse(null);
         if (rec != null && rec.canConnect(mjConnector) && mjConnector.canConnect(rec)) {
             return rec;
-        } else {
-            return null;
         }
+        IEnergyStorage fe = tile.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).orElse(null);
+        return MjToFeAutoConverter.createReceiver(fe);
     }
 
     public IMjReceiver getReceiverToPower(Direction side) {
@@ -686,9 +689,9 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         IMjReceiver recv = next.getCapability(MjAPI.CAP_RECEIVER, side.getOpposite()).orElse(null);
         if (recv != null && recv.canConnect(mjConnector) && mjConnector.canConnect(recv)) {
             return recv;
-        } else {
-            return null;
         }
+        IEnergyStorage fe = next.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).orElse(null);
+        return MjToFeAutoConverter.createReceiver(fe);
     }
 
     @Override
@@ -757,6 +760,15 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     
     @OnlyIn(Dist.CLIENT)
 	public abstract TextureAtlasSprite getTextureBack();
+
+    /**
+     * Texture used by the moving piston face. Normal engines use their back texture; converters such as the
+     * BuildCraft 8 MJ Dynamo can override this without duplicating the engine renderer.
+     */
+    @OnlyIn(Dist.CLIENT)
+    public TextureAtlasSprite getTextureFront() {
+        return getTextureBack();
+    }
 
     @OnlyIn(Dist.CLIENT)
 	public abstract TextureAtlasSprite getTextureSide();

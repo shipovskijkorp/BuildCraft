@@ -6,6 +6,8 @@
  */
 package buildcraft.core;
 
+import buildcraft.api.mj.MjAPI;
+import buildcraft.api.mj.MjFeConversion;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.BCLibConfig.ChunkLoaderLevel;
 import buildcraft.lib.BCLibConfig.ChunkLoaderType;
@@ -49,6 +51,8 @@ public class BCCoreConfig {
     private static BooleanValue propUseWrenchTag;
 
     private static IntValue propGuideItemSearchLimit;
+    private static ForgeConfigSpec.DoubleValue propMjPerFe;
+    private static ForgeConfigSpec.EnumValue<BCLibConfig.PowerMode> propPowerMode;
     private static IntValue propMaxGuideSearchResults;
     private static IntValue propItemLifespan;
     private static IntValue propMarkerMaxDistance;
@@ -159,6 +163,13 @@ public class BCCoreConfig {
             .defineInRange("guideItemSearchLimit", 10_000, 1_500, 5_000_000);
         builder.pop();
 
+        builder.push("power");
+        propMjPerFe = builder.comment("MJ per 1 FE. Default 0.1 means 1 MJ = 10 FE.")
+            .worldRestart().defineInRange("mjPerFe", 0.1D, 0.0001D, 0.2D);
+        propPowerMode = builder.comment("MJ_ONLY, MJ_AUTOCONVERT_FE, or DISPLAY_FE")
+            .worldRestart().defineEnum("powerMode", BCLibConfig.PowerMode.MJ_ONLY);
+        builder.pop();
+
         config = builder.build();
     }
 
@@ -205,6 +216,9 @@ public class BCCoreConfig {
         BCLibConfig.chunkLoadingLevel = propChunkLoadLevel.get();
         BCLibConfig.useSwappableSprites = propUseSwappableSprites.get();
 
+        BCLibConfig.mjFeConversion = MjFeConversion.createParsed(propMjPerFe.get());
+        BCLibConfig.powerMode = propPowerMode.get();
+        MjAPI.setFeStatus(new BCLibConfig.MjToFeStatus());
         BCLibConfig.refreshConfigs();
     }
 }

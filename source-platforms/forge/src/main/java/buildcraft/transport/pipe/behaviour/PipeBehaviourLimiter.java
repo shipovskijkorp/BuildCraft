@@ -10,15 +10,20 @@ import java.io.IOException;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.MjAPI;
+import buildcraft.api.transport.pipe.IFlowForgeEnergy;
 import buildcraft.api.transport.pipe.IFlowPower;
 import buildcraft.api.transport.pipe.IPipe;
 import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
 import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.api.transport.pipe.PipeEventActionActivate;
+import buildcraft.api.transport.pipe.PipeApi.ForgeEnergyTransferInfo;
 import buildcraft.api.transport.pipe.PipeApi.PowerTransferInfo;
 import buildcraft.api.transport.pipe.PipeBehaviour;
 import buildcraft.api.transport.pipe.PipeEventHandler;
+import buildcraft.api.transport.pipe.PipeEventForgeEnergy;
 import buildcraft.api.transport.pipe.PipeEventPower;
 import buildcraft.lib.misc.EntityUtil;
+import buildcraft.transport.statements.ActionPowerLimit;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -72,6 +77,23 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
         }
     }
 
+    @PipeEventHandler
+    public void configureForgeEnergy(PipeEventForgeEnergy.Configure event) {
+        if (limitShift == MAX_SHIFT) {
+            event.disableTransfer();
+        } else {
+            event.setMaxPower(event.getMaxPower() >> limitShift);
+        }
+    }
+
+    @PipeEventHandler
+    public void onActionActivate(PipeEventActionActivate event) {
+        if (event.action instanceof ActionPowerLimit action) {
+            limitShift = action.limitShift;
+            requestReconfigure();
+        }
+    }
+
     @Override
     public boolean onPipeActivate(Player player, BlockHitResult trace, Level level, EnumPipePart part) {
         if (EntityUtil.getWrenchHand(player) == null) {
@@ -85,9 +107,15 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
                 limitShift = 0;
             }
 
-            PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(pipe.getDefinition());
-            long limit = limitShift == MAX_SHIFT ? 0 : (transferInfo.transferPerTick >> limitShift) / MjAPI.MJ;
-            player.displayClientMessage(Component.translatable("chat.pipe.power.iron.mode", limit), true);
+            if (pipe.getFlow() instanceof IFlowForgeEnergy) {
+                ForgeEnergyTransferInfo transferInfo = PipeApi.getForgeEnergyTransferInfo(pipe.getDefinition());
+                int limit = limitShift == MAX_SHIFT ? 0 : transferInfo.transferPerTick >> limitShift;
+                player.displayClientMessage(Component.translatable("chat.pipe.fe.iron.mode", limit), true);
+            } else {
+                PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(pipe.getDefinition());
+                long limit = limitShift == MAX_SHIFT ? 0 : (transferInfo.transferPerTick >> limitShift) / MjAPI.MJ;
+                player.displayClientMessage(Component.translatable("chat.pipe.power.iron.mode", limit), true);
+            }
 
             requestReconfigure();
         }
@@ -97,6 +125,9 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
     private void requestReconfigure() {
         if (pipe.getFlow() instanceof IFlowPower powerFlow) {
             powerFlow.reconfigure();
+            pipe.getHolder().scheduleNetworkUpdate(PipeMessageReceiver.BEHAVIOUR);
+        } else if (pipe.getFlow() instanceof IFlowForgeEnergy feFlow) {
+            feFlow.reconfigure();
             pipe.getHolder().scheduleNetworkUpdate(PipeMessageReceiver.BEHAVIOUR);
         }
     }

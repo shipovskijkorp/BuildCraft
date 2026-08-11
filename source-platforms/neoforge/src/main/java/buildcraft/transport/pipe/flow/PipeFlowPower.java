@@ -23,6 +23,7 @@ import buildcraft.api.mj.IMjPassiveProvider;
 import buildcraft.api.mj.IMjReceiver;
 import buildcraft.api.mj.IMjRedstoneReceiver;
 import buildcraft.api.mj.MjAPI;
+import buildcraft.api.mj.MjToFeAutoConverter;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.transport.pipe.IFlowPower;
 import buildcraft.api.transport.pipe.IPipe;
@@ -48,6 +49,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.BlockCapability;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.fml.LogicalSide;
 
@@ -506,7 +509,12 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             return null;
         }
 
-        return pipe.getHolder().getCapabilityFromPipe(face, MjAPI.CAP_RECEIVER);
+        IMjReceiver receiver = pipe.getHolder().getCapabilityFromPipe(face, MjAPI.CAP_RECEIVER);
+        if (receiver != null) {
+            return receiver;
+        }
+        IEnergyStorage fe = pipe.getHolder().getCapabilityFromPipe(face, Capabilities.EnergyStorage.BLOCK);
+        return MjToFeAutoConverter.createReceiver(fe);
     }
 
     public long getPowerRequested(@Nullable Direction side) {

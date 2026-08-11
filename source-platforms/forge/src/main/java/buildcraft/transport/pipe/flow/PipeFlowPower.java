@@ -24,6 +24,7 @@ import buildcraft.api.mj.IMjPassiveProvider;
 import buildcraft.api.mj.IMjReceiver;
 import buildcraft.api.mj.IMjRedstoneReceiver;
 import buildcraft.api.mj.MjAPI;
+import buildcraft.api.mj.MjToFeAutoConverter;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.transport.pipe.IFlowPower;
 import buildcraft.api.transport.pipe.IPipe;
@@ -49,8 +50,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.LogicalSide;
 
 public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
@@ -499,7 +502,15 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         }
 
         LazyOptional<IMjReceiver> tileReceiver = pipe.getHolder().getCapabilityFromPipe(face, MjAPI.CAP_RECEIVER);
-        return tileReceiver == null ? null : tileReceiver.orElse(null);
+        IMjReceiver receiver = tileReceiver == null ? null : tileReceiver.orElse(null);
+        if (receiver != null) {
+            return receiver;
+        }
+
+        LazyOptional<IEnergyStorage> feCapability =
+            pipe.getHolder().getCapabilityFromPipe(face, ForgeCapabilities.ENERGY);
+        IEnergyStorage fe = feCapability == null ? null : feCapability.orElse(null);
+        return MjToFeAutoConverter.createReceiver(fe);
     }
 
     public long getPowerRequested(@Nullable Direction side) {

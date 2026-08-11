@@ -19,7 +19,7 @@ When reporting a problem, always include:
 
 - Drop support for 1.21.1 Forge [✔]
 - New API system - in progress
-- FE/RF compat - in progress
+- FE compatibility [✔]
 - Port to 1.20.1 Fabric
 - Port to 1.21.11 Fabric/NeoForge
 - Port to 26.X Fabric/NeoForge
@@ -29,7 +29,6 @@ When reporting a problem, always include:
 - Minecraft 1.19.2 — Forge
 - Minecraft 1.20.1 — Forge
 - Minecraft 1.21.1 — NeoForge
-- Minecraft 1.21.1 — Forge (legacy)
 
 ## Multi-version build and source architecture
 

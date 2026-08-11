@@ -1,0 +1,7 @@
+{
+  "parent": "buildcraftlib:block/engine_base",
+  "textures": {
+    "back": "buildcraftenergy:blocks/mj_dynamo/back",
+    "side": "buildcraftenergy:blocks/mj_dynamo/side"
+  }
+}

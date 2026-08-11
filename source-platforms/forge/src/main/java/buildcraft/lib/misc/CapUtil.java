@@ -36,14 +36,14 @@ public class CapUtil {
     public static final Capability<IItemTransactor> CAP_ITEM_TRANSACTOR;
     
     @Nonnull
-    public static final Capability<IEnergyStorage> CAP_RF;
+    public static final Capability<IEnergyStorage> CAP_FE;
 
 
     static {
 
         CAP_ITEMS = getCapNonNull(ForgeCapabilities.ITEM_HANDLER, IItemHandler.class);
         CAP_FLUIDS = getCapNonNull(ForgeCapabilities.FLUID_HANDLER, IFluidHandler.class);
-        CAP_RF = getCapNonNull(ForgeCapabilities.ENERGY, IEnergyStorage.class);
+        CAP_FE = getCapNonNull(ForgeCapabilities.ENERGY, IEnergyStorage.class);
         CAP_ITEM_TRANSACTOR = CapabilityManager.get(new CapabilityToken<>(){});
         // FIXME: Move cap registration into API!
 

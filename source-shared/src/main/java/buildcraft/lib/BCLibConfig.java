@@ -10,6 +10,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import buildcraft.api.mj.IMjToFeStatus;
+import buildcraft.api.mj.MjFeConversion;
 import buildcraft.lib.chunkload.IChunkLoadingTile.LoadType;
 import buildcraft.lib.misc.LocaleUtil;
 
@@ -88,12 +90,50 @@ public class BCLibConfig {
     /** The maximum number of items that the guide book will index. */
     public static int guideItemSearchLimit = 10_000;
 
+    /** MJ/FE conversion. Default matches BuildCraft 8: 1 MJ = 10 FE. */
+    public static MjFeConversion mjFeConversion = MjFeConversion.createDefault();
+
+    /** Controls automatic Forge Energy compatibility for ordinary BuildCraft machines. */
+    public static PowerMode powerMode = PowerMode.MJ_ONLY;
+
     public static final List<Runnable> configChangeListeners = new ArrayList<>();
 
     /** Resets cached values across various BCLib classes that rely on these config options. */
     public static void refreshConfigs() {
         for (Runnable r : configChangeListeners) {
             r.run();
+        }
+    }
+
+    public enum PowerMode {
+        /** Pure BuildCraft MJ. Dedicated FE Engine / MJ Dynamo / FE pipes are still available. */
+        MJ_ONLY(false, false),
+        /** Ordinary BuildCraft machines accept FE and engines can feed FE consumers. */
+        MJ_AUTOCONVERT_FE(true, false),
+        /** Same conversion behaviour, but user-facing generic power readouts prefer FE. */
+        DISPLAY_FE(true, true);
+
+        private final boolean autoconvert;
+        private final boolean displayFe;
+
+        PowerMode(boolean autoconvert, boolean displayFe) {
+            this.autoconvert = autoconvert;
+            this.displayFe = displayFe;
+        }
+
+        public boolean isAutoconvertEnabled() { return autoconvert; }
+        public boolean isDisplayFe() { return displayFe; }
+    }
+
+    public static final class MjToFeStatus implements IMjToFeStatus {
+        @Override
+        public MjFeConversion getConversion() {
+            return mjFeConversion;
+        }
+
+        @Override
+        public boolean isAutoconvertEnabled() {
+            return powerMode.isAutoconvertEnabled();
         }
     }
 

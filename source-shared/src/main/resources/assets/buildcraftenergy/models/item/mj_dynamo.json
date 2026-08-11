@@ -1,0 +1,64 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "back": "buildcraftenergy:blocks/mj_dynamo/back",
+    "front": "buildcraftenergy:blocks/mj_dynamo/front",
+    "side": "buildcraftenergy:blocks/mj_dynamo/side",
+    "trunk": "buildcraftlib:blocks/engine/trunk_blue",
+    "chamber": "buildcraftlib:blocks/engine/chamber_base",
+    "particle": "buildcraftenergy:blocks/mj_dynamo/back"
+  },
+  "shade": true,
+  "elements": [
+    {
+      "name": "base",
+      "from": [0, 0, 0],
+      "to": [16, 4, 16],
+      "faces": {
+        "down":  { "uv": [0, 0, 16, 16], "texture": "#back" },
+        "up":    { "uv": [0, 0, 16, 16], "texture": "#back" },
+        "north": { "uv": [0, 0, 16, 4], "texture": "#side" },
+        "south": { "uv": [0, 0, 16, 4], "texture": "#side" },
+        "west":  { "uv": [0, 0, 16, 4], "texture": "#side" },
+        "east":  { "uv": [0, 0, 16, 4], "texture": "#side" }
+      }
+    },
+    {
+      "name": "base_moving",
+      "from": [2, 7.2, 2],
+      "to": [14, 11.2, 14],
+      "faces": {
+        "down":  { "uv": [0, 0, 12, 12], "texture": "#front" },
+        "up":    { "uv": [0, 0, 12, 12], "texture": "#front" },
+        "north": { "uv": [0, 12, 12, 16], "texture": "#front" },
+        "south": { "uv": [0, 12, 12, 16], "texture": "#front" },
+        "west":  { "uv": [0, 12, 12, 16], "texture": "#front" },
+        "east":  { "uv": [0, 12, 12, 16], "texture": "#front" }
+      }
+    },
+    {
+      "name": "trunk",
+      "from": [4, 4, 4],
+      "to": [12, 16, 12],
+      "faces": {
+        "down":  { "uv": [0, 0, 8, 8], "texture": "#trunk" },
+        "up":    { "uv": [0, 0, 8, 8], "texture": "#trunk" },
+        "north": { "uv": [8, 0, 16, 12], "texture": "#trunk" },
+        "south": { "uv": [8, 0, 16, 12], "texture": "#trunk" },
+        "west":  { "uv": [8, 0, 16, 12], "texture": "#trunk" },
+        "east":  { "uv": [8, 0, 16, 12], "texture": "#trunk" }
+      }
+    },
+    {
+      "name": "chamber",
+      "from": [3, 4, 3],
+      "to": [13, 7.2, 13],
+      "faces": {
+        "north": { "uv": [3, 3.2, 13, 0], "texture": "#chamber" },
+        "south": { "uv": [3, 3.2, 13, 0], "texture": "#chamber" },
+        "west":  { "uv": [3, 3.2, 13, 0], "texture": "#chamber" },
+        "east":  { "uv": [3, 3.2, 13, 0], "texture": "#chamber" }
+      }
+    }
+  ]
+}

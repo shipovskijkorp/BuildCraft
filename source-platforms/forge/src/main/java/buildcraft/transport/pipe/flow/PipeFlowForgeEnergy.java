@@ -1,0 +1,437 @@
+/*
+ * Copyright (c) 2017 SpaceToad and the BuildCraft team
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ */
+package buildcraft.transport.pipe.flow;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NotNull;
+
+import buildcraft.api.core.EnumPipePart;
+import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.api.mj.MjAPI;
+import buildcraft.api.tiles.IDebuggable;
+import buildcraft.api.transport.pipe.IFlowForgeEnergy;
+import buildcraft.api.transport.pipe.IPipe;
+import buildcraft.api.transport.pipe.IPipe.ConnectedType;
+import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.api.transport.pipe.PipeApi.ForgeEnergyTransferInfo;
+import buildcraft.api.transport.pipe.PipeEventForgeEnergy;
+import buildcraft.api.transport.pipe.PipeFlow;
+import buildcraft.core.BCCoreConfig;
+import buildcraft.lib.misc.VecUtil;
+import buildcraft.lib.misc.data.AverageInt;
+import buildcraft.transport.pipe.Pipe;
+
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.LogicalSide;
+
+/** BuildCraft 8 Forge Energy pipe flow, restored from the original external-energy flow with FE terminology. */
+public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, IDebuggable {
+    private static final int DEFAULT_MAX_POWER = 100;
+    public static final int NET_POWER_AMOUNTS = 2;
+
+    public Vec3 clientDisplayFlowCentre = VecUtil.VEC_HALF;
+    public Vec3 clientDisplayFlowCentreLast = VecUtil.VEC_HALF;
+    public long clientLastDisplayTime;
+
+    private int maxPower = -1;
+    private boolean disabled;
+    private boolean isReceiver;
+    private long currentWorldTime = Long.MIN_VALUE;
+    private final EnumMap<Direction, Section> sections = new EnumMap<>(Direction.class);
+
+    private final SafeTimeTracker networkTracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 2);
+    private final EnumFlow[] lastObservedFlows = new EnumFlow[Direction.values().length];
+    private final int[] lastObservedDisplayPower = new int[Direction.values().length];
+    private boolean networkUpdatePending;
+
+    public PipeFlowForgeEnergy(IPipe pipe) {
+        super(pipe);
+        initSections();
+    }
+
+    public PipeFlowForgeEnergy(IPipe pipe, CompoundTag nbt) {
+        super(pipe, nbt);
+        isReceiver = nbt.getBoolean("isReceiver");
+        initSections();
+    }
+
+    private void initSections() {
+        for (Direction face : Direction.values()) sections.put(face, new Section(face));
+    }
+
+    @Override
+    public CompoundTag writeToNbt() {
+        CompoundTag nbt = super.writeToNbt();
+        nbt.putBoolean("isReceiver", isReceiver);
+        return nbt;
+    }
+
+    @Override
+    public void writePayload(int id, FriendlyByteBuf buffer, LogicalSide side) {
+        super.writePayload(id, buffer, side);
+        if (side == LogicalSide.SERVER && (id == NET_POWER_AMOUNTS || id == NET_ID_FULL_STATE)) {
+            for (Direction face : Direction.values()) {
+                Section section = sections.get(face);
+                buffer.writeInt(section.displayPower);
+                buffer.writeEnum(section.displayFlow);
+            }
+        }
+    }
+
+    @Override
+    public void readPayload(int id, FriendlyByteBuf buffer, LogicalSide side) throws IOException {
+        super.readPayload(id, buffer, side);
+        if (side == LogicalSide.CLIENT && (id == NET_POWER_AMOUNTS || id == NET_ID_FULL_STATE)) {
+            for (Direction face : Direction.values()) {
+                Section section = sections.get(face);
+                section.displayPower = buffer.readInt();
+                section.displayFlow = buffer.readEnum(EnumFlow.class);
+            }
+        }
+    }
+
+    @Override
+    public boolean canConnect(Direction face, PipeFlow other) {
+        return other instanceof PipeFlowForgeEnergy;
+    }
+
+    @Override
+    public boolean canConnect(Direction face, BlockEntity tile) {
+        if (tile == null) return false;
+        return tile.getCapability(ForgeCapabilities.ENERGY, face.getOpposite()).isPresent();
+    }
+
+    private void ensureConfigured() {
+        if (maxPower < 0) reconfigure();
+    }
+
+    @Override
+    public void reconfigure() {
+        PipeEventForgeEnergy.Configure configure = new PipeEventForgeEnergy.Configure(pipe.getHolder(), this);
+        ForgeEnergyTransferInfo info = PipeApi.getForgeEnergyTransferInfo(pipe.getDefinition());
+        configure.setReceiver(info.isReceiver);
+        configure.setMaxPower(info.transferPerTick);
+        pipe.getHolder().fireEvent(configure);
+        isReceiver = configure.isReceiver();
+        maxPower = configure.getMaxPower();
+        disabled = configure.isTransferDisabled();
+        if (maxPower <= 0) maxPower = DEFAULT_MAX_POWER;
+    }
+
+    @Override
+    public int tryExtractPower(int maxExtracted, Direction from) {
+        ensureConfigured();
+        if (!isReceiver || disabled || from == null || maxExtracted <= 0) return 0;
+        BlockEntity tile = pipe.getConnectedTile(from);
+        if (tile == null) return 0;
+        IEnergyStorage storage = tile.getCapability(ForgeCapabilities.ENERGY, from.getOpposite()).orElse(null);
+        if (storage == null || !storage.canExtract()) return 0;
+
+        step();
+        Section section = sections.get(from);
+        int free = Math.max(0, maxPower - section.internalNextPower);
+        int requested = Math.min(Math.min(maxExtracted, maxPower), Math.min(getPowerRequested(from), free));
+        if (requested <= 0) return 0;
+        int simulated = Math.max(0, Math.min(requested, storage.extractEnergy(requested, true)));
+        if (simulated <= 0) return 0;
+        int extracted = Math.max(0, Math.min(simulated, storage.extractEnergy(simulated, false)));
+        if (extracted <= 0) return 0;
+        int leftover = section.receivePowerInternal(extracted);
+        int accepted = extracted - leftover;
+        if (accepted > 0) {
+            section.debugPowerInput = saturatingAdd(section.debugPowerInput, accepted);
+            section.displayFlow = EnumFlow.IN;
+            section.powerAverage.push(accepted);
+        }
+        return accepted;
+    }
+
+    @Override
+    public boolean isExternalEnergyReceiver(Direction side) {
+        if (side == null || pipe.getConnectedType(side) != ConnectedType.TILE) return false;
+        LazyOptional<IEnergyStorage> cap = pipe.getHolder().getCapabilityFromPipe(side, ForgeCapabilities.ENERGY);
+        IEnergyStorage storage = cap == null ? null : cap.orElse(null);
+        return storage != null && storage.canReceive();
+    }
+
+    @Override
+    public boolean onFlowActivate(Player player, BlockHitResult trace, Level level, EnumPipePart part) {
+        return super.onFlowActivate(player, trace, level, part);
+    }
+
+    public Section getSection(Direction side) {
+        return sections.get(side);
+    }
+
+    @Override
+    public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+        if (facing != null && capability == ForgeCapabilities.ENERGY && isReceiver && !disabled) {
+            return LazyOptional.of(() -> sections.get(facing)).cast();
+        }
+        return LazyOptional.empty();
+    }
+
+    @Override
+    public void getDebugInfo(List<String> left, List<String> right, Direction side) {
+        left.add("maxFE = " + maxPower + " FE/t");
+        left.add("isReceiver = " + isReceiver);
+        left.add("disabled = " + disabled);
+        left.add("internalFE = " + arrayToString(s -> s.internalPower) + " <- " + arrayToString(s -> s.internalNextPower));
+        left.add("- request: " + arrayToString(s -> s.powerQuery) + " <- " + arrayToString(s -> s.nextPowerQuery));
+        left.add("- FE: IN " + arrayToString(s -> s.debugPowerInput) + ", OUT " + arrayToString(s -> s.debugPowerOutput));
+    }
+
+    private String arrayToString(ToIntFunction<Section> getter) {
+        int[] arr = new int[Direction.values().length];
+        for (Direction face : Direction.values()) arr[face.ordinal()] = getter.applyAsInt(sections.get(face));
+        return Arrays.toString(arr);
+    }
+
+    @Override
+    public void onTick() {
+        ensureConfigured();
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
+            clientDisplayFlowCentreLast = clientDisplayFlowCentre;
+            for (Direction face : Direction.values()) {
+                Section section = sections.get(face);
+                section.clientDisplayFlowLast = section.clientDisplayFlow;
+                double diff = section.displayFlow.value * 2.4 * face.getAxisDirection().getStep();
+                section.clientDisplayFlow = (section.clientDisplayFlow + 16 + diff) % 16;
+                double centre = VecUtil.getValue(clientDisplayFlowCentre, face.getAxis());
+                clientDisplayFlowCentre = VecUtil.replaceValue(clientDisplayFlowCentre, face.getAxis(), (centre + 16 + diff / 2) % 16);
+            }
+            return;
+        }
+
+        step();
+
+        // Distribute energy already present in the pipe towards demand.
+        for (Direction inputFace : Direction.values()) {
+            Section input = sections.get(inputFace);
+            if (input.internalPower <= 0) continue;
+            int totalQuery = 0;
+            for (Direction outputFace : Direction.values()) {
+                if (outputFace != inputFace) totalQuery = saturatingAdd(totalQuery, sections.get(outputFace).powerQuery);
+            }
+            boolean returnPower = false;
+            if (totalQuery <= 0 && input.powerQuery > 0) {
+                totalQuery = input.powerQuery;
+                returnPower = true;
+            }
+            if (totalQuery <= 0) continue;
+
+            int unusedQuery = totalQuery;
+            for (Direction outputFace : Direction.values()) {
+                if (outputFace == inputFace && !returnPower) continue;
+                Section output = sections.get(outputFace);
+                if (output.powerQuery <= 0 || input.internalPower <= 0) continue;
+                int offered = (int) Math.min(input.internalPower,
+                    Math.max(0L, input.internalPower * (long) output.powerQuery / Math.max(1, unusedQuery)));
+                unusedQuery = Math.max(0, unusedQuery - output.powerQuery);
+                if (offered <= 0) continue;
+
+                int leftover = offered;
+                IPipe neighbour = pipe.getHolder().getNeighbourPipe(outputFace);
+                if (neighbour != null && neighbour != Pipe.EMPTY && neighbour.getFlow() instanceof PipeFlowForgeEnergy other
+                    && neighbour.isConnected(outputFace.getOpposite())) {
+                    leftover = other.sections.get(outputFace.getOpposite()).receivePowerInternal(offered);
+                } else {
+                    LazyOptional<IEnergyStorage> cap = pipe.getHolder().getCapabilityFromPipe(outputFace, ForgeCapabilities.ENERGY);
+                    IEnergyStorage receiver = cap == null ? null : cap.orElse(null);
+                    if (receiver != null && receiver.canReceive()) {
+                        int accepted = Math.max(0, Math.min(offered, receiver.receiveEnergy(offered, false)));
+                        leftover = offered - accepted;
+                    }
+                }
+
+                int used = offered - leftover;
+                if (used > 0) {
+                    input.internalPower -= used;
+                    output.debugPowerOutput = saturatingAdd(output.debugPowerOutput, used);
+                    input.powerAverage.push(used);
+                    output.powerAverage.push(used);
+                    input.displayFlow = EnumFlow.OUT;
+                    output.displayFlow = EnumFlow.IN;
+                }
+            }
+        }
+
+        for (Section section : sections.values()) {
+            section.powerAverage.tick();
+            double normalized = maxPower <= 0 ? 0 : section.powerAverage.getAverage() / (double) maxPower;
+            section.displayPower = (int) (Math.sqrt(Math.max(0, normalized)) * MjAPI.MJ);
+        }
+
+        // Ask neighbouring FE consumers how much they can really receive. Simulation is important for
+        // bufferless machines whose getMaxEnergyStored()/getEnergyStored() do not describe demand.
+        for (Direction face : Direction.values()) {
+            if (pipe.getConnectedType(face) != ConnectedType.TILE) continue;
+            LazyOptional<IEnergyStorage> cap = pipe.getHolder().getCapabilityFromPipe(face, ForgeCapabilities.ENERGY);
+            IEnergyStorage receiver = cap == null ? null : cap.orElse(null);
+            if (receiver != null && receiver.canReceive()) {
+                int requested = Math.max(0, receiver.receiveEnergy(maxPower, true));
+                if (requested > 0) requestPower(face, requested);
+            }
+        }
+
+        int[] transferQuery = new int[Direction.values().length];
+        for (Direction face : Direction.values()) {
+            if (!pipe.isConnected(face)) continue;
+            int query = 0;
+            for (Direction other : Direction.values()) {
+                if (other != face) query = saturatingAdd(query, sections.get(other).powerQuery);
+            }
+            transferQuery[face.ordinal()] = Math.min(maxPower, query);
+        }
+
+        for (Direction face : Direction.values()) {
+            if (disabled || transferQuery[face.ordinal()] <= 0 || !pipe.isConnected(face)) continue;
+            IPipe neighbour = pipe.getHolder().getNeighbourPipe(face);
+            if (neighbour == null || neighbour == Pipe.EMPTY || !(neighbour.getFlow() instanceof PipeFlowForgeEnergy other)) continue;
+            other.requestPower(face.getOpposite(), transferQuery[face.ordinal()]);
+        }
+
+        if (isReceiver && !disabled) {
+            for (Direction face : Direction.values()) {
+                int requested = transferQuery[face.ordinal()];
+                if (requested > 0 && pipe.getConnectedType(face) == ConnectedType.TILE) tryExtractPower(requested, face);
+            }
+        }
+
+        boolean changed = false;
+        for (Direction face : Direction.values()) {
+            Section section = sections.get(face);
+            int i = face.ordinal();
+            if (lastObservedFlows[i] != section.displayFlow || lastObservedDisplayPower[i] != section.displayPower) changed = true;
+            lastObservedFlows[i] = section.displayFlow;
+            lastObservedDisplayPower[i] = section.displayPower;
+        }
+        if (changed) networkUpdatePending = true;
+        if (networkUpdatePending && networkTracker.markTimeIfDelay(pipe.getHolder().getPipeWorld())) {
+            sendPayload(NET_POWER_AMOUNTS);
+            networkUpdatePending = false;
+        }
+    }
+
+    private void step() {
+        ensureConfigured();
+        long now = pipe.getHolder().getPipeWorld().getGameTime();
+        if (currentWorldTime != now) {
+            currentWorldTime = now;
+            sections.values().forEach(Section::step);
+        }
+    }
+
+    private void requestPower(Direction from, int amount) {
+        if (disabled || amount <= 0) return;
+        step();
+        int requested = pipe.getBehaviour() instanceof IPipeTransportForgeEnergyHook hook
+            ? hook.requestPower(from, amount) : amount;
+        Section section = sections.get(from);
+        section.nextPowerQuery = Math.min(maxPower, saturatingAdd(section.nextPowerQuery, Math.max(0, requested)));
+    }
+
+    public int getPowerRequested(@Nullable Direction side) {
+        ensureConfigured();
+        if (disabled) return 0;
+        int requested = 0;
+        for (Direction face : Direction.values()) {
+            if (side == null || face != side) requested = saturatingAdd(requested, sections.get(face).getEffectivePowerQuery());
+        }
+        return Math.min(maxPower, requested);
+    }
+
+    public double getMaxTransferForRender(float partialTicks) {
+        return maxPower / (double) MjAPI.MJ;
+    }
+
+    private static int saturatingAdd(int a, int b) {
+        if (b <= 0) return a;
+        return a > Integer.MAX_VALUE - b ? Integer.MAX_VALUE : a + b;
+    }
+
+    public class Section implements IEnergyStorage {
+        public final Direction side;
+        public final AverageInt clientDisplayAverage = new AverageInt(10);
+        public double clientDisplayFlow;
+        public double clientDisplayFlowLast;
+        public int displayPower;
+        public EnumFlow displayFlow = EnumFlow.STATIONARY;
+        public int nextPowerQuery;
+        public int internalNextPower;
+        public final AverageInt powerAverage = new AverageInt(10);
+        int powerQuery;
+        int internalPower;
+        int debugPowerInput;
+        int debugPowerOutput;
+
+        Section(Direction side) {
+            this.side = side;
+            clientDisplayFlow = (side.getAxisDirection() == Direction.AxisDirection.POSITIVE ? 7 : 1) / 8.0;
+        }
+
+        void step() {
+            powerQuery = Math.min(maxPower, Math.max(0, nextPowerQuery));
+            nextPowerQuery = 0;
+            internalPower = saturatingAdd(internalPower, Math.max(0, internalNextPower));
+            internalNextPower = 0;
+        }
+
+        int getEffectivePowerQuery() {
+            return currentWorldTime == pipe.getHolder().getPipeWorld().getGameTime() ? powerQuery : nextPowerQuery;
+        }
+
+        int receivePowerInternal(int sent) {
+            ensureConfigured();
+            if (disabled || sent <= 0) return sent;
+            step();
+            int free = Math.max(0, maxPower - internalNextPower);
+            int accepted = Math.min(sent, free);
+            internalNextPower += accepted;
+            return sent - accepted;
+        }
+
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            if (!isReceiver || disabled || maxReceive <= 0) return 0;
+            int free = Math.max(0, maxPower - internalNextPower);
+            int requested = Math.max(0, getPowerRequested(side));
+            int accepted = Math.min(maxReceive, Math.min(free, requested > 0 ? requested : maxPower));
+            if (!simulate && accepted > 0) accepted -= receivePowerInternal(accepted);
+            return accepted;
+        }
+
+        @Override public int extractEnergy(int maxExtract, boolean simulate) { return 0; }
+        @Override public int getEnergyStored() { return Math.max(0, internalPower + internalNextPower); }
+        @Override public int getMaxEnergyStored() { ensureConfigured(); return maxPower; }
+        @Override public boolean canExtract() { return false; }
+        @Override public boolean canReceive() { return isReceiver && !disabled; }
+    }
+
+    public enum EnumFlow {
+        IN(-1), OUT(1), STATIONARY(0);
+        public final int value;
+        EnumFlow(int value) { this.value = value; }
+    }
+}

@@ -9,6 +9,7 @@ import buildcraft.api.mj.MjAPI;
 import buildcraft.api.transport.pipe.EnumPipeColourType;
 import buildcraft.api.transport.pipe.PipeApi;
 import buildcraft.api.transport.pipe.PipeApi.PowerTransferInfo;
+import buildcraft.api.transport.pipe.PipeApi.ForgeEnergyTransferInfo;
 import buildcraft.api.transport.pipe.PipeDefinition;
 import buildcraft.lib.misc.MathUtil;
 import net.neoforged.neoforge.common.ModConfigSpec;
@@ -26,11 +27,13 @@ public class BCTransportConfig {
     public static long mjPerMillibucket = 1_000;
     public static long mjPerItem = MjAPI.MJ;
     public static int baseFlowRate = 10;
+    public static int baseFeRate = 40;
     public static boolean fluidPipeColourBorder;
 
     private static IntValue propMjPerMillibucket;
     private static IntValue propMjPerItem;
     private static IntValue propBaseFlowRate;
+    private static IntValue propBaseFeRate;
     private static BooleanValue propFluidPipeColourBorder;
 
     public static void preInit() {
@@ -45,6 +48,8 @@ public class BCTransportConfig {
 
         propBaseFlowRate = builder.worldRestart()
             .defineInRange("pipes.baseFluidRate", baseFlowRate, 1, 40);
+        propBaseFeRate = builder.worldRestart()
+            .defineInRange("pipes.baseFeRate", baseFeRate, 10, 4000);
         builder.pop();
 
         builder.push("display");
@@ -59,6 +64,7 @@ public class BCTransportConfig {
         mjPerMillibucket = Math.max(MJ_REQ_MILLIBUCKET_MIN, propMjPerMillibucket.get());
         mjPerItem = Math.max(MJ_REQ_ITEM_MIN, propMjPerItem.get());
         baseFlowRate = MathUtil.clamp(propBaseFlowRate.get(), 1, 40);
+        baseFeRate = MathUtil.clamp(propBaseFeRate.get(), 10, 4000);
         int basePowerRate = 4;
 
         fluidPipeColourBorder = propFluidPipeColourBorder.get();
@@ -90,6 +96,16 @@ public class BCTransportConfig {
         powerTransfer(BCTransportPipes.goldPower, basePowerRate * 16, 32, false);
         powerTransfer(BCTransportPipes.diamondPower, basePowerRate * 64, 32, false);
         powerTransfer(BCTransportPipes.diaWoodPower, basePowerRate * 64, 32, true);
+
+        forgeEnergyTransfer(BCTransportPipes.cobbleFe, baseFeRate, false);
+        forgeEnergyTransfer(BCTransportPipes.stoneFe, baseFeRate * 2, false);
+        forgeEnergyTransfer(BCTransportPipes.woodFe, baseFeRate * 4, true);
+        forgeEnergyTransfer(BCTransportPipes.sandstoneFe, baseFeRate * 4, false);
+        forgeEnergyTransfer(BCTransportPipes.quartzFe, baseFeRate * 8, false);
+        forgeEnergyTransfer(BCTransportPipes.ironFe, baseFeRate * 8, false);
+        forgeEnergyTransfer(BCTransportPipes.goldFe, baseFeRate * 32, false);
+        forgeEnergyTransfer(BCTransportPipes.diamondFe, baseFeRate * 64, false);
+        forgeEnergyTransfer(BCTransportPipes.diaWoodFe, baseFeRate * 64, true);
     }
 
     private static void fluidTransfer(PipeDefinition def, int rate, int delay) {
@@ -100,6 +116,10 @@ public class BCTransportConfig {
         long transfer = MjAPI.MJ * transferMultiplier;
         long resistance = MjAPI.MJ / resistanceDivisor;
         PipeApi.powerTransferData.put(def, PowerTransferInfo.createFromResistance(transfer, resistance, recv));
+    }
+
+    private static void forgeEnergyTransfer(PipeDefinition def, int maxTransfer, boolean receiver) {
+        PipeApi.forgeEnergyTransferData.put(def, new ForgeEnergyTransferInfo(maxTransfer, receiver));
     }
 
     public static void onConfigLoad(ModConfigEvent.Loading event) {

@@ -38,7 +38,7 @@ public final class CapUtil {
         EntityCapability.createSided(id("item_transactor"), IItemTransactor.class);
 
     @Nonnull
-    public static final BlockCapability<IEnergyStorage, Direction> CAP_RF = Capabilities.EnergyStorage.BLOCK;
+    public static final BlockCapability<IEnergyStorage, Direction> CAP_FE = Capabilities.EnergyStorage.BLOCK;
 
     private CapUtil() {
     }

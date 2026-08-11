@@ -43,38 +43,47 @@ public class BCTransportItems {
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_WOOD;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_WOOD;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_WOOD;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_WOOD;
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_STONE;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_STONE;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_STONE;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_STONE;
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_COBBLE;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_COBBLE;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_COBBLE;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_COBBLE;
     
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_QUARTZ;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_QUARTZ;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_QUARTZ;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_QUARTZ;
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_GOLD;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_GOLD;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_GOLD;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_GOLD;
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_SAND_STONE;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_SAND_STONE;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_SAND_STONE;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_SAND_STONE;
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_IRON;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_IRON;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_IRON;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_IRON;
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_DIAMOND;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_DIAMOND;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_DIAMOND;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_DIAMOND;
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_DIAWOOD;
     public static final RegistryObject<ItemPipeHolder> PIPE_FLUID_DIAWOOD;
     public static final RegistryObject<ItemPipeHolder> PIPE_POWER_DIAWOOD;
+    public static final RegistryObject<ItemPipeHolder> PIPE_FE_DIAWOOD;
 
 
     public static final RegistryObject<ItemPipeHolder> PIPE_ITEM_CLAY;
@@ -131,14 +140,23 @@ public class BCTransportItems {
         // pipeFluidObsidian = makePipeItem(BCTransportPipes.obsidianFluid);
 
         PIPE_POWER_WOOD = makePipeItem(BCTransportPipes.woodPower);
+        PIPE_FE_WOOD = makePipeItem(BCTransportPipes.woodFe);
         PIPE_POWER_COBBLE = makePipeItem(BCTransportPipes.cobblePower);
+        PIPE_FE_COBBLE = makePipeItem(BCTransportPipes.cobbleFe);
         PIPE_POWER_STONE = makePipeItem(BCTransportPipes.stonePower);
+        PIPE_FE_STONE = makePipeItem(BCTransportPipes.stoneFe);
         PIPE_POWER_QUARTZ = makePipeItem(BCTransportPipes.quartzPower);
+        PIPE_FE_QUARTZ = makePipeItem(BCTransportPipes.quartzFe);
         PIPE_POWER_IRON = makePipeItem(BCTransportPipes.ironPower);
+        PIPE_FE_IRON = makePipeItem(BCTransportPipes.ironFe);
         PIPE_POWER_GOLD = makePipeItem(BCTransportPipes.goldPower);
+        PIPE_FE_GOLD = makePipeItem(BCTransportPipes.goldFe);
         PIPE_POWER_SAND_STONE = makePipeItem(BCTransportPipes.sandstonePower);
+        PIPE_FE_SAND_STONE = makePipeItem(BCTransportPipes.sandstoneFe);
         PIPE_POWER_DIAMOND = makePipeItem(BCTransportPipes.diamondPower);
+        PIPE_FE_DIAMOND = makePipeItem(BCTransportPipes.diamondFe);
         PIPE_POWER_DIAWOOD = makePipeItem(BCTransportPipes.diaWoodPower);
+        PIPE_FE_DIAWOOD = makePipeItem(BCTransportPipes.diaWoodFe);
 
         plugBlocker = ITEMS.register("plug_blocker",() -> new ItemPluggableSimple(BCTransportPlugs.blocker, new Properties()));
         plugPowerAdaptor = ITEMS.register("plug_power_adaptor", () -> new ItemPluggableSimple(

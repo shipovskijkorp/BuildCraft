@@ -9,6 +9,7 @@ import buildcraft.core.blockEntity.TileEngineCreative;
 import buildcraft.core.blockEntity.TileEngineRedstone_BC8;
 import buildcraft.core.blockEntity.TileMarkerPath;
 import buildcraft.core.blockEntity.TileMarkerVolume;
+import buildcraft.energy.tile.TileEngineFE;
 import buildcraft.energy.tile.TileEngineIron_BC8;
 import buildcraft.energy.tile.TileEngineStone_BC8;
 import net.minecraft.world.level.block.Block;
@@ -46,7 +47,8 @@ public class BCCoreBlocks {
     		.registerEngine(EnumEngineType.WOOD, TileEngineRedstone_BC8::new)
     		.registerEngine(EnumEngineType.CREATIVE, TileEngineCreative::new)
     		.registerEngine(EnumEngineType.STONE, TileEngineStone_BC8::new)
-    		.registerEngine(EnumEngineType.IRON, TileEngineIron_BC8::new));
+    		.registerEngine(EnumEngineType.IRON, TileEngineIron_BC8::new)
+            .registerEngine(EnumEngineType.FE, TileEngineFE::new));
 
     public static final RegistryObject<BlockSpring> SPRING = BLOCKS.register("spring", BlockSpring::new);
     public static final RegistryObject<BlockMarkerPath> MARKER_PATH = BLOCKS.register("marker_path", BlockMarkerPath::new);

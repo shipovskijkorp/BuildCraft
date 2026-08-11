@@ -116,6 +116,9 @@ public class ItemPipeHolder extends BlockItem implements IItemPipe {
         } else if (definition.flowType == PipeApi.flowPower) {
             PipeApi.PowerTransferInfo pti = PipeApi.getPowerTransferInfo(definition);
             tooltip.add(LocaleUtil.localizeMjFlow(pti.transferPerTick));
+        } else if (definition.flowType == PipeApi.flowForgeEnergy && PipeApi.flowForgeEnergy != null) {
+            PipeApi.ForgeEnergyTransferInfo fti = PipeApi.getForgeEnergyTransferInfo(definition);
+            tooltip.add(LocaleUtil.localizeFeFlow(fti.transferPerTick));
         }
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

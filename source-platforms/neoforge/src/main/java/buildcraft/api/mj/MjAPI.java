@@ -33,6 +33,25 @@ public class MjAPI {
 
     public static IMjEffectManager EFFECT_MANAGER = NullaryEffectManager.INSTANCE;
 
+    private static volatile IMjToFeStatus FE_STATUS = new IMjToFeStatus() {
+        private final MjFeConversion conversion = MjFeConversion.createDefault();
+        @Override public MjFeConversion getConversion() { return conversion; }
+        @Override public boolean isAutoconvertEnabled() { return false; }
+    };
+
+    public static void setFeStatus(IMjToFeStatus status) {
+        if (status == null) throw new NullPointerException("status");
+        FE_STATUS = status;
+    }
+
+    public static MjFeConversion getFeConversion() {
+        return FE_STATUS.getConversion();
+    }
+
+    public static boolean isFeAutoConversionEnabled() {
+        return FE_STATUS.isAutoconvertEnabled();
+    }
+
     // ###############
     //
     // Helpful methods

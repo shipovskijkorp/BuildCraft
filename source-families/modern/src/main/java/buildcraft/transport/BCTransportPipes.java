@@ -47,38 +47,47 @@ public class BCTransportPipes {
     public static PipeDefinition woodItem;
     public static PipeDefinition woodFluid;
     public static PipeDefinition woodPower;
+    public static PipeDefinition woodFe;
 
     public static PipeDefinition stoneItem;
     public static PipeDefinition stoneFluid;
     public static PipeDefinition stonePower;
+    public static PipeDefinition stoneFe;
 
     public static PipeDefinition cobbleItem;
     public static PipeDefinition cobbleFluid;
     public static PipeDefinition cobblePower;
+    public static PipeDefinition cobbleFe;
 
     public static PipeDefinition quartzItem;
     public static PipeDefinition quartzFluid;
     public static PipeDefinition quartzPower;
+    public static PipeDefinition quartzFe;
 
     public static PipeDefinition goldItem;
     public static PipeDefinition goldFluid;
     public static PipeDefinition goldPower;
+    public static PipeDefinition goldFe;
 
     public static PipeDefinition sandstoneItem;
     public static PipeDefinition sandstoneFluid;
     public static PipeDefinition sandstonePower;
+    public static PipeDefinition sandstoneFe;
 
     public static PipeDefinition ironItem;
     public static PipeDefinition ironFluid;
     public static PipeDefinition ironPower;
+    public static PipeDefinition ironFe;
 
     public static PipeDefinition diamondItem;
     public static PipeDefinition diamondFluid;
     public static PipeDefinition diamondPower;
+    public static PipeDefinition diamondFe;
 
     public static PipeDefinition diaWoodItem;
     public static PipeDefinition diaWoodFluid;
     public static PipeDefinition diaWoodPower;
+    public static PipeDefinition diaWoodFe;
 
     public static PipeDefinition clayItem;
     public static PipeDefinition clayFluid;
@@ -109,31 +118,37 @@ public class BCTransportPipes {
         woodFluid = builder.idTexPrefix("wood_fluid").flowFluid().define();
         builder.logic(PipeBehaviourWoodPower::new, PipeBehaviourWoodPower::new);
         woodPower = builder.idTexPrefix("wood_power").flowPower().define();
+        woodFe = builder.idTexPrefix("wood_fe").flowForgeEnergy().define();
 
         builder.logic(PipeBehaviourStone::new, PipeBehaviourStone::new);
         stoneItem = builder.idTex("stone_item").flowItem().define();
         stoneFluid = builder.idTex("stone_fluid").flowFluid().define();
         stonePower = builder.idTex("stone_power").flowPower().define();
+        stoneFe = builder.idTex("stone_fe").flowForgeEnergy().define();
 
         builder.logic(PipeBehaviourCobble::new, PipeBehaviourCobble::new);
         cobbleItem = builder.idTex("cobblestone_item").flowItem().define();
         cobbleFluid = builder.idTex("cobblestone_fluid").flowFluid().define();
         cobblePower = builder.idTex("cobblestone_power").flowPower().define();
+        cobbleFe = builder.idTex("cobblestone_fe").flowForgeEnergy().define();
 
         builder.logic(PipeBehaviourQuartz::new, PipeBehaviourQuartz::new);
         quartzItem = builder.idTex("quartz_item").flowItem().define();
         quartzFluid = builder.idTex("quartz_fluid").flowFluid().define();
         quartzPower = builder.idTex("quartz_power").flowPower().define();
+        quartzFe = builder.idTex("quartz_fe").flowForgeEnergy().define();
 
         builder.logic(PipeBehaviourGold::new, PipeBehaviourGold::new);
         goldItem = builder.idTex("gold_item").flowItem().define();
         goldFluid = builder.idTex("gold_fluid").flowFluid().define();
         goldPower = builder.idTex("gold_power").flowPower().define();
+        goldFe = builder.idTex("gold_fe").flowForgeEnergy().define();
 
         builder.logic(PipeBehaviourSandstone::new, PipeBehaviourSandstone::new);
         sandstoneItem = builder.idTex("sandstone_item").flowItem().define();
         sandstoneFluid = builder.idTex("sandstone_fluid").flowFluid().define();
         sandstonePower = builder.idTex("sandstone_power").flowPower().define();
+        sandstoneFe = builder.idTex("sandstone_fe").flowForgeEnergy().define();
 
         builder.logic(PipeBehaviourIron::new, PipeBehaviourIron::new).texSuffixes("_clear", "_filled");
         ironItem = builder.idTexPrefix("iron_item").flowItem().define();
@@ -159,6 +174,9 @@ public class BCTransportPipes {
         builder.builder.itemTex(6);
         ironPower = builder.idTexPrefix("iron_power").define();
         diamondPower = builder.idTexPrefix("diamond_power").define();
+        builder.flowForgeEnergy();
+        ironFe = builder.idTexPrefix("iron_fe").define();
+        diamondFe = builder.idTexPrefix("diamond_fe").define();
         builder.builder.itemTex(0);
 
         builder.logic(PipeBehaviourWoodDiamond::new, PipeBehaviourWoodDiamond::new).texSuffixes("_clear", "_filled");
@@ -166,6 +184,7 @@ public class BCTransportPipes {
         diaWoodFluid = builder.idTexPrefix("diamond_wood_fluid").flowFluid().define();
         builder.logic(PipeBehaviourWoodPower::new, PipeBehaviourWoodPower::new);
         diaWoodPower = builder.idTexPrefix("diamond_wood_power").flowPower().define();
+        diaWoodFe = builder.idTexPrefix("diamond_wood_fe").flowForgeEnergy().define();
 
         builder.logic(PipeBehaviourClay::new, PipeBehaviourClay::new);
         clayItem = builder.idTex("clay_item").flowItem().define();
@@ -199,6 +218,22 @@ public class BCTransportPipes {
 
         builder.logic(PipeBehaviourStripes::new, PipeBehaviourStripes::new);
         stripesItem = builder.idTex("stripes_item").flowItem().define();
+
+        registerLegacyFeAliases();
+    }
+
+    private static void registerLegacyFeAliases() {
+        // Legacy definition IDs are kept as read aliases for save compatibility.
+        // They are read aliases only: all newly saved definitions use the canonical *_fe IDs.
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:wood_rf", woodFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:cobblestone_rf", cobbleFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:stone_rf", stoneFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:sandstone_rf", sandstoneFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:quartz_rf", quartzFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:iron_rf", ironFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:gold_rf", goldFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:diamond_rf", diamondFe);
+        PipeRegistry.INSTANCE.registerAlias("buildcrafttransport:diamond_wood_rf", diaWoodFe);
     }
 
     private static class DefinitionBuilder {
@@ -251,6 +286,10 @@ public class BCTransportPipes {
 
         public DefinitionBuilder flowPower() {
             return flow(PipeApi.flowPower);
+        }
+
+        public DefinitionBuilder flowForgeEnergy() {
+            return flow(PipeApi.flowForgeEnergy);
         }
 
         public DefinitionBuilder flow(PipeFlowType flow) {

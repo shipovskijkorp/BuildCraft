@@ -25,6 +25,7 @@ public final class PipeApi {
     public static PipeFlowType flowItems;
     public static PipeFlowType flowFluids;
     public static PipeFlowType flowPower;
+    public static PipeFlowType flowForgeEnergy;
 
     /** The default transfer information used if a pipe definition has not been registered. Note that this is replaced
      * by BuildCraft Transport to config-defined values. */
@@ -34,8 +35,12 @@ public final class PipeApi {
      * by BuildCraft Transport to config-defined values. */
     public static PowerTransferInfo powerInfoDefault = PowerTransferInfo.createFromResistance(8 * MjAPI.MJ, MjAPI.MJ / 32, false);
 
+    /** Default Forge Energy transfer settings for FE pipes. */
+    public static ForgeEnergyTransferInfo forgeEnergyInfoDefault = new ForgeEnergyTransferInfo(100, false);
+
     public static final Map<PipeDefinition, FluidTransferInfo> fluidTransferData = new IdentityHashMap<>();
     public static final Map<PipeDefinition, PowerTransferInfo> powerTransferData = new IdentityHashMap<>();
+    public static final Map<PipeDefinition, ForgeEnergyTransferInfo> forgeEnergyTransferData = new IdentityHashMap<>();
 
     @Nonnull
     public static final Capability<IPipeHolder> CAP_PIPE_HOLDER;
@@ -56,6 +61,11 @@ public final class PipeApi {
         } else {
             return info;
         }
+    }
+
+    public static ForgeEnergyTransferInfo getForgeEnergyTransferInfo(PipeDefinition def) {
+        ForgeEnergyTransferInfo info = forgeEnergyTransferData.get(def);
+        return info == null ? forgeEnergyInfoDefault : info;
     }
 
     public static PowerTransferInfo getPowerTransferInfo(PipeDefinition def) {
@@ -83,6 +93,18 @@ public final class PipeApi {
                 transferDelay = 1;
             }
             this.transferDelayMultiplier = transferDelay;
+        }
+    }
+
+    public static class ForgeEnergyTransferInfo {
+        /** Maximum FE transferred through this pipe per tick. */
+        public final int transferPerTick;
+        /** True for wooden and diamond-wood extraction pipes. */
+        public final boolean isReceiver;
+
+        public ForgeEnergyTransferInfo(int transferPerTick, boolean isReceiver) {
+            this.transferPerTick = Math.max(1, transferPerTick);
+            this.isReceiver = isReceiver;
         }
     }
 

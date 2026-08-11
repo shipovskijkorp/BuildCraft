@@ -23,6 +23,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -223,6 +224,29 @@ public class BCEnergyRecipes {
                 builder7.define('p', Blocks.PISTON);
                 builder7.unlockedBy("has_"+BCCoreItems.GEAR_IRON.getId().getPath(), TriggerInstance.hasItems(BCCoreItems.GEAR_IRON.get()));
                 builder7.save(writer);
+
+                ShapedRecipeBuilder feEngine = ShapedRecipeBuilder.shaped(BCEnergyBlocks.ENGINE_FE_ITEM.get(), 1);
+                feEngine.pattern("www");
+                feEngine.pattern(" g ");
+                feEngine.pattern("GpG");
+                feEngine.define('w', Items.REDSTONE);
+                feEngine.define('g', Items.GLASS);
+                feEngine.define('G', BCCoreItems.GEAR_IRON.get());
+                feEngine.define('p', Blocks.PISTON);
+                feEngine.unlockedBy("has_"+BCCoreItems.GEAR_IRON.getId().getPath(), TriggerInstance.hasItems(BCCoreItems.GEAR_IRON.get()));
+                feEngine.save(writer, new ResourceLocation(BCEnergy.MODID, "fe_engine"));
+
+                ShapedRecipeBuilder mjDynamo = ShapedRecipeBuilder.shaped(BCEnergyBlocks.DYNAMO_MJ_ITEM.get(), 1);
+                mjDynamo.pattern("wgw");
+                mjDynamo.pattern(" p ");
+                mjDynamo.pattern("GwG");
+                mjDynamo.define('w', Items.REDSTONE);
+                mjDynamo.define('g', Items.GLASS);
+                mjDynamo.define('G', BCCoreItems.GEAR_IRON.get());
+                mjDynamo.define('p', Blocks.PISTON);
+                mjDynamo.unlockedBy("has_"+BCCoreItems.GEAR_IRON.getId().getPath(), TriggerInstance.hasItems(BCCoreItems.GEAR_IRON.get()));
+                mjDynamo.save(writer, new ResourceLocation(BCEnergy.MODID, "mj_dynamo"));
+
                 super.buildCraftingRecipes(writer);
     		}
     }

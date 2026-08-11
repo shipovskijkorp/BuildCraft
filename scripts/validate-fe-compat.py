@@ -1,0 +1,335 @@
+#!/usr/bin/env python3
+"""Static release gate for BuildCraft Community Edition Forge Energy compatibility."""
+from __future__ import annotations
+
+from pathlib import Path
+import json
+import re
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+errors: list[str] = []
+
+
+def fail(message: str) -> None:
+    errors.append(message)
+
+
+def text(path: str) -> str:
+    p = ROOT / path
+    if not p.is_file():
+        fail(f"missing file: {path}")
+        return ""
+    return p.read_text(encoding="utf-8")
+
+
+def require(path: str, *needles: str) -> None:
+    data = text(path)
+    for needle in needles:
+        if needle not in data:
+            fail(f"{path}: missing {needle!r}")
+
+
+def require_file(path: str) -> None:
+    if not (ROOT / path).is_file():
+        fail(f"missing file: {path}")
+
+
+# Converter recipes and loot, in both resource layouts.
+for path in (
+    "source-families/legacy/src/main/resources/data/buildcraftenergy/recipes/fe_engine.json",
+    "source-families/legacy/src/main/resources/data/buildcraftenergy/recipes/mj_dynamo.json",
+    "source-families/modern/src/main/resources/data/buildcraftenergy/recipe/fe_engine.json",
+    "source-families/modern/src/main/resources/data/buildcraftenergy/recipe/mj_dynamo.json",
+    "source-families/legacy/src/main/resources/data/buildcraftenergy/loot_tables/blocks/mj_dynamo.json",
+    "source-families/modern/src/main/resources/data/buildcraftenergy/loot_table/blocks/mj_dynamo.json",
+):
+    require_file(path)
+
+for path in (
+    "source-families/legacy/src/main/resources/data/buildcraftcore/loot_tables/blocks/engine.json",
+    "source-families/modern/src/main/resources/data/buildcraftcore/loot_table/blocks/engine.json",
+):
+    require(path, '"type": "fe"', "buildcraftenergy:engine_fe")
+
+# Original BC8 only had upgrade/undo recipes for wood, cobblestone and stone FE pipes.
+for family, recipe_dir in (("legacy", "recipes"), ("modern", "recipe")):
+    for stem in ("wood_fe", "cobblestone_fe", "stone_fe"):
+        require_file(f"source-families/{family}/src/main/resources/data/buildcrafttransport/{recipe_dir}/{stem}.json")
+        require_file(f"source-families/{family}/src/main/resources/data/buildcrafttransport/{recipe_dir}/{stem}_undo.json")
+
+# Nine original RF pipe definitions, exposed as FE.
+pipe_ids = (
+    "wood_fe", "cobblestone_fe", "stone_fe", "sandstone_fe", "quartz_fe",
+    "iron_fe", "gold_fe", "diamond_fe", "diamond_wood_fe",
+)
+for family in ("legacy", "modern"):
+    path = f"source-families/{family}/src/main/java/buildcraft/transport/BCTransportPipes.java"
+    data = text(path)
+    for pipe_id in pipe_ids:
+        if f'"{pipe_id}"' not in data:
+            fail(f"{path}: missing FE pipe id {pipe_id}")
+    for old_id in (
+        "wood_rf", "cobblestone_rf", "stone_rf", "sandstone_rf", "quartz_rf",
+        "iron_rf", "gold_rf", "diamond_rf", "diamond_wood_rf",
+    ):
+        if f'registerAlias("buildcrafttransport:{old_id}"' not in data:
+            fail(f"{path}: missing placed-pipe migration alias {old_id}")
+
+# Original BC8 throughput table, renamed FE.
+for loader in ("forge", "neoforge"):
+    path = f"source-platforms/{loader}/src/main/java/buildcraft/transport/BCTransportConfig.java"
+    require(
+        path,
+        "baseFeRate = 40",
+        "cobbleFe, baseFeRate, false",
+        "stoneFe, baseFeRate * 2, false",
+        "woodFe, baseFeRate * 4, true",
+        "sandstoneFe, baseFeRate * 4, false",
+        "quartzFe, baseFeRate * 8, false",
+        "ironFe, baseFeRate * 8, false",
+        "goldFe, baseFeRate * 32, false",
+        "diamondFe, baseFeRate * 64, false",
+        "diaWoodFe, baseFeRate * 64, true",
+    )
+
+# Flow support, gate power-request trigger and limiter actions.
+require(
+    "source-shared/src/main/java/buildcraft/api/transport/pipe/IFlowForgeEnergy.java",
+    "int getPowerRequested(Direction side);",
+)
+require(
+    "source-shared/src/main/java/buildcraft/transport/statements/TriggerPowerRequested.java",
+    "instanceof IFlowForgeEnergy",
+)
+require(
+    "source-shared/src/main/java/buildcraft/transport/statements/TriggerProviderPipes.java",
+    "instanceof IFlowForgeEnergy",
+    "TRIGGER_POWER_REQUESTED",
+)
+require(
+    "source-shared/src/main/java/buildcraft/transport/statements/ActionPowerLimit.java",
+    "ActionIronFeLimit",
+    "ActionDiamondFeLimit",
+    "iron_rf_s",
+    "diamond_rf_s",
+)
+require(
+    "source-shared/src/main/java/buildcraft/transport/statements/ActionProviderPipes.java",
+    "ironFe",
+    "diamondFe",
+)
+for loader in ("forge", "neoforge"):
+    require(
+        f"source-platforms/{loader}/src/main/java/buildcraft/transport/pipe/behaviour/PipeBehaviourLimiter.java",
+        "ActionPowerLimit",
+        "limitShift = action.limitShift",
+    )
+    require(
+        f"source-platforms/{loader}/src/main/java/buildcraft/transport/pipe/flow/PipeFlowPower.java",
+        "MjToFeAutoConverter",
+        "EnergyStorage",
+    )
+    require(
+        f"source-platforms/{loader}/src/main/java/buildcraft/transport/pipe/PipeRegistry.java" if loader == "forge"
+        else "source-families/modern/src/main/java/buildcraft/transport/pipe/PipeRegistry.java",
+        "registerAlias",
+    )
+
+# Limiter sprite sets are present on every supported family/version source.
+for path in (
+    "version-src/1.19.2-forge/src/main/java/buildcraft/transport/BCTransportSprites.java",
+    "version-src/1.20.1-forge/src/main/java/buildcraft/transport/BCTransportSprites.java",
+    "source-families/modern/src/main/java/buildcraft/transport/BCTransportSprites.java",
+):
+    require(path, "FE_LIMIT", "trigger_fe_limiter_m256", "trigger_fe_limiter_m0")
+
+# Converter block entities and original numeric characteristics.
+for loader in ("forge", "neoforge"):
+    engine = f"source-platforms/{loader}/src/main/java/buildcraft/energy/tile/TileEngineFE.java"
+    dynamo = f"source-platforms/{loader}/src/main/java/buildcraft/energy/tile/TileDynamoMJ.java"
+    require(
+        engine,
+        "MAX_FE = 10_000",
+        "MjAPI.MJ * 4",
+        "getMaxChainLength() { return 4; }",
+        "protected void burn()",
+        "if (power + generatedMj >= getMaxPower()) return;",
+        "case BLUE -> 0.04",
+        "case GREEN -> 0.05",
+        "case YELLOW -> 0.06",
+        "case RED -> 0.07",
+        "instanceof IItemPipe",
+    )
+    if "EnumAccess.NONE, EnumPipePart.VALUES" in text(engine):
+        fail(f"{engine}: private upgrade inventory must not expose sides when EnumAccess.NONE is used")
+    if "EnumAccess.NONE, EnumPipePart.VALUES" in text(dynamo):
+        fail(f"{dynamo}: private upgrade inventory must not expose sides when EnumAccess.NONE is used")
+    if "protected void engineUpdate()" in text(engine):
+        fail(f"{engine}: FE -> MJ conversion must happen in burn(), after the engine send phase, like BC8")
+    require(
+        dynamo,
+        "extends TileEngineBase_BC8",
+        "MAX_FE = 10_000",
+        "MAX_MJ = 1_000L * MjAPI.MJ",
+        "4L * MjAPI.MJ",
+        "getMaxChainLength() { return 3; }",
+        "MAX_FE / 10",
+        "RenderEngine_BC8.DYNAMO_FRONT",
+        "getFeReceiver",
+        "case BLUE -> 0.04",
+        "case GREEN -> 0.05",
+        "case YELLOW -> 0.06",
+        "case RED -> 0.07",
+        "instanceof IItemPipe",
+    )
+    if "convertedInput" in text(dynamo):
+        fail(f"{dynamo}: MJ Dynamo must not accept auto-converted FE input; BC8 powerMode excludes dedicated converters")
+
+# Forge FE Engine must accept energy on all sides, like BC8.
+forge_engine = text("source-platforms/forge/src/main/java/buildcraft/energy/tile/TileEngineFE.java")
+if "side == currentDirection ? feCapability" in forge_engine or "facing == currentDirection ? feCapability" in forge_engine:
+    fail("Forge FE Engine is incorrectly direction-restricted")
+# Neo FE Engine must likewise not direction-gate its FE storage.
+neo_engine = text("source-platforms/neoforge/src/main/java/buildcraft/energy/tile/TileEngineFE.java")
+if re.search(r"currentDirection.*EnergyStorage|EnergyStorage.*currentDirection", neo_engine):
+    fail("NeoForge FE Engine appears direction-restricted")
+
+# Dynamo renderer/model parity and non-full collision shape.
+require("source-shared/src/main/java/buildcraft/energy/block/BlockDynamoMJ.java", "hasDynamicShape", "getEngineShape")
+require("source-shared/src/main/resources/assets/buildcraftenergy/models/block/mj_dynamo.json", "buildcraftlib:block/engine_base")
+require(
+    "source-shared/src/main/resources/assets/buildcraftenergy/models/item/mj_dynamo.json",
+    '"parent": "minecraft:block/block"',
+    '"front": "buildcraftenergy:blocks/mj_dynamo/front"',
+    '"name": "base_moving"',
+    '"name": "chamber"',
+)
+require_file("source-shared/src/main/resources/assets/buildcraftenergy/models/block/mj_dynamo_texture_probe.json")
+for path in (
+    "version-src/1.19.2-forge/src/main/java/buildcraft/core/client/render/RenderEngine_BC8.java",
+    "version-src/1.20.1-forge/src/main/java/buildcraft/core/client/render/RenderEngine_BC8.java",
+    "source-platforms/neoforge/src/main/java/buildcraft/core/client/render/RenderEngine_BC8.java",
+):
+    require(path, "DYNAMO_BACK", "DYNAMO_FRONT", "DYNAMO_SIDE", "getTrunkLightSprite", "getChamberSprite")
+for path in (
+    "version-src/1.19.2-forge/src/main/java/buildcraft/energy/client/render/RenderDynamoMJ.java",
+    "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/render/RenderDynamoMJ.java",
+    "source-platforms/neoforge/src/main/java/buildcraft/energy/client/render/RenderDynamoMJ.java",
+):
+    require(path, "class RenderDynamoMJ", "12x12", "renderMovingHead", "renderChamber", "getTrunkLightSprite")
+for path in (
+    "version-src/1.19.2-forge/src/main/java/buildcraft/energy/BCEnergyClientProxy.java",
+    "version-src/1.20.1-forge/src/main/java/buildcraft/energy/BCEnergyClientProxy.java",
+    "source-platforms/neoforge/src/main/java/buildcraft/energy/BCEnergyClientProxy.java",
+):
+    require(path, "DYNAMO_MJ_TILE.get(), RenderDynamoMJ::new")
+
+# Original converter GUI affordances: power ledger, upgrade hints, battery help and ghost gear overlay.
+for path in (
+    "version-src/1.19.2-forge/src/main/java/buildcraft/energy/client/gui/GuiEngineFE.java",
+    "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/gui/GuiEngineFE.java",
+    "source-families/modern/src/main/java/buildcraft/energy/client/gui/GuiEngineFE.java",
+):
+    require(path, "LedgerEngine", "RECT_FE_BATTERY", "FE_UPGRADES", "OVERLAY", "GEAR_IRON", "GEAR_GOLD", "getMjPerTick(container.upgrades)")
+for path in (
+    "version-src/1.19.2-forge/src/main/java/buildcraft/energy/client/gui/GuiDynamoMJ.java",
+    "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/gui/GuiDynamoMJ.java",
+    "source-families/modern/src/main/java/buildcraft/energy/client/gui/GuiDynamoMJ.java",
+):
+    require(path, "LedgerDynamoMJ", "RECT_FE_BATTERY", "FE_UPGRADES", "OVERLAY", "GEAR_IRON", "GEAR_GOLD", "getMjPerTick(container.upgrades)")
+for path in (
+    "version-src/1.19.2-forge/src/main/java/buildcraft/energy/client/gui/LedgerDynamoMJ.java",
+    "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/gui/LedgerDynamoMJ.java",
+    "source-families/modern/src/main/java/buildcraft/energy/client/gui/LedgerDynamoMJ.java",
+):
+    require(path, "localizeFeFlow(engine.getCurrentOutput())", "localizeMj(engine.getMjStored())", "localizeHeat(engine.getHeat())")
+
+# Energy buffers must remain persistent even when a tick only changes the converter-specific FE/MJ state.
+for loader in ("forge", "neoforge"):
+    require(
+        f"source-platforms/{loader}/src/main/java/buildcraft/energy/tile/TileEngineFE.java",
+        "currentFe -= consumedFe;",
+        "markChunkDirty();",
+    )
+    require(
+        f"source-platforms/{loader}/src/main/java/buildcraft/energy/tile/TileDynamoMJ.java",
+        "markEnergyStateDirtyIfChanged",
+        "persistedFeState",
+        "persistedMjState",
+    )
+
+# Kinesis pipes keep their classic BC8 power textures; FE pipes use the old RF visual family.
+for stem in ("wood", "cobblestone", "stone", "sandstone", "quartz", "gold"):
+    power_name = f"{stem}_power" + ("_clear" if stem == "wood" else "") + ".png"
+    fe_name = f"{stem}_fe" + ("_clear" if stem == "wood" else "") + ".png"
+    power = ROOT / "source-shared/src/main/resources/assets/buildcrafttransport/textures/pipes" / power_name
+    fe = ROOT / "source-shared/src/main/resources/assets/buildcrafttransport/textures/pipes" / fe_name
+    if not power.is_file(): fail(f"missing Kinesis texture: {power.relative_to(ROOT)}")
+    if not fe.is_file(): fail(f"missing FE texture: {fe.relative_to(ROOT)}")
+    if power.is_file() and fe.is_file() and power.read_bytes() == fe.read_bytes():
+        fail(f"Kinesis texture incorrectly duplicates FE texture: {power_name}")
+
+for path in (
+    "source-platforms/forge/src/main/java/buildcraft/lib/gui/help/ElementHelpInfo.java",
+    "source-platforms/neoforge/src/main/java/buildcraft/lib/gui/help/ElementHelpInfo.java",
+):
+    require(path, "contentSignature()")
+for path in (
+    "source-families/legacy/src/main/java/buildcraft/lib/gui/ledger/LedgerHelp.java",
+    "source-families/modern/src/main/java/buildcraft/lib/gui/ledger/LedgerHelp.java",
+):
+    require(path, "sameContent", "sameTarget", "contentSignature")
+
+require("README.md", "- FE compatibility [✔]")
+
+# Public/new naming is FE. The only old _rf strings permitted are persistence aliases.
+allowed_rf_files = {
+    ROOT / "source-families/legacy/src/main/java/buildcraft/transport/BCTransportPipes.java",
+    ROOT / "source-families/modern/src/main/java/buildcraft/transport/BCTransportPipes.java",
+    ROOT / "source-shared/src/main/java/buildcraft/transport/statements/ActionPowerLimit.java",
+}
+for base in (ROOT / "source-shared", ROOT / "source-families", ROOT / "source-platforms", ROOT / "version-src"):
+    for p in base.rglob("*"):
+        if not p.is_file() or "build" in p.parts:
+            continue
+        try:
+            data = p.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        if re.search(r"\bRF\b|Redstone Flux|redstone flux|rf_battery|rf_limit", data):
+            fail(f"user-facing/implementation RF branding remains: {p.relative_to(ROOT)}")
+        if "_rf" in data and p not in allowed_rf_files:
+            fail(f"unexpected old _rf identifier outside migration aliases: {p.relative_to(ROOT)}")
+
+# No known junk/typo textures from upstream's unused resources.
+for bad in (
+    "source-shared/src/main/resources/assets/buildcrafttransport/textures/pipes/diorite_fe.png",
+    "source-shared/src/main/resources/assets/buildcrafttransport/textures/pipes/diamnd_fe_m128.png",
+):
+    if (ROOT / bad).exists():
+        fail(f"unused/typo FE asset present: {bad}")
+
+# Parse every JSON source resource so broken recipe/model edits fail the gate.
+for base in (ROOT / "source-shared", ROOT / "source-families", ROOT / "source-platforms", ROOT / "version-src"):
+    for p in base.rglob("*.json"):
+        try:
+            json.loads(p.read_text(encoding="utf-8"))
+        except Exception as exc:
+            fail(f"invalid JSON {p.relative_to(ROOT)}: {exc}")
+
+if errors:
+    print("FE compatibility validation FAILED")
+    for error in errors:
+        print(f" - {error}")
+    sys.exit(1)
+
+print("FE compatibility validation OK")
+print(" - BC8 MJ <-> FE converters present")
+print(" - nine FE pipe types + original rates present")
+print(" - original converter and pipe conversion recipes present")
+print(" - gate/trigger FE integration present")
+print(" - placed RF pipe/action persistence aliases present")
+print(" - Kinesis -> FE auto-conversion fallback present")
+print(" - MJ Dynamo engine animation/model integration present")
+print(" - source JSON resources parse successfully")

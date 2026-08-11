@@ -244,12 +244,8 @@
   "buildcraft.help.tank.title.": "Zbiornik",
   "buildcraft.help.tank.slot.title": "Zawartość zbiornika",
   "buildcraft.help.tank.slot.desc": "Pokazuje płyn przechowywany w tym zbiorniku.",
-  "buildcraft.help.mj_dynamo.rf_battery.title": "Bateria RF",
-  "buildcraft.help.mj_dynamo.rf_battery.desc": "Converts between BuildCraft MJ and Forge Energy.",
-  "buildcraft.help.rf_engine.rf_battery.title": "Bateria RF",
-  "buildcraft.help.rf_engine.rf_battery.desc": "Converts between Forge Energy and BuildCraft MJ.",
-  "buildcraft.help.rf_engine.upgrades.title": "Ulepszenia",
-  "buildcraft.help.rf_engine.upgrades.desc": "Dodaj zgodne przekładnie, aby zwiększyć współczynnik konwersji. Maks. 1 przekładnia na slot.",
+  "buildcraft.help.fe_engine.upgrades.title": "Ulepszenia",
+  "buildcraft.help.fe_engine.upgrades.desc": "Dodaj zgodne przekładnie, aby zwiększyć współczynnik konwersji. Maks. 1 przekładnia na slot.",
   "buildcraft.help.architect.mode.title": "Tryb zapisu",
   "buildcraft.help.architect.mode.desc": "Tryb kreatywny zapisuje bloki tylko kreatywne i inaczej nieobsługiwane. Tryb przetrwania pomija nieobsługiwane bloki.",
   "buildcraft.help.architect.rotate.title": "Obrót",
@@ -321,5 +317,9 @@
   "plugin_buildcraftlib.jade_owner": "BuildCraft owner",
   "plugin_buildcraftlib.jade_pipe_details": "BuildCraft pipe details",
   "plugin_buildcraftlib.jade_robot": "BuildCraft robot",
-  "plugin_buildcraftlib.jade_robot_details": "BuildCraft robot details"
+  "plugin_buildcraftlib.jade_robot_details": "BuildCraft robot details",
+  "buildcraft.help.mj_dynamo.fe_battery.title": "Bateria FE",
+  "buildcraft.help.mj_dynamo.fe_battery.desc": "Converts between BuildCraft MJ and Forge Energy.",
+  "buildcraft.help.fe_engine.fe_battery.title": "Bateria FE",
+  "buildcraft.help.fe_engine.fe_battery.desc": "Converts between Forge Energy and BuildCraft MJ."
 }

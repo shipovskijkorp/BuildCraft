@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "buildcraftenergy:blocks/mj_dynamo/back",
+    "up": "buildcraftenergy:blocks/mj_dynamo/front",
+    "north": "buildcraftenergy:blocks/mj_dynamo/side",
+    "south": "buildcraftenergy:blocks/mj_dynamo/side",
+    "west": "buildcraftenergy:blocks/mj_dynamo/side",
+    "east": "buildcraftenergy:blocks/mj_dynamo/side",
+    "particle": "buildcraftenergy:blocks/mj_dynamo/side"
+  }
+}

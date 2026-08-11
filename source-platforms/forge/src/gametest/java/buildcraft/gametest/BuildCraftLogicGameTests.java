@@ -3,6 +3,7 @@ package buildcraft.gametest;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import io.netty.buffer.Unpooled;
@@ -13,9 +14,13 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -26,6 +31,8 @@ import buildcraft.api.filler.FillerManager;
 import buildcraft.api.filler.IFilledTemplate;
 import buildcraft.api.filler.IFillerPatternShape;
 import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.api.v2.item.ItemTransferResult;
+import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.api.lists.ListMatchHandler.Type;
 import buildcraft.api.statements.IStatementParameter;
 import buildcraft.builders.BCBuildersStatements;
@@ -35,6 +42,7 @@ import buildcraft.builders.snapshot.Template;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterFacing;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterHollow;
 import buildcraft.lib.BCLib;
+import buildcraft.lib.api.v2.FacadeRuleRegistryImpl;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.fluid.TankManager;
 import buildcraft.lib.list.ListMatchHandlerTools;
@@ -363,6 +371,46 @@ public final class BuildCraftLogicGameTests {
         } finally {
             buffer.release();
         }
+    }
+
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 200)
+    public static void apiV2ItemTransferResultUsesDefensiveCopies(GameTestHelper helper) {
+        ItemStack offered = new ItemStack(Items.STICK, 3);
+        ItemTransferResult result = ItemTransferResult.ofInsertion(offered, 2);
+        offered.setCount(1);
+
+        require(helper, result.transferredCount() == 2, "mutating offered stack changed stored transfer result");
+        require(helper, result.remainderCount() == 1, "unexpected insertion remainder");
+
+        ItemStack returned = result.transferred();
+        returned.setCount(99);
+        require(helper, result.transferredCount() == 2, "mutating returned stack changed stored transfer result");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 200)
+    public static void apiV2FacadeRulesUsePriorityAndDefensiveCopies(GameTestHelper helper) {
+        FacadeRuleRegistryImpl rules = new FacadeRuleRegistryImpl();
+        Block block = Blocks.STONE;
+        BlockState state = block.defaultBlockState();
+
+        rules.disable(id("disable"), block, new DefinitionProvenance("addon", "code", 0));
+        require(helper, rules.disabledBy(block).isPresent(), "disabled facade rule was not retained");
+        require(helper, "addon".equals(rules.disabledBy(block).orElseThrow().owner()), "wrong facade rule provenance");
+
+        ItemStack stack = new ItemStack(Items.STICK, 1);
+        rules.mapState(id("map_low"), state, stack, new DefinitionProvenance("low", "code", 0));
+        rules.mapState(id("map_high"), state, new ItemStack(Items.STICK, 2), new DefinitionProvenance("high", "code", 10));
+        ItemStack first = rules.mappedStack(state).orElseThrow();
+        require(helper, first.getCount() == 2, "higher-priority facade mapping did not win");
+        first.setCount(99);
+        require(helper, rules.mappedStack(state).orElseThrow().getCount() == 2, "facade mapped stack was not defensively copied");
+        helper.succeed();
+    }
+
+    private static ResourceLocation id(String path) {
+        return Objects.requireNonNull(ResourceLocation.tryParse("test:" + path));
     }
 
     private static void require(GameTestHelper helper, boolean condition, String message) {

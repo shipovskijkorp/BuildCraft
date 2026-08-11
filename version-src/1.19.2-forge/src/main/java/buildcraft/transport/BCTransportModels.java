@@ -21,6 +21,7 @@ import buildcraft.transport.client.model.ModelPipeItem;
 import buildcraft.transport.client.model.key.KeyPlugBlocker;
 import buildcraft.transport.client.model.key.KeyPlugPowerAdaptor;
 import buildcraft.transport.client.render.PipeBehaviourRendererStripes;
+import buildcraft.transport.client.render.PipeFlowRendererFE;
 import buildcraft.transport.client.render.PipeFlowRendererFluids;
 import buildcraft.transport.client.render.PipeFlowRendererItems;
 import buildcraft.transport.client.render.PipeFlowRendererPower;
@@ -28,6 +29,7 @@ import buildcraft.transport.client.render.RenderPipeHolder;
 import buildcraft.transport.pipe.PipeRegistry;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourStripes;
 import buildcraft.transport.pipe.flow.PipeFlowFluids;
+import buildcraft.transport.pipe.flow.PipeFlowForgeEnergy;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
 import buildcraft.transport.pipe.flow.PipeFlowPower;
 
@@ -87,6 +89,7 @@ public class BCTransportModels {
         PipeApiClient.registry.registerRenderer(PipeFlowItems.class, PipeFlowRendererItems.INSTANCE);
         PipeApiClient.registry.registerRenderer(PipeFlowFluids.class, PipeFlowRendererFluids.INSTANCE);
         PipeApiClient.registry.registerRenderer(PipeFlowPower.class, PipeFlowRendererPower.INSTANCE);
+        PipeApiClient.registry.registerRenderer(PipeFlowForgeEnergy.class, PipeFlowRendererFE.INSTANCE);
 
         PipeApiClient.registry.registerRenderer(PipeBehaviourStripes.class, PipeBehaviourRendererStripes.INSTANCE);
     }

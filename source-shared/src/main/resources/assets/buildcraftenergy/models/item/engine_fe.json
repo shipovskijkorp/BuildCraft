@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "back": "buildcraftenergy:blocks/engine/fe/back",
+    "side": "buildcraftenergy:blocks/engine/fe/side"
+  },
+  "parent": "buildcraftlib:item/engine_base"
+}

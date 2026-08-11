@@ -7,6 +7,7 @@
 package buildcraft.transport.statements;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.annotation.Nonnull;
 
@@ -22,10 +23,12 @@ import buildcraft.api.statements.IActionProvider;
 import buildcraft.api.statements.IStatementContainer;
 import buildcraft.api.transport.IWireEmitter;
 import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.api.transport.pipe.PipeDefinition;
 import buildcraft.api.transport.pipe.PipeEventStatement;
 
 import buildcraft.lib.misc.ColourUtil;
 
+import buildcraft.transport.BCTransportPipes;
 import buildcraft.transport.BCTransportStatements;
 
 public enum ActionProviderPipes implements IActionProvider {
@@ -44,6 +47,17 @@ public enum ActionProviderPipes implements IActionProvider {
                         actions.add(BCTransportStatements.ACTION_PIPE_SIGNAL[colour.ordinal()]);
                     }
                 }
+            }
+
+            PipeDefinition def = holder.getPipe().getDefinition();
+            if (def == BCTransportPipes.ironPower) {
+                Collections.addAll(actions, BCTransportStatements.ACTION_IRON_POWER_LIMIT);
+            } else if (def == BCTransportPipes.diamondPower) {
+                Collections.addAll(actions, BCTransportStatements.ACTION_DIAMOND_POWER_LIMIT);
+            } else if (def == BCTransportPipes.ironFe) {
+                Collections.addAll(actions, BCTransportStatements.ACTION_IRON_FE_LIMIT);
+            } else if (def == BCTransportPipes.diamondFe) {
+                Collections.addAll(actions, BCTransportStatements.ACTION_DIAMOND_FE_LIMIT);
             }
         }
     }

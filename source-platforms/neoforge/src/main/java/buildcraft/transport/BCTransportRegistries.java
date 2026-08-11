@@ -14,6 +14,7 @@ import buildcraft.api.transport.pipe.PipeFlowType;
 import buildcraft.transport.pipe.PipeRegistry;
 import buildcraft.transport.pipe.StripesRegistry;
 import buildcraft.transport.pipe.flow.PipeFlowFluids;
+import buildcraft.transport.pipe.flow.PipeFlowForgeEnergy;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
 import buildcraft.transport.pipe.flow.PipeFlowPower;
 import buildcraft.transport.pipe.flow.PipeFlowStructure;
@@ -43,6 +44,7 @@ public class BCTransportRegistries {
         PipeApi.flowItems = new PipeFlowType(PipeFlowItems::new, PipeFlowItems::new);
         PipeApi.flowFluids = new PipeFlowType(PipeFlowFluids::new, PipeFlowFluids::new);
         PipeApi.flowPower = new PipeFlowType(PipeFlowPower::new, PipeFlowPower::new);
+        PipeApi.flowForgeEnergy = new PipeFlowType(PipeFlowForgeEnergy::new, PipeFlowForgeEnergy::new);
         PipeApi.flowStructure = new PipeFlowType(PipeFlowStructure::new, PipeFlowStructure::new);
         PipeApi.flowStructure.fallbackColourType = EnumPipeColourType.BORDER_OUTER;
     }

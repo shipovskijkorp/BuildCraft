@@ -3,6 +3,7 @@
 	  "type=wood":{"model":"buildcraftcore:block/engine_redstone"},
 	  "type=stone":{"model":"buildcraftcore:block/engine_redstone"},
 	  "type=iron":{"model":"buildcraftcore:block/engine_redstone"},
-	  "type=creative":{"model":"buildcraftcore:block/engine_redstone"}
+	  "type=creative":{"model":"buildcraftcore:block/engine_redstone"},
+	  "type=fe":{"model":"buildcraftcore:block/engine_redstone"}
 	}
 }

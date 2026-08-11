@@ -168,12 +168,8 @@
   "buildcraft.help.tank.title.": "Бак",
   "buildcraft.help.tank.slot.title": "Содержимое бака",
   "buildcraft.help.tank.slot.desc": "Показывает жидкость, которая хранится в этом баке.",
-  "buildcraft.help.mj_dynamo.rf_battery.title": "RF-батарея",
-  "buildcraft.help.mj_dynamo.rf_battery.desc": "Преобразует BuildCraft MJ и Forge Energy.",
-  "buildcraft.help.rf_engine.rf_battery.title": "RF-батарея",
-  "buildcraft.help.rf_engine.rf_battery.desc": "Преобразует Forge Energy и BuildCraft MJ.",
-  "buildcraft.help.rf_engine.upgrades.title": "Улучшения",
-  "buildcraft.help.rf_engine.upgrades.desc": "Добавьте подходящие шестерни, чтобы повысить скорость преобразования. Максимум одна шестерня на слот.",
+  "buildcraft.help.fe_engine.upgrades.title": "Улучшения",
+  "buildcraft.help.fe_engine.upgrades.desc": "Добавьте подходящие шестерни, чтобы повысить скорость преобразования. Максимум одна шестерня на слот.",
   "gui.power": "Энергия",
   "gui.currentOutput": "Текущая отдача",
   "gui.stored": "Накоплено",
@@ -321,5 +317,9 @@
   "plugin_buildcraftlib.jade_owner": "Владелец BuildCraft",
   "plugin_buildcraftlib.jade_pipe_details": "Детали труб BuildCraft",
   "plugin_buildcraftlib.jade_robot": "Робот BuildCraft",
-  "plugin_buildcraftlib.jade_robot_details": "Детали роботов BuildCraft"
+  "plugin_buildcraftlib.jade_robot_details": "Детали роботов BuildCraft",
+  "buildcraft.help.mj_dynamo.fe_battery.title": "FE-батарея",
+  "buildcraft.help.mj_dynamo.fe_battery.desc": "Преобразует BuildCraft MJ и Forge Energy.",
+  "buildcraft.help.fe_engine.fe_battery.title": "FE-батарея",
+  "buildcraft.help.fe_engine.fe_battery.desc": "Преобразует Forge Energy и BuildCraft MJ."
 }

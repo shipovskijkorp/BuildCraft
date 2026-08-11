@@ -34,10 +34,25 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 	private static final ResourceLocation IRON_SIDE_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/iron/side");
 	private static final ResourceLocation STONE_BACK_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/stone/back");
 	private static final ResourceLocation STONE_SIDE_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/stone/side");
+	private static final ResourceLocation FE_BACK_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/fe/back");
+	private static final ResourceLocation FE_SIDE_LOCATION = new ResourceLocation("buildcraftenergy:blocks/engine/fe/side");
+	private static final ResourceLocation DYNAMO_BACK_LOCATION = new ResourceLocation("buildcraftenergy:blocks/mj_dynamo/back");
+	private static final ResourceLocation DYNAMO_FRONT_LOCATION = new ResourceLocation("buildcraftenergy:blocks/mj_dynamo/front");
+	private static final ResourceLocation DYNAMO_SIDE_LOCATION = new ResourceLocation("buildcraftenergy:blocks/mj_dynamo/side");
 
 	private static TextureAtlasSprite LIGHT;
 	private static TextureAtlasSprite TRUNK;
 	private static TextureAtlasSprite CHAMBER;
+
+	public static TextureAtlasSprite getTrunkLightSprite() {
+		ensureSprites();
+		return LIGHT;
+	}
+
+	public static TextureAtlasSprite getChamberSprite() {
+		ensureSprites();
+		return CHAMBER;
+	}
 	public static TextureAtlasSprite REDSTONE_BACK;
 	public static TextureAtlasSprite REDSTONE_SIDE;
 	public static TextureAtlasSprite CREATIVE_BACK;
@@ -46,6 +61,11 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 	public static TextureAtlasSprite IRON_SIDE;
 	public static TextureAtlasSprite STONE_BACK;
 	public static TextureAtlasSprite STONE_SIDE;
+	public static TextureAtlasSprite FE_BACK;
+	public static TextureAtlasSprite FE_SIDE;
+	public static TextureAtlasSprite DYNAMO_BACK;
+	public static TextureAtlasSprite DYNAMO_FRONT;
+	public static TextureAtlasSprite DYNAMO_SIDE;
 
 	/** Refreshes every cached atlas sprite after a resource-pack reload. */
 	public static void reloadSprites(TextureAtlas atlas) {
@@ -60,6 +80,11 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 		IRON_SIDE = atlas.getSprite(IRON_SIDE_LOCATION);
 		STONE_BACK = atlas.getSprite(STONE_BACK_LOCATION);
 		STONE_SIDE = atlas.getSprite(STONE_SIDE_LOCATION);
+		FE_BACK = atlas.getSprite(FE_BACK_LOCATION);
+		FE_SIDE = atlas.getSprite(FE_SIDE_LOCATION);
+		DYNAMO_BACK = atlas.getSprite(DYNAMO_BACK_LOCATION);
+		DYNAMO_FRONT = atlas.getSprite(DYNAMO_FRONT_LOCATION);
+		DYNAMO_SIDE = atlas.getSprite(DYNAMO_SIDE_LOCATION);
 	}
 
 	private static void ensureSprites() {
@@ -83,6 +108,7 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 //        float f1 = neighborcombineresult.<Float2FloatFunction>apply(ChestBlock.opennessCombiner(tile)).get(light)
 //        int i = neighborcombineresult.<Int2IntFunction>apply(new BrightnessCombiner<>()).applyAsInt(light);
         TextureAtlasSprite BACK = tile.getTextureBack();
+        TextureAtlasSprite FRONT = tile.getTextureFront();
         TextureAtlasSprite SIDE = tile.getTextureSide();
         VertexConsumer builder = buffer.getBuffer(RenderType.solid());
         int texoffset = 0;
@@ -130,7 +156,7 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
             break;
         }
 //        renderStatic(BACK,SIDE, matrix4f, matrix3f, builder, light, 0,overlay);
-        renderMovingBack(BACK, matrix4f, matrix3f, builder, light, offset,overlay);
+        renderMovingBack(FRONT, matrix4f, matrix3f, builder, light, offset,overlay);
         for(int i=0;i<4;i++) {
         	renderLight(LIGHT, matrix4f, matrix3f, builder, 15728880, offset,overlay,texoffset);
         	renderMovingSide(SIDE, matrix4f, matrix3f, builder, light, offset,overlay);

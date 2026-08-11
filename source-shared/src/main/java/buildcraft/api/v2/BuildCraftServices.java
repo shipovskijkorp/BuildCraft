@@ -1,6 +1,7 @@
 package buildcraft.api.v2;
 
 import buildcraft.api.v2.crops.CropService;
+import buildcraft.api.v2.energy.EnergyService;
 import buildcraft.api.v2.facade.FacadeRuleService;
 import buildcraft.api.v2.fuels.EnergyFluidService;
 import buildcraft.api.v2.recipe.MachineRecipeService;
@@ -13,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Stable keys for services provided by the BuildCraft API 2 runtime. */
 public final class BuildCraftServices {
+    public static final ServiceKey<EnergyService> ENERGY = ServiceKey.of(id("energy"));
     public static final ServiceKey<PermissionServiceRegistry> PERMISSIONS = ServiceKey.of(id("permissions"));
     public static final ServiceKey<EnergyFluidService> ENERGY_FLUIDS = ServiceKey.of(id("energy_fluids"));
     public static final ServiceKey<MachineRecipeService> MACHINE_RECIPES = ServiceKey.of(id("machine_recipes"));

@@ -50,6 +50,19 @@
         },
         {
           "type": "minecraft:item",
+          "name": "buildcraftenergy:engine_fe",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "buildcraftcore:engine",
+              "properties": {
+                "type": "fe"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "buildcraftcore:engine_creative",
           "conditions": [
             {
