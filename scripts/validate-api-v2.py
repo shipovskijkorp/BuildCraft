@@ -59,12 +59,6 @@ INTERNALIZED_PUBLIC_FILENAMES = {
 
 EXPECTED_PROVIDER = "buildcraft.lib.internal.api.v2.BuildCraftApiRuntimeProvider"
 
-TRANSPORT_LEGACY_PACKAGE = "buildcraft.api.transport"
-TRANSPORT_SOURCE_MARKER = Path("buildcraft/api/transport")
-MJ_LEGACY_PACKAGE = "buildcraft.api.mj"
-SCHEMATIC_LEGACY_PACKAGE = "buildcraft.api.schematics"
-
-
 def java_files(root: Path):
     if root.is_dir():
         yield from sorted(root.rglob("*.java"))
@@ -88,7 +82,7 @@ def main() -> int:
             if imported.startswith(FORBIDDEN_API_IMPORT_PREFIXES):
                 errors.append(f"{rel}: forbidden loader/client import {imported}")
             if imported.startswith("buildcraft.") and not imported.startswith("buildcraft.api.v2."):
-                errors.append(f"{rel}: API v2 imports BuildCraft implementation/legacy API: {imported}")
+                errors.append(f"{rel}: API v2 imports BuildCraft implementation/non-v2 API: {imported}")
         for match in PUBLIC_STATIC_FIELD_RE.finditer(text):
             line = text.count("\n", 0, match.start()) + 1
             errors.append(f"{rel}:{line}: public writable static field is forbidden")
@@ -114,46 +108,7 @@ def main() -> int:
     if OLD_IMPL_ROOT.is_dir() and any(OLD_IMPL_ROOT.rglob("*.java")):
         errors.append("Legacy implementation namespace buildcraft.lib.api.v2 still contains Java sources; use buildcraft.lib.internal.api.v2")
 
-    # Transport Java API was retired once the runtime moved behind API2. The old namespace must never reappear.
-    for path in ROOT.rglob("*.java"):
-        if any(part in {"build", ".gradle", ".git"} for part in path.parts):
-            continue
-        text = path.read_text(encoding="utf-8")
-        rel = path.relative_to(ROOT)
-        package_match = PACKAGE_RE.search(text)
-        if package_match and package_match.group(1).startswith(TRANSPORT_LEGACY_PACKAGE):
-            errors.append(f"{rel}: retired Transport API package must not be restored; use buildcraft.api.v2.pipe")
-        for imported in IMPORT_RE.findall(text):
-            if imported.startswith(TRANSPORT_LEGACY_PACKAGE):
-                errors.append(f"{rel}: imports retired Transport API {imported}")
-
-    # The legacy MJ Java API was retired once EnergyService/MjPort became the runtime boundary.
-    for path in ROOT.rglob("*.java"):
-        if any(part in {"build", ".gradle", ".git"} for part in path.parts):
-            continue
-        text = path.read_text(encoding="utf-8")
-        rel = path.relative_to(ROOT)
-        package_match = PACKAGE_RE.search(text)
-        if package_match and package_match.group(1).startswith(MJ_LEGACY_PACKAGE):
-            errors.append(f"{rel}: retired MJ API package must not be restored; use buildcraft.api.v2.energy")
-        for imported in IMPORT_RE.findall(text):
-            if imported.startswith(MJ_LEGACY_PACKAGE):
-                errors.append(f"{rel}: imports retired MJ API {imported}")
-
-
-    # The old Builders schematic Java API was retired once capture/persistence moved behind API2.
-    for path in ROOT.rglob("*.java"):
-        if any(part in {"build", ".gradle", ".git"} for part in path.parts):
-            continue
-        text = path.read_text(encoding="utf-8")
-        rel = path.relative_to(ROOT)
-        package_match = PACKAGE_RE.search(text)
-        if package_match and package_match.group(1).startswith(SCHEMATIC_LEGACY_PACKAGE):
-            errors.append(f"{rel}: retired schematic API package must not be restored; use buildcraft.api.v2.schematic")
-        for imported in IMPORT_RE.findall(text):
-            if imported.startswith(SCHEMATIC_LEGACY_PACKAGE):
-                errors.append(f"{rel}: imports retired schematic API {imported}")
-
+    # Repository-wide retirement of all non-v2 Java API namespaces is enforced by validate-api-v2-only.py.
 
     if REGISTRY_KEYS_FILE.is_file() and RUNTIME_FILE.is_file():
         registry_keys = set(REGISTRY_KEY_RE.findall(REGISTRY_KEYS_FILE.read_text(encoding="utf-8")))

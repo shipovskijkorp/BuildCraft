@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-import csv
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,27 +35,6 @@ RETIRED = {
     "buildcraft.api.lists.ListRegistry",
 }
 
-STAGE9 = {
-    "buildcraft.api.capabilities.BCCapabilityRegistration",
-    "buildcraft.api.capabilities.IBCCapabilityProvider",
-    "buildcraft.api.core.BlockIndex",
-    "buildcraft.api.core.EnumPipePart",
-    "buildcraft.api.core.IFluidFilter",
-    "buildcraft.api.core.IFluidHandlerAdv",
-    "buildcraft.api.core.IStackFilter",
-    "buildcraft.api.core.InvalidInputDataException",
-    "buildcraft.api.core.SafeTimeTracker",
-    "buildcraft.api.core.render.ISprite",
-    "buildcraft.api.data.NbtSquishConstants",
-    "buildcraft.api.inventory.IItemHandlerFiltered",
-    "buildcraft.api.inventory.IItemTransactor",
-    "buildcraft.api.inventory.IItemTransactor.IItemExtractable",
-    "buildcraft.api.inventory.IItemTransactor.IItemInsertable",
-    "buildcraft.api.properties.BuildCraftProperties",
-    "buildcraft.api.recipes.IngredientStack",
-    "buildcraft.api.recipes.StackDefinition",
-}
-
 IMPORT = re.compile(r"^\s*import\s+(buildcraft\.api\.(?!v2\.)[^;]+);", re.MULTILINE)
 SIMPLE_RETIRED = {
     "FacadeAPI", "IFacade", "IFacadeItem", "IFacadePhasedState", "IFacadeRegistry", "IFacadeState",
@@ -76,7 +54,7 @@ def require_tokens(errors: list[str], rel: str, *tokens: str) -> None:
     text = read(rel)
     for token in tokens:
         if token not in text:
-            errors.append(f"{rel}: missing Stage 8 API2 hook {token}")
+            errors.append(f"{rel}: missing Facades/Lists/Map API2 hook {token}")
 
 
 def main() -> int:
@@ -92,14 +70,14 @@ def main() -> int:
             current.update(IMPORT.findall(text))
             for retired in RETIRED:
                 if re.search(rf"\b(?:package|import)\s+{re.escape(retired)}(?:\s*;|\.)", text):
-                    errors.append(f"{rel}: retired Stage 8 public symbol remains: {retired}")
+                    errors.append(f"{rel}: retired Facades/Lists/Map public symbol remains: {retired}")
             code = COMMENT_RE.sub("", text)
             for simple in SIMPLE_RETIRED:
                 if re.search(rf"\b{re.escape(simple)}\b", code):
-                    errors.append(f"{rel}: retired Stage 8 simple symbol remains in code: {simple}")
+                    errors.append(f"{rel}: retired Facades/Lists/Map simple symbol remains in code: {simple}")
 
     stale = sorted(RETIRED & current)
-    errors.extend(f"retired Stage 8 import still active: {symbol}" for symbol in stale)
+    errors.extend(f"retired Facades/Lists/Map import still active: {symbol}" for symbol in stale)
 
     runtime = read("source-shared/src/main/java/buildcraft/lib/internal/api/v2/BuildCraftApiRuntime.java")
     for service in ("ITEM_LISTS", "ITEM_LABELS", "MAP_LOCATIONS", "FLUID_DROPS", "FACADES"):
@@ -205,22 +183,9 @@ def main() -> int:
         "BuildCraftServices.FACADES",
     )
 
-    migration_map = ROOT / "docs/api2/LEGACY_IMPORT_MIGRATION_MAP.csv"
-    with migration_map.open(newline="", encoding="utf-8") as handle:
-        rows = {row["legacy_import"]: row for row in csv.DictReader(handle)}
-    missing_map = sorted(current - rows.keys())
-    if missing_map:
-        errors.extend(f"current legacy import missing migration-map row: {symbol}" for symbol in missing_map)
-    wrong_stage9 = sorted(current - STAGE9)
-    if wrong_stage9:
-        errors.extend(f"non-Stage-9 legacy import remains after Stage 8: {symbol}" for symbol in wrong_stage9)
-    for symbol in sorted(current):
-        row = rows.get(symbol)
-        if row and row["disposition"] != "INTERNALIZE":
-            errors.append(f"remaining Stage 9 symbol is not INTERNALIZE in migration map: {symbol}")
-
-    if not current.issubset(STAGE9):
-        errors.append("legacy imports outside the Stage 9 allowlist remain after Stage 8")
+    if current:
+        for symbol in sorted(current):
+            errors.append(f"non-v2 BuildCraft API import remains after finalization: {symbol}")
 
     if errors:
         print("Facades / Lists / Map API2 migration FAILED:")
@@ -229,9 +194,8 @@ def main() -> int:
         return 1
 
     print(
-        "Facades / Lists / Map API2 migration OK: 16 Stage 8 public symbols retired; "
-        "facade/list/map/label/fluid-drop runtime uses API2; "
-        f"{len(current)} Stage 9 implementation-only imports remain"
+        "Facades / Lists / Map API2 runtime OK: retired public symbols remain absent; "
+        "facade/list/map/label/fluid-drop runtime uses API2; 0 non-v2 BuildCraft API imports"
     )
     return 0
 

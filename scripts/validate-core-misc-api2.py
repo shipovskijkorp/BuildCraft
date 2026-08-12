@@ -74,11 +74,11 @@ def main() -> int:
             current.update(IMPORT.findall(text))
             for retired in RETIRED:
                 if re.search(rf"\b(?:package|import)\s+{re.escape(retired)}(?:\s*;|\.)", text):
-                    errors.append(f"{rel}: retired Stage 7 public symbol remains: {retired}")
+                    errors.append(f"{rel}: retired Core/misc public symbol remains: {retired}")
 
     stale = sorted(RETIRED & current)
     if stale:
-        errors.extend(f"retired Stage 7 import still active: {symbol}" for symbol in stale)
+        errors.extend(f"retired Core/misc import still active: {symbol}" for symbol in stale)
 
     runtime = read("source-shared/src/main/java/buildcraft/lib/internal/api/v2/BuildCraftApiRuntime.java")
     for service in ("ACTORS", "MODULES", "WRENCHES", "BLOCK_INTERACTIONS", "DEBUG_VIEWS"):
@@ -108,15 +108,15 @@ def main() -> int:
         data = read(rel)
         for token in tokens:
             if token not in data:
-                errors.append(f"{rel}: missing Stage 7 API2 hook {token}")
+                errors.append(f"{rel}: missing Core/misc API2 hook {token}")
 
     modules = read("source-shared/src/main/java/buildcraft/api/v2/module/BuildCraftModules.java")
     if "COMPAT" not in modules:
         errors.append("BuildCraftModules.COMPAT missing")
 
     legacy_count = len(current)
-    if legacy_count > 34:
-        errors.append(f"Stage 7 burn-down regressed: expected at most 34 remaining legacy imports, found {legacy_count}")
+    if legacy_count:
+        errors.append(f"Core/misc finalization requires zero non-v2 BuildCraft API imports, found {legacy_count}")
 
     if errors:
         print("Core / misc API2 migration FAILED:")
@@ -125,9 +125,9 @@ def main() -> int:
         return 1
 
     print(
-        "Core / misc API2 migration OK: 32 Stage 7 public symbols retired; "
+        "Core / misc API2 runtime OK: retired public symbols remain absent; "
         "area/ownership bridges and module/wrench/block/debug services are live; "
-        f"{legacy_count} legacy imports remain for later migration stages"
+        "0 non-v2 BuildCraft API imports"
     )
     return 0
 

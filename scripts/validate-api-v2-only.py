@@ -1,0 +1,164 @@
+#!/usr/bin/env python3
+"""Final API2 migration gate: BuildCraft's Java extension surface is buildcraft.api.v2 only."""
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+JAVA_ROOTS = (
+    "source-shared/src/main/java",
+    "source-families/legacy/src/main/java",
+    "source-families/modern/src/main/java",
+    "source-platforms/forge/src/main/java",
+    "source-platforms/neoforge/src/main/java",
+    "version-src/1.19.2-forge/src/main/java",
+    "version-src/1.20.1-forge/src/main/java",
+    "version-src/1.21.1-neoforge/src/main/java",
+    "source-shared/src/test/java",
+    "source-families/legacy/src/test/java",
+    "source-families/modern/src/test/java",
+    "source-platforms/forge/src/test/java",
+    "source-platforms/neoforge/src/test/java",
+    "source-shared/src/gametest/java",
+    "source-families/legacy/src/gametest/java",
+    "source-families/modern/src/gametest/java",
+    "source-platforms/forge/src/gametest/java",
+    "source-platforms/neoforge/src/gametest/java",
+    "addon-fixture/src/main/java",
+)
+
+PACKAGE_OR_IMPORT = re.compile(
+    r"^\s*(?:package|import)\s+(?:static\s+)?(buildcraft\.api(?:\.[\w$*]+)*)\s*;",
+    re.MULTILINE,
+)
+V2_PREFIX = "buildcraft.api.v2"
+
+OBSOLETE_MIGRATION_FILES = (
+    "docs/api2/CORE_MISC_RUNTIME_MIGRATION.md",
+    "docs/api2/FACADES_LISTS_MAP_RUNTIME_MIGRATION.md",
+    "docs/api2/IMPLEMENTATION_INTERNALIZATION.md",
+    "docs/api2/LEGACY_IMPORT_MIGRATION_MAP.csv",
+    "scripts/validate-api-v2-migration-surface.py",
+    "scripts/validate-legacy-api-internalization.py",
+)
+
+GRADLE_FILES = (
+    "builds/legacy/build.forge.gradle",
+    "builds/modern/build.neoforge.gradle",
+)
+CI_FILE = ".github/workflows/ci.yml"
+COMPLETION_DOC = "docs/api2/API2_MIGRATION_COMPLETE.md"
+
+
+def is_v2(name: str) -> bool:
+    return name == V2_PREFIX or name.startswith(V2_PREFIX + ".")
+
+
+def main() -> int:
+    errors: list[str] = []
+    public_api_files = 0
+    scanned_java = 0
+
+    for relative in JAVA_ROOTS:
+        root = ROOT / relative
+        if not root.is_dir():
+            continue
+        for path in root.rglob("*.java"):
+            scanned_java += 1
+            rel = path.relative_to(ROOT).as_posix()
+            posix = path.as_posix()
+
+            marker = "/buildcraft/api/"
+            if marker in posix:
+                suffix = posix.split(marker, 1)[1]
+                if suffix.startswith("v2/"):
+                    if relative.endswith("src/main/java"):
+                        public_api_files += 1
+                else:
+                    errors.append(f"{rel}: non-v2 source remains below buildcraft/api")
+
+            text = path.read_text(encoding="utf-8", errors="ignore")
+            for name in PACKAGE_OR_IMPORT.findall(text):
+                if not is_v2(name):
+                    errors.append(f"{rel}: non-v2 BuildCraft API package/import remains: {name}")
+
+    api_root = ROOT / "source-shared/src/main/java/buildcraft/api"
+    if not api_root.is_dir():
+        errors.append("source-shared public API root is missing")
+    else:
+        unexpected = sorted(
+            p.relative_to(api_root).as_posix()
+            for p in api_root.iterdir()
+            if p.name != "v2"
+        )
+        if unexpected:
+            errors.append("public API root contains non-v2 entries: " + ", ".join(unexpected))
+
+    if public_api_files == 0:
+        errors.append("no buildcraft.api.v2 Java sources found")
+
+    for relative in OBSOLETE_MIGRATION_FILES:
+        if (ROOT / relative).exists():
+            errors.append(f"obsolete migration artifact remains: {relative}")
+
+    completion = ROOT / COMPLETION_DOC
+    if not completion.is_file():
+        errors.append(f"missing API2 completion document: {COMPLETION_DOC}")
+    else:
+        text = completion.read_text(encoding="utf-8", errors="ignore")
+        lower = text.lower()
+        for token in (
+            "buildcraft.api.v2",
+            "buildcraft.lib.internal",
+            "no legacy java api compatibility facade",
+            "save and registry compatibility",
+        ):
+            if token not in lower:
+                errors.append(f"{COMPLETION_DOC}: missing finalization invariant: {token}")
+
+    for relative in GRADLE_FILES:
+        path = ROOT / relative
+        if not path.is_file():
+            errors.append(f"missing build file: {relative}")
+            continue
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        for token in (
+            "validateApiV2Only",
+            "scripts/validate-api-v2-only.py",
+            "dependsOn validateApiV2Only",
+            "java.include 'buildcraft/api/v2/**'",
+        ):
+            if token not in text:
+                errors.append(f"{relative}: missing final API2-only build gate token {token}")
+        if "validateApiV2MigrationSurface" in text or "validate-api-v2-migration-surface.py" in text:
+            errors.append(f"{relative}: obsolete migration-surface build task remains")
+
+    ci = ROOT / CI_FILE
+    if not ci.is_file():
+        errors.append(f"missing CI file: {CI_FILE}")
+    else:
+        text = ci.read_text(encoding="utf-8", errors="ignore")
+        if "python scripts/validate-api-v2-only.py" not in text:
+            errors.append(f"{CI_FILE}: API2-only validator is not executed")
+        if "validate-api-v2-migration-surface.py" in text or "API v2 migration surface" in text:
+            errors.append(f"{CI_FILE}: obsolete migration-surface CI gate remains")
+
+    if errors:
+        print("API v2-only finalization FAILED:")
+        for error in errors:
+            print(f" - {error}")
+        return 1
+
+    print(
+        "API v2-only finalization OK: "
+        f"{public_api_files} public API2 Java source(s); "
+        f"{scanned_java} Java source(s) scanned; "
+        "0 non-v2 buildcraft.api packages/imports; migration ledger retired"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
