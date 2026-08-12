@@ -10,7 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.core.BuildCraftAPI;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -63,12 +64,12 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
 
     @Override
     protected boolean doPlaceTask(PlaceTask placeTask) {
-        FakePlayer fakePlayer = BuildCraftAPI.fakePlayerProvider.getFakePlayer(
+        FakePlayer fakePlayer = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(
             (ServerLevel) tile.getWorldBC(),
             tile.getOwner(),
             tile.getBuilderPos()
         );
-        return TemplateRegistry.INSTANCE.handle(
+        return BuildCraftApi.service(BuildCraftServices.TEMPLATES).handle(
             tile.getWorldBC(),
             placeTask.pos,
             fakePlayer,

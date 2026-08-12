@@ -13,14 +13,13 @@ import java.util.Map;
 import java.util.UUID;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.core.IFakePlayerProvider;
 import buildcraft.lib.fake.FakePlayerBC;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 
-public enum FakePlayerProvider implements IFakePlayerProvider {
+public enum FakePlayerProvider {
     INSTANCE;
 
     /** The default {@link GameProfile} to use if a tile entity cannot determine its real owner. Most of the time this
@@ -36,17 +35,14 @@ public enum FakePlayerProvider implements IFakePlayerProvider {
     /** Fake players are world-bound entities; never move one mutable instance between dimensions. */
     private final Map<ServerLevel, Map<GameProfile, FakePlayerBC>> playersByWorld = new IdentityHashMap<>();
 
-    @Override
     public FakePlayerBC getBuildCraftPlayer(ServerLevel world) {
         return getFakePlayer(world, NULL_PROFILE, BlockPos.ZERO);
     }
 
-    @Override
     public FakePlayerBC getFakePlayer(ServerLevel world, GameProfile profile) {
         return getFakePlayer(world, profile, BlockPos.ZERO);
     }
 
-    @Override
     public FakePlayerBC getFakePlayer(ServerLevel world, GameProfile profile, BlockPos pos) {
         if (profile == null) {
             BCLog.logger.warn("[lib.fake] Null GameProfile! This is a bug!", new IllegalArgumentException());

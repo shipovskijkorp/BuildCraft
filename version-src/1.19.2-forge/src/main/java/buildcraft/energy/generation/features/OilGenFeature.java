@@ -4,10 +4,18 @@ import java.util.List;
 
 import com.mojang.serialization.Codec;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.content.BuildCraftContentIds;
+import buildcraft.api.v2.worldgen.ResourceDepositRule;
+import buildcraft.api.v2.worldgen.WorldgenService;
 import buildcraft.energy.BCEnergyConfig;
 import buildcraft.lib.misc.data.Box;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -32,8 +40,16 @@ public class OilGenFeature extends Feature<OilFeatureConfiguration>{
             return false;
         }
 
+        ResourceDepositRule rule = resolveOilRule(world, contextOrigin(pfc));
+        if (rule == null) {
+            return false;
+        }
         ResourceLocation dimension = world.getLevel().dimension().location();
         if (!BCEnergyConfig.isDimensionAllowed(dimension)) {
+            return false;
+        }
+        double frequency = rule.frequencyMultiplier();
+        if (frequency <= 0 || (frequency < 1.0 && pfc.random().nextDouble() >= frequency)) {
             return false;
         }
 
@@ -47,6 +63,32 @@ public class OilGenFeature extends Feature<OilFeatureConfiguration>{
         synchronized (OilGenerator.class) {
             return placeLocked(world, chunkX, chunkZ, pfc.config());
         }
+    }
+
+
+    private static BlockPos contextOrigin(FeaturePlaceContext<OilFeatureConfiguration> context) {
+        return context.origin();
+    }
+
+    private static ResourceDepositRule resolveOilRule(WorldGenLevel world, BlockPos origin) {
+        ResourceLocation dimension = world.getLevel().dimension().location();
+        var biomeHolder = world.getBiome(origin);
+        ResourceLocation biome = biomeHolder.unwrapKey().map(ResourceKey::location).orElse(null);
+        if (biome == null) return null;
+
+        var dimensionType = world.getLevel().dimensionTypeRegistration();
+        WorldgenService service = BuildCraftApi.service(BuildCraftServices.WORLDGEN);
+        return service.rules().stream()
+            .filter(ResourceDepositRule::enabled)
+            .filter(rule -> rule.profile().equals(BuildCraftContentIds.Worldgen.STANDARD_OIL))
+            .filter(rule -> rule.target().matches(
+                dimension, biome,
+                tagId -> dimensionType.is(TagKey.create(Registry.DIMENSION_TYPE_REGISTRY, tagId)),
+                tagId -> biomeHolder.is(TagKey.create(Registry.BIOME_REGISTRY, tagId))
+            ))
+            .sorted(java.util.Comparator.comparingInt(ResourceDepositRule::priority).reversed()
+                .thenComparing(rule -> rule.id().toString()))
+            .findFirst().orElse(null);
     }
 
     private boolean placeLocked(WorldGenLevel world, int chunkX, int chunkZ, OilFeatureConfiguration configuration) {

@@ -1,7 +1,8 @@
 package buildcraft.robotics.boards;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
-import buildcraft.api.crops.CropManager;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.robotics.BCRoboticsBoards;
@@ -22,7 +23,7 @@ public class BoardRobotHarvester extends BoardRobotGenericSearchBlock {
 
     @Override
     public boolean isExpectedBlock(Level level, BlockPos pos) {
-        return level.isLoaded(pos) && CropManager.isMature(level, level.getBlockState(pos), pos);
+        return level.isLoaded(pos) && BuildCraftApi.service(BuildCraftServices.CROPS).isMature(level, level.getBlockState(pos), pos);
     }
 
     @Override

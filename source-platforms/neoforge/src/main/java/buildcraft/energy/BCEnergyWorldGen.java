@@ -37,6 +37,7 @@ public final class BCEnergyWorldGen {
     }
 
     public static void preInit(IEventBus modEventBus) {
+        BCEnergyBiomeModifiers.register(modEventBus);
         FEATURE_REGISTER.register(modEventBus);
     }
 }

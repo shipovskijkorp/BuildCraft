@@ -1,12 +1,15 @@
 package buildcraft.robotics.recipes;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.recipes.IngredientStack;
-import buildcraft.api.recipes.IntegrationRecipe;
 import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.lib.recipe.IntegrationRecipeRegistry;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.recipe.CountedIngredient;
+import buildcraft.api.v2.recipe.IntegrationRecipeDefinition;
+import buildcraft.api.v2.recipe.MachineRecipeService;
+import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.robotics.BCRobotics;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.BCRoboticsBoards.BoardEntry;
@@ -17,25 +20,25 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class RobotIntegrationRecipe extends IntegrationRecipe {
+/** Built-in robot-board Integration Table recipe registered through API 2. */
+public class RobotIntegrationRecipe implements IntegrationRecipeDefinition {
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(BCRobotics.MODID, "robot_board_integration");
+    private static final DefinitionProvenance PROVENANCE =
+        new DefinitionProvenance(BCRobotics.MODID, "built-in", 0);
     private static boolean registered;
 
-    public RobotIntegrationRecipe() {
-        super(ID);
-    }
-
     public static void register() {
-        if (registered || IntegrationRecipeRegistry.INSTANCE.getRecipe(ID) != null) {
+        MachineRecipeService service = BuildCraftApi.service(BuildCraftServices.MACHINE_RECIPES);
+        if (registered || service.snapshot().resolved(ID).isPresent()) {
             registered = true;
             return;
         }
-        IntegrationRecipeRegistry.INSTANCE.addRecipe(new RobotIntegrationRecipe());
+        service.register(ID, new RobotIntegrationRecipe(), PROVENANCE);
         registered = true;
     }
 
     @Override
-    public ItemStack getOutput(ItemStack target, NonNullList<ItemStack> toIntegrate) {
+    public ItemStack output(ItemStack target, NonNullList<ItemStack> toIntegrate) {
         if (target.isEmpty() || !target.is(BCRoboticsItems.ROBOT.get())) {
             return ItemStack.EMPTY;
         }
@@ -54,18 +57,18 @@ public class RobotIntegrationRecipe extends IntegrationRecipe {
     }
 
     @Override
-    public ImmutableList<IngredientStack> getRequirements(ItemStack output) {
-        return ImmutableList.of(new IngredientStack(Ingredient.of(BCRoboticsItems.REDSTONE_BOARD.get())));
+    public List<CountedIngredient> requirements(ItemStack output) {
+        return List.of(CountedIngredient.of(Ingredient.of(BCRoboticsItems.REDSTONE_BOARD.get()), 1));
     }
 
     @Override
-    public long getRequiredMicroJoules(ItemStack output) {
+    public long requiredMicroJoules(ItemStack output) {
         return 10_000L * MjAPI.MJ;
     }
 
     @Override
-    public IngredientStack getCenterStack() {
-        return new IngredientStack(Ingredient.of(BCRoboticsItems.ROBOT.get()));
+    public CountedIngredient centerIngredient() {
+        return CountedIngredient.of(Ingredient.of(BCRoboticsItems.ROBOT.get()), 1);
     }
 
     private BoardEntry findBoard(NonNullList<ItemStack> stacks) {

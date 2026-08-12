@@ -14,6 +14,20 @@ public final class BuildCraftContentIds {
         private Machines() {}
     }
 
+    public static final class MachineComponents {
+        public static final ResourceLocation ENERGY = id("buildcraft:energy");
+        public static final ResourceLocation AREA = id("buildcraft:area");
+        public static final ResourceLocation MINING = id("buildcraft:mining");
+        public static final ResourceLocation PUMPING = id("buildcraft:pumping");
+        public static final ResourceLocation DISTILLATION = id("buildcraft:distillation");
+        public static final ResourceLocation INVENTORY_OUTPUT = id("buildcraft:inventory_output");
+        public static final ResourceLocation FLUID_INPUT = id("buildcraft:fluid_input");
+        public static final ResourceLocation FLUID_OUTPUT = id("buildcraft:fluid_output");
+        public static final ResourceLocation CHUNK_LOADING = id("buildcraft:chunk_loading");
+
+        private MachineComponents() {}
+    }
+
     public static final class Worldgen {
         /** Standard BuildCraft oil-deposit generator profile. */
         public static final ResourceLocation STANDARD_OIL = id("buildcraftenergy:oil");

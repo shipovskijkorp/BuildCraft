@@ -11,7 +11,6 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.IMjRedstoneReceiver;
 import buildcraft.api.mj.MjAPI;
@@ -205,7 +204,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
         IPipeHolder holder = pipe.getHolder();
         Level world = holder.getPipeWorld();
         BlockPos pos = holder.getPipePos();
-        ServerPlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer((ServerLevel) world, holder.getOwner(), pos);
+        ServerPlayer player = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer((ServerLevel) world, holder.getOwner(), pos);
         player.getInventory().clearContent();;
         // set the main hand of the fake player to the stack
         player.getInventory().setItem(player.getInventory().selected, event.getStack());

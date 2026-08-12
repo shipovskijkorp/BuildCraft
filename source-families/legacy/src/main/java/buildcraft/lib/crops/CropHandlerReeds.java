@@ -6,8 +6,7 @@
 
 package buildcraft.lib.crops;
 
-import buildcraft.api.crops.CropManager;
-import buildcraft.api.crops.ICropHandler;
+import buildcraft.api.v2.crops.CropAdapter;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +21,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public enum CropHandlerReeds implements ICropHandler {
+public enum CropHandlerReeds implements CropAdapter {
     INSTANCE;
     public static final int MAX_HEIGHT = 3;
 
@@ -39,8 +38,8 @@ public enum CropHandlerReeds implements ICropHandler {
     }
 
     @Override
-    public boolean plantCrop(Level world, Player player, ItemStack seed, BlockPos pos) {
-        return CropManager.getDefaultHandler().plantCrop(world, player, seed, pos);
+    public boolean plant(Level world, Player player, ItemStack seed, BlockPos pos) {
+        return CropHandlerPlantable.INSTANCE.plant(world, player, seed, pos);
     }
 
     @Override
@@ -49,7 +48,7 @@ public enum CropHandlerReeds implements ICropHandler {
     }
 
     @Override
-    public boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops) {
+    public boolean harvest(Level world, BlockPos pos, NonNullList<ItemStack> drops, Player actor) {
         return false;
     }
 }

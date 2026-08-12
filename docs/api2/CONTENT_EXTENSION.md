@@ -38,7 +38,7 @@ bc.distillation("moon_crude", recipe -> recipe
     .powerMj(20));
 ```
 
-The high-level builder avoids raw micro-MJ and legacy `FluidStack`/`RefineryRecipeRegistry`. The existing refinery compatibility layer already reads API 2 machine-recipe definitions, so code-owned Distiller recipes are visible to the current refinery runtime while the rest of BCCE is migrated.
+The high-level builder avoids raw micro-MJ and legacy `FluidStack`/`RefineryRecipeRegistry`. Distiller and Heat Exchanger runtime lookups now use `MachineRecipeService` directly, and built-in distillation/heat-exchange recipes are registered into the same API 2 service. Code-owned addon recipes therefore use the same runtime path as BCCE recipes.
 
 ## Reusing BuildCraft oil generation
 
@@ -48,7 +48,7 @@ bc.oilInDimension("moon_oil", id("examplemod:moon"), 0.75);
 
 This registers a `ResourceDepositRule` referencing the stable `BuildCraftContentIds.Worldgen.STANDARD_OIL` profile. The rule is loader-neutral and can additionally target biome ids/tags through `WorldTargetSelector`.
 
-The API contract and runtime rule registry are now present. The remaining BCCE migration step is the loader/platform worldgen bridge that translates these rules into Forge/NeoForge/Fabric biome/placed-feature registration. Addons do not depend on that bridge.
+The Forge 1.19.2/1.20.1 and NeoForge 1.21.1 runtimes now install the BuildCraft oil placed feature into biomes through a loader-specific biome-modifier bridge. The feature itself performs the authoritative API 2 rule check at placement time, so an addon can opt an exact custom dimension into standard BuildCraft oil generation with only `oilInDimension(...)`; it does not need its own Forge/NeoForge biome-modifier JSON. A future Fabric target will need an equivalent platform bridge.
 
 ## Machine variants / Quarry Mk2
 
@@ -75,7 +75,7 @@ bc.machineVariant("quarry_mk2", BuildCraftContentIds.Machines.QUARRY, machine ->
 
 Addons may register their own typed `MachineProperty<?>` keys for their own reusable components.
 
-The public machine/archetype surface is complete, but built-in BCCE machines still need to be migrated to register and consume their `MachineType` definitions before a variant becomes a fully placeable machine. That migration should not change addon code.
+BCCE now registers Quarry, Distiller, Mining Well and Pump as built-in `MachineType` definitions. Their existing runtime implementations consume the reusable energy/capacity/speed/cost/chunk-loading properties from those definitions. This makes archetype overrides meaningful to the built-in runtime. A completely new addon-owned placeable machine still requires the later generic machine factory/executor bridge; addons do not need to subclass BCCE block entities for the definition layer.
 
 ## Pipe variants
 

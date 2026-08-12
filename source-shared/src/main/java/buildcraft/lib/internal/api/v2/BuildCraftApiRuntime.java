@@ -188,5 +188,4 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     public CropServiceImpl crops() { return crops; }
     public TemplateServiceImpl templates() { return templates; }
     public FacadeRuleRegistryImpl facadeRules() { return facadeRules; }
-    public WorldPropertyServiceImpl worldProperties() { return worldProperties; }
 }

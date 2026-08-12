@@ -26,12 +26,14 @@ import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.items.FluidItemDrops;
 import buildcraft.api.mj.IMjReceiver;
 import buildcraft.api.mj.MjAPI;
+import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.energy.BCEnergyFluids;
 import buildcraft.energy.tile.ITileOilSpring;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.lib.fluid.FluidCompatRegistry;
+import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.BlockUtil;
@@ -306,7 +308,7 @@ public class TilePump extends TileMiner {
         }
 //        BCLog.logger.debug(""+currentPos);
 
-        long target = 10 * MjAPI.MJ;
+        long target = Math.max(0L, Math.round(10 * MjAPI.MJ * MachineDefinitionLookup.energyCostMultiplier(BuildCraftContentIds.Machines.PUMP)));
         if (currentPos != null && paths.containsKey(currentPos)) {
             progress += battery.extractPower(0, target - progress);
             if (progress < target) {
@@ -497,7 +499,7 @@ public class TilePump extends TileMiner {
 
     @Override
     protected long getBatteryCapacity() {
-        return 50 * MjAPI.MJ;
+        return MachineDefinitionLookup.capacityMicroMj(BuildCraftContentIds.Machines.PUMP, 50 * MjAPI.MJ);
     }
 
 	@Override

@@ -11,10 +11,8 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 import buildcraft.api.blocks.ICustomRotationHandler;
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.lib.recipe.RefineryRecipeRegistry;
-import buildcraft.api.recipes.IRefineryRecipeManager;
-import buildcraft.api.recipes.IRefineryRecipeManager.ICoolableRecipe;
-import buildcraft.api.recipes.IRefineryRecipeManager.IHeatableRecipe;
+import buildcraft.api.v2.recipe.HeatExchangeRecipeDefinition;
+import buildcraft.lib.recipe.MachineRecipeApiBridge;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.block.BlockHeatExchange;
@@ -719,7 +717,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         }
 
         private boolean isHeatant(FluidStack fluid) {
-            return RefineryRecipeRegistry.INSTANCE.getHeatableRegistry().getRecipeForInput(fluid) != null;
+            return MachineRecipeApiBridge.findHeating(fluid) != null;
         }
 
         private IFluidHandler getTankForSide(Direction side) {
@@ -782,9 +780,8 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             Tank c_out = tankOutput;
             Tank h_in = tankInput;
             Tank h_out = endSection.tankOutput;
-            IRefineryRecipeManager reg = RefineryRecipeRegistry.INSTANCE;
-            ICoolableRecipe c_recipe = reg.getCoolableRegistry().getRecipeForInput(c_in.getFluid());
-            IHeatableRecipe h_recipe = reg.getHeatableRegistry().getRecipeForInput(h_in.getFluid());
+            HeatExchangeRecipeDefinition c_recipe = MachineRecipeApiBridge.findCooling(c_in.getFluid());
+            HeatExchangeRecipeDefinition h_recipe = MachineRecipeApiBridge.findHeating(h_in.getFluid());
             if (h_recipe == null || c_recipe == null) {
                 progressState = EnumProgressState.STOPPING;
                 return;
@@ -806,10 +803,10 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                 return;
             }
             int max_amount = FLUID_MULT[middleCount - 1];
-            FluidStack c_in_f = setAmount(c_recipe.in(), max_amount);
-            FluidStack c_out_f = setAmount(c_recipe.out(), max_amount);
-            FluidStack h_in_f = setAmount(h_recipe.in(), max_amount);
-            FluidStack h_out_f = setAmount(h_recipe.out(), max_amount);
+            FluidStack c_in_f = setAmount(c_in.getFluid(), max_amount);
+            FluidStack c_out_f = recipeOutput(c_recipe, max_amount);
+            FluidStack h_in_f = setAmount(h_in.getFluid(), max_amount);
+            FluidStack h_out_f = recipeOutput(h_recipe, max_amount);
 
             // fluid == null => the fluid is consumed in the process (e.g. water, lava)
             int c_out_amount = c_out_f == null ? max_amount : c_out.fillInternal(c_out_f, FluidAction.SIMULATE);
@@ -822,10 +819,10 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                 = Math.min(Math.min(Math.min(c_out_amount, h_out_amount), c_in_amount), h_in_amount);
 
             if (min_common_multiplier > 0) {
-                c_in_f = setAmount(c_recipe.in(), min_common_multiplier);
-                c_out_f = setAmount(c_recipe.out(), min_common_multiplier);
-                h_in_f = setAmount(h_recipe.in(), min_common_multiplier);
-                h_out_f = setAmount(h_recipe.out(), min_common_multiplier);
+                c_in_f = setAmount(c_in.getFluid(), min_common_multiplier);
+                c_out_f = recipeOutput(c_recipe, min_common_multiplier);
+                h_in_f = setAmount(h_in.getFluid(), min_common_multiplier);
+                h_out_f = recipeOutput(h_recipe, min_common_multiplier);
 
                 if (progressState == EnumProgressState.OFF) {
                     progressState = EnumProgressState.PREPARING;
@@ -904,6 +901,13 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             }
         }
 
+        private static FluidStack recipeOutput(HeatExchangeRecipeDefinition recipe, int amount) {
+            if (recipe == null || recipe.output().isEmpty()) {
+                return null;
+            }
+            return setAmount(MachineRecipeApiBridge.outputStack(recipe.output()), amount);
+        }
+
         private static FluidStack setAmount(FluidStack fluid, int mult) {
             if (fluid == null) {
                 return null;
@@ -976,7 +980,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         }
 
         private boolean isCoolant(FluidStack fluid) {
-            return RefineryRecipeRegistry.INSTANCE.getCoolableRegistry().getRecipeForInput(fluid) != null;
+            return MachineRecipeApiBridge.findCooling(fluid) != null;
         }
 
         private IFluidHandler getTankForSide(Direction side) {

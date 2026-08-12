@@ -1,10 +1,11 @@
 package buildcraft.robotics.boards;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.crops.CropManager;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.api.robots.ResourceIdBlock;
@@ -27,7 +28,7 @@ public class BoardRobotPlanter extends RedstoneBoardRobot {
 
     private BlockIndex blockFound;
 
-    private final IStackFilter seedFilter = stack -> !stack.isEmpty() && CropManager.isSeed(stack);
+    private final IStackFilter seedFilter = stack -> !stack.isEmpty() && BuildCraftApi.service(BuildCraftServices.CROPS).isSeed(stack);
 
     public BoardRobotPlanter(EntityRobotBase robot) {
         super(robot);
@@ -88,7 +89,7 @@ public class BoardRobotPlanter extends RedstoneBoardRobot {
         if (robot.getRegistry() != null && robot.getRegistry().isTaken(new ResourceIdBlock(pos))) {
             return false;
         }
-        return CropManager.canSustainPlant(level, seed, pos);
+        return BuildCraftApi.service(BuildCraftServices.CROPS).canSustainPlant(level, seed, pos);
     }
 
     private void releaseBlockFound() {

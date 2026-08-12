@@ -88,9 +88,9 @@ public class BCEnergyConfig {
         ).define("dimensionBlacklist", "");
 
         propDimensionWhitelist = builder.comment(
-            "Comma-separated dimension registry names in which oil generation is allowed.",
-            "The default only permits the vanilla Overworld. Leave empty to remove this restriction."
-        ).define("dimensionWhitelist", "minecraft:overworld");
+            "Optional hard allow-list applied after API 2 worldgen rule matching.",
+            "Leave empty to let registered BuildCraft worldgen rules decide the dimensions. Blacklist entries always win."
+        ).define("dimensionWhitelist", "");
 
         builder.pop();
         builder.push("worldgen.oil.spouts");

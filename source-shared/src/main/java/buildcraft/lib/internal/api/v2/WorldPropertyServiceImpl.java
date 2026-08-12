@@ -22,17 +22,6 @@ public final class WorldPropertyServiceImpl implements WorldPropertyService {
         snapshot = Collections.unmodifiableMap(new LinkedHashMap<>(properties));
     }
 
-    public synchronized void replaceLegacy(ResourceLocation id, WorldProperty property) {
-        properties.put(Objects.requireNonNull(id, "id"), Objects.requireNonNull(property, "property"));
-        snapshot = Collections.unmodifiableMap(new LinkedHashMap<>(properties));
-    }
-
-    public synchronized void removeLegacy(ResourceLocation id) {
-        if (properties.remove(Objects.requireNonNull(id, "id")) != null) {
-            snapshot = Collections.unmodifiableMap(new LinkedHashMap<>(properties));
-        }
-    }
-
     @Override public Optional<WorldProperty> get(ResourceLocation id) { return Optional.ofNullable(snapshot.get(id)); }
     @Override public Map<ResourceLocation, WorldProperty> properties() { return snapshot; }
 }

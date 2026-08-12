@@ -118,6 +118,7 @@ public class BCEnergyWorldGen {
     
     
     public static void preInit(IEventBus modEventBus) {
+        BCEnergyBiomeModifiers.register(modEventBus);
     	BIOME_REGISTER.register("oil_desert", () -> OIL_DESERT_BIOME);
     	BIOME_REGISTER.register("oil_deep_ocean", () -> OIL_DEEP_OCEAN_BIOME);
     	FEATURE_REGISTER.register("worldgen.feature.oil", () -> OIL_FEATURE);

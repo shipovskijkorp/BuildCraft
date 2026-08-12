@@ -6,19 +6,14 @@
 
 package buildcraft.lib;
 
-import buildcraft.api.core.BuildCraftAPI;
-import buildcraft.api.crops.CropManager;
-import buildcraft.api.fuels.BuildcraftFuelRegistry;
-import buildcraft.api.recipes.BuildcraftRecipeRegistry;
 import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.crops.CropService;
 import buildcraft.lib.internal.api.v2.BuildCraftApiRuntime;
+import buildcraft.lib.internal.api.v2.BuiltInApi2Content;
 import buildcraft.lib.crops.CropHandlerPlantable;
 import buildcraft.lib.crops.CropHandlerReeds;
-import buildcraft.lib.fluid.CoolantRegistry;
-import buildcraft.lib.fluid.FuelRegistry;
-import buildcraft.lib.misc.FakePlayerProvider;
-import buildcraft.lib.recipe.IntegrationRecipeRegistry;
-import buildcraft.lib.recipe.RefineryRecipeRegistry;
 import buildcraft.lib.registry.PluggableRegistry;
 
 public class BCLibRegistries {
@@ -37,19 +32,16 @@ public class BCLibRegistries {
 
     public static void fmlPreInit() {
         BuildCraftApiRuntime.bootstrap();
-        BuildcraftRecipeRegistry.integrationRecipes = IntegrationRecipeRegistry.INSTANCE;
-        BuildcraftRecipeRegistry.refineryRecipes = RefineryRecipeRegistry.INSTANCE;
-        BuildcraftFuelRegistry.fuel = FuelRegistry.INSTANCE;
-        BuildcraftFuelRegistry.coolant = CoolantRegistry.INSTANCE;
-        BuildCraftAPI.fakePlayerProvider = FakePlayerProvider.INSTANCE;
+        BuiltInApi2Content.register();
         initApiRegistries();
 
 //        ReloadableRegistryManager dataManager = ReloadableRegistryManager.DATA_PACKS;
 //        BuildCraftRegistryManager.managerDataPacks = dataManager;
 //        dataManager.registerRegistry(GuideBookRegistry.INSTANCE);
 
-        CropManager.setDefaultHandler(CropHandlerPlantable.INSTANCE);
-        CropManager.registerHandler(CropHandlerReeds.INSTANCE);
+        CropService crops = BuildCraftApi.service(BuildCraftServices.CROPS);
+        crops.register(new net.minecraft.resources.ResourceLocation("buildcraft", "plantable"), -1000, CropHandlerPlantable.INSTANCE);
+        crops.register(new net.minecraft.resources.ResourceLocation("buildcraft", "reeds"), 100, CropHandlerReeds.INSTANCE);
     }
 
     public static void fmlInit() {}

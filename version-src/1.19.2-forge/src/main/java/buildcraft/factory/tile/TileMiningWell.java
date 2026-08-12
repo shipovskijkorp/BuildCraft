@@ -9,9 +9,12 @@ package buildcraft.factory.tile;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.mj.IMjReceiver;
+import buildcraft.api.mj.MjAPI;
+import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.lib.inventory.AutomaticProvidingTransactor;
+import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.InventoryUtil;
@@ -78,7 +81,7 @@ public class TileMiningWell extends TileMiner {
     protected void mine() {
         if (currentPos != null && canBreak()) {
             shouldCheck = true;
-            long target = BlockUtil.computeBlockBreakPower(level, currentPos);
+            long target = Math.max(0L, Math.round(BlockUtil.computeBlockBreakPower(level, currentPos) * MachineDefinitionLookup.energyCostMultiplier(BuildCraftContentIds.Machines.MINING_WELL)));
             progress += battery.extractPower(0, target - progress);
             if (progress >= target) {
                 progress = 0;
@@ -154,6 +157,11 @@ public class TileMiningWell extends TileMiner {
         }
 		super.onRemove(dropSelf);
 	}
+
+    @Override
+    protected long getBatteryCapacity() {
+        return MachineDefinitionLookup.capacityMicroMj(BuildCraftContentIds.Machines.MINING_WELL, 500 * MjAPI.MJ);
+    }
 
 	@Override
     protected IMjReceiver createMjReceiver() {

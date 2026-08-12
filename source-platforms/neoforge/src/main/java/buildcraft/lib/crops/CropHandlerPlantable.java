@@ -6,7 +6,7 @@
 
 package buildcraft.lib.crops;
 
-import buildcraft.api.crops.ICropHandler;
+import buildcraft.api.v2.crops.CropAdapter;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.FakePlayerProvider;
 
@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.TallGrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.SpecialPlantable;
 
-public enum CropHandlerPlantable implements ICropHandler {
+public enum CropHandlerPlantable implements CropAdapter {
     INSTANCE;
 
     @Override
@@ -64,7 +64,7 @@ public enum CropHandlerPlantable implements ICropHandler {
     }
 
     @Override
-    public boolean plantCrop(Level world, Player player, ItemStack seed, BlockPos pos) {
+    public boolean plant(Level world, Player player, ItemStack seed, BlockPos pos) {
         return BlockUtil.useItemOnBlock(world, player, seed, pos, Direction.UP);
     }
 
@@ -87,12 +87,19 @@ public enum CropHandlerPlantable implements ICropHandler {
     }
 
     @Override
-    public boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops, Player actor) {
+    public boolean harvest(Level world, BlockPos pos, NonNullList<ItemStack> drops, Player actor) {
         if (!(world instanceof ServerLevel serverLevel)) {
             return false;
         }
         BlockState state = serverLevel.getBlockState(pos);
         if (state.isAir()) {
+            return false;
+        }
+        if (actor == null) {
+            if (BlockUtil.breakBlock(serverLevel, pos, drops, pos, FakePlayerProvider.NULL_PROFILE)) {
+                serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
+                return true;
+            }
             return false;
         }
         drops.addAll(Block.getDrops(state, serverLevel, pos, serverLevel.getBlockEntity(pos), actor, ItemStack.EMPTY));
@@ -101,21 +108,4 @@ public enum CropHandlerPlantable implements ICropHandler {
         return true;
     }
 
-    @Override
-    public boolean harvestCrop(Level world, BlockPos pos, NonNullList<ItemStack> drops) {
-        if (!(world instanceof ServerLevel serverLevel)) {
-            return false;
-        }
-
-        BlockState state = serverLevel.getBlockState(pos);
-        if (state.isAir()) {
-            return false;
-        }
-
-        if (BlockUtil.breakBlock(serverLevel, pos, drops, pos, FakePlayerProvider.NULL_PROFILE)) {
-            serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
-            return true;
-        }
-        return false;
-    }
 }

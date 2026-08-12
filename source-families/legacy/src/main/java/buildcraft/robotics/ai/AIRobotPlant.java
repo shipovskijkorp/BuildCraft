@@ -1,7 +1,8 @@
 package buildcraft.robotics.ai;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.crops.CropManager;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.misc.FakePlayerProvider;
@@ -75,7 +76,7 @@ public class AIRobotPlant extends AIRobot {
 
         ItemStack before = held.copy();
         int beforeCount = held.getCount();
-        boolean planted = CropManager.plantCrop(serverLevel, player, held, pos);
+        boolean planted = BuildCraftApi.service(BuildCraftServices.CROPS).plant(serverLevel, player, held, pos);
         if (!planted) {
             setSuccess(false);
             robot.setItemInUse(before);

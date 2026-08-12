@@ -1,6 +1,4 @@
 {
-  "type": "neoforge:add_features",
-  "biomes": "#minecraft:is_overworld",
-  "features": "buildcraftenergy:oil_placed_feature",
-  "step": "fluid_springs"
+  "type": "buildcraftenergy:oil_feature_injection",
+  "features": "buildcraftenergy:oil_placed_feature"
 }

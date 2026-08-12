@@ -33,11 +33,12 @@ import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
-import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IAreaProvider;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.mj.MjBattery;
+import buildcraft.api.v2.content.BuildCraftContentIds;
+import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
 import buildcraft.api.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.tiles.IHasWork;
@@ -105,7 +106,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoadingTile, IHasWork {
     public static final boolean DEBUG_QUARRY = BCDebugging.shouldDebugLog("builders.quarry");
-    private static final long MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
+    private static final long DEFAULT_MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
     private static final ResourceLocation ADVANCEMENT_COMPLETE
         = new ResourceLocation("buildcraftbuilders:diggy_diggy_hole");
     private static final ResourceLocation ADVANCEMENT_DESTROYING_THE_WORLD
@@ -113,7 +114,11 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     private static final Map<ServerLevel, Map<UUID, Map<BlockPos, Long>>> FULL_SPEED_QUARRIES
         = new WeakHashMap<>();
 
-    private final MjBattery battery = new MjBattery(24000 * MjAPI.MJ);
+    private final MjBattery battery;
+    private final long maxPowerPerTick;
+    private final boolean apiChunkLoading;
+    private final double apiWorkSpeedMultiplier;
+    private final double apiEnergyCostMultiplier;
     public final Box frameBox = new Box();
     private final Box miningBox = new Box();
     private BoxIterator boxIterator;
@@ -198,6 +203,15 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
     public TileQuarry(BlockPos pos, BlockState state) {
     	super(BCBuildersBlocks.QUARRY_TILE_BC8.get(), pos, state);
+        maxPowerPerTick = MachineDefinitionLookup.maxInputMicroMj(
+            BuildCraftContentIds.Machines.QUARRY, DEFAULT_MAX_POWER_PER_TICK
+        );
+        battery = new MjBattery(MachineDefinitionLookup.capacityMicroMj(
+            BuildCraftContentIds.Machines.QUARRY, 24000 * MjAPI.MJ
+        ));
+        apiChunkLoading = MachineDefinitionLookup.chunkLoading(BuildCraftContentIds.Machines.QUARRY, true);
+        apiWorkSpeedMultiplier = MachineDefinitionLookup.workSpeedMultiplier(BuildCraftContentIds.Machines.QUARRY);
+        apiEnergyCostMultiplier = MachineDefinitionLookup.energyCostMultiplier(BuildCraftContentIds.Machines.QUARRY);
         caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, this, EnumPipePart.VALUES);
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery) {
             @Override
@@ -544,13 +558,13 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     @Nullable
     @Override
     public LoadType getLoadType() {
-        return LoadType.HARD;
+        return apiChunkLoading ? LoadType.HARD : null;
     }
 
     @Nullable
     @Override
     public Set<ChunkPos> getChunksToLoad() {
-        if (!miningBox.isInitialized()) {
+        if (!apiChunkLoading || !miningBox.isInitialized()) {
             return null;
         }
         Set<ChunkPos> chunkPoses = new HashSet<>();
@@ -629,7 +643,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (retryAt > now) {
             return false;
         }
-        Player actor = BuildCraftAPI.fakePlayerProvider.getFakePlayer(serverLevel, getOwner(), pos);
+        Player actor = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, getOwner(), pos);
         if (!BlockUtil.canBreakBlock(serverLevel, pos, actor)) {
             deniedBreakUntil.put(pos.immutable(), now + 200);
             return false;
@@ -737,24 +751,24 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         long max;
         if (battery.getStored() > battery.getCapacity() / 2) {
-            max = MAX_POWER_PER_TICK;
+            max = maxPowerPerTick;
         } else {
             long roundedUp = battery.getStored() + MjAPI.MJ / 2;
-            if (roundedUp > Long.MAX_VALUE / MAX_POWER_PER_TICK) {
+            if (roundedUp > Long.MAX_VALUE / maxPowerPerTick) {
                 // The multiplication would overflow, so we'll have to use BigInteger for this bit
-                max = BigInteger.valueOf(roundedUp).multiply(BigInteger.valueOf(MAX_POWER_PER_TICK))
+                max = BigInteger.valueOf(roundedUp).multiply(BigInteger.valueOf(maxPowerPerTick))
                     .divide(BigInteger.valueOf(battery.getCapacity() / 2)).longValue();
             } else {
-                max = MAX_POWER_PER_TICK * roundedUp / (battery.getCapacity() / 2);
+                max = maxPowerPerTick * roundedUp / (battery.getCapacity() / 2);
             }
-            max = MathUtil.clamp(max, 0, MAX_POWER_PER_TICK);
+            max = MathUtil.clamp(max, 0, maxPowerPerTick);
         }
         long initialPowerBudget = max;
         debugPowerRate = max;
         blockPercentSoFar = 0;
         moveDistanceSoFar = 0;
 
-        int maxTasks = Math.max(1, (int) (max * BCBuildersConfig.quarryMaxTasksPerTick / MAX_POWER_PER_TICK));
+        int maxTasks = Math.max(1, (int) (max * BCBuildersConfig.quarryMaxTasksPerTick * apiWorkSpeedMultiplier / Math.max(1L, maxPowerPerTick)));
         boolean sendUpdate = false;
         power_loop: for (int i = 0; i < maxTasks; i++) {
 
@@ -886,7 +900,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
         }
         debugPowerRate -= max;
-        if (initialPowerBudget == MAX_POWER_PER_TICK && debugPowerRate > 0) {
+        if (initialPowerBudget == maxPowerPerTick && debugPowerRate > 0) {
             trackFullSpeedQuarry();
         }
         if (sendUpdate) {
@@ -1289,6 +1303,20 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         }
     }
 
+    private long scaleTaskEnergy(long baseMicroMj) {
+        if (baseMicroMj <= 0 || apiEnergyCostMultiplier <= 0) {
+            return 0;
+        }
+        double scaled = baseMicroMj * apiEnergyCostMultiplier;
+        return scaled >= Long.MAX_VALUE ? Long.MAX_VALUE : Math.max(1L, Math.round(scaled));
+    }
+
+    private double movementDistanceForPower(long addedMicroMj, long targetMicroMj, double totalDistance) {
+        if (addedMicroMj <= 0 || totalDistance <= 0) return 0;
+        if (targetMicroMj <= 0) return totalDistance;
+        return Math.min(totalDistance, addedMicroMj / (double) targetMicroMj * totalDistance);
+    }
+
     private abstract class Task {
         public long power;
         public long clientPower;
@@ -1336,6 +1364,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         final boolean addPower(long microJoules) {
             power += microJoules;
             long target = getTarget();
+            if (target <= 0) {
+                return finish(0, 0);
+            }
             if (power >= target) {
                 if (!finish(microJoules, target)) {
                     battery.addPower(Math.min(power, battery.getCapacity() - battery.getStored()), FluidAction.EXECUTE);
@@ -1388,14 +1419,14 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         public long getTarget() {
-            return BlockUtil.computeBlockBreakPower(level, breakPos);
+            return scaleTaskEnergy(BlockUtil.computeBlockBreakPower(level, breakPos));
         }
 
         @Override
         public long getRequiredPowerThisTick() {
             long target = getTarget();
             long req = Math.max(0, target - power);
-            double rate = BCBuildersConfig.quarryMaxBlockMineRate;
+            double rate = BCBuildersConfig.quarryMaxBlockMineRate * apiWorkSpeedMultiplier;
             if (rate < 0.1) {
                 return req;
             }
@@ -1409,7 +1440,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         protected boolean onReceivePower(long added, long target) {
-            blockPercentSoFar += added / (double) target;
+            blockPercentSoFar += target <= 0 ? 1.0 : added / (double) target;
             if (!level.isEmptyBlock(breakPos)) {
                 level.destroyBlockProgress(breakPos.hashCode(), breakPos, (int) (power * 9 / getTarget()));
                 return false;
@@ -1420,7 +1451,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         protected boolean finish(long added, long target) {
-            blockPercentSoFar += added / (double) target;
+            blockPercentSoFar += target <= 0 ? 1.0 : added / (double) target;
             if (!canMine(breakPos)) {
                 return true;
             }
@@ -1496,7 +1527,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         public long getTarget() {
-            return 24 * MjAPI.MJ;
+            return scaleTaskEnergy(24 * MjAPI.MJ);
         }
 
         @Override
@@ -1512,7 +1543,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             if (!(level instanceof ServerLevel serverLevel)) {
                 return false;
             }
-            Player actor = BuildCraftAPI.fakePlayerProvider.getFakePlayer(serverLevel, getOwner(), framePos);
+            Player actor = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, getOwner(), framePos);
             boolean placed = BlockUtil.placeBlock(
                 serverLevel, framePos, BCBuildersBlocks.FRAME.get().defaultBlockState(), actor, Direction.UP, 3
             );
@@ -1581,14 +1612,14 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         public long getTarget() {
-            return (long) (from.distanceTo(to) * 20 * MjAPI.MJ);
+            return scaleTaskEnergy((long) (from.distanceTo(to) * 20 * MjAPI.MJ));
         }
 
         @Override
         public long getRequiredPowerThisTick() {
             long req = Math.max(0, getTarget() - power);
 
-            double max = BCBuildersConfig.quarryMaxFrameMoveSpeed;
+            double max = BCBuildersConfig.quarryMaxFrameMoveSpeed * apiWorkSpeedMultiplier;
             if (max < 0.1) {
                 return req;
             }
@@ -1602,7 +1633,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         protected boolean onReceivePower(long added, long target) {
-            moveDistanceSoFar += added / (double) MjAPI.MJ;
+            moveDistanceSoFar += movementDistanceForPower(added, target, from.distanceTo(to));
             // Vec3 oldDrillPos = drillPos;
             drillPos = from.scale(1 - power / (double) target).add(to.scale(power / (double) target));
             // moveEntities(oldDrillPos);
@@ -1611,7 +1642,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         protected boolean finish(long added, long target) {
-            moveDistanceSoFar += added / (double) MjAPI.MJ;
+            moveDistanceSoFar += movementDistanceForPower(added, target, from.distanceTo(to));
             // Vec3 oldDrillPos = drillPos;
             drillPos = to;
             // moveEntities(oldDrillPos);

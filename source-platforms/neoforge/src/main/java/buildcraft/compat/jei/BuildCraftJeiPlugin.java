@@ -11,13 +11,17 @@ import java.util.stream.Collectors;
 
 import net.minecraft.client.gui.GuiGraphics;
 
-import buildcraft.api.fuels.BuildcraftFuelRegistry;
-import buildcraft.api.fuels.IFuel;
-import buildcraft.api.fuels.IFuelManager;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.lib.recipe.RefineryRecipeRegistry;
-import buildcraft.api.recipes.IRefineryRecipeManager;
-import buildcraft.api.recipes.IRefineryRecipeManager.IHeatExchangerRecipe;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.fuels.EnergyFluidService;
+import buildcraft.api.v2.fuels.FuelProfile;
+import buildcraft.api.v2.recipe.DistillationRecipeDefinition;
+import buildcraft.api.v2.recipe.HeatExchangeRecipeDefinition;
+import buildcraft.api.v2.recipe.MachineRecipeService;
+import buildcraft.api.v2.recipe.RecipeDefinition;
+import buildcraft.lib.fluid.FuelApiBridge;
+import buildcraft.lib.recipe.MachineRecipeApiBridge;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.energy.BCEnergyBlocks;
@@ -110,7 +114,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public static final RecipeType<AssemblyRecipeBasic> ASSEMBLY = RecipeType.create("buildcraftsilicon", "assembly", AssemblyRecipeBasic.class);
     public static final RecipeType<ProgrammingRecipeView> PROGRAMMING = RecipeType.create("buildcraftsilicon", "programming", ProgrammingRecipeView.class);
     public static final RecipeType<IntegrationRecipeView> INTEGRATION = RecipeType.create("buildcraftsilicon", "integration", IntegrationRecipeView.class);
-    public static final RecipeType<IRefineryRecipeManager.IDistillationRecipe> DISTILLATION = RecipeType.create("buildcraftfactory", "distillation", IRefineryRecipeManager.IDistillationRecipe.class);
+    public static final RecipeType<DistillationRecipeDefinition> DISTILLATION = RecipeType.create("buildcraftfactory", "distillation", DistillationRecipeDefinition.class);
     public static final RecipeType<HeatExchangeRecipeView> HEAT_EXCHANGE = RecipeType.create("buildcraftfactory", "heat_exchange", HeatExchangeRecipeView.class);
     public static final RecipeType<CombustionFuelRecipeView> COMBUSTION_FUEL = RecipeType.create("buildcraftenergy", "combustion_fuel", CombustionFuelRecipeView.class);
 
@@ -203,29 +207,25 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         registration.addRecipes(PROGRAMMING, programming);
         registration.addRecipes(INTEGRATION, integration);
 
-        if (RefineryRecipeRegistry.INSTANCE != null) {
-            registration.addRecipes(DISTILLATION, new ArrayList<>(RefineryRecipeRegistry.INSTANCE.getDistillationRegistry().getAllRecipes()));
+        MachineRecipeService machineRecipes = BuildCraftApi.service(BuildCraftServices.MACHINE_RECIPES);
+        registration.addRecipes(DISTILLATION, machineRecipes.recipes(DistillationRecipeDefinition.class).stream()
+                .map(match -> match.recipe())
+                .toList());
 
-            List<HeatExchangeRecipeView> heatExchange = new ArrayList<>();
-            for (IRefineryRecipeManager.IHeatableRecipe recipe : RefineryRecipeRegistry.INSTANCE.getHeatableRegistry().getAllRecipes()) {
-                if (recipe.out() != null && !recipe.out().isEmpty()) {
-                    heatExchange.add(new HeatExchangeRecipeView(recipe, true));
-                }
-            }
-            for (IRefineryRecipeManager.ICoolableRecipe recipe : RefineryRecipeRegistry.INSTANCE.getCoolableRegistry().getAllRecipes()) {
-                if (recipe.out() != null && !recipe.out().isEmpty()) {
-                    heatExchange.add(new HeatExchangeRecipeView(recipe, false));
-                }
-            }
-            registration.addRecipes(HEAT_EXCHANGE, heatExchange);
-        }
+        List<HeatExchangeRecipeView> heatExchange = machineRecipes.recipes(HeatExchangeRecipeDefinition.class).stream()
+                .map(match -> match.recipe())
+                .filter(recipe -> !recipe.output().isEmpty())
+                .map(HeatExchangeRecipeView::new)
+                .toList();
+        registration.addRecipes(HEAT_EXCHANGE, heatExchange);
 
-        if (BuildcraftFuelRegistry.fuel != null) {
-            List<CombustionFuelRecipeView> fuels = BuildcraftFuelRegistry.fuel.getFuels().stream()
-                    .map(CombustionFuelRecipeView::new)
-                    .toList();
-            registration.addRecipes(COMBUSTION_FUEL, fuels);
-        }
+        EnergyFluidService energyFluids = BuildCraftApi.service(BuildCraftServices.ENERGY_FLUIDS);
+        List<CombustionFuelRecipeView> fuels = energyFluids.fuels().stream()
+                .map(match -> match.profile())
+                .filter(fuel -> fuel.representativeVariant().isPresent())
+                .map(CombustionFuelRecipeView::new)
+                .toList();
+        registration.addRecipes(COMBUSTION_FUEL, fuels);
     }
 
     @Override
@@ -535,21 +535,21 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
     }
 
-    public record HeatExchangeRecipeView(IHeatExchangerRecipe recipe, boolean heating) {
+    public record HeatExchangeRecipeView(HeatExchangeRecipeDefinition recipe) {
+        public boolean heating() {
+            return recipe.kind() == RecipeDefinition.Kind.HEATING;
+        }
     }
 
-    public record CombustionFuelRecipeView(IFuel fuel) {
+    public record CombustionFuelRecipeView(FuelProfile fuel) {
         public FluidStack input() {
-            FluidStack stack = fuel.getFluid().copy();
-            stack.setAmount(FluidType.BUCKET_VOLUME);
-            return stack;
+            return fuel.representativeVariant()
+                    .map(variant -> FuelApiBridge.stackOfVariant(variant, FluidType.BUCKET_VOLUME))
+                    .orElse(FluidStack.EMPTY);
         }
 
         public FluidStack residue() {
-            if (fuel instanceof IFuelManager.IDirtyFuel dirtyFuel) {
-                return dirtyFuel.getResidue().copy();
-            }
-            return FluidStack.EMPTY;
+            return FuelApiBridge.stackOf(fuel.residuePerBucket());
         }
     }
 
@@ -1100,7 +1100,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
     }
 
-    private static class DistillationCategory implements IRecipeCategory<IRefineryRecipeManager.IDistillationRecipe> {
+    private static class DistillationCategory implements IRecipeCategory<DistillationRecipeDefinition> {
         private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
                 "buildcraftfactory", "textures/gui/distiller.png");
         private final IDrawable background;
@@ -1120,7 +1120,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         @Override
-        public RecipeType<IRefineryRecipeManager.IDistillationRecipe> getRecipeType() {
+        public RecipeType<DistillationRecipeDefinition> getRecipeType() {
             return DISTILLATION;
         }
 
@@ -1140,20 +1140,20 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         @Override
-        public void setRecipe(IRecipeLayoutBuilder builder, IRefineryRecipeManager.IDistillationRecipe recipe, IFocusGroup focuses) {
-            addFluidSlot(builder, RecipeIngredientRole.INPUT, 1, 26, recipe.in().copy(), null);
-            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 57, 1, recipe.outGas().copy(), null);
-            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 57, 46, recipe.outLiquid().copy(), null);
+        public void setRecipe(IRecipeLayoutBuilder builder, DistillationRecipeDefinition recipe, IFocusGroup focuses) {
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 1, 26, MachineRecipeApiBridge.representativeInput(recipe.input()), null);
+            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 57, 1, MachineRecipeApiBridge.outputStack(recipe.gasOutput()), null);
+            addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 57, 46, MachineRecipeApiBridge.outputStack(recipe.liquidOutput()), null);
         }
 
         @Override
-        public void draw(IRefineryRecipeManager.IDistillationRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        public void draw(DistillationRecipeDefinition recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
             machineBody.draw(guiGraphics, 20, 4);
             processAnimation.draw(guiGraphics, 20, 4);
             slot.draw(guiGraphics, 0, 25);
             slot.draw(guiGraphics, 56, 0);
             slot.draw(guiGraphics, 56, 45);
-            guiGraphics.drawString(Minecraft.getInstance().font, formatMj(recipe.powerRequired()), 78, 28, 0xFF55FFFF, false);
+            guiGraphics.drawString(Minecraft.getInstance().font, formatMj(recipe.powerRequiredMicroMj()), 78, 28, 0xFF55FFFF, false);
         }
     }
 
@@ -1194,8 +1194,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, HeatExchangeRecipeView view, IFocusGroup focuses) {
-            addFluidSlot(builder, RecipeIngredientRole.INPUT, 1, 1, view.recipe().in().copy(), null);
-            FluidStack out = view.recipe().out();
+            addFluidSlot(builder, RecipeIngredientRole.INPUT, 1, 1, MachineRecipeApiBridge.representativeInput(view.recipe().input()), null);
+            FluidStack out = MachineRecipeApiBridge.outputStack(view.recipe().output());
             if (out != null && !out.isEmpty()) {
                 addFluidSlot(builder, RecipeIngredientRole.OUTPUT, 73, 1, out.copy(), null);
             }
@@ -1257,11 +1257,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         @Override
         public void draw(CombustionFuelRecipeView recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
             furnace.draw(guiGraphics, 0, 0);
-            IFuel fuel = recipe.fuel();
-            long total = fuel.getPowerPerCycle() * (long) fuel.getTotalBurningTime();
-            int seconds = fuel.getTotalBurningTime() / 20;
+            FuelProfile fuel = recipe.fuel();
+            long total = fuel.powerPerTickMicroMj() * (long) fuel.burnTicksPerBucket();
+            int seconds = fuel.burnTicksPerBucket() / 20;
             drawSanitizedComponent(guiGraphics, Component.translatable("jei.buildcraftenergy.burn_time", seconds), 24, 8, 0xFF404040);
-            drawSanitizedComponent(guiGraphics, Component.translatable("jei.buildcraftenergy.power_per_tick", formatMj(fuel.getPowerPerCycle())), 24, 20, 0xFF404040);
+            drawSanitizedComponent(guiGraphics, Component.translatable("jei.buildcraftenergy.power_per_tick", formatMj(fuel.powerPerTickMicroMj())), 24, 20, 0xFF404040);
             drawSanitizedComponent(guiGraphics, Component.translatable("jei.buildcraftenergy.total_energy", formatMj(total)), 24, 32, 0xFF707070);
         }
     }

@@ -15,10 +15,13 @@ import org.jetbrains.annotations.NotNull;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IFluidHandlerAdv;
-import buildcraft.api.fuels.BuildcraftFuelRegistry;
-import buildcraft.api.fuels.IFuel;
-import buildcraft.api.fuels.IFuelManager.IDirtyFuel;
-import buildcraft.api.fuels.ISolidCoolant;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.fluid.FluidVariant;
+import buildcraft.api.v2.fuels.CoolantProfile;
+import buildcraft.api.v2.fuels.EnergyFluidService;
+import buildcraft.api.v2.fuels.FuelProfile;
+import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.properties.BuildCraftProperties;
@@ -74,12 +77,13 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     public final Tank tankCoolant = new Tank("coolant", MAX_FLUID, this, this::isValidCoolant) {
         @Override
         protected FluidGetResult map(ItemStack stack, int space) {
-            ISolidCoolant coolant = BuildcraftFuelRegistry.coolant.getSolidCoolant(stack);
-            if (coolant == null) {
+            var match = energyFluids().findSolidCoolant(stack).orElse(null);
+            if (match == null) {
                 return super.map(stack, space);
             }
-            FluidStack fluidCoolant = coolant.getFluidFromSolidCoolant(stack);
-            if (fluidCoolant == null || fluidCoolant.getAmount() <= 0 || fluidCoolant.getAmount() > space) {
+            FluidStack fluidCoolant = FuelApiBridge.stackOf(match.profile().convert(stack));
+            if (fluidCoolant == null || fluidCoolant.isEmpty() || fluidCoolant.getAmount() <= 0
+                || fluidCoolant.getAmount() > space) {
                 return super.map(stack, space);
             }
             return new FluidGetResult(StackUtil.EMPTY, fluidCoolant);
@@ -87,7 +91,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
 
         @Override
         public ItemStack transferStackToTank(Player player, ItemStack stack) {
-            boolean isSolidCoolant = BuildcraftFuelRegistry.coolant.getSolidCoolant(stack) != null;
+            boolean isSolidCoolant = energyFluids().findSolidCoolant(stack).isPresent();
             int amountBefore = getFluidAmount();
             ItemStack result = super.transferStackToTank(player, stack);
             if (!player.level.isClientSide && isSolidCoolant && getFluidAmount() > amountBefore) {
@@ -111,7 +115,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     private boolean lastPowered = false;
     private double burnTime;
     private double residueAmount = 0;
-    private IFuel currentFuel;
+    private FuelProfile currentFuel;
     
     public TileEngineIron_BC8(BlockPos pos, BlockState state) {
     	super(BCEnergyBlocks.ENGINE_IRON_TILE_BC8.get(), pos, state);
@@ -244,11 +248,14 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     @Override
     protected void burn() {
         final FluidStack fuel = this.tankFuel.getFluid();
-        if (currentFuel == null || !FluidCompatRegistry.areEquivalent(currentFuel.getFluid(), fuel)) {
-            currentFuel = BuildcraftFuelRegistry.fuel.getFuel(fuel);
+        if (fuel == null || fuel.isEmpty()) {
+            currentFuel = null;
+            return;
         }
-
-        if (fuel == FluidStack.EMPTY || currentFuel == null) {
+        FluidVariant fuelVariant = FuelApiBridge.variantOf(fuel);
+        currentFuel = energyFluids().findFuel(fuelVariant, FuelApiBridge.MATCH_CONTEXT)
+            .map(match -> match.profile()).orElse(null);
+        if (currentFuel == null) {
             return;
         }
 
@@ -263,17 +270,16 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                     if (burnTime <= 0) {
                         if (fuel.getAmount() > 0) {
                             fuel.setAmount(fuel.getAmount() - 1);
-                            burnTime += currentFuel.getTotalBurningTime() / 1000.0;
+                            burnTime += currentFuel.burnTicksPerBucket() / 1000.0;
 
-                            // If we also produce residue then put it out too
-                            if (currentFuel instanceof IDirtyFuel) {
-                                IDirtyFuel dirtyFuel = (IDirtyFuel) currentFuel;
-                                FluidStack residueFluid = dirtyFuel.getResidue().copy();
-                                residueAmount += residueFluid.getAmount() / 1000.0;
-                                if (residueAmount >= 1) {
+                            // If this fuel produces residue, emit its per-bucket fraction for this consumed mB.
+                            if (currentFuel.hasResidue()) {
+                                FluidStack residueFluid = FuelApiBridge.stackOf(currentFuel.residuePerBucket());
+                                residueAmount += currentFuel.residuePerBucket().amount().milliBuckets() / 1000.0;
+                                if (residueAmount >= 1 && !residueFluid.isEmpty()) {
                                     residueFluid.setAmount(Mth.floor(residueAmount));
                                     residueAmount -= tankResidue.fill(residueFluid, FluidAction.EXECUTE);
-                                } else if (tankResidue.getFluid() == FluidStack.EMPTY) {
+                                } else if (!residueFluid.isEmpty() && tankResidue.getFluid() == FluidStack.EMPTY) {
                                     residueFluid.setAmount(0);
                                     tankResidue.setFluid(residueFluid);
                                 }
@@ -285,9 +291,9 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                             return;
                         }
                     }
-                    currentOutput = currentFuel.getPowerPerCycle(); // Comment out for constant power
-                    addPower(currentFuel.getPowerPerCycle());
-                    heat += currentFuel.getPowerPerCycle() * HEAT_PER_MJ / MjAPI.MJ * getBiomeTempScalar();
+                    currentOutput = currentFuel.powerPerTickMicroMj();
+                    addPower(currentFuel.powerPerTickMicroMj());
+                    heat += currentFuel.powerPerTickMicroMj() * HEAT_PER_MJ / MjAPI.MJ * getBiomeTempScalar();
                 }
             } else if (lastPowered) {
                 lastPowered = false;
@@ -324,7 +330,12 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                     {
                         if (tankCoolant.getFluidAmount() > 0) {
                             FluidStack coolant = tankCoolant.getFluid();
-                            float coolPerMb = BuildcraftFuelRegistry.coolant.getDegreesPerMb(coolant, (float) heat);
+                            FluidVariant coolantVariant = FuelApiBridge.variantOf(coolant);
+                            CoolantProfile coolantProfile = energyFluids()
+                                .findCoolant(coolantVariant, FuelApiBridge.MATCH_CONTEXT)
+                                .map(match -> match.profile()).orElse(null);
+                            double coolPerMb = coolantProfile == null ? 0
+                                : coolantProfile.degreesPerMilliBucket(coolantVariant, heat);
                             if (coolPerMb > 0) {
                                 boolean alternativeCoolant = solidCoolantLoaded
                                     || !FluidCompatRegistry.areEquivalent(coolant.getFluid(), Fluids.WATER);
@@ -408,18 +419,24 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         if (currentFuel == null) {
             return 0;
         } else {
-            return currentFuel.getPowerPerCycle();
+            return currentFuel.powerPerTickMicroMj();
         }
+    }
+
+    private static EnergyFluidService energyFluids() {
+        return BuildCraftApi.service(BuildCraftServices.ENERGY_FLUIDS);
     }
 
     // Fluid related
 
     private boolean isValidFuel(FluidStack fluid) {
-        return BuildcraftFuelRegistry.fuel.getFuel(fluid) != null;
+        return fluid != null && !fluid.isEmpty()
+            && energyFluids().findFuel(FuelApiBridge.variantOf(fluid), FuelApiBridge.MATCH_CONTEXT).isPresent();
     }
 
     private boolean isValidCoolant(FluidStack fluid) {
-        return BuildcraftFuelRegistry.coolant.getCoolant(fluid) != null;
+        return fluid != null && !fluid.isEmpty()
+            && energyFluids().findCoolant(FuelApiBridge.variantOf(fluid), FuelApiBridge.MATCH_CONTEXT).isPresent();
     }
 
     private boolean isResidue(FluidStack fluid) {
@@ -427,8 +444,9 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         if (level != null && level.isClientSide) {
             return true;
         }
-        if (currentFuel instanceof IDirtyFuel) {
-            return FluidCompatRegistry.areEquivalent(fluid, ((IDirtyFuel) currentFuel).getResidue());
+        if (currentFuel != null && currentFuel.hasResidue()) {
+            FluidStack residue = FuelApiBridge.stackOf(currentFuel.residuePerBucket());
+            return !residue.isEmpty() && FluidCompatRegistry.areEquivalent(fluid, residue);
         }
         return false;
     }

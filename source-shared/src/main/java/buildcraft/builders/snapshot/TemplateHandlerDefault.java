@@ -6,7 +6,7 @@
 
 package buildcraft.builders.snapshot;
 
-import buildcraft.api.template.ITemplateHandler;
+import buildcraft.api.v2.template.TemplateHandler;
 import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public enum TemplateHandlerDefault implements ITemplateHandler {
+public enum TemplateHandlerDefault implements TemplateHandler {
     INSTANCE;
 
     @Override

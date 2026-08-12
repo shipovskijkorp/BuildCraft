@@ -6,7 +6,8 @@
 
 package buildcraft.transport.stripes;
 
-import buildcraft.api.crops.CropManager;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.transport.IStripesActivator;
 import buildcraft.api.transport.IStripesHandlerItem;
 
@@ -26,7 +27,7 @@ public enum StripesHandlerPlant implements IStripesHandlerItem {
                           ItemStack stack,
                           Player player,
                           IStripesActivator activator) {
-        return CropManager.plantCrop(world, player, stack, pos.offset(direction.getNormal()).below())
-            || CropManager.plantCrop(world, player, stack, pos.offset(direction.getNormal()));
+        return BuildCraftApi.service(BuildCraftServices.CROPS).plant(world, player, stack, pos.offset(direction.getNormal()).below())
+            || BuildCraftApi.service(BuildCraftServices.CROPS).plant(world, player, stack, pos.offset(direction.getNormal()));
     }
 }

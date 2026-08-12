@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.transport.IStripesActivator;
 import buildcraft.api.transport.IWireManager;
 import buildcraft.api.transport.pipe.IItemPipe;
@@ -168,7 +167,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
             stripesNBTOld.putInt("z", p.getZ());
 
             // - Create block and tile
-            ServerPlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer((ServerLevel) w, owner, p);
+            ServerPlayer player = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer((ServerLevel) w, owner, p);
             player.getInventory().clearContent();
             w.setBlock(p, stripesStateOld, 3);
             if (EventHooks.onBlockPlace(player, blockSnapshot2, r.dir)) {
@@ -251,7 +250,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
 
         // Step 2: Add new pipe
         if (!canceled) {
-            ServerPlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer((ServerLevel) w, owner, r.pos);
+            ServerPlayer player = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer((ServerLevel) w, owner, r.pos);
             player.getInventory().clearContent();
             player.getInventory().setItem(player.getInventory().selected, r.stack);
             InteractionResult result = CommonHooks.onPlaceItemIntoWorld(
@@ -279,7 +278,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
             stripesNBTOld.putInt("z", p.getZ());
 
             // - Create block and tile
-            ServerPlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer((ServerLevel) w, owner, p);
+            ServerPlayer player = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer((ServerLevel) w, owner, p);
             player.getInventory().clearContent();
             BlockSnapshot blockSnapshot2 = BlockSnapshot.create(w.dimension(), w, p);
             w.setBlock(p, stripesStateOld, 3);

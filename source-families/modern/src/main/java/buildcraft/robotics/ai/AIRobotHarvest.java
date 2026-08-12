@@ -1,7 +1,8 @@
 package buildcraft.robotics.ai;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.crops.CropManager;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.misc.BlockUtil;
@@ -50,7 +51,7 @@ public class AIRobotHarvest extends AIRobot {
         }
 
         BlockPos pos = blockFound.toBlockPos();
-        if (!CropManager.isMature(serverLevel, serverLevel.getBlockState(pos), pos)) {
+        if (!BuildCraftApi.service(BuildCraftServices.CROPS).isMature(serverLevel, serverLevel.getBlockState(pos), pos)) {
             setSuccess(false);
             terminate();
             return;
@@ -67,7 +68,7 @@ public class AIRobotHarvest extends AIRobot {
         }
 
         NonNullList<ItemStack> drops = NonNullList.create();
-        if (!CropManager.harvestCrop(serverLevel, pos, drops, fakePlayer)) {
+        if (!BuildCraftApi.service(BuildCraftServices.CROPS).harvest(serverLevel, pos, drops, fakePlayer)) {
             setSuccess(false);
             terminate();
             return;

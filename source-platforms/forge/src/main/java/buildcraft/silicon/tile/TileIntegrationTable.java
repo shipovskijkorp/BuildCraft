@@ -7,16 +7,20 @@
 package buildcraft.silicon.tile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.recipes.IngredientStack;
-import buildcraft.api.recipes.IntegrationRecipe;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.recipe.CountedIngredient;
+import buildcraft.api.v2.recipe.IntegrationRecipeDefinition;
+import buildcraft.api.v2.recipe.MachineRecipeService;
+import buildcraft.api.v2.recipe.RecipeMatch;
 import buildcraft.lib.gui.ItemProvider;
 import buildcraft.lib.misc.StackUtil;
-import buildcraft.lib.recipe.IntegrationRecipeRegistry;
 import buildcraft.lib.tile.item.ItemHandlerManager;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.silicon.BCSiliconBlocks;
@@ -67,18 +71,25 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
         EnumPipePart.VALUES
     );
     public final ItemProvider invOutput = new ItemProvider((i) -> getOutput(), 1);
-    public IntegrationRecipe recipe;
+    public RecipeMatch<IntegrationRecipeDefinition> recipe;
 
-    private boolean extract(IngredientStack item, ImmutableList<IngredientStack> items, boolean simulate) {
+    private boolean extract(CountedIngredient item, List<CountedIngredient> items, boolean simulate) {
         ItemStack targetStack = invTarget.getStackInSlot(0);
-        if (targetStack.isEmpty()) return false;
-        if (!StackUtil.contains(item, targetStack)) return false;
-        if (!extract(invToIntegrate, items, simulate, true)) return false;
+        if (targetStack.isEmpty() || !item.test(targetStack)) return false;
+        List<IngredientStack> legacyItems = new ArrayList<>(items.size());
+        for (CountedIngredient definition : items) {
+            legacyItems.add(new IngredientStack(definition.ingredient(), definition.count()));
+        }
+        if (!extract(invToIntegrate, legacyItems, simulate, true)) return false;
         if (!simulate) {
-            targetStack.setCount(targetStack.getCount() - item.count);
+            targetStack.setCount(targetStack.getCount() - item.count());
             invTarget.setStackInSlot(0, targetStack);
         }
         return true;
+    }
+
+    private static MachineRecipeService recipeService() {
+        return BuildCraftApi.service(BuildCraftServices.MACHINE_RECIPES);
     }
 
     private boolean isSpaceEnough(ItemStack stack) {
@@ -88,21 +99,25 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
 
     private void updateRecipe() {
         if (recipe != null) {
+            IntegrationRecipeDefinition definition = recipe.recipe();
             ItemStack output = getOutput();
-            if (!output.isEmpty() && extract(recipe.getCenterStack(), recipe.getRequirements(output), true))
+            if (!output.isEmpty() && extract(definition.centerIngredient(), definition.requirements(output), true)) {
                 return;
+            }
         }
-        recipe = IntegrationRecipeRegistry.INSTANCE.getRecipeFor(invTarget.getStackInSlot(0), invToIntegrate.stacks);
+        recipe = recipeService().findIntegration(invTarget.getStackInSlot(0), invToIntegrate.stacks).orElse(null);
     }
 
     public ItemStack getOutput() {
-        return recipe != null ? recipe.getOutput(invTarget.getStackInSlot(0), invToIntegrate.stacks) : ItemStack.EMPTY;
+        return recipe != null
+            ? recipe.recipe().output(invTarget.getStackInSlot(0), invToIntegrate.stacks)
+            : ItemStack.EMPTY;
     }
 
     @Override
     public long getTarget() {
         ItemStack output = getOutput();
-        return recipe != null && isSpaceEnough(output) ? recipe.getRequiredMicroJoules(output) : 0;
+        return recipe != null && isSpaceEnough(output) ? recipe.recipe().requiredMicroJoules(output) : 0;
     }
 
     @Override
@@ -117,7 +132,8 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
 
         if (getTarget() > 0 && power >= getTarget()) {
             ItemStack output = getOutput();
-            extract(recipe.getCenterStack(), recipe.getRequirements(output), false);
+            IntegrationRecipeDefinition definition = recipe.recipe();
+            extract(definition.centerIngredient(), definition.requirements(output), false);
             ItemStack result = invResult.getStackInSlot(0);
             if (!result.isEmpty()) {
                 result = result.copy();
@@ -136,7 +152,7 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
 	public void saveAdditional(CompoundTag nbt) {
 		super.saveAdditional(nbt);
 		if (recipe != null) {
-			nbt.putString("recipe", recipe.name.toString());
+			nbt.putString("recipe", recipe.id().toString());
 		}
 	}
     
@@ -157,7 +173,7 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
         if (id == NET_GUI_DATA) {
             buffer.writeBoolean(recipe != null);
             if (recipe != null) {
-                buffer.writeUtf(recipe.name.toString());
+                buffer.writeUtf(recipe.id().toString());
             }
         }
     }
@@ -182,8 +198,14 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
         left.add("target - " + getTarget());
     }
 
-    private IntegrationRecipe lookupRecipe(String name) {
-        return IntegrationRecipeRegistry.INSTANCE.getRecipe(new ResourceLocation(name));
+    private RecipeMatch<IntegrationRecipeDefinition> lookupRecipe(String name) {
+        ResourceLocation id = new ResourceLocation(name);
+        return recipeService().snapshot().resolved(id)
+            .filter(resolved -> resolved.value() instanceof IntegrationRecipeDefinition)
+            .map(resolved -> new RecipeMatch<>(
+                resolved.id(), (IntegrationRecipeDefinition) resolved.value(), resolved.provenance()
+            ))
+            .orElse(null);
     }
     
 	@Override

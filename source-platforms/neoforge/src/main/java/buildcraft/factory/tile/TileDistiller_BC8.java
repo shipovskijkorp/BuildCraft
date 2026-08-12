@@ -13,9 +13,10 @@ import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.mj.MjBattery;
 import buildcraft.api.mj.MjCapabilityHelper;
-import buildcraft.lib.recipe.RefineryRecipeRegistry;
-import buildcraft.api.recipes.IRefineryRecipeManager;
-import buildcraft.api.recipes.IRefineryRecipeManager.IDistillationRecipe;
+import buildcraft.api.v2.content.BuildCraftContentIds;
+import buildcraft.api.v2.recipe.DistillationRecipeDefinition;
+import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
+import buildcraft.lib.recipe.MachineRecipeApiBridge;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.core.BCCoreConfig;
@@ -83,7 +84,8 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
     private final Tank tankGasOut = new Tank("gasOut", 4 * FluidType.BUCKET_VOLUME, this);
     private final Tank tankLiquidOut = new Tank("liquidOut", 4 * FluidType.BUCKET_VOLUME, this);
 
-    private final MjBattery mjBattery = new MjBattery(1024 * MjAPI.MJ);
+    private final MjBattery mjBattery;
+    private final long maxMjPerTick;
 
     public final FluidSmoother smoothedTankIn;
     public final FluidSmoother smoothedTankGasOut;
@@ -92,7 +94,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
     /** The model variables, used to keep track of the various state-based variables. */
     public final ModelVariableData clientModelData = new ModelVariableData();
 
-    private IDistillationRecipe currentRecipe;
+    private DistillationRecipeDefinition currentRecipe;
     private long distillPower = 0;
     private boolean hasWork, isActive = false;
     private final AverageLong powerAvg = new AverageLong(100);
@@ -103,6 +105,12 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
 
 	public TileDistiller_BC8(BlockPos pos, BlockState bs) {
 		super(BCFactoryBlocks.ENTITYBLOCKDISTILLER.get(), pos, bs);
+        maxMjPerTick = MachineDefinitionLookup.maxInputMicroMj(
+            BuildCraftContentIds.Machines.DISTILLER, MAX_MJ_PER_TICK
+        );
+        mjBattery = new MjBattery(MachineDefinitionLookup.capacityMicroMj(
+            BuildCraftContentIds.Machines.DISTILLER, 1024 * MjAPI.MJ
+        ));
         tankIn.setCanDrain(false);
         tankGasOut.setCanFill(false);
         tankLiquidOut.setCanFill(false);
@@ -127,9 +135,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
     }
 
     private boolean isDistillableFluid(FluidStack fluid) {
-        IRefineryRecipeManager manager = RefineryRecipeRegistry.INSTANCE;
-        IDistillationRecipe recipe = manager.getDistillationRegistry().getRecipeForInput(fluid);
-        return recipe != null;
+        return MachineRecipeApiBridge.findDistillation(fluid) != null;
     }
 
     
@@ -215,7 +221,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
 
         MODEL_ACTIVE.value = isActive;
         MODEL_POWER_AVG.value = powerAvgClient / MjAPI.MJ;
-        MODEL_POWER_MAX.value = MAX_MJ_PER_TICK / MjAPI.MJ;
+        MODEL_POWER_MAX.value = maxMjPerTick / MjAPI.MJ;
         MODEL_FACING.value = Direction.WEST;
 
         BlockState state = level.getBlockState(worldPosition);
@@ -236,17 +242,16 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
         powerAvg.tick();
         changedSinceNetUpdate |= powerAvgClient != powerAvg.getAverageLong();
 
-        currentRecipe =
-            RefineryRecipeRegistry.INSTANCE.getDistillationRegistry().getRecipeForInput(tankIn.getFluid());
+        currentRecipe = MachineRecipeApiBridge.findDistillation(tankIn.getFluid());
         if (currentRecipe == null) {
             mjBattery.addPowerChecking(distillPower, FluidAction.EXECUTE);
             distillPower = 0;
             isActive = false;
             hasWork = false;
         } else {
-            FluidStack reqIn = currentRecipe.in();
-            FluidStack outLiquid = currentRecipe.outLiquid();
-            FluidStack outGas = currentRecipe.outGas();
+            FluidStack reqIn = MachineRecipeApiBridge.inputStack(currentRecipe.input(), tankIn.getFluid());
+            FluidStack outLiquid = MachineRecipeApiBridge.outputStack(currentRecipe.liquidOutput());
+            FluidStack outGas = MachineRecipeApiBridge.outputStack(currentRecipe.gasOutput());
 
             FluidStack potentialIn = tankIn.drainInternal(reqIn, FluidAction.SIMULATE);
             boolean canExtract = FluidCompatRegistry.areEquivalent(reqIn, potentialIn) && reqIn.getAmount() == potentialIn.getAmount();
@@ -256,11 +261,11 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
 
             if (canExtract && canFillLiquid && canFillGas) {
                 hasWork = true;
-                long max = MAX_MJ_PER_TICK;
+                long max = maxMjPerTick;
                 max *= mjBattery.getStored() + max;
                 max /= mjBattery.getCapacity() / 2;
-                max = Math.min(max, MAX_MJ_PER_TICK);
-                long powerReq = currentRecipe.powerRequired();
+                max = Math.min(max, maxMjPerTick);
+                long powerReq = currentRecipe.powerRequiredMicroMj();
                 long power = mjBattery.extractPower(0, max);
                 powerAvg.push(max);
                 distillPower += power;

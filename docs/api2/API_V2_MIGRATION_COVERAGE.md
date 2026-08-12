@@ -3,10 +3,11 @@
 This document maps the legacy BCCE API concepts to the contract that should be
 used while migrating the implementation.
 
-Current implementation audit: **224** unique legacy API imports are still used
-by BCCE implementation code. **211** are classified `MIGRATE` to API 2 and
+Current implementation audit after runtime migration pass 1: **202** unique legacy API imports are still used
+by BCCE implementation code. **189** are classified `MIGRATE` to API 2 and
 **13** are classified `INTERNALIZE`; **0** imports are left without a migration
-destination.
+destination. The migration map also retains **22** historical entries for legacy
+symbols that have already been removed from live implementation source.
 
 | Legacy/current concept | API 2 replacement |
 |---|---|

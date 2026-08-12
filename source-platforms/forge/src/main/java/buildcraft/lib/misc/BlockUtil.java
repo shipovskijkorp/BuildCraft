@@ -20,7 +20,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.BCLibConfig;
@@ -139,7 +138,7 @@ public final class BlockUtil {
         }
         Player placementActor = actor != null
                 ? actor
-                : BuildCraftAPI.fakePlayerProvider.getFakePlayer(serverLevel, FakePlayerProvider.NULL_PROFILE, pos);
+                : buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, FakePlayerProvider.NULL_PROFILE, pos);
         BlockSnapshot snapshot = BlockSnapshot.create(serverLevel.dimension(), serverLevel, pos);
         if (!serverLevel.setBlock(pos, state, flags)) {
             return false;
@@ -192,7 +191,7 @@ public final class BlockUtil {
 
     public static FakePlayer getFakePlayerWithTool(ServerLevel world, @Nonnull ItemStack tool, GameProfile owner,
                                                    BlockPos pos) {
-        FakePlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer(world, owner, pos);
+        FakePlayer player = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(world, owner, pos);
         int i = 0;
 
         while (player.getItemInHand(InteractionHand.MAIN_HAND) != tool && i < 9) {
@@ -209,7 +208,7 @@ public final class BlockUtil {
 
     public static boolean breakBlock(ServerLevel world, BlockPos pos, NonNullList<ItemStack> drops, BlockPos ownerPos,
                                      GameProfile owner) {
-        FakePlayer fakePlayer = BuildCraftAPI.fakePlayerProvider.getFakePlayer(world, owner, ownerPos);
+        FakePlayer fakePlayer = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(world, owner, ownerPos);
         if (!canBreakBlock(world, pos, fakePlayer)) {
             return false;
         }
@@ -298,7 +297,7 @@ public final class BlockUtil {
 
     public static float getBlockHardnessMining(Level world, BlockPos pos, BlockState state, GameProfile owner) {
         if (world instanceof ServerLevel) {
-            Player fakePlayer = BuildCraftAPI.fakePlayerProvider.getFakePlayer((ServerLevel) world, owner);
+            Player fakePlayer = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer((ServerLevel) world, owner);
             float relativeHardness = state.getDestroyProgress(fakePlayer, world, pos);
             if (relativeHardness <= 0.0F) {
                 // Forge's getPlayerRelativeBlockHardness hook returns 0.0F if the hardness is < 0.0F.
