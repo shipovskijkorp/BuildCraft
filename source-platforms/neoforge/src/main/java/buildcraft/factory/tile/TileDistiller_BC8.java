@@ -5,17 +5,20 @@
  */
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjFormatting;
+
 import java.io.IOException;
 import java.util.List;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.api.v2.recipe.DistillationRecipeDefinition;
 import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
+import buildcraft.lib.internal.api.v2.MachineRuntimeView;
 import buildcraft.lib.recipe.MachineRecipeApiBridge;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.tiles.TilesAPI;
@@ -37,7 +40,7 @@ import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.data.AverageLong;
 import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.misc.data.ModelVariableData;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -57,7 +60,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
+public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable, MachineRuntimeView {
     public static final FunctionContext MODEL_FUNC_CTX;
     private static final NodeVariableObject<Direction> MODEL_FACING;
     private static final NodeVariableBoolean MODEL_ACTIVE;
@@ -78,7 +81,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
         MODEL_ACTIVE = MODEL_FUNC_CTX.putVariableBoolean("active");
     }
 
-    public static final long MAX_MJ_PER_TICK = 6 * MjAPI.MJ;
+    public static final long MAX_MJ_PER_TICK = 6 * MjAmount.MICRO_MJ_PER_MJ;
 
     private final Tank tankIn = new Tank("in", 4 * FluidType.BUCKET_VOLUME, this, this::isDistillableFluid);
     private final Tank tankGasOut = new Tank("gasOut", 4 * FluidType.BUCKET_VOLUME, this);
@@ -109,7 +112,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
             BuildCraftContentIds.Machines.DISTILLER, MAX_MJ_PER_TICK
         );
         mjBattery = new MjBattery(MachineDefinitionLookup.capacityMicroMj(
-            BuildCraftContentIds.Machines.DISTILLER, 1024 * MjAPI.MJ
+            BuildCraftContentIds.Machines.DISTILLER, 1024 * MjAmount.MICRO_MJ_PER_MJ
         ));
         tankIn.setCanDrain(false);
         tankGasOut.setCanFill(false);
@@ -169,8 +172,8 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
                 writePayload(NET_TANK_LIQUID_OUT, buffer, side);
                 buffer.writeBoolean(isActive);
                 powerAvgClient = powerAvg.getAverageLong();
-                final long div = MjAPI.MJ / 2;
-                //BCLog.d(powerAvgClient/(double)MjAPI.MJ + "");
+                final long div = MjAmount.MICRO_MJ_PER_MJ / 2;
+                //BCLog.d(powerAvgClient/(double)MjAmount.MICRO_MJ_PER_MJ + "");
                 powerAvgClient = Math.round(powerAvgClient / (double) div) * div;
                 buffer.writeLong(powerAvgClient);
             } else if (id == NET_TANK_IN) {
@@ -220,8 +223,8 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
         DefaultContexts.RENDER_PARTIAL_TICKS.value = partialTicks;
 
         MODEL_ACTIVE.value = isActive;
-        MODEL_POWER_AVG.value = powerAvgClient / MjAPI.MJ;
-        MODEL_POWER_MAX.value = maxMjPerTick / MjAPI.MJ;
+        MODEL_POWER_AVG.value = powerAvgClient / MjAmount.MICRO_MJ_PER_MJ;
+        MODEL_POWER_MAX.value = maxMjPerTick / MjAmount.MICRO_MJ_PER_MJ;
         MODEL_FACING.value = Direction.WEST;
 
         BlockState state = level.getBlockState(worldPosition);
@@ -304,7 +307,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
         left.add("GasOut = " + tankGasOut.getDebugString());
         left.add("LiquidOut = " + tankLiquidOut.getDebugString());
         left.add("Battery = " + mjBattery.getDebugString());
-        left.add("Progress = " + MjAPI.formatMj(distillPower) + " MJ");
+        left.add("Progress = " + MjFormatting.formatMicroMj(distillPower) + " MJ");
         left.add("Rate = " + LocaleUtil.localizeMjFlow(powerAvgClient));
         left.add("CurrRecipe = " + currentRecipe);
     }
@@ -320,5 +323,10 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable {
         left.add("  power_max = " + MODEL_POWER_MAX);
         left.add("Current Model Variables:");
     }
+    @Override
+    public net.minecraft.resources.ResourceLocation api2MachineTypeId() {
+        return BuildCraftContentIds.Machines.DISTILLER;
+    }
+
 }
 

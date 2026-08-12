@@ -6,6 +6,8 @@
 
 package buildcraft.builders.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -35,11 +37,11 @@ import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IAreaProvider;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.api.v2.MachineRuntimeView;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.tiles.IHasWork;
 import buildcraft.api.tiles.TilesAPI;
@@ -69,7 +71,7 @@ import buildcraft.lib.misc.data.AxisOrder;
 import buildcraft.lib.misc.data.Box;
 import buildcraft.lib.misc.data.BoxIterator;
 import buildcraft.lib.misc.data.EnumAxisOrder;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -104,9 +106,9 @@ import net.minecraftforge.network.NetworkEvent;
 
 
 
-public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoadingTile, IHasWork {
+public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoadingTile, IHasWork, MachineRuntimeView {
     public static final boolean DEBUG_QUARRY = BCDebugging.shouldDebugLog("builders.quarry");
-    private static final long DEFAULT_MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
+    private static final long DEFAULT_MAX_POWER_PER_TICK = 512 * MjAmount.MICRO_MJ_PER_MJ;
     private static final ResourceLocation ADVANCEMENT_COMPLETE
         = new ResourceLocation("buildcraftbuilders:diggy_diggy_hole");
     private static final ResourceLocation ADVANCEMENT_DESTROYING_THE_WORLD
@@ -207,7 +209,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             BuildCraftContentIds.Machines.QUARRY, DEFAULT_MAX_POWER_PER_TICK
         );
         battery = new MjBattery(MachineDefinitionLookup.capacityMicroMj(
-            BuildCraftContentIds.Machines.QUARRY, 24000 * MjAPI.MJ
+            BuildCraftContentIds.Machines.QUARRY, 24000 * MjAmount.MICRO_MJ_PER_MJ
         ));
         apiChunkLoading = MachineDefinitionLookup.chunkLoading(BuildCraftContentIds.Machines.QUARRY, true);
         apiWorkSpeedMultiplier = MachineDefinitionLookup.workSpeedMultiplier(BuildCraftContentIds.Machines.QUARRY);
@@ -753,7 +755,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (battery.getStored() > battery.getCapacity() / 2) {
             max = maxPowerPerTick;
         } else {
-            long roundedUp = battery.getStored() + MjAPI.MJ / 2;
+            long roundedUp = battery.getStored() + MjAmount.MICRO_MJ_PER_MJ / 2;
             if (roundedUp > Long.MAX_VALUE / maxPowerPerTick) {
                 // The multiplication would overflow, so we'll have to use BigInteger for this bit
                 max = BigInteger.valueOf(roundedUp).multiply(BigInteger.valueOf(maxPowerPerTick))
@@ -1527,7 +1529,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         public long getTarget() {
-            return scaleTaskEnergy(24 * MjAPI.MJ);
+            return scaleTaskEnergy(24 * MjAmount.MICRO_MJ_PER_MJ);
         }
 
         @Override
@@ -1612,7 +1614,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
         @Override
         public long getTarget() {
-            return scaleTaskEnergy((long) (from.distanceTo(to) * 20 * MjAPI.MJ));
+            return scaleTaskEnergy((long) (from.distanceTo(to) * 20 * MjAmount.MICRO_MJ_PER_MJ));
         }
 
         @Override
@@ -1628,7 +1630,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             if (max <= 0) {
                 return 0;
             }
-            return Math.min(req, (long) (max * 20 * MjAPI.MJ));
+            return Math.min(req, (long) (max * 20 * MjAmount.MICRO_MJ_PER_MJ));
         }
 
         @Override
@@ -1661,5 +1663,10 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         }
     }
 
+
+    @Override
+    public net.minecraft.resources.ResourceLocation api2MachineTypeId() {
+        return BuildCraftContentIds.Machines.QUARRY;
+    }
 
 }

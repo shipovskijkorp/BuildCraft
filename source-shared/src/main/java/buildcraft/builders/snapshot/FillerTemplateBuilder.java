@@ -6,7 +6,8 @@
 
 package buildcraft.builders.snapshot;
 
-import buildcraft.api.mj.MjAPI;
+import buildcraft.api.v2.energy.MjAmount;
+
 import buildcraft.builders.tile.TileFiller;
 
 /**
@@ -18,7 +19,7 @@ import buildcraft.builders.tile.TileFiller;
 public class FillerTemplateBuilder extends TemplateBuilder {
     private static final int FILLER_CHECKS_PER_TICK = 128;
     private static final int FILLER_FAST_CHECKS_PER_TICK = 256;
-    private static final long FILLER_MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
+    private static final long FILLER_MAX_POWER_PER_TICK = 512 * MjAmount.MICRO_MJ_PER_MJ;
 
     public FillerTemplateBuilder(TileFiller tile) {
         super(tile);

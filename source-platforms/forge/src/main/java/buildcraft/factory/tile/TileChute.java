@@ -6,6 +6,8 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,9 +19,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.tuple.Pair;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.block.BlockChute;
@@ -30,7 +31,7 @@ import buildcraft.lib.inventory.NoSpaceTransactor;
 import buildcraft.lib.inventory.TransactorEntityItem;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.BoundingBoxUtil;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
@@ -71,7 +72,7 @@ public class TileChute extends TileBC_Neptune implements IDebuggable, MenuProvid
         EnumPipePart.VALUES
     );
 
-    private final MjBattery battery = new MjBattery(1 * MjAPI.MJ);
+    private final MjBattery battery = new MjBattery(1 * MjAmount.MICRO_MJ_PER_MJ);
     private int progress = 0;
 
     public TileChute(BlockPos pos, BlockState state) {

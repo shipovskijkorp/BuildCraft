@@ -6,14 +6,21 @@
 
 package buildcraft.silicon.tile;
 
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.content.BuildCraftContentIds;
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.energy.MjPort;
+import buildcraft.api.v2.energy.MjTransferResult;
+import buildcraft.api.v2.machine.LaserTarget;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.ILaserTarget;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.api.enums.EnumLaserTableType;
+import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.tiles.TilesAPI;
@@ -32,12 +39,33 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
-public abstract class TileLaserTableBase extends TileBC_Neptune implements ILaserTarget, IDebuggable {
-    private static final long MJ_FLOW_ROUND = MjAPI.MJ / 10;
+public abstract class TileLaserTableBase extends TileBC_Neptune implements LaserTarget, IDebuggable {
+    private static final long MJ_FLOW_ROUND = MjAmount.MICRO_MJ_PER_MJ / 10;
     private final AverageLong avgPower = new AverageLong(120);
     public long avgPowerClient;
     public long targetClient;
     public long power;
+
+    private final MjPort api2LaserPort = new MjPort() {
+        @Override
+        public MjTransferResult insert(MjAmount offered, OperationMode mode) {
+            long accepted = Math.min(offered.microMj(), getDirectPowerRequested());
+            if (accepted > 0 && mode == OperationMode.EXECUTE) {
+                power += accepted;
+                avgPower.push(accepted);
+                markChunkDirty();
+            }
+            return MjTransferResult.of(offered, MjAmount.ofMicro(accepted));
+        }
+
+        @Override public MjTransferResult extract(MjAmount requested, OperationMode mode) {
+            return MjTransferResult.none(requested);
+        }
+        @Override public MjAmount stored() { return MjAmount.ofMicro(Math.max(0L, power)); }
+        @Override public MjAmount capacity() { return MjAmount.ofMicro(Math.max(power, Math.max(0L, getTarget()))); }
+        @Override public boolean canInsert() { return true; }
+        @Override public boolean canExtract() { return false; }
+    };
 
     protected TileLaserTableBase(BlockEntityType<? extends TileLaserTableBase> type, BlockPos pos, BlockState state) {
     	super(type, pos, state);
@@ -51,21 +79,22 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements ILase
     }
 
     @Override
-    public long getRequiredLaserPower() {
-        return getTarget() - power;
+    public MjPort laserPort() {
+        return api2LaserPort;
     }
 
     @Override
-    public long receiveLaserPower(long microJoules) {
-        long received = Math.min(microJoules, getRequiredLaserPower());
-        power += received;
-        avgPower.push(received);
-        return microJoules - received;
-    }
-
-    @Override
-    public boolean isInvalidTarget() {
-        return isRemoved();
+    public java.util.Optional<net.minecraft.resources.ResourceLocation> typeId() {
+        BlockState state = getBlockState();
+        if (!state.hasProperty(BuildCraftProperties.LASER_TABLE_TYPE)) return java.util.Optional.empty();
+        EnumLaserTableType type = state.getValue(BuildCraftProperties.LASER_TABLE_TYPE);
+        return java.util.Optional.of(switch (type) {
+            case ASSEMBLY_TABLE -> BuildCraftContentIds.LaserTables.ASSEMBLY;
+            case ADVANCED_CRAFTING_TABLE -> BuildCraftContentIds.LaserTables.ADVANCED_CRAFTING;
+            case INTEGRATION_TABLE -> BuildCraftContentIds.LaserTables.INTEGRATION;
+            case CHARGING_TABLE -> BuildCraftContentIds.LaserTables.CHARGING;
+            case PROGRAMMING_TABLE -> BuildCraftContentIds.LaserTables.PROGRAMMING;
+        });
     }
 
     @Override

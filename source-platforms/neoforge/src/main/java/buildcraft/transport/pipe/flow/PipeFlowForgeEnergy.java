@@ -4,6 +4,8 @@
  */
 package buildcraft.transport.pipe.flow;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -17,7 +19,6 @@ import javax.annotation.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
 import buildcraft.transport.internal.pipe.IPipe;
@@ -332,7 +333,7 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
         for (Section section : sections.values()) {
             section.powerAverage.tick();
             double normalized = maxPower <= 0 ? 0 : section.powerAverage.getAverage() / (double) maxPower;
-            section.displayPower = (int) (Math.sqrt(Math.max(0, normalized)) * MjAPI.MJ);
+            section.displayPower = (int) (Math.sqrt(Math.max(0, normalized)) * MjAmount.MICRO_MJ_PER_MJ);
         }
 
         // Ask neighbouring FE consumers how much they can really receive. Simulation is important for
@@ -414,7 +415,7 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
     }
 
     public double getMaxTransferForRender(float partialTicks) {
-        return maxPower / (double) MjAPI.MJ;
+        return maxPower / (double) MjAmount.MICRO_MJ_PER_MJ;
     }
 
     private static int saturatingAdd(int a, int b) {

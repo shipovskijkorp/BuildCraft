@@ -1,8 +1,9 @@
 package buildcraft.robotics.recipes;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.List;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
@@ -63,7 +64,7 @@ public class RobotIntegrationRecipe implements IntegrationRecipeDefinition {
 
     @Override
     public long requiredMicroJoules(ItemStack output) {
-        return 10_000L * MjAPI.MJ;
+        return 10_000L * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override

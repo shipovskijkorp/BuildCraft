@@ -6,19 +6,21 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjReceiver;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.lib.inventory.AutomaticProvidingTransactor;
 import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
+import buildcraft.lib.internal.api.v2.MachineRuntimeView;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.InventoryUtil;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +37,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 
-public class TileMiningWell extends TileMiner {
+public class TileMiningWell extends TileMiner implements MachineRuntimeView {
 	private final BlockPositionSource blockPosSource = new BlockPositionSource(this.worldPosition);
     private boolean shouldCheck = true;
     private final SafeTimeTracker tracker = new SafeTimeTracker(256);
@@ -160,11 +162,16 @@ public class TileMiningWell extends TileMiner {
 
     @Override
     protected long getBatteryCapacity() {
-        return MachineDefinitionLookup.capacityMicroMj(BuildCraftContentIds.Machines.MINING_WELL, 500 * MjAPI.MJ);
+        return MachineDefinitionLookup.capacityMicroMj(BuildCraftContentIds.Machines.MINING_WELL, 500 * MjAmount.MICRO_MJ_PER_MJ);
     }
 
 	@Override
     protected IMjReceiver createMjReceiver() {
         return new MjBatteryReceiver(battery);
     }
+    @Override
+    public net.minecraft.resources.ResourceLocation api2MachineTypeId() {
+        return BuildCraftContentIds.Machines.MINING_WELL;
+    }
+
 }

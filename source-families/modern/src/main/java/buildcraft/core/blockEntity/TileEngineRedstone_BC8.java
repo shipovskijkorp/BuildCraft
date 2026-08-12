@@ -4,10 +4,11 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.blockEntity;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import javax.annotation.Nonnull;
 
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.lib.engine.EngineConnector;
@@ -77,22 +78,22 @@ public class TileEngineRedstone_BC8 extends TileEngineBase_BC8 {
 
     @Override
     public long getMaxPower() {
-        return MjAPI.MJ * 1;
+        return MjAmount.MICRO_MJ_PER_MJ * 1;
     }
 
     @Override
     public long minPowerReceived() {
-        return MjAPI.MJ / 10;
+        return MjAmount.MICRO_MJ_PER_MJ / 10;
     }
 
     @Override
     public long maxPowerReceived() {
-        return 4 * MjAPI.MJ;
+        return 4 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
     public long maxPowerExtracted() {
-        return MjAPI.MJ;
+        return MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
@@ -102,7 +103,7 @@ public class TileEngineRedstone_BC8 extends TileEngineBase_BC8 {
 
     @Override
     public long getCurrentOutput() {
-        return MjAPI.MJ / 20;
+        return MjAmount.MICRO_MJ_PER_MJ / 20;
     }
 
 	@Override

@@ -1,6 +1,7 @@
 package buildcraft.transport.internal.pipe;
 
-import buildcraft.api.mj.MjAPI;
+import buildcraft.api.v2.energy.MjAmount;
+
 
 import net.minecraft.core.Direction;
 
@@ -18,9 +19,9 @@ public abstract class PipeEventPower extends PipeEvent {
     }
 
     public static class Configure extends PipeEventPower {
-        private long maxPower = 10 * MjAPI.MJ;
+        private long maxPower = 10 * MjAmount.MICRO_MJ_PER_MJ;
         /** The percentage resistance of the power pipe (as in, percentage of current power going through the pipe).
-         * Should be a number between 0 and {@link MjAPI#MJ} */
+         * Should be a number between 0 and {@link MjAmount#MICRO_MJ_PER_MJ} */
         private long powerResistance = -1;
         /** The absolute loss of the power pipe. Negative numbers mean that this field will be populated from a default,
          * or by {@link #powerResistance} if it is set. This is capped at the value given in {@link #getMaxPower()} */
@@ -53,13 +54,13 @@ public abstract class PipeEventPower extends PipeEvent {
         }
 
         /** The percentage resistance of the power pipe (percentage of current power going through the pipe that will be
-         * lost). Should be a number between 0 and {@link MjAPI#MJ} */
+         * lost). Should be a number between 0 and {@link MjAmount#MICRO_MJ_PER_MJ} */
         public long getPowerResistance() {
             return this.powerResistance;
         }
 
         /** The percentage resistance of the power pipe (percentage of current power going through the pipe that will be
-         * lost). Should be a number between 0 and {@link MjAPI#MJ} */
+         * lost). Should be a number between 0 and {@link MjAmount#MICRO_MJ_PER_MJ} */
         public void setPowerResistance(long powerResistance) {
             this.powerResistance = powerResistance;
         }

@@ -6,6 +6,13 @@
 
 package buildcraft.silicon.tile;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.energy.MjPort;
+import buildcraft.api.v2.machine.LaserTarget;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +21,8 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.SafeTimeTracker;
-import buildcraft.api.mj.ILaserTarget;
-import buildcraft.api.mj.ILaserTargetBlock;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.lib.client.render.DetachedRenderer.IDetachedRenderer;
@@ -28,7 +32,7 @@ import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.VolumeUtil;
 import buildcraft.lib.misc.data.AverageLong;
 import buildcraft.lib.misc.data.Box;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.silicon.BCSiliconBlocks;
 import buildcraft.silicon.client.render.AdvDebuggerLaser;
@@ -47,7 +51,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -71,7 +74,7 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
 
     public TileLaser(BlockPos pos, BlockState state) {
         super(BCSiliconBlocks.LASER_TILE.get(), pos, state);
-        battery = new MjBattery(1024 * MjAPI.MJ);
+        battery = new MjBattery(1024 * MjAmount.MICRO_MJ_PER_MJ);
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery)));
     }
 
@@ -114,13 +117,8 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
             if (!visible) {
                 return;
             }
-            BlockState stateAt = level.getBlockState(p);
-            if (stateAt.getBlock() instanceof ILaserTargetBlock) {
-                BlockEntity tileAt = level.getBlockEntity(p);
-                if (tileAt instanceof ILaserTarget) {
-                    targetPositions.add(p);
-
-                }
+            if (laserTargets().target(level, p, laserTargetSide()).isPresent()) {
+                targetPositions.add(p);
             }
         });
     }
@@ -139,24 +137,32 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
         targetPos = targetsNeedingPower.get(level.getRandom().nextInt(targetsNeedingPower.size()));
     }
 
-    private boolean isPowerNeededAt(BlockPos position) {
-        if (position != null) {
-            BlockEntity tile = level.getBlockEntity(position);
-            if (tile instanceof ILaserTarget) {
-                ILaserTarget target = (ILaserTarget) tile;
-                return target.getRequiredLaserPower() > 0;
-            }
-        }
-        return false;
+    private buildcraft.api.v2.machine.LaserTargetService laserTargets() {
+        return BuildCraftApi.service(BuildCraftServices.LASER_TARGETS);
     }
 
-    private ILaserTarget getTarget() {
-        if (targetPos != null) {
-            if (level.getBlockEntity(targetPos) instanceof ILaserTarget) {
-                return (ILaserTarget) level.getBlockEntity(targetPos);
-            }
-        }
-        return null;
+    private Direction laserTargetSide() {
+        BlockState state = level.getBlockState(worldPosition);
+        return state.hasProperty(BuildCraftProperties.BLOCK_FACING_6)
+            ? state.getValue(BuildCraftProperties.BLOCK_FACING_6).getOpposite()
+            : Direction.DOWN;
+    }
+
+    private boolean isPowerNeededAt(BlockPos position) {
+        LaserTarget target = getTarget(position);
+        if (target == null) return false;
+        return target.laserPort()
+            .insert(MjAmount.ofMicro(getMaxPowerPerTick()), OperationMode.SIMULATE)
+            .transferred().microMj() > 0;
+    }
+
+    private LaserTarget getTarget(BlockPos position) {
+        if (position == null) return null;
+        return laserTargets().target(level, position, laserTargetSide()).orElse(null);
+    }
+
+    private LaserTarget getTarget() {
+        return getTarget(targetPos);
     }
 
     private void updateLaser() {
@@ -178,7 +184,7 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
 
     public long getMaxPowerPerTick() {
         // 128 MJ/s = 6.4 MJ/t at 20 ticks per second.
-        return 128 * MjAPI.MJ / 20;
+        return 128 * MjAmount.MICRO_MJ_PER_MJ / 20;
     }
 
     public void update() {
@@ -208,18 +214,24 @@ public class TileLaser extends TileBC_Neptune implements IDebuggable, GameEventL
         }
 
         long transferredPower = 0;
-        ILaserTarget target = getTarget();
+        LaserTarget target = getTarget();
         if (target != null) {
             long max = getMaxPowerPerTick();
             max *= battery.getStored() + max;
             max /= battery.getCapacity() / 2;
-            max = Math.min(Math.min(max, getMaxPowerPerTick()), target.getRequiredLaserPower());
-            long power = battery.extractPower(0, max);
-            long excess = target.receiveLaserPower(power);
-            if (excess > 0) {
-                battery.addPowerChecking(excess, FluidAction.EXECUTE);
+            max = Math.min(max, getMaxPowerPerTick());
+
+            MjPort targetPort = target.laserPort();
+            long acceptedByTarget = targetPort.insert(MjAmount.ofMicro(max), OperationMode.SIMULATE)
+                .transferred().microMj();
+            long offered = battery.extractPower(0, acceptedByTarget);
+            long accepted = targetPort.insert(MjAmount.ofMicro(offered), OperationMode.EXECUTE)
+                .transferred().microMj();
+            accepted = Math.max(0L, Math.min(offered, accepted));
+            if (accepted < offered) {
+                battery.insert(MjAmount.ofMicro(offered - accepted), OperationMode.EXECUTE);
             }
-            transferredPower = power - excess;
+            transferredPower = accepted;
             avgPower.push(transferredPower);
         } else {
             avgPower.clear();

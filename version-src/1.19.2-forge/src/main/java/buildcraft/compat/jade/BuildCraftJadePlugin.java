@@ -4,6 +4,10 @@
  */
 package buildcraft.compat.jade;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjFormatting;
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -13,8 +17,7 @@ import java.util.Set;
 
 import com.mojang.authlib.GameProfile;
 
-import buildcraft.api.mj.IMjReadable;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjReadable;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.api.robots.DockingStation;
 import buildcraft.api.robots.EntityRobotBase;
@@ -647,7 +650,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         if (output > 0L) {
             MutableComponent value = BCLibConfig.hidePowerValues
                 ? Component.translatable("buildcraft.value.hidden")
-                : Component.literal(MjAPI.formatMj(output) + " MJ/t");
+                : Component.literal(MjFormatting.formatMicroMj(output) + " MJ/t");
             tooltip.add(line("engine.output", value.withStyle(ChatFormatting.WHITE)));
         }
         tooltip.add(line("engine.redstone", bool(tag.getBoolean("Redstone"))));
@@ -670,7 +673,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
     private static void appendLaserTooltip(ITooltip tooltip, CompoundTag tag) {
         MutableComponent value = BCLibConfig.hidePowerValues
             ? Component.translatable("buildcraft.value.hidden")
-            : Component.literal(MjAPI.formatMj(Math.max(0L, tag.getLong("Target") - tag.getLong("Power"))) + " MJ");
+            : Component.literal(MjFormatting.formatMicroMj(Math.max(0L, tag.getLong("Target") - tag.getLong("Power"))) + " MJ");
         tooltip.add(line("laser.required", value.withStyle(ChatFormatting.WHITE)));
     }
 
@@ -707,7 +710,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         List<ViewGroup<CompoundTag>> groups = new ArrayList<>();
         Set<IMjReadable> seen = Collections.newSetFromMap(new IdentityHashMap<>());
         for (Direction side : nullableDirections()) {
-            IMjReadable readable = tile.getCapability(MjAPI.CAP_READABLE, side).orElse(null);
+            IMjReadable readable = tile.getCapability(MjCapabilities.CAP_READABLE, side).orElse(null);
             if (readable == null || !seen.add(readable)) {
                 continue;
             }
@@ -736,7 +739,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
     }
 
     private static CompoundTag mjEnergyTag(long current, long capacity) {
-        CompoundTag tag = energyTag(current, capacity, MjAPI.MJ);
+        CompoundTag tag = energyTag(current, capacity, MjAmount.MICRO_MJ_PER_MJ);
         tag.putString("Unit", "MJ");
         tag.putLong("MicroCur", Math.max(0L, current));
         tag.putLong("MicroCapacity", Math.max(0L, capacity));
@@ -755,8 +758,8 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
             }
             long current = Math.max(0L, Math.min(capacity, tag.getLong("MicroCur")));
             EnergyView view = new EnergyView();
-            view.current = MjAPI.formatMj(current) + " MJ";
-            view.max = MjAPI.formatMj(capacity) + " MJ";
+            view.current = MjFormatting.formatMicroMj(current) + " MJ";
+            view.max = MjFormatting.formatMicroMj(capacity) + " MJ";
             view.ratio = (float) (current / (double) capacity);
             view.overrideText = Component.literal(view.current + " / " + view.max).withStyle(ChatFormatting.WHITE);
             return view;

@@ -1,19 +1,31 @@
 package buildcraft.energy.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjCapabilities;
+
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.content.BuildCraftContentIds;
+import buildcraft.api.v2.energy.MjPort;
+import buildcraft.api.v2.energy.MjPortDescriptor;
+import buildcraft.api.v2.energy.MjPortRole;
+import buildcraft.api.v2.platform.ExternalEnergyPort;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.BCCoreItems;
 import buildcraft.core.client.render.RenderEngine_BC8;
@@ -21,7 +33,7 @@ import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.menu.ContainerDynamoMJ;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 import buildcraft.lib.misc.EntityUtil;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
@@ -49,13 +61,12 @@ import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /** BuildCraft 8 MJ Dynamo: consumes MJ and produces Forge Energy. */
 public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
     public static final int MAX_FE = 10_000;
-    public static final long MAX_MJ = 1_000L * MjAPI.MJ;
+    public static final long MAX_MJ = 1_000L * MjAmount.MICRO_MJ_PER_MJ;
     public static final double HEAT_RATE = 0.06;
     public static final double COOLDOWN_RATE = 0.01;
 
@@ -72,6 +83,21 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
     private long persistedMjState;
     private boolean energyStateCaptured;
     private final IEnergyStorage feStorage = new FeStorage();
+    private final ExternalEnergyPort api2FeOutputPort = new ExternalEnergyPort() {
+        @Override public long insert(long offered, OperationMode mode) { return 0; }
+        @Override public long extract(long requested, OperationMode mode) {
+            long extracted = Math.min(Math.max(0L, requested), currentFe);
+            if (mode == OperationMode.EXECUTE && extracted > 0) {
+                currentFe -= (int) extracted;
+                markEnergyStateDirty();
+            }
+            return extracted;
+        }
+        @Override public long stored() { return currentFe; }
+        @Override public long capacity() { return MAX_FE; }
+        @Override public boolean canInsert() { return false; }
+        @Override public boolean canExtract() { return true; }
+    };
 
     public TileDynamoMJ(BlockPos pos, BlockState state) {
         super(BCEnergyBlocks.DYNAMO_MJ_TILE.get(), pos, state);
@@ -84,8 +110,8 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
 
     private static void ensureUpgradeMap() {
         if (!FE_UPGRADES.isEmpty()) return;
-        FE_UPGRADES.put(BCCoreItems.GEAR_IRON.get(), 2L * MjAPI.MJ);
-        FE_UPGRADES.put(BCCoreItems.GEAR_GOLD.get(), 3L * MjAPI.MJ);
+        FE_UPGRADES.put(BCCoreItems.GEAR_IRON.get(), 2L * MjAmount.MICRO_MJ_PER_MJ);
+        FE_UPGRADES.put(BCCoreItems.GEAR_GOLD.get(), 3L * MjAmount.MICRO_MJ_PER_MJ);
     }
 
     private static boolean isValidUpgrade(ItemStack stack) {
@@ -103,7 +129,7 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
 
     public static long getMjPerTick(IItemHandlerAdv upgrades) {
         ensureUpgradeMap();
-        long value = 4L * MjAPI.MJ;
+        long value = 4L * MjAmount.MICRO_MJ_PER_MJ;
         if (upgrades == null) return value;
         for (int slot = 0; slot < upgrades.getSlots(); slot++) {
             ItemStack stack = upgrades.getStackInSlot(slot);
@@ -118,7 +144,7 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
     }
 
     public static int getFeGenerationRate(IItemHandlerAdv upgrades) {
-        long ratio = MjAPI.getFeConversion().mjPerFe;
+        long ratio = BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjPerFe();
         if (ratio <= 0) return 0;
         return (int) Math.min(Integer.MAX_VALUE, getMjPerTick(upgrades) / ratio);
     }
@@ -160,7 +186,7 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
     protected void burn() {
         if (!isRedstonePowered || currentFe >= MAX_FE) return;
 
-        long ratio = MjAPI.getFeConversion().mjPerFe;
+        long ratio = BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjPerFe();
         if (ratio <= 0) return;
 
         long stored = mjBattery.getStored();
@@ -213,10 +239,37 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
     }
 
     @Override
-    @Nullable
-    public IMjReceiver getReceiverToPower(Direction side) {
-        IEnergyStorage receiver = getFeReceiver(side);
-        return receiver == null ? null : new FeReceiverAdapter(receiver);
+    protected boolean isFacingReceiver(Direction side) {
+        return getFeReceiver(side) != null;
+    }
+
+    @Override
+    protected long getPowerToExtract(boolean doExtract) {
+        IEnergyStorage receiver = getFeReceiver(currentDirection);
+        if (receiver == null) return 0;
+        int offered = (int) Math.min(Integer.MAX_VALUE, Math.min(currentFe, maxPowerExtracted()));
+        if (offered <= 0) return 0;
+        int accepted = receiver.receiveEnergy(offered, true);
+        accepted = Math.max(0, Math.min(offered, accepted));
+        if (doExtract && accepted > 0) {
+            currentFe -= accepted;
+            markEnergyStateDirty();
+        }
+        return accepted;
+    }
+
+    @Override
+    protected void sendPower() {
+        IEnergyStorage receiver = getFeReceiver(currentDirection);
+        if (receiver == null) return;
+        int offered = (int) Math.min(Integer.MAX_VALUE, Math.min(currentFe, maxPowerExtracted()));
+        if (offered <= 0) return;
+        int accepted = receiver.receiveEnergy(offered, false);
+        accepted = Math.max(0, Math.min(offered, accepted));
+        if (accepted > 0) {
+            currentFe -= accepted;
+            markEnergyStateDirty();
+        }
     }
 
     @Nullable
@@ -240,18 +293,19 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
         return receiver != null && receiver.canReceive() ? receiver : null;
     }
 
-    private static final class FeReceiverAdapter implements IMjReceiver {
-        private final IEnergyStorage receiver;
-        private FeReceiverAdapter(IEnergyStorage receiver) { this.receiver = receiver; }
-        @Override public boolean canConnect(@Nonnull IMjConnector other) { return true; }
-        @Override public long getPowerRequested() { return Math.max(0, receiver.receiveEnergy(Integer.MAX_VALUE, true)); }
-        @Override public long receivePower(long amount, FluidAction action) {
-            if (amount <= 0) return 0;
-            int offered = (int) Math.min(Integer.MAX_VALUE, amount);
-            int accepted = receiver.receiveEnergy(offered, action == FluidAction.SIMULATE);
-            accepted = Math.max(0, Math.min(offered, accepted));
-            return amount - accepted;
-        }
+    @Override public net.minecraft.resources.ResourceLocation typeId() { return BuildCraftContentIds.Engines.MJ_DYNAMO; }
+    @Override public MjAmount outputPerTick() { return MjAmount.ZERO; }
+    @Override public Optional<MjPort> mjPort(Direction side) {
+        return side != currentDirection ? Optional.of(mjReceiver) : Optional.empty();
+    }
+    @Override public Optional<MjPortDescriptor> mjPortDescriptor(Direction side) {
+        if (side == currentDirection) return Optional.empty();
+        return Optional.of(new MjPortDescriptor(net.minecraft.resources.ResourceLocation.parse("buildcraft:mj"),
+            Set.of(MjPortRole.CONSUMER, MjPortRole.CONNECTOR, MjPortRole.READABLE),
+            MjAmount.ofMicro(getMjPerTick()), MjAmount.ZERO));
+    }
+    @Override public Optional<ExternalEnergyPort> externalEnergyPort(Direction side) {
+        return side == currentDirection ? Optional.of(api2FeOutputPort) : Optional.empty();
     }
 
     @Override public long getMaxPower() { return MAX_MJ; }
@@ -328,11 +382,11 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
     @Override public TextureAtlasSprite getTextureSide() { return RenderEngine_BC8.DYNAMO_SIDE; }
 
     private static boolean isMjCapability(BlockCapability<?, ?> capability) {
-        return capability == MjAPI.CAP_CONNECTOR
-            || capability == MjAPI.CAP_RECEIVER
-            || capability == MjAPI.CAP_REDSTONE_RECEIVER
-            || capability == MjAPI.CAP_READABLE
-            || capability == MjAPI.CAP_PASSIVE_PROVIDER;
+        return capability == MjCapabilities.CAP_CONNECTOR
+            || capability == MjCapabilities.CAP_RECEIVER
+            || capability == MjCapabilities.CAP_REDSTONE_RECEIVER
+            || capability == MjCapabilities.CAP_READABLE
+            || capability == MjCapabilities.CAP_PASSIVE_PROVIDER;
     }
 
     @Override

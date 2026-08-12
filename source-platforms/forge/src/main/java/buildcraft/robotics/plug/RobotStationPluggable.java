@@ -1,15 +1,17 @@
 package buildcraft.robotics.plug;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjReadable;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjReadable;
+import buildcraft.lib.internal.mj.IMjReceiver;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.robots.DockingStation;
 import buildcraft.api.robots.IDockingStationProvider;
 import buildcraft.api.robots.EntityRobotBase;
@@ -46,7 +48,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class RobotStationPluggable extends PipePluggable implements IDockingStationProvider, IMjReceiver, IMjReadable {
     /** Match the old robot battery receiver: at most 100 robot-energy units per tick = 1 MJ/t in this port. */
-    private static final long MAX_CHARGE_PER_TICK = 20 * MjAPI.MJ;
+    private static final long MAX_CHARGE_PER_TICK = 20 * MjAmount.MICRO_MJ_PER_MJ;
 
     public enum RobotStationState {
         None,
@@ -94,7 +96,7 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
 
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-        if (cap == MjAPI.CAP_CONNECTOR || cap == MjAPI.CAP_RECEIVER || cap == MjAPI.CAP_READABLE) {
+        if (cap == MjCapabilities.CAP_CONNECTOR || cap == MjCapabilities.CAP_RECEIVER || cap == MjCapabilities.CAP_READABLE) {
             validateStation();
             return mjCaps.getCapability(cap, side);
         }
@@ -103,7 +105,7 @@ public class RobotStationPluggable extends PipePluggable implements IDockingStat
 
     @Override
     public <T> LazyOptional<T> getInternalCapability(@Nonnull Capability<T> cap) {
-        if (cap == MjAPI.CAP_CONNECTOR || cap == MjAPI.CAP_RECEIVER || cap == MjAPI.CAP_READABLE) {
+        if (cap == MjCapabilities.CAP_CONNECTOR || cap == MjCapabilities.CAP_RECEIVER || cap == MjCapabilities.CAP_READABLE) {
             validateStation();
             return mjCaps.getCapability(cap, side);
         }

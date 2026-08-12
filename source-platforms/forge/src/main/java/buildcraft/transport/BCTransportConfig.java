@@ -5,7 +5,8 @@
  */
 package buildcraft.transport;
 
-import buildcraft.api.mj.MjAPI;
+import buildcraft.api.v2.energy.MjAmount;
+
 import buildcraft.transport.internal.pipe.EnumPipeColourType;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeApi.PowerTransferInfo;
@@ -25,7 +26,7 @@ public class BCTransportConfig {
     private static final long MJ_REQ_ITEM_MIN = 50_000;
 
     public static long mjPerMillibucket = 1_000;
-    public static long mjPerItem = MjAPI.MJ;
+    public static long mjPerItem = MjAmount.MICRO_MJ_PER_MJ;
     public static int baseFlowRate = 10;
     public static int baseFeRate = 40;
     public static boolean fluidPipeColourBorder;
@@ -113,8 +114,8 @@ public class BCTransportConfig {
     }
 
     private static void powerTransfer(PipeDefinition def, int transferMultiplier, int resistanceDivisor, boolean recv) {
-        long transfer = MjAPI.MJ * transferMultiplier;
-        long resistance = MjAPI.MJ / resistanceDivisor;
+        long transfer = MjAmount.MICRO_MJ_PER_MJ * transferMultiplier;
+        long resistance = MjAmount.MICRO_MJ_PER_MJ / resistanceDivisor;
         PipeApi.powerTransferData.put(def, PowerTransferInfo.createFromResistance(transfer, resistance, recv));
     }
 

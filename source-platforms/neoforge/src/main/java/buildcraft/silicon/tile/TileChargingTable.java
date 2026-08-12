@@ -6,13 +6,14 @@
 
 package buildcraft.silicon.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.lib.tile.item.ItemHandlerManager;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.silicon.BCSiliconBlocks;
@@ -64,7 +65,7 @@ public class TileChargingTable extends TileLaserTableBase implements MenuProvide
     @Override
     public long getTarget() {
         long requested = getEnergyRequested(invCharge.getStackInSlot(0));
-        return Math.min(requested, Integer.MAX_VALUE) * MjAPI.MJ;
+        return Math.min(requested, Integer.MAX_VALUE) * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
@@ -75,7 +76,7 @@ public class TileChargingTable extends TileLaserTableBase implements MenuProvide
         }
 
         ItemStack stack = invCharge.getStackInSlot(0);
-        if (stack.isEmpty() || power < MjAPI.MJ) {
+        if (stack.isEmpty() || power < MjAmount.MICRO_MJ_PER_MJ) {
             return;
         }
 
@@ -89,13 +90,13 @@ public class TileChargingTable extends TileLaserTableBase implements MenuProvide
         if (!energy.canReceive()) {
             return;
         }
-        int available = (int) Math.min(Integer.MAX_VALUE, power / MjAPI.MJ);
+        int available = (int) Math.min(Integer.MAX_VALUE, power / MjAmount.MICRO_MJ_PER_MJ);
         if (available <= 0) {
             return;
         }
         int accepted = energy.receiveEnergy(available, false);
         if (accepted > 0) {
-            power -= accepted * MjAPI.MJ;
+            power -= accepted * MjAmount.MICRO_MJ_PER_MJ;
             invCharge.setStackInSlot(0, stack);
             sendNetworkGuiUpdate(NET_GUI_DATA);
         }

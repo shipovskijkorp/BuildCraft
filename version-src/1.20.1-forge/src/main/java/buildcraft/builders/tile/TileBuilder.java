@@ -6,6 +6,8 @@
  */
 package buildcraft.builders.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,9 +32,8 @@ import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.enums.EnumOptionalSnapshotType;
 import buildcraft.api.enums.EnumSnapshotType;
 import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.api.tiles.TilesAPI;
@@ -62,7 +63,7 @@ import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.PositionUtil;
 import buildcraft.lib.misc.data.Box;
 import buildcraft.lib.misc.data.IdAllocator;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 import buildcraft.lib.net.MessageManager;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
@@ -117,7 +118,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
         itemManager.addInvHandler("resources", 27, EnumAccess.BOTH, EnumPipePart.VALUES);
     public final ItemProvider invRequire = new ItemProvider(this::getDisplay, 24);
 
-    private final MjBattery battery = new MjBattery(16000 * MjAPI.MJ);
+    private final MjBattery battery = new MjBattery(16000 * MjAmount.MICRO_MJ_PER_MJ);
 
     /** Stores the real path - just a few block positions. */
     public List<BlockPos> path = null;

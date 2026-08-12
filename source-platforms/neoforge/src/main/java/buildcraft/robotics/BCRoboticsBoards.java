@@ -1,5 +1,8 @@
 package buildcraft.robotics;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjFormatting;
+
 import buildcraft.lib.misc.ItemStackUtil;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +16,6 @@ import buildcraft.api.boards.RedstoneBoardNBT;
 import buildcraft.api.boards.RedstoneBoardRegistry;
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.misc.LocaleUtil;
@@ -95,9 +97,9 @@ public final class BCRoboticsBoards {
             return LocaleUtil.localize("buildcraft.value.hidden");
         }
         if (energyCostMj <= 0) {
-            return MjAPI.formatMj(0);
+            return MjFormatting.formatMicroMj(0);
         }
-        return MjAPI.formatMj((long) energyCostMj * MjAPI.MJ);
+        return MjFormatting.formatMicroMj((long) energyCostMj * MjAmount.MICRO_MJ_PER_MJ);
     }
 
     public static void init() {

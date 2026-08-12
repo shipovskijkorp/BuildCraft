@@ -4,6 +4,8 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.blockEntity;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
@@ -11,8 +13,7 @@ import javax.annotation.Nonnull;
 import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 
 import buildcraft.api.enums.EnumPowerStage;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.client.render.RenderEngine_BC8;
@@ -109,7 +110,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
 
     @Override
     public long maxPowerReceived() {
-        return 2_000 * MjAPI.MJ;
+        return 2_000 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
@@ -124,7 +125,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
 
     @Override
     public long getCurrentOutput() {
-        return outputs[Mth.clamp(currentOutputIndex, 0, outputs.length - 1)] * MjAPI.MJ;
+        return outputs[Mth.clamp(currentOutputIndex, 0, outputs.length - 1)] * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override

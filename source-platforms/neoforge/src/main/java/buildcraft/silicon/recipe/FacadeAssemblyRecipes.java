@@ -6,6 +6,8 @@
 
 package buildcraft.silicon.recipe;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +18,6 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.MapCodec;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.StackUtil;
@@ -53,7 +54,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
     public static final FacadeAssemblyRecipes INSTANCE = new FacadeAssemblyRecipes(ID);
 
     private static final int TIME_GAP = 500;
-    private static final long MJ_COST = 64 * MjAPI.MJ;
+    private static final long MJ_COST = 64 * MjAmount.MICRO_MJ_PER_MJ;
     private static final ChangingObject<Long> MJ_COSTS = new ChangingObject<>(new Long[] { MJ_COST });
 
     public static FacadeAssemblyRecipes getInstance(ResourceLocation location) {

@@ -1,5 +1,8 @@
 package buildcraft.transport.pipe.flow;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.math.BigInteger;
 
 import javax.annotation.Nonnull;
@@ -23,10 +26,9 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjPassiveProvider;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjPassiveProvider;
+import buildcraft.lib.internal.mj.IMjReceiver;
 import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeEventFluid;
@@ -320,7 +322,7 @@ public final class PipeFluidPowerGameTests {
 
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 30)
     public static void powerReceiverSimulationAndDistributionAreConservative(GameTestHelper helper) {
-        long mj = MjAPI.MJ;
+        long mj = MjAmount.MICRO_MJ_PER_MJ;
         PipeApi.PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
         FakeReceiver east = new FakeReceiver(4 * mj);
         FakeReceiver south = new FakeReceiver(12 * mj);
@@ -328,8 +330,8 @@ public final class PipeFluidPowerGameTests {
             .connect(Direction.WEST, ConnectedType.TILE)
             .connect(Direction.EAST, ConnectedType.TILE)
             .connect(Direction.SOUTH, ConnectedType.TILE)
-            .exposeCapability(Direction.EAST, MjAPI.CAP_RECEIVER, east)
-            .exposeCapability(Direction.SOUTH, MjAPI.CAP_RECEIVER, south);
+            .exposeCapability(Direction.EAST, MjCapabilities.CAP_RECEIVER, east)
+            .exposeCapability(Direction.SOUTH, MjCapabilities.CAP_RECEIVER, south);
         PipeFlowPower flow = new PipeFlowPower(pipe);
         pipe.setFlow(flow);
         flow.reconfigure();
@@ -381,9 +383,9 @@ public final class PipeFluidPowerGameTests {
             .connect(Direction.UP, ConnectedType.TILE)
             .connect(Direction.SOUTH, ConnectedType.TILE)
             .connect(Direction.EAST, ConnectedType.TILE)
-            .exposeCapability(Direction.UP, MjAPI.CAP_RECEIVER, up)
-            .exposeCapability(Direction.SOUTH, MjAPI.CAP_RECEIVER, south)
-            .exposeCapability(Direction.EAST, MjAPI.CAP_RECEIVER, east);
+            .exposeCapability(Direction.UP, MjCapabilities.CAP_RECEIVER, up)
+            .exposeCapability(Direction.SOUTH, MjCapabilities.CAP_RECEIVER, south)
+            .exposeCapability(Direction.EAST, MjCapabilities.CAP_RECEIVER, east);
         PipeFlowPower flow = new PipeFlowPower(pipe);
         pipe.setFlow(flow);
         flow.reconfigure();
@@ -416,7 +418,7 @@ public final class PipeFluidPowerGameTests {
 
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 40)
     public static void powerTraversesNonReceiverPipeAndReachesSink(GameTestHelper helper) {
-        long requested = 8 * MjAPI.MJ;
+        long requested = 8 * MjAmount.MICRO_MJ_PER_MJ;
         PipeApi.PowerTransferInfo sourceTransferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.woodPower);
         PipeApi.PowerTransferInfo transportTransferInfo = PipeApi.getPowerTransferInfo(BCTransportPipes.stonePower);
         long expectedAtTransport = applyPowerResistance(requested, sourceTransferInfo);
@@ -427,7 +429,7 @@ public final class PipeFluidPowerGameTests {
             .connect(Direction.WEST, ConnectedType.TILE);
         TestPipe transportPipe = new TestPipe(helper.getLevel(), BCTransportPipes.stonePower)
             .connect(Direction.EAST, ConnectedType.TILE)
-            .exposeCapability(Direction.EAST, MjAPI.CAP_RECEIVER, sink);
+            .exposeCapability(Direction.EAST, MjCapabilities.CAP_RECEIVER, sink);
         sourcePipe.connectPipe(Direction.EAST, transportPipe);
         transportPipe.connectPipe(Direction.WEST, sourcePipe);
 
@@ -480,7 +482,7 @@ public final class PipeFluidPowerGameTests {
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.woodPower)
             .connectTile(Direction.WEST, providerTile)
             .connect(Direction.EAST, ConnectedType.TILE)
-            .exposeCapability(Direction.WEST, MjAPI.CAP_PASSIVE_PROVIDER, provider);
+            .exposeCapability(Direction.WEST, MjCapabilities.CAP_PASSIVE_PROVIDER, provider);
         PipeFlowPower flow = new PipeFlowPower(pipe);
         pipe.setFlow(flow);
         flow.reconfigure();
@@ -582,16 +584,16 @@ public final class PipeFluidPowerGameTests {
         if (amount <= 0) {
             return 0;
         }
-        long resistance = Math.max(0, Math.min(MjAPI.MJ, transferInfo.resistancePerTick));
+        long resistance = Math.max(0, Math.min(MjAmount.MICRO_MJ_PER_MJ, transferInfo.resistancePerTick));
         if (resistance <= 0) {
             return amount;
         }
-        if (resistance >= MjAPI.MJ) {
+        if (resistance >= MjAmount.MICRO_MJ_PER_MJ) {
             return 0;
         }
         long retained = BigInteger.valueOf(amount)
-            .multiply(BigInteger.valueOf(MjAPI.MJ - resistance))
-            .divide(BigInteger.valueOf(MjAPI.MJ))
+            .multiply(BigInteger.valueOf(MjAmount.MICRO_MJ_PER_MJ - resistance))
+            .divide(BigInteger.valueOf(MjAmount.MICRO_MJ_PER_MJ))
             .longValue();
         return Math.max(1, retained);
     }

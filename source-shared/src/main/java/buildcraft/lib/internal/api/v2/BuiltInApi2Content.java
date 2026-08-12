@@ -6,6 +6,9 @@ import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.api.v2.energy.MjAmount;
 import buildcraft.api.v2.machine.BuiltInMachineProperties;
+import buildcraft.api.v2.machine.EngineProfile;
+import buildcraft.api.v2.machine.EngineType;
+import buildcraft.api.v2.machine.LaserTableType;
 import buildcraft.api.v2.machine.MachineComponent;
 import buildcraft.api.v2.machine.MachineComponentType;
 import buildcraft.api.v2.machine.MachineType;
@@ -26,6 +29,8 @@ public final class BuiltInApi2Content {
     public static synchronized void register() {
         if (registered) return;
         registerMachineComponents();
+        registerEngines();
+        registerLaserTables();
         registerMachines();
         registerWorldgen();
         registered = true;
@@ -45,6 +50,42 @@ public final class BuiltInApi2Content {
             BuildCraftContentIds.MachineComponents.CHUNK_LOADING
         )) {
             registry.register(id, new MachineComponentType<MachineComponent>(id, null), BUILTIN);
+        }
+    }
+
+    private static void registerEngines() {
+        ApiRegistry<EngineType> registry = BuildCraftApi.registry(BuildCraftRegistries.ENGINE_TYPES);
+        registry.register(BuildCraftContentIds.Engines.REDSTONE,
+            new EngineType(BuildCraftContentIds.Engines.REDSTONE,
+                new EngineProfile(MjAmount.ofMj(1), MjAmount.ofMj(1), false)), BUILTIN);
+        registry.register(BuildCraftContentIds.Engines.STONE,
+            new EngineType(BuildCraftContentIds.Engines.STONE,
+                new EngineProfile(MjAmount.ofMj(1), MjAmount.ofMj(1_000), false)), BUILTIN);
+        registry.register(BuildCraftContentIds.Engines.IRON,
+            new EngineType(BuildCraftContentIds.Engines.IRON,
+                new EngineProfile(MjAmount.ofMj(500), MjAmount.ofMj(10_000), false)), BUILTIN);
+        // Creative output is user-selectable (1..256 MJ/t), so the profile exposes the maximum configured tier.
+        registry.register(BuildCraftContentIds.Engines.CREATIVE,
+            new EngineType(BuildCraftContentIds.Engines.CREATIVE,
+                new EngineProfile(MjAmount.ofMj(256), MjAmount.ofMj(2_560_000), false)), BUILTIN);
+        registry.register(BuildCraftContentIds.Engines.FE,
+            new EngineType(BuildCraftContentIds.Engines.FE,
+                new EngineProfile(MjAmount.ofMj(500), MjAmount.ofMj(1_000), true)), BUILTIN);
+        registry.register(BuildCraftContentIds.Engines.MJ_DYNAMO,
+            new EngineType(BuildCraftContentIds.Engines.MJ_DYNAMO,
+                new EngineProfile(MjAmount.ZERO, MjAmount.ofMj(1_000), false)), BUILTIN);
+    }
+
+    private static void registerLaserTables() {
+        ApiRegistry<LaserTableType> registry = BuildCraftApi.registry(BuildCraftRegistries.LASER_TABLE_TYPES);
+        for (ResourceLocation id : List.of(
+            BuildCraftContentIds.LaserTables.ASSEMBLY,
+            BuildCraftContentIds.LaserTables.ADVANCED_CRAFTING,
+            BuildCraftContentIds.LaserTables.INTEGRATION,
+            BuildCraftContentIds.LaserTables.CHARGING,
+            BuildCraftContentIds.LaserTables.PROGRAMMING
+        )) {
+            registry.register(id, new LaserTableType(id), BUILTIN);
         }
     }
 

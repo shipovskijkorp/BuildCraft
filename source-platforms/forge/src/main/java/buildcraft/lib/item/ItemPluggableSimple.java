@@ -6,10 +6,11 @@
 
 package buildcraft.lib.item;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.transport.internal.IItemPluggable;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipeHolder;
@@ -32,11 +33,11 @@ public class ItemPluggableSimple extends Item implements IItemPluggable {
 
     /** Returns true if the {@link IPipeHolder}'s
      * {@link PipeBehaviour#getCapability(net.minecraftforge.common.capabilities.Capability, Direction)} returns a
-     * non-null value for {@link MjAPI#CAP_REDSTONE_RECEIVER}. */
+     * non-null value for {@link MjCapabilities#CAP_REDSTONE_RECEIVER}. */
     public static final IPlacementPredicate PIPE_BEHAVIOUR_ACCEPTS_RS_POWER = (item, pipeHolder, side) -> {
         IPipe pipe = pipeHolder.getPipe();
         if (pipe != Pipe.EMPTY) {
-            return pipe.getBehaviour().getCapability(MjAPI.CAP_REDSTONE_RECEIVER, side).isPresent();
+            return pipe.getBehaviour().getCapability(MjCapabilities.CAP_REDSTONE_RECEIVER, side).isPresent();
         }
         return false;
     };

@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +22,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.compat.CompatManager;
@@ -423,7 +424,7 @@ public final class BlockUtil {
     public static long computeBlockBreakPower(Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         float hardness = state.getDestroySpeed(world, pos);
-        long a =  (long) Math.floor(16 * MjAPI.MJ * ((hardness + 1) * 2) * BCCoreConfig.miningMultiplier);
+        long a =  (long) Math.floor(16 * MjAmount.MICRO_MJ_PER_MJ * ((hardness + 1) * 2) * BCCoreConfig.miningMultiplier);
         return a;
     }
 

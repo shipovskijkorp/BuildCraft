@@ -6,9 +6,10 @@
 
 package buildcraft.transport;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.api.schematics.SchematicBlockFactoryRegistry;
 import buildcraft.lib.BCLibRegistries;
@@ -109,11 +110,11 @@ public class BCTransport {
         BCCapabilityRegistration.registerBlockEntity(event, PipeApi.CAP_INJECTABLE, pipeHolderType);
         BCCapabilityRegistration.registerBlockEntity(event, CapUtil.CAP_ITEM_TRANSACTOR, pipeHolderType);
         BCCapabilityRegistration.registerBlockEntity(event, CapUtil.CAP_FLUIDS, pipeHolderType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_CONNECTOR, pipeHolderType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_RECEIVER, pipeHolderType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_REDSTONE_RECEIVER, pipeHolderType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_READABLE, pipeHolderType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_PASSIVE_PROVIDER, pipeHolderType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_CONNECTOR, pipeHolderType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_RECEIVER, pipeHolderType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_REDSTONE_RECEIVER, pipeHolderType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_READABLE, pipeHolderType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_PASSIVE_PROVIDER, pipeHolderType);
 
         BCCapabilityRegistration.registerBlockEntity(
             event, Capabilities.ItemHandler.BLOCK, BCTransportBlocks.FILTERREDBUFFER_BE.get()

@@ -6,16 +6,17 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.util.Arrays;
 
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IHasWork;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.lib.misc.AdvancementUtil;
@@ -43,9 +44,9 @@ import net.minecraftforge.network.NetworkEvent;
 public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
     implements IHasWork, IMjRedstoneReceiver, IAutoCraft {
 
-    /** A redstone engine generates <code> 1 * {@link MjAPI#MJ}</code> per tick. This makes it a lot slower without one
+    /** A redstone engine generates <code> 1 * {@link MjAmount#MICRO_MJ_PER_MJ}</code> per tick. This makes it a lot slower without one
      * powering it. */
-    private static final long POWER_GEN_PASSIVE = MjAPI.MJ / 5;
+    private static final long POWER_GEN_PASSIVE = MjAmount.MICRO_MJ_PER_MJ / 5;
 
     /** It takes 10 seconds to craft an item. */
     private static final long POWER_REQUIRED = POWER_GEN_PASSIVE * 20 * 10;

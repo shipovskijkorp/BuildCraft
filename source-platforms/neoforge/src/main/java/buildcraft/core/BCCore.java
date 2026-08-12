@@ -1,5 +1,7 @@
 package buildcraft.core;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,6 @@ import buildcraft.api.BCModules;
 import buildcraft.api.enums.EnumSpring;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.items.FluidItemDrops;
 import buildcraft.core.client.RenderTickListener;
 import buildcraft.core.item.ItemFragileFluidContainer;
@@ -132,11 +133,11 @@ public class BCCore {
     private static <BE extends BlockEntity & IBCCapabilityProvider> void registerEngineCapabilities(
         RegisterCapabilitiesEvent event, BlockEntityType<BE> blockEntityType
     ) {
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_CONNECTOR, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_RECEIVER, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_REDSTONE_RECEIVER, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_READABLE, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_PASSIVE_PROVIDER, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_CONNECTOR, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_RECEIVER, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_REDSTONE_RECEIVER, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_READABLE, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_PASSIVE_PROVIDER, blockEntityType);
         BCCapabilityRegistration.registerBlockEntity(event, Capabilities.ItemHandler.BLOCK, blockEntityType);
     }
 

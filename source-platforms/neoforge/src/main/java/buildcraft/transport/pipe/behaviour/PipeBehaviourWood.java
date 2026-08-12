@@ -6,15 +6,16 @@
 
 package buildcraft.transport.pipe.behaviour;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IFlowItems;
@@ -119,7 +120,7 @@ public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRe
 
     @Override
     public long getPowerRequested() {
-        final long power = 512 * MjAPI.MJ;
+        final long power = 512 * MjAmount.MICRO_MJ_PER_MJ;
         return power - extract(power, FluidAction.SIMULATE);
     }
 

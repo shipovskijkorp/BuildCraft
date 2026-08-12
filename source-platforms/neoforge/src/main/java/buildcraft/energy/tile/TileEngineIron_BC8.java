@@ -6,6 +6,8 @@
 
 package buildcraft.energy.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
@@ -22,8 +24,7 @@ import buildcraft.api.v2.fuels.CoolantProfile;
 import buildcraft.api.v2.fuels.EnergyFluidService;
 import buildcraft.api.v2.fuels.FuelProfile;
 import buildcraft.lib.fluid.FuelApiBridge;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.client.render.RenderEngine_BC8;
@@ -292,7 +293,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                     }
                     currentOutput = currentFuel.powerPerTickMicroMj();
                     addPower(currentFuel.powerPerTickMicroMj());
-                    heat += currentFuel.powerPerTickMicroMj() * HEAT_PER_MJ / MjAPI.MJ * getBiomeTempScalar();
+                    heat += currentFuel.powerPerTickMicroMj() * HEAT_PER_MJ / MjAmount.MICRO_MJ_PER_MJ * getBiomeTempScalar();
                 }
             } else if (lastPowered) {
                 lastPowered = false;
@@ -385,17 +386,17 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
 
     @Override
     public long getMaxPower() {
-        return 10_000 * MjAPI.MJ;
+        return 10_000 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
     public long maxPowerReceived() {
-        return 2_000 * MjAPI.MJ;
+        return 2_000 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
     public long maxPowerExtracted() {
-        return 500 * MjAPI.MJ;
+        return 500 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override

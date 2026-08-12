@@ -6,6 +6,11 @@
 
 package buildcraft.lib.misc;
 
+import buildcraft.lib.internal.mj.MjFormatting;
+
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -16,7 +21,6 @@ import javax.annotation.Nullable;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.BCLibConfig.TimeGap;
 
@@ -197,23 +201,23 @@ public class LocaleUtil {
 
     public static MutableComponent localizeMj(long mj) {
         if (BCLibConfig.powerMode.isDisplayFe()) {
-            return localizeFe(MjAPI.getFeConversion().microMjToFe(mj));
+            return localizeFe(BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjToWholeFe(mj));
         }
         if (BCLibConfig.hidePowerValues) {
             return hiddenValue();
         }
-        return Component.translatable(localeKeyMjStatic, MjAPI.formatMj(mj));
+        return Component.translatable(localeKeyMjStatic, MjFormatting.formatMicroMj(mj));
     }
 
     public static MutableComponent localizeMjFlow(long mj) {
         if (BCLibConfig.powerMode.isDisplayFe()) {
-            return localizeFeFlow(MjAPI.getFeConversion().microMjToFe(mj));
+            return localizeFeFlow(BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjToWholeFe(mj));
         }
         if (BCLibConfig.hidePowerValues) {
             return hiddenValue();
         }
         mj = BCLibConfig.displayTimeGap.convertTicksToGap(mj);
-        return Component.translatable(localeKeyMjFlow, MjAPI.formatMj(mj));
+        return Component.translatable(localeKeyMjFlow, MjFormatting.formatMicroMj(mj));
     }
 
     private static MutableComponent hiddenValue() {

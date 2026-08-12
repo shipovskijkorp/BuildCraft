@@ -6,14 +6,15 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.util.List;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjReceiver;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.core.BCCoreConfig;
@@ -245,6 +246,6 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
     }
 
     protected long getBatteryCapacity() {
-        return 500 * MjAPI.MJ;
+        return 500 * MjAmount.MICRO_MJ_PER_MJ;
     }
 }

@@ -6,6 +6,8 @@
 
 package buildcraft.builders.snapshot;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,7 +26,6 @@ import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.authlib.GameProfile;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.lib.misc.*;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -486,7 +487,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     }
 
     private int computeRobotBreakEnergyCost(BlockPos blockPos) {
-        long breakMj = Math.max(1L, BlockUtil.computeBlockBreakPower(tile.getWorldBC(), blockPos) / MjAPI.MJ);
+        long breakMj = Math.max(1L, BlockUtil.computeBlockBreakPower(tile.getWorldBC(), blockPos) / MjAmount.MICRO_MJ_PER_MJ);
         return Math.max(16, computeRobotEnergyCost(blockPos) + (int) Math.min(10_000L, breakMj));
     }
 

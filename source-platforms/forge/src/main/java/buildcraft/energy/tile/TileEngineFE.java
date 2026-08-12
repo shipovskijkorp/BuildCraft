@@ -1,15 +1,22 @@
 package buildcraft.energy.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.platform.ExternalEnergyPort;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.BCCoreItems;
 import buildcraft.core.client.render.RenderEngine_BC8;
@@ -58,6 +65,17 @@ public class TileEngineFE extends TileEngineBase_BC8 implements MenuProvider {
     public final ItemHandlerSimple invUpgrades;
 
     private final IEnergyStorage feStorage = new FeStorage();
+    private final ExternalEnergyPort api2FeInputPort = new ExternalEnergyPort() {
+        @Override public long insert(long offered, OperationMode mode) {
+            int accepted = feStorage.receiveEnergy((int) Math.min(Integer.MAX_VALUE, Math.max(0L, offered)), mode == OperationMode.SIMULATE);
+            return Math.max(0, accepted);
+        }
+        @Override public long extract(long requested, OperationMode mode) { return 0; }
+        @Override public long stored() { return currentFe; }
+        @Override public long capacity() { return MAX_FE; }
+        @Override public boolean canInsert() { return true; }
+        @Override public boolean canExtract() { return false; }
+    };
     private final LazyOptional<IEnergyStorage> feCapability = LazyOptional.of(() -> feStorage);
 
     public TileEngineFE(BlockPos pos, BlockState state) {
@@ -70,8 +88,8 @@ public class TileEngineFE extends TileEngineBase_BC8 implements MenuProvider {
 
     private static void ensureUpgradeMap() {
         if (!FE_UPGRADES.isEmpty()) return;
-        FE_UPGRADES.put(BCCoreItems.GEAR_IRON.get(), MjAPI.MJ * 2);
-        FE_UPGRADES.put(BCCoreItems.GEAR_GOLD.get(), MjAPI.MJ * 3);
+        FE_UPGRADES.put(BCCoreItems.GEAR_IRON.get(), MjAmount.MICRO_MJ_PER_MJ * 2);
+        FE_UPGRADES.put(BCCoreItems.GEAR_GOLD.get(), MjAmount.MICRO_MJ_PER_MJ * 3);
     }
 
     private static boolean isValidUpgrade(ItemStack stack) {
@@ -85,7 +103,7 @@ public class TileEngineFE extends TileEngineBase_BC8 implements MenuProvider {
 
     public static long getMjPerTick(IItemHandlerAdv upgrades) {
         ensureUpgradeMap();
-        long value = MjAPI.MJ * 4;
+        long value = MjAmount.MICRO_MJ_PER_MJ * 4;
         if (upgrades == null) return value;
         for (int slot = 0; slot < upgrades.getSlots(); slot++) {
             ItemStack stack = upgrades.getStackInSlot(slot);
@@ -100,7 +118,7 @@ public class TileEngineFE extends TileEngineBase_BC8 implements MenuProvider {
     }
 
     public static int getFeConsumptionRate(IItemHandlerAdv upgrades) {
-        long ratio = MjAPI.getFeConversion().mjPerFe;
+        long ratio = BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjPerFe();
         if (ratio <= 0) return 0;
         long required = getMjPerTick(upgrades) / ratio;
         if (required <= 0) return 1;
@@ -142,7 +160,7 @@ public class TileEngineFE extends TileEngineBase_BC8 implements MenuProvider {
     @Override
     protected void burn() {
         if (currentFe <= 0 || !isRedstonePowered) return;
-        long ratio = MjAPI.getFeConversion().mjPerFe;
+        long ratio = BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjPerFe();
         if (ratio <= 0) return;
         int consumedFe = Math.min(currentFe, getFeConsumptionRate());
         long generatedMj = consumedFe * ratio;
@@ -183,9 +201,14 @@ public class TileEngineFE extends TileEngineBase_BC8 implements MenuProvider {
         return new EngineConnector(false);
     }
 
-    @Override public long getMaxPower() { return 1000 * MjAPI.MJ; }
-    @Override public long maxPowerReceived() { return 200 * MjAPI.MJ; }
-    @Override public long maxPowerExtracted() { return 500 * MjAPI.MJ; }
+    @Override
+    public Optional<ExternalEnergyPort> externalEnergyPort(Direction side) {
+        return Optional.of(api2FeInputPort);
+    }
+
+    @Override public long getMaxPower() { return 1000 * MjAmount.MICRO_MJ_PER_MJ; }
+    @Override public long maxPowerReceived() { return 200 * MjAmount.MICRO_MJ_PER_MJ; }
+    @Override public long maxPowerExtracted() { return 500 * MjAmount.MICRO_MJ_PER_MJ; }
     @Override public float explosionRange() { return 4; }
     @Override protected int getMaxChainLength() { return 4; }
     @Override public long getCurrentOutput() { return currentFe > 0 ? getMjPerTick() : 0; }

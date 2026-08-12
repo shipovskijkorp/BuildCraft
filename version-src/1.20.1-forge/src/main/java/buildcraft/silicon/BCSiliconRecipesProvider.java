@@ -6,6 +6,8 @@
 
 package buildcraft.silicon;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.function.Consumer;
 
 import com.google.gson.JsonObject;
@@ -15,7 +17,6 @@ import com.google.common.collect.ImmutableSet.Builder;
 
 import buildcraft.api.enums.EnumEngineType;
 import buildcraft.api.enums.EnumRedstoneChipset;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;
@@ -238,7 +239,7 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
 	
     /** Keeps generated assembly-table recipes in sync with the 50% energy rebalance. */
     private static long assemblyCost(long wholeMj) {
-        return wholeMj * MjAPI.MJ / 2L;
+        return wholeMj * MjAmount.MICRO_MJ_PER_MJ / 2L;
     }
 
     private static void saveSerializerOnlyRecipe(

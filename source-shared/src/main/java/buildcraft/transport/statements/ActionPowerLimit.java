@@ -5,7 +5,8 @@
  */
 package buildcraft.transport.statements;
 
-import buildcraft.api.mj.MjAPI;
+import buildcraft.api.v2.energy.MjAmount;
+
 import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
@@ -66,7 +67,7 @@ public abstract class ActionPowerLimit extends BCStatement implements IActionInt
         } else if (pipeInfo == null) {
             max = "??[INVALID_PIPE]??";
         } else {
-            max = (pipeInfo.transferPerTick >> limitShift) / MjAPI.MJ;
+            max = (pipeInfo.transferPerTick >> limitShift) / MjAmount.MICRO_MJ_PER_MJ;
         }
         return Component.translatable("gate.action.pipe.power_limit", max);
     }

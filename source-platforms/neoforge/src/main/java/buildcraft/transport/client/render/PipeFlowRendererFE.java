@@ -6,10 +6,11 @@
 
 package buildcraft.transport.client.render;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 
 import java.util.function.Function;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.transport.internal.pipe.IPipeFlowRenderer;
 import buildcraft.lib.client.model.ModelUtil;
 import buildcraft.lib.client.model.ModelUtil.UvFaceData;
@@ -63,7 +64,7 @@ public enum PipeFlowRendererFE implements IPipeFlowRenderer<PipeFlowForgeEnergy>
         for (Direction side : Direction.values()) {
             Section s = flow.getSection(side);
             int i = side.ordinal();
-            power[i] = s.displayPower / (double) MjAPI.MJ;
+            power[i] = s.displayPower / (double) MjAmount.MICRO_MJ_PER_MJ;
             centrePower = Math.max(centrePower, power[i]);
         }
 

@@ -1,5 +1,8 @@
 package buildcraft.compat.jei;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjFormatting;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,7 +13,6 @@ import java.util.Set;
 
 import net.minecraft.client.gui.GuiGraphics;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.fuels.EnergyFluidService;
@@ -409,7 +411,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         if (BCLibConfig.hidePowerValues) {
             return sanitizeJeiText(LocaleUtil.localize("buildcraft.value.hidden"));
         }
-        return sanitizeJeiText(MjAPI.formatMj(Math.max(0L, microJoules)) + " MJ");
+        return sanitizeJeiText(MjFormatting.formatMicroMj(Math.max(0L, microJoules)) + " MJ");
     }
 
     private static String sanitizeJeiText(String text) {
@@ -506,7 +508,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         public long requiredMicroJoules() {
-            return board.energyCost() * MjAPI.MJ;
+            return board.energyCost() * MjAmount.MICRO_MJ_PER_MJ;
         }
     }
 
@@ -524,7 +526,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         public long requiredMicroJoules() {
-            return 10_000L * MjAPI.MJ;
+            return 10_000L * MjAmount.MICRO_MJ_PER_MJ;
         }
     }
 
@@ -1256,7 +1258,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     }
 
     private static int getProgressTicks(long microJoules) {
-        long ticks = Math.max(10L, microJoules / MjAPI.MJ / 50L);
+        long ticks = Math.max(10L, microJoules / MjAmount.MICRO_MJ_PER_MJ / 50L);
         return (int) Math.min(Integer.MAX_VALUE, ticks);
     }
 

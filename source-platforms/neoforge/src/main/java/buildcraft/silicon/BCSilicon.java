@@ -6,6 +6,8 @@
 
 package buildcraft.silicon;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.util.List;
 
 import buildcraft.api.BCModules;
@@ -46,7 +48,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.tiles.TilesAPI;
 
 @Mod(BCSilicon.MODID)
@@ -122,11 +123,11 @@ public class BCSilicon {
     private static <BE extends BlockEntity & IBCCapabilityProvider> void registerMjCapabilities(
         RegisterCapabilitiesEvent event, BlockEntityType<BE> type
     ) {
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_CONNECTOR, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_RECEIVER, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_REDSTONE_RECEIVER, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_READABLE, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_PASSIVE_PROVIDER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_CONNECTOR, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_RECEIVER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_REDSTONE_RECEIVER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_READABLE, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_PASSIVE_PROVIDER, type);
     }
 
     public static void commonSetup(FMLCommonSetupEvent event) {

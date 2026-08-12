@@ -1,5 +1,8 @@
 package buildcraft.robotics.entity;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjFormatting;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,8 +20,7 @@ import buildcraft.api.core.BCLog;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IZone;
 import buildcraft.api.events.RobotEvent;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.DockingStation;
 import buildcraft.api.robots.EntityRobotBase;
@@ -147,7 +149,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private boolean firstUpdateDone;
     private boolean convertingToItems;
     private int ticksCharging;
-    /** Fractional charge accumulator, stored as (microJoules * ENERGY_UNITS_PER_MJ) % MjAPI.MJ. */
+    /** Fractional charge accumulator, stored as (microJoules * ENERGY_UNITS_PER_MJ) % MjAmount.MICRO_MJ_PER_MJ. */
     private long chargeRemainder;
 
     public EntityRobot(EntityType<? extends EntityRobot> type, Level level) {
@@ -172,17 +174,17 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
      * Converts the robotics internal charge unit into BuildCraft power units.
      *
      * <p>The robot battery intentionally stores old robotics charge units for AI costs and balancing. Display code and
-     * {@link buildcraft.api.mj.IMjReadable} implementations must expose real BuildCraft micro-MJ instead.</p>
+     * {@link buildcraft.lib.internal.mj.IMjReadable} implementations must expose real BuildCraft micro-MJ instead.</p>
      */
     public static long robotEnergyToMicroMj(long robotEnergy) {
         if (robotEnergy <= 0L) {
             return 0L;
         }
-        long maxBeforeMultiply = Long.MAX_VALUE / MjAPI.MJ;
+        long maxBeforeMultiply = Long.MAX_VALUE / MjAmount.MICRO_MJ_PER_MJ;
         if (robotEnergy > maxBeforeMultiply) {
             return Long.MAX_VALUE;
         }
-        return robotEnergy * MjAPI.MJ / ENERGY_UNITS_PER_MJ;
+        return robotEnergy * MjAmount.MICRO_MJ_PER_MJ / ENERGY_UNITS_PER_MJ;
     }
 
     /** Formats internal robot charge as player-facing BuildCraft Minecraft Joules, without appending the MJ suffix. */
@@ -191,7 +193,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             return LocaleUtil.localize("buildcraft.value.hidden");
         }
         long clamped = Math.max(0L, Math.min((long) MAX_ENERGY, robotEnergy));
-        return MjAPI.formatMj(robotEnergyToMicroMj(clamped));
+        return MjFormatting.formatMicroMj(robotEnergyToMicroMj(clamped));
     }
 
     public void setBoard(BoardEntry entry) {
@@ -248,7 +250,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         if (requestedEnergy <= 0) {
             return 0;
         }
-        long numeratorNeeded = requestedEnergy * MjAPI.MJ - Math.min(chargeRemainder, MjAPI.MJ - 1);
+        long numeratorNeeded = requestedEnergy * MjAmount.MICRO_MJ_PER_MJ - Math.min(chargeRemainder, MjAmount.MICRO_MJ_PER_MJ - 1);
         return ceilDiv(numeratorNeeded, ENERGY_UNITS_PER_MJ);
     }
 
@@ -267,8 +269,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         long accepted = Math.min(maxReceive, getMjPowerRequestedForCharging());
         if (accepted > 0 && action.execute()) {
             long numerator = accepted * ENERGY_UNITS_PER_MJ + chargeRemainder;
-            long energyReceived = numerator / MjAPI.MJ;
-            chargeRemainder = numerator % MjAPI.MJ;
+            long energyReceived = numerator / MjAmount.MICRO_MJ_PER_MJ;
+            chargeRemainder = numerator % MjAmount.MICRO_MJ_PER_MJ;
 
             if (energyReceived > 0) {
                 long added = Math.min(energyReceived, requestedEnergy);

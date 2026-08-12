@@ -6,8 +6,8 @@
  */
 package buildcraft.core;
 
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjFeConversion;
+import buildcraft.lib.internal.mj.MjCapabilities;
+import buildcraft.lib.internal.mj.MjFeConversion;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.BCLibConfig.ChunkLoaderLevel;
 import buildcraft.lib.BCLibConfig.ChunkLoaderType;
@@ -220,7 +220,6 @@ public class BCCoreConfig {
 
         BCLibConfig.mjFeConversion = MjFeConversion.createParsed(propMjPerFe.get());
         BCLibConfig.powerMode = propPowerMode.get();
-        MjAPI.setFeStatus(new BCLibConfig.MjToFeStatus());
         BCLibConfig.refreshConfigs();
     }
 }

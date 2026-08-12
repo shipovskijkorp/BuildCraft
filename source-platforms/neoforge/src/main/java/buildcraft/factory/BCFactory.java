@@ -1,7 +1,8 @@
 package buildcraft.factory;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import buildcraft.api.capabilities.BCCapabilityRegistration;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.core.BCCore;
 import buildcraft.factory.client.render.RenderDistiller;
@@ -87,11 +88,11 @@ public class BCFactory {
 
     private static <BE extends net.minecraft.world.level.block.entity.BlockEntity & buildcraft.api.capabilities.IBCCapabilityProvider>
     void registerMachineCapabilities(RegisterCapabilitiesEvent event, BlockEntityType<BE> type) {
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_CONNECTOR, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_RECEIVER, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_REDSTONE_RECEIVER, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_READABLE, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_PASSIVE_PROVIDER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_CONNECTOR, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_RECEIVER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_REDSTONE_RECEIVER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_READABLE, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_PASSIVE_PROVIDER, type);
     }
 
     @SuppressWarnings("unused")

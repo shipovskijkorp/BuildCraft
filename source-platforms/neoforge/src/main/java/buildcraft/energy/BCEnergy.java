@@ -1,8 +1,9 @@
 package buildcraft.energy;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.core.BCCore;
 import buildcraft.energy.tile.TileSpringOil;
 import buildcraft.lib.misc.AdvancementUtil;
@@ -91,11 +92,11 @@ public class BCEnergy {
     private static <BE extends BlockEntity & IBCCapabilityProvider> void registerEngineCapabilities(
         RegisterCapabilitiesEvent event, BlockEntityType<BE> blockEntityType
     ) {
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_CONNECTOR, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_RECEIVER, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_REDSTONE_RECEIVER, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_READABLE, blockEntityType);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_PASSIVE_PROVIDER, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_CONNECTOR, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_RECEIVER, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_REDSTONE_RECEIVER, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_READABLE, blockEntityType);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_PASSIVE_PROVIDER, blockEntityType);
     }
 
     public void gatherData(GatherDataEvent event) {

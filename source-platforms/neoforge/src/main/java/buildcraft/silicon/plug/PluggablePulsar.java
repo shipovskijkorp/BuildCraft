@@ -6,6 +6,8 @@
 
 package buildcraft.silicon.plug;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import net.neoforged.api.distmarker.OnlyIn;
 
 import net.neoforged.api.distmarker.Dist;
@@ -14,8 +16,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import buildcraft.api.BCModules;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IPipeHolder;
@@ -240,7 +241,7 @@ public class PluggablePulsar extends PipePluggable {
             pulseStage = 0;
             IMjRedstoneReceiver rsRec = (IMjRedstoneReceiver) holder.getPipe().getBehaviour();
             if (gateSinglePulses > 0) {
-                long power = MjAPI.MJ;
+                long power = MjAmount.MICRO_MJ_PER_MJ;
                 if (BCModules.TRANSPORT.isLoaded()) {
                     if (holder.getPipe().getFlow() instanceof IFlowFluid) {
                         power = BCTransportConfig.mjPerMillibucket * 1000;
@@ -257,7 +258,7 @@ public class PluggablePulsar extends PipePluggable {
                     // ParticleUtil.spawnFailureParticles
                 }
             } else {
-                rsRec.receivePower(MjAPI.MJ, FluidAction.EXECUTE);
+                rsRec.receivePower(MjAmount.MICRO_MJ_PER_MJ, FluidAction.EXECUTE);
             }
             if (gateSinglePulses > 0) {
                 gateSinglePulses--;

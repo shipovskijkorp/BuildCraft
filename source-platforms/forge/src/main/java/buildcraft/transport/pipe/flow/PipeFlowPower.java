@@ -6,6 +6,8 @@
 
 package buildcraft.transport.pipe.flow;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -21,12 +23,11 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjPassiveProvider;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjToFeAutoConverter;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjPassiveProvider;
+import buildcraft.lib.internal.mj.IMjReceiver;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjToFeAutoConverter;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowPower;
 import buildcraft.transport.internal.pipe.IPipe;
@@ -59,7 +60,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.LogicalSide;
 
 public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
-    private static final long DEFAULT_MAX_POWER = MjAPI.MJ * 10;
+    private static final long DEFAULT_MAX_POWER = MjAmount.MICRO_MJ_PER_MJ * 10;
     public static final int NET_POWER_AMOUNTS = 2;
 
     public Vec3 clientDisplayFlowCentre = Vec3.ZERO;
@@ -141,12 +142,12 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     @Override
     public boolean canConnect(Direction face, BlockEntity oTile) {
         if (isReceiver) {
-            LazyOptional<IMjPassiveProvider> provider = oTile.getCapability(MjAPI.CAP_PASSIVE_PROVIDER, face.getOpposite());
+            LazyOptional<IMjPassiveProvider> provider = oTile.getCapability(MjCapabilities.CAP_PASSIVE_PROVIDER, face.getOpposite());
             if (provider.isPresent()) {
                 return true;
             }
         }
-        IMjConnector receiver = oTile.getCapability(MjAPI.CAP_CONNECTOR, face.getOpposite()).orElse(null);
+        IMjConnector receiver = oTile.getCapability(MjCapabilities.CAP_CONNECTOR, face.getOpposite()).orElse(null);
         return receiver != null && receiver.canConnect(sections.get(face));
     }
 
@@ -174,16 +175,16 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             maxPower = DEFAULT_MAX_POWER;
         }
         powerLoss = MathUtil.clamp(configure.getPowerLoss(), -1, maxPower);
-        powerResistance = MathUtil.clamp(configure.getPowerResistance(), -1, MjAPI.MJ);
+        powerResistance = MathUtil.clamp(configure.getPowerResistance(), -1, MjAmount.MICRO_MJ_PER_MJ);
 
         if (powerLoss < 0) {
             if (powerResistance < 0) {
                 // 1% resistance
-                powerResistance = MjAPI.MJ / 100;
+                powerResistance = MjAmount.MICRO_MJ_PER_MJ / 100;
             }
-            powerLoss = maxPower * powerResistance / MjAPI.MJ;
+            powerLoss = maxPower * powerResistance / MjAmount.MICRO_MJ_PER_MJ;
         } else if (powerResistance < 0) {
-            powerResistance = powerLoss * MjAPI.MJ / maxPower;
+            powerResistance = powerLoss * MjAmount.MICRO_MJ_PER_MJ / maxPower;
         }
     }
 
@@ -200,7 +201,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         if (tile == null) {
             return 0;
         }
-        IMjPassiveProvider provider = tile.getCapability(MjAPI.CAP_PASSIVE_PROVIDER, from.getOpposite()).orElse(null);
+        IMjPassiveProvider provider = tile.getCapability(MjCapabilities.CAP_PASSIVE_PROVIDER, from.getOpposite()).orElse(null);
         if (provider == null) {
             return 0;
         }
@@ -274,9 +275,9 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
         if (facing == null) {
             return LazyOptional.empty();
-        } else if (capability == MjAPI.CAP_RECEIVER) {
+        } else if (capability == MjCapabilities.CAP_RECEIVER) {
             return isReceiver ? LazyOptional.of(() -> sections.get(facing)).cast() : LazyOptional.empty();
-        } else if (capability == MjAPI.CAP_CONNECTOR) {
+        } else if (capability == MjCapabilities.CAP_CONNECTOR) {
             return LazyOptional.of(() -> sections.get(facing)).cast();
         } else {
             return LazyOptional.empty();
@@ -289,7 +290,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         left.add("isReceiver = " + isReceiver);
         left.add("disabled = " + disabled);
         left.add("powerLoss = " + LocaleUtil.localizeMj(powerLoss));
-        left.add("powerResistance = " + (powerResistance * 100.0 / MjAPI.MJ) + "%");
+        left.add("powerResistance = " + (powerResistance * 100.0 / MjAmount.MICRO_MJ_PER_MJ) + "%");
         left.add(
             "internalPower = " + arrayToString(s -> s.internalPower) + " <- " + arrayToString(s -> s.internalNextPower)
         );
@@ -303,7 +304,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     private String arrayToString(ToLongFunction<Section> getter) {
         long[] arr = new long[6];
         for (Direction face : Direction.values()) {
-            arr[face.ordinal()] = getter.applyAsLong(sections.get(face)) / MjAPI.MJ;
+            arr[face.ordinal()] = getter.applyAsLong(sections.get(face)) / MjAmount.MICRO_MJ_PER_MJ;
         }
         return Arrays.toString(arr);
     }
@@ -425,7 +426,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             s.powerAverage.tick();
             double value = s.powerAverage.getAverage() / maxPower;
             value = Math.sqrt(value);
-            s.displayPower = (int) (value * MjAPI.MJ);
+            s.displayPower = (int) (value * MjAmount.MICRO_MJ_PER_MJ);
         }
 
         // Compute local consumers requesting power. This includes both external tiles and internal pluggables such as
@@ -533,7 +534,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     private IMjReceiver getPowerSink(Direction face) {
         PipePluggable plug = pipe.getHolder().getPluggable(face);
         if (plug != null && plug != PipePluggable.EMPTY) {
-            LazyOptional<IMjReceiver> pluggableReceiver = plug.getInternalCapability(MjAPI.CAP_RECEIVER);
+            LazyOptional<IMjReceiver> pluggableReceiver = plug.getInternalCapability(MjCapabilities.CAP_RECEIVER);
             if (pluggableReceiver.isPresent()) {
                 return pluggableReceiver.orElse(null);
             }
@@ -546,7 +547,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             return null;
         }
 
-        LazyOptional<IMjReceiver> tileReceiver = pipe.getHolder().getCapabilityFromPipe(face, MjAPI.CAP_RECEIVER);
+        LazyOptional<IMjReceiver> tileReceiver = pipe.getHolder().getCapabilityFromPipe(face, MjCapabilities.CAP_RECEIVER);
         IMjReceiver receiver = tileReceiver == null ? null : tileReceiver.orElse(null);
         if (receiver != null) {
             return receiver;
@@ -579,12 +580,12 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         if (powerResistance <= 0) {
             return input;
         }
-        if (powerResistance >= MjAPI.MJ) {
+        if (powerResistance >= MjAmount.MICRO_MJ_PER_MJ) {
             return 0;
         }
         BigInteger retained = BigInteger.valueOf(input)
-            .multiply(BigInteger.valueOf(MjAPI.MJ - powerResistance))
-            .divide(BigInteger.valueOf(MjAPI.MJ));
+            .multiply(BigInteger.valueOf(MjAmount.MICRO_MJ_PER_MJ - powerResistance))
+            .divide(BigInteger.valueOf(MjAmount.MICRO_MJ_PER_MJ));
         return Math.max(1, retained.longValue());
     }
 
@@ -595,11 +596,11 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         if (powerResistance <= 0) {
             return Math.min(delivered, maxInput);
         }
-        long retainedRatio = MjAPI.MJ - powerResistance;
+        long retainedRatio = MjAmount.MICRO_MJ_PER_MJ - powerResistance;
         if (retainedRatio <= 0) {
             return maxInput;
         }
-        BigInteger numerator = BigInteger.valueOf(delivered).multiply(BigInteger.valueOf(MjAPI.MJ));
+        BigInteger numerator = BigInteger.valueOf(delivered).multiply(BigInteger.valueOf(MjAmount.MICRO_MJ_PER_MJ));
         BigInteger denominator = BigInteger.valueOf(retainedRatio);
         long required = numerator.add(denominator).subtract(BigInteger.ONE).divide(denominator).longValue();
         return Math.min(required, maxInput);
@@ -614,10 +615,10 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
     public double getMaxTransferForRender(float partialTicks) {
 //        if (true) 
-        	return maxPower / (double) MjAPI.MJ;
+            return maxPower / (double) MjAmount.MICRO_MJ_PER_MJ;
 /*        double max = 0;
         for (Section s : sections.values()) {
-            double value = s.displayPower / (double) MjAPI.MJ;
+            double value = s.displayPower / (double) MjAmount.MICRO_MJ_PER_MJ;
             // value = MathUtil.interp(partialTicks, value, value);
             max = Math.max(max, value);
         }
@@ -630,7 +631,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         public final AverageInt clientDisplayAverage = new AverageInt(10);
         public double clientDisplayFlow, clientDisplayFlowLast;
 
-        /** Range: 0 to {@link MjAPI#MJ} */
+        /** Range: 0 to {@link MjAmount#MICRO_MJ_PER_MJ} */
         public int displayPower;
         public EnumFlow displayFlow = EnumFlow.STATIONARY;
         public long nextPowerQuery;

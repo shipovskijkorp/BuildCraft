@@ -1,5 +1,8 @@
 package buildcraft.energy.client.gui;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +10,7 @@ import java.util.Map;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.MjCapabilities;
 import buildcraft.core.BCCoreItems;
 import buildcraft.energy.menu.ContainerDynamoMJ;
 import buildcraft.energy.tile.TileDynamoMJ;
@@ -58,7 +61,7 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
                 lines.add(Component.literal(LocaleUtil.localize("buildcraft.gui.fe_engine.upgrade_types")));
                 for (Map.Entry<Item, Long> entry : TileDynamoMJ.FE_UPGRADES.entrySet()) {
                     String itemName = new ItemStack(entry.getKey()).getHoverName().getString();
-                    long fe = MjAPI.getFeConversion().microMjToFe(entry.getValue());
+                    long fe = BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjToWholeFe(entry.getValue());
                     lines.add(Component.literal(itemName + " = +").append(LocaleUtil.localizeFeFlow(fe)));
                 }
                 tooltips.add(new ToolTip(lines));

@@ -6,12 +6,13 @@
 
 package buildcraft.silicon.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.lib.gui.ItemProvider;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.StackUtil;
@@ -154,7 +155,7 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
             return 0;
         }
         ItemStack programmed = ItemRedstoneBoard.createStack(selected);
-        return canPutOutput(programmed) ? selected.energyCost() * MjAPI.MJ : 0;
+        return canPutOutput(programmed) ? selected.energyCost() * MjAmount.MICRO_MJ_PER_MJ : 0;
     }
 
     @Override

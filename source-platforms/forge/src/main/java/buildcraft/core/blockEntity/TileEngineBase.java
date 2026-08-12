@@ -34,7 +34,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public abstract class TileEngineBase extends BlockEntity {
 
-	/** Heat per {@link MjAPI#MJ}. */
+	/** Heat per {@link MjAmount#MICRO_MJ_PER_MJ}. */
 	public static final double HEAT_PER_MJ = 0.0023;
 
 	public static final double MIN_HEAT = 20;

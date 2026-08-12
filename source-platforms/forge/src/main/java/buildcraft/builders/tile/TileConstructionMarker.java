@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.enums.EnumSnapshotType;
 import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.builders.BCBuildersBlocks;

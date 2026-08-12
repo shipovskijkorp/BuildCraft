@@ -23,6 +23,11 @@ public interface EnergyService {
         return Optional.empty();
     }
 
+    /** Applies public connection rules and the platform compatibility bridge for a prospective MJ edge. */
+    default boolean canConnect(MjConnectionContext context) {
+        return true;
+    }
+
     /**
      * Creates the standard BuildCraft MJ storage implementation without exposing Lib internals.
      */

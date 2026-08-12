@@ -1,11 +1,12 @@
 package buildcraft.transport.internal.pipe;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.IdentityHashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.transport.internal.IInjectable;
 import buildcraft.transport.internal.IStripesRegistry;
 import buildcraft.transport.internal.pluggable.IPluggableRegistry;
@@ -33,7 +34,7 @@ public final class PipeApi {
 
     /** The default transfer information used if a pipe definition has not been registered. Note that this is replaced
      * by BuildCraft Transport to config-defined values. */
-    public static PowerTransferInfo powerInfoDefault = PowerTransferInfo.createFromResistance(8 * MjAPI.MJ, MjAPI.MJ / 32, false);
+    public static PowerTransferInfo powerInfoDefault = PowerTransferInfo.createFromResistance(8 * MjAmount.MICRO_MJ_PER_MJ, MjAmount.MICRO_MJ_PER_MJ / 32, false);
 
     /** Default Forge Energy transfer settings for FE pipes. */
     public static ForgeEnergyTransferInfo forgeEnergyInfoDefault = new ForgeEnergyTransferInfo(100, false);
@@ -115,7 +116,7 @@ public final class PipeApi {
     public static class PowerTransferInfo {
         public final long transferPerTick;
         public final long lossPerTick;
-        /** The percentage resistance per tick. Should be a value between 0 and {@link MjAPI#MJ} */
+        /** The percentage resistance per tick. Should be a value between 0 and {@link MjAmount#MICRO_MJ_PER_MJ} */
         public final long resistancePerTick;
         public final boolean isReceiver;
 
@@ -125,7 +126,7 @@ public final class PipeApi {
          * @param lossPerTick
          * @param isReceiver */
         public static PowerTransferInfo createFromLoss(long transferPerTick, long lossPerTick, boolean isReceiver) {
-            return new PowerTransferInfo(transferPerTick, lossPerTick, lossPerTick * MjAPI.MJ / transferPerTick, isReceiver);
+            return new PowerTransferInfo(transferPerTick, lossPerTick, lossPerTick * MjAmount.MICRO_MJ_PER_MJ / transferPerTick, isReceiver);
         }
 
         /** Sets lossPerTick to be equal to resistancePerTick when full power is being transferred.
@@ -134,7 +135,7 @@ public final class PipeApi {
          * @param resistancePerTick
          * @param isReceiver */
         public static PowerTransferInfo createFromResistance(long transferPerTick, long resistancePerTick, boolean isReceiver) {
-            long lossPerTick = resistancePerTick * transferPerTick / MjAPI.MJ;
+            long lossPerTick = resistancePerTick * transferPerTick / MjAmount.MICRO_MJ_PER_MJ;
             return new PowerTransferInfo(transferPerTick, lossPerTick, resistancePerTick, isReceiver);
         }
 

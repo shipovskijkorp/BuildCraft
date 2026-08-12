@@ -7,6 +7,7 @@ package buildcraft.lib;
 import buildcraft.api.BCModules;
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.block.VanillaRotationHandlers;
+import buildcraft.lib.internal.mj.MjApi2PlatformBridge;
 import buildcraft.lib.chunkload.ChunkLoaderManager;
 import buildcraft.lib.expression.ExpressionDebugManager;
 import buildcraft.lib.list.VanillaListHandlers;
@@ -37,6 +38,7 @@ public class BCLib {
     public static final boolean DEV = !FMLEnvironment.production || Boolean.getBoolean("buildcraft.dev");
 
     public BCLib() {
+        MjApi2PlatformBridge.install();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 

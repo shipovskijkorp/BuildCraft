@@ -18,7 +18,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.core.IZone;
-import buildcraft.api.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjBattery;
 
 public abstract class EntityRobotBase extends LivingEntity implements Container, IFluidHandler {
     public static final int MAX_ENERGY = 100_000;

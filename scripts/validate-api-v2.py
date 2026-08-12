@@ -61,6 +61,7 @@ EXPECTED_PROVIDER = "buildcraft.lib.internal.api.v2.BuildCraftApiRuntimeProvider
 
 TRANSPORT_LEGACY_PACKAGE = "buildcraft.api.transport"
 TRANSPORT_SOURCE_MARKER = Path("buildcraft/api/transport")
+MJ_LEGACY_PACKAGE = "buildcraft.api.mj"
 
 
 def java_files(root: Path):
@@ -124,6 +125,19 @@ def main() -> int:
         for imported in IMPORT_RE.findall(text):
             if imported.startswith(TRANSPORT_LEGACY_PACKAGE):
                 errors.append(f"{rel}: imports retired Transport API {imported}")
+
+    # The legacy MJ Java API was retired once EnergyService/MjPort became the runtime boundary.
+    for path in ROOT.rglob("*.java"):
+        if any(part in {"build", ".gradle", ".git"} for part in path.parts):
+            continue
+        text = path.read_text(encoding="utf-8")
+        rel = path.relative_to(ROOT)
+        package_match = PACKAGE_RE.search(text)
+        if package_match and package_match.group(1).startswith(MJ_LEGACY_PACKAGE):
+            errors.append(f"{rel}: retired MJ API package must not be restored; use buildcraft.api.v2.energy")
+        for imported in IMPORT_RE.findall(text):
+            if imported.startswith(MJ_LEGACY_PACKAGE):
+                errors.append(f"{rel}: imports retired MJ API {imported}")
 
 
     if REGISTRY_KEYS_FILE.is_file() and RUNTIME_FILE.is_file():

@@ -6,6 +6,8 @@
 
 package buildcraft.transport.pipe.behaviour;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.List;
 import java.util.WeakHashMap;
 
@@ -14,10 +16,9 @@ import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IPipe;
@@ -42,8 +43,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneReceiver {
-    private static final long POWER_PER_ITEM = MjAPI.MJ / 2;
-    private static final long POWER_PER_METRE = MjAPI.MJ / 4;
+    private static final long POWER_PER_ITEM = MjAmount.MICRO_MJ_PER_MJ / 2;
+    private static final long POWER_PER_METRE = MjAmount.MICRO_MJ_PER_MJ / 4;
 
     private static final double INSERT_SPEED = 0.04;
     private static final int DROP_GAP = 20;
@@ -195,7 +196,7 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
 
     @Override
     public long getPowerRequested() {
-        final long power = 512 * MjAPI.MJ;
+        final long power = 512 * MjAmount.MICRO_MJ_PER_MJ;
         return power - receivePower(power, FluidAction.SIMULATE);
     }
 
@@ -220,7 +221,7 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
                 }
             }
         }
-        return microJoules - MjAPI.MJ;
+        return microJoules - MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override

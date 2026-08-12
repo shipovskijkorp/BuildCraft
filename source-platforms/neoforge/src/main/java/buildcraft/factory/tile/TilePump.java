@@ -6,6 +6,8 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -24,8 +26,7 @@ import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.items.FluidItemDrops;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjReceiver;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreConfig;
@@ -34,6 +35,7 @@ import buildcraft.energy.tile.ITileOilSpring;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
+import buildcraft.lib.internal.api.v2.MachineRuntimeView;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.BlockUtil;
@@ -59,7 +61,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class TilePump extends TileMiner {
+public class TilePump extends TileMiner implements MachineRuntimeView {
     public static final boolean DEBUG_PUMP = BCDebugging.shouldDebugComplex("factory.pump");
 
     private static final Direction[] SEARCH_NORMAL = new Direction[] { //
@@ -303,7 +305,7 @@ public class TilePump extends TileMiner {
         }
 //        BCLog.logger.debug(""+currentPos);
 
-        long target = Math.max(0L, Math.round(10 * MjAPI.MJ * MachineDefinitionLookup.energyCostMultiplier(BuildCraftContentIds.Machines.PUMP)));
+        long target = Math.max(0L, Math.round(10 * MjAmount.MICRO_MJ_PER_MJ * MachineDefinitionLookup.energyCostMultiplier(BuildCraftContentIds.Machines.PUMP)));
         if (currentPos != null && paths.containsKey(currentPos)) {
             progress += battery.extractPower(0, target - progress);
             if (progress < target) {
@@ -494,7 +496,7 @@ public class TilePump extends TileMiner {
 
     @Override
     protected long getBatteryCapacity() {
-        return MachineDefinitionLookup.capacityMicroMj(BuildCraftContentIds.Machines.PUMP, 50 * MjAPI.MJ);
+        return MachineDefinitionLookup.capacityMicroMj(BuildCraftContentIds.Machines.PUMP, 50 * MjAmount.MICRO_MJ_PER_MJ);
     }
 
 	@Override
@@ -506,4 +508,9 @@ public class TilePump extends TileMiner {
 	}
     
     
+    @Override
+    public net.minecraft.resources.ResourceLocation api2MachineTypeId() {
+        return BuildCraftContentIds.Machines.PUMP;
+    }
+
 }

@@ -6,18 +6,39 @@
 
 package buildcraft.lib.engine;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.content.BuildCraftContentIds;
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.energy.MjConnectionContext;
+import buildcraft.api.v2.energy.MjPort;
+import buildcraft.api.v2.energy.MjPortDescriptor;
+import buildcraft.api.v2.energy.MjPortProvider;
+import buildcraft.api.v2.energy.MjPortRole;
+import buildcraft.api.v2.energy.MjTransferResult;
+import buildcraft.api.v2.machine.EngineStage;
+import buildcraft.api.v2.machine.EngineView;
+import buildcraft.api.v2.machine.MachineComponent;
+import buildcraft.api.v2.machine.MachineControl;
+import buildcraft.api.v2.machine.WorkState;
+import buildcraft.api.v2.machine.WorkStatus;
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
+import buildcraft.api.enums.EnumEngineType;
 import buildcraft.api.enums.EnumPowerStage;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjToFeAutoConverter;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.core.client.model.ModelEngine;
 import buildcraft.lib.block.VanillaRotationHandlers;
@@ -44,19 +65,44 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
-public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebuggable {
+public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebuggable, EngineView, MjPortProvider {
 
     private static final ResourceLocation ADVANCEMENT_POWERING_UP =
         new ResourceLocation("buildcraftenergy:powering_up");
+    private static final ResourceLocation MJ_NETWORK_ID = new ResourceLocation("buildcraft", "mj");
 
-    /** Heat per {@link MjAPI#MJ}. */
+    private final MjPort api2OutputPort = new MjPort() {
+        @Override
+        public MjTransferResult insert(MjAmount offered, OperationMode mode) {
+            return MjTransferResult.none(offered);
+        }
+
+        @Override
+        public MjTransferResult extract(MjAmount requested, OperationMode mode) {
+            long requestedMicro = Math.max(0L, requested.microMj());
+            long extracted = extractPower(0L, requestedMicro, mode == OperationMode.EXECUTE);
+            return MjTransferResult.of(requested, MjAmount.ofMicro(extracted));
+        }
+
+        @Override
+        public MjAmount stored() {
+            return MjAmount.ofMicro(Math.max(0L, power));
+        }
+
+        @Override
+        public MjAmount capacity() {
+            return MjAmount.ofMicro(Math.max(0L, getMaxPower()));
+        }
+
+        @Override public boolean canInsert() { return false; }
+        @Override public boolean canExtract() { return true; }
+    };
+
+    /** Heat per {@link MjAmount#MICRO_MJ_PER_MJ}. */
     public static final double HEAT_PER_MJ = 0.0023;
 
     public static final double MIN_HEAT = 20;
@@ -227,8 +273,8 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         return InteractionResult.FAIL;
     }
 
-    private boolean isFacingReceiver(Direction dir) {
-        return getReceiverToPower(dir) != null;
+    protected boolean isFacingReceiver(Direction dir) {
+        return getPortToPower(dir) != null;
     }
 
     protected final boolean canChain() {
@@ -360,8 +406,8 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         lastPower = 0;
 
         if (!isRedstonePowered) {
-            if (power > MjAPI.MJ) {
-                power -= MjAPI.MJ;
+            if (power > MjAmount.MICRO_MJ_PER_MJ) {
+                power -= MjAmount.MICRO_MJ_PER_MJ;
             } else if (power > 0) {
                 power = 0;
             }
@@ -448,38 +494,35 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     }
 
     protected long getPowerToExtract(boolean doExtract) {
-        IMjReceiver receiver = getReceiverToPower(currentDirection);
+        MjPort receiver = getPortToPower(currentDirection);
         if (receiver == null) {
             return 0;
         }
 
-        // Pulsed power
-        return extractPower(0, receiver.getPowerRequested(), doExtract);
-        // TODO: Use this:
-        // return extractPower(receiver.getMinPowerReceived(), receiver.getMaxPowerReceived(), false);
-
-        // Constant power
-        // return extractEnergy(0, getActualOutput(), false); // Uncomment for constant power
+        long available = extractPower(0, maxPowerExtracted(), false);
+        if (available <= 0) return 0;
+        MjAmount offered = MjAmount.ofMicro(available);
+        long accepted = receiver.insert(offered, OperationMode.SIMULATE).transferred().microMj();
+        accepted = Math.max(0L, Math.min(available, accepted));
+        if (doExtract && accepted > 0) {
+            extractPower(accepted, accepted, true);
+        }
+        return accepted;
     }
 
     protected void sendPower() {
-        IMjReceiver receiver = getReceiverToPower(currentDirection);
+        MjPort receiver = getPortToPower(currentDirection);
         if (receiver == null) {
             return;
         }
 
-        // Work out the offer without mutating the engine buffer. The old code extracted here and then
-        // extracted the accepted amount a second time after the receiver call.
         long offered = getPowerToExtract(false);
         if (offered <= 0) {
             return;
         }
 
-        long excess = receiver.receivePower(offered, FluidAction.EXECUTE);
-        // A third-party receiver must not be able to make us add or over-extract power by returning an
-        // invalid remainder. Treat the return value strictly as the unaccepted part of this offer.
-        excess = Math.max(0, Math.min(offered, excess));
-        long accepted = offered - excess;
+        long accepted = receiver.insert(MjAmount.ofMicro(offered), OperationMode.EXECUTE).transferred().microMj();
+        accepted = Math.max(0L, Math.min(offered, accepted));
         if (accepted > 0) {
             extractPower(accepted, accepted, true);
         }
@@ -640,58 +683,43 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
             TileEngineBase_BC8 other = (TileEngineBase_BC8) tile;
             return other.currentDirection == currentDirection;
         }
-        return getReceiverToPower(tile, side) != null;
+        return BuildCraftApi.service(BuildCraftServices.ENERGY)
+            .port(level, tile.getBlockPos(), side.getOpposite()).isPresent();
     }
 
-    /** @deprecated Replaced with {@link #getReceiverToPower(Direction)}. */
-    @Deprecated
-    public IMjReceiver getReceiverToPower(BlockEntity tile, Direction side) {
-        if (tile == null) return null;
-        IMjReceiver rec = tile.getCapability(MjAPI.CAP_RECEIVER, side.getOpposite()).orElse(null);
-        if (rec != null && rec.canConnect(mjConnector) && mjConnector.canConnect(rec)) {
-            return rec;
-        }
-        IEnergyStorage fe = tile.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).orElse(null);
-        return MjToFeAutoConverter.createReceiver(fe);
-    }
-
-    public IMjReceiver getReceiverToPower(Direction side) {
+    /** Returns the API2 MJ endpoint reached through a valid same-engine chain. */
+    public MjPort getPortToPower(Direction side) {
         TileEngineBase_BC8 engine = this;
         BlockEntity next = null;
 
         for (int len = 0; len <= getMaxChainLength(); len++) {
             next = engine.getTileBuffer(side).getTile();
-
-            if (next == null) {
-                return null;
-            }
+            if (next == null) return null;
 
             if (next.getClass() == getClass()) {
-                if (side != ((TileEngineBase_BC8) next).currentDirection) {
-                    return null;
-                }
+                if (side != ((TileEngineBase_BC8) next).currentDirection) return null;
             }
 
             if (next instanceof TileEngineBase_BC8) {
-                if (next.getClass() != getClass()) {
-                    return null;
-                }
+                if (next.getClass() != getClass()) return null;
                 engine = (TileEngineBase_BC8) next;
             } else {
                 break;
             }
         }
 
-        if (next == null || next instanceof TileEngineBase_BC8) {
+        if (next == null || next instanceof TileEngineBase_BC8) return null;
+        var energy = BuildCraftApi.service(BuildCraftServices.ENERGY);
+        MjPort remotePort = energy.port(level, next.getBlockPos(), side.getOpposite()).orElse(null);
+        if (remotePort == null) return null;
+        Optional<MjPortDescriptor> localDescriptor = engine.mjPortDescriptor(side);
+        Optional<MjPortDescriptor> remoteDescriptor = energy.descriptor(level, next.getBlockPos(), side.getOpposite());
+        if (localDescriptor.isPresent() && remoteDescriptor.isPresent()
+            && !energy.canConnect(new MjConnectionContext(level, engine.worldPosition, side,
+                localDescriptor.get(), remoteDescriptor.get()))) {
             return null;
         }
-
-        IMjReceiver recv = next.getCapability(MjAPI.CAP_RECEIVER, side.getOpposite()).orElse(null);
-        if (recv != null && recv.canConnect(mjConnector) && mjConnector.canConnect(recv)) {
-            return recv;
-        }
-        IEnergyStorage fe = next.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).orElse(null);
-        return MjToFeAutoConverter.createReceiver(fe);
+        return remotePort;
     }
 
     @Override
@@ -706,7 +734,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     public abstract long getMaxPower();
 
     public long minPowerReceived() {
-        return 2 * MjAPI.MJ;
+        return 2 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     public abstract long maxPowerReceived();
@@ -739,6 +767,78 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 
     public Direction getCurrentFacing() {
         return currentDirection;
+    }
+
+    @Override
+    public ResourceLocation typeId() {
+        BlockState state = getBlockState();
+        if (state.hasProperty(BuildCraftProperties.ENGINE_TYPE)) {
+            EnumEngineType type = state.getValue(BuildCraftProperties.ENGINE_TYPE);
+            return switch (type) {
+                case WOOD -> BuildCraftContentIds.Engines.REDSTONE;
+                case STONE -> BuildCraftContentIds.Engines.STONE;
+                case IRON -> BuildCraftContentIds.Engines.IRON;
+                case CREATIVE -> BuildCraftContentIds.Engines.CREATIVE;
+                case FE -> BuildCraftContentIds.Engines.FE;
+            };
+        }
+        return BuildCraftContentIds.Engines.REDSTONE;
+    }
+
+    @Override
+    public BlockPos position() {
+        return worldPosition;
+    }
+
+    @Override
+    public WorkStatus workStatus() {
+        WorkState state = !isRedstonePowered ? WorkState.PAUSED
+            : (isPumping || isBurning() ? WorkState.RUNNING : WorkState.IDLE);
+        double p = Math.max(0.0, Math.min(1.0, progress));
+        return new WorkStatus(state, p, getPowerStage().name().toLowerCase(java.util.Locale.ROOT));
+    }
+
+    @Override
+    public Collection<MachineComponent> components() {
+        return List.of((MachineComponent) () -> BuildCraftContentIds.MachineComponents.ENERGY);
+    }
+
+    @Override
+    public Optional<MachineControl> control() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<MjPort> mjPort(Direction side) {
+        return side == currentDirection ? Optional.of(api2OutputPort) : Optional.empty();
+    }
+
+    @Override
+    public Optional<MjPortDescriptor> mjPortDescriptor(Direction side) {
+        if (side != currentDirection) return Optional.empty();
+        return Optional.of(new MjPortDescriptor(
+            MJ_NETWORK_ID,
+            Set.of(MjPortRole.PROVIDER, MjPortRole.CONNECTOR, MjPortRole.READABLE),
+            MjAmount.ZERO,
+            MjAmount.ofMicro(Math.max(0L, maxPowerExtracted()))
+        ));
+    }
+
+    @Override
+    public EngineStage stage() {
+        return switch (getPowerStage()) {
+            case BLUE -> new EngineStage(BuildCraftContentIds.EngineStages.BLUE, 0);
+            case GREEN -> new EngineStage(BuildCraftContentIds.EngineStages.GREEN, 1);
+            case YELLOW -> new EngineStage(BuildCraftContentIds.EngineStages.YELLOW, 2);
+            case RED -> new EngineStage(BuildCraftContentIds.EngineStages.RED, 3);
+            case OVERHEAT -> new EngineStage(BuildCraftContentIds.EngineStages.OVERHEAT, 4);
+            case BLACK -> new EngineStage(BuildCraftContentIds.EngineStages.BLACK, 5);
+        };
+    }
+
+    @Override
+    public MjAmount outputPerTick() {
+        return MjAmount.ofMicro(Math.max(0L, getCurrentOutput()));
     }
 
     @Override

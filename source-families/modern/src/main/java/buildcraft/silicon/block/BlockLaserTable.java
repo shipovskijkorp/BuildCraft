@@ -7,7 +7,6 @@
 package buildcraft.silicon.block;
 
 import buildcraft.api.enums.EnumLaserTableType;
-import buildcraft.api.mj.ILaserTargetBlock;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.silicon.tile.TileAdvancedCraftingTable;
@@ -29,7 +28,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BlockLaserTable extends BlockBCTile_Neptune implements ILaserTargetBlock {
+public class BlockLaserTable extends BlockBCTile_Neptune {
     private final EnumLaserTableType type;
     
     private static final VoxelShape BOUNDING_BOX = Shapes.box(0 / 16D, 0 / 16D, 0 / 16D, 16 / 16D, 9 / 16D, 16 / 16D);

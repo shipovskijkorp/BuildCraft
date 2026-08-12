@@ -1,5 +1,7 @@
 package buildcraft.transport.plug;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -7,7 +9,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.mj.MjAPI;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.transport.internal.pluggable.PluggableDefinition;
@@ -75,7 +76,7 @@ public class PluggablePowerAdaptor extends PipePluggable {
 
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-        if (cap == MjAPI.CAP_CONNECTOR || cap == MjAPI.CAP_RECEIVER || cap == MjAPI.CAP_REDSTONE_RECEIVER) {
+        if (cap == MjCapabilities.CAP_CONNECTOR || cap == MjCapabilities.CAP_RECEIVER || cap == MjCapabilities.CAP_REDSTONE_RECEIVER) {
             return holder.getPipe().getBehaviour().getCapability(cap, side);
         }
         return LazyOptional.empty();

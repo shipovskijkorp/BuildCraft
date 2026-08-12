@@ -49,7 +49,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -223,6 +226,17 @@ public final class ApiV2FixtureAddon {
             new ParameterPresentation(id("boolean_parameter"), "fixture.boolean", "", null, id("toggle_editor")),
             () -> "api-v2-fixture"
         );
+    }
+
+    /**
+     * Compile-only proof that addon common code can discover live BuildCraft MJ ports,
+     * machines and laser targets without importing engine/tile/capability implementation classes.
+     */
+    public static void probeRuntime(Level level, BlockPos pos, Direction side) {
+        BuildCraftApi.service(BuildCraftServices.ENERGY).port(level, pos, side);
+        BuildCraftApi.service(BuildCraftServices.ENERGY).descriptor(level, pos, side);
+        BuildCraftApi.service(BuildCraftServices.MACHINES).machine(level, pos);
+        BuildCraftApi.service(BuildCraftServices.LASER_TARGETS).target(level, pos, side);
     }
 
     private static ResourceLocation id(String path) {

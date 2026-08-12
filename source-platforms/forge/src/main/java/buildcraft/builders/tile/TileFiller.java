@@ -6,6 +6,8 @@
 
 package buildcraft.builders.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +23,8 @@ import buildcraft.api.core.IAreaProvider;
 import buildcraft.api.core.IBox;
 import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.containers.IFillerStatementContainer;
 import buildcraft.api.tiles.IControllable;
@@ -50,7 +51,7 @@ import buildcraft.lib.misc.BoundingBoxUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.data.Box;
 import buildcraft.lib.misc.data.IdAllocator;
-import buildcraft.lib.mj.MjBatteryReceiver;
+import buildcraft.lib.internal.mj.MjBatteryReceiver;
 import buildcraft.lib.net.MessageManager;
 import buildcraft.lib.statement.FullStatement;
 import buildcraft.lib.tile.TileBC_Neptune;
@@ -99,7 +100,7 @@ public class TileFiller extends TileBC_Neptune
             EnumAccess.INSERT,
             EnumPipePart.VALUES
         );
-    private final MjBattery battery = new MjBattery(16000 * MjAPI.MJ);
+    private final MjBattery battery = new MjBattery(16000 * MjAmount.MICRO_MJ_PER_MJ);
     private boolean canExcavate = true;
     public boolean inverted = false;
     private boolean finished = false;
@@ -271,7 +272,7 @@ public class TileFiller extends TileBC_Neptune
         if (mode == Mode.OFF || (mode == Mode.ON && finished)) {
             return;
         }
-        if (battery.getStored() < MjAPI.MJ) {
+        if (battery.getStored() < MjAmount.MICRO_MJ_PER_MJ) {
             return;
         }
         SnapshotBuilder<?> currentBuilder = getBuilder();

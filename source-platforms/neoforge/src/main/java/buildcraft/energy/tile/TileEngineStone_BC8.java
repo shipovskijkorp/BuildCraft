@@ -4,14 +4,16 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.energy.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjFormatting;
+
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.enums.EnumPowerStage;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.MjAPI;
+import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;
@@ -48,7 +50,7 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable;
 public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvider{
     private static final ResourceLocation ADVANCEMENT_LAVA_POWER =
         ResourceLocation.parse("buildcraftenergy:lava_power");
-    private static final long MAX_OUTPUT = MjAPI.MJ;
+    private static final long MAX_OUTPUT = MjAmount.MICRO_MJ_PER_MJ;
     private static final long MIN_OUTPUT = MAX_OUTPUT / 3;
     // private static final long TARGET_OUTPUT = 0.375f;
     private static final float kp = 1f;
@@ -185,7 +187,7 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
 
     @Override
     public long maxPowerReceived() {
-        return 200 * MjAPI.MJ;
+        return 200 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
@@ -195,7 +197,7 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
 
     @Override
     public long getMaxPower() {
-        return 1000 * MjAPI.MJ;
+        return 1000 * MjAmount.MICRO_MJ_PER_MJ;
     }
 
     @Override
@@ -221,9 +223,9 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
     @Override
     public void getDebugInfo(List<String> left, List<String> right, Direction side) {
         super.getDebugInfo(left, right, side);
-        left.add("esum = " + MjAPI.formatMj(esum) + " MJ");
+        left.add("esum = " + MjFormatting.formatMicroMj(esum) + " MJ");
         long e = 3 * getMaxPower() / 8 - power;
-        left.add("output = " + MjAPI.formatMj(clamp(e + esum / 20, MIN_OUTPUT, MAX_OUTPUT)) + " MJ");
+        left.add("output = " + MjFormatting.formatMicroMj(clamp(e + esum / 20, MIN_OUTPUT, MAX_OUTPUT)) + " MJ");
         left.add("burnTime = " + burnTime);
         left.add("delta = " + deltaFuelLeft.getDynamic(0));
     }

@@ -6,10 +6,11 @@
 
 package buildcraft.transport.pipe.behaviour;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
 import buildcraft.transport.internal.pipe.IFlowPower;
 import buildcraft.transport.internal.pipe.IPipe;
@@ -113,7 +114,7 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
                 player.displayClientMessage(Component.translatable("chat.pipe.fe.iron.mode", limit), true);
             } else {
                 PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(pipe.getDefinition());
-                long limit = limitShift == MAX_SHIFT ? 0 : (transferInfo.transferPerTick >> limitShift) / MjAPI.MJ;
+                long limit = limitShift == MAX_SHIFT ? 0 : (transferInfo.transferPerTick >> limitShift) / MjAmount.MICRO_MJ_PER_MJ;
                 player.displayClientMessage(Component.translatable("chat.pipe.power.iron.mode", limit), true);
             }
 

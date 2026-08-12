@@ -6,6 +6,8 @@
 
 package buildcraft.silicon;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.concurrent.CompletableFuture;
 
 import com.google.common.collect.ImmutableSet;
@@ -13,7 +15,6 @@ import com.google.common.collect.ImmutableSet.Builder;
 
 import buildcraft.api.enums.EnumEngineType;
 import buildcraft.api.enums.EnumRedstoneChipset;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;
@@ -48,7 +49,7 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
 
     /** 8.0.12 assembly energy rebalance: generated assembly costs are halved. */
     private static long assemblyCost(long wholeMj) {
-        return wholeMj * MjAPI.MJ / 2L;
+        return wholeMj * MjAmount.MICRO_MJ_PER_MJ / 2L;
     }
 
     public BCSiliconRecipesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

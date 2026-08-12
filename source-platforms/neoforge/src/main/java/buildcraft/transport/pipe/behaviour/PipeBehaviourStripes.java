@@ -6,15 +6,17 @@
 
 package buildcraft.transport.pipe.behaviour;
 
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjBattery;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.transport.internal.IStripesActivator;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IPipe;
@@ -52,7 +54,7 @@ import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActivator, IMjRedstoneReceiver {
-    private final MjBattery battery = new MjBattery(256 * MjAPI.MJ);
+    private final MjBattery battery = new MjBattery(256 * MjAmount.MICRO_MJ_PER_MJ);
 
     @Nullable
     public Direction direction = null;
@@ -175,7 +177,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
             if (target > 0) {
                 int offsetHash = offset.hashCode();
                 if (progress < target) {
-                    progress += battery.extractPower(0, Math.min(target - progress, MjAPI.MJ * 10));
+                    progress += battery.extractPower(0, Math.min(target - progress, MjAmount.MICRO_MJ_PER_MJ * 10));
                     if (progress > 0) {
                         world.destroyBlockProgress(offsetHash, offset, (int) (progress * 9 / target));
                         
@@ -241,9 +243,9 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
     public <T> T getCapability(
         BlockCapability<T, Direction> capability, @Nullable Direction facing
     ) {
-        if (capability == MjAPI.CAP_REDSTONE_RECEIVER
-            || capability == MjAPI.CAP_RECEIVER
-            || capability == MjAPI.CAP_CONNECTOR) {
+        if (capability == MjCapabilities.CAP_REDSTONE_RECEIVER
+            || capability == MjCapabilities.CAP_RECEIVER
+            || capability == MjCapabilities.CAP_CONNECTOR) {
             return (T) this;
         }
         return super.getCapability(capability, facing);

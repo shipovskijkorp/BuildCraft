@@ -6,8 +6,8 @@
 
 package buildcraft.lib.mj;
 
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjBattery;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjBattery;
 
 public class MjRedstoneBatteryReceiver extends MjBatteryReceiver implements IMjRedstoneReceiver {
     public MjRedstoneBatteryReceiver(MjBattery battery) {

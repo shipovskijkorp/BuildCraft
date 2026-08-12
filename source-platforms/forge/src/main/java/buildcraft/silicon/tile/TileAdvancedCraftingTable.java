@@ -6,15 +6,16 @@
 
 package buildcraft.silicon.tile;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjRedstoneReceiver;
-import buildcraft.api.mj.MjAPI;
-import buildcraft.api.mj.MjCapabilityHelper;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.lib.tile.craft.IAutoCraft;
 import buildcraft.lib.tile.craft.WorkbenchCrafting;
 import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
@@ -42,7 +43,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 
 public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAutoCraft, MenuProvider, IMjRedstoneReceiver {
-    private static final long POWER_REQ = 500 * MjAPI.MJ;
+    private static final long POWER_REQ = 500 * MjAmount.MICRO_MJ_PER_MJ;
 
     public final ItemHandlerSimple invBlueprint;
     public final ItemHandlerSimple invMaterials;

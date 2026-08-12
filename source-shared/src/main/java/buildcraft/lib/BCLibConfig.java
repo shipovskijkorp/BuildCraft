@@ -10,8 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.mj.IMjToFeStatus;
-import buildcraft.api.mj.MjFeConversion;
+import buildcraft.lib.internal.mj.MjFeConversion;
 import buildcraft.lib.chunkload.IChunkLoadingTile.LoadType;
 import buildcraft.lib.misc.LocaleUtil;
 
@@ -123,18 +122,6 @@ public class BCLibConfig {
 
         public boolean isAutoconvertEnabled() { return autoconvert; }
         public boolean isDisplayFe() { return displayFe; }
-    }
-
-    public static final class MjToFeStatus implements IMjToFeStatus {
-        @Override
-        public MjFeConversion getConversion() {
-            return mjFeConversion;
-        }
-
-        @Override
-        public boolean isAutoconvertEnabled() {
-            return powerMode.isAutoconvertEnabled();
-        }
     }
 
     public enum TimeGap {

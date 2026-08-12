@@ -6,6 +6,8 @@
 
 package buildcraft.builders.snapshot;
 
+import buildcraft.api.v2.energy.MjAmount;
+
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -21,7 +23,6 @@ import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.MessageUtil;
@@ -56,7 +57,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     private static final byte REQUIRED_FALSE = 2;
     private static final int CHECKS_PER_TICK = 24;
     private static final int FAST_CHECKS_PER_TICK = 128;
-    private static final long MAX_POWER_PER_TICK = 512 * MjAPI.MJ;
+    private static final long MAX_POWER_PER_TICK = 512 * MjAmount.MICRO_MJ_PER_MJ;
     private static final int POWER_EFFICIENCY_MULTIPLIER = 2;
 
     protected final T tile;
@@ -876,7 +877,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         }
 
         public long getTarget() {
-            return (long) (Math.sqrt(pos.distSqr(tile.getBuilderPos())) * 10 * MjAPI.MJ);
+            return (long) (Math.sqrt(pos.distSqr(tile.getBuilderPos())) * 10 * MjAmount.MICRO_MJ_PER_MJ);
         }
 
         public void writePayload(FriendlyByteBuf buffer) {

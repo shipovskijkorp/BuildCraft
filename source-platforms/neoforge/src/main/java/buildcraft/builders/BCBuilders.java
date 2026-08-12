@@ -4,6 +4,8 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.builders;
 
+import buildcraft.lib.internal.mj.MjCapabilities;
+
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -11,7 +13,6 @@ import com.mojang.logging.LogUtils;
 import buildcraft.builders.snapshot.RulesLoader;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.mj.MjAPI;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.core.BCCore;
@@ -117,11 +118,11 @@ public class BCBuilders {
     private static <BE extends BlockEntity & IBCCapabilityProvider> void registerMachineCapabilities(
         RegisterCapabilitiesEvent event, BlockEntityType<BE> type
     ) {
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_CONNECTOR, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_RECEIVER, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_REDSTONE_RECEIVER, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_READABLE, type);
-        BCCapabilityRegistration.registerBlockEntity(event, MjAPI.CAP_PASSIVE_PROVIDER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_CONNECTOR, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_RECEIVER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_REDSTONE_RECEIVER, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_READABLE, type);
+        BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_PASSIVE_PROVIDER, type);
     }
 
     public void gatherData(GatherDataEvent event) {

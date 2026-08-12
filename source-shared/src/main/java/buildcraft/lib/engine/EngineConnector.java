@@ -8,9 +8,9 @@ package buildcraft.lib.engine;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.mj.IMjConnector;
-import buildcraft.api.mj.IMjReceiver;
-import buildcraft.api.mj.IMjRedstoneReceiver;
+import buildcraft.lib.internal.mj.IMjConnector;
+import buildcraft.lib.internal.mj.IMjReceiver;
+import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 
 public class EngineConnector implements IMjConnector {
     public final boolean redstoneOnly;

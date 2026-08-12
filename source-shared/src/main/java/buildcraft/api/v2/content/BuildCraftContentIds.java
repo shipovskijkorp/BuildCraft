@@ -14,6 +14,29 @@ public final class BuildCraftContentIds {
         private Machines() {}
     }
 
+    public static final class Engines {
+        public static final ResourceLocation REDSTONE = id("buildcraftcore:engine_redstone");
+        public static final ResourceLocation STONE = id("buildcraftenergy:engine_stone");
+        public static final ResourceLocation IRON = id("buildcraftenergy:engine_iron");
+        public static final ResourceLocation CREATIVE = id("buildcraftcore:engine_creative");
+        public static final ResourceLocation FE = id("buildcraftenergy:engine_fe");
+        /** MJ -> external-energy converter implemented with the engine chassis. */
+        public static final ResourceLocation MJ_DYNAMO = id("buildcraftenergy:mj_dynamo");
+
+        private Engines() {}
+    }
+
+    public static final class EngineStages {
+        public static final ResourceLocation BLUE = id("buildcraft:engine_stage/blue");
+        public static final ResourceLocation GREEN = id("buildcraft:engine_stage/green");
+        public static final ResourceLocation YELLOW = id("buildcraft:engine_stage/yellow");
+        public static final ResourceLocation RED = id("buildcraft:engine_stage/red");
+        public static final ResourceLocation OVERHEAT = id("buildcraft:engine_stage/overheat");
+        public static final ResourceLocation BLACK = id("buildcraft:engine_stage/black");
+
+        private EngineStages() {}
+    }
+
     public static final class MachineComponents {
         public static final ResourceLocation ENERGY = id("buildcraft:energy");
         public static final ResourceLocation AREA = id("buildcraft:area");
@@ -26,6 +49,16 @@ public final class BuildCraftContentIds {
         public static final ResourceLocation CHUNK_LOADING = id("buildcraft:chunk_loading");
 
         private MachineComponents() {}
+    }
+
+    public static final class LaserTables {
+        public static final ResourceLocation ASSEMBLY = id("buildcraftsilicon:assembly_table");
+        public static final ResourceLocation ADVANCED_CRAFTING = id("buildcraftsilicon:advanced_crafting_table");
+        public static final ResourceLocation INTEGRATION = id("buildcraftsilicon:integration_table");
+        public static final ResourceLocation CHARGING = id("buildcraftsilicon:charging_table");
+        public static final ResourceLocation PROGRAMMING = id("buildcraftsilicon:programming_table");
+
+        private LaserTables() {}
     }
 
     public static final class Pipes {
