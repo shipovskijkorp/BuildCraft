@@ -1,5 +1,6 @@
 package buildcraft.robotics;
 
+import buildcraft.robotics.internal.api2.RoboticsApi2Bootstrap;
 import java.util.List;
 
 import buildcraft.lib.internal.module.BCModules;

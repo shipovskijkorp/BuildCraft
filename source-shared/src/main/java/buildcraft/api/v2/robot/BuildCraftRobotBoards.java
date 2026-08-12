@@ -1,5 +1,6 @@
 package buildcraft.api.v2.robot;
 
+import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 
 /** Stable identifiers for the built-in BuildCraft robot boards. */
@@ -26,6 +27,6 @@ public final class BuildCraftRobotBoards {
     private BuildCraftRobotBoards() {}
 
     public static ResourceLocation id(String key) {
-        return new ResourceLocation("buildcraft", "robot_board/" + key);
+        return Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:robot_board/" + key));
     }
 }

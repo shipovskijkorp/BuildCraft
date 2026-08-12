@@ -759,7 +759,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     }
 
     @Override
-    public Collection<MachineComponent> components() {
+    public Collection<MachineComponent> machineComponents() {
         return List.of((MachineComponent) () -> BuildCraftContentIds.MachineComponents.ENERGY);
     }
 

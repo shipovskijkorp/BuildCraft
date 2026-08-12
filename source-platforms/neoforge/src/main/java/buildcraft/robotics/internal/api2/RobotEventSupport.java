@@ -7,6 +7,7 @@ import buildcraft.api.v2.robot.RobotEventContext;
 import buildcraft.api.v2.robot.RobotEventDecision;
 import buildcraft.api.v2.robot.RobotEventKind;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import java.util.Objects;
 import java.util.Optional;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +19,7 @@ public final class RobotEventSupport {
 
     public static boolean denied(RobotEventKind kind, EntityRobotBase robot, Player player, ItemStack heldItem) {
         AutomationActor actor = player == null
-            ? AutomationActor.system(new ResourceLocation("buildcraft", "robot"))
+            ? AutomationActor.system(Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:robot")))
             : AutomationActor.player(player.getUUID(), player.getGameProfile().getName());
         RobotEventContext context = new RobotEventContext(
             kind,

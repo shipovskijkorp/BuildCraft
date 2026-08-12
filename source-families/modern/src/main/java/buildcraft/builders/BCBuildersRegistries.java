@@ -25,7 +25,7 @@ public class BCBuildersRegistries {
 
     public static void init() {
         BuildCraftApi.service(BuildCraftServices.TEMPLATES).register(
-            new ResourceLocation("buildcraftbuilders", "default"), 0, TemplateHandlerDefault.INSTANCE
+            ResourceLocation.parse("buildcraftbuilders:default"), 0, TemplateHandlerDefault.INSTANCE
         );
     }
 }

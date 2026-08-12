@@ -17,7 +17,7 @@ public final class RequestSupport {
 
     public static ResourceLocation slotId(int slot) {
         if (slot < 0) throw new IllegalArgumentException("slot must be non-negative");
-        return new ResourceLocation("buildcraft", SLOT_PREFIX + slot);
+        return Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:" + SLOT_PREFIX + slot));
     }
 
     public static OptionalInt slot(ResourceLocation id) {

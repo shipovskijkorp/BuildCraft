@@ -47,6 +47,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
@@ -130,14 +131,24 @@ public final class RobotServiceImpl implements RobotService {
         return null;
     }
 
+    static Level level(EntityRobotBase robot) {
+        //? if <1.20 {
+        return robot.level;
+        //?} else {
+        /*?
+        return robot.level();
+        ?*/
+        //?}
+    }
+
     private static AutomationActor actor(EntityRobotBase robot) {
         if (robot instanceof EntityRobot entity) {
             GameProfile owner = entity.getOwnerProfile();
             if (owner != null && owner.getId() != null && !owner.getId().equals(FakePlayerProvider.NULL_PROFILE.getId())) {
-                return AutomationActor.machineOwner(owner.getId(), owner.getName(), new ResourceLocation("buildcraft", "robot"));
+                return AutomationActor.machineOwner(owner.getId(), owner.getName(), Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:robot")));
             }
         }
-        return AutomationActor.system(new ResourceLocation("buildcraft", "robot"));
+        return AutomationActor.system(Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:robot")));
     }
 
     private static final class RobotHandleAdapter implements RobotHandle {
@@ -172,7 +183,7 @@ public final class RobotServiceImpl implements RobotService {
             String name = RobotManager.getAIRobotName(active.getClass());
             if (name == null || name.isBlank()) return Optional.empty();
             String safe = name.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_./-]", "_");
-            return Optional.of(new ResourceLocation("buildcraft", "classic_robot_task/" + safe));
+            return Optional.of(Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:classic_robot_task/" + safe)));
         }
 
         @Override public Optional<RobotControl> control() { return Optional.of(control); }
@@ -215,7 +226,7 @@ public final class RobotServiceImpl implements RobotService {
 
         @Override
         public void update() {
-            RobotTaskResult result = task.tick(new RobotTaskContext(robot.level(), handle, actor(robot)));
+            RobotTaskResult result = task.tick(new RobotTaskContext(level(robot), handle, actor(robot)));
             if (result == null) {
                 setSuccess(false);
                 terminate();

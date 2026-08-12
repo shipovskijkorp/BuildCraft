@@ -52,7 +52,9 @@ public final class PipeTypeBridge {
     }
 
     public static ResourceLocation runtimeComponentId(ResourceLocation pipeId) {
-        return new ResourceLocation(pipeId.getNamespace(), COMPONENT_PREFIX + pipeId.getPath());
+        return Objects.requireNonNull(ResourceLocation.tryParse(
+            pipeId.getNamespace() + ":" + COMPONENT_PREFIX + pipeId.getPath()
+        ));
     }
 
     private static void ensureRuntimeComponent(ResourceLocation id, String owner) {

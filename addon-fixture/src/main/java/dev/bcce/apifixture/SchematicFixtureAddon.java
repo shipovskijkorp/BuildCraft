@@ -29,7 +29,7 @@ public final class SchematicFixtureAddon {
         ContentRegistrar bc = BuildCraftContent.addon("moonbuildcraft");
 
         PersistentType<MoonMachineSnapshot, OpaqueData> persistence = PersistentType
-            .builder(ELEMENT_ID, 0, new ApiCodec<>() {
+            .<MoonMachineSnapshot, OpaqueData>builder(ELEMENT_ID, 0, new ApiCodec<MoonMachineSnapshot, OpaqueData>() {
                 @Override
                 public CodecResult<MoonMachineSnapshot> decode(OpaqueData payload) {
                     return CodecResult.success(new MoonMachineSnapshot(new String(payload.bytes(), StandardCharsets.UTF_8)));

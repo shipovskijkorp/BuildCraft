@@ -15,6 +15,7 @@ import buildcraft.lib.internal.api.v2.BuiltInApi2Content;
 import buildcraft.lib.crops.CropHandlerPlantable;
 import buildcraft.lib.crops.CropHandlerReeds;
 import buildcraft.lib.registry.PluggableRegistry;
+import java.util.Objects;
 
 public class BCLibRegistries {
     /**
@@ -40,8 +41,8 @@ public class BCLibRegistries {
 //        dataManager.registerRegistry(GuideBookRegistry.INSTANCE);
 
         CropService crops = BuildCraftApi.service(BuildCraftServices.CROPS);
-        crops.register(new net.minecraft.resources.ResourceLocation("buildcraft", "plantable"), -1000, CropHandlerPlantable.INSTANCE);
-        crops.register(new net.minecraft.resources.ResourceLocation("buildcraft", "reeds"), 100, CropHandlerReeds.INSTANCE);
+        crops.register(Objects.requireNonNull(net.minecraft.resources.ResourceLocation.tryParse("buildcraft:plantable")), -1000, CropHandlerPlantable.INSTANCE);
+        crops.register(Objects.requireNonNull(net.minecraft.resources.ResourceLocation.tryParse("buildcraft:reeds")), 100, CropHandlerReeds.INSTANCE);
     }
 
     public static void fmlInit() {}

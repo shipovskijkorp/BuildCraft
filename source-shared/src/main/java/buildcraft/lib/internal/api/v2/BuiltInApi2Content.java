@@ -17,6 +17,7 @@ import buildcraft.api.v2.registry.RegistrationContext;
 import buildcraft.api.v2.worldgen.ResourceDepositRule;
 import buildcraft.api.v2.worldgen.WorldTargetSelector;
 import java.util.List;
+import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 
 /** Registers BCCE's own content through the same API 2 contracts exposed to addons. */
@@ -135,9 +136,9 @@ public final class BuiltInApi2Content {
     }
 
     private static void registerWorldgen() {
-        ResourceLocation overworld = new ResourceLocation("minecraft", "overworld");
+        ResourceLocation overworld = Objects.requireNonNull(ResourceLocation.tryParse("minecraft:overworld"));
         ResourceDepositRule rule = ResourceDepositRule.builder(
-                new ResourceLocation("buildcraftenergy", "standard_oil_overworld"),
+                Objects.requireNonNull(ResourceLocation.tryParse("buildcraftenergy:standard_oil_overworld")),
                 BuildCraftContentIds.Worldgen.STANDARD_OIL
             )
             .target(WorldTargetSelector.builder().dimension(overworld).build())

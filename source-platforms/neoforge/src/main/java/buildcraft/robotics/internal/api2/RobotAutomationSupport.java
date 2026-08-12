@@ -9,6 +9,7 @@ import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import com.mojang.authlib.GameProfile;
+import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 
 /** Common owner identity and automation-policy bridge for classic robot AIs. */
@@ -19,10 +20,10 @@ public final class RobotAutomationSupport {
         if (robot instanceof EntityRobot entity) {
             GameProfile owner = entity.getOwnerProfile();
             if (owner != null && owner.getId() != null && !owner.getId().equals(FakePlayerProvider.NULL_PROFILE.getId())) {
-                return AutomationActor.machineOwner(owner.getId(), owner.getName(), new ResourceLocation("buildcraft", "robot"));
+                return AutomationActor.machineOwner(owner.getId(), owner.getName(), Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:robot")));
             }
         }
-        return AutomationActor.system(new ResourceLocation("buildcraft", "robot"));
+        return AutomationActor.system(Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:robot")));
     }
 
     public static boolean permits(AutomationRequest request) {

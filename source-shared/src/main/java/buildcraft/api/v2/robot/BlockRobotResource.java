@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** A reservable block/side work target used to prevent multiple robots claiming the same job. */
 public record BlockRobotResource(BlockPos position, Optional<Direction> side) implements RobotResource {
-    public static final ResourceLocation TYPE = new ResourceLocation("buildcraft", "block_resource");
+    public static final ResourceLocation TYPE = Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:block_resource"));
 
     public BlockRobotResource {
         position = Objects.requireNonNull(position, "position").immutable();

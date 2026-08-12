@@ -456,7 +456,9 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
             if (destinations == null || destinations.size() == 0) {
                 destinations = findDest.generateRandomOrder();
             }
-            destinations = pipe.applyItemRouting(reachCenter.from, itemEntry.stack, destinations);
+            if (pipe instanceof Pipe runtimePipe) {
+                destinations = runtimePipe.applyItemRouting(reachCenter.from, itemEntry.stack, destinations);
+            }
             if (destinations.size() == 0) {
                 dropItem(itemEntry.stack, null, item.side.getOpposite(), newSpeed);
             } else {

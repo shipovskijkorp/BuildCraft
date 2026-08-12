@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 public final class ResourceIdApiRequest extends ResourceId {
     private BlockIndex index = new BlockIndex();
     @Nullable private Direction side;
-    private ResourceLocation requestId = new ResourceLocation("buildcraft", "invalid_request");
+    private ResourceLocation requestId = Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:invalid_request"));
 
     public ResourceIdApiRequest() {}
 

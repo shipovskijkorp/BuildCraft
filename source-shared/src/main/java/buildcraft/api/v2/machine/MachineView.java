@@ -14,7 +14,7 @@ public interface MachineView {
     ResourceLocation typeId();
     BlockPos position();
     WorkStatus workStatus();
-    Collection<MachineComponent> components();
+    Collection<MachineComponent> machineComponents();
     Optional<MachineControl> control();
     default Optional<ItemPort> itemPort(Direction side) { return Optional.empty(); }
     default Optional<FluidPort> fluidPort(Direction side) { return Optional.empty(); }

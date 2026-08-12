@@ -77,8 +77,14 @@ public final class StatementApi2Bridge {
     public static synchronized void registerParameterBridge() {
         if (parameterBridgeRegistered) return;
         ensureLegacyParameterType();
-        StatementManager.registerParameter(API2_PARAMETER_TAG.toString(), Api2ParameterAdapter::readFromNbt);
-        StatementManager.registerParameter(API2_PARAMETER_TAG.toString(), buffer -> Api2ParameterAdapter.readFromNbt(buffer.readNbt()));
+        StatementManager.registerParameter(
+            API2_PARAMETER_TAG.toString(),
+            (StatementManager.IParameterReader) Api2ParameterAdapter::readFromNbt
+        );
+        StatementManager.registerParameter(
+            API2_PARAMETER_TAG.toString(),
+            (StatementManager.IParamReaderBuf) buffer -> Api2ParameterAdapter.readFromNbt(buffer.readNbt())
+        );
         parameterBridgeRegistered = true;
     }
 
@@ -316,7 +322,9 @@ public final class StatementApi2Bridge {
         try { return ResourceLocation.tryParse(id); } catch (RuntimeException ignored) { return null; }
     }
 
-    private static ResourceLocation id(String path) { return new ResourceLocation("buildcraft", path); }
+    private static ResourceLocation id(String path) {
+        return Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:" + path));
+    }
 
     private interface NativeStatementAdapter {}
 

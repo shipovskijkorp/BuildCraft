@@ -639,7 +639,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 }
                 random = runtimePipe.applyFluidRouting(
                     inputs,
-                    FuelApiBridge.volumeOf(new FluidStack(currentFluid, totalAvailable)),
+                    FuelApiBridge.volumeOf(currentFluid.copyWithAmount(totalAvailable)),
                     set
                 );
             } else {

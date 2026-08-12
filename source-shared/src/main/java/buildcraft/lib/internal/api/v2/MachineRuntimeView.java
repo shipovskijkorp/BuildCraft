@@ -53,7 +53,7 @@ public interface MachineRuntimeView extends MachineView {
     }
 
     @Override
-    default Collection<MachineComponent> components() {
+    default Collection<MachineComponent> machineComponents() {
         MachineType type = BuildCraftApi.registry(BuildCraftRegistries.MACHINE_TYPES).get(typeId());
         if (type == null) return List.of();
         List<MachineComponent> result = new ArrayList<>();

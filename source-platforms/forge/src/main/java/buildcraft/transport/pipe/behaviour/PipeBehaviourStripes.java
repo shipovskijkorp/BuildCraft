@@ -38,6 +38,7 @@ import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.transport.BCTransportStatements;
+import buildcraft.transport.pipe.StripesRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
