@@ -6,75 +6,73 @@
 
 package buildcraft.transport.pipe;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.automation.AutomationResult;
+import buildcraft.api.v2.automation.StripesContext;
+import buildcraft.api.v2.automation.StripesHandler;
+import buildcraft.api.v2.automation.StripesOutput;
+import buildcraft.api.v2.permission.AutomationActor;
 import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.Comparator;
 import java.util.List;
-
-import buildcraft.api.core.EnumHandlerPriority;
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerBlock;
-import buildcraft.transport.internal.IStripesHandlerItem;
-import buildcraft.transport.internal.IStripesRegistry;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public enum StripesRegistry implements IStripesRegistry {
+/** Runtime dispatcher for Stripes. Handler ownership and ordering are now API2 registry data. */
+public enum StripesRegistry {
     INSTANCE;
 
-    private final EnumMap<EnumHandlerPriority, List<IStripesHandlerItem>> itemHandlers = new EnumMap<>(EnumHandlerPriority.class);
-    private final EnumMap<EnumHandlerPriority, List<IStripesHandlerBlock>> blockHandlers = new EnumMap<>(EnumHandlerPriority.class);
-
-    StripesRegistry() {
-        for (EnumHandlerPriority priority : EnumHandlerPriority.VALUES) {
-            itemHandlers.put(priority, new ArrayList<>());
-            blockHandlers.put(priority, new ArrayList<>());
-        }
+    public boolean handleItem(
+        Level world,
+        BlockPos pos,
+        Direction direction,
+        ItemStack stack,
+        Player player,
+        StripesOutput output
+    ) {
+        return dispatch(world, pos, direction, stack, player, output);
     }
 
-    @Override
-    public void addHandler(IStripesHandlerItem handler, EnumHandlerPriority priority) {
-        itemHandlers.get(priority).add(handler);
+    public boolean handleBlock(
+        Level world,
+        BlockPos pos,
+        Direction direction,
+        Player player,
+        StripesOutput output
+    ) {
+        return dispatch(world, pos, direction, ItemStack.EMPTY, player, output);
     }
 
-    @Override
-    public void addHandler(IStripesHandlerBlock handler, EnumHandlerPriority priority) {
-        blockHandlers.get(priority).add(handler);
-    }
-
-    /** @return True if a handler handled the itemstack, false otherwise (and so nothing has been done) */
-    @Override
-    public boolean handleItem(Level world,
-                              BlockPos pos,
-                              Direction direction,
-                              ItemStack stack,
-                              Player player,
-                              IStripesActivator activator) {
-        for (EnumHandlerPriority priority : EnumHandlerPriority.VALUES) {
-            for (IStripesHandlerItem handler : itemHandlers.get(priority)) {
-                if (handler.handle(world, pos, direction, stack, player, activator)) {
-                    return true;
+    private boolean dispatch(
+        Level world,
+        BlockPos pos,
+        Direction direction,
+        ItemStack stack,
+        Player player,
+        StripesOutput output
+    ) {
+        AutomationActor actor = player == null
+            ? AutomationActor.unknown()
+            : AutomationActor.player(player.getUUID(), player.getGameProfile().getName());
+        List<StripesHandler> handlers = new ArrayList<>(BuildCraftApi.registry(BuildCraftRegistries.STRIPES_HANDLERS).values());
+        handlers.sort(Comparator.comparingInt(StripesHandler::priority).reversed());
+        for (StripesHandler handler : handlers) {
+            // Each handler receives a fresh working stack. Mutating the context and returning PASS
+            // cannot leak partial state into the next handler.
+            StripesContext context = new StripesContext(
+                world, pos, direction, stack, actor, OperationMode.EXECUTE, player, output
+            );
+            AutomationResult result = handler.activate(context);
+            if (result.status() != AutomationResult.Status.PASS) {
+                if (player != null && !stack.isEmpty()) {
+                    player.getInventory().setItem(player.getInventory().selected, context.stack());
                 }
-            }
-        }
-        return false;
-    }
-
-    /** @return True if a handler broke a block, false otherwise (and so nothing has been done) */
-    @Override
-    public boolean handleBlock(Level world,
-                               BlockPos pos,
-                               Direction direction,
-                               Player player,
-                               IStripesActivator activator) {
-        for (EnumHandlerPriority priority : EnumHandlerPriority.VALUES) {
-            for (IStripesHandlerBlock handler : blockHandlers.get(priority)) {
-                if (handler.handle(world, pos, direction, player, activator)) {
-                    return true;
-                }
+                return true;
             }
         }
         return false;

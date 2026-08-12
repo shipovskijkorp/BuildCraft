@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import buildcraft.transport.internal.IInjectable;
-import buildcraft.transport.internal.IStripesRegistry;
 import buildcraft.transport.internal.pluggable.IPluggableRegistry;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 
@@ -20,7 +19,6 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 public final class PipeApi {
     public static IPipeRegistry pipeRegistry;
     public static IPluggableRegistry pluggableRegistry;
-    public static IStripesRegistry stripeRegistry;
     public static IPipeExtensionManager extensionManager;
     public static PipeFlowType flowStructure;
     public static PipeFlowType flowItems;

@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
-import buildcraft.transport.internal.IWireManager;
+import buildcraft.transport.wire.WireManager;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import com.mojang.authlib.GameProfile;
 
@@ -47,7 +47,7 @@ public interface IPipeHolder extends IRedstoneStatementContainer {
     @Nullable
     <T> /*@Nonnull*/ LazyOptional<T> getCapabilityFromPipe(Direction side, @Nonnull Capability<T> capability);
 
-    IWireManager getWireManager();
+    WireManager getWireManager();
 
     GameProfile getOwner();
 

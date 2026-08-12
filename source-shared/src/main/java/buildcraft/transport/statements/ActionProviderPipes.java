@@ -21,7 +21,6 @@ import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IActionInternalSided;
 import buildcraft.lib.internal.statement.IActionProvider;
 import buildcraft.lib.internal.statement.IStatementContainer;
-import buildcraft.transport.internal.IWireEmitter;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pipe.PipeDefinition;
 import buildcraft.transport.internal.pipe.PipeEventStatement;
@@ -41,11 +40,9 @@ public enum ActionProviderPipes implements IActionProvider {
             IPipeHolder holder = gate.getPipeHolder();
             holder.fireEvent(new PipeEventStatement.AddActionInternal(holder, actions));
 
-            if (container instanceof IWireEmitter) {
-                for (DyeColor colour : ColourUtil.COLOURS) {
-                    if (TriggerPipeSignal.doesGateHaveColour(gate, colour)) {
-                        actions.add(BCTransportStatements.ACTION_PIPE_SIGNAL[colour.ordinal()]);
-                    }
+            for (DyeColor colour : ColourUtil.COLOURS) {
+                if (TriggerPipeSignal.doesGateHaveColour(gate, colour)) {
+                    actions.add(BCTransportStatements.ACTION_PIPE_SIGNAL[colour.ordinal()]);
                 }
             }
 

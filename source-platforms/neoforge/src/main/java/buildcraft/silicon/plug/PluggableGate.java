@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import buildcraft.transport.internal.IWireEmitter;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
 import buildcraft.transport.internal.pluggable.PipePluggable;
@@ -63,7 +62,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
@@ -73,7 +71,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PluggableGate extends PipePluggable implements IWireEmitter , MenuProvider{
+public class PluggableGate extends PipePluggable implements MenuProvider{
     public static final FunctionContext MODEL_FUNC_CTX_STATIC, MODEL_FUNC_CTX_DYNAMIC;
     private static final NodeVariableObject<String> MODEL_MATERIAL;
     private static final NodeVariableObject<String> MODEL_MODIFIER;
@@ -297,16 +295,6 @@ public class PluggableGate extends PipePluggable implements IWireEmitter , MenuP
         }
 
         return true;
-    }
-
-    @Override
-    public boolean isEmitting(DyeColor colour) {
-        return logic.isEmitting(colour);
-    }
-
-    @Override
-    public void emitWire(DyeColor colour) {
-        logic.emitWire(colour);
     }
 
     // Gate methods

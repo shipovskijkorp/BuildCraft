@@ -66,6 +66,7 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final LaserTargetServiceImpl laserTargets = new LaserTargetServiceImpl();
     private final MjFormatterImpl mjFormatter = new MjFormatterImpl();
     private final PowerLossEffectServiceImpl powerLossEffects = new PowerLossEffectServiceImpl();
+    private final AutomationServiceImpl automation = new AutomationServiceImpl();
 
     private BuildCraftApiRuntime() {
         services.put(BuildCraftServices.ENERGY, energy);
@@ -84,6 +85,7 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         services.put(BuildCraftServices.LASER_TARGETS, laserTargets);
         services.put(BuildCraftServices.MJ_FORMATTER, mjFormatter);
         services.put(BuildCraftServices.POWER_LOSS_EFFECTS, powerLossEffects);
+        services.put(BuildCraftServices.AUTOMATION, automation);
 
         registerRegistry(BuildCraftRegistries.ENGINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_TYPES);

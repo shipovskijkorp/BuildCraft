@@ -17,6 +17,9 @@ import java.util.TreeSet;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.signal.BuildCraftSignalChannels;
 import buildcraft.api.v2.gate.GateControl;
 import buildcraft.api.v2.gate.GateProgram;
 import buildcraft.api.v2.gate.GateRule;
@@ -36,8 +39,6 @@ import buildcraft.lib.internal.statement.ITriggerInternalSided;
 import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
-import buildcraft.transport.internal.IWireEmitter;
-import buildcraft.transport.internal.IWireManager;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pipe.PipeEvent;
 import buildcraft.transport.internal.pipe.PipeEventActionActivate;
@@ -57,7 +58,6 @@ import buildcraft.lib.statement.TriggerWrapper.TriggerWrapperInternal;
 import buildcraft.lib.statement.TriggerWrapper.TriggerWrapperInternalSided;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.silicon.plug.PluggableGate;
-import buildcraft.transport.wire.WorldSavedDataWireSystems;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -67,7 +67,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContainer, GateView, GateControl {
+public class GateLogic implements IGate, IRedstoneStatementContainer, GateView, GateControl {
 
     protected static final IdAllocator ID_ALLOC = new IdAllocator("GateLogic");
 
@@ -102,6 +102,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
     public int redstoneOutput, redstoneOutputSide;
 
     private final EnumSet<DyeColor> wireBroadcasts;
+    private boolean signalOutputsSynced;
 
     /** Used on the client to determine if this gate should glow or not. */
     public boolean isOn;
@@ -119,6 +120,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
         actionOn = new boolean[variant.numSlots];
 
         wireBroadcasts = EnumSet.noneOf(DyeColor.class);
+        signalOutputsSynced = false;
     }
 
     private void markGateDirty() {
@@ -464,16 +466,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
     // Wire related
 
     @Override
-    public boolean isEmitting(DyeColor colour) {
-        BlockEntity tile = getPipeHolder().getPipeTile();
-        if (tile.isRemoved()) {
-            throw new UnsupportedOperationException("Cannot check an invalid emitter!");
-        }
-        return wireBroadcasts.contains(colour);
-    }
-
-    @Override
-    public void emitWire(DyeColor colour) {
+    public void emitSignal(DyeColor colour) {
         wireBroadcasts.add(colour);
     }
 
@@ -568,17 +561,26 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
             }
         }
 
-        if (!previousBroadcasts.equals(wireBroadcasts)) {
-            IWireManager wires = getPipeHolder().getWireManager();
-            EnumSet<DyeColor> turnedOff = EnumSet.copyOf(previousBroadcasts);
-            turnedOff.removeAll(wireBroadcasts);
-
-            EnumSet<DyeColor> turnedOn = EnumSet.copyOf(wireBroadcasts);
-            turnedOn.removeAll(previousBroadcasts);
-
-            if (BCModules.TRANSPORT.isLoaded() && !getPipeHolder().getPipeWorld().isClientSide) {
-                WorldSavedDataWireSystems.get(getPipeHolder().getPipeWorld()).gatesChanged = true;
+        if (BCModules.TRANSPORT.isLoaded() && !getPipeHolder().getPipeWorld().isClientSide
+            && (!signalOutputsSynced || !previousBroadcasts.equals(wireBroadcasts))) {
+            var signalService = BuildCraftApi.service(BuildCraftServices.SIGNALS);
+            for (DyeColor colour : DyeColor.values()) {
+                boolean before = previousBroadcasts.contains(colour);
+                boolean now = wireBroadcasts.contains(colour);
+                if (signalOutputsSynced && before == now) continue;
+                signalService.port(
+                    getPipeHolder().getPipeWorld(),
+                    getPipeHolder().getPipePos(),
+                    getSide(),
+                    BuildCraftSignalChannels.id(colour)
+                ).ifPresent(port -> {
+                    @SuppressWarnings("unchecked")
+                    buildcraft.api.v2.signal.SignalPort<Boolean> booleanPort =
+                        (buildcraft.api.v2.signal.SignalPort<Boolean>) port;
+                    booleanPort.publish(now, OperationMode.EXECUTE);
+                });
             }
+            signalOutputsSynced = true;
         }
 
         if (isOn != prevIsOn) {

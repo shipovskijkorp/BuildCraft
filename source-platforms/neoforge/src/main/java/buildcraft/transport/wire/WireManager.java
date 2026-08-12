@@ -16,7 +16,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import buildcraft.transport.internal.EnumWirePart;
-import buildcraft.transport.internal.IWireManager;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.pipe.Pipe;
@@ -31,11 +30,12 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class WireManager implements IWireManager {
+public class WireManager {
     private final IPipeHolder holder;
     public final Map<EnumWirePart, DyeColor> parts = new EnumMap<>(EnumWirePart.class);
     public final Set<EnumWirePart> poweredClient = EnumSet.noneOf(EnumWirePart.class);
     public final Map<EnumWireBetween, DyeColor> betweens = new EnumMap<>(EnumWireBetween.class);
+    private final Map<Direction, EnumSet<DyeColor>> signalOutputs = new EnumMap<>(Direction.class);
     public boolean initialised = false;
     // TODO: Wire connections to adjacent blocks
 
@@ -47,7 +47,6 @@ public class WireManager implements IWireManager {
         return WorldSavedDataWireSystems.get(holder.getPipeWorld());
     }
 
-    @Override
     public IPipeHolder getHolder() {
         return holder;
     }
@@ -77,7 +76,6 @@ public class WireManager implements IWireManager {
         }
     }
 
-    @Override
     public boolean addPart(EnumWirePart part, DyeColor colour) {
         if (getColorOfPart(part) == null) {
             parts.put(part, colour);
@@ -92,7 +90,6 @@ public class WireManager implements IWireManager {
         }
     }
 
-    @Override
     public DyeColor removePart(EnumWirePart part) {
         DyeColor color = getColorOfPart(part);
         if (color == null) {
@@ -148,9 +145,15 @@ public class WireManager implements IWireManager {
         betweens.clear();
         for (Map.Entry<EnumWireBetween, DyeColor> entry : rotatedBetweens.entrySet()) 
         	betweens.put(entry.getKey().rotate(rotation), entry.getValue());
+
+        Map<Direction, EnumSet<DyeColor>> rotatedOutputs = new EnumMap<>(Direction.class);
+        signalOutputs.forEach((side, colors) ->
+            rotatedOutputs.put(rotation.rotate(side), colors.isEmpty() ? EnumSet.noneOf(DyeColor.class) : EnumSet.copyOf(colors))
+        );
+        signalOutputs.clear();
+        signalOutputs.putAll(rotatedOutputs);
     }
 
-    @Override
     public void updateBetweens(boolean recursive) {
         betweens.clear();
         parts.forEach((part, color) -> {
@@ -164,7 +167,7 @@ public class WireManager implements IWireManager {
                 } else if (WireSystem.canWireConnect(holder, between.to)) {
                     IPipe pipe = holder.getNeighbourPipe(between.to);
                     if (pipe != Pipe.EMPTY) {
-                        IWireManager wireManager = pipe.getHolder().getWireManager();
+                        WireManager wireManager = pipe.getHolder().getWireManager();
                         if (betweenParts[0] == part && wireManager.getColorOfPart(betweenParts[1]) == color) {
                             betweens.put(between, color);
                         }
@@ -183,17 +186,14 @@ public class WireManager implements IWireManager {
         }
     }
 
-    @Override
     public DyeColor getColorOfPart(EnumWirePart part) {
         return parts.get(part);
     }
 
-    @Override
     public boolean hasPartOfColor(DyeColor color) {
         return parts.values().contains(color);
     }
 
-    @Override
     public boolean isPowered(EnumWirePart part) {
         if (holder.getPipeWorld().isClientSide()) {
             return poweredClient.contains(part);
@@ -212,7 +212,6 @@ public class WireManager implements IWireManager {
         }
     }
 
-    @Override
     public boolean isAnyPowered(DyeColor color) {
         if (!this.parts.isEmpty()) {
             for (Map.Entry<EnumWirePart, DyeColor> partColor : this.parts.entrySet()) {
@@ -222,6 +221,33 @@ public class WireManager implements IWireManager {
             }
         }
         return false;
+    }
+
+    public boolean isSignalOutputActive(Direction side, DyeColor color) {
+        EnumSet<DyeColor> outputs = signalOutputs.get(side);
+        return outputs != null && outputs.contains(color);
+    }
+
+    /** Updates one API2 signal source attached to this pipe side. */
+    public boolean setSignalOutput(Direction side, DyeColor color, boolean active) {
+        EnumSet<DyeColor> outputs = signalOutputs.computeIfAbsent(side, ignored -> EnumSet.noneOf(DyeColor.class));
+        boolean changed = active ? outputs.add(color) : outputs.remove(color);
+        if (outputs.isEmpty()) signalOutputs.remove(side);
+        if (changed && !holder.getPipeWorld().isClientSide()) {
+            WorldSavedDataWireSystems systems = getWireSystems();
+            systems.gatesChanged = true;
+            // Old wire-system saves only recorded sides that hosted legacy emitter pluggables.
+            // Rebuild once when an active source is missing from that saved topology; modern
+            // systems already contain every side endpoint, so normal signal toggles are O(1).
+            if (active && hasPartOfColor(color)) {
+                WireSystem.WireElement endpoint = new WireSystem.WireElement(holder.getPipePos(), side);
+                boolean endpointKnown = systems.getWireSystemsWithElementAsReadOnlyList(endpoint).stream()
+                    .anyMatch(system -> system.color == color);
+                if (!endpointKnown) systems.rebuildWireSystemsAround(holder);
+            }
+            holder.getPipeTile().setChanged();
+        }
+        return changed;
     }
 
     public CompoundTag writeToNbt() {
@@ -234,14 +260,33 @@ public class WireManager implements IWireManager {
             i[0] += 2;
         });
         nbt.putIntArray("parts", wiresArray);
+
+        int outputCount = signalOutputs.values().stream().mapToInt(Set::size).sum();
+        int[] outputsArray = new int[outputCount * 2];
+        int outputIndex = 0;
+        for (Map.Entry<Direction, EnumSet<DyeColor>> entry : signalOutputs.entrySet()) {
+            for (DyeColor color : entry.getValue()) {
+                outputsArray[outputIndex++] = entry.getKey().get3DDataValue();
+                outputsArray[outputIndex++] = color.getId();
+            }
+        }
+        nbt.putIntArray("signalOutputs", outputsArray);
         return nbt;
     }
 
     public void readFromNbt(CompoundTag nbt) {
         parts.clear();
         int[] wiresArray = nbt.getIntArray("parts");
-        for (int i = 0; i < wiresArray.length; i += 2) {
+        for (int i = 0; i + 1 < wiresArray.length; i += 2) {
             parts.put(EnumWirePart.VALUES[wiresArray[i]], DyeColor.byId(wiresArray[i + 1]));
+        }
+
+        signalOutputs.clear();
+        int[] outputsArray = nbt.getIntArray("signalOutputs");
+        for (int i = 0; i + 1 < outputsArray.length; i += 2) {
+            Direction side = Direction.from3DDataValue(outputsArray[i]);
+            DyeColor color = DyeColor.byId(outputsArray[i + 1]);
+            signalOutputs.computeIfAbsent(side, ignored -> EnumSet.noneOf(DyeColor.class)).add(color);
         }
     }
 

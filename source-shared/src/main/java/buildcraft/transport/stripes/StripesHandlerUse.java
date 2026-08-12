@@ -9,8 +9,7 @@ package buildcraft.transport.stripes;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.lib.misc.BlockUtil;
 
 import net.minecraft.core.BlockPos;
@@ -20,18 +19,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public enum StripesHandlerUse implements IStripesHandlerItem {
+public enum StripesHandlerUse {
     INSTANCE;
 
     public static final List<Item> ITEMS = new ArrayList<>();
 
-    @Override
     public boolean handle(Level world,
                           BlockPos pos,
                           Direction direction,
                           ItemStack stack,
                           Player player,
-                          IStripesActivator activator) {
+                          StripesOutput activator) {
         return ITEMS.contains(stack.getItem()) &&
             BlockUtil.useItemOnBlock(
                 world,

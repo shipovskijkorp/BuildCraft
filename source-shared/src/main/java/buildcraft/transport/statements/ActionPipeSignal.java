@@ -14,7 +14,7 @@ import net.minecraft.world.item.DyeColor;
 import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;
-import buildcraft.transport.internal.IWireEmitter;
+import buildcraft.transport.internal.gate.IGate;
 
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import buildcraft.lib.misc.LocaleUtil;
@@ -50,18 +50,17 @@ public class ActionPipeSignal extends BCStatement implements IActionInternal {
 
     @Override
     public void actionActivate(IStatementContainer container, IStatementParameter[] parameters) {
-        if (!(container instanceof IWireEmitter)) {
+        if (!(container instanceof IGate gate)) {
             return;
         }
-        IWireEmitter emitter = (IWireEmitter) container;
-        emitter.emitWire(colour);
+        gate.emitSignal(colour);
 
         for (IStatementParameter param : parameters) {
             if (param != null && param instanceof ActionParameterSignal) {
                 ActionParameterSignal signal = (ActionParameterSignal) param;
 
                 if (signal.getColor() != null) {
-                    emitter.emitWire(signal.getColor());
+                    gate.emitSignal(signal.getColor());
                 }
             }
         }

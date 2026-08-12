@@ -4,8 +4,7 @@
  * should be located as "LICENSE.API" in the BuildCraft source code distribution. */
 package buildcraft.transport.stripes;
 
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.api.v2.automation.StripesOutput;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,16 +17,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public enum StripesHandlerPlaceBlock implements IStripesHandlerItem {
+public enum StripesHandlerPlaceBlock {
     INSTANCE;
 
-    @Override
     public boolean handle(Level world,
                           BlockPos pos,
                           Direction direction,
                           ItemStack stack,
                           Player player,
-                          IStripesActivator activator) {
+                          StripesOutput activator) {
         if (!(stack.getItem() instanceof BlockItem)) {
             return false;
         }

@@ -6,8 +6,7 @@
 
 package buildcraft.transport.stripes;
 
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeDefinition;
@@ -18,10 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class StripesHandlerPipes implements IStripesHandlerItem {
+public class StripesHandlerPipes {
 
-    @Override
-    public boolean handle(Level world, BlockPos pos, Direction direction, ItemStack stack, Player player, IStripesActivator activator) {
+    public boolean handle(Level world, BlockPos pos, Direction direction, ItemStack stack, Player player, StripesOutput activator) {
         if (!(stack.getItem() instanceof IItemPipe)) {
             return false;
         }

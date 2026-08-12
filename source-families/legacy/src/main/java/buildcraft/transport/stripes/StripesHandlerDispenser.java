@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.api.v2.automation.StripesOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
@@ -28,7 +27,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public enum StripesHandlerDispenser implements IStripesHandlerItem {
+public enum StripesHandlerDispenser {
     INSTANCE;
 
     public static final List<Item> ITEMS = new ArrayList<>();
@@ -111,13 +110,12 @@ public enum StripesHandlerDispenser implements IStripesHandlerItem {
         return false;
     }
 
-    @Override
     public boolean handle(Level world,
                           BlockPos pos,
                           Direction direction,
                           ItemStack stack,
                           Player player,
-                          IStripesActivator activator) {
+                          StripesOutput activator) {
         if (!DISPENSER_REGISTRY.containsKey(stack.getItem())||world.isClientSide) {
             return false;
         }

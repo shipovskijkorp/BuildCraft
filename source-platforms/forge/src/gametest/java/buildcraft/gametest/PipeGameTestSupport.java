@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
-import buildcraft.transport.internal.IWireManager;
+import buildcraft.transport.wire.WireManager;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
@@ -264,7 +264,7 @@ public final class PipeGameTestSupport {
         }
 
         @Override
-        public IWireManager getWireManager() {
+        public WireManager getWireManager() {
             return null;
         }
 

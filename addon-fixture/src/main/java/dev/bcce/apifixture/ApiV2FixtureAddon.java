@@ -13,6 +13,10 @@ import buildcraft.api.v2.drop.FluidDropProvider;
 import buildcraft.api.v2.debug.DebugContributor;
 import buildcraft.api.v2.client.ParameterPresentation;
 import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.automation.AutomationActionType;
+import buildcraft.api.v2.automation.AutomationRequest;
+import buildcraft.api.v2.automation.AutomationResult;
+import buildcraft.api.v2.automation.StripesHandler;
 import buildcraft.api.v2.client.ContentPresentation;
 import buildcraft.api.v2.energy.MjAmount;
 import buildcraft.api.v2.fuels.CoolantProfile;
@@ -27,6 +31,7 @@ import buildcraft.api.v2.machine.MachineType;
 import buildcraft.api.v2.persistence.ApiCodec;
 import buildcraft.api.v2.persistence.CodecResult;
 import buildcraft.api.v2.persistence.OpaqueData;
+import buildcraft.api.v2.permission.AutomationActor;
 import buildcraft.api.v2.permission.PermissionDecision;
 import buildcraft.api.v2.permission.PermissionServiceRegistry;
 import buildcraft.api.v2.pipe.ItemTransportProfile;
@@ -37,6 +42,7 @@ import buildcraft.api.v2.recipe.MachineRecipeService;
 import buildcraft.api.v2.registry.ApiRegistry;
 import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.api.v2.robot.RobotBoardType;
+import buildcraft.api.v2.signal.BuildCraftSignalChannels;
 import buildcraft.api.v2.signal.SignalChannelType;
 import buildcraft.api.v2.statement.ActionType;
 import buildcraft.api.v2.statement.ParameterSchema;
@@ -127,6 +133,24 @@ public final class ApiV2FixtureAddon {
         signals.register(
             id("logic_signal"),
             new SignalChannelType<>(id("logic_signal"), false, BOOL_CODEC, (current, incoming) -> current || incoming),
+            () -> "api-v2-fixture"
+        );
+
+        BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.AUTOMATION_ACTION_TYPES).register(
+            FixtureAutomationRequest.KIND,
+            new AutomationActionType<>(
+                FixtureAutomationRequest.KIND,
+                FixtureAutomationRequest.class,
+                request -> AutomationResult.success(1)
+            ),
+            () -> "api-v2-fixture"
+        );
+        BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.STRIPES_HANDLERS).register(
+            id("fixture_stripes"),
+            (StripesHandler) context -> {
+                int consumed = context.hasItem() ? context.consume(1) : 0;
+                return consumed > 0 ? AutomationResult.success(consumed) : AutomationResult.pass();
+            },
             () -> "api-v2-fixture"
         );
 
@@ -237,6 +261,19 @@ public final class ApiV2FixtureAddon {
         BuildCraftApi.service(BuildCraftServices.ENERGY).descriptor(level, pos, side);
         BuildCraftApi.service(BuildCraftServices.MACHINES).machine(level, pos);
         BuildCraftApi.service(BuildCraftServices.LASER_TARGETS).target(level, pos, side);
+        BuildCraftApi.service(BuildCraftServices.SIGNALS)
+            .port(level, pos, side, BuildCraftSignalChannels.RED)
+            .ifPresent(port -> port.connected());
+        BuildCraftApi.service(BuildCraftServices.AUTOMATION).execute(
+            new FixtureAutomationRequest(pos, AutomationActor.unknown(), OperationMode.SIMULATE)
+        );
+    }
+
+    private record FixtureAutomationRequest(
+        BlockPos origin, AutomationActor actor, OperationMode mode
+    ) implements AutomationRequest {
+        private static final ResourceLocation KIND = id("fixture_automation");
+        @Override public ResourceLocation kind() { return KIND; }
     }
 
     private static ResourceLocation id(String path) {

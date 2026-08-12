@@ -8,8 +8,7 @@ package buildcraft.transport.stripes;
 
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.api.v2.automation.StripesOutput;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,16 +16,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public enum StripesHandlerPlant implements IStripesHandlerItem {
+public enum StripesHandlerPlant {
     INSTANCE;
 
-    @Override
     public boolean handle(Level world,
                           BlockPos pos,
                           Direction direction,
                           ItemStack stack,
                           Player player,
-                          IStripesActivator activator) {
+                          StripesOutput activator) {
         return BuildCraftApi.service(BuildCraftServices.CROPS).plant(world, player, stack, pos.offset(direction.getNormal()).below())
             || BuildCraftApi.service(BuildCraftServices.CROPS).plant(world, player, stack, pos.offset(direction.getNormal()));
     }

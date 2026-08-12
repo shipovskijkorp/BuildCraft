@@ -8,8 +8,7 @@ package buildcraft.transport.stripes;
 
 import java.util.List;
 
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.lib.misc.BlockUtil;
 
 import net.minecraft.core.BlockPos;
@@ -25,16 +24,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.IForgeShearable;
 
-public enum StripesHandlerShears implements IStripesHandlerItem {
+public enum StripesHandlerShears {
     INSTANCE;
 
-    @Override
     public boolean handle(Level world,
                           BlockPos pos,
                           Direction direction,
                           ItemStack stack,
                           Player player,
-                          IStripesActivator activator) {
+                          StripesOutput activator) {
         if (!(stack.getItem() instanceof ShearsItem)) {
             return false;
         }

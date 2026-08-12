@@ -3,9 +3,9 @@ package buildcraft.robotics.ai;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.transport.internal.IStripesActivator;
+import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.transport.internal.pipe.IItemPipe;
-import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.pipe.StripesRegistry;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.robotics.entity.EntityRobot;
 import com.mojang.authlib.GameProfile;
@@ -26,7 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 /** Applies the transport Stripes item handlers from a robot-held item to the reserved target block. */
-public class AIRobotStripesHandler extends AIRobot implements IStripesActivator {
+public class AIRobotStripesHandler extends AIRobot implements StripesOutput {
     private static final int USE_DELAY_TICKS = 12;
 
     private BlockIndex useToBlock;
@@ -105,11 +105,8 @@ public class AIRobotStripesHandler extends AIRobot implements IStripesActivator 
             return placePipeAsBlock(serverLevel, target, direction, working, player);
         }
 
-        if (PipeApi.stripeRegistry == null) {
-            return false;
-        }
         BlockPos activatorPos = target.relative(direction.getOpposite());
-        return PipeApi.stripeRegistry.handleItem(serverLevel, activatorPos, direction, working, player, this);
+        return StripesRegistry.INSTANCE.handleItem(serverLevel, activatorPos, direction, working, player, this);
     }
 
     private boolean placePipeAsBlock(Level level, BlockPos target, Direction direction, ItemStack working, Player player) {

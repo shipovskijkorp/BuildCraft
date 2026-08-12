@@ -9,8 +9,7 @@ package buildcraft.transport.stripes;
 import java.util.Collections;
 import java.util.List;
 
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerBlock;
+import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.lib.misc.StackUtil;
 
 import net.minecraft.core.BlockPos;
@@ -22,11 +21,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-public enum StripesHandlerMinecartDestroy implements IStripesHandlerBlock {
+public enum StripesHandlerMinecartDestroy {
     INSTANCE;
 
-    @Override
-    public boolean handle(Level world, BlockPos pos, Direction direction, Player player, IStripesActivator activator) {
+    public boolean handle(Level world, BlockPos pos, Direction direction, Player player, StripesOutput activator) {
         AABB box = new AABB(pos);
         List<AbstractMinecart> minecarts = world.getEntitiesOfClass(AbstractMinecart.class, box);
 

@@ -6,7 +6,7 @@ package buildcraft.transport.wire;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import buildcraft.transport.internal.IWireManager;
+import buildcraft.transport.wire.WireManager;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 
 import net.minecraft.client.Minecraft;
@@ -37,15 +37,12 @@ public class MessageWireSystemsPoweredClientHandler {
                     BlockEntity tile = level.getBlockEntity(element.blockPos);
                     if (tile instanceof IPipeHolder) {
                         IPipeHolder holder = (IPipeHolder) tile;
-                        IWireManager iWireManager = holder.getWireManager();
-                        if (iWireManager instanceof WireManager) {
-                            WireManager wireManager = (WireManager) iWireManager;
-                            if (wireManager.getColorOfPart(element.wirePart) != null) {
-                                if (powered) {
-                                    wireManager.poweredClient.add(element.wirePart);
-                                } else {
-                                    wireManager.poweredClient.remove(element.wirePart);
-                                }
+                        WireManager wireManager = holder.getWireManager();
+                        if (wireManager.getColorOfPart(element.wirePart) != null) {
+                            if (powered) {
+                                wireManager.poweredClient.add(element.wirePart);
+                            } else {
+                                wireManager.poweredClient.remove(element.wirePart);
                             }
                         }
                     }

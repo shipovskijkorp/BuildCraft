@@ -19,9 +19,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.transport.internal.EnumWirePart;
-import buildcraft.transport.internal.IWireEmitter;
 import buildcraft.transport.internal.pipe.IPipeHolder;
-import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.lib.net.MessageManager;
 
 import net.minecraft.nbt.CompoundTag;
@@ -43,7 +41,6 @@ public class WorldSavedDataWireSystems extends SavedData {
     public boolean structureChanged = true;
     public final List<WireSystem> changedSystems = new ArrayList<>();
     public final List<Player> changedPlayers = new ArrayList<>();
-    public final Map<WireSystem.WireElement, IWireEmitter> emittersCache = new HashMap<>();
 
     private final Map<WireSystem.WireElement, List<WireSystem>> elementsToWireSystemsIndex = new HashMap<>();
 
@@ -52,7 +49,6 @@ public class WorldSavedDataWireSystems extends SavedData {
     public void markStructureChanged() {
         structureChanged = true;
         gatesChanged = true;
-        emittersCache.clear();
     }
 
     public List<WireSystem> getWireSystemsWithElement(WireSystem.WireElement element) {
@@ -103,39 +99,13 @@ public class WorldSavedDataWireSystems extends SavedData {
                 .forEach(this::buildAndAddWireSystem);
     }
 
-    public IWireEmitter getEmitter(WireSystem.WireElement element) {
-        if (element.type == WireSystem.WireElement.Type.EMITTER_SIDE) {
-            if (!emittersCache.containsKey(element)) {
-                if (!world.isLoaded(element.blockPos)) {
-                    BCLog.logger.warn("[transport.wire] Ghost loading " + element.blockPos + " to look for an emitter!");
-                }
-                BlockEntity tile = world.getBlockEntity(element.blockPos);
-                if (tile instanceof IPipeHolder) {
-                    IPipeHolder holder = (IPipeHolder) tile;
-                    PipePluggable plug = holder.getPluggable(element.emitterSide);
-                    if(plug instanceof IWireEmitter) {
-                        emittersCache.put(element, (IWireEmitter) plug);
-                    }
-                }
-                if (!emittersCache.containsKey(element)) {
-                    throw new IllegalStateException("Tried to get a wire element when none existed! THIS IS A BUG " + element);
-                }
-            }
-            return emittersCache.get(element);
-        }
-        return null;
-    }
-
     public boolean isEmitterEmitting(WireSystem.WireElement element, DyeColor color) {
         if (!world.isLoaded(element.blockPos)) {
-            BCLog.logger.warn("[transport.wire] Ghost loading " + element.blockPos + " to look for an emitter!");
+            BCLog.logger.warn("[transport.wire] Ghost loading " + element.blockPos + " to resolve an API2 signal endpoint!");
         }
         BlockEntity tile = world.getBlockEntity(element.blockPos);
-        if(tile instanceof IPipeHolder) {
-            IPipeHolder holder = (IPipeHolder) tile;
-            if (holder.getPluggable(element.emitterSide) instanceof IWireEmitter) {
-                return getEmitter(element).isEmitting(color);
-            }
+        if (tile instanceof IPipeHolder holder) {
+            return holder.getWireManager().isSignalOutputActive(element.emitterSide, color);
         }
         return false;
     }

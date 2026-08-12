@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.lib.internal.mj.MjBattery;
-import buildcraft.transport.internal.IStripesActivator;
+import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipeHolder;
@@ -56,7 +56,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActivator, IMjRedstoneReceiver {
+public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput, IMjRedstoneReceiver {
     private final MjBattery battery = new MjBattery(256 * MjAmount.MICRO_MJ_PER_MJ);
 
     @Nullable
@@ -213,7 +213,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
         player.getInventory().clearContent();;
         // set the main hand of the fake player to the stack
         player.getInventory().setItem(player.getInventory().selected, event.getStack());
-        if (PipeApi.stripeRegistry.handleItem(world, pos, direction, event.getStack(), player, this)) {
+        if (StripesRegistry.INSTANCE.handleItem(world, pos, direction, event.getStack(), player, this)) {
             event.setStack(StackUtil.EMPTY);
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack stack = player.getInventory().removeItemNoUpdate(i);

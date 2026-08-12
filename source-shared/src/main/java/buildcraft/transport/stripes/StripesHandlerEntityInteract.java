@@ -9,8 +9,7 @@ package buildcraft.transport.stripes;
 import java.util.Collections;
 import java.util.List;
 
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.api.v2.automation.StripesOutput;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,16 +21,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-public enum StripesHandlerEntityInteract implements IStripesHandlerItem {
+public enum StripesHandlerEntityInteract {
     INSTANCE;
 
-    @Override
     public boolean handle(Level world,
                           BlockPos pos,
                           Direction direction,
                           ItemStack stack,
                           Player player,
-                          IStripesActivator activator) {
+                          StripesOutput activator) {
         List<LivingEntity> entities = world.getEntitiesOfClass(
             LivingEntity.class,
             new AABB(pos.offset(direction.getNormal()))

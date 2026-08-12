@@ -11,6 +11,7 @@ import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.lib.internal.statement.containers.ISidedStatementContainer;
 import buildcraft.transport.internal.pipe.IPipeHolder;
+import net.minecraft.world.item.DyeColor;
 
 public interface IGate extends ISidedStatementContainer {
 
@@ -25,4 +26,7 @@ public interface IGate extends ISidedStatementContainer {
     List<IStatementParameter> getTriggerParameters(int slot);
 
     List<IStatementParameter> getActionParameters(int slot);
+
+    /** Queues one classic pipe-wire signal for this gate tick. */
+    void emitSignal(DyeColor colour);
 }

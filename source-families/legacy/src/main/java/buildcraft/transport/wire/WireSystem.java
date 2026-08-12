@@ -22,7 +22,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import buildcraft.transport.internal.EnumWirePart;
-import buildcraft.transport.internal.IWireEmitter;
 import buildcraft.transport.internal.WireNode;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipeHolder;
@@ -155,7 +154,10 @@ public final class WireSystem {
                             Arrays.stream(Direction.values()).forEach(side -> queue.add(new WireElement(element.blockPos, side)));
                         }
                     } else if (element.type == WireElement.Type.EMITTER_SIDE) {
-                        if (holder.getPluggable(element.emitterSide) instanceof IWireEmitter) {
+                        // API2 signal ports exist independently of a particular pluggable class.
+                        // Keep every side endpoint in the topology for the current wire channel;
+                        // inactive endpoints cost only a boolean lookup during signal resolution.
+                        if (tempColor != null && holder.getWireManager().hasPartOfColor(tempColor)) {
                             elementBuilder.add(new WireElement(element.blockPos, element.emitterSide));
                         }
                     }

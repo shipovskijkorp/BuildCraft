@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.transport.internal.IStripesActivator;
-import buildcraft.transport.internal.IWireManager;
+import buildcraft.api.v2.automation.StripesOutput;
+import buildcraft.transport.wire.WireManager;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipeExtensionManager;
@@ -28,7 +28,6 @@ import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.SoundUtil;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourStripes;
-import buildcraft.transport.wire.WireManager;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.core.BlockPos;
@@ -63,7 +62,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
     private final Set<PipeDefinition> retractionPipeDefs = new HashSet<>();
 
     @Override
-    public boolean requestPipeExtension(Level world, BlockPos pos, Direction dir, IStripesActivator stripes, ItemStack stack) {
+    public boolean requestPipeExtension(Level world, BlockPos pos, Direction dir, StripesOutput stripes, ItemStack stack) {
         if (world.isClientSide || stack.isEmpty() || !(stack.getItem() instanceof IItemPipe)) {
             return false;
         }
@@ -334,15 +333,12 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
         IPipeHolder stripesPipeHolderNew = CapUtil.getCapability(stripesTileNew, PipeApi.CAP_PIPE_HOLDER, null).orElse(null);
         if (stripesPipeHolderNew != null) {
             if (!canceled) {
-                IWireManager wireManager = stripesPipeHolderNew.getWireManager();
-                if (wireManager instanceof WireManager) {
-                    ((WireManager) wireManager).getWireSystems().rebuildWireSystemsAround(stripesPipeHolderNew);
-                }
+                stripesPipeHolderNew.getWireManager().getWireSystems().rebuildWireSystemsAround(stripesPipeHolderNew);
             }
 
             PipeBehaviour behaviour = stripesPipeHolderNew.getPipe().getBehaviour();
-            if (behaviour instanceof IStripesActivator) {
-                IStripesActivator stripesNew = (IStripesActivator) behaviour;
+            if (behaviour instanceof StripesOutput) {
+                StripesOutput stripesNew = (StripesOutput) behaviour;
                 for (ItemStack s : stacksToSendBack) {
                     s = s.copy();
                     if (!stripesNew.sendItem(s, r.dir)) {
@@ -385,11 +381,11 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
     private class PipeExtensionRequest {
         public final BlockPos pos;
         public final Direction dir;
-        public final IStripesActivator stripes;
+        public final StripesOutput stripes;
         public final PipeDefinition pipeDef;
         public final ItemStack stack;
 
-        private PipeExtensionRequest(BlockPos pos, Direction dir, IStripesActivator stripes, PipeDefinition pipeDef, ItemStack stack) {
+        private PipeExtensionRequest(BlockPos pos, Direction dir, StripesOutput stripes, PipeDefinition pipeDef, ItemStack stack) {
             this.pos = pos;
             this.dir = dir;
             this.stripes = stripes;
