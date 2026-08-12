@@ -88,11 +88,17 @@ def main() -> int:
     if not api_root.is_dir():
         errors.append("source-shared public API root is missing")
     else:
-        unexpected = sorted(
-            p.relative_to(api_root).as_posix()
-            for p in api_root.iterdir()
-            if p.name != "v2"
-        )
+        # File deletions do not necessarily remove now-empty directories from the
+        # working tree (notably after git apply on Windows). Only actual files
+        # below non-v2 API roots are a violation; empty directories are harmless.
+        unexpected = []
+        for entry in api_root.iterdir():
+            if entry.name == "v2":
+                continue
+            has_files = entry.is_file() or (entry.is_dir() and any(p.is_file() for p in entry.rglob("*")))
+            if has_files:
+                unexpected.append(entry.relative_to(api_root).as_posix())
+        unexpected.sort()
         if unexpected:
             errors.append("public API root contains non-v2 entries: " + ", ".join(unexpected))
 
