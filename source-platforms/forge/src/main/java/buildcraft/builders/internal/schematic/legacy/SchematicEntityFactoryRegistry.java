@@ -1,4 +1,4 @@
-package buildcraft.api.schematics;
+package buildcraft.builders.internal.schematic.legacy;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class SchematicEntityFactoryRegistry {
     private static final Set<SchematicEntityFactory<?>> FACTORIES = new TreeSet<>();
@@ -24,7 +24,7 @@ public class SchematicEntityFactoryRegistry {
                                                                     Predicate<SchematicEntityContext> predicate,
                                                                     Supplier<S> supplier) {
         FACTORIES.add(new SchematicEntityFactory<>(
-            ResourceLocation.parse(name),
+            new ResourceLocation(name),
             priority,
             predicate,
             supplier
@@ -40,7 +40,7 @@ public class SchematicEntityFactoryRegistry {
         registerFactory(
             name,
             priority,
-            context -> entities.contains(BuiltInRegistries.ENTITY_TYPE.getKey(context.entity.getType())),
+            context -> entities.contains(ForgeRegistries.ENTITY_TYPES.getKey(context.entity.getType())),
             supplier
         );
     }

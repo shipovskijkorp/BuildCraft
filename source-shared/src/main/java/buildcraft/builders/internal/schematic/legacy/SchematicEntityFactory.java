@@ -1,4 +1,4 @@
-package buildcraft.api.schematics;
+package buildcraft.builders.internal.schematic.legacy;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;

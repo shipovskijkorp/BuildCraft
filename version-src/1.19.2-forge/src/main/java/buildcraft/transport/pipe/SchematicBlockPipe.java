@@ -14,8 +14,8 @@ import javax.annotation.Nonnull;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.schematics.ISchematicBlock;
-import buildcraft.api.schematics.SchematicBlockContext;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
+import buildcraft.builders.internal.schematic.legacy.SchematicBlockContext;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.transport.BCTransportBlocks;
 import buildcraft.transport.block.BlockPipeHolder;

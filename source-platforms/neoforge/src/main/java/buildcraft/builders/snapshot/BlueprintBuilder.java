@@ -30,12 +30,13 @@ import buildcraft.lib.misc.*;
 import org.apache.commons.lang3.tuple.Pair;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.schematics.ISchematicBlock;
-import buildcraft.api.schematics.ISchematicEntity;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
+import buildcraft.builders.internal.schematic.api2.Api2SchematicEntity;
+import buildcraft.builders.internal.schematic.legacy.ISchematicEntity;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;
-import buildcraft.api.schematics.SchematicEntityContext;
+import buildcraft.builders.internal.schematic.legacy.SchematicEntityContext;
 import buildcraft.builders.BuildersNbtUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -977,7 +978,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
             List<ItemStack> requiredItems = getBuildingInfo().entitiesRequiredItems.get(schematicEntity);
             List<FluidStack> requiredFluids = getBuildingInfo().entitiesRequiredFluids.get(schematicEntity);
             if (!tile.needMeterial()) {
-                if (schematicEntity.build(level, getBuildingInfo().offsetPos) == null) {
+                if (!buildSchematicEntity(schematicEntity, level, getBuildingInfo().offsetPos)) {
                     spawnedAll = false;
                 }
                 continue;
@@ -988,7 +989,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 spawnedAll = false;
                 continue;
             }
-            if (schematicEntity.build(level, getBuildingInfo().offsetPos) == null) {
+            if (!buildSchematicEntity(schematicEntity, level, getBuildingInfo().offsetPos)) {
                 cancelPlaceTask(new PlaceTask(tile.getBuilderPos(), extracted.get(), 0));
                 spawnedAll = false;
                 continue;
@@ -996,6 +997,13 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         }
         level.getProfiler().pop();
         return spawnedAll;
+    }
+
+    private static boolean buildSchematicEntity(ISchematicEntity schematicEntity, Level level, BlockPos basePos) {
+        if (schematicEntity instanceof Api2SchematicEntity api2) {
+            return api2.place(level, basePos);
+        }
+        return schematicEntity.build(level, basePos) != null;
     }
 
     @Override

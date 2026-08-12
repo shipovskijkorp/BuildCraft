@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.schematics.ISchematicBlock;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientLevel.ClientLevelData;
 import net.minecraft.core.BlockPos;

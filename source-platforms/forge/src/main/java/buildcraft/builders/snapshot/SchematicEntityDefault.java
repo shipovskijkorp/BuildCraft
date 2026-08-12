@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.tuple.Pair;
 
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.schematics.ISchematicEntity;
-import buildcraft.api.schematics.SchematicEntityContext;
+import buildcraft.builders.internal.schematic.legacy.ISchematicEntity;
+import buildcraft.builders.internal.schematic.legacy.SchematicEntityContext;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.RotationUtil;
 import net.minecraft.core.BlockPos;

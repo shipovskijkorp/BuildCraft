@@ -62,6 +62,7 @@ EXPECTED_PROVIDER = "buildcraft.lib.internal.api.v2.BuildCraftApiRuntimeProvider
 TRANSPORT_LEGACY_PACKAGE = "buildcraft.api.transport"
 TRANSPORT_SOURCE_MARKER = Path("buildcraft/api/transport")
 MJ_LEGACY_PACKAGE = "buildcraft.api.mj"
+SCHEMATIC_LEGACY_PACKAGE = "buildcraft.api.schematics"
 
 
 def java_files(root: Path):
@@ -138,6 +139,20 @@ def main() -> int:
         for imported in IMPORT_RE.findall(text):
             if imported.startswith(MJ_LEGACY_PACKAGE):
                 errors.append(f"{rel}: imports retired MJ API {imported}")
+
+
+    # The old Builders schematic Java API was retired once capture/persistence moved behind API2.
+    for path in ROOT.rglob("*.java"):
+        if any(part in {"build", ".gradle", ".git"} for part in path.parts):
+            continue
+        text = path.read_text(encoding="utf-8")
+        rel = path.relative_to(ROOT)
+        package_match = PACKAGE_RE.search(text)
+        if package_match and package_match.group(1).startswith(SCHEMATIC_LEGACY_PACKAGE):
+            errors.append(f"{rel}: retired schematic API package must not be restored; use buildcraft.api.v2.schematic")
+        for imported in IMPORT_RE.findall(text):
+            if imported.startswith(SCHEMATIC_LEGACY_PACKAGE):
+                errors.append(f"{rel}: imports retired schematic API {imported}")
 
 
     if REGISTRY_KEYS_FILE.is_file() and RUNTIME_FILE.is_file():

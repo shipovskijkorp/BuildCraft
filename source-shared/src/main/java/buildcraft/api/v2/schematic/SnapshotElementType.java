@@ -7,6 +7,10 @@ import net.minecraft.resources.ResourceLocation;
 
 public record SnapshotElementType<E extends SnapshotElement>(ResourceLocation id, PersistentType<E, OpaqueData> persistence) {
     public SnapshotElementType {
-        Objects.requireNonNull(id, "id"); Objects.requireNonNull(persistence, "persistence");
+        Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(persistence, "persistence");
+        if (!id.equals(persistence.id())) {
+            throw new IllegalArgumentException("Snapshot element id must match persistence id: " + id + " != " + persistence.id());
+        }
     }
 }

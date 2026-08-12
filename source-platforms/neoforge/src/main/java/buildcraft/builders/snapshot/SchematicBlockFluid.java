@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.schematics.ISchematicBlock;
-import buildcraft.api.schematics.SchematicBlockContext;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
+import buildcraft.builders.internal.schematic.legacy.SchematicBlockContext;
 import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

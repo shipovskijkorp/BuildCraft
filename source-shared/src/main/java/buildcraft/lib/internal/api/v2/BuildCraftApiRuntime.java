@@ -114,6 +114,7 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         registerRegistry(BuildCraftRegistries.ROBOT_BOARD_TYPES);
         registerRegistry(BuildCraftRegistries.ROBOT_EVENT_LISTENERS);
         registerRegistry(BuildCraftRegistries.SCHEMATIC_ADAPTERS);
+        registerRegistry(BuildCraftRegistries.SCHEMATIC_ENTITY_ADAPTERS);
         registerRegistry(BuildCraftRegistries.SNAPSHOT_ELEMENT_TYPES);
         registerRegistry(BuildCraftRegistries.INVENTORY_COPY_POLICIES);
         registerRegistry(BuildCraftRegistries.FACADE_MATERIAL_ADAPTERS);

@@ -30,7 +30,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.logging.LogUtils;
 
-import buildcraft.api.schematics.BuilderInventoryCopyAPI;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
+import buildcraft.api.v2.schematic.DataPath;
+import buildcraft.api.v2.schematic.InventoryCopyPolicy;
 import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -77,8 +80,9 @@ public final class InventoryContentPolicy {
             .map(InventoryContentPolicy::getDomainFromSelector)
             .filter(Objects::nonNull)
             .forEach(domains::add);
-        BuilderInventoryCopyAPI.getBlockInventoryCopyRules().stream()
-            .map(rule -> rule.getBlockId().getNamespace())
+        apiInventoryCopyPolicies().stream()
+            .flatMap(policy -> policy.blockIds().stream())
+            .map(ResourceLocation::getNamespace)
             .forEach(domains::add);
         return domains;
     }
@@ -102,8 +106,12 @@ public final class InventoryContentPolicy {
         if (blockId == null) {
             return false;
         }
-        return BuilderInventoryCopyAPI.getBlockInventoryCopyRules().stream()
-            .anyMatch(rule -> rule.getBlockId().equals(blockId) && path.equals(NbtPath.of(rule.getNbtPath())));
+        DataPath apiPath = new DataPath(path.getElements());
+        List<InventoryCopyPolicy> policies = apiInventoryCopyPolicies(blockId);
+        if (policies.stream().anyMatch(policy -> policy.deniedPaths().contains(apiPath))) {
+            return false;
+        }
+        return policies.stream().anyMatch(policy -> policy.allowedPaths().contains(apiPath));
     }
 
     public static Set<NbtPath> getAllowedBlockItemPaths(BlockState blockState) {
@@ -114,10 +122,14 @@ public final class InventoryContentPolicy {
             .forEach(paths::add);
         ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(blockState.getBlock());
         if (blockId != null) {
-            BuilderInventoryCopyAPI.getBlockInventoryCopyRules().stream()
-                .filter(rule -> rule.getBlockId().equals(blockId))
-                .map(rule -> NbtPath.of(rule.getNbtPath()))
+            apiInventoryCopyPolicies(blockId).stream()
+                .flatMap(policy -> policy.allowedPaths().stream())
+                .map(path -> NbtPath.of(path.segments()))
                 .forEach(paths::add);
+            apiInventoryCopyPolicies(blockId).stream()
+                .flatMap(policy -> policy.deniedPaths().stream())
+                .map(path -> NbtPath.of(path.segments()))
+                .forEach(paths::remove);
         }
         paths.removeIf(path -> matchesAny(BLACKLIST_BLOCK_RULES, blockState, path));
         return paths;
@@ -186,9 +198,13 @@ public final class InventoryContentPolicy {
             .forEach(paths::add);
         ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(blockState.getBlock());
         if (blockId != null) {
-            BuilderInventoryCopyAPI.getBlockInventoryCopyRules().stream()
-                .filter(rule -> rule.getBlockId().equals(blockId))
-                .map(rule -> NbtPath.of(rule.getNbtPath()))
+            apiInventoryCopyPolicies(blockId).stream()
+                .flatMap(policy -> policy.allowedPaths().stream())
+                .map(path -> NbtPath.of(path.segments()))
+                .forEach(paths::add);
+            apiInventoryCopyPolicies(blockId).stream()
+                .flatMap(policy -> policy.deniedPaths().stream())
+                .map(path -> NbtPath.of(path.segments()))
                 .forEach(paths::add);
         }
         BLACKLIST_BLOCK_RULES.stream()
@@ -211,6 +227,14 @@ public final class InventoryContentPolicy {
             .map(RequiredExtractorItemsList::getPath)
             .filter(Objects::nonNull)
             .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    private static List<InventoryCopyPolicy> apiInventoryCopyPolicies() {
+        return new ArrayList<>(BuildCraftApi.registry(BuildCraftRegistries.INVENTORY_COPY_POLICIES).values());
+    }
+
+    private static List<InventoryCopyPolicy> apiInventoryCopyPolicies(ResourceLocation blockId) {
+        return apiInventoryCopyPolicies().stream().filter(policy -> policy.appliesTo(blockId)).collect(Collectors.toList());
     }
 
     private static boolean matchesAny(List<BlockContentConfigRule> rules, BlockState blockState, NbtPath path) {

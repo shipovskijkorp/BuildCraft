@@ -8,10 +8,11 @@ import java.util.stream.StreamSupport;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.schematics.ISchematicBlock;
-import buildcraft.api.schematics.SchematicBlockContext;
-import buildcraft.api.schematics.SchematicBlockFactoryRegistry;
-import buildcraft.api.schematics.SchematicEntityFactoryRegistry;
+import buildcraft.builders.internal.schematic.api2.BuildersSchematicApi2;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
+import buildcraft.builders.internal.schematic.legacy.SchematicBlockContext;
+import buildcraft.builders.internal.schematic.legacy.SchematicBlockFactoryRegistry;
+import buildcraft.builders.internal.schematic.legacy.SchematicEntityFactoryRegistry;
 import buildcraft.builders.snapshot.SchematicBlockAir;
 import buildcraft.builders.snapshot.SchematicBlockDefault;
 import buildcraft.builders.snapshot.SchematicBlockFluid;
@@ -30,6 +31,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class BCBuildersSchematics {
     public static void preInit() {
+        BuildersSchematicApi2.bootstrap();
         registerSchematicFactory("air", 0, SchematicBlockAir::predicate, SchematicBlockAir::new);
         registerSchematicFactory("default", 100, SchematicBlockDefault::predicate, SchematicBlockDefault::new);
         registerSchematicFactory("fluid", 200, SchematicBlockFluid::predicate, SchematicBlockFluid::new);

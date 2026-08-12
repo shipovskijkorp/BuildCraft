@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.enums.EnumSnapshotType;
-import buildcraft.api.schematics.ISchematicBlock;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.gui.MenuReplacer;
 import buildcraft.builders.item.ItemSchematicSingle;

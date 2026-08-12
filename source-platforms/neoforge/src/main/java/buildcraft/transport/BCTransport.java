@@ -11,7 +11,7 @@ import buildcraft.lib.internal.mj.MjCapabilities;
 import buildcraft.api.BCModules;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.transport.internal.pipe.PipeApi;
-import buildcraft.api.schematics.SchematicBlockFactoryRegistry;
+import buildcraft.builders.internal.schematic.legacy.SchematicBlockFactoryRegistry;
 import buildcraft.lib.BCLibRegistries;
 import buildcraft.lib.CreativeTabManager;
 import buildcraft.lib.CreativeTabManager.CreativeTabBC;

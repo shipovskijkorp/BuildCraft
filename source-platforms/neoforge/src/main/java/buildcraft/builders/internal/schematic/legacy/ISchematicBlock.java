@@ -1,4 +1,4 @@
-package buildcraft.api.schematics;
+package buildcraft.builders.internal.schematic.legacy;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,16 +8,23 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.api.v2.schematic.SnapshotElement;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
-public interface ISchematicBlock {
+public interface ISchematicBlock extends SnapshotElement {
+    @Override
+    default ResourceLocation typeId() {
+        return SchematicBlockFactoryRegistry.getFactoryByInstance(this).name;
+    }
+
     void init(SchematicBlockContext context);
 
     default boolean isAir() {

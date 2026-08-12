@@ -1,4 +1,4 @@
-package buildcraft.api.schematics;
+package buildcraft.builders.internal.schematic.legacy;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,8 +6,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.api.v2.schematic.SnapshotElement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -16,7 +18,12 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 
-public interface ISchematicEntity {
+public interface ISchematicEntity extends SnapshotElement {
+    @Override
+    default ResourceLocation typeId() {
+        return SchematicEntityFactoryRegistry.getFactoryByInstance(this).name;
+    }
+
     void init(SchematicEntityContext context);
 
     Vec3 getPos();

@@ -26,7 +26,10 @@ import buildcraft.api.v2.robot.DockPortType;
 import buildcraft.api.v2.robot.RobotBoardType;
 import buildcraft.api.v2.robot.RobotResourceType;
 import buildcraft.api.v2.robot.RobotTaskType;
+import buildcraft.api.v2.schematic.EntitySchematicAdapter;
+import buildcraft.api.v2.schematic.InventoryCopyPolicy;
 import buildcraft.api.v2.schematic.SchematicAdapter;
+import buildcraft.api.v2.schematic.SnapshotElement;
 import buildcraft.api.v2.schematic.SnapshotElementType;
 import buildcraft.api.v2.signal.SignalChannelType;
 import buildcraft.api.v2.statement.ActionType;
@@ -175,8 +178,44 @@ public final class ContentRegistrar {
         return register(BuildCraftRegistries.SCHEMATIC_ADAPTERS, id(path), adapter);
     }
 
+    public EntitySchematicAdapter entitySchematicAdapter(String path, EntitySchematicAdapter adapter) {
+        return register(BuildCraftRegistries.SCHEMATIC_ENTITY_ADAPTERS, id(path), adapter);
+    }
+
+    public InventoryCopyPolicy inventoryCopyPolicy(InventoryCopyPolicy policy) {
+        return register(BuildCraftRegistries.INVENTORY_COPY_POLICIES, policy.id(), policy);
+    }
+
     public SnapshotElementType<?> snapshotElement(SnapshotElementType<?> type) {
         return register(BuildCraftRegistries.SNAPSHOT_ELEMENT_TYPES, type.id(), type);
+    }
+
+    public <E extends SnapshotElement> SnapshotElementType<E> blockSchematic(
+        String path,
+        SnapshotElementType<E> type,
+        SchematicAdapter adapter
+    ) {
+        ResourceLocation expected = id(path);
+        if (!expected.equals(type.id())) {
+            throw new IllegalArgumentException("Snapshot element id must match content id " + expected + ": " + type.id());
+        }
+        register(BuildCraftRegistries.SNAPSHOT_ELEMENT_TYPES, type.id(), type);
+        register(BuildCraftRegistries.SCHEMATIC_ADAPTERS, expected, adapter);
+        return type;
+    }
+
+    public <E extends SnapshotElement> SnapshotElementType<E> entitySchematic(
+        String path,
+        SnapshotElementType<E> type,
+        EntitySchematicAdapter adapter
+    ) {
+        ResourceLocation expected = id(path);
+        if (!expected.equals(type.id())) {
+            throw new IllegalArgumentException("Snapshot element id must match content id " + expected + ": " + type.id());
+        }
+        register(BuildCraftRegistries.SNAPSHOT_ELEMENT_TYPES, type.id(), type);
+        register(BuildCraftRegistries.SCHEMATIC_ENTITY_ADAPTERS, expected, adapter);
+        return type;
     }
 
 

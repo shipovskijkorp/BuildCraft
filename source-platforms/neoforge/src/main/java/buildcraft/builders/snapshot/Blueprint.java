@@ -19,8 +19,8 @@ import com.google.common.collect.ImmutableSet;
 
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.enums.EnumSnapshotType;
-import buildcraft.api.schematics.ISchematicBlock;
-import buildcraft.api.schematics.ISchematicEntity;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
+import buildcraft.builders.internal.schematic.legacy.ISchematicEntity;
 import buildcraft.lib.misc.NBTUtilBC;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

@@ -12,8 +12,8 @@ import javax.annotation.Nonnull;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.schematics.ISchematicBlock;
-import buildcraft.api.schematics.SchematicBlockContext;
+import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
+import buildcraft.builders.internal.schematic.legacy.SchematicBlockContext;
 import buildcraft.builders.snapshot.SchematicBlockManager;
 import buildcraft.lib.inventory.InventoryWrapper;
 import buildcraft.lib.misc.ItemStackUtil;

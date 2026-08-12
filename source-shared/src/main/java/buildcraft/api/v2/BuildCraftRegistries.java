@@ -35,6 +35,7 @@ import buildcraft.api.v2.robot.DockPortType;
 import buildcraft.api.v2.robot.RobotBoardType;
 import buildcraft.api.v2.robot.RobotResourceType;
 import buildcraft.api.v2.robot.RobotTaskType;
+import buildcraft.api.v2.schematic.EntitySchematicAdapter;
 import buildcraft.api.v2.schematic.InventoryCopyPolicy;
 import buildcraft.api.v2.schematic.SchematicAdapter;
 import buildcraft.api.v2.schematic.SnapshotElementType;
@@ -81,6 +82,7 @@ public final class BuildCraftRegistries {
     public static final RegistryKey<RobotEventListener> ROBOT_EVENT_LISTENERS = key("robot_event_listeners");
 
     public static final RegistryKey<SchematicAdapter> SCHEMATIC_ADAPTERS = key("schematic_adapters");
+    public static final RegistryKey<EntitySchematicAdapter> SCHEMATIC_ENTITY_ADAPTERS = key("schematic_entity_adapters");
     public static final RegistryKey<SnapshotElementType<?>> SNAPSHOT_ELEMENT_TYPES = key("snapshot_element_types");
     public static final RegistryKey<InventoryCopyPolicy> INVENTORY_COPY_POLICIES = key("inventory_copy_policies");
 
