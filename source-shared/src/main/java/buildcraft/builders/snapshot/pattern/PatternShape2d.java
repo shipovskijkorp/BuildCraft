@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import buildcraft.api.filler.IFilledTemplate;
-import buildcraft.api.filler.IFillerPatternShape;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
+import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterAxis;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterHollow;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterRotation;

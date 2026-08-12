@@ -10,12 +10,12 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.gates.IGate;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.ITriggerExternal;
-import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.statements.ITriggerInternalSided;
-import buildcraft.api.statements.ITriggerProvider;
+import buildcraft.transport.internal.gate.IGate;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.ITriggerExternal;
+import buildcraft.lib.internal.statement.ITriggerInternal;
+import buildcraft.lib.internal.statement.ITriggerInternalSided;
+import buildcraft.lib.internal.statement.ITriggerProvider;
 import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pipe.PipeEventStatement;

@@ -1,8 +1,8 @@
 package buildcraft.robotics.statements;
 
 import buildcraft.api.robots.DockingStation;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.core.statements.StatementParameterItemStackExact;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.robotics.BCRoboticsSprites;

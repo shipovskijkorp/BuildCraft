@@ -9,10 +9,10 @@ package buildcraft.core.statements;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.StatementMouseClick;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.StatementMouseClick;
 import buildcraft.core.BCCoreSprites;
 import buildcraft.lib.misc.StackUtil;
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import buildcraft.api.BCModules;
 import buildcraft.core.BCCore;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.robotics.statements.RobotsActionProvider;
 import buildcraft.robotics.statements.RobotsTriggerProvider;
 import buildcraft.robotics.statements.StatementParameterRobot;

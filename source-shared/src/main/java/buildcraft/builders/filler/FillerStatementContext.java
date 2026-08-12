@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.filler.IFillerPattern;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.builders.BCBuildersStatements;
 import buildcraft.builders.snapshot.pattern.PatternShape2d;
 import buildcraft.lib.gui.ISimpleDrawable;

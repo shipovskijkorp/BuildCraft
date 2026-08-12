@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.statements.IGuiSlot;
+import buildcraft.lib.internal.statement.IGuiSlot;
 import buildcraft.lib.gui.ISimpleDrawable;
 
 /** Provides a set of possible {@link IGuiSlot}'s for showing in GUI's as possible values, to be dragged into waiting

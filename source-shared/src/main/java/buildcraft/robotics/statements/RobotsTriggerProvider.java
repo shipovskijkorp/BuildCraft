@@ -7,11 +7,11 @@ import javax.annotation.Nonnull;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.ITriggerExternal;
-import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.statements.ITriggerInternalSided;
-import buildcraft.api.statements.ITriggerProvider;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.ITriggerExternal;
+import buildcraft.lib.internal.statement.ITriggerInternal;
+import buildcraft.lib.internal.statement.ITriggerInternalSided;
+import buildcraft.lib.internal.statement.ITriggerProvider;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.robotics.BCRoboticsStatements;
 import buildcraft.robotics.plug.RobotStationPluggable;

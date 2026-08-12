@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import buildcraft.lib.misc.data.IReference;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 

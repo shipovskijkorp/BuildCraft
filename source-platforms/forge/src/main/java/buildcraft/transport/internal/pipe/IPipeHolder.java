@@ -3,7 +3,7 @@ package buildcraft.transport.internal.pipe;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.statements.containers.IRedstoneStatementContainer;
+import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
 import buildcraft.transport.internal.IWireManager;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import com.mojang.authlib.GameProfile;

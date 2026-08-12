@@ -1,7 +1,7 @@
 package buildcraft.robotics.statements;
 
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.core.statements.StatementParameterItemStackExact;
 

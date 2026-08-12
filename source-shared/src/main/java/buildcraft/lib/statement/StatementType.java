@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.statements.IGuiSlot;
+import buildcraft.lib.internal.statement.IGuiSlot;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 

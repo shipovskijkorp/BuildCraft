@@ -5,10 +5,11 @@ import java.io.IOException;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.ITrigger;
-import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.ITrigger;
+import buildcraft.lib.internal.statement.ITriggerInternal;
+import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 import buildcraft.lib.statement.StatementType;
 import buildcraft.lib.statement.TriggerWrapper;
 import buildcraft.lib.statement.TriggerWrapper.TriggerWrapperInternal;
@@ -42,6 +43,7 @@ public class TriggerType extends StatementType<TriggerWrapper> {
         }
         EnumPipePart side = EnumPipePart.fromMeta(nbt.getByte("side"));
         IStatement statement = StatementManager.statements.get(kind);
+        if (statement == null) statement = StatementApi2Bridge.ensureNativeAdapter(kind);
         if (statement instanceof ITrigger) {
             return TriggerWrapper.wrap(statement, side.face);
         }
@@ -66,6 +68,7 @@ public class TriggerType extends StatementType<TriggerWrapper> {
             String name = buffer.readUtf();
             EnumPipePart part = buffer.readEnum(EnumPipePart.class);
             IStatement statement = StatementManager.statements.get(name);
+            if (statement == null) statement = StatementApi2Bridge.ensureNativeAdapter(name);
             if (statement instanceof ITrigger) {
                 return TriggerWrapper.wrap(statement, part.face);
             } else {

@@ -6,10 +6,10 @@
 package buildcraft.transport.statements;
 
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeApi.ForgeEnergyTransferInfo;
 import buildcraft.transport.internal.pipe.PipeApi.PowerTransferInfo;

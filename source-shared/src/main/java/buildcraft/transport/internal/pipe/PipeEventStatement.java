@@ -4,10 +4,10 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IActionInternalSided;
-import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.statements.ITriggerInternalSided;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IActionInternalSided;
+import buildcraft.lib.internal.statement.ITriggerInternal;
+import buildcraft.lib.internal.statement.ITriggerInternalSided;
 
 import net.minecraft.core.Direction;
 

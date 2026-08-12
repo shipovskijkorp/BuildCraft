@@ -11,12 +11,12 @@ import java.util.Collections;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.statements.IActionExternal;
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IActionInternalSided;
-import buildcraft.api.statements.IActionProvider;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.containers.IFillerStatementContainer;
+import buildcraft.lib.internal.statement.IActionExternal;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IActionInternalSided;
+import buildcraft.lib.internal.statement.IActionProvider;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.containers.IFillerStatementContainer;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 

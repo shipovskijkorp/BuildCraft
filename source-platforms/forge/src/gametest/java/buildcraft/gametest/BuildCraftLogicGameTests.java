@@ -27,14 +27,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
-import buildcraft.api.filler.FillerManager;
-import buildcraft.api.filler.IFilledTemplate;
-import buildcraft.api.filler.IFillerPatternShape;
+import buildcraft.builders.internal.filler.legacy.FillerManager;
+import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
+import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
 import buildcraft.api.inventory.IItemTransactor;
 import buildcraft.api.v2.item.ItemTransferResult;
 import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.api.lists.ListMatchHandler.Type;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.builders.BCBuildersStatements;
 import buildcraft.builders.registry.FillerRegistry;
 import buildcraft.builders.snapshot.Snapshot;

@@ -3,7 +3,7 @@ package buildcraft.silicon.gate;
 import java.util.List;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.statements.IStatement;
+import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.gui.ISimpleDrawable;
 import buildcraft.lib.misc.ColourUtil;
 import buildcraft.lib.statement.StatementContext;

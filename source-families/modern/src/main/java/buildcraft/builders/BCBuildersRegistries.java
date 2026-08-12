@@ -7,7 +7,7 @@
 package buildcraft.builders;
 
 import buildcraft.builders.registry.FillerRegistry;
-import buildcraft.api.filler.FillerManager;
+import buildcraft.builders.internal.filler.legacy.FillerManager;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.builders.addon.AddonFillerPlanner;

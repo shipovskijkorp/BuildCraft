@@ -8,11 +8,11 @@ package buildcraft.transport.statements;
 
 import java.util.Locale;
 
-import buildcraft.api.gates.IGate;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.ITriggerInternal;
+import buildcraft.transport.internal.gate.IGate;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.ITriggerInternal;
 import buildcraft.transport.internal.IWireManager;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;

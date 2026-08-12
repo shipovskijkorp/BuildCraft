@@ -6,7 +6,7 @@
 
 package buildcraft.builders;
 
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.builders.filler.FillerStatementContext;
 import buildcraft.builders.snapshot.pattern.Pattern;
 import buildcraft.builders.snapshot.pattern.PatternBox;

@@ -5,7 +5,7 @@
 package buildcraft.core;
 
 import buildcraft.api.enums.EnumPowerStage;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.api.tiles.IControllable.Mode;
 import buildcraft.core.statements.ActionMachineControl;
 import buildcraft.core.statements.ActionRedstoneOutput;

@@ -1,7 +1,7 @@
 package buildcraft.builders.filler;
 
 import buildcraft.builders.registry.FillerRegistry;
-import buildcraft.api.filler.IFillerPattern;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.builders.BCBuildersStatements;
 import buildcraft.lib.statement.StatementType;
 import net.minecraft.nbt.CompoundTag;

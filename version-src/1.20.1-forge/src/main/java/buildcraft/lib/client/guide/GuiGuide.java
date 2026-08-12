@@ -45,7 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.recipes.IngredientStack;
-import buildcraft.api.statements.IStatement;
+import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.client.sprite.SpriteNineSliced;
 import buildcraft.lib.gui.GuiIcon;

@@ -4,8 +4,8 @@ import javax.annotation.Nullable;
 
 import buildcraft.api.items.IList;
 import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.StatementParameterItemStack;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.StatementParameterItemStack;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.item.ItemRobot;
@@ -35,10 +35,10 @@ public class StatementParameterRobot extends StatementParameterItemStack {
 
     @Override
     public StatementParameterRobot onClick(
-        buildcraft.api.statements.IStatementContainer source,
-        buildcraft.api.statements.IStatement stmt,
+        buildcraft.lib.internal.statement.IStatementContainer source,
+        buildcraft.lib.internal.statement.IStatement stmt,
         ItemStack clicked,
-        buildcraft.api.statements.StatementMouseClick mouse
+        buildcraft.lib.internal.statement.StatementMouseClick mouse
     ) {
         if (clicked.isEmpty()) {
             return new StatementParameterRobot();

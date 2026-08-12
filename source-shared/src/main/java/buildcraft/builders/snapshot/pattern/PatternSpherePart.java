@@ -6,9 +6,9 @@ import java.util.Locale;
 import java.util.Set;
 
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.filler.IFilledTemplate;
-import buildcraft.api.filler.IFillerPatternShape;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
+import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.builders.BCBuildersSprites;
 import buildcraft.builders.snapshot.Snapshot;
 import buildcraft.builders.snapshot.pattern.parameter.PatternParameterFacing;

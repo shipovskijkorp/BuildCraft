@@ -1,6 +1,6 @@
 package buildcraft.builders.gui;
 
-import buildcraft.api.filler.IFillerPattern;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.api.tiles.IControllable.Mode;
 import buildcraft.builders.filler.FillerStatementContext;
 import buildcraft.builders.menu.ContainerFiller;

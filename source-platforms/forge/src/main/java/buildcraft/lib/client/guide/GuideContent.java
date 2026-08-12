@@ -43,8 +43,8 @@ import buildcraft.api.v2.guide.GuideEntry;
 import buildcraft.api.v2.guide.GuidePage;
 import buildcraft.api.v2.guide.GuideSection;
 import buildcraft.api.v2.guide.GuideService;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.StatementManager;
 
 /**
  * Loads the BuildCraft Guide Book index and its localized packed pages.

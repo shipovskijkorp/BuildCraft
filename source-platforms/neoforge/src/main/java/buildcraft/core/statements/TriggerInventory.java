@@ -9,11 +9,11 @@ package buildcraft.core.statements;
 import java.util.Locale;
 
 import buildcraft.api.items.IList;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.ITriggerExternal;
-import buildcraft.api.statements.StatementParameterItemStack;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.ITriggerExternal;
+import buildcraft.lib.internal.statement.StatementParameterItemStack;
 import buildcraft.core.BCCoreSprites;
 import buildcraft.compat.CompatCapTransfromer;
 import buildcraft.core.BCCoreStatements;

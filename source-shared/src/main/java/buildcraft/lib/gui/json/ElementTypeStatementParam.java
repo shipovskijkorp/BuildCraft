@@ -2,7 +2,7 @@ package buildcraft.lib.gui.json;
 
 import com.google.gson.JsonSyntaxException;
 
-import buildcraft.api.statements.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.expression.FunctionContext;
 import buildcraft.lib.gui.IGuiElement;
 import buildcraft.lib.gui.pos.IGuiArea;

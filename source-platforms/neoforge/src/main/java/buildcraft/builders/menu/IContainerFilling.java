@@ -9,7 +9,7 @@ package buildcraft.builders.menu;
 import java.io.IOException;
 import java.util.stream.IntStream;
 
-import buildcraft.api.filler.IFillerPattern;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.builders.filler.FillerType;
 import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.misc.MessageUtil;

@@ -4,9 +4,9 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.builders.snapshot.pattern;
 
-import buildcraft.api.filler.IFilledTemplate;
-import buildcraft.api.filler.IFillerPatternShape;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
+import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.builders.BCBuildersSprites;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import net.neoforged.api.distmarker.Dist;

@@ -12,9 +12,9 @@ import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.IBox;
-import buildcraft.api.filler.IFillerPattern;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.containers.IFillerStatementContainer;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.containers.IFillerStatementContainer;
 import buildcraft.builders.BCBuildersSprites;
 import buildcraft.builders.filler.FillerType;
 import buildcraft.builders.filler.FillerUtil;

@@ -6,9 +6,9 @@
 
 package buildcraft.builders.filler;
 
-import buildcraft.api.filler.IFillerPattern;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.containers.IFillerStatementContainer;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.containers.IFillerStatementContainer;
 import buildcraft.builders.snapshot.Template;
 import buildcraft.builders.snapshot.Template.BuildingInfo;
 import buildcraft.lib.statement.FullStatement;

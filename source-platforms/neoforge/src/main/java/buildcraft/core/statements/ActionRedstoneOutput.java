@@ -6,11 +6,11 @@
 
 package buildcraft.core.statements;
 
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.containers.IRedstoneStatementContainer;
-import buildcraft.api.statements.containers.ISidedStatementContainer;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
+import buildcraft.lib.internal.statement.containers.ISidedStatementContainer;
 import buildcraft.core.BCCoreSprites;
 import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;

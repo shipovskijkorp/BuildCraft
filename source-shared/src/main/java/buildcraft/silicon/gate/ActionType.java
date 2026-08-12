@@ -5,10 +5,11 @@ import java.io.IOException;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.statements.IAction;
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.IAction;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 import buildcraft.lib.statement.ActionWrapper;
 import buildcraft.lib.statement.ActionWrapper.ActionWrapperInternal;
 import buildcraft.lib.statement.StatementType;
@@ -42,6 +43,7 @@ public class ActionType extends StatementType<ActionWrapper> {
         }
         EnumPipePart side = EnumPipePart.fromMeta(nbt.getByte("side"));
         IStatement statement = StatementManager.statements.get(kind);
+        if (statement == null) statement = StatementApi2Bridge.ensureNativeAdapter(kind);
         if (statement instanceof IAction) {
             return ActionWrapper.wrap(statement, side.face);
         }
@@ -66,6 +68,7 @@ public class ActionType extends StatementType<ActionWrapper> {
             String name = buffer.readUtf();
             EnumPipePart part = buffer.readEnum(EnumPipePart.class);
             IStatement statement = StatementManager.statements.get(name);
+            if (statement == null) statement = StatementApi2Bridge.ensureNativeAdapter(name);
             if (statement instanceof IAction) {
                 return ActionWrapper.wrap(statement, part.face);
             } else {

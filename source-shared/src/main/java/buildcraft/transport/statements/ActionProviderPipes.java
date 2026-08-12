@@ -15,12 +15,12 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 
-import buildcraft.api.gates.IGate;
-import buildcraft.api.statements.IActionExternal;
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IActionInternalSided;
-import buildcraft.api.statements.IActionProvider;
-import buildcraft.api.statements.IStatementContainer;
+import buildcraft.transport.internal.gate.IGate;
+import buildcraft.lib.internal.statement.IActionExternal;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IActionInternalSided;
+import buildcraft.lib.internal.statement.IActionProvider;
+import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.transport.internal.IWireEmitter;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pipe.PipeDefinition;

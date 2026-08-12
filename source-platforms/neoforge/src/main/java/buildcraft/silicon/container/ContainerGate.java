@@ -16,7 +16,7 @@ import java.util.TreeSet;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.lib.gui.ContainerPipe;

@@ -6,7 +6,7 @@ package buildcraft.lib;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.core.BCLog;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.lib.block.VanillaRotationHandlers;
 import buildcraft.lib.chunkload.ChunkLoaderManager;
 import buildcraft.lib.expression.ExpressionDebugManager;

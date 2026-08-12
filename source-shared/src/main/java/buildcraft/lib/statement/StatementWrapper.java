@@ -12,11 +12,11 @@ import java.util.Objects;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.statements.IAction;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.ITrigger;
+import buildcraft.lib.internal.statement.IAction;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.ITrigger;
 import buildcraft.lib.misc.ColourUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,37 +32,37 @@ public abstract class StatementWrapper implements IStatement, Comparable<Stateme
         this.sourcePart = sourcePart;
     }
 
-    /** @see buildcraft.api.statements.IStatement#getUniqueTag() */
+    /** @see buildcraft.lib.internal.statement.IStatement#getUniqueTag() */
     @Override
     public String getUniqueTag() {
         return this.delegate.getUniqueTag();
     }
 
-    /** @see buildcraft.api.statements.IStatement#maxParameters() */
+    /** @see buildcraft.lib.internal.statement.IStatement#maxParameters() */
     @Override
     public int maxParameters() {
         return this.delegate.maxParameters();
     }
 
-    /** @see buildcraft.api.statements.IStatement#minParameters() */
+    /** @see buildcraft.lib.internal.statement.IStatement#minParameters() */
     @Override
     public int minParameters() {
         return this.delegate.minParameters();
     }
 
-    /** @see buildcraft.api.statements.IStatement#getDescription() */
+    /** @see buildcraft.lib.internal.statement.IStatement#getDescription() */
     @Override
     public Component getDescription() {
         return this.delegate.getDescription();
     }
 
-    /** @see buildcraft.api.statements.IStatement#createParameter(int) */
+    /** @see buildcraft.lib.internal.statement.IStatement#createParameter(int) */
     @Override
     public IStatementParameter createParameter(int index) {
         return this.delegate.createParameter(index);
     }
 
-    /** @see buildcraft.api.statements.IStatement#rotateLeft() */
+    /** @see buildcraft.lib.internal.statement.IStatement#rotateLeft() */
     @Override
     public StatementWrapper rotateLeft() {
     	this.delegate = this.delegate.rotateLeft();
@@ -71,7 +71,7 @@ public abstract class StatementWrapper implements IStatement, Comparable<Stateme
         return this;
     }
 
-    /** @see buildcraft.api.statements.IStatement#getSprite() */
+    /** @see buildcraft.lib.internal.statement.IStatement#getSprite() */
     @Override
     public ISprite getSprite() {
         return this.delegate.getSprite();

@@ -3,10 +3,10 @@ package buildcraft.robotics.statements;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.StatementMouseClick;
-import buildcraft.api.statements.StatementParameterItemStack;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.StatementMouseClick;
+import buildcraft.lib.internal.statement.StatementParameterItemStack;
 import buildcraft.api.items.IMapLocation;
 import buildcraft.lib.misc.ItemStackUtil;
 

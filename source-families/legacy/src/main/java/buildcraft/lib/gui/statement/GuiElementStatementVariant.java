@@ -10,7 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 ?*/
 //?}
-import buildcraft.api.statements.IGuiSlot;
+import buildcraft.lib.internal.statement.IGuiSlot;
 import buildcraft.lib.client.sprite.SpriteNineSliced;
 import buildcraft.lib.gui.BuildCraftGui;
 import buildcraft.lib.gui.GuiElementSimple;

@@ -6,9 +6,10 @@
 
 package buildcraft.core.statements;
 
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 
 public abstract class BCStatement implements IStatement {
 
@@ -23,6 +24,7 @@ public abstract class BCStatement implements IStatement {
         for (String tag : uniqueTag) {
             StatementManager.statements.put(tag, this);
         }
+        StatementApi2Bridge.mirrorLegacyStatement(this);
     }
 
     @Override

@@ -22,7 +22,7 @@ import buildcraft.api.robots.DockingStation;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.api.robots.IRobotRegistry;
 import buildcraft.api.robots.RobotManager;
-import buildcraft.api.statements.StatementSlot;
+import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.fluid.FluidCompatRegistry;

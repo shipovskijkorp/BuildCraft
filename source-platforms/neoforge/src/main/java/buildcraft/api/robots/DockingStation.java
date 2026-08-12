@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.statements.StatementSlot;
+import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.transport.internal.IInjectable;
 
 public abstract class DockingStation {

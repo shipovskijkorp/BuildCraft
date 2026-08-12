@@ -4,7 +4,7 @@ import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.DockingStation;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.transport.internal.IInjectable;
-import buildcraft.api.statements.StatementSlot;
+import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import buildcraft.robotics.DockingStationPipe;
 import buildcraft.robotics.statements.ActionRobotFilter;

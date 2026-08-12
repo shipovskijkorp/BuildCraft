@@ -8,10 +8,10 @@ package buildcraft.core.statements;
 
 import java.util.Locale;
 
-import buildcraft.api.statements.IActionExternal;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IActionExternal;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.api.tiles.IControllable;
 import buildcraft.api.tiles.IControllable.Mode;
 import buildcraft.api.tiles.TilesAPI;

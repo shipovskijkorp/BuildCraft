@@ -60,6 +60,8 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final WorldPropertyServiceImpl worldProperties = new WorldPropertyServiceImpl();
     private final GuideServiceImpl guide = new GuideServiceImpl();
     private final WorldgenServiceImpl worldgen = new WorldgenServiceImpl();
+    private final StatementServiceImpl statements = StatementServiceImpl.INSTANCE;
+    private final FillerPatternServiceImpl fillerPatterns = FillerPatternServiceImpl.INSTANCE;
 
     private BuildCraftApiRuntime() {
         services.put(BuildCraftServices.ENERGY, energy);
@@ -72,6 +74,8 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         services.put(BuildCraftServices.WORLD_PROPERTIES, worldProperties);
         services.put(BuildCraftServices.GUIDE, guide);
         services.put(BuildCraftServices.WORLDGEN, worldgen);
+        services.put(BuildCraftServices.STATEMENTS, statements);
+        services.put(BuildCraftServices.FILLER_PATTERNS, fillerPatterns);
 
         registerRegistry(BuildCraftRegistries.ENGINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_TYPES);

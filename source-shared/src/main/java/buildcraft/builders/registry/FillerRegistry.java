@@ -6,6 +6,8 @@
 
 package buildcraft.builders.registry;
 
+import buildcraft.builders.api2.FillerApi2Bridge;
+
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -15,9 +17,9 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.filler.IFilledTemplate;
-import buildcraft.api.filler.IFillerPattern;
-import buildcraft.api.filler.IFillerRegistry;
+import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
+import buildcraft.builders.internal.filler.legacy.IFillerRegistry;
 import buildcraft.builders.snapshot.Snapshot;
 import buildcraft.builders.snapshot.Template;
 import net.minecraft.core.BlockPos;
@@ -35,17 +37,21 @@ public enum FillerRegistry implements IFillerRegistry {
         // statement tags. Preserve that compatibility behavior until filler
         // patterns move to the typed API 2 statements domain.
         patterns.put(id, pattern);
+        FillerApi2Bridge.mirrorLegacyPattern(pattern);
     }
 
     @Override
     @Nullable
     public IFillerPattern getPattern(String name) {
-        return patterns.get(name);
+        IFillerPattern pattern = patterns.get(name);
+        return pattern != null ? pattern : FillerApi2Bridge.nativePattern(name);
     }
 
     @Override
     public synchronized Collection<IFillerPattern> getPatterns() {
-        return List.copyOf(patterns.values());
+        List<IFillerPattern> all = new java.util.ArrayList<>(patterns.values());
+        all.addAll(FillerApi2Bridge.nativePatterns());
+        return List.copyOf(all);
     }
 
     @Override

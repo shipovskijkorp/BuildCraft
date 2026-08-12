@@ -13,7 +13,7 @@ import java.util.List;
 
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.enums.EnumSnapshotType;
-import buildcraft.api.filler.IFilledTemplate;
+import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
 import buildcraft.lib.misc.VecUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

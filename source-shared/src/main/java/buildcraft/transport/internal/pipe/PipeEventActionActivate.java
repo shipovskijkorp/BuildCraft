@@ -1,8 +1,8 @@
 package buildcraft.transport.internal.pipe;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.statements.IAction;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IAction;
+import buildcraft.lib.internal.statement.IStatementParameter;
 
 public class PipeEventActionActivate extends PipeEvent {
     public final IAction action;

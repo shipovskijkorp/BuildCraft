@@ -10,12 +10,12 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.ITriggerExternal;
-import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.statements.ITriggerInternalSided;
-import buildcraft.api.statements.ITriggerProvider;
-import buildcraft.api.statements.containers.IRedstoneStatementContainer;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.ITriggerExternal;
+import buildcraft.lib.internal.statement.ITriggerInternal;
+import buildcraft.lib.internal.statement.ITriggerInternalSided;
+import buildcraft.lib.internal.statement.ITriggerProvider;
+import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.compat.CompatCapTransfromer;
 import buildcraft.core.BCCoreStatements;

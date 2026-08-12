@@ -9,7 +9,7 @@ package buildcraft.transport;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.core.Direction;
 
-import buildcraft.api.statements.StatementManager;
+import buildcraft.lib.internal.statement.StatementManager;
 
 import buildcraft.lib.misc.ColourUtil;
 

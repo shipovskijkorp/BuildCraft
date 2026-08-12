@@ -11,24 +11,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import buildcraft.api.BCModules;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.gate.GateControl;
+import buildcraft.api.v2.gate.GateProgram;
+import buildcraft.api.v2.gate.GateRule;
+import buildcraft.api.v2.gate.GateView;
+import buildcraft.api.v2.statement.StatementKind;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.gates.IGate;
-import buildcraft.api.statements.IActionExternal;
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IActionInternalSided;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.ITriggerExternal;
-import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.statements.ITriggerInternalSided;
-import buildcraft.api.statements.StatementManager;
-import buildcraft.api.statements.StatementSlot;
-import buildcraft.api.statements.containers.IRedstoneStatementContainer;
+import buildcraft.transport.internal.gate.IGate;
+import buildcraft.lib.internal.statement.IActionExternal;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IActionInternalSided;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.ITriggerExternal;
+import buildcraft.lib.internal.statement.ITriggerInternal;
+import buildcraft.lib.internal.statement.ITriggerInternalSided;
+import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.StatementSlot;
+import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
 import buildcraft.transport.internal.IWireEmitter;
 import buildcraft.transport.internal.IWireManager;
 import buildcraft.transport.internal.pipe.IPipeHolder;
@@ -37,6 +44,7 @@ import buildcraft.transport.internal.pipe.PipeEventActionActivate;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.data.IdAllocator;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 import buildcraft.lib.statement.ActionWrapper;
 import buildcraft.lib.statement.ActionWrapper.ActionWrapperExternal;
 import buildcraft.lib.statement.ActionWrapper.ActionWrapperInternal;
@@ -59,7 +67,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
-public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContainer {
+public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContainer, GateView, GateControl {
 
     protected static final IdAllocator ID_ALLOC = new IdAllocator("GateLogic");
 
@@ -307,6 +315,105 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
     @Override
     public IPipeHolder getPipeHolder() {
         return pluggable.holder;
+    }
+
+    // API2 gate view/control
+
+    @Override
+    public net.minecraft.core.BlockPos position() {
+        return getPipeHolder().getPipePos();
+    }
+
+    @Override
+    public Direction side() {
+        return getSide();
+    }
+
+    @Override
+    public GateProgram program() {
+        List<GateRule> rules = new ArrayList<>(statements.length);
+        for (StatementPair pair : statements) {
+            TriggerWrapper trigger = pair.trigger.get();
+            ActionWrapper action = pair.action.get();
+            buildcraft.api.v2.statement.StatementSlot apiTrigger = trigger == null ? null
+                : new buildcraft.api.v2.statement.StatementSlot(
+                    StatementKind.TRIGGER, java.util.Objects.requireNonNull(net.minecraft.resources.ResourceLocation.tryParse(trigger.getUniqueTag())),
+                    trigger.getSourcePart().face, StatementApi2Bridge.toApiParameters(trigger.getDelegate(), pair.trigger.getParameters())
+                );
+            buildcraft.api.v2.statement.StatementSlot apiAction = action == null ? null
+                : new buildcraft.api.v2.statement.StatementSlot(
+                    StatementKind.ACTION, java.util.Objects.requireNonNull(net.minecraft.resources.ResourceLocation.tryParse(action.getUniqueTag())),
+                    action.getSourcePart().face, StatementApi2Bridge.toApiParameters(action.getDelegate(), pair.action.getParameters())
+                );
+            rules.add(new GateRule(apiTrigger, apiAction));
+        }
+        List<Boolean> links = new ArrayList<>(connections.length);
+        for (boolean connection : connections) links.add(connection);
+        return new GateProgram(rules, links);
+    }
+
+    @Override
+    public Optional<GateControl> control() {
+        return Optional.of(this);
+    }
+
+    @Override
+    public boolean setProgram(GateProgram program, OperationMode mode) {
+        if (program == null || mode == null || program.rules().size() > statements.length
+            || program.connections().size() > connections.length) {
+            return false;
+        }
+
+        TriggerWrapper[] triggers = new TriggerWrapper[statements.length];
+        ActionWrapper[] actions = new ActionWrapper[statements.length];
+        buildcraft.lib.internal.statement.IStatementParameter[][] triggerParams =
+            new buildcraft.lib.internal.statement.IStatementParameter[statements.length][];
+        buildcraft.lib.internal.statement.IStatementParameter[][] actionParams =
+            new buildcraft.lib.internal.statement.IStatementParameter[statements.length][];
+
+        for (int i = 0; i < program.rules().size(); i++) {
+            GateRule rule = program.rules().get(i);
+            if (rule.trigger() != null) {
+                if (rule.trigger().kind() != StatementKind.TRIGGER) return false;
+                triggers[i] = StatementApi2Bridge.toLegacyTrigger(rule.trigger());
+                if (triggers[i] == null || !statements[i].trigger.canSet(triggers[i])) return false;
+                triggerParams[i] = StatementApi2Bridge.toLegacyParameters(triggers[i].getDelegate(), rule.trigger().parameters());
+            }
+            if (rule.action() != null) {
+                if (rule.action().kind() != StatementKind.ACTION) return false;
+                actions[i] = StatementApi2Bridge.toLegacyAction(rule.action());
+                if (actions[i] == null || !statements[i].action.canSet(actions[i])) return false;
+                actionParams[i] = StatementApi2Bridge.toLegacyParameters(actions[i].getDelegate(), rule.action().parameters());
+            }
+        }
+
+        if (mode == OperationMode.SIMULATE) return true;
+
+        for (int i = 0; i < statements.length; i++) {
+            setApiTrigger(i, triggers[i], triggerParams[i]);
+            setApiAction(i, actions[i], actionParams[i]);
+        }
+        Arrays.fill(connections, false);
+        for (int i = 0; i < program.connections().size(); i++) connections[i] = program.connections().get(i);
+        markGateDirty();
+        for (int i = 0; i < statements.length; i++) {
+            sendStatementUpdate(false, i);
+            sendStatementUpdate(true, i);
+        }
+        sendResolveData();
+        return true;
+    }
+
+    private void setApiTrigger(int index, TriggerWrapper trigger, buildcraft.lib.internal.statement.IStatementParameter[] params) {
+        FullStatement<TriggerWrapper> full = statements[index].trigger;
+        full.set(trigger);
+        for (int p = 0; p < full.getParamCount(); p++) full.set(p, params != null && p < params.length ? params[p] : null);
+    }
+
+    private void setApiAction(int index, ActionWrapper action, buildcraft.lib.internal.statement.IStatementParameter[] params) {
+        FullStatement<ActionWrapper> full = statements[index].action;
+        full.set(action);
+        for (int p = 0; p < full.getParamCount(); p++) full.set(p, params != null && p < params.length ? params[p] : null);
     }
 
     @Override

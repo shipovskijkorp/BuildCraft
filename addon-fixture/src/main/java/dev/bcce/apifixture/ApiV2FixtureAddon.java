@@ -40,7 +40,10 @@ import buildcraft.api.v2.robot.RobotBoardType;
 import buildcraft.api.v2.signal.SignalChannelType;
 import buildcraft.api.v2.statement.ActionType;
 import buildcraft.api.v2.statement.ParameterSchema;
+import buildcraft.api.v2.statement.ParameterSpec;
+import buildcraft.api.v2.statement.ParameterType;
 import buildcraft.api.v2.statement.StatementResult;
+import buildcraft.api.v2.statement.StatementContributor;
 import buildcraft.api.v2.statement.TriggerType;
 import java.util.List;
 import java.util.Objects;
@@ -55,6 +58,8 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class ApiV2FixtureAddon {
     private static final ResourceLocation BOOL_FORMAT = id("bool_payload");
+    private static final ResourceLocation BOOL_PARAMETER_ID = id("boolean_parameter");
+    private static final ResourceLocation BOOL_PARAMETER_SLOT = id("enabled");
     private static final ApiCodec<Boolean, OpaqueData> BOOL_CODEC = new ApiCodec<>() {
         @Override
         public CodecResult<Boolean> decode(OpaqueData payload) {
@@ -69,6 +74,9 @@ public final class ApiV2FixtureAddon {
             return CodecResult.success(new OpaqueData(BOOL_FORMAT, new byte[] { (byte) (value ? 1 : 0) }));
         }
     };
+    private static final ParameterType<Boolean> BOOL_PARAMETER = new ParameterType<>(
+        BOOL_PARAMETER_ID, BOOL_CODEC, context -> List.of(Boolean.TRUE, Boolean.FALSE)
+    );
 
     private ApiV2FixtureAddon() {}
 
@@ -119,14 +127,32 @@ public final class ApiV2FixtureAddon {
             () -> "api-v2-fixture"
         );
 
+        BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.PARAMETER_TYPES).register(
+            BOOL_PARAMETER_ID,
+            BOOL_PARAMETER,
+            () -> "api-v2-fixture"
+        );
         BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.TRIGGER_TYPES).register(
             id("always"),
-            new TriggerType(id("always"), ParameterSchema.EMPTY, (context, parameters) -> true),
+            new TriggerType(
+                id("always"),
+                new ParameterSchema(List.of(new ParameterSpec(BOOL_PARAMETER_SLOT, BOOL_PARAMETER_ID, false))),
+                (context, parameters) -> parameters.get(BOOL_PARAMETER_SLOT, BOOL_PARAMETER).orElse(Boolean.TRUE)
+            ),
             () -> "api-v2-fixture"
         );
         BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.ACTION_TYPES).register(
             id("noop"),
             new ActionType(id("noop"), ParameterSchema.EMPTY, (context, parameters) -> StatementResult.success()),
+            () -> "api-v2-fixture"
+        );
+
+        BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.STATEMENT_CONTRIBUTORS).register(
+            id("gate_examples"),
+            (StatementContributor) (context, collector) -> {
+                collector.addTrigger(id("always"));
+                collector.addAction(id("noop"));
+            },
             () -> "api-v2-fixture"
         );
 

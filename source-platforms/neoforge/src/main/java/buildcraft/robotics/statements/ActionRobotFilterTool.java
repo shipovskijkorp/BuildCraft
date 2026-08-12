@@ -5,11 +5,11 @@ import java.util.Collection;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.robots.DockingStation;
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.StatementParameterItemStack;
-import buildcraft.api.statements.StatementSlot;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.StatementParameterItemStack;
+import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import buildcraft.lib.inventory.filter.PassThroughStackFilter;

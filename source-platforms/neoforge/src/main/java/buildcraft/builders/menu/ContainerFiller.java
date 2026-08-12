@@ -8,7 +8,7 @@ package buildcraft.builders.menu;
 
 import java.io.IOException;
 
-import buildcraft.api.filler.IFillerPattern;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.builders.BCBuildersGuis;
 import buildcraft.builders.filler.FillerType;
 import buildcraft.builders.tile.TileFiller;

@@ -7,7 +7,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 
-import buildcraft.api.statements.IStatement;
+import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.client.sprite.SpriteNineSliced;
 import buildcraft.lib.client.sprite.SpriteRaw;

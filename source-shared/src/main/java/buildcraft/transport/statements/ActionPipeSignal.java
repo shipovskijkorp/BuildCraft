@@ -11,9 +11,9 @@ import java.util.Locale;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
 
-import buildcraft.api.statements.IActionInternal;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IActionInternal;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.transport.internal.IWireEmitter;
 
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;

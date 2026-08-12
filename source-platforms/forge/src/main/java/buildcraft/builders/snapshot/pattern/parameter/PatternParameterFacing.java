@@ -12,10 +12,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.StatementMouseClick;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.StatementMouseClick;
 import buildcraft.builders.BCBuildersSprites;
 import buildcraft.lib.misc.MathUtil;
 import buildcraft.lib.misc.StackUtil;

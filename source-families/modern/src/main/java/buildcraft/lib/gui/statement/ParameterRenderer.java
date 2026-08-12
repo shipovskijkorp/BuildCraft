@@ -7,8 +7,8 @@ import java.util.function.Function;
 import net.minecraft.client.gui.GuiGraphics;
 
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.IStatementParameter.DrawType;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.IStatementParameter.DrawType;
 import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.ISimpleDrawable;
 import buildcraft.lib.misc.GuiUtil;

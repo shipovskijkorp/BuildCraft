@@ -4,11 +4,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.gates.IGate;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.statements.StatementParameterItemStack;
+import buildcraft.transport.internal.gate.IGate;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.ITriggerInternal;
+import buildcraft.lib.internal.statement.StatementParameterItemStack;
 import buildcraft.transport.internal.pipe.PipeFlow;
 
 import buildcraft.core.statements.BCStatement;

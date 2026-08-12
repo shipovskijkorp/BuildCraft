@@ -3,10 +3,10 @@ package buildcraft.lib.statement;
 import java.io.IOException;
 
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.StatementManager;
-import buildcraft.api.statements.StatementManager.IParamReaderBuf;
-import buildcraft.api.statements.StatementManager.IParameterReader;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.StatementManager.IParamReaderBuf;
+import buildcraft.lib.internal.statement.StatementManager.IParameterReader;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 

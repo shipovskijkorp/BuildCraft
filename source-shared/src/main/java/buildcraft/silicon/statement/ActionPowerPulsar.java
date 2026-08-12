@@ -6,12 +6,12 @@
 
 package buildcraft.silicon.statement;
 
-import buildcraft.api.gates.IGate;
-import buildcraft.api.statements.IActionInternalSided;
-import buildcraft.api.statements.IActionSingle;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.transport.internal.gate.IGate;
+import buildcraft.lib.internal.statement.IActionInternalSided;
+import buildcraft.lib.internal.statement.IActionSingle;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.core.statements.BCStatement;

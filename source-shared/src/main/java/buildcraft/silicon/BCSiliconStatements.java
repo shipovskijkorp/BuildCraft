@@ -1,5 +1,7 @@
 package buildcraft.silicon;
 
+import buildcraft.silicon.api2.SiliconApi2;
+
 import buildcraft.silicon.statement.ActionPowerPulsar;
 import buildcraft.silicon.statement.TriggerLightSensor;
 import buildcraft.silicon.statement.TriggerTimer;
@@ -35,6 +37,7 @@ public class BCSiliconStatements {
     }
 
     public static void preInit() {
-        // NO-OP: just to call the above static block
+        SiliconApi2.install();
+        // The static block above registers the built-in statements through the API2 bridge.
     }
 }

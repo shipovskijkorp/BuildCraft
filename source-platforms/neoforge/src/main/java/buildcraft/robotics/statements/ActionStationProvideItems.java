@@ -1,10 +1,10 @@
 package buildcraft.robotics.statements;
 
 import buildcraft.api.robots.DockingStation;
-import buildcraft.api.statements.IStatement;
-import buildcraft.api.statements.StatementSlot;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
+import buildcraft.lib.internal.statement.IStatement;
+import buildcraft.lib.internal.statement.StatementSlot;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;

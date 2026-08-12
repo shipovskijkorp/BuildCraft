@@ -1,11 +1,11 @@
 package buildcraft.builders.snapshot.pattern;
 
 import buildcraft.builders.registry.FillerRegistry;
-import buildcraft.api.filler.IFillerPattern;
-import buildcraft.api.statements.IActionExternal;
-import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.statements.containers.IFillerStatementContainer;
+import buildcraft.builders.internal.filler.legacy.IFillerPattern;
+import buildcraft.lib.internal.statement.IActionExternal;
+import buildcraft.lib.internal.statement.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementParameter;
+import buildcraft.lib.internal.statement.containers.IFillerStatementContainer;
 import buildcraft.builders.BCBuildersStatements;
 import buildcraft.core.statements.BCStatement;
 import net.minecraft.core.Direction;

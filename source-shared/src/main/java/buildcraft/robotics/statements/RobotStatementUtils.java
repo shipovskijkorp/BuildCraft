@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import buildcraft.api.robots.DockingStation;
-import buildcraft.api.statements.IStatementContainer;
+import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.robotics.plug.RobotStationPluggable;
 
