@@ -15,7 +15,7 @@ import buildcraft.api.core.render.ISprite;
 import buildcraft.robotics.BCRoboticsSprites;
 import buildcraft.robotics.ai.AIRobotGoAndLinkToDock;
 import buildcraft.robotics.plug.RobotStationPluggable;
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

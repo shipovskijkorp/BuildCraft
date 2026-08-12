@@ -16,7 +16,7 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import buildcraft.api.transport.pluggable.IPlugDynamicRenderer;
+import buildcraft.transport.internal.pluggable.IPlugDynamicRenderer;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.silicon.client.model.key.KeyPlugFacade;
 import buildcraft.silicon.client.model.plug.PlugBakerFacade;

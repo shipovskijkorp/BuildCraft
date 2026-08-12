@@ -1,8 +1,8 @@
 package buildcraft.silicon;
 
-import buildcraft.api.transport.pipe.PipeApiClient;
-import buildcraft.api.transport.pipe.PipeApiClient.IClientRegistry;
-import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
+import buildcraft.transport.internal.pipe.PipeApiClient;
+import buildcraft.transport.internal.pipe.PipeApiClient.IClientRegistry;
+import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
 import buildcraft.lib.client.model.ModelHolderStatic;
 import buildcraft.lib.client.model.ModelHolderVariable;
 import buildcraft.lib.client.model.ModelPluggableItem;

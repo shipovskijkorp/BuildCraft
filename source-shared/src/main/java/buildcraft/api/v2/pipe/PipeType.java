@@ -16,6 +16,8 @@ public final class PipeType {
     private final FluidTransportProfile fluidProfile;
     private final PowerTransportProfile mjProfile;
     private final ExternalEnergyTransportProfile externalEnergyProfile;
+    private final boolean colorable;
+    private final ResourceLocation archetypeId;
 
     private PipeType(Builder b) {
         id = b.id;
@@ -25,10 +27,12 @@ public final class PipeType {
         fluidProfile = b.fluidProfile;
         mjProfile = b.mjProfile;
         externalEnergyProfile = b.externalEnergyProfile;
+        colorable = b.colorable;
+        archetypeId = b.archetypeId;
     }
 
     public static Builder builder(ResourceLocation id) { return new Builder(id); }
-    public static Builder variant(ResourceLocation id, PipeType base) { return new Builder(id).copyFrom(base); }
+    public static Builder variant(ResourceLocation id, PipeType base) { return new Builder(id).copyFrom(base).archetype(base.id()); }
     public Builder copyAs(ResourceLocation newId) { return variant(newId, this); }
     public ResourceLocation id() { return id; }
     public Set<PipeMedium> media() { return media; }
@@ -37,6 +41,9 @@ public final class PipeType {
     public Optional<FluidTransportProfile> fluidProfile() { return Optional.ofNullable(fluidProfile); }
     public Optional<PowerTransportProfile> mjProfile() { return Optional.ofNullable(mjProfile); }
     public Optional<ExternalEnergyTransportProfile> externalEnergyProfile() { return Optional.ofNullable(externalEnergyProfile); }
+    public boolean colorable() { return colorable; }
+    /** Runtime archetype whose stable behaviour/rendering is reused by this variant. */
+    public Optional<ResourceLocation> archetypeId() { return Optional.ofNullable(archetypeId); }
 
     public static final class Builder {
         private final ResourceLocation id;
@@ -46,6 +53,8 @@ public final class PipeType {
         private FluidTransportProfile fluidProfile;
         private PowerTransportProfile mjProfile;
         private ExternalEnergyTransportProfile externalEnergyProfile;
+        private boolean colorable;
+        private ResourceLocation archetypeId;
 
         private Builder(ResourceLocation id) { this.id = Objects.requireNonNull(id, "id"); }
         public Builder copyFrom(PipeType base) {
@@ -58,6 +67,8 @@ public final class PipeType {
             fluidProfile = base.fluidProfile;
             mjProfile = base.mjProfile;
             externalEnergyProfile = base.externalEnergyProfile;
+            colorable = base.colorable;
+            archetypeId = base.archetypeId;
             return this;
         }
         public Builder medium(PipeMedium medium) { media.add(Objects.requireNonNull(medium, "medium")); return this; }
@@ -68,6 +79,8 @@ public final class PipeType {
         public Builder fluidProfile(FluidTransportProfile profile) { fluidProfile = Objects.requireNonNull(profile, "profile"); return medium(PipeMedium.FLUID); }
         public Builder mjProfile(PowerTransportProfile profile) { mjProfile = Objects.requireNonNull(profile, "profile"); return medium(PipeMedium.MJ); }
         public Builder externalEnergyProfile(ExternalEnergyTransportProfile profile) { externalEnergyProfile = Objects.requireNonNull(profile, "profile"); return medium(PipeMedium.EXTERNAL_ENERGY); }
+        public Builder colorable(boolean value) { colorable = value; return this; }
+        public Builder archetype(ResourceLocation value) { archetypeId = Objects.requireNonNull(value, "value"); return this; }
         public PipeType build() {
             if (media.isEmpty()) throw new IllegalStateException("Pipe type must declare at least one medium");
             return new PipeType(this);

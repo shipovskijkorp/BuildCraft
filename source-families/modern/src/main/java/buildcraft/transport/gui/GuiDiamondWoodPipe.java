@@ -9,7 +9,7 @@ package buildcraft.transport.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import buildcraft.api.transport.pipe.IFlowItems;
+import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.lib.gui.GuiBC8;
 import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.button.GuiImageButton;

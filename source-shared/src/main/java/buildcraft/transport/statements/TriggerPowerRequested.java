@@ -7,8 +7,8 @@ import buildcraft.api.gates.IGate;
 import buildcraft.api.statements.IStatementContainer;
 import buildcraft.api.statements.IStatementParameter;
 import buildcraft.api.statements.ITriggerInternal;
-import buildcraft.api.transport.pipe.IFlowForgeEnergy;
-import buildcraft.api.transport.pipe.PipeFlow;
+import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
+import buildcraft.transport.internal.pipe.PipeFlow;
 
 import buildcraft.core.statements.BCStatement;
 import buildcraft.transport.BCTransportSprites;

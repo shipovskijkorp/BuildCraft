@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.transport.pipe.IItemPipe;
+import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.BCCoreItems;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;

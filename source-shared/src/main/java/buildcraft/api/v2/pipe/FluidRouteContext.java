@@ -5,9 +5,18 @@ import java.util.Objects;
 import java.util.Set;
 import net.minecraft.core.Direction;
 
-public record FluidRouteContext(PipeView pipe, Direction input, FluidVolume volume, Set<Direction> candidates) {
+/**
+ * Routing context for fluids currently merged in a pipe centre.
+ *
+ * <p>Unlike item and energy transport, BuildCraft fluid flow may merge the same fluid from several
+ * input faces before selecting output faces. The API therefore exposes every active input instead of
+ * inventing a single source direction.</p>
+ */
+public record FluidRouteContext(PipeView pipe, Set<Direction> inputs, FluidVolume volume, Set<Direction> candidates) {
     public FluidRouteContext {
-        Objects.requireNonNull(pipe, "pipe"); Objects.requireNonNull(input, "input"); Objects.requireNonNull(volume, "volume");
+        Objects.requireNonNull(pipe, "pipe");
+        inputs = Set.copyOf(Objects.requireNonNull(inputs, "inputs"));
+        Objects.requireNonNull(volume, "volume");
         candidates = Set.copyOf(Objects.requireNonNull(candidates, "candidates"));
     }
 }

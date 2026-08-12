@@ -13,7 +13,7 @@ import buildcraft.api.mj.IMjReceiver;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.mj.MjBattery;
 import buildcraft.api.mj.MjCapabilityHelper;
-import buildcraft.api.transport.pipe.IItemPipe;
+import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.BCCoreItems;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;

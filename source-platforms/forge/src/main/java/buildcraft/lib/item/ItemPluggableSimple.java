@@ -10,13 +10,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.transport.IItemPluggable;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
-import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableCreator;
+import buildcraft.transport.internal.IItemPluggable;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.pluggable.PluggableDefinition.IPluggableCreator;
 import buildcraft.lib.misc.SoundUtil;
 import buildcraft.transport.pipe.Pipe;
 

@@ -8,8 +8,8 @@ package buildcraft.transport.stripes;
 
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
-import buildcraft.api.transport.IStripesActivator;
-import buildcraft.api.transport.IStripesHandlerItem;
+import buildcraft.transport.internal.IStripesActivator;
+import buildcraft.transport.internal.IStripesHandlerItem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

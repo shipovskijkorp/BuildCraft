@@ -13,9 +13,9 @@ import java.util.Objects;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.world.item.DyeColor;
 
-import buildcraft.api.transport.pipe.EnumPipeColourType;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pipe.PipeFaceTex;
+import buildcraft.transport.internal.pipe.EnumPipeColourType;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeFaceTex;
 
 import buildcraft.lib.client.model.IModelCache;
 import buildcraft.lib.client.model.ModelCache;

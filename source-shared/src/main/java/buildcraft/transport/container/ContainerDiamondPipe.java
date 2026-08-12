@@ -6,7 +6,7 @@
 
 package buildcraft.transport.container;
 
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.lib.gui.ContainerPipe;
 import buildcraft.lib.gui.slot.SlotPhantom;
 import buildcraft.lib.tile.item.IItemHandlerAdv;

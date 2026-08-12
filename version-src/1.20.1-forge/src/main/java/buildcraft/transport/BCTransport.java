@@ -14,6 +14,7 @@ import buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import buildcraft.lib.net.MessageManager;
 import buildcraft.core.BCCore;
 import buildcraft.transport.net.MessageMultiPipeItem;
+import buildcraft.transport.api2.TransportApi2;
 import buildcraft.transport.pipe.SchematicBlockPipe;
 import buildcraft.transport.wire.MessageWireSystems;
 import buildcraft.transport.wire.MessageWireSystemsPowered;
@@ -66,6 +67,7 @@ public class BCTransport {
         modEventBus.addListener(BCTransportConfig::onConfigReload);
 
         BCLibRegistries.initApiRegistries();
+        TransportApi2.install();
         BCTransportRegistries.preInit();
         BCTransportConfig.preInit();
         BCTransportPipes.preInit();

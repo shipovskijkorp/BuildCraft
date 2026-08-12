@@ -15,10 +15,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;
 import buildcraft.api.core.BCLog;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 
 import buildcraft.lib.client.model.IModelCache;
 import buildcraft.lib.client.model.ModelCache;

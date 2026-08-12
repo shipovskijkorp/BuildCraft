@@ -1,7 +1,7 @@
 package buildcraft.robotics;
 
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
 import buildcraft.lib.BCLibRegistries;
 import buildcraft.robotics.plug.RobotStationPluggable;
 import net.minecraft.resources.ResourceLocation;

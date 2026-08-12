@@ -11,10 +11,10 @@ import java.util.EnumMap;
 import java.util.List;
 
 import buildcraft.api.core.EnumHandlerPriority;
-import buildcraft.api.transport.IStripesActivator;
-import buildcraft.api.transport.IStripesHandlerBlock;
-import buildcraft.api.transport.IStripesHandlerItem;
-import buildcraft.api.transport.IStripesRegistry;
+import buildcraft.transport.internal.IStripesActivator;
+import buildcraft.transport.internal.IStripesHandlerBlock;
+import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.transport.internal.IStripesRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

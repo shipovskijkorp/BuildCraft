@@ -14,10 +14,10 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.transport.pipe.EnumPipeColourType;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pipe.PipeFaceTex;
+import buildcraft.transport.internal.pipe.EnumPipeColourType;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeFaceTex;
 import buildcraft.lib.client.model.ModelUtil;
 import buildcraft.lib.client.model.ModelUtil.UvFaceData;
 import buildcraft.lib.client.model.MutableQuad;

@@ -8,7 +8,7 @@ package buildcraft.silicon.client.model.key;
 
 import java.util.Objects;
 
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;

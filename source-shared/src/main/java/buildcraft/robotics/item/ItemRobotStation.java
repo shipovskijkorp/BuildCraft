@@ -2,9 +2,9 @@ package buildcraft.robotics.item;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.transport.IItemPluggable;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.transport.internal.IItemPluggable;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.robotics.BCRoboticsPlugs;
 import buildcraft.robotics.plug.RobotStationPluggable;
 import net.minecraft.core.Direction;

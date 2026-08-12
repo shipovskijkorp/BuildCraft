@@ -10,7 +10,7 @@ package buildcraft.transport.client.render;
 import java.util.function.Function;
 
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.transport.pipe.IPipeFlowRenderer;
+import buildcraft.transport.internal.pipe.IPipeFlowRenderer;
 import buildcraft.lib.client.model.ModelUtil;
 import buildcraft.lib.client.model.ModelUtil.UvFaceData;
 import buildcraft.lib.client.model.MutableQuad;

@@ -9,8 +9,8 @@ package buildcraft.transport.stripes;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.transport.IStripesActivator;
-import buildcraft.api.transport.IStripesHandlerItem;
+import buildcraft.transport.internal.IStripesActivator;
+import buildcraft.transport.internal.IStripesHandlerItem;
 import buildcraft.lib.misc.BlockUtil;
 
 import net.minecraft.core.BlockPos;

@@ -164,7 +164,7 @@ public class LocaleUtil {
         }
     }
 
-    public static MutableComponent localizeFluidFlow(int milliBucketsPerTick) {
+    public static MutableComponent localizeFluidFlow(long milliBucketsPerTick) {
         if (BCLibConfig.hideFluidValues) {
             return hiddenValue();
         }

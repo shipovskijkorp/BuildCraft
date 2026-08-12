@@ -6,11 +6,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 import forestry.api.ForestryCapabilities;
 import forestry.api.core.ILocationProvider;
 import forestry.api.genetics.filter.IFilterLogic;

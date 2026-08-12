@@ -14,10 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
-import buildcraft.api.transport.pipe.PipeEventItem.ItemEntry;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.PipeEventItem.ItemEntry;
 
 import buildcraft.lib.misc.MathUtil;
 import buildcraft.lib.misc.StackUtil;

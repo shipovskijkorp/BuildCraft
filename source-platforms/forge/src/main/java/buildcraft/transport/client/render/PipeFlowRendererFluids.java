@@ -7,8 +7,8 @@
 package buildcraft.transport.client.render;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.transport.pipe.IPipeFlowRenderer;
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeFlowRenderer;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.lib.client.render.fluid.FluidRenderer;
 import buildcraft.lib.client.render.fluid.FluidSpriteType;
 import buildcraft.lib.misc.VecUtil;

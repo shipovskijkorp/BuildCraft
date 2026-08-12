@@ -19,9 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 import buildcraft.api.core.BCDebugging;
-import buildcraft.api.transport.pipe.PipeEvent;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventPriority;
+import buildcraft.transport.internal.pipe.PipeEvent;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventPriority;
 
 public class PipeEventBus {
     public static final boolean DEBUG = BCDebugging.shouldDebugLog("transport.pipe.event_bus");

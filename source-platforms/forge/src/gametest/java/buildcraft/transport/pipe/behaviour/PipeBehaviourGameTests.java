@@ -17,10 +17,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
-import buildcraft.api.transport.pipe.IPipe.ConnectedType;
-import buildcraft.api.transport.pipe.PipeEventFluid;
-import buildcraft.api.transport.pipe.PipeEventItem;
-import buildcraft.api.transport.pipe.PipeEventItem.ItemEntry;
+import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
+import buildcraft.transport.internal.pipe.PipeEventFluid;
+import buildcraft.transport.internal.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.PipeEventItem.ItemEntry;
 import buildcraft.gametest.PipeGameTestSupport;
 import buildcraft.gametest.PipeGameTestSupport.TestPipe;
 import buildcraft.lib.BCLib;

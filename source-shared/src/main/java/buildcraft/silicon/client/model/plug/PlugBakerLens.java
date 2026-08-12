@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
+import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.silicon.BCSiliconModels;
 import buildcraft.silicon.client.model.key.KeyPlugLens;

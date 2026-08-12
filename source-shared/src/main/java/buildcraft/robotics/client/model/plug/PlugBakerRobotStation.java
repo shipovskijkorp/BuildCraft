@@ -6,7 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
+import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
 import buildcraft.lib.client.model.ModelHolderStatic;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.robotics.client.model.key.KeyRobotStation;

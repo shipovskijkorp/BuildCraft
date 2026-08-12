@@ -10,8 +10,8 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
 import buildcraft.lib.gui.ContainerPipe;
 import buildcraft.lib.gui.slot.SlotPhantom;
 import buildcraft.lib.tile.item.IItemHandlerAdv;

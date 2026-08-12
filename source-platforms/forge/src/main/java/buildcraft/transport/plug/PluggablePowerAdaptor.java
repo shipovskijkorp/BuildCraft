@@ -8,10 +8,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 import buildcraft.transport.BCTransportItems;
 import buildcraft.transport.client.model.key.KeyPlugPowerAdaptor;
 

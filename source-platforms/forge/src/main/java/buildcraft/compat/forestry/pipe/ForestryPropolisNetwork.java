@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.compat.BuildCraftCompat;
 import forestry.api.IForestryApi;
 import forestry.api.genetics.ISpecies;

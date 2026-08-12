@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.Map;
 import java.util.List;
 import java.util.function.ToLongFunction;
 
@@ -25,14 +27,14 @@ import buildcraft.api.mj.IMjRedstoneReceiver;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.mj.MjToFeAutoConverter;
 import buildcraft.api.tiles.IDebuggable;
-import buildcraft.api.transport.pipe.IFlowPower;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipe.ConnectedType;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeApi.PowerTransferInfo;
-import buildcraft.api.transport.pipe.PipeEventPower;
-import buildcraft.api.transport.pipe.PipeFlow;
-import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.transport.internal.pipe.IFlowPower;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.pipe.PowerTransportProfile;
+import buildcraft.transport.internal.pipe.PipeEventPower;
+import buildcraft.transport.internal.pipe.PipeFlow;
+import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.MathUtil;
@@ -163,11 +165,13 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     @Override
     public void reconfigure() {
         PipeEventPower.Configure configure = new PipeEventPower.Configure(pipe.getHolder(), this);
-        PowerTransferInfo pti = PipeApi.getPowerTransferInfo(pipe.getDefinition());
-        configure.setReceiver(pti.isReceiver);
-        configure.setMaxPower(pti.transferPerTick);
-        configure.setPowerLoss(pti.lossPerTick);
-        configure.setPowerResistance(pti.resistancePerTick);
+        PowerTransportProfile profile = pipe.getDefinition().getApiType().mjProfile().orElseThrow(() ->
+            new IllegalStateException("MJ pipe has no API2 power profile: " + pipe.getDefinition().identifier)
+        );
+        configure.setReceiver(profile.extractor());
+        configure.setMaxPower(profile.maxPerTick().microMj());
+        configure.setPowerLoss(profile.lossAtFullTransfer().microMj());
+        configure.setPowerResistance(profile.resistancePerTick());
         pipe.getHolder().fireEvent(configure);
         isReceiver = configure.isReceiver();
         maxPower = configure.getMaxPower();
@@ -244,6 +248,33 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         return sections.get(side);
     }
 
+    /** API2 bridge: accepts MJ into this pipe without exposing legacy MJ capability interfaces. */
+    public long receivePowerFromApi(Direction side, long offered, boolean simulate) {
+        if (side == null || offered <= 0) return 0;
+        ensureConfigured();
+        Section section = sections.get(side);
+        if (section == null) return 0;
+        long remainder = section.receivePower(offered, simulate ? FluidAction.SIMULATE : FluidAction.EXECUTE);
+        return Math.max(0, offered - remainder);
+    }
+
+    public long getStoredPowerForApi(Direction side) {
+        if (side == null) return 0;
+        ensureConfigured();
+        Section section = sections.get(side);
+        return section == null ? 0 : Math.max(0, section.getEffectivePendingPower());
+    }
+
+    public long getMaxPowerForApi() {
+        ensureConfigured();
+        return Math.max(0, maxPower);
+    }
+
+    public boolean canReceivePowerFromApi() {
+        ensureConfigured();
+        return isReceiver && !disabled;
+    }
+
     @Override
     @Nullable
     @SuppressWarnings("unchecked")
@@ -314,13 +345,25 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         for (Direction face : Direction.values()) {
             Section s = sections.get(face);
             if (s.internalPower > 0) {
-                BigInteger totalPowerQuery = BigInteger.ZERO;
+                EnumSet<Direction> routeCandidates = EnumSet.noneOf(Direction.class);
                 for (Direction face2 : Direction.values()) {
-                    if (face != face2) {
-                        long powerQuery = sections.get(face2).powerQuery;
-                        if (powerQuery > 0) {
-                            totalPowerQuery = totalPowerQuery.add(BigInteger.valueOf(powerQuery));
-                        }
+                    if (face != face2 && sections.get(face2).powerQuery > 0) routeCandidates.add(face2);
+                }
+                Map<Direction, Long> routeWeights = new EnumMap<>(Direction.class);
+                if (pipe instanceof Pipe runtimePipe) {
+                    routeWeights.putAll(runtimePipe.applyMjRouting(face, MjAmount.ofMicro(s.internalPower), routeCandidates));
+                } else {
+                    for (Direction candidate : routeCandidates) routeWeights.put(candidate, 1L);
+                }
+
+                BigInteger totalPowerQuery = BigInteger.ZERO;
+                for (Direction face2 : routeCandidates) {
+                    long powerQuery = sections.get(face2).powerQuery;
+                    long weight = routeWeights.getOrDefault(face2, 0L);
+                    if (powerQuery > 0 && weight > 0) {
+                        totalPowerQuery = totalPowerQuery.add(
+                            BigInteger.valueOf(powerQuery).multiply(BigInteger.valueOf(weight))
+                        );
                     }
                 }
 
@@ -331,8 +374,10 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
                             continue;
                         }
                         Section s2 = sections.get(face2);
-                        if (s2.powerQuery > 0) {
-                            BigInteger sidePowerQuery = BigInteger.valueOf(s2.powerQuery);
+                        long routeWeight = routeWeights.getOrDefault(face2, 0L);
+                        if (s2.powerQuery > 0 && routeWeight > 0) {
+                            BigInteger sidePowerQuery = BigInteger.valueOf(s2.powerQuery)
+                                .multiply(BigInteger.valueOf(routeWeight));
                             long offeredInput = Math.min(
                                 BigInteger.valueOf(s.internalPower).multiply(sidePowerQuery).divide(
                                     unusedPowerQuery

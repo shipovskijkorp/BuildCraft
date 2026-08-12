@@ -8,9 +8,9 @@ package buildcraft.transport.pipe.behaviour;
 
 import buildcraft.api.mj.IMjReceiver;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.transport.pipe.IFlowForgeEnergy;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

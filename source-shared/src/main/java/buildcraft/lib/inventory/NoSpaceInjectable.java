@@ -8,7 +8,7 @@ package buildcraft.lib.inventory;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.transport.IInjectable;
+import buildcraft.transport.internal.IInjectable;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;

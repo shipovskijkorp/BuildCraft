@@ -2,7 +2,7 @@ package buildcraft.transport.client;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.transport.tile.TilePipeHolder;
 
 import net.minecraft.client.color.block.BlockColor;

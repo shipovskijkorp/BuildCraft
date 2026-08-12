@@ -5,8 +5,11 @@
 package buildcraft.transport.pipe.flow;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.Map;
 import java.util.List;
 import java.util.function.ToIntFunction;
 
@@ -19,13 +22,12 @@ import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.tiles.IDebuggable;
-import buildcraft.api.transport.pipe.IFlowForgeEnergy;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipe.ConnectedType;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeApi.ForgeEnergyTransferInfo;
-import buildcraft.api.transport.pipe.PipeEventForgeEnergy;
-import buildcraft.api.transport.pipe.PipeFlow;
+import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
+import buildcraft.api.v2.pipe.ExternalEnergyTransportProfile;
+import buildcraft.transport.internal.pipe.PipeEventForgeEnergy;
+import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.lib.misc.data.AverageInt;
@@ -129,9 +131,11 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
     @Override
     public void reconfigure() {
         PipeEventForgeEnergy.Configure configure = new PipeEventForgeEnergy.Configure(pipe.getHolder(), this);
-        ForgeEnergyTransferInfo info = PipeApi.getForgeEnergyTransferInfo(pipe.getDefinition());
-        configure.setReceiver(info.isReceiver);
-        configure.setMaxPower(info.transferPerTick);
+        ExternalEnergyTransportProfile profile = pipe.getDefinition().getApiType().externalEnergyProfile().orElseThrow(() ->
+            new IllegalStateException("External-energy pipe has no API2 profile: " + pipe.getDefinition().identifier)
+        );
+        configure.setReceiver(profile.extractor());
+        configure.setMaxPower((int) Math.min(Integer.MAX_VALUE, profile.maxPerTick()));
         pipe.getHolder().fireEvent(configure);
         isReceiver = configure.isReceiver();
         maxPower = configure.getMaxPower();
@@ -184,6 +188,31 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
         return sections.get(side);
     }
 
+    /** API2 bridge: receives external integer energy without exposing loader energy-storage types. */
+    public int receiveEnergyFromApi(Direction side, int offered, boolean simulate) {
+        if (side == null || offered <= 0) return 0;
+        ensureConfigured();
+        Section section = sections.get(side);
+        return section == null ? 0 : section.receiveEnergy(offered, simulate);
+    }
+
+    public int getStoredEnergyForApi(Direction side) {
+        if (side == null) return 0;
+        ensureConfigured();
+        Section section = sections.get(side);
+        return section == null ? 0 : section.getEnergyStored();
+    }
+
+    public int getMaxEnergyForApi() {
+        ensureConfigured();
+        return Math.max(0, maxPower);
+    }
+
+    public boolean canReceiveEnergyFromApi() {
+        ensureConfigured();
+        return isReceiver && !disabled;
+    }
+
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
         if (facing != null && capability == ForgeCapabilities.ENERGY && isReceiver && !disabled) {
@@ -226,29 +255,53 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
 
         step();
 
-        // Distribute energy already present in the pipe towards demand.
+        // Distribute energy already present in the pipe towards demand. API2 route components participate
+        // by weighting or blocking output faces without exposing the internal FE flow graph.
         for (Direction inputFace : Direction.values()) {
             Section input = sections.get(inputFace);
             if (input.internalPower <= 0) continue;
-            int totalQuery = 0;
+
+            EnumSet<Direction> routeCandidates = EnumSet.noneOf(Direction.class);
             for (Direction outputFace : Direction.values()) {
-                if (outputFace != inputFace) totalQuery = saturatingAdd(totalQuery, sections.get(outputFace).powerQuery);
+                if (outputFace != inputFace && sections.get(outputFace).powerQuery > 0) routeCandidates.add(outputFace);
             }
             boolean returnPower = false;
-            if (totalQuery <= 0 && input.powerQuery > 0) {
-                totalQuery = input.powerQuery;
+            if (routeCandidates.isEmpty() && input.powerQuery > 0) {
+                routeCandidates.add(inputFace);
                 returnPower = true;
             }
-            if (totalQuery <= 0) continue;
+            if (routeCandidates.isEmpty()) continue;
 
-            int unusedQuery = totalQuery;
+            Map<Direction, Long> routeWeights = new EnumMap<>(Direction.class);
+            if (pipe instanceof Pipe runtimePipe) {
+                routeWeights.putAll(runtimePipe.applyExternalEnergyRouting(inputFace, input.internalPower, routeCandidates));
+            } else {
+                for (Direction candidate : routeCandidates) routeWeights.put(candidate, 1L);
+            }
+
+            BigInteger totalQuery = BigInteger.ZERO;
+            for (Direction candidate : routeCandidates) {
+                long weight = routeWeights.getOrDefault(candidate, 0L);
+                int query = sections.get(candidate).powerQuery;
+                if (query > 0 && weight > 0) {
+                    totalQuery = totalQuery.add(BigInteger.valueOf(query).multiply(BigInteger.valueOf(weight)));
+                }
+            }
+            if (totalQuery.signum() <= 0) continue;
+
+            BigInteger unusedQuery = totalQuery;
             for (Direction outputFace : Direction.values()) {
                 if (outputFace == inputFace && !returnPower) continue;
                 Section output = sections.get(outputFace);
-                if (output.powerQuery <= 0 || input.internalPower <= 0) continue;
-                int offered = (int) Math.min(input.internalPower,
-                    Math.max(0L, input.internalPower * (long) output.powerQuery / Math.max(1, unusedQuery)));
-                unusedQuery = Math.max(0, unusedQuery - output.powerQuery);
+                long routeWeight = routeWeights.getOrDefault(outputFace, 0L);
+                if (output.powerQuery <= 0 || routeWeight <= 0 || input.internalPower <= 0) continue;
+
+                BigInteger weightedQuery = BigInteger.valueOf(output.powerQuery).multiply(BigInteger.valueOf(routeWeight));
+                int offered = Math.min(
+                    input.internalPower,
+                    BigInteger.valueOf(input.internalPower).multiply(weightedQuery).divide(unusedQuery).intValue()
+                );
+                unusedQuery = unusedQuery.subtract(weightedQuery);
                 if (offered <= 0) continue;
 
                 int leftover = offered;

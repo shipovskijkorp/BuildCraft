@@ -25,7 +25,7 @@ import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.properties.BuildCraftProperties;
-import buildcraft.api.transport.pipe.IItemPipe;
+import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.menu.ContainerEngineIron_BC8;

@@ -7,7 +7,7 @@
 package buildcraft.factory.block;
 
 import buildcraft.api.properties.BuildCraftProperties;
-import buildcraft.api.transport.pipe.ICustomPipeConnection;
+import buildcraft.transport.internal.pipe.ICustomPipeConnection;
 import buildcraft.factory.tile.TileTank;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.fluid.FluidSmoother.FluidStackInterp;

@@ -9,7 +9,7 @@ package buildcraft.transport.wire;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import buildcraft.api.transport.EnumWirePart;
+import buildcraft.transport.internal.EnumWirePart;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;

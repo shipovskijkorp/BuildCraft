@@ -6,11 +6,11 @@
 
 package buildcraft.transport.stripes;
 
-import buildcraft.api.transport.IStripesActivator;
-import buildcraft.api.transport.IStripesHandlerItem;
-import buildcraft.api.transport.pipe.IItemPipe;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeDefinition;
+import buildcraft.transport.internal.IStripesActivator;
+import buildcraft.transport.internal.IStripesHandlerItem;
+import buildcraft.transport.internal.pipe.IItemPipe;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeDefinition;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

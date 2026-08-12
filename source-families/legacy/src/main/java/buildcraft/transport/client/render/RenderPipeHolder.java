@@ -6,12 +6,12 @@
 
 package buildcraft.transport.client.render;
 
-import buildcraft.api.transport.pipe.IPipeBehaviourRenderer;
-import buildcraft.api.transport.pipe.IPipeFlowRenderer;
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pipe.PipeFlow;
-import buildcraft.api.transport.pluggable.IPlugDynamicRenderer;
-import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.transport.internal.pipe.IPipeBehaviourRenderer;
+import buildcraft.transport.internal.pipe.IPipeFlowRenderer;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.PipeFlow;
+import buildcraft.transport.internal.pluggable.IPlugDynamicRenderer;
+import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.transport.client.PipeRegistryClient;
 import buildcraft.transport.pipe.Pipe;
 import buildcraft.transport.tile.TilePipeHolder;

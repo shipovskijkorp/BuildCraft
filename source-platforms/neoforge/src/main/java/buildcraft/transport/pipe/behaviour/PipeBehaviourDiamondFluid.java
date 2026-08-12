@@ -13,9 +13,9 @@ import net.minecraft.core.Direction;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeEventFluid;
-import buildcraft.api.transport.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.PipeEventFluid;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 
 public class PipeBehaviourDiamondFluid extends PipeBehaviourDiamond {

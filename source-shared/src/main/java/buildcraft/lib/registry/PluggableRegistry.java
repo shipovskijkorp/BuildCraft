@@ -9,8 +9,9 @@ package buildcraft.lib.registry;
 import java.util.HashMap;
 import java.util.Map;
 
-import buildcraft.api.transport.pluggable.IPluggableRegistry;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.pluggable.IPluggableRegistry;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
+import buildcraft.transport.api2.PipeAttachmentBridge;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -22,6 +23,7 @@ public enum PluggableRegistry implements IPluggableRegistry {
     @Override
     public void register(ResourceLocation id, PluggableDefinition definition) {
         registered.put(id, definition);
+        PipeAttachmentBridge.ensureRegistered(id, definition);
     }
 
     @Override

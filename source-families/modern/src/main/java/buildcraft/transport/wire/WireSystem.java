@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import buildcraft.api.transport.EnumWirePart;
-import buildcraft.api.transport.IWireEmitter;
-import buildcraft.api.transport.WireNode;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.transport.internal.EnumWirePart;
+import buildcraft.transport.internal.IWireEmitter;
+import buildcraft.transport.internal.WireNode;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.transport.pipe.Pipe;

@@ -16,7 +16,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.transport.EnumWirePart;
+import buildcraft.transport.internal.EnumWirePart;
 import buildcraft.lib.client.model.ModelUtil;
 import buildcraft.lib.client.model.ModelUtil.UvFaceData;
 import buildcraft.lib.client.model.MutableQuad;

@@ -10,10 +10,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 
 public class PipeBehaviourSandstone extends PipeBehaviour {
     private static final double SPEED_DELTA = PipeBehaviourStone.SPEED_DELTA;

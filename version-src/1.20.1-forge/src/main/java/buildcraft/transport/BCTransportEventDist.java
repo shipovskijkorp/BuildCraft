@@ -6,7 +6,7 @@
 
 package buildcraft.transport;
 
-import buildcraft.api.transport.pipe.PipeApiClient;
+import buildcraft.transport.internal.pipe.PipeApiClient;
 import buildcraft.transport.client.PipeRegistryClient;
 import buildcraft.transport.client.model.ModelPipe;
 import buildcraft.transport.client.model.PipeBaseModelGenStandard;

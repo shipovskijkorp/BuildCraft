@@ -11,12 +11,12 @@ import java.io.IOException;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pipe.PipeEventActionActivate;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventStatement;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.PipeEventActionActivate;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventStatement;
 import buildcraft.lib.block.VanillaRotationHandlers;
 import buildcraft.lib.misc.EntityUtil;
 import buildcraft.lib.misc.NBTUtilBC;

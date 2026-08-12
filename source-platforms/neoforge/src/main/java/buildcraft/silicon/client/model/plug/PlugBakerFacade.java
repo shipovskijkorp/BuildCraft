@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.tuple.Pair;
 
 import buildcraft.api.BCModules;
-import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
+import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.lib.client.model.MutableVertex;
 import buildcraft.lib.misc.VecUtil;

@@ -1,8 +1,8 @@
 package buildcraft.compat.forestry.pipe;
 
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pipe.PipeDefinition.PipeDefinitionBuilder;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeDefinition.PipeDefinitionBuilder;
 import buildcraft.compat.BuildCraftCompat;
 import buildcraft.transport.item.ItemPipeHolder;
 import buildcraft.transport.pipe.PipeRegistry;

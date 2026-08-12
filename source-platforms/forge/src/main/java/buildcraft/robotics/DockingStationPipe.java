@@ -25,7 +25,7 @@ import buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
 import buildcraft.transport.pipe.flow.PipeFlowFluids;
 import buildcraft.transport.pipe.flow.PipeFlowPower;
-import buildcraft.api.transport.IInjectable;
+import buildcraft.transport.internal.IInjectable;
 import buildcraft.transport.tile.TilePipeHolder;
 import buildcraft.transport.pipe.Pipe;
 import net.minecraft.core.BlockPos;

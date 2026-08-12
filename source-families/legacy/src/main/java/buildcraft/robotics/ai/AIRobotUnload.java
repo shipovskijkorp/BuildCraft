@@ -3,7 +3,7 @@ package buildcraft.robotics.ai;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.DockingStation;
 import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.transport.IInjectable;
+import buildcraft.transport.internal.IInjectable;
 import buildcraft.api.statements.StatementSlot;
 import buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import buildcraft.robotics.DockingStationPipe;

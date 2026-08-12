@@ -18,9 +18,9 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import buildcraft.lib.misc.ItemStackUtil;
-import buildcraft.api.transport.pipe.IFlowItems;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.IFlowItems;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 import buildcraft.lib.BCLib;
 import buildcraft.transport.BCTransportPipes;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourDiamond;

@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.statements.StatementSlot;
-import buildcraft.api.transport.IInjectable;
+import buildcraft.transport.internal.IInjectable;
 
 public abstract class DockingStation {
     @Nullable

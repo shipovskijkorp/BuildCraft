@@ -8,11 +8,11 @@ package buildcraft.transport;
 
 import net.minecraft.resources.ResourceLocation;
 
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
-import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableCreator;
-import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNbtReader;
-import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNetLoader;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.pluggable.PluggableDefinition.IPluggableCreator;
+import buildcraft.transport.internal.pluggable.PluggableDefinition.IPluggableNbtReader;
+import buildcraft.transport.internal.pluggable.PluggableDefinition.IPluggableNetLoader;
 import buildcraft.lib.BCLibRegistries;
 
 import buildcraft.transport.plug.PluggableBlocker;

@@ -14,7 +14,7 @@ import net.minecraft.world.item.DyeColor;
 import buildcraft.api.statements.IActionInternal;
 import buildcraft.api.statements.IStatementContainer;
 import buildcraft.api.statements.IStatementParameter;
-import buildcraft.api.transport.IWireEmitter;
+import buildcraft.transport.internal.IWireEmitter;
 
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import buildcraft.lib.misc.LocaleUtil;

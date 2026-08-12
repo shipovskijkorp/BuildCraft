@@ -8,7 +8,7 @@ package buildcraft.factory.block;
 
 import java.util.Locale;
 
-import buildcraft.api.transport.pipe.ICustomPipeConnection;
+import buildcraft.transport.internal.pipe.ICustomPipeConnection;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.tile.TileHeatExchange;
 import buildcraft.lib.block.BlockBCTile_Neptune;

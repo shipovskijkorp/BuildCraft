@@ -2,7 +2,7 @@ package buildcraft.lib.gui;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

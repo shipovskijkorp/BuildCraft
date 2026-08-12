@@ -5,16 +5,23 @@ import buildcraft.api.v2.fluid.FluidPort;
 import buildcraft.api.v2.item.ItemPort;
 import buildcraft.api.v2.platform.ExternalEnergyPort;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 
 public interface PipeView {
     ResourceLocation typeId();
     BlockPos position();
     Set<Direction> connectedSides();
+    default PipeEndpointKind endpoint(Direction side) { return connectedSides().contains(side) ? PipeEndpointKind.BLOCK : PipeEndpointKind.NONE; }
+    default Optional<DyeColor> color() { return Optional.empty(); }
+    default boolean colorable() { return false; }
+    default Map<Direction, PipeAttachment> attachments() { return Map.of(); }
+    default Optional<PipeAttachment> attachment(Direction side) { return Optional.ofNullable(attachments().get(side)); }
     Collection<PipeComponent> components();
     Optional<PipeComponent> component(ResourceLocation typeId);
     default Optional<ItemPort> itemPort(Direction side) { return Optional.empty(); }

@@ -9,17 +9,17 @@ package buildcraft.transport.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import buildcraft.api.transport.pipe.IPipeBehaviourBaker;
-import buildcraft.api.transport.pipe.IPipeBehaviourRenderer;
-import buildcraft.api.transport.pipe.IPipeFlowBaker;
-import buildcraft.api.transport.pipe.IPipeFlowRenderer;
-import buildcraft.api.transport.pipe.PipeApiClient.IClientRegistry;
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pipe.PipeFlow;
-import buildcraft.api.transport.pluggable.IPlugDynamicRenderer;
-import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.transport.internal.pipe.IPipeBehaviourBaker;
+import buildcraft.transport.internal.pipe.IPipeBehaviourRenderer;
+import buildcraft.transport.internal.pipe.IPipeFlowBaker;
+import buildcraft.transport.internal.pipe.IPipeFlowRenderer;
+import buildcraft.transport.internal.pipe.PipeApiClient.IClientRegistry;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.PipeFlow;
+import buildcraft.transport.internal.pluggable.IPlugDynamicRenderer;
+import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 
 public enum PipeRegistryClient implements IClientRegistry {
     INSTANCE;

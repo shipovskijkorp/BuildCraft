@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.transport.IStripesActivator;
-import buildcraft.api.transport.IStripesHandlerItem;
+import buildcraft.transport.internal.IStripesActivator;
+import buildcraft.transport.internal.IStripesHandlerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;

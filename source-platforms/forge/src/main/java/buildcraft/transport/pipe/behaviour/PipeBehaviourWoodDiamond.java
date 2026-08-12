@@ -10,11 +10,11 @@ import java.io.IOException;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.transport.IItemPluggable;
-import buildcraft.api.transport.pipe.IFlowFluid;
-import buildcraft.api.transport.pipe.IFlowItems;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.IItemPluggable;
+import buildcraft.transport.internal.pipe.IFlowFluid;
+import buildcraft.transport.internal.pipe.IFlowItems;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
 import buildcraft.lib.inventory.filter.ArrayFluidFilter;
 import buildcraft.lib.inventory.filter.DelegatingItemHandlerFilter;
 import buildcraft.lib.inventory.filter.InvertedFluidFilter;

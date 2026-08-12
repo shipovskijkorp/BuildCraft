@@ -95,7 +95,7 @@ for loader in ("forge", "neoforge"):
 
 # Flow support, gate power-request trigger and limiter actions.
 require(
-    "source-shared/src/main/java/buildcraft/api/transport/pipe/IFlowForgeEnergy.java",
+    "source-shared/src/main/java/buildcraft/transport/internal/pipe/IFlowForgeEnergy.java",
     "int getPowerRequested(Direction side);",
 )
 require(

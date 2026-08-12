@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.transport.EnumWirePart;
-import buildcraft.api.transport.IWireEmitter;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.transport.internal.EnumWirePart;
+import buildcraft.transport.internal.IWireEmitter;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.lib.net.MessageManager;
 
 import net.minecraft.nbt.CompoundTag;

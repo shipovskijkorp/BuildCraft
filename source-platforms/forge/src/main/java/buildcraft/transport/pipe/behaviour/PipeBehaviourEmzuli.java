@@ -15,11 +15,11 @@ import javax.annotation.Nonnull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.transport.pipe.IFlowItems;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
-import buildcraft.api.transport.pipe.PipeEventActionActivate;
-import buildcraft.api.transport.pipe.PipeEventStatement;
+import buildcraft.transport.internal.pipe.IFlowItems;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.pipe.PipeEventActionActivate;
+import buildcraft.transport.internal.pipe.PipeEventStatement;
 import buildcraft.lib.misc.EntityUtil;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;

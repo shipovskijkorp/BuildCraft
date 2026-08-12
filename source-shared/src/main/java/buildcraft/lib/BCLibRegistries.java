@@ -6,7 +6,7 @@
 
 package buildcraft.lib;
 
-import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.crops.CropService;

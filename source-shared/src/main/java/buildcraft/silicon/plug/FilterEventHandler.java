@@ -6,10 +6,10 @@
 
 package buildcraft.silicon.plug;
 
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
-import buildcraft.api.transport.pluggable.PipePluggable;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
+import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.transport.pipe.Pipe;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;

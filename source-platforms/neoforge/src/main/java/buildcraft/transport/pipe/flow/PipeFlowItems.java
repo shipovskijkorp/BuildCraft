@@ -19,16 +19,17 @@ import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.transport.IInjectable;
-import buildcraft.api.transport.pipe.IFlowItems;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipe.ConnectedType;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
-import buildcraft.api.transport.pipe.PipeEventStatement;
-import buildcraft.api.transport.pipe.PipeFlow;
+import buildcraft.transport.internal.IInjectable;
+import buildcraft.api.v2.pipe.ItemTransportProfile;
+import buildcraft.transport.internal.pipe.IFlowItems;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.PipeEventStatement;
+import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.lib.inventory.ItemTransactorHelper;
 import buildcraft.lib.inventory.NoSpaceTransactor;
 import buildcraft.lib.misc.CapUtil;
@@ -63,7 +64,17 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     private static final double EXTRACT_SPEED = 0.08;
     public static final int NET_CREATE_ITEM = 2;
 
+    private final ItemTransportProfile itemTransportProfile = requireItemProfile();
     private final DelayedList<TravellingItem> items = new DelayedList<>();
+
+    private ItemTransportProfile requireItemProfile() {
+        if (pipe.getDefinition().getApiType() == null) {
+            throw new IllegalStateException("Pipe definition is not linked to API2: " + pipe.getDefinition().identifier);
+        }
+        return pipe.getDefinition().getApiType().itemProfile().orElseThrow(() ->
+            new IllegalStateException("Item pipe has no API2 item profile: " + pipe.getDefinition().identifier)
+        );
+    }
     /** Raw travelling-item NBT loaded before Minecraft attaches a Level to the block entity. */
     @Nullable
     private ListTag pendingItems;
@@ -445,6 +456,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
             if (destinations == null || destinations.size() == 0) {
                 destinations = findDest.generateRandomOrder();
             }
+            destinations = pipe.applyItemRouting(reachCenter.from, itemEntry.stack, destinations);
             if (destinations.size() == 0) {
                 dropItem(itemEntry.stack, null, item.side.getOpposite(), newSpeed);
             } else {
@@ -736,15 +748,15 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         }
     }
 
-    private static ItemStack splitSingleTravellingStack(ItemStack stack) {
+    private ItemStack splitSingleTravellingStack(ItemStack stack) {
         return stack.split(getSingleTravellingStackCount(stack, stack.getCount()));
     }
 
-    private static int getSingleTravellingStackCount(ItemStack stack, int accepted) {
+    private int getSingleTravellingStackCount(ItemStack stack, int accepted) {
         if (stack.isEmpty() || accepted <= 0) {
             return 0;
         }
-        int max = Math.max(1, stack.getMaxStackSize());
+        int max = Math.min(Math.max(1, stack.getMaxStackSize()), itemTransportProfile.maxItemsPerCycle());
         return Math.min(Math.min(accepted, stack.getCount()), max);
     }
 

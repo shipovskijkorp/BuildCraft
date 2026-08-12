@@ -8,12 +8,12 @@ package buildcraft.transport;
 
 import java.util.Arrays;
 
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pipe.PipeDefinition.IPipeCreator;
-import buildcraft.api.transport.pipe.PipeDefinition.IPipeLoader;
-import buildcraft.api.transport.pipe.PipeDefinition.PipeDefinitionBuilder;
-import buildcraft.api.transport.pipe.PipeFlowType;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeDefinition.IPipeCreator;
+import buildcraft.transport.internal.pipe.PipeDefinition.IPipeLoader;
+import buildcraft.transport.internal.pipe.PipeDefinition.PipeDefinitionBuilder;
+import buildcraft.transport.internal.pipe.PipeFlowType;
 import buildcraft.transport.pipe.PipeRegistry;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourClay;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourCobble;

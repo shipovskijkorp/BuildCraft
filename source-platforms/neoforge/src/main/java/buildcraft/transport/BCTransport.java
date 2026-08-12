@@ -9,7 +9,7 @@ package buildcraft.transport;
 import buildcraft.api.BCModules;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.transport.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.api.schematics.SchematicBlockFactoryRegistry;
 import buildcraft.lib.BCLibRegistries;
 import buildcraft.lib.CreativeTabManager;
@@ -18,6 +18,7 @@ import buildcraft.lib.net.MessageManager;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.core.BCCore;
 import buildcraft.transport.net.MessageMultiPipeItem;
+import buildcraft.transport.api2.TransportApi2;
 import buildcraft.transport.pipe.SchematicBlockPipe;
 import buildcraft.transport.wire.MessageWireSystems;
 import buildcraft.transport.wire.MessageWireSystemsPowered;
@@ -73,6 +74,7 @@ public class BCTransport {
         // Data generators are registered below.
 
         BCLibRegistries.initApiRegistries();
+        TransportApi2.install();
         BCTransportRegistries.preInit();
         BCTransportConfig.preInit();
         BCTransportRecipes.preInit(modEventBus);

@@ -11,7 +11,7 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import buildcraft.api.transport.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeDefinition;
 import buildcraft.lib.item.ItemBC_Neptune;
 import buildcraft.lib.item.ItemByEnum;
 import buildcraft.lib.item.ItemPluggableSimple;

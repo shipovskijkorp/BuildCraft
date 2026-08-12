@@ -670,7 +670,7 @@ def validate_forge_atlas_reload_caches() -> None:
 
 
 def validate_pipe_pluggable_contract() -> None:
-    pluggable = "src/main/java/buildcraft/api/transport/pluggable/PipePluggable.java"
+    pluggable = "src/main/java/buildcraft/transport/internal/pluggable/PipePluggable.java"
     for target in TARGETS:
         require(target, pluggable,
                 "public boolean isSideSolid()",

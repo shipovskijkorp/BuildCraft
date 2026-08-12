@@ -59,6 +59,9 @@ INTERNALIZED_PUBLIC_FILENAMES = {
 
 EXPECTED_PROVIDER = "buildcraft.lib.internal.api.v2.BuildCraftApiRuntimeProvider"
 
+TRANSPORT_LEGACY_PACKAGE = "buildcraft.api.transport"
+TRANSPORT_SOURCE_MARKER = Path("buildcraft/api/transport")
+
 
 def java_files(root: Path):
     if root.is_dir():
@@ -108,6 +111,20 @@ def main() -> int:
 
     if OLD_IMPL_ROOT.is_dir() and any(OLD_IMPL_ROOT.rglob("*.java")):
         errors.append("Legacy implementation namespace buildcraft.lib.api.v2 still contains Java sources; use buildcraft.lib.internal.api.v2")
+
+    # Transport Java API was retired once the runtime moved behind API2. The old namespace must never reappear.
+    for path in ROOT.rglob("*.java"):
+        if any(part in {"build", ".gradle", ".git"} for part in path.parts):
+            continue
+        text = path.read_text(encoding="utf-8")
+        rel = path.relative_to(ROOT)
+        package_match = PACKAGE_RE.search(text)
+        if package_match and package_match.group(1).startswith(TRANSPORT_LEGACY_PACKAGE):
+            errors.append(f"{rel}: retired Transport API package must not be restored; use buildcraft.api.v2.pipe")
+        for imported in IMPORT_RE.findall(text):
+            if imported.startswith(TRANSPORT_LEGACY_PACKAGE):
+                errors.append(f"{rel}: imports retired Transport API {imported}")
+
 
     if REGISTRY_KEYS_FILE.is_file() and RUNTIME_FILE.is_file():
         registry_keys = set(REGISTRY_KEY_RE.findall(REGISTRY_KEYS_FILE.read_text(encoding="utf-8")))

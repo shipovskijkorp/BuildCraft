@@ -16,9 +16,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
-import buildcraft.api.transport.pipe.IFlowItems;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.IFlowItems;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 import buildcraft.lib.BCLib;
 import buildcraft.transport.BCTransportPipes;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourDiamond;

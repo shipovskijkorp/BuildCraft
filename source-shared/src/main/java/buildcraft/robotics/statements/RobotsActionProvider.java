@@ -12,7 +12,7 @@ import buildcraft.api.statements.IActionInternal;
 import buildcraft.api.statements.IActionInternalSided;
 import buildcraft.api.statements.IActionProvider;
 import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.robotics.BCRoboticsStatements;
 import buildcraft.robotics.plug.RobotStationPluggable;
 

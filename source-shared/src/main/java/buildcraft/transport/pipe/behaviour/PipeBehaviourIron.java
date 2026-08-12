@@ -10,10 +10,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeEventFluid;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.PipeEventFluid;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 
 public class PipeBehaviourIron extends PipeBehaviourDirectional {
     public PipeBehaviourIron(IPipe pipe) {

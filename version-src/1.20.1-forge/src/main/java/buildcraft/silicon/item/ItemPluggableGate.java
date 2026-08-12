@@ -11,10 +11,10 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.transport.IItemPluggable;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.IItemPluggable;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
 import buildcraft.lib.item.ICreativeTabItemProvider;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.SoundUtil;

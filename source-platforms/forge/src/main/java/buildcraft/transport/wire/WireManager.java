@@ -15,10 +15,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import buildcraft.api.transport.EnumWirePart;
-import buildcraft.api.transport.IWireManager;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.EnumWirePart;
+import buildcraft.transport.internal.IWireManager;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.pipe.Pipe;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

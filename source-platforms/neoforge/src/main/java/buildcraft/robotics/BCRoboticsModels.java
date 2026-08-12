@@ -1,7 +1,7 @@
 package buildcraft.robotics;
 
-import buildcraft.api.transport.pipe.PipeApiClient;
-import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
+import buildcraft.transport.internal.pipe.PipeApiClient;
+import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
 import buildcraft.lib.client.model.ModelHolderStatic;
 import buildcraft.robotics.client.model.plug.PlugBakerRobotStation;
 import buildcraft.robotics.client.model.key.KeyRobotStation;

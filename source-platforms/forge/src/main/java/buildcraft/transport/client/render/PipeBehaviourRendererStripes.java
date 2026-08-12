@@ -19,7 +19,7 @@ import org.joml.Matrix4f;
 ?*/
 //?}
 
-import buildcraft.api.transport.pipe.IPipeBehaviourRenderer;
+import buildcraft.transport.internal.pipe.IPipeBehaviourRenderer;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.transport.BCTransportModels;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourStripes;

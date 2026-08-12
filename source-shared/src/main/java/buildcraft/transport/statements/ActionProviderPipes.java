@@ -21,10 +21,10 @@ import buildcraft.api.statements.IActionInternal;
 import buildcraft.api.statements.IActionInternalSided;
 import buildcraft.api.statements.IActionProvider;
 import buildcraft.api.statements.IStatementContainer;
-import buildcraft.api.transport.IWireEmitter;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pipe.PipeEventStatement;
+import buildcraft.transport.internal.IWireEmitter;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeEventStatement;
 
 import buildcraft.lib.misc.ColourUtil;
 

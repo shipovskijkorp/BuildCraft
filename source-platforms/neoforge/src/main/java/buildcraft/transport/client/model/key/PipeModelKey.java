@@ -9,9 +9,9 @@ package buildcraft.transport.client.model.key;
 import java.util.Arrays;
 import java.util.Objects;
 
-import buildcraft.api.transport.pipe.EnumPipeColourType;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pipe.PipeFaceTex;
+import buildcraft.transport.internal.pipe.EnumPipeColourType;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeFaceTex;
 
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.api.distmarker.Dist;

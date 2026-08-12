@@ -9,9 +9,8 @@ package buildcraft.transport.item;
 import java.util.List;
 
 
-import buildcraft.api.transport.pipe.IItemPipe;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.IItemPipe;
+import buildcraft.transport.internal.pipe.PipeDefinition;
 import buildcraft.transport.BCTransportBlocks;
 import buildcraft.lib.misc.LocaleUtil;
 
@@ -95,15 +94,18 @@ public class ItemPipeHolder extends BlockItem implements IItemPipe {
         if (I18n.exists(tipName)) {
             tooltip.add(Component.translatable(tipName).setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
         }
-        if (definition.flowType == PipeApi.flowFluids) {
-            PipeApi.FluidTransferInfo fti = PipeApi.getFluidTransferInfo(definition);
-            tooltip.add(LocaleUtil.localizeFluidFlow(fti.transferPerTick));
-        } else if (definition.flowType == PipeApi.flowPower) {
-            PipeApi.PowerTransferInfo pti = PipeApi.getPowerTransferInfo(definition);
-            tooltip.add(LocaleUtil.localizeMjFlow(pti.transferPerTick));
-        } else if (definition.flowType == PipeApi.flowForgeEnergy && PipeApi.flowForgeEnergy != null) {
-            PipeApi.ForgeEnergyTransferInfo fti = PipeApi.getForgeEnergyTransferInfo(definition);
-            tooltip.add(LocaleUtil.localizeFeFlow(fti.transferPerTick));
+        if (definition.getApiType().fluidProfile().isPresent()) {
+            tooltip.add(LocaleUtil.localizeFluidFlow(
+                definition.getApiType().fluidProfile().orElseThrow().maxPerTick().milliBuckets()
+            ));
+        } else if (definition.getApiType().mjProfile().isPresent()) {
+            tooltip.add(LocaleUtil.localizeMjFlow(
+                definition.getApiType().mjProfile().orElseThrow().maxPerTick().microMj()
+            ));
+        } else if (definition.getApiType().externalEnergyProfile().isPresent()) {
+            tooltip.add(LocaleUtil.localizeFeFlow(
+                definition.getApiType().externalEnergyProfile().orElseThrow().maxPerTick()
+            ));
         }
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

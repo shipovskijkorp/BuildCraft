@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 import buildcraft.transport.pipe.Pipe;
 
 /** Fast, deterministic guards for pipe contracts inherited from BuildCraft 8. */

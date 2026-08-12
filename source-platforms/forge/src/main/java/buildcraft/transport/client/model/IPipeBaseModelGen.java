@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraftforge.client.event.TextureStitchEvent;
 //?}
 
-import buildcraft.api.transport.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeDefinition;
 
 import buildcraft.transport.client.model.PipeModelCacheBase.PipeBaseCutoutKey;
 import buildcraft.transport.client.model.PipeModelCacheBase.PipeBaseTranslucentKey;

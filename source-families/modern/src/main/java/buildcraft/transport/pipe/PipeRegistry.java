@@ -14,10 +14,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.transport.pipe.IItemPipe;
-import buildcraft.api.transport.pipe.IPipeRegistry;
-import buildcraft.api.transport.pipe.PipeDefinition;
+import buildcraft.api.v2.pipe.PipeType;
+import buildcraft.transport.internal.pipe.IItemPipe;
+import buildcraft.transport.internal.pipe.IPipeRegistry;
+import buildcraft.transport.internal.pipe.PipeDefinition;
 import buildcraft.transport.item.ItemPipeHolder;
+import buildcraft.transport.api2.PipeTypeBridge;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.resources.ResourceLocation;
@@ -32,14 +34,39 @@ public enum PipeRegistry implements IPipeRegistry {
 
     @Override
     public void registerPipe(PipeDefinition definition) {
-        definitions.put(definition.identifier, definition);
+        PipeDefinition previous = definitions.putIfAbsent(definition.identifier, definition);
+        if (previous != null && previous != definition) {
+            throw new IllegalStateException("Duplicate pipe definition id: " + definition.identifier);
+        }
+        PipeTypeBridge.ensureRegistered(definition);
+    }
+
+    /** Materializes an API2 pipe variant into the legacy-compatible runtime implementation. */
+    public synchronized PipeDefinition ensureRuntimeDefinition(PipeType type) {
+        if (type == null) throw new NullPointerException("type");
+        PipeDefinition existing = definitions.get(type.id());
+        if (existing != null) {
+            existing.setApiType(type);
+            return existing;
+        }
+        ResourceLocation baseId = type.archetypeId().orElseThrow(() -> new IllegalArgumentException(
+            "Pipe type " + type.id() + " has no runtime archetype; create it with PipeType.variant(...)"
+        ));
+        PipeDefinition base = getDefinition(baseId);
+        if (base == null) {
+            throw new IllegalStateException("Unknown runtime pipe archetype " + baseId + " for " + type.id());
+        }
+        PipeDefinition definition = PipeDefinition.apiVariant(type, base);
+        registerPipe(definition);
+        return definition;
     }
 
     @Override
     public IItemPipe registryItemForPipe(Supplier<? extends Block> block, PipeDefinition definition) {
         ItemPipeHolder item = new ItemPipeHolder(definition);
-        if (!definitions.values().contains(definition)) 
-        	definitions.put(definition.identifier, definition);
+        if (!definitions.values().contains(definition)) {
+            registerPipe(definition);
+        }
         pipeItems.put(definition, item);
         return item;
     }
@@ -84,6 +111,7 @@ public enum PipeRegistry implements IPipeRegistry {
         if (previous != null && previous != target) {
             throw new IllegalStateException("Conflicting pipe alias " + id);
         }
+        PipeTypeBridge.registerAlias(id, target);
     }
 
     @Override

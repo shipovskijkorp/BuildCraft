@@ -10,10 +10,10 @@ import java.io.IOException;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
 import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.core.Direction;

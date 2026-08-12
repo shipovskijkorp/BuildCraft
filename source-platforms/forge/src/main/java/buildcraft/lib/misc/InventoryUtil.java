@@ -14,7 +14,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.transport.IInjectable;
+import buildcraft.transport.internal.IInjectable;
 import buildcraft.lib.inventory.ItemTransactorHelper;
 
 import net.minecraft.core.BlockPos;

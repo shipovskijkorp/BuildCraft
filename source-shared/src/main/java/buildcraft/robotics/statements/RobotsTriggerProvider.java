@@ -12,7 +12,7 @@ import buildcraft.api.statements.ITriggerExternal;
 import buildcraft.api.statements.ITriggerInternal;
 import buildcraft.api.statements.ITriggerInternalSided;
 import buildcraft.api.statements.ITriggerProvider;
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.robotics.BCRoboticsStatements;
 import buildcraft.robotics.plug.RobotStationPluggable;
 

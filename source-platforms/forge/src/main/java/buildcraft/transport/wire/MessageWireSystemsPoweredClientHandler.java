@@ -6,8 +6,8 @@ package buildcraft.transport.wire;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import buildcraft.api.transport.IWireManager;
-import buildcraft.api.transport.pipe.IPipeHolder;
+import buildcraft.transport.internal.IWireManager;
+import buildcraft.transport.internal.pipe.IPipeHolder;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.Level;

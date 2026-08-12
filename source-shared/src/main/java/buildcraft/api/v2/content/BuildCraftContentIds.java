@@ -28,6 +28,67 @@ public final class BuildCraftContentIds {
         private MachineComponents() {}
     }
 
+    public static final class Pipes {
+        public static final ResourceLocation STRUCTURE = id("buildcrafttransport:structure");
+
+        public static final ResourceLocation WOOD_ITEM = id("buildcrafttransport:wood_item");
+        public static final ResourceLocation WOOD_FLUID = id("buildcrafttransport:wood_fluid");
+        public static final ResourceLocation WOOD_POWER = id("buildcrafttransport:wood_power");
+        public static final ResourceLocation WOOD_FE = id("buildcrafttransport:wood_fe");
+
+        public static final ResourceLocation COBBLESTONE_ITEM = id("buildcrafttransport:cobblestone_item");
+        public static final ResourceLocation COBBLESTONE_FLUID = id("buildcrafttransport:cobblestone_fluid");
+        public static final ResourceLocation COBBLESTONE_POWER = id("buildcrafttransport:cobblestone_power");
+        public static final ResourceLocation COBBLESTONE_FE = id("buildcrafttransport:cobblestone_fe");
+
+        public static final ResourceLocation STONE_ITEM = id("buildcrafttransport:stone_item");
+        public static final ResourceLocation STONE_FLUID = id("buildcrafttransport:stone_fluid");
+        public static final ResourceLocation STONE_POWER = id("buildcrafttransport:stone_power");
+        public static final ResourceLocation STONE_FE = id("buildcrafttransport:stone_fe");
+
+        public static final ResourceLocation QUARTZ_ITEM = id("buildcrafttransport:quartz_item");
+        public static final ResourceLocation QUARTZ_FLUID = id("buildcrafttransport:quartz_fluid");
+        public static final ResourceLocation QUARTZ_POWER = id("buildcrafttransport:quartz_power");
+        public static final ResourceLocation QUARTZ_FE = id("buildcrafttransport:quartz_fe");
+
+        public static final ResourceLocation GOLD_ITEM = id("buildcrafttransport:gold_item");
+        public static final ResourceLocation GOLD_FLUID = id("buildcrafttransport:gold_fluid");
+        public static final ResourceLocation GOLD_POWER = id("buildcrafttransport:gold_power");
+        public static final ResourceLocation GOLD_FE = id("buildcrafttransport:gold_fe");
+
+        public static final ResourceLocation SANDSTONE_ITEM = id("buildcrafttransport:sandstone_item");
+        public static final ResourceLocation SANDSTONE_FLUID = id("buildcrafttransport:sandstone_fluid");
+        public static final ResourceLocation SANDSTONE_POWER = id("buildcrafttransport:sandstone_power");
+        public static final ResourceLocation SANDSTONE_FE = id("buildcrafttransport:sandstone_fe");
+
+        public static final ResourceLocation IRON_ITEM = id("buildcrafttransport:iron_item");
+        public static final ResourceLocation IRON_FLUID = id("buildcrafttransport:iron_fluid");
+        public static final ResourceLocation IRON_POWER = id("buildcrafttransport:iron_power");
+        public static final ResourceLocation IRON_FE = id("buildcrafttransport:iron_fe");
+
+        public static final ResourceLocation DIAMOND_ITEM = id("buildcrafttransport:diamond_item");
+        public static final ResourceLocation DIAMOND_FLUID = id("buildcrafttransport:diamond_fluid");
+        public static final ResourceLocation DIAMOND_POWER = id("buildcrafttransport:diamond_power");
+        public static final ResourceLocation DIAMOND_FE = id("buildcrafttransport:diamond_fe");
+
+        public static final ResourceLocation DIAMOND_WOOD_ITEM = id("buildcrafttransport:diamond_wood_item");
+        public static final ResourceLocation DIAMOND_WOOD_FLUID = id("buildcrafttransport:diamond_wood_fluid");
+        public static final ResourceLocation DIAMOND_WOOD_POWER = id("buildcrafttransport:diamond_wood_power");
+        public static final ResourceLocation DIAMOND_WOOD_FE = id("buildcrafttransport:diamond_wood_fe");
+
+        public static final ResourceLocation CLAY_ITEM = id("buildcrafttransport:clay_item");
+        public static final ResourceLocation CLAY_FLUID = id("buildcrafttransport:clay_fluid");
+        public static final ResourceLocation VOID_ITEM = id("buildcrafttransport:void_item");
+        public static final ResourceLocation VOID_FLUID = id("buildcrafttransport:void_fluid");
+        public static final ResourceLocation OBSIDIAN_ITEM = id("buildcrafttransport:obsidian_item");
+        public static final ResourceLocation LAPIS_ITEM = id("buildcrafttransport:lapis_item");
+        public static final ResourceLocation DAIZULI_ITEM = id("buildcrafttransport:daizuli_item");
+        public static final ResourceLocation EMZULI_ITEM = id("buildcrafttransport:emzuli_item");
+        public static final ResourceLocation STRIPES_ITEM = id("buildcrafttransport:stripes_item");
+
+        private Pipes() {}
+    }
+
     public static final class Worldgen {
         /** Standard BuildCraft oil-deposit generator profile. */
         public static final ResourceLocation STANDARD_OIL = id("buildcraftenergy:oil");

@@ -1,5 +1,7 @@
 package dev.bcce.apifixture;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.content.BuildCraftContent;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.api.v2.content.ContentRegistrar;
@@ -9,6 +11,8 @@ import buildcraft.api.v2.guide.GuideEntry;
 import buildcraft.api.v2.guide.GuidePages;
 import buildcraft.api.v2.guide.GuideSection;
 import buildcraft.api.v2.machine.BuiltInMachineProperties;
+import buildcraft.api.v2.pipe.ItemTransportProfile;
+import buildcraft.api.v2.pipe.PipeType;
 import buildcraft.api.v2.recipe.FluidIngredient;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
@@ -53,6 +57,12 @@ public final class EasyContentFixtureAddon {
             .property(BuiltInMachineProperties.WORK_SPEED_MULTIPLIER, 2.0)
             .property(BuiltInMachineProperties.MAX_MJ_INPUT_PER_TICK, MjAmount.ofMj(512))
             .component(bc.id("overdrive_component")));
+
+        // Reuse a complete built-in pipe runtime archetype and override only the public transport profile.
+        PipeType fastCobble = bc.pipeVariant("fast_cobblestone_item_pipe", BuildCraftContentIds.Pipes.COBBLESTONE_ITEM, pipe -> pipe
+            .itemProfile(new ItemTransportProfile(32, 5)));
+        // The returned vanilla Item can be registered by the addon's Forge/NeoForge/Fabric entrypoint.
+        BuildCraftApi.service(BuildCraftServices.PIPES).createItem(fastCobble.id());
     }
 
     private static ResourceLocation id(String value) {

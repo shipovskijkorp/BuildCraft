@@ -27,20 +27,20 @@ import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IFluidHandlerAdv;
 import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.tiles.IDebuggable;
-import buildcraft.api.transport.pipe.IFlowFluid;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeApi.FluidTransferInfo;
-import buildcraft.api.transport.pipe.PipeEventFluid;
-import buildcraft.api.transport.pipe.PipeEventFluid.OnMoveToCentre;
-import buildcraft.api.transport.pipe.PipeEventFluid.PreMoveToCentre;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventStatement;
-import buildcraft.api.transport.pipe.PipeFlow;
+import buildcraft.transport.internal.pipe.IFlowFluid;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.api.v2.pipe.FluidTransportProfile;
+import buildcraft.transport.internal.pipe.PipeEventFluid;
+import buildcraft.transport.internal.pipe.PipeEventFluid.OnMoveToCentre;
+import buildcraft.transport.internal.pipe.PipeEventFluid.PreMoveToCentre;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventStatement;
+import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.compat.CompatCapTransfromer;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.fluid.FluidCompatRegistry;
+import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.FluidStackUtil;
 import buildcraft.lib.misc.LocaleUtil;
@@ -51,6 +51,7 @@ import buildcraft.lib.net.cache.BuildCraftObjectCaches;
 import buildcraft.lib.net.cache.NetworkedObjectCache;
 import buildcraft.transport.tile.TilePipeHolder;
 import buildcraft.transport.BCTransportStatements;
+import buildcraft.transport.pipe.Pipe;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -86,11 +87,13 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     /** The number of pixels the fluid moves by per millisecond */
     public static final double FLOW_MULTIPLIER = 0.016;
 
-    private final FluidTransferInfo fluidTransferInfo = PipeApi.getFluidTransferInfo(pipe.getDefinition());
+    private final FluidTransportProfile fluidTransportProfile = requireFluidProfile();
+    private final int transferPerTick = Math.toIntExact(fluidTransportProfile.maxPerTick().milliBuckets());
+    private final int transferDelayTicks = fluidTransportProfile.transferDelayTicks();
 
     /* Default to an additional second of fluid inserting and removal. This means that (for a normal pipe like cobble)
      * it will be 20 * (10 + 12) = 20 * 22 = 440 - oh that's not good is it */
-    public final int capacity = Math.max(FluidType.BUCKET_VOLUME, fluidTransferInfo.transferPerTick * (10));// TEMP!
+    public final int capacity = Math.max(FluidType.BUCKET_VOLUME, transferPerTick * 10);// TEMP!
 
     private final Map<EnumPipePart, Section> sections = new EnumMap<>(EnumPipePart.class);
     private FluidStack currentFluid = FluidStack.EMPTY;
@@ -140,6 +143,15 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
 
     private static FluidStack readFluidStack(HolderLookup.Provider registries, CompoundTag nbt) {
         return FluidStackUtil.parseOptional(registries, nbt);
+    }
+
+    private FluidTransportProfile requireFluidProfile() {
+        if (pipe.getDefinition().getApiType() == null) {
+            throw new IllegalStateException("Pipe definition is not linked to API2: " + pipe.getDefinition().identifier);
+        }
+        return pipe.getDefinition().getApiType().fluidProfile().orElseThrow(() ->
+            new IllegalStateException("Fluid pipe has no API2 fluid profile: " + pipe.getDefinition().identifier)
+        );
     }
 
     @Override
@@ -472,10 +484,10 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         currentFluid = FluidCompatRegistry.canonicalize(fluid);
         fluid = currentFluid;
         if (fluid.isEmpty()) {
-            currentDelay = (int) PipeApi.getFluidTransferInfo(pipe.getDefinition()).transferDelayMultiplier;
+            currentDelay = (int) transferDelayTicks;
             // (int) (fluidTransferInfo.transferDelayMultiplier * fluid.getFluid().getViscosity(fluid) / 100);
         } else {
-            currentDelay = (int) PipeApi.getFluidTransferInfo(pipe.getDefinition()).transferDelayMultiplier;
+            currentDelay = (int) transferDelayTicks;
         }
         for (Section section : sections.values()) {
             section.incoming = new int[currentDelay];
@@ -560,7 +572,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         for (EnumPipePart part : EnumPipePart.FACES) {
             Section section = sections.get(part);
             if (section.getCurrentDirection().canOutput()) {
-                int maxDrain = section.drainInternal(fluidTransferInfo.transferPerTick, false);
+                int maxDrain = section.drainInternal(transferPerTick, false);
                 if (maxDrain <= 0) {
                     continue;
                 }
@@ -593,7 +605,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             return;
         }
 
-        int flowRate = fluidTransferInfo.transferPerTick;
+        int flowRate = transferPerTick;
         Set<Direction> realDirections = EnumSet.noneOf(Direction.class);
 
         // Move liquid from the center to the output sides
@@ -617,11 +629,26 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
 
             EnumSet<Direction> set = sideCheck.getOrder();
 
-            List<Direction> random = new ArrayList<>(set);
-            Collections.shuffle(random);
+            List<Direction> random;
+            if (pipe instanceof Pipe runtimePipe) {
+                EnumSet<Direction> inputs = EnumSet.noneOf(Direction.class);
+                for (Direction input : Direction.values()) {
+                    Section inputSection = sections.get(EnumPipePart.fromFacing(input));
+                    if (inputSection.getCurrentDirection().canInput()) inputs.add(input);
+                }
+                random = runtimePipe.applyFluidRouting(
+                    inputs,
+                    FuelApiBridge.volumeOf(new FluidStack(currentFluid, totalAvailable)),
+                    set
+                );
+            } else {
+                random = new ArrayList<>(set);
+                Collections.shuffle(random);
+            }
 
-            float min = Math.min(flowRate * realDirections.size(), totalAvailable)
-            / (float) flowRate / realDirections.size();
+            if (random.isEmpty()) return;
+            float min = Math.min(flowRate * random.size(), totalAvailable)
+            / (float) flowRate / random.size();
 
             for (Direction direction : random) {
                 Section section = sections.get(EnumPipePart.fromFacing(direction));
@@ -652,7 +679,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         if (spaceAvailable <= 0 || center.getMaxFilled() <= 0) {
             return;
         }
-        int flowRate = fluidTransferInfo.transferPerTick;
+        int flowRate = transferPerTick;
 
         List<EnumPipePart> faces = new ArrayList<>();
         Collections.addAll(faces, EnumPipePart.FACES);
@@ -852,13 +879,13 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         /** @return The maximum amount of fluid that can be inserted into this pipe on this tick. */
         int getMaxFilled() {
             int availableTotal = capacity - amount;
-            int availableThisTick = fluidTransferInfo.transferPerTick - incoming[currentTime];
+            int availableThisTick = transferPerTick - incoming[currentTime];
             return Math.min(availableTotal, availableThisTick);
         }
 
         /** @return The maximum amount of fluid that can be extracted out of this pipe this tick. */
         int getMaxDrained() {
-            return Math.min(amount - incomingTotalCache, fluidTransferInfo.transferPerTick);
+            return Math.min(amount - incomingTotalCache, transferPerTick);
         }
 
         /** @return The fluid filled */

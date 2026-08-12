@@ -5,10 +5,10 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.BCLog;
-import buildcraft.api.transport.EnumWirePart;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.transport.internal.EnumWirePart;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 import buildcraft.lib.client.sprite.SingleSpriteSet;
 import buildcraft.lib.misc.SpriteUtil;
 import buildcraft.transport.client.model.PipeModelCacheBase;

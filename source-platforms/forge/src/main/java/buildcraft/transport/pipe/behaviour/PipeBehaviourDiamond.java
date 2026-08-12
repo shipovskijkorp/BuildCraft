@@ -10,8 +10,8 @@ import java.util.List;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.transport.client.render.RenderPipeHolder;

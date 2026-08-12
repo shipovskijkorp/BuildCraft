@@ -6,12 +6,12 @@
 
 package buildcraft.transport.pipe.behaviour;
 
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipe.ConnectedType;
-import buildcraft.api.transport.pipe.PipeBehaviour;
-import buildcraft.api.transport.pipe.PipeEventFluid;
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
+import buildcraft.transport.internal.pipe.PipeBehaviour;
+import buildcraft.transport.internal.pipe.PipeEventFluid;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

@@ -6,7 +6,7 @@
 
 package buildcraft.transport.pipe;
 
-import buildcraft.api.transport.pipe.ICustomPipeConnection;
+import buildcraft.transport.internal.pipe.ICustomPipeConnection;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

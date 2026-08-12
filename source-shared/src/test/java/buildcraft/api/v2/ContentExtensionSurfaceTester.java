@@ -50,6 +50,8 @@ class ContentExtensionSurfaceTester {
         PipeType variant = PipeType.variant(id("fast_pipe"), base).component(id("accelerator")).build();
         assertTrue(variant.itemProfile().isPresent());
         assertTrue(variant.defaultComponents().containsAll(Set.of(id("extractor"), id("accelerator"))));
+        assertEquals(base.id(), variant.archetypeId().orElseThrow());
+        assertEquals(base.colorable(), variant.colorable());
     }
 
     @Test

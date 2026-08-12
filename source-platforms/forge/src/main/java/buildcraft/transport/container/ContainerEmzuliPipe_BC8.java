@@ -11,8 +11,8 @@ import java.util.EnumMap;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
 import buildcraft.lib.gui.ContainerPipe;
 import buildcraft.lib.gui.Widget_Neptune;
 import buildcraft.lib.gui.slot.SlotPhantom;

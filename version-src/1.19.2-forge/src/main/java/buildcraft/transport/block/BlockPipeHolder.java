@@ -16,14 +16,17 @@ import javax.annotation.Nullable;
 import buildcraft.api.blocks.ICustomPaintHandler;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.transport.EnumWirePart;
-import buildcraft.api.transport.IItemPluggable;
-import buildcraft.api.transport.WireNode;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeDefinition;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.AutomationActor;
+import buildcraft.api.v2.pipe.PipeActivationResult;
+import buildcraft.transport.internal.EnumWirePart;
+import buildcraft.transport.internal.IItemPluggable;
+import buildcraft.transport.internal.WireNode;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.BoundingBoxUtil;
@@ -827,6 +830,18 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		if (pipe == Pipe.EMPTY) {
 			return InteractionResult.PASS;
 		}
+        Direction apiSide = part.face != null ? part.face : re.getDirection();
+        PipeActivationResult apiActivation = pipe.activateApiComponents(
+            apiSide, player.getItemInHand(hand),
+            AutomationActor.player(player.getUUID(), player.getGameProfile().getName()),
+            world.isClientSide ? OperationMode.SIMULATE : OperationMode.EXECUTE
+        );
+        if (apiActivation == PipeActivationResult.SUCCESS) {
+            return InteractionResult.SUCCESS;
+        }
+        if (apiActivation == PipeActivationResult.DENIED || apiActivation == PipeActivationResult.FAILED) {
+            return InteractionResult.FAIL;
+        }
 		if (pipe.behaviour.onPipeActivate(player, re, world, part)) {
 			return InteractionResult.SUCCESS;
 		}

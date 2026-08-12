@@ -7,10 +7,10 @@
 package buildcraft.transport;
 
 import buildcraft.api.core.EnumHandlerPriority;
-import buildcraft.api.transport.pipe.EnumPipeColourType;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeConnectionAPI;
-import buildcraft.api.transport.pipe.PipeFlowType;
+import buildcraft.transport.internal.pipe.EnumPipeColourType;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeConnectionAPI;
+import buildcraft.transport.internal.pipe.PipeFlowType;
 import buildcraft.transport.pipe.PipeRegistry;
 import buildcraft.transport.pipe.StripesRegistry;
 import buildcraft.transport.pipe.flow.PipeFlowFluids;

@@ -3,8 +3,8 @@ package buildcraft.transport.pipe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import buildcraft.api.transport.pipe.PipeEventHandler;
-import buildcraft.api.transport.pipe.PipeEventItem;
+import buildcraft.transport.internal.pipe.PipeEventHandler;
+import buildcraft.transport.internal.pipe.PipeEventItem;
 
 public class PipeEventBusTester {
     @Test

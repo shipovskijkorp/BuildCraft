@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Supplier;
 
-import buildcraft.api.transport.pipe.IPipe;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.PipeFlow;
+import buildcraft.transport.internal.pipe.IPipe;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.transport.pipe.Pipe;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
 

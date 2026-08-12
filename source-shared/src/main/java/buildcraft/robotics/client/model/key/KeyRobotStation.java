@@ -1,6 +1,6 @@
 package buildcraft.robotics.client.model.key;
 
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 import buildcraft.robotics.plug.RobotStationPluggable.RobotStationState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;

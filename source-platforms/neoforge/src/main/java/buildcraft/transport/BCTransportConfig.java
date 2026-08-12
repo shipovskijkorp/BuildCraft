@@ -6,11 +6,11 @@
 package buildcraft.transport;
 
 import buildcraft.api.mj.MjAPI;
-import buildcraft.api.transport.pipe.EnumPipeColourType;
-import buildcraft.api.transport.pipe.PipeApi;
-import buildcraft.api.transport.pipe.PipeApi.PowerTransferInfo;
-import buildcraft.api.transport.pipe.PipeApi.ForgeEnergyTransferInfo;
-import buildcraft.api.transport.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.EnumPipeColourType;
+import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.transport.internal.pipe.PipeApi.PowerTransferInfo;
+import buildcraft.transport.internal.pipe.PipeApi.ForgeEnergyTransferInfo;
+import buildcraft.transport.internal.pipe.PipeDefinition;
 import buildcraft.lib.misc.MathUtil;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;

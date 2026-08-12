@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.transport.IWireEmitter;
-import buildcraft.api.transport.pipe.IPipeHolder;
-import buildcraft.api.transport.pipe.IPipeHolder.PipeMessageReceiver;
-import buildcraft.api.transport.pluggable.PipePluggable;
-import buildcraft.api.transport.pluggable.PluggableDefinition;
-import buildcraft.api.transport.pluggable.PluggableModelKey;
+import buildcraft.transport.internal.IWireEmitter;
+import buildcraft.transport.internal.pipe.IPipeHolder;
+import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
+import buildcraft.transport.internal.pluggable.PipePluggable;
+import buildcraft.transport.internal.pluggable.PluggableDefinition;
+import buildcraft.transport.internal.pluggable.PluggableModelKey;
 import buildcraft.lib.expression.DefaultContexts;
 import buildcraft.lib.expression.FunctionContext;
 import buildcraft.lib.expression.info.ContextInfo;
