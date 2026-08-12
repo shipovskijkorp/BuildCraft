@@ -5,11 +5,12 @@ import java.util.Collection;
 import java.util.List;
 
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.IRequestProvider;
-import buildcraft.api.robots.ResourceId;
+import buildcraft.api.v2.request.ItemRequest;
+import buildcraft.api.v2.request.RequestProvider;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.ResourceId;
 import buildcraft.lib.inventory.filter.PassThroughStackFilter;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.robotics.IStationFilter;
@@ -91,18 +92,24 @@ public class AIRobotSearchStackRequest extends AIRobot {
             return result;
         }
 
-        IRequestProvider provider = station.getRequestProvider();
+        RequestProvider provider = station.getRequestProvider();
         if (provider == null) {
             return result;
         }
 
-        for (int i = 0; i < provider.getRequestsCount(); i++) {
-            ItemStack stack = provider.getRequest(i);
-            if (stack == null || stack.isEmpty()) {
+        for (ItemRequest definition : provider.requests()) {
+            ItemStack stack = definition.matcher().examples().stream()
+                .filter(example -> example != null && !example.isEmpty())
+                .findFirst()
+                .map(ItemStack::copy)
+                .orElse(ItemStack.EMPTY);
+            if (stack.isEmpty()) {
                 continue;
             }
+            int requestedCount = Math.max(definition.minimum(), Math.min(definition.maximum(), stack.getMaxStackSize()));
+            stack.setCount(Math.max(1, requestedCount));
 
-            StackRequest req = new StackRequest(provider, i, stack);
+            StackRequest req = new StackRequest(provider, definition.id(), stack);
             req.setStation(station);
             ResourceId resourceId = req.getResourceId(robot.level());
             if (resourceId != null && !robot.getRegistry().isTaken(resourceId)) {

@@ -1,8 +1,8 @@
 package buildcraft.robotics.ai;
 
 import buildcraft.api.core.IFluidFilter;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 
 public class AIRobotGotoStationAndLoadFluids extends AIRobot {
     private IFluidFilter filter;

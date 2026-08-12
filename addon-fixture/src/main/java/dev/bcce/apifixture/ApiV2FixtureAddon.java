@@ -41,7 +41,11 @@ import buildcraft.api.v2.recipe.FluidIngredient;
 import buildcraft.api.v2.recipe.MachineRecipeService;
 import buildcraft.api.v2.registry.ApiRegistry;
 import buildcraft.api.v2.reload.DefinitionProvenance;
+import buildcraft.api.v2.robot.BuildCraftRobotBoards;
 import buildcraft.api.v2.robot.RobotBoardType;
+import buildcraft.api.v2.robot.RobotTask;
+import buildcraft.api.v2.robot.RobotTaskContext;
+import buildcraft.api.v2.robot.RobotTaskResult;
 import buildcraft.api.v2.signal.BuildCraftSignalChannels;
 import buildcraft.api.v2.signal.SignalChannelType;
 import buildcraft.api.v2.statement.ActionType;
@@ -267,6 +271,20 @@ public final class ApiV2FixtureAddon {
         BuildCraftApi.service(BuildCraftServices.AUTOMATION).execute(
             new FixtureAutomationRequest(pos, AutomationActor.unknown(), OperationMode.SIMULATE)
         );
+        // Robotics/request runtime is discoverable without importing EntityRobotBase, AIRobot or DockingStation.
+        BuildCraftApi.service(BuildCraftServices.ROBOTS).robots(level).stream().findFirst().ifPresent(robot ->
+            robot.control().ifPresent(control -> control.assign(new FixtureRobotTask(), OperationMode.SIMULATE))
+        );
+        BuildCraftApi.service(BuildCraftServices.ROBOTS).dock(level, pos, side);
+        BuildCraftApi.service(BuildCraftServices.REQUESTS).provider(level, pos, side)
+            .ifPresent(provider -> provider.requests().size());
+        BuildCraftApi.registry(BuildCraftRegistries.ROBOT_BOARD_TYPES).get(BuildCraftRobotBoards.PICKER);
+    }
+
+    private static final class FixtureRobotTask implements RobotTask {
+        private static final ResourceLocation TYPE = id("fixture_robot_task");
+        @Override public ResourceLocation typeId() { return TYPE; }
+        @Override public RobotTaskResult tick(RobotTaskContext context) { return RobotTaskResult.complete(); }
     }
 
     private record FixtureAutomationRequest(

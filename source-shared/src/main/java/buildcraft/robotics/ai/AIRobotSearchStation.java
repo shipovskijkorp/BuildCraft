@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.Set;
 
 import buildcraft.api.core.IZone;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.IStationFilter;
 import buildcraft.robotics.statements.ActionStationForbidRobot;
 import net.minecraft.core.Direction;

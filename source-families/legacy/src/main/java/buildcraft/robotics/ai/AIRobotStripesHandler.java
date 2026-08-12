@@ -1,8 +1,8 @@
 package buildcraft.robotics.ai;
 
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.pipe.StripesRegistry;

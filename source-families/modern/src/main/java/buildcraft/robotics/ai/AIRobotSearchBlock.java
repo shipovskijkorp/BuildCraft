@@ -14,9 +14,9 @@ import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IBox;
 import buildcraft.api.core.IZone;
 import buildcraft.robotics.zone.ZonePlan;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.ResourceIdBlock;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -365,12 +365,12 @@ public class AIRobotSearchBlock extends AIRobot {
 
     public boolean takeResource() {
         return blockFound != null && robot.getRegistry() != null
-                && robot.getRegistry().take(new buildcraft.api.robots.ResourceIdBlock(blockFound), robot);
+                && robot.getRegistry().take(new buildcraft.robotics.internal.legacy.robots.ResourceIdBlock(blockFound), robot);
     }
 
     public void unreserve() {
         if (blockFound != null && robot.getRegistry() != null) {
-            robot.getRegistry().release(new buildcraft.api.robots.ResourceIdBlock(blockFound));
+            robot.getRegistry().release(new buildcraft.robotics.internal.legacy.robots.ResourceIdBlock(blockFound));
         }
     }
 

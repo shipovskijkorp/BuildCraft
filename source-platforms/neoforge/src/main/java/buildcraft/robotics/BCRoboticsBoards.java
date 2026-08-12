@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import buildcraft.api.boards.IRedstoneBoard;
-import buildcraft.api.boards.RedstoneBoardNBT;
-import buildcraft.api.boards.RedstoneBoardRegistry;
-import buildcraft.api.boards.RedstoneBoardRobot;
-import buildcraft.api.boards.RedstoneBoardRobotNBT;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.boards.IRedstoneBoard;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardNBT;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRegistry;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.robotics.boards.BoardRobotCarrier;

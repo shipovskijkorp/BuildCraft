@@ -6,13 +6,14 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.api.v2.robot.RobotEventKind;
+import buildcraft.robotics.internal.api2.RobotEventSupport;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.BCRoboticsBoards.BoardEntry;
 import buildcraft.robotics.BCRoboticsItems;
 
-import buildcraft.api.events.RobotEvent;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.plug.RobotStationPluggable;
 import buildcraft.transport.tile.TilePipeHolder;
@@ -22,7 +23,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.common.NeoForge;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -139,9 +139,7 @@ public class ItemRobot extends Item implements ICreativeTabItemProvider {
             return InteractionResult.SUCCESS;
         }
         robot.setOwner(player.getGameProfile());
-        RobotEvent.Place robotEvent = new RobotEvent.Place(robot, player);
-        NeoForge.EVENT_BUS.post(robotEvent);
-        if (robotEvent.isCanceled()) {
+        if (RobotEventSupport.denied(RobotEventKind.PLACE, robot, player, currentItem)) {
             return InteractionResult.SUCCESS;
         }
 

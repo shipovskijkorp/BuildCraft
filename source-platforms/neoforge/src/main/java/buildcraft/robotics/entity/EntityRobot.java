@@ -12,18 +12,19 @@ import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.boards.RedstoneBoardRobot;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
 import com.mojang.authlib.GameProfile;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IZone;
-import buildcraft.api.events.RobotEvent;
 import buildcraft.lib.internal.mj.MjBattery;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.IRobotRegistry;
-import buildcraft.api.robots.RobotManager;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.api.v2.robot.RobotEventKind;
+import buildcraft.robotics.internal.api2.RobotEventSupport;
+import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
+import buildcraft.robotics.internal.legacy.robots.RobotManager;
 import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.lib.BCLibConfig;
@@ -222,7 +223,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
     }
 
     /** Allow gate statements to override the robot's main AI (e.g., goto station, wake up). */
-    public void setMainAIOverride(buildcraft.api.robots.AIRobot ai) {
+    public void setMainAIOverride(buildcraft.robotics.internal.legacy.robots.AIRobot ai) {
         if (level().isClientSide) {
             return;
         }
@@ -231,6 +232,11 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
             mainAI.start();
         }
         mainAI.setOverridingAI(ai);
+    }
+
+    @Override
+    public AIRobot getActiveAI() {
+        return mainAI == null ? null : mainAI.getActiveAI();
     }
 
     private boolean isAsleepOrShutdownOnServer() {
@@ -990,16 +996,12 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
             return InteractionResult.PASS;
         }
 
-        RobotEvent.Interact robotInteractEvent = new RobotEvent.Interact(this, player, stack);
-        NeoForge.EVENT_BUS.post(robotInteractEvent);
-        if (robotInteractEvent.isCanceled()) {
+        if (RobotEventSupport.denied(RobotEventKind.INTERACT, this, player, stack)) {
             return InteractionResult.PASS;
         }
 
         if (player.isShiftKeyDown() && WrenchUtil.isWrench(stack)) {
-            RobotEvent.Dismantle robotDismantleEvent = new RobotEvent.Dismantle(this, player);
-            NeoForge.EVENT_BUS.post(robotDismantleEvent);
-            if (robotDismantleEvent.isCanceled()) {
+            if (RobotEventSupport.denied(RobotEventKind.DISMANTLE, this, player, stack)) {
                 return InteractionResult.PASS;
             }
             if (!level().isClientSide) {
@@ -1025,8 +1027,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
     private boolean isWearable(ItemStack stack) {
         if (stack.isEmpty()) return false;
         if (stack.getItem() instanceof ArmorItem) return true;
-        return stack.getItem() instanceof buildcraft.api.robots.IRobotOverlayItem
-                && ((buildcraft.api.robots.IRobotOverlayItem) stack.getItem()).isValidRobotOverlay(stack);
+        return stack.getItem() instanceof buildcraft.robotics.internal.legacy.robots.IRobotOverlayItem
+                && ((buildcraft.robotics.internal.legacy.robots.IRobotOverlayItem) stack.getItem()).isValidRobotOverlay(stack);
     }
 
     @Override

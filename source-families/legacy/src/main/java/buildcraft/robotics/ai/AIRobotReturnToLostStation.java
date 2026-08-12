@@ -9,10 +9,10 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.IRobotRegistry;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

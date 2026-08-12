@@ -1,14 +1,19 @@
 package buildcraft.robotics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.IRequestProvider;
-import buildcraft.api.robots.RobotManager;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.item.ItemTransferResult;
+import buildcraft.api.v2.request.ItemRequest;
+import buildcraft.api.v2.request.RequestProvider;
+import buildcraft.robotics.internal.api2.RequestSupport;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.RobotManager;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.StatementSlot;
 import net.minecraft.world.level.Level;
@@ -30,13 +35,14 @@ import buildcraft.transport.tile.TilePipeHolder;
 import buildcraft.transport.pipe.Pipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import org.jetbrains.annotations.NotNull;
 
-public class DockingStationPipe extends DockingStation implements IRequestProvider {
+public class DockingStationPipe extends DockingStation implements RequestProvider {
     private static final long INVALID_STATION_GRACE_TICKS = 20L;
 
     private TilePipeHolder pipe;
@@ -340,32 +346,41 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
         return getPipe() != null && getPipe().getPipe() != null && getPipe().getPipe().flow instanceof PipeFlowPower;
     }
 
-    @Override
-    public int getRequestsCount() {
-        return getActiveItemRequests().size();
-    }
-
-    @Override
-    public ItemStack getRequest(int slot) {
+    private ItemStack getRequest(int slot) {
         List<ItemStack> requests = getActiveItemRequests();
         return slot >= 0 && slot < requests.size() ? requests.get(slot).copy() : ItemStack.EMPTY;
     }
 
     @Override
-    public ItemStack offerItem(int slot, ItemStack stack) {
-        if (stack.isEmpty()) {
-            return ItemStack.EMPTY;
+    public Collection<ItemRequest> requests() {
+        List<ItemStack> active = getActiveItemRequests();
+        List<ItemRequest> result = new ArrayList<>(active.size());
+        for (int slot = 0; slot < active.size(); slot++) {
+            ItemStack request = active.get(slot);
+            if (!request.isEmpty()) {
+                result.add(RequestSupport.request(slot, request, active.size() - slot));
+            }
         }
-        if (getRequest(slot).isEmpty()) {
-            return stack;
+        return List.copyOf(result);
+    }
+
+    @Override
+    public ItemTransferResult offer(ResourceLocation requestId, ItemStack offered, OperationMode mode) {
+        if (offered == null || offered.isEmpty()) {
+            return ItemTransferResult.nothing(offered == null ? 0 : offered.getCount());
+        }
+        int slot = RequestSupport.slot(requestId).orElse(-1);
+        if (slot < 0 || getRequest(slot).isEmpty()) {
+            return ItemTransferResult.nothing(offered.getCount());
         }
 
         IInjectable output = getItemOutput();
         Direction outputSide = getItemOutputSide();
         if (output == null || outputSide == null || !output.canInjectItems(outputSide)) {
-            return stack;
+            return ItemTransferResult.nothing(offered.getCount());
         }
-        return output.injectItem(stack.copy(), true, outputSide, null, 0.08D);
+        ItemStack remainder = output.injectItem(offered.copy(), mode == OperationMode.EXECUTE, outputSide, null, 0.08D);
+        return ItemTransferResult.ofInsertion(offered, offered.getCount() - remainder.getCount());
     }
 
     private List<ItemStack> getActiveItemRequests() {
@@ -393,13 +408,13 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     }
 
     @Override
-    public IRequestProvider getRequestProvider() {
+    public RequestProvider getRequestProvider() {
         Level level = level();
         if (level != null) {
             BlockPos pos = new BlockPos(x(), y(), z());
             for (Direction dir : Direction.values()) {
                 BlockEntity neighbour = level.getBlockEntity(pos.relative(dir));
-                if (neighbour instanceof IRequestProvider provider) {
+                if (neighbour instanceof RequestProvider provider) {
                     return provider;
                 }
             }

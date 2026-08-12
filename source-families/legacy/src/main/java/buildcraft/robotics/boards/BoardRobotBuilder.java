@@ -6,11 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import buildcraft.api.boards.RedstoneBoardRobot;
-import buildcraft.api.boards.RedstoneBoardRobotNBT;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.ResourceIdBlock;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;
 import buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildTask;
 import buildcraft.builders.tile.IRobotBuilderTarget;
 import buildcraft.builders.tile.TileBuilder;

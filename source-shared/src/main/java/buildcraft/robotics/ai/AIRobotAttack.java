@@ -1,7 +1,7 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
 import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

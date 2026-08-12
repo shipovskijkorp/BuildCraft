@@ -1,6 +1,6 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec3;
 

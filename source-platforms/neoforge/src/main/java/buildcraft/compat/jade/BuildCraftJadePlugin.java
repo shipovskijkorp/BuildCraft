@@ -19,8 +19,8 @@ import com.mojang.authlib.GameProfile;
 
 import buildcraft.lib.internal.mj.IMjReadable;
 import buildcraft.api.properties.BuildCraftProperties;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.transport.internal.EnumWirePart;
 import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
 import buildcraft.transport.internal.pluggable.PipePluggable;

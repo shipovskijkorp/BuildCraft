@@ -6,7 +6,7 @@ package buildcraft.builders.tile;
 
 import java.util.List;
 
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildTask;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

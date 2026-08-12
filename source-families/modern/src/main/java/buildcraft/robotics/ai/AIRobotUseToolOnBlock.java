@@ -1,11 +1,14 @@
 package buildcraft.robotics.ai;
 
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.automation.UseItemRequest;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.robotics.entity.EntityRobot;
+import buildcraft.robotics.internal.api2.RobotAutomationSupport;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -62,6 +65,13 @@ public class AIRobotUseToolOnBlock extends AIRobot {
         }
 
         BlockPos pos = useToBlock.toBlockPos();
+        if (!RobotAutomationSupport.permits(new UseItemRequest(
+                serverLevel, robot.blockPosition(), pos, Direction.UP, held,
+                RobotAutomationSupport.actor(robot), OperationMode.SIMULATE))) {
+            setSuccess(false);
+            terminate();
+            return;
+        }
         GameProfile owner = robot instanceof EntityRobot entityRobot
                 ? entityRobot.getOwnerProfile()
                 : FakePlayerProvider.NULL_PROFILE;

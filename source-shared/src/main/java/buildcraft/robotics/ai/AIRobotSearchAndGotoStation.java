@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import buildcraft.api.core.IZone;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.IStationFilter;
 
 public class AIRobotSearchAndGotoStation extends AIRobot {

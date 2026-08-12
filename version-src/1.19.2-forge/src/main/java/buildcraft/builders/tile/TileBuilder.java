@@ -35,7 +35,7 @@ import buildcraft.api.inventory.IItemTransactor;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.tiles.IDebuggable;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.api.tiles.TilesAPI;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.core.BCCoreConfig;

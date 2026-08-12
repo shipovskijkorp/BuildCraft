@@ -4,11 +4,11 @@ import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Set;
 
-import buildcraft.api.boards.RedstoneBoardRobotNBT;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IZone;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.ai.AIRobotBreak;
 import buildcraft.robotics.ai.AIRobotSearchAndGotoBlock;

@@ -4,7 +4,7 @@ import buildcraft.api.v2.energy.MjAmount;
 
 import java.util.List;
 
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.recipe.CountedIngredient;

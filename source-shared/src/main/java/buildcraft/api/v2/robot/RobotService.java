@@ -9,7 +9,13 @@ import net.minecraft.world.level.Level;
 public interface RobotService {
     Optional<RobotHandle> robot(Level level, long id);
     Collection<? extends RobotHandle> robots(Level level);
+
+    /** Finds an unsided/block station at the position. */
+    Optional<RobotDock> dock(Level level, BlockPos pos);
+
+    /** Finds a station attached to a specific side. */
     Optional<RobotDock> dock(Level level, BlockPos pos, Direction side);
+
     Optional<RobotResourceLease> acquire(Level level, long robotId, RobotResourceRequest request);
 
     /**

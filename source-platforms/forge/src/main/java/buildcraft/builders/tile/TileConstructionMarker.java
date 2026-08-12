@@ -23,7 +23,7 @@ import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.enums.EnumSnapshotType;
 import buildcraft.api.inventory.IItemTransactor;
 import buildcraft.lib.internal.mj.MjBattery;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.item.ItemSnapshot;

@@ -2,13 +2,13 @@ package buildcraft.robotics.boards;
 
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
-import buildcraft.api.boards.RedstoneBoardRobot;
-import buildcraft.api.boards.RedstoneBoardRobotNBT;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.ResourceIdBlock;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;
 import buildcraft.lib.inventory.filter.AggregateFilter;
 import buildcraft.robotics.BCRoboticsBoards;
 import buildcraft.robotics.ai.AIRobotFetchAndEquipItemStack;

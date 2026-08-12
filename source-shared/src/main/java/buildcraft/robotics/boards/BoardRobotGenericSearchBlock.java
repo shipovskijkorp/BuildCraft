@@ -3,11 +3,11 @@ package buildcraft.robotics.boards;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.boards.RedstoneBoardRobot;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.ResourceIdBlock;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;
 import buildcraft.robotics.ai.AIRobotGotoSleep;
 import buildcraft.robotics.ai.AIRobotSearchAndGotoBlock;
 import buildcraft.robotics.statements.ActionRobotFilter;

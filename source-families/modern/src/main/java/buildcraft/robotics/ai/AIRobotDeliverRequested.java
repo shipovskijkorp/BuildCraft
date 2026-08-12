@@ -1,8 +1,10 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.IRequestProvider;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.item.ItemTransferResult;
+import buildcraft.api.v2.request.RequestProvider;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import buildcraft.robotics.StackRequest;
 import net.minecraft.nbt.CompoundTag;
@@ -41,7 +43,7 @@ public class AIRobotDeliverRequested extends AIRobot {
                 return;
             }
 
-            IRequestProvider requester = requested == null ? null : requested.getRequester(robot.level());
+            RequestProvider requester = requested == null ? null : requested.getRequester(robot.level());
             if (requester == null) {
                 setSuccess(false);
                 terminate();
@@ -54,7 +56,7 @@ public class AIRobotDeliverRequested extends AIRobot {
         }
     }
 
-    private boolean deliver(IRequestProvider requester) {
+    private boolean deliver(RequestProvider requester) {
         if (requested == null || requested.getStack().isEmpty()) {
             return false;
         }
@@ -72,9 +74,8 @@ public class AIRobotDeliverRequested extends AIRobot {
             int toOffer = Math.min(stack.getCount(), remainingRequest);
             ItemStack offered = stack.copy();
             offered.setCount(toOffer);
-            ItemStack rejected = requester.offerItem(requested.getSlot(), offered.copy());
-            int rejectedCount = rejected == null || rejected.isEmpty() ? 0 : rejected.getCount();
-            int accepted = toOffer - rejectedCount;
+            ItemTransferResult transfer = requester.offer(requested.getRequestId(), offered.copy(), OperationMode.EXECUTE);
+            int accepted = Math.min(toOffer, transfer.transferredCount());
             if (accepted <= 0) {
                 continue;
             }

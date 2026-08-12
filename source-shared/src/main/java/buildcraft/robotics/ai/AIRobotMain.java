@@ -1,9 +1,9 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.boards.RedstoneBoardRobot;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import net.minecraft.core.Direction;
 
 /** Main robotics AI loop, ported from BuildCraft 7.1.x. */

@@ -3,10 +3,10 @@ package buildcraft.robotics.statements;
 import java.util.List;
 
 import buildcraft.api.items.IMapLocation;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.IRobotRegistry;
-import buildcraft.api.robots.RobotManager;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
+import buildcraft.robotics.internal.legacy.robots.RobotManager;
 import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

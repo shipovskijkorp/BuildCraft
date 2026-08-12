@@ -1,6 +1,6 @@
 package buildcraft.robotics.statements;
 
-import buildcraft.api.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

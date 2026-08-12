@@ -68,7 +68,7 @@ import buildcraft.robotics.boards.BoardRobotPlanter;
 import buildcraft.robotics.boards.BoardRobotPump;
 import buildcraft.robotics.boards.BoardRobotShovelman;
 import buildcraft.robotics.boards.BoardRobotStripes;
-import buildcraft.api.robots.RobotManager;
+import buildcraft.robotics.internal.legacy.robots.RobotManager;
 import buildcraft.robotics.client.render.RenderRobot;
 import buildcraft.robotics.zone.MessageZoneMapResponse;
 import buildcraft.robotics.recipes.RobotIntegrationRecipe;
@@ -120,6 +120,7 @@ public class BCRobotics {
         modEventBus.addListener(BCRobotics::registerEntityAttributes);
 
         BCRoboticsBoards.init();
+        RoboticsApi2Bootstrap.bootstrap();
         BCRoboticsPlugs.preInit();
         BCRoboticsBlocks.registry(modEventBus);
         BCRoboticsItems.registry(modEventBus);

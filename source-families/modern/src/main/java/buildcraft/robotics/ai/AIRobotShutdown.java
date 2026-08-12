@@ -1,7 +1,7 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 

@@ -3,12 +3,18 @@
  */
 package buildcraft.robotics.tile;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.robots.IRequestProvider;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.item.ItemTransferResult;
+import buildcraft.api.v2.request.ItemRequest;
+import buildcraft.api.v2.request.RequestProvider;
+import buildcraft.robotics.internal.api2.RequestSupport;
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.misc.data.IdAllocator;
@@ -20,6 +26,7 @@ import buildcraft.robotics.container.ContainerRequester;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,7 +41,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkHooks;
 
-public class TileRequester extends TileBC_Neptune implements IRequestProvider, IDebuggable, MenuProvider {
+public class TileRequester extends TileBC_Neptune implements RequestProvider, IDebuggable, MenuProvider {
     protected static final IdAllocator IDS = TileBC_Neptune.IDS.makeChild("requester");
 
     public static final int NB_ITEMS = 20;
@@ -95,13 +102,7 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
                 && existing.getCount() >= template.getCount();
     }
 
-    @Override
-    public int getRequestsCount() {
-        return NB_ITEMS;
-    }
-
-    @Override
-    public ItemStack getRequest(int index) {
+    private ItemStack getRequest(int index) {
         if (!isValidSlot(index) || isFulfilled(index)) {
             return ItemStack.EMPTY;
         }
@@ -119,8 +120,7 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
         return request.getCount() > 0 ? request : ItemStack.EMPTY;
     }
 
-    @Override
-    public ItemStack offerItem(int index, ItemStack stack) {
+    private ItemStack offerItem(int index, ItemStack stack, boolean simulate) {
         if (stack.isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -136,9 +136,11 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
         ItemStack existing = inv.getStackInSlot(index);
         if (existing.isEmpty()) {
             int accepted = Math.min(stack.getCount(), template.getCount());
-            ItemStack inserted = stack.copy();
-            inserted.setCount(accepted);
-            inv.setStackInSlot(index, inserted);
+            if (!simulate) {
+                ItemStack inserted = stack.copy();
+                inserted.setCount(accepted);
+                inv.setStackInSlot(index, inserted);
+            }
             return copyRemainder(stack, accepted);
         }
 
@@ -152,10 +154,34 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
         }
 
         int accepted = Math.min(stack.getCount(), missing);
-        ItemStack updated = existing.copy();
-        updated.grow(accepted);
-        inv.setStackInSlot(index, updated);
+        if (!simulate) {
+            ItemStack updated = existing.copy();
+            updated.grow(accepted);
+            inv.setStackInSlot(index, updated);
+        }
         return copyRemainder(stack, accepted);
+    }
+
+    @Override
+    public Collection<ItemRequest> requests() {
+        List<ItemRequest> result = new ArrayList<>();
+        for (int slot = 0; slot < NB_ITEMS; slot++) {
+            ItemStack request = getRequest(slot);
+            if (!request.isEmpty()) {
+                result.add(RequestSupport.request(slot, request, NB_ITEMS - slot));
+            }
+        }
+        return List.copyOf(result);
+    }
+
+    @Override
+    public ItemTransferResult offer(ResourceLocation requestId, ItemStack offered, OperationMode mode) {
+        int slot = RequestSupport.slot(requestId).orElse(-1);
+        if (slot < 0 || slot >= NB_ITEMS || offered == null || offered.isEmpty()) {
+            return ItemTransferResult.nothing(offered == null ? 0 : offered.getCount());
+        }
+        ItemStack remainder = offerItem(slot, offered.copy(), mode == OperationMode.SIMULATE);
+        return ItemTransferResult.ofInsertion(offered, offered.getCount() - remainder.getCount());
     }
 
     @Override

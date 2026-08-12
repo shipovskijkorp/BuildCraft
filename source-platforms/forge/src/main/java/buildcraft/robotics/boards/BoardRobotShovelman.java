@@ -1,7 +1,7 @@
 package buildcraft.robotics.boards;
 
-import buildcraft.api.boards.RedstoneBoardRobotNBT;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.BCRoboticsBoards;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;

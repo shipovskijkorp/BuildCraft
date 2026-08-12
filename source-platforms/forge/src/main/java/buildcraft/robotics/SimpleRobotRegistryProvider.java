@@ -12,12 +12,12 @@ import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
-import buildcraft.api.robots.IRobotRegistry;
-import buildcraft.api.robots.IRobotRegistryProvider;
-import buildcraft.api.robots.ResourceId;
-import buildcraft.api.robots.RobotManager;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
+import buildcraft.robotics.internal.legacy.robots.IRobotRegistryProvider;
+import buildcraft.robotics.internal.legacy.robots.ResourceId;
+import buildcraft.robotics.internal.legacy.robots.RobotManager;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -143,6 +143,11 @@ public enum SimpleRobotRegistryProvider implements IRobotRegistryProvider {
         @Override
         public EntityRobotBase getLoadedRobot(long id) {
             return robots.get(id);
+        }
+
+        @Override
+        public Collection<EntityRobotBase> getLoadedRobots() {
+            return Collections.unmodifiableList(new ArrayList<>(robots.values()));
         }
 
         @Override

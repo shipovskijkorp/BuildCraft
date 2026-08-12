@@ -1,11 +1,14 @@
 package buildcraft.robotics.ai;
 
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.automation.BreakBlockRequest;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.robotics.entity.EntityRobot;
+import buildcraft.robotics.internal.api2.RobotAutomationSupport;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -73,6 +76,12 @@ public class AIRobotBreak extends AIRobot {
         if (blockDamage > 1.0F) {
             serverLevel.destroyBlockProgress(robot.getId(), pos, -1);
             blockDamage = 0.0F;
+            if (!RobotAutomationSupport.permits(new BreakBlockRequest(
+                    serverLevel, robot.blockPosition(), pos, RobotAutomationSupport.actor(robot), OperationMode.SIMULATE))) {
+                setSuccess(false);
+                terminate();
+                return;
+            }
             ItemStack held = robot.getItemBySlot(EquipmentSlot.MAINHAND);
             GameProfile owner = robot instanceof EntityRobot entityRobot
                     ? entityRobot.getOwnerProfile()

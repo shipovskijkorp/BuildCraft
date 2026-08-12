@@ -1,6 +1,6 @@
 package buildcraft.robotics;
 
-import buildcraft.api.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
 
 @FunctionalInterface
 public interface IStationFilter {

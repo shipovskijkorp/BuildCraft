@@ -1,9 +1,9 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.IRobotRegistry;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 
 public class AIRobotGotoSleep extends AIRobot {
     public AIRobotGotoSleep(EntityRobotBase robot) {

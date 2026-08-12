@@ -5,8 +5,8 @@ import java.util.Random;
 import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IBox;
 import buildcraft.api.core.IZone;
-import buildcraft.api.robots.AIRobot;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.AIRobot;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 

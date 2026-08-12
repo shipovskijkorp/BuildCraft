@@ -3,7 +3,7 @@ package buildcraft.robotics.statements;
 import javax.annotation.Nullable;
 
 import buildcraft.api.items.IList;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.StatementParameterItemStack;
 import buildcraft.robotics.BCRoboticsBoards;

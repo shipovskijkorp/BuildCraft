@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IStackFilter;
-import buildcraft.api.robots.DockingStation;
-import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.internal.legacy.robots.DockingStation;
+import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
