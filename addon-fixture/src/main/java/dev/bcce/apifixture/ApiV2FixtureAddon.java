@@ -16,6 +16,9 @@ import buildcraft.api.v2.map.MapLocationAdapter;
 import buildcraft.api.v2.item.ItemLabelAdapter;
 import buildcraft.api.v2.energy.MjConnectionRule;
 import buildcraft.api.v2.drop.FluidDropProvider;
+import buildcraft.api.v2.drop.FluidDropContext;
+import buildcraft.api.v2.facade.FacadeMaterialAdapter;
+import buildcraft.api.v2.list.ListMatchAdapter;
 import buildcraft.api.v2.debug.DebugContributor;
 import buildcraft.api.v2.client.ParameterPresentation;
 import buildcraft.api.v2.OperationMode;
@@ -222,6 +225,19 @@ public final class ApiV2FixtureAddon {
             context -> context.local().networkId().equals(context.remote().networkId()),
             () -> "api-v2-fixture"
         );
+        BuildCraftApi.registry(BuildCraftRegistries.FACADE_MATERIAL_ADAPTERS).register(
+            id("facade_materials"),
+            new FacadeMaterialAdapter() { },
+            () -> "api-v2-fixture"
+        );
+        BuildCraftApi.registry(BuildCraftRegistries.LIST_MATCH_ADAPTERS).register(
+            id("list_matching"),
+            new ListMatchAdapter() {
+                @Override public boolean supports(buildcraft.api.v2.list.ListMatchContext context) { return false; }
+                @Override public boolean matches(buildcraft.api.v2.list.ListMatchContext context) { return false; }
+            },
+            () -> "api-v2-fixture"
+        );
         BuildCraftApi.registry(BuildCraftRegistries.ITEM_LABEL_ADAPTERS).register(
             id("labels"),
             new ItemLabelAdapter() {
@@ -291,6 +307,12 @@ public final class ApiV2FixtureAddon {
         AutomationActor actor = BuildCraftApi.service(BuildCraftServices.ACTORS).unknown();
         BuildCraftApi.service(BuildCraftServices.MODULES).loaded(BuildCraftModules.CORE);
         BuildCraftApi.service(BuildCraftServices.WRENCHES).isWrench(ItemStack.EMPTY);
+        BuildCraftApi.service(BuildCraftServices.ITEM_LISTS).isList(ItemStack.EMPTY);
+        BuildCraftApi.service(BuildCraftServices.ITEM_LABELS).label(ItemStack.EMPTY);
+        BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).read(ItemStack.EMPTY);
+        BuildCraftApi.service(BuildCraftServices.FLUID_DROPS).createDrops(FluidDropContext.of(FluidVolume.empty()));
+        BuildCraftApi.service(BuildCraftServices.FACADES).resolve(level.getBlockState(pos));
+
         BuildCraftApi.service(BuildCraftServices.DEBUG_VIEWS).collect(
             new DebugContext(level, pos, Optional.of(side), level.isClientSide)
         );

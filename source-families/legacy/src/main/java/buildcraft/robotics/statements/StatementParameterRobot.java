@@ -2,7 +2,8 @@ package buildcraft.robotics.statements;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.items.IList;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.StatementParameterItemStack;
@@ -60,13 +61,14 @@ public class StatementParameterRobot extends StatementParameterItemStack {
         }
 
         ItemStack robotStack = createRobotStack(robot);
-        if (filterStack.getItem() instanceof IList list) {
-            if (!robotStack.isEmpty() && list.matches(filterStack, robotStack)) {
+        var lists = BuildCraftApi.service(BuildCraftServices.ITEM_LISTS);
+        if (lists.isList(filterStack)) {
+            if (!robotStack.isEmpty() && lists.matches(filterStack, robotStack)) {
                 return true;
             }
             if (robot instanceof EntityRobot entityRobot) {
                 for (ItemStack wearable : entityRobot.getWearables()) {
-                    if (!wearable.isEmpty() && list.matches(filterStack, wearable)) {
+                    if (!wearable.isEmpty() && lists.matches(filterStack, wearable)) {
                         return true;
                     }
                 }

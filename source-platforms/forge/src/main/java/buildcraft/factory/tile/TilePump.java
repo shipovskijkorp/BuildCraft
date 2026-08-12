@@ -25,7 +25,7 @@ import buildcraft.lib.internal.debug.BCDebugging;
 import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
-import buildcraft.api.items.FluidItemDrops;
+import buildcraft.lib.fluid.FluidDropRuntime;
 import buildcraft.lib.internal.mj.IMjReceiver;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.core.BCCoreBlocks;
@@ -442,7 +442,7 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
     
 	@Override
 	public void addDrops(NonNullList<ItemStack> toDrop, int fortune) {
-		FluidItemDrops.addFluidDrops(toDrop, tank);
+		FluidDropRuntime.addFluidDrops(toDrop, tank);
 		super.addDrops(toDrop, fortune);
 	}
 

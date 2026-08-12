@@ -2,8 +2,6 @@ package buildcraft.silicon.plug;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.facades.IFacadePhasedState;
-import buildcraft.api.facades.IFacadeState;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import net.minecraft.core.Direction;
@@ -18,7 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class FacadePhasedState implements IFacadePhasedState {
+public class FacadePhasedState {
     public final FacadeBlockStateInfo stateInfo;
 
     @Nullable
@@ -100,14 +98,10 @@ public class FacadePhasedState implements IFacadePhasedState {
         return (activeColour == null ? "" : activeColour + " ") + getState();
     }
 
-    // IFacadePhasedState
-
-    @Override
-    public IFacadeState getState() {
+    public FacadeBlockStateInfo getState() {
         return stateInfo;
     }
 
-    @Override
     public DyeColor getActiveColor() {
         return activeColour;
     }

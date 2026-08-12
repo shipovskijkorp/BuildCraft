@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.google.common.collect.ImmutableSet;
 
-import buildcraft.api.facades.IFacadeState;
 import buildcraft.lib.world.SingleBlockAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class FacadeBlockStateInfo implements IFacadeState {
+public class FacadeBlockStateInfo  {
     public final BlockState state;
     public final ItemStack requiredStack;
     public final ImmutableSet<Property<?>> varyingProperties;
@@ -51,19 +50,15 @@ public class FacadeBlockStateInfo implements IFacadeState {
             + state.toString() + "]";
     }
 
-    // IFacadeState
 
-    @Override
     public BlockState getBlockState() {
         return state;
     }
 
-    @Override
     public boolean isTransparent() {
         return isTransparent;
     }
 
-    @Override
     public ItemStack getRequiredStack() {
         return requiredStack;
     }

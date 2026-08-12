@@ -13,9 +13,11 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
-import buildcraft.api.lists.ListMatchHandler.Type;
-import buildcraft.api.lists.ListRegistry;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
+import buildcraft.api.v2.list.ListMatchAdapter;
+import buildcraft.api.v2.list.ListMatchContext;
+import buildcraft.api.v2.list.ListMatchType;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.NonNullList;
@@ -94,19 +96,20 @@ public final class ListHandler {
                     return false;
                 }
 
-                List<ListMatchHandler> handlers = ListRegistry.getHandlers();
-                ListMatchHandler.Type type = getSortingType();
+                List<ListMatchAdapter> handlers = new ArrayList<>(BuildCraftApi.registry(BuildCraftRegistries.LIST_MATCH_ADAPTERS).values());
+                ListMatchType type = getSortingType();
                 boolean anyHandled = false;
-                for (ListMatchHandler h : handlers) {
-                    if (!h.isValidSource(type, compare)) {
+                for (ListMatchAdapter h : handlers) {
+                    ListMatchContext context = new ListMatchContext(type, compare, target, precise);
+                    if (!h.supports(context)) {
                         continue;
                     }
                     anyHandled = true;
-                    if (h.matches(type, compare, target, precise)) {
+                    if (h.matches(context)) {
                         return true;
                     }
                 }
-                if (!anyHandled && type == Type.TYPE) {
+                if (!anyHandled && type == ListMatchType.TYPE) {
                     // Modern item variants are generally separate Item instances.
                     // For an otherwise unhandled item, variation mode therefore
                     // falls back to the same item while ignoring damage and NBT.
@@ -128,9 +131,9 @@ public final class ListHandler {
             return false;
         }
 
-        public ListMatchHandler.Type getSortingType() {
-            return byType ? (byMaterial ? ListMatchHandler.Type.CLASS : ListMatchHandler.Type.TYPE)
-                : ListMatchHandler.Type.MATERIAL;
+        public ListMatchType getSortingType() {
+            return byType ? (byMaterial ? ListMatchType.CLASS : ListMatchType.TYPE)
+                : ListMatchType.MATERIAL;
         }
 
         public static Line fromNBT(CompoundTag data) {
@@ -196,14 +199,15 @@ public final class ListHandler {
                 return NonNullList.withSize(0, StackUtil.EMPTY);
             }
             NonNullList<ItemStack> stackList = NonNullList.create();
-            List<ListMatchHandler> handlers = ListRegistry.getHandlers();
-            List<ListMatchHandler> handlersCustom = new ArrayList<>();
-            ListMatchHandler.Type type = getSortingType();
-            for (ListMatchHandler h : handlers) {
-                if (h.isValidSource(type, firstStack)) {
-                    NonNullList<ItemStack> examples = h.getClientExamples(type, firstStack);
-                    if (examples != null) {
-                        stackList.addAll(examples);
+            List<ListMatchAdapter> handlers = new ArrayList<>(BuildCraftApi.registry(BuildCraftRegistries.LIST_MATCH_ADAPTERS).values());
+            List<ListMatchAdapter> handlersCustom = new ArrayList<>();
+            ListMatchType type = getSortingType();
+            for (ListMatchAdapter h : handlers) {
+                ListMatchContext context = new ListMatchContext(type, firstStack, ItemStack.EMPTY, false);
+                if (h.supports(context)) {
+                    java.util.Optional<java.util.List<ItemStack>> examples = h.examples(context);
+                    if (examples.isPresent()) {
+                        stackList.addAll(examples.get());
                     } else {
                         handlersCustom.add(h);
                     }
@@ -220,8 +224,8 @@ public final class ListHandler {
                     ?*/
                     //?}
                     for (ItemStack s : examples) {
-                        for (ListMatchHandler mh : handlersCustom) {
-                            if (mh.matches(type, firstStack, s, false)) {
+                        for (ListMatchAdapter mh : handlersCustom) {
+                            if (mh.matches(new ListMatchContext(type, firstStack, s, false))) {
                                 stackList.add(s);
                                 break;
                             }

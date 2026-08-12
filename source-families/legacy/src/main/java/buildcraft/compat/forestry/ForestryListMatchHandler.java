@@ -2,7 +2,8 @@ package buildcraft.compat.forestry;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
+import buildcraft.api.v2.list.ListMatchType;
+import buildcraft.lib.list.ListMatchHandlerBackend;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.capability.IIndividualHandlerItem;
 import net.minecraft.resources.ResourceLocation;
@@ -13,9 +14,9 @@ import net.minecraft.world.item.ItemStack;
  * MATERIAL compares species, TYPE compares species family and life stage,
  * and CLASS requires both.
  */
-final class ForestryListMatchHandler extends ListMatchHandler {
+final class ForestryListMatchHandler extends ListMatchHandlerBackend {
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack compare, @Nonnull ItemStack target, boolean precise) {
+    public boolean matches(ListMatchType type, @Nonnull ItemStack compare, @Nonnull ItemStack target, boolean precise) {
         IIndividualHandlerItem compareHandler = getHandler(compare);
         IIndividualHandlerItem targetHandler = getHandler(target);
         if (compareHandler == null || targetHandler == null) {
@@ -53,7 +54,7 @@ final class ForestryListMatchHandler extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
+    public boolean isValidSource(ListMatchType type, @Nonnull ItemStack stack) {
         return getHandler(stack) != null;
     }
 

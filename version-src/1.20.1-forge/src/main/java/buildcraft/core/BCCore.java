@@ -8,7 +8,8 @@ import java.util.Map;
 
 import buildcraft.lib.internal.module.BCModules;
 import buildcraft.lib.internal.enums.EnumSpring;
-import buildcraft.api.items.FluidItemDrops;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
 import buildcraft.core.client.RenderTickListener;
 import buildcraft.core.client.model.ModelEngine;
 import buildcraft.core.client.render.RenderEngine_BC8;
@@ -121,7 +122,10 @@ public class BCCore {
     	EnumSpring.OIL.tileConstructor = TileSpringOil::new;
     	BCCoreConfig.reloadConfig(MODID);
         BUILDCRAFT_TAB.setItem(BCCoreItems.WRENCH.get());
-        FluidItemDrops.item = BCCoreItems.FRAGILE_FLUID_SHARD.get();
+        BuildCraftApi.registry(BuildCraftRegistries.FLUID_DROP_PROVIDERS).register(
+            java.util.Objects.requireNonNull(net.minecraft.resources.ResourceLocation.tryParse("buildcraftcore:fragile_fluid_shard")),
+            BCCoreItems.FRAGILE_FLUID_SHARD.get()
+        );
     }
     
     

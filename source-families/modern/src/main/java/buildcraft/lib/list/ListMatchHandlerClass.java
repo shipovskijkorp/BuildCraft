@@ -8,15 +8,15 @@ package buildcraft.lib.list;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
-import buildcraft.api.lists.ListRegistry;
+import buildcraft.api.v2.list.ListMatchType;
+import buildcraft.lib.list.ListMatchHandlerBackend;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 
-public class ListMatchHandlerClass extends ListMatchHandler {
+public class ListMatchHandlerClass extends ListMatchHandlerBackend {
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
-        if (type != Type.TYPE) {
+    public boolean matches(ListMatchType type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+        if (type != ListMatchType.TYPE) {
             return false;
         }
 
@@ -26,16 +26,14 @@ public class ListMatchHandlerClass extends ListMatchHandler {
             return target.has(DataComponents.FOOD);
         }
 
-        Class<?> itemClass = stack.getItem().getClass();
-        return ListRegistry.itemClassAsType.contains(itemClass)
-            && itemClass.equals(target.getItem().getClass());
+        return false;
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
-        if (type != Type.TYPE) {
+    public boolean isValidSource(ListMatchType type, @Nonnull ItemStack stack) {
+        if (type != ListMatchType.TYPE) {
             return false;
         }
-        return stack.has(DataComponents.FOOD) || ListRegistry.itemClassAsType.contains(stack.getItem().getClass());
+        return stack.has(DataComponents.FOOD);
     }
 }

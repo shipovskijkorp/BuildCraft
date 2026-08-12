@@ -2,7 +2,8 @@ package buildcraft.robotics.statements;
 
 import java.util.List;
 
-import buildcraft.api.items.IMapLocation;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
@@ -83,14 +84,11 @@ public class ActionRobotGotoStation extends BCStatement implements IActionIntern
             return null;
         }
         ItemStack stack = param.getItemStack();
-        if (stack.isEmpty() || !(stack.getItem() instanceof IMapLocation map)) {
-            return null;
-        }
-        BlockPos pos = map.getPoint(stack);
-        if (pos == null) {
-            return null;
-        }
-        Direction side = map.getPointSide(stack);
+        if (stack.isEmpty()) return null;
+        var location = BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).read(stack);
+        if (location.isEmpty() || location.get().point().isEmpty()) return null;
+        BlockPos pos = location.get().point().get();
+        Direction side = location.get().pointSide().orElse(Direction.UP);
         return registry.getStation(pos, side);
     }
 

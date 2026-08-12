@@ -3,7 +3,8 @@ package buildcraft.compat.forestry;
 import java.lang.reflect.InvocationTargetException;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.lists.ListRegistry;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
 import buildcraft.compat.forestry.pipe.ForestryPipes;
 import buildcraft.compat.forestry.pipe.ForestryPropolisNetwork;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,7 +50,10 @@ public final class ForestryCompat {
     public static synchronized void init() {
         if (!runtimeInitialised) {
             runtimeInitialised = true;
-            ListRegistry.registerHandler(new ForestryListMatchHandler());
+            BuildCraftApi.registry(BuildCraftRegistries.LIST_MATCH_ADAPTERS).register(
+                new net.minecraft.resources.ResourceLocation("buildcraftcompat", "list_match/forestry"),
+                new ForestryListMatchHandler()
+            );
         }
     }
 }

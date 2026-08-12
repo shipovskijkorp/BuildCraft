@@ -15,7 +15,15 @@ import buildcraft.lib.internal.area.IAreaProvider;
 import buildcraft.lib.internal.area.IBox;
 import buildcraft.lib.internal.area.IPathProvider;
 import buildcraft.lib.internal.area.IZone;
-import buildcraft.api.items.IMapLocation;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.area.BlockBox;
+import buildcraft.api.v2.area.Path;
+import buildcraft.api.v2.area.Zone;
+import buildcraft.api.v2.item.ItemLabelAdapter;
+import buildcraft.api.v2.map.MapLocationAdapter;
+import buildcraft.api.v2.map.MapLocationKind;
+import buildcraft.api.v2.map.MapLocationView;
+import java.util.Optional;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
@@ -41,7 +49,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-public class ItemMapLocation extends Item implements IMapLocation {
+public class ItemMapLocation extends Item implements MapLocationAdapter, ItemLabelAdapter {
     private static final String[] STORAGE_TAGS = "kind,Damage,x,y,z,side,xMin,xMax,yMin,yMax,zMin,zMax,path,chunkMapping,name".split(",");
 
     public ItemMapLocation(Item.Properties prop) {
@@ -271,7 +279,6 @@ public class ItemMapLocation extends Item implements IMapLocation {
         return values[side];
     }
 
-    @Override
     public IBox getBox(@Nonnull ItemStack item) {
         MapLocationType type = MapLocationType.getFromStack(item);
 
@@ -288,7 +295,6 @@ public class ItemMapLocation extends Item implements IMapLocation {
         }
     }
 
-    @Override
     public Direction getPointSide(@Nonnull ItemStack item) {
         CompoundTag cpt = ItemStackUtil.getCustomData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
@@ -300,7 +306,6 @@ public class ItemMapLocation extends Item implements IMapLocation {
         }
     }
 
-    @Override
     public BlockPos getPoint(@Nonnull ItemStack item) {
         CompoundTag cpt = ItemStackUtil.getCustomData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
@@ -312,7 +317,6 @@ public class ItemMapLocation extends Item implements IMapLocation {
         }
     }
 
-    @Override
     public IZone getZone(@Nonnull ItemStack item) {
         CompoundTag cpt = ItemStackUtil.getCustomData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
@@ -336,7 +340,6 @@ public class ItemMapLocation extends Item implements IMapLocation {
         }
     }
 
-    @Override
     public List<BlockPos> getPath(@Nonnull ItemStack item) {
         CompoundTag cpt = ItemStackUtil.getCustomData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
@@ -366,6 +369,102 @@ public class ItemMapLocation extends Item implements IMapLocation {
         }
     }
 
+    private static CompoundTag getMapData(ItemStack stack) {
+        return ItemStackUtil.getCustomData(stack);
+    }
+
+    private static void setMapData(ItemStack stack, CompoundTag data) {
+        ItemStackUtil.setCustomData(stack, data);
+    }
+
+    @Override
+    public boolean supports(ItemStack stack) {
+        return !stack.isEmpty() && stack.getItem() == this;
+    }
+
+    @Override
+    public Optional<MapLocationView> read(ItemStack stack) {
+        if (!supports(stack)) return Optional.empty();
+        ItemStack snapshot = stack.copy();
+        MapLocationType type = MapLocationType.getFromStack(snapshot);
+        String label = getLabelName(snapshot);
+        if (type == MapLocationType.CLEAN) return Optional.of(MapLocationView.clean(label));
+        BlockPos point = getPoint(snapshot);
+        Direction side = getPointSide(snapshot);
+        IBox legacyBox = getBox(snapshot);
+        IZone legacyZone = getZone(snapshot);
+        List<BlockPos> legacyPath = getPath(snapshot);
+        Optional<BlockBox> box = legacyBox == null ? Optional.empty() : legacyBox.bounds();
+        Optional<Zone> zone = legacyZone == null ? Optional.empty() : Optional.of(legacyZone);
+        Optional<Path> path = legacyPath == null ? Optional.empty() : Optional.of(() -> List.copyOf(legacyPath));
+        return Optional.of(new MapLocationView(
+            MapLocationKind.valueOf(type.name()), label, Optional.ofNullable(point), Optional.ofNullable(side), box, zone, path
+        ));
+    }
+
+    @Override
+    public boolean write(ItemStack stack, MapLocationView location, OperationMode mode) {
+        if (!supports(stack) || location == null) return false;
+        if (!canEncode(location)) return false;
+        if (mode == OperationMode.SIMULATE) return true;
+        clearMarkerData(stack);
+        CompoundTag data = getMapData(stack);
+        switch (location.kind()) {
+            case CLEAN -> { }
+            case SPOT -> {
+                BlockPos pos = location.point().orElseThrow();
+                data.putInt("x", pos.getX());
+                data.putInt("y", pos.getY());
+                data.putInt("z", pos.getZ());
+                data.putByte("side", (byte) location.pointSide().orElse(Direction.UP).get3DDataValue());
+            }
+            case AREA -> {
+                BlockBox box = location.box().orElseThrow();
+                data.putInt("xMin", box.min().getX()); data.putInt("yMin", box.min().getY()); data.putInt("zMin", box.min().getZ());
+                data.putInt("xMax", box.max().getX()); data.putInt("yMax", box.max().getY()); data.putInt("zMax", box.max().getZ());
+            }
+            case PATH, PATH_REPEATING -> {
+                ListTag pathTag = new ListTag();
+                for (BlockPos pos : location.path().orElseThrow().points()) pathTag.add(NbtUtils.writeBlockPos(pos));
+                data.put("path", pathTag);
+            }
+            case ZONE -> ((ZonePlan) location.zone().orElseThrow()).writeToNBT(data);
+        }
+        setMapData(stack, data);
+        MapLocationType.valueOf(location.kind().name()).setToStack(stack);
+        setLabelName(stack, location.label());
+        return true;
+    }
+
+    private static boolean canEncode(MapLocationView location) {
+        return switch (location.kind()) {
+            case CLEAN -> true;
+            case SPOT -> location.point().isPresent();
+            case AREA -> location.box().isPresent();
+            case PATH, PATH_REPEATING -> location.path().isPresent();
+            case ZONE -> location.zone().orElse(null) instanceof ZonePlan;
+        };
+    }
+
+    @Override
+    public boolean clear(ItemStack stack, OperationMode mode) {
+        if (!supports(stack)) return false;
+        if (mode == OperationMode.EXECUTE) clearMarkerData(stack);
+        return true;
+    }
+
+    @Override
+    public String label(ItemStack stack) {
+        return getLabelName(stack);
+    }
+
+    @Override
+    public boolean setLabel(ItemStack stack, String label, OperationMode mode) {
+        if (!supports(stack)) return false;
+        if (mode == OperationMode.EXECUTE) return setLabelName(stack, label);
+        return true;
+    }
+
     public static void setZone(@Nonnull ItemStack item, ZonePlan plan) {
         CompoundTag cpt = ItemStackUtil.getCustomData(item);
         plan.writeToNBT(cpt);
@@ -373,12 +472,11 @@ public class ItemMapLocation extends Item implements IMapLocation {
         MapLocationType.ZONE.setToStack(item);
     }
 
-    @Override
     public String getLabelName(@Nonnull ItemStack item) {
-        return ItemStackUtil.getCustomData(item).getString("name");
+        CompoundTag data = ItemStackUtil.getCustomDataOrNull(item);
+        return data == null ? "" : data.getString("name");
     }
 
-    @Override
     public boolean setLabelName(@Nonnull ItemStack item, String name) {
         CompoundTag cpt = ItemStackUtil.getCustomData(item);
         cpt.putString("name", name);

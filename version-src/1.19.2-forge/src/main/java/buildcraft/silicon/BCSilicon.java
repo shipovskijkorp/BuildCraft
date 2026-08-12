@@ -7,7 +7,8 @@
 package buildcraft.silicon;
 
 import buildcraft.lib.internal.module.BCModules;
-import buildcraft.api.facades.FacadeAPI;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
 import buildcraft.lib.CreativeTabManager;
 import buildcraft.lib.CreativeTabManager.CreativeTabBC;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
@@ -42,7 +43,11 @@ public class BCSilicon {
     	modEventBus.addListener(BCSilicon::commonSetup);
     	modEventBus.addListener(BCSilicon::postInit);
     	modEventBus.addListener(BCSilicon::gatherData);
-        FacadeAPI.registry = FacadeStateManager.INSTANCE;
+
+        BuildCraftApi.registry(BuildCraftRegistries.FACADE_MATERIAL_ADAPTERS).register(
+            java.util.Objects.requireNonNull(net.minecraft.resources.ResourceLocation.tryParse("buildcraft:facade_materials/builtin")),
+            FacadeStateManager.INSTANCE
+        );
 
         BCSiliconStatements.preInit();
         BCSiliconPlugs.preInit();
@@ -58,10 +63,7 @@ public class BCSilicon {
     }
 
     public static void commonSetup(FMLCommonSetupEvent evt) {
-        if (BCSiliconItems.PLUG_FACADE_ITEM.isPresent()) {
-            FacadeAPI.facadeItem = BCSiliconItems.PLUG_FACADE_ITEM.get();
-        }
-        FacadeStateManager.init();
+            FacadeStateManager.init();
     }
 
     public static void postInit(FMLLoadCompleteEvent evt) {

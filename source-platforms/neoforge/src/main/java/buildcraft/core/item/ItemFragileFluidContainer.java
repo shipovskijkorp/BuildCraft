@@ -8,7 +8,9 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.items.IItemFluidShard;
+import buildcraft.api.v2.drop.FluidDropContext;
+import buildcraft.api.v2.drop.FluidDropProvider;
+import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.fluid.BCFluid;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import buildcraft.lib.misc.ItemStackUtil;
@@ -25,7 +27,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
-public class ItemFragileFluidContainer extends Item implements IItemFluidShard {
+public class ItemFragileFluidContainer extends Item implements FluidDropProvider {
     public static final int MAX_FLUID_HELD = 500;
 
     public ItemFragileFluidContainer() {
@@ -59,7 +61,6 @@ public class ItemFragileFluidContainer extends Item implements IItemFluidShard {
         }
     }
 
-    @Override
     public void addFluidDrops(NonNullList<ItemStack> toDrop, @Nullable FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) {
             return;
@@ -80,6 +81,14 @@ public class ItemFragileFluidContainer extends Item implements IItemFluidShard {
             setFluid(stack, fluid.copyWithAmount(amount));
             toDrop.add(stack);
         }
+    }
+
+    @Override
+    public java.util.Collection<ItemStack> createDrops(FluidDropContext context) {
+        NonNullList<ItemStack> drops = NonNullList.create();
+        FluidStack fluid = FuelApiBridge.stackOf(context.fluid());
+        addFluidDrops(drops, fluid);
+        return java.util.List.copyOf(drops);
     }
 
     public static void setFluid(ItemStack container, FluidStack fluid) {

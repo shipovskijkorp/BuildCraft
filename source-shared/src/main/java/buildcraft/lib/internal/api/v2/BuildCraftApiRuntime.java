@@ -72,6 +72,11 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final WrenchServiceImpl wrenches = new WrenchServiceImpl();
     private final BlockInteractionServiceImpl blockInteractions = new BlockInteractionServiceImpl();
     private final DebugServiceImpl debugViews = new DebugServiceImpl();
+    private final ItemListServiceImpl itemLists = new ItemListServiceImpl();
+    private final ItemLabelServiceImpl itemLabels = new ItemLabelServiceImpl();
+    private final MapLocationServiceImpl mapLocations = new MapLocationServiceImpl();
+    private final FluidDropServiceImpl fluidDrops = new FluidDropServiceImpl();
+    private final FacadeServiceImpl facades = new FacadeServiceImpl();
 
     private BuildCraftApiRuntime() {
         services.put(BuildCraftServices.ENERGY, energy);
@@ -96,6 +101,11 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         services.put(BuildCraftServices.WRENCHES, wrenches);
         services.put(BuildCraftServices.BLOCK_INTERACTIONS, blockInteractions);
         services.put(BuildCraftServices.DEBUG_VIEWS, debugViews);
+        services.put(BuildCraftServices.ITEM_LISTS, itemLists);
+        services.put(BuildCraftServices.ITEM_LABELS, itemLabels);
+        services.put(BuildCraftServices.MAP_LOCATIONS, mapLocations);
+        services.put(BuildCraftServices.FLUID_DROPS, fluidDrops);
+        services.put(BuildCraftServices.FACADES, facades);
 
         registerRegistry(BuildCraftRegistries.ENGINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_TYPES);

@@ -1,24 +1,29 @@
-/*
- * Copyright (c) 2017 SpaceToad and the BuildCraft team
- * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
- * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/
- */
-
 package buildcraft.lib.list;
 
-import buildcraft.api.lists.ListRegistry;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
+import java.util.Objects;
+import net.minecraft.resources.ResourceLocation;
 
-public class VanillaListHandlers {
-    public static void fmlInit() {
-        ListRegistry.registerHandler(new ListMatchHandlerClass());
-        ListRegistry.registerHandler(new ListMatchHandlerFluid());
-        ListRegistry.registerHandler(new ListMatchHandlerTools());
-        ListRegistry.registerHandler(new ListMatchHandlerArmor());
-        ListRegistry.registerHandler(new ListMatchHandlerOreDictionary());
+/** Registers BuildCraft's built-in list semantics into the public API2 registry. */
+public final class VanillaListHandlers {
+    private static boolean registered;
+
+    private VanillaListHandlers() {}
+
+    public static synchronized void fmlInit() {
+        if (registered) return;
+        registered = true;
+        register("class", new ListMatchHandlerClass());
+        register("fluid", new ListMatchHandlerFluid());
+        register("tools", new ListMatchHandlerTools());
+        register("armor", new ListMatchHandlerArmor());
+        register("tags", new ListMatchHandlerOreDictionary());
     }
 
-    public static void fmlPostInit() {
-        // Kept for API compatibility. Modern Forge tags do not need the old
-        // OreDictionary post-init name cache.
+    private static void register(String path, buildcraft.api.v2.list.ListMatchAdapter adapter) {
+        BuildCraftApi.registry(BuildCraftRegistries.LIST_MATCH_ADAPTERS).register(
+            Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:list_match/" + path)), adapter
+        );
     }
 }

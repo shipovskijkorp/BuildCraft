@@ -6,7 +6,6 @@
 
 package buildcraft.silicon.recipe;
 
-import buildcraft.api.facades.FacadeAPI;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.recipe.ChangingItemStack;
 import buildcraft.lib.recipe.IRecipeViewable;
@@ -55,9 +54,6 @@ public enum FacadeSwapRecipe implements CraftingRecipe, IRecipeViewable.IViewabl
     };
 
     public static void genRecipes() {
-        if (FacadeAPI.facadeItem == null) {
-            throw new IllegalStateException("Don't call FacadeSwapRecipe if the facade item doesn't exist!");
-        }
         NonNullList<ItemStack> inputs = NonNullList.create();
         NonNullList<ItemStack> outputStacks = NonNullList.create();
         for (FacadeBlockStateInfo info : FacadeStateManager.validFacadeStates.values()) {

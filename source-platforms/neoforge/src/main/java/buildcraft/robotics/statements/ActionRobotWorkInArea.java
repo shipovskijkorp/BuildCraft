@@ -1,7 +1,8 @@
 package buildcraft.robotics.statements;
 
 import buildcraft.lib.internal.area.IZone;
-import buildcraft.api.items.IMapLocation;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
@@ -47,15 +48,6 @@ public class ActionRobotWorkInArea extends BCStatement implements IActionInterna
         // The area constraint is read by the robot AI boards
     }
 
-    public static IMapLocation getMapLocation(IStatementParameter[] parameters) {
-        if (parameters == null || parameters.length == 0) return null;
-        IStatementParameter p = parameters[0];
-        if (!(p instanceof StatementParameterMapLocation spl)) return null;
-        ItemStack stack = spl.getItemStack();
-        if (stack.isEmpty() || !(stack.getItem() instanceof IMapLocation)) return null;
-        return (IMapLocation) stack.getItem();
-    }
-
     public static IZone getArea(StatementSlot slot) {
         if (slot == null || slot.parameters == null || slot.parameters.length == 0) {
             return null;
@@ -65,11 +57,11 @@ public class ActionRobotWorkInArea extends BCStatement implements IActionInterna
             return null;
         }
         ItemStack stack = mapParam.getItemStack();
-        if (stack.isEmpty() || !(stack.getItem() instanceof IMapLocation map)) {
-            return null;
-        }
-
-        return map.getZone(stack);
+        if (stack.isEmpty()) return null;
+        var location = BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).read(stack);
+        if (location.isEmpty()) return null;
+        var zone = location.get().zone().orElse(null);
+        return zone instanceof IZone internalZone ? internalZone : null;
     }
 
     public AreaType getAreaType() {

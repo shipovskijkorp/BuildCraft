@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IFluidHandlerAdv;
-import buildcraft.api.items.FluidItemDrops;
+import buildcraft.lib.fluid.FluidDropRuntime;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.container.ContainerTank;

@@ -11,7 +11,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
+import buildcraft.api.v2.list.ListMatchType;
+import buildcraft.lib.list.ListMatchHandlerBackend;
 import buildcraft.lib.fluid.FluidCompatRegistry;
 import net.minecraft.core.NonNullList;
 //? if <1.20 {
@@ -29,7 +30,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ListMatchHandlerFluid extends ListMatchHandler {
+public class ListMatchHandlerFluid extends ListMatchHandlerBackend {
     private static final List<ItemStack> clientExampleHolders = new ArrayList<>();
     private static boolean isBuilt = false;
 
@@ -57,8 +58,8 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
     }
 
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
-        if (type == Type.TYPE) {
+    public boolean matches(ListMatchType type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+        if (type == ListMatchType.TYPE) {
             IFluidHandlerItem fluidHandlerStack = FluidUtil.getFluidHandler(stack.copy()).orElse(null);
             IFluidHandlerItem fluidHandlerTarget = FluidUtil.getFluidHandler(target.copy()).orElse(null);
 
@@ -72,7 +73,7 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
                     return true;
                 }
             }
-        } else if (type == Type.MATERIAL) {
+        } else if (type == ListMatchType.MATERIAL) {
             FluidStack fStack = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
             FluidStack fTarget = FluidUtil.getFluidContained(target).orElse(FluidStack.EMPTY);
             if (!fStack.isEmpty() && !fTarget.isEmpty()) {
@@ -83,19 +84,19 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
-        if (type == Type.TYPE) {
+    public boolean isValidSource(ListMatchType type, @Nonnull ItemStack stack) {
+        if (type == ListMatchType.TYPE) {
             return FluidUtil.getFluidHandler(stack).isPresent();
-        } else if (type == Type.MATERIAL) {
+        } else if (type == ListMatchType.MATERIAL) {
             return FluidUtil.getFluidContained(stack).isPresent();
         }
         return false;
     }
 
     @Override
-    public NonNullList<ItemStack> getClientExamples(Type type, @Nonnull ItemStack stack) {
+    public NonNullList<ItemStack> getClientExamples(ListMatchType type, @Nonnull ItemStack stack) {
         buildClientExampleList();
-        if (type == Type.MATERIAL) {
+        if (type == ListMatchType.MATERIAL) {
             FluidStack fStack = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
             if (!fStack.isEmpty()) {
                 NonNullList<ItemStack> examples = NonNullList.create();
@@ -114,7 +115,7 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
                 }
                 return examples;
             }
-        } else if (type == Type.TYPE) {
+        } else if (type == ListMatchType.TYPE) {
             IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack.copy()).orElse(null);
 
             if (fluidHandler != null) {

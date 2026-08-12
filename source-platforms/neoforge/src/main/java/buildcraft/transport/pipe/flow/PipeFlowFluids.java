@@ -6,6 +6,7 @@
 
 package buildcraft.transport.pipe.flow;
 
+import buildcraft.lib.fluid.FluidDropRuntime;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -209,7 +210,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 totalAmount += sections.get(part).amount;
             }
             if (totalAmount > 0) {
-                BCCoreItems.FRAGILE_FLUID_SHARD.get().addFluidDrops(toDrop, currentFluid.copyWithAmount(totalAmount));
+                FluidDropRuntime.addFluidDrops(toDrop, currentFluid.copyWithAmount(totalAmount));
             }
         }
     }

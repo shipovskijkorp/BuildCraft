@@ -30,12 +30,10 @@ import com.google.common.collect.ImmutableSet;
 
 import buildcraft.lib.internal.debug.BCDebugging;
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.facades.FacadeAPI;
-import buildcraft.api.facades.IFacade;
-import buildcraft.api.facades.IFacadePhasedState;
-import buildcraft.api.facades.IFacadeRegistry;
-import buildcraft.api.facades.IFacadeState;
 import buildcraft.lib.BCLib;
+import buildcraft.api.v2.facade.FacadeMaterial;
+import buildcraft.api.v2.facade.FacadeMaterialAdapter;
+import buildcraft.api.v2.facade.FacadeStateResult;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.StackUtil;
@@ -67,8 +65,15 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.InterModComms.IMCMessage;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public enum FacadeStateManager implements IFacadeRegistry {
+public enum FacadeStateManager implements FacadeMaterialAdapter {
     INSTANCE;
+
+    // Legacy IMC wire IDs are save/integration compatibility, not legacy Java API.
+    private static final String IMC_FACADE_DISABLE = "facade_disable_block";
+    private static final String IMC_FACADE_CUSTOM = "facade_custom_map_block_item";
+    private static final String NBT_CUSTOM_BLOCK_REG_KEY = "block_registry_name";
+    private static final String NBT_CUSTOM_BLOCK_META = "block_meta";
+    private static final String NBT_CUSTOM_ITEM_STACK = "item_stack";
 
     public static final boolean DEBUG = BCDebugging.shouldDebugLog("silicon.facade");
     public static final SortedMap<BlockState, FacadeBlockStateInfo> validFacadeStates;
@@ -100,7 +105,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
     public static void receiveInterModComms(IMCMessage message) {
         String id = getImcMethod(message);
         String sender = getImcSender(message);
-        if (FacadeAPI.IMC_FACADE_DISABLE.equals(id)) {
+        if (IMC_FACADE_DISABLE.equals(id)) {
             ResourceLocation loc = getImcResourceLocation(message);
             if (loc == null) {
                 return;
@@ -110,13 +115,13 @@ public enum FacadeStateManager implements IFacadeRegistry {
                 return;
             }
             registerDisabledRule(block, sender, "imc");
-        } else if (FacadeAPI.IMC_FACADE_CUSTOM.equals(id)) {
+        } else if (IMC_FACADE_CUSTOM.equals(id)) {
             CompoundTag nbt = getImcNbt(message);
             if (nbt == null) {
                 return;
             }
-            String regName = nbt.getString(FacadeAPI.NBT_CUSTOM_BLOCK_REG_KEY);
-            ItemStack stack = ItemStack.of(nbt.getCompound(FacadeAPI.NBT_CUSTOM_ITEM_STACK));
+            String regName = nbt.getString(NBT_CUSTOM_BLOCK_REG_KEY);
+            ItemStack stack = ItemStack.of(nbt.getCompound(NBT_CUSTOM_ITEM_STACK));
             if (regName.isEmpty() || stack.isEmpty()) {
                 return;
             }
@@ -125,8 +130,8 @@ public enum FacadeStateManager implements IFacadeRegistry {
                 return;
             }
             BlockState state = block.defaultBlockState();
-            if (nbt.contains(FacadeAPI.NBT_CUSTOM_BLOCK_META)) {
-                int legacyMeta = nbt.getInt(FacadeAPI.NBT_CUSTOM_BLOCK_META);
+            if (nbt.contains(NBT_CUSTOM_BLOCK_META)) {
+                int legacyMeta = nbt.getInt(NBT_CUSTOM_BLOCK_META);
                 BlockState legacy = Block.stateById(legacyMeta);
                 if (legacy.getBlock() == block) {
                     state = legacy;
@@ -260,12 +265,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
     }
 
     public static void init() {
-        FacadeAPI.registry = INSTANCE;
         defaultState = new FacadeBlockStateInfo(Blocks.AIR.defaultBlockState(), StackUtil.EMPTY, ImmutableSet.of());
-        if (FacadeAPI.facadeItem == null) {
-            previewState = defaultState;
-            return;
-        }
 
         for (Block block : ForgeRegistries.BLOCKS) {
             scanBlock(block);
@@ -593,37 +593,25 @@ public enum FacadeStateManager implements IFacadeRegistry {
         }
     }
 
-    // IFacadeRegistry
-
     @Override
-    public Collection<? extends IFacadeState> getValidFacades() {
-        return validFacadeStates.values();
+    public Optional<FacadeStateResult> fromState(BlockState state) {
+        if (state == null) return Optional.empty();
+        FacadeBlockStateInfo info = validFacadeStates.get(state);
+        return info == null ? Optional.empty() : Optional.of(toApiResult(info));
     }
 
     @Override
-    public IFacadePhasedState createPhasedState(IFacadeState state, DyeColor activeColor) {
-        return new FacadePhasedState((FacadeBlockStateInfo) state, activeColor);
+    public Optional<FacadeStateResult> fromStack(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return Optional.empty();
+        ItemStack normalized = stack.copy();
+        normalized.setCount(1);
+        List<FacadeBlockStateInfo> infos = stackFacades.get(new ItemStackKey(normalized));
+        if (infos == null || infos.isEmpty()) return Optional.empty();
+        return Optional.of(toApiResult(infos.get(0)));
     }
 
-    @Override
-    public IFacade createPhasedFacade(IFacadePhasedState[] states, boolean isHollow) {
-        FacadePhasedState[] realStates = new FacadePhasedState[states.length];
-        for (int i = 0; i < states.length; i++) {
-            realStates[i] = (FacadePhasedState) states[i];
-        }
-        return new FacadeInstance(realStates, isHollow);
-    }
-
-    @Override
-    public void disableBlock(Block block) {
-        if (block != null) registerDisabledRule(block, "legacy-api", "direct");
-    }
-
-    @Override
-    public void mapStateToStack(BlockState state, ItemStack stack) {
-        if (state != null && stack != null && !stack.isEmpty()) {
-            registerMappedRule(state, stack, "legacy-api", "direct");
-        }
+    private static FacadeStateResult toApiResult(FacadeBlockStateInfo info) {
+        return new FacadeStateResult(new FacadeMaterial(info.state, info.isTransparent), info.requiredStack);
     }
 
     private static void registerDisabledRule(Block block, String owner, String source) {

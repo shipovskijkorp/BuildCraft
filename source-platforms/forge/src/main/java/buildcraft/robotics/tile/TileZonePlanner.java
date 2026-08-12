@@ -9,10 +9,13 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import buildcraft.lib.internal.area.IZone;
-import buildcraft.api.items.IMapLocation;
-import buildcraft.api.items.INamedItem;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.map.MapLocationKind;
+import buildcraft.api.v2.map.MapLocationView;
+import java.util.Optional;
 import buildcraft.lib.internal.tiles.IDebuggable;
-import buildcraft.core.item.ItemMapLocation;
 import buildcraft.lib.delta.DeltaInt;
 import buildcraft.lib.delta.DeltaManager.EnumNetworkVisibility;
 import buildcraft.lib.misc.StackUtil;
@@ -87,7 +90,7 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
             return true;
         }
         return switch (slot) {
-            case SLOT_INPUT_MAP, SLOT_IMPORT_MAP -> stack.getItem() instanceof IMapLocation;
+            case SLOT_INPUT_MAP, SLOT_IMPORT_MAP -> BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).adapter(stack).isPresent();
             case SLOT_OUTPUT_MAP -> false;
             default -> false;
         };
@@ -102,7 +105,8 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
 
         ItemStack input = inv.getStackInSlot(SLOT_INPUT_MAP);
         ItemStack output = inv.getStackInSlot(SLOT_OUTPUT_MAP);
-        boolean canCraft = !input.isEmpty() && output.isEmpty() && input.getItem() instanceof ItemMapLocation;
+        boolean canCraft = !input.isEmpty() && output.isEmpty()
+                && BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).adapter(input).isPresent();
 
         if (!canCraft) {
             if (progress != 0) {
@@ -130,9 +134,14 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
         }
 
         ZonePlan selected = selectArea(currentSelectedArea);
-        ItemMapLocation.setZone(crafted, new ZonePlan(selected));
-        if (crafted.getItem() instanceof INamedItem namedItem) {
-            namedItem.setLabelName(crafted, mapName);
+        MapLocationView view = new MapLocationView(
+            MapLocationKind.ZONE, mapName, Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.of(new ZonePlan(selected)), Optional.empty()
+        );
+        if (!BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).write(crafted, view, OperationMode.EXECUTE)) {
+            progress = 0;
+            deltaProgress.setValue(0);
+            return;
         }
 
         inv.setStackInSlot(SLOT_OUTPUT_MAP, crafted);
@@ -154,10 +163,12 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
     }
 
     private void importMap(ItemStack stack) {
-        if (stack.isEmpty() || !(stack.getItem() instanceof IMapLocation map)) {
+        if (stack.isEmpty()) {
             return;
         }
-        IZone zone = map.getZone(stack);
+        var location = BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).read(stack);
+        if (location.isEmpty()) return;
+        var zone = location.get().zone().orElse(null);
         if (zone instanceof ZonePlan plan) {
             // Imported plans obey the same loaded-chunk boundary as plans drawn in the GUI.
             setArea(currentSelectedArea, plan);

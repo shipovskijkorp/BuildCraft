@@ -10,12 +10,13 @@ import java.util.EnumSet;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
+import buildcraft.api.v2.list.ListMatchType;
+import buildcraft.lib.list.ListMatchHandlerBackend;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 
-public class ListMatchHandlerArmor extends ListMatchHandler {
+public class ListMatchHandlerArmor extends ListMatchHandlerBackend {
     private static EnumSet<EquipmentSlot> getArmorTypes(ItemStack stack) {
         EnumSet<EquipmentSlot> types = EnumSet.noneOf(EquipmentSlot.class);
 
@@ -31,8 +32,8 @@ public class ListMatchHandlerArmor extends ListMatchHandler {
     }
 
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
-        if (type == Type.TYPE) {
+    public boolean matches(ListMatchType type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+        if (type == ListMatchType.TYPE) {
             EnumSet<EquipmentSlot> armorTypeIDSource = getArmorTypes(stack);
             if (armorTypeIDSource.size() > 0) {
                 EnumSet<EquipmentSlot> armorTypeIDTarget = getArmorTypes(target);
@@ -48,7 +49,7 @@ public class ListMatchHandlerArmor extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
+    public boolean isValidSource(ListMatchType type, @Nonnull ItemStack stack) {
         return getArmorTypes(stack).size() > 0;
     }
 }

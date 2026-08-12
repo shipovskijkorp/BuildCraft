@@ -8,7 +8,8 @@ package buildcraft.core.statements;
 
 import java.util.Locale;
 
-import buildcraft.api.items.IList;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;
@@ -76,7 +77,7 @@ public class TriggerInventory extends BCStatement implements ITriggerExternal {
                 foundItems |= !stack.isEmpty() && (searchedStack.isEmpty() || StackUtil.canStacksOrListsMerge(stack, searchedStack));
 
                 foundSpace |= (stack.isEmpty() || (StackUtil.canStacksOrListsMerge(stack, searchedStack) && stack.getCount() < stack.getMaxStackSize()))//
-                    && (searchedStack.isEmpty() || searchedStack.getItem() instanceof IList || handler.insertItem(i, searchedStack, true).isEmpty());
+                    && (searchedStack.isEmpty() || BuildCraftApi.service(BuildCraftServices.ITEM_LISTS).isList(searchedStack) || handler.insertItem(i, searchedStack, true).isEmpty());
                 // On the test above, we deactivate item list as inventories
                 // typically don't check for lists possibility. This is a
                 // heuristic which is more desirable than expensive computation

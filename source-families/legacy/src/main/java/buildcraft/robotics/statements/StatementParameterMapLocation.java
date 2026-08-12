@@ -6,7 +6,8 @@ import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.StatementMouseClick;
 import buildcraft.lib.internal.statement.StatementParameterItemStack;
-import buildcraft.api.items.IMapLocation;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 
 public class StatementParameterMapLocation extends StatementParameterItemStack {
 
@@ -24,7 +25,7 @@ public class StatementParameterMapLocation extends StatementParameterItemStack {
             IStatementContainer source, IStatement stmt,
             ItemStack clicked, StatementMouseClick mouse) {
         if (clicked.isEmpty()) return new StatementParameterMapLocation();
-        if (!(clicked.getItem() instanceof IMapLocation)) return this;
+        if (BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).adapter(clicked).isEmpty()) return this;
         ItemStack copy = clicked.copy();
         copy.setCount(1);
         return new StatementParameterMapLocation(copy);

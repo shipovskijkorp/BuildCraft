@@ -10,10 +10,12 @@ import java.io.IOException;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.list.ListMatchType;
 import buildcraft.core.BCCore;
 import buildcraft.core.BCCoreItems;
-import buildcraft.core.item.ItemList_BC8;
 import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.gui.widget.WidgetPhantomSlot;
 import buildcraft.lib.list.ListHandler;
@@ -97,7 +99,7 @@ public class ContainerList extends MenuBC_Neptune {
 
     private static InteractionHand findListHand(Player player) {
         ItemStack mainHand = player.getItemInHand(InteractionHand.MAIN_HAND);
-        if (!mainHand.isEmpty() && mainHand.getItem() instanceof ItemList_BC8) {
+        if (BuildCraftApi.service(BuildCraftServices.ITEM_LISTS).isList(mainHand)) {
             return InteractionHand.MAIN_HAND;
         }
         return InteractionHand.OFF_HAND;
@@ -106,7 +108,7 @@ public class ContainerList extends MenuBC_Neptune {
     @Nonnull
     public ItemStack getListItemStack() {
         ItemStack stack = playerInventory.player.getItemInHand(hand);
-        return !stack.isEmpty() && stack.getItem() instanceof ItemList_BC8 ? stack : StackUtil.EMPTY;
+        return BuildCraftApi.service(BuildCraftServices.ITEM_LISTS).isList(stack) ? stack : StackUtil.EMPTY;
     }
 
     void setStack(final int lineIndex, final int slotIndex, @Nonnull final ItemStack stack) {
@@ -129,8 +131,8 @@ public class ContainerList extends MenuBC_Neptune {
                 buffer.writeByte(button);
             });
         } else if (button == 1 || button == 2) {
-            ListMatchHandler.Type type = lines[lineIndex].getSortingType();
-            if (type == ListMatchHandler.Type.MATERIAL || type == ListMatchHandler.Type.TYPE) {
+            ListMatchType type = lines[lineIndex].getSortingType();
+            if (type == ListMatchType.MATERIAL || type == ListMatchType.TYPE) {
                 WidgetListSlot[] widgetSlots = slots[lineIndex];
                 for (int i = 1; i < widgetSlots.length; i++) {
                     widgetSlots[i].setStack(StackUtil.EMPTY, true);
@@ -143,7 +145,7 @@ public class ContainerList extends MenuBC_Neptune {
 
     public void setLabel(final String text) {
         String label = text.length() > 32 ? text.substring(0, 32) : text;
-        BCCoreItems.LIST.get().setLabelName(getListItemStack(), label);
+        BuildCraftApi.service(BuildCraftServices.ITEM_LABELS).setLabel(getListItemStack(), label, OperationMode.EXECUTE);
 
         if (playerInventory.player.level().isClientSide) {
             sendMessage(ID_LABEL, (buffer) -> buffer.writeUtf(label));

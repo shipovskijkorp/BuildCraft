@@ -9,7 +9,8 @@ package buildcraft.core.statements;
 import java.util.Locale;
 
 import buildcraft.api.inventory.IItemHandlerFiltered;
-import buildcraft.api.items.IList;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;
@@ -76,7 +77,7 @@ public class TriggerInventoryLevel extends BCStatement implements ITriggerExtern
                 if (searchStack.isEmpty()) {
                     itemSpace += itemHandler.getSlotLimit(slot);
                 } else {
-                    if (searchStack.getItem() instanceof IList) {
+                    if (BuildCraftApi.service(BuildCraftServices.ITEM_LISTS).isList(searchStack)) {
                         // Unfortunately lists are too generic to work properly
                         // without a simple filtered inventory.
                         ItemStack filter = filters == null ? ItemStack.EMPTY : filters.getFilter(slot);

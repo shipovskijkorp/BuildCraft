@@ -9,9 +9,6 @@ package buildcraft.silicon.plug;
 import javax.annotation.Nullable;
 
 import buildcraft.lib.internal.module.BCModules;
-import buildcraft.api.facades.FacadeType;
-import buildcraft.api.facades.IFacade;
-import buildcraft.api.facades.IFacadePhasedState;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.transport.internal.pluggable.PluggableDefinition;
@@ -42,7 +39,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ChunkRenderTypeSet;
 import net.minecraftforge.client.model.data.ModelData;
 
-public class PluggableFacade extends PipePluggable implements IFacade {
+public class PluggableFacade extends PipePluggable {
 
     private static final VoxelShape[] BOXES = new VoxelShape[6];
 
@@ -176,20 +173,15 @@ public class PluggableFacade extends PipePluggable implements IFacade {
         return colours.getColor(state.stateInfo.state, holder.getPipeWorld(), holder.getPipePos(), tintIndex);
     }
 
-    // IFacade
-
-    @Override
     public FacadeType getType() {
         return states.getType();
     }
 
-    @Override
     public boolean isHollow() {
         return states.isHollow();
     }
 
-    @Override
-    public IFacadePhasedState[] getPhasedStates() {
+    public FacadePhasedState[] getPhasedStates() {
         return states.getPhasedStates();
     }
 }

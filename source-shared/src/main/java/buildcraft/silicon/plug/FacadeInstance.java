@@ -4,9 +4,6 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.facades.FacadeType;
-import buildcraft.api.facades.IFacade;
-import buildcraft.api.facades.IFacadePhasedState;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -14,7 +11,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.DyeColor;
 
-public class FacadeInstance implements IFacade {
+public class FacadeInstance {
     public final FacadePhasedState[] phasedStates;
     public final FacadeType type;
     public final boolean isHollow;
@@ -122,20 +119,15 @@ public class FacadeInstance implements IFacade {
         return true;
     }
 
-    // IFacade
-
-    @Override
     public FacadeType getType() {
         return type;
     }
 
-    @Override
     public boolean isHollow() {
         return isHollow;
     }
 
-    @Override
-    public IFacadePhasedState[] getPhasedStates() {
+    public FacadePhasedState[] getPhasedStates() {
         return phasedStates;
     }
 }

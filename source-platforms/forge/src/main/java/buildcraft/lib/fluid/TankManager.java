@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IFluidHandlerAdv;
-import buildcraft.api.items.FluidItemDrops;
+import buildcraft.lib.fluid.FluidDropRuntime;
 import buildcraft.lib.misc.FluidUtilBC;
 import com.google.common.collect.ForwardingList;
 
@@ -63,7 +63,7 @@ public class TankManager extends ForwardingList<Tank> implements IFluidHandlerAd
     public void addDrops(NonNullList<ItemStack> toDrop) {
     	if(tanks.isEmpty())
     		return;
-        FluidItemDrops.addFluidDrops(toDrop, toArray(new Tank[0]));
+        FluidDropRuntime.addFluidDrops(toDrop, toArray(new Tank[0]));
     }
 
     public InteractionResult onActivated(Player player, BlockPos pos, InteractionHand hand) {

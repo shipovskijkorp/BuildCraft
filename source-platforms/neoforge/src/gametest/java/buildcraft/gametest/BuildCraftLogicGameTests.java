@@ -34,7 +34,7 @@ import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
 import buildcraft.api.inventory.IItemTransactor;
 import buildcraft.api.v2.item.ItemTransferResult;
 import buildcraft.api.v2.reload.DefinitionProvenance;
-import buildcraft.api.lists.ListMatchHandler.Type;
+import buildcraft.api.v2.list.ListMatchType;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.builders.BCBuildersStatements;
 import buildcraft.builders.registry.FillerRegistry;
@@ -277,14 +277,14 @@ public final class BuildCraftLogicGameTests {
         ItemStack woodenShovel = new ItemStack(Items.WOODEN_SHOVEL);
         ItemStack apple = new ItemStack(Items.APPLE);
 
-        require(helper, matcher.isValidSource(Type.TYPE, woodenAxe), "wooden axe is not a valid TYPE source");
-        require(helper, matcher.isValidSource(Type.TYPE, damagedWoodenAxe), "damaged axe is not a valid TYPE source");
-        require(helper, !matcher.isValidSource(Type.TYPE, apple), "apple is a valid tool TYPE source");
-        require(helper, matcher.matches(Type.TYPE, woodenAxe, ironAxe, false), "axe materials did not match by TYPE");
-        require(helper, matcher.matches(Type.TYPE, woodenAxe, damagedWoodenAxe, false), "axe damage changed TYPE match");
-        require(helper, !matcher.matches(Type.TYPE, woodenAxe, woodenShovel, false), "axe matched shovel by TYPE");
-        require(helper, !matcher.matches(Type.TYPE, woodenAxe, apple, false), "axe matched apple by TYPE");
-        require(helper, !matcher.matches(Type.MATERIAL, woodenAxe, ironAxe, false), "different materials matched");
+        require(helper, matcher.isValidSource(ListMatchType.TYPE, woodenAxe), "wooden axe is not a valid TYPE source");
+        require(helper, matcher.isValidSource(ListMatchType.TYPE, damagedWoodenAxe), "damaged axe is not a valid TYPE source");
+        require(helper, !matcher.isValidSource(ListMatchType.TYPE, apple), "apple is a valid tool TYPE source");
+        require(helper, matcher.matches(ListMatchType.TYPE, woodenAxe, ironAxe, false), "axe materials did not match by TYPE");
+        require(helper, matcher.matches(ListMatchType.TYPE, woodenAxe, damagedWoodenAxe, false), "axe damage changed TYPE match");
+        require(helper, !matcher.matches(ListMatchType.TYPE, woodenAxe, woodenShovel, false), "axe matched shovel by TYPE");
+        require(helper, !matcher.matches(ListMatchType.TYPE, woodenAxe, apple, false), "axe matched apple by TYPE");
+        require(helper, !matcher.matches(ListMatchType.MATERIAL, woodenAxe, ironAxe, false), "different materials matched");
         helper.succeed();
     }
 

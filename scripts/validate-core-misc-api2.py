@@ -115,8 +115,8 @@ def main() -> int:
         errors.append("BuildCraftModules.COMPAT missing")
 
     legacy_count = len(current)
-    if legacy_count != 34:
-        errors.append(f"expected 34 remaining Stage 8/9 legacy imports after Stage 7, found {legacy_count}")
+    if legacy_count > 34:
+        errors.append(f"Stage 7 burn-down regressed: expected at most 34 remaining legacy imports, found {legacy_count}")
 
     if errors:
         print("Core / misc API2 migration FAILED:")
@@ -127,7 +127,7 @@ def main() -> int:
     print(
         "Core / misc API2 migration OK: 32 Stage 7 public symbols retired; "
         "area/ownership bridges and module/wrench/block/debug services are live; "
-        f"{legacy_count} legacy imports remain for Stages 8-9"
+        f"{legacy_count} legacy imports remain for later migration stages"
     )
     return 0
 

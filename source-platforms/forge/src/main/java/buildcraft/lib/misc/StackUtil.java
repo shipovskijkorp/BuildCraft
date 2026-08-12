@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.items.IList;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.recipes.StackDefinition;
 
@@ -178,12 +179,11 @@ public class StackUtil {
             return false;
         }
 
-        if (stack1.getItem() instanceof IList) {
-            IList list = (IList) stack1.getItem();
-            return list.matches(stack1, stack2);
-        } else if (stack2.getItem() instanceof IList) {
-            IList list = (IList) stack2.getItem();
-            return list.matches(stack2, stack1);
+        var lists = BuildCraftApi.service(BuildCraftServices.ITEM_LISTS);
+        if (lists.isList(stack1)) {
+            return lists.matches(stack1, stack2);
+        } else if (lists.isList(stack2)) {
+            return lists.matches(stack2, stack1);
         }
 
         //? if <1.20 {
@@ -197,16 +197,16 @@ public class StackUtil {
 
     /** This doesn't take into account stack sizes.
      * 
-     * @param filterOrList The exact itemstack to test, or an item that implements {@link IList} to test against.
+     * @param filterOrList The exact itemstack to test, or an item that implements {@link buildcraft.api.v2.list.ItemListAdapter} to test against.
      * @param test The stack to test for equality
      * @return True if they matched according to the above definitions, or false if theydidn't, or either was empty. */
     public static boolean matchesStackOrList(@Nonnull ItemStack filterOrList, @Nonnull ItemStack test) {
         if (filterOrList.isEmpty() || test.isEmpty()) {
             return false;
         }
-        if (filterOrList.getItem() instanceof IList) {
-            IList list = (IList) filterOrList.getItem();
-            return list.matches(filterOrList, test);
+        var lists = BuildCraftApi.service(BuildCraftServices.ITEM_LISTS);
+        if (lists.isList(filterOrList)) {
+            return lists.matches(filterOrList, test);
         }
         return canMerge(filterOrList, test);
     }
@@ -263,12 +263,11 @@ public class StackUtil {
             return false;
         }
 
-        if (base.getItem() instanceof IList) {
-            IList list = (IList) base.getItem();
-            return list.matches(base, comparison);
-        } else if (comparison.getItem() instanceof IList) {
-            IList list = (IList) comparison.getItem();
-            return list.matches(comparison, base);
+        var lists = BuildCraftApi.service(BuildCraftServices.ITEM_LISTS);
+        if (lists.isList(base)) {
+            return lists.matches(base, comparison);
+        } else if (lists.isList(comparison)) {
+            return lists.matches(comparison, base);
         }
 
         return isMatchingItem(base, comparison, true, false);

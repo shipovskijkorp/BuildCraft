@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
+import buildcraft.api.v2.list.ListMatchType;
+import buildcraft.lib.list.ListMatchHandlerBackend;
 import net.minecraft.core.NonNullList;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -27,7 +28,7 @@ import net.neoforged.api.distmarker.OnlyIn;
  * {@code dusts/iron}, or {@code storage_blocks/iron}. The parent path is the
  * old ore-dictionary "type", while the final path component is its material.
  */
-public class ListMatchHandlerOreDictionary extends ListMatchHandler {
+public class ListMatchHandlerOreDictionary extends ListMatchHandlerBackend {
     private static final class TagParts {
         final String type;
         final String material;
@@ -65,14 +66,14 @@ public class ListMatchHandlerOreDictionary extends ListMatchHandler {
     }
 
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+    public boolean matches(ListMatchType type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
         List<TagKey<Item>> sourceTags = getTags(stack);
         if (sourceTags.isEmpty()) {
             return false;
         }
         List<TagKey<Item>> targetTags = getTags(target);
 
-        if (type == Type.CLASS) {
+        if (type == ListMatchType.CLASS) {
             for (TagKey<Item> source : sourceTags) {
                 if (targetTags.contains(source)) {
                     return true;
@@ -91,10 +92,10 @@ public class ListMatchHandlerOreDictionary extends ListMatchHandler {
                 if (targetParts == null) {
                     continue;
                 }
-                if (type == Type.TYPE && Objects.equals(sourceParts.type, targetParts.type)) {
+                if (type == ListMatchType.TYPE && Objects.equals(sourceParts.type, targetParts.type)) {
                     return true;
                 }
-                if (type == Type.MATERIAL && Objects.equals(sourceParts.material, targetParts.material)) {
+                if (type == ListMatchType.MATERIAL && Objects.equals(sourceParts.material, targetParts.material)) {
                     return true;
                 }
             }
@@ -103,9 +104,9 @@ public class ListMatchHandlerOreDictionary extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
+    public boolean isValidSource(ListMatchType type, @Nonnull ItemStack stack) {
         List<TagKey<Item>> tags = getTags(stack);
-        if (type == Type.CLASS) {
+        if (type == ListMatchType.CLASS) {
             return !tags.isEmpty();
         }
         for (TagKey<Item> tag : tags) {
@@ -118,7 +119,7 @@ public class ListMatchHandlerOreDictionary extends ListMatchHandler {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public NonNullList<ItemStack> getClientExamples(Type type, @Nonnull ItemStack stack) {
+    public NonNullList<ItemStack> getClientExamples(ListMatchType type, @Nonnull ItemStack stack) {
         // Returning null asks ListHandler to enumerate creative-search stacks
         // and test them with matches(). Returning an empty list here made the
         // preview look as if there were no matching tag equivalents at all.

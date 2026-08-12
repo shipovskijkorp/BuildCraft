@@ -17,12 +17,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 
-import buildcraft.lib.internal.area.IBox;
-import buildcraft.lib.internal.area.IZone;
-import buildcraft.api.items.IMapLocation.MapLocationType;
 import buildcraft.lib.internal.tiles.IDebuggable;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.map.MapLocationKind;
+import buildcraft.api.v2.map.MapLocationView;
 import buildcraft.core.BCCoreItems;
-import buildcraft.core.item.ItemMapLocation;
 import buildcraft.core.item.ItemMarkerConnector;
 import buildcraft.lib.client.render.DetachedRenderer;
 import buildcraft.lib.client.render.laser.LaserBoxRenderer;
@@ -192,8 +192,9 @@ public class RenderTickListener {
         Item mainHandItem = mainHand.getItem();
         Item offHandItem = offHand.getItem();
 
-        if (mainHandItem == BCCoreItems.MAP_LOCATION.get()) {
-            renderMapLocation(poseStack, matrix, world, player, mainHand);
+        var mapLocation = BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).read(mainHand);
+        if (mapLocation.isPresent()) {
+            renderMapLocation(poseStack, matrix, world, player, mapLocation.get());
         } else if (mainHandItem == BCCoreItems.MARKER_CONNECTOR.get() || offHandItem == BCCoreItems.MARKER_CONNECTOR.get()) {
             renderMarkerConnector(poseStack, matrix, world, player);
         }
@@ -205,34 +206,36 @@ public class RenderTickListener {
     }
 
     private static void renderMapLocation(PoseStack poseStack, Matrix4f matrix, ClientLevel world, Player player,
-        @Nonnull ItemStack stack) {
-        MapLocationType type = MapLocationType.getFromStack(stack);
-        if (type == MapLocationType.SPOT) {
-            Direction face = ItemMapLocation.getPointFace(stack);
-            IBox box = ItemMapLocation.getPointBox(stack);
-            if (box != null) {
-                Vec3[][] vectors = MAP_LOCATION_POINT[face.ordinal()];
-                poseStack.pushPose();
-                poseStack.translate(box.min().getX(), box.min().getY(), box.min().getZ());
-                for (Vec3[] vec : vectors) {
-                    LaserData_BC8 laser =
-                        new LaserData_BC8(BuildCraftLaserManager.STRIPES_WRITE, vec[0], vec[1], 1 / 16.0);
-                    LaserRenderer_BC8.renderLaserStatic(poseStack, matrix, laser);
-                }
-                poseStack.popPose();
+        MapLocationView location) {
+        MapLocationKind type = location.kind();
+        if (type == MapLocationKind.SPOT) {
+            BlockPos point = location.point().orElse(null);
+            if (point == null) return;
+            Direction face = location.pointSide().orElse(Direction.UP);
+            Vec3[][] vectors = MAP_LOCATION_POINT[face.ordinal()];
+            poseStack.pushPose();
+            poseStack.translate(point.getX(), point.getY(), point.getZ());
+            for (Vec3[] vec : vectors) {
+                LaserData_BC8 laser =
+                    new LaserData_BC8(BuildCraftLaserManager.STRIPES_WRITE, vec[0], vec[1], 1 / 16.0);
+                LaserRenderer_BC8.renderLaserStatic(poseStack, matrix, laser);
             }
-        } else if (type == MapLocationType.AREA) {
-            IBox box = ItemMapLocation.getAreaBox(stack);
+            poseStack.popPose();
+        } else if (type == MapLocationKind.AREA) {
+            var box = location.box().orElse(null);
+            if (box == null) return;
             LAST_RENDERED_MAP_LOC.reset();
-            LAST_RENDERED_MAP_LOC.initialize(box);
+            LAST_RENDERED_MAP_LOC.extendToEncompassBoth(box.min(), box.max());
             LaserBoxRenderer.renderLaserBoxStatic(
                 poseStack, matrix, LAST_RENDERED_MAP_LOC, BuildCraftLaserManager.STRIPES_WRITE, true
             );
-        } else if (type == MapLocationType.PATH || type == MapLocationType.PATH_REPEATING) {
-            renderMapPath(poseStack, matrix, player, BCCoreItems.MAP_LOCATION.get().getPath(stack),
-                type == MapLocationType.PATH_REPEATING);
-        } else if (type == MapLocationType.ZONE) {
-            IZone zone = BCCoreItems.MAP_LOCATION.get().getZone(stack);
+        } else if (type == MapLocationKind.PATH || type == MapLocationKind.PATH_REPEATING) {
+            var path = location.path().orElse(null);
+            if (path != null) {
+                renderMapPath(poseStack, matrix, player, path.points(), type == MapLocationKind.PATH_REPEATING);
+            }
+        } else if (type == MapLocationKind.ZONE) {
+            var zone = location.zone().orElse(null);
             if (zone instanceof ZonePlan zonePlan) {
                 renderMapZone(poseStack, matrix, world, player, zonePlan);
             }

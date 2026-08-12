@@ -14,9 +14,10 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import buildcraft.api.lists.ListMatchHandler;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.list.ListMatchType;
 import buildcraft.core.BCCoreItems;
-import buildcraft.core.item.ItemList_BC8;
 import buildcraft.core.list.ContainerList.WidgetListSlot;
 import buildcraft.lib.gui.GuiBC8;
 import buildcraft.lib.gui.GuiIcon;
@@ -48,7 +49,7 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
     private static final GuiIcon ICON_ONE_STACK = new GuiIcon(TEXTURE_BASE, 0, 191, 20, 20);
     private static final int BUTTON_COUNT = 3;
 
-    private final Map<Integer, Map<ListMatchHandler.Type, NonNullList<ItemStack>>> exampleCache = new HashMap<>();
+    private final Map<Integer, Map<ListMatchType, NonNullList<ItemStack>>> exampleCache = new HashMap<>();
     private EditBox textField;
 
     public GuiList(ContainerList container, Inventory inv, Component title) {
@@ -156,7 +157,7 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
         mainGui.shownElements.add(new LedgerHelp(mainGui, false));
 
         textField = new EditBox(font, leftPos + 10, topPos + 10, 156, 12, Component.empty());
-        textField.setValue(BCCoreItems.LIST.get().getLabelName(container.getListItemStack()));
+        textField.setValue(BuildCraftApi.service(BuildCraftServices.ITEM_LABELS).label(container.getListItemStack()).orElse(""));
         textField.setMaxLength(32);
         textField.setResponder(container::setLabel);
         addWidget(textField);
@@ -204,15 +205,6 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
         textField.render(pose, mouseX, mouseY, 0);
     }
 
-    private boolean isCarryingNonEmptyList() {
-        ItemStack stack = container.getCarried();
-        return !stack.isEmpty() && stack.getItem() instanceof ItemList_BC8 && stack.getTag() != null;
-    }
-
-    private boolean hasListEquipped() {
-        return !container.getListItemStack().isEmpty();
-    }
-
     @Override
     public boolean keyPressed(int a, int b, int c){
 		if (a == 256) {
@@ -241,15 +233,15 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
     }
 
     private void clearExamplesCache(int lineId) {
-        Map<ListMatchHandler.Type, NonNullList<ItemStack>> exampleList = exampleCache.get(lineId);
+        Map<ListMatchType, NonNullList<ItemStack>> exampleList = exampleCache.get(lineId);
         if (exampleList != null) {
             exampleList.clear();
         }
     }
 
-    private NonNullList<ItemStack> getExamplesList(int lineId, ListMatchHandler.Type type) {
-        Map<ListMatchHandler.Type, NonNullList<ItemStack>> exampleList =
-            exampleCache.computeIfAbsent(lineId, k -> new EnumMap<>(ListMatchHandler.Type.class));
+    private NonNullList<ItemStack> getExamplesList(int lineId, ListMatchType type) {
+        Map<ListMatchType, NonNullList<ItemStack>> exampleList =
+            exampleCache.computeIfAbsent(lineId, k -> new EnumMap<>(ListMatchType.class));
 
         if (!exampleList.containsKey(type)) {
             NonNullList<ItemStack> examples = container.lines[lineId].getExamples();

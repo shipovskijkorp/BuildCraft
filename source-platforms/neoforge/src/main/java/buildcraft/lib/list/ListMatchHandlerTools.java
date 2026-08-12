@@ -11,11 +11,12 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.lists.ListMatchHandler;
+import buildcraft.api.v2.list.ListMatchType;
+import buildcraft.lib.list.ListMatchHandlerBackend;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ItemAbility;
 
-public class ListMatchHandlerTools extends ListMatchHandler {
+public class ListMatchHandlerTools extends ListMatchHandlerBackend {
     private static final ItemAbility[] TOOL_TYPES = {
         ItemAbility.get("axe_dig"),
         ItemAbility.get("pickaxe_dig"),
@@ -36,8 +37,8 @@ public class ListMatchHandlerTools extends ListMatchHandler {
     }
 
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
-        if (type != Type.TYPE) {
+    public boolean matches(ListMatchType type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+        if (type != ListMatchType.TYPE) {
             return false;
         }
 
@@ -51,7 +52,7 @@ public class ListMatchHandlerTools extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
-        return type == Type.TYPE && !getToolTypes(stack).isEmpty();
+    public boolean isValidSource(ListMatchType type, @Nonnull ItemStack stack) {
+        return type == ListMatchType.TYPE && !getToolTypes(stack).isEmpty();
     }
 }

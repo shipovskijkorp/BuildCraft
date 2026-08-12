@@ -8,7 +8,9 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.items.IList;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.item.ItemLabelAdapter;
+import buildcraft.api.v2.list.ItemListAdapter;
 import buildcraft.core.list.ContainerList;
 import buildcraft.lib.list.ListHandler;
 import buildcraft.lib.misc.AdvancementUtil;
@@ -34,7 +36,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-public class ItemList_BC8 extends Item implements IList, MenuProvider {
+public class ItemList_BC8 extends Item implements ItemListAdapter, ItemLabelAdapter, MenuProvider {
     private static final ResourceLocation ADVANCEMENT = ResourceLocation.parse("buildcraftcore:list");
     public ItemList_BC8(Item.Properties prop) {//stack to 1
         super(prop);
@@ -67,7 +69,6 @@ public class ItemList_BC8 extends Item implements IList, MenuProvider {
         return ListHandler.hasItems(StackUtil.asNonNull(stack)) ? 1 : 0;
     }*/
     
-    // IList
 
     @Override
     @OnlyIn(Dist.CLIENT)
@@ -80,17 +81,34 @@ public class ItemList_BC8 extends Item implements IList, MenuProvider {
 
 
     //TODO ItemStack:getHoverName
-	@Override
     public String getLabelName(@Nonnull ItemStack stack) {
         CompoundTag data = ItemStackUtil.getCustomDataOrNull(stack);
         return data == null ? "" : data.getString("label");
     }
 
-    @Override
     public boolean setLabelName(@Nonnull ItemStack stack, String name) {
         CompoundTag data = ItemStackUtil.getCustomData(stack);
         data.putString("label", name);
         ItemStackUtil.setCustomData(stack, data);
+        return true;
+    }
+
+    @Override
+    public boolean supports(ItemStack stack) {
+        return !stack.isEmpty() && stack.getItem() == this;
+    }
+
+    @Override
+    public String label(ItemStack stack) {
+        return getLabelName(stack);
+    }
+
+    @Override
+    public boolean setLabel(ItemStack stack, String label, OperationMode mode) {
+        if (!supports(stack)) return false;
+        if (mode == OperationMode.EXECUTE) {
+            return setLabelName(stack, label);
+        }
         return true;
     }
 

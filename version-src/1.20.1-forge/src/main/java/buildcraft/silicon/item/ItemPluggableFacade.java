@@ -10,10 +10,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 
-import buildcraft.api.facades.FacadeAPI;
-import buildcraft.api.facades.FacadeType;
-import buildcraft.api.facades.IFacade;
-import buildcraft.api.facades.IFacadeItem;
 import buildcraft.transport.internal.IItemPluggable;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pluggable.PipePluggable;
@@ -28,6 +24,7 @@ import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeInstance;
 import buildcraft.silicon.plug.FacadePhasedState;
 import buildcraft.silicon.plug.FacadeStateManager;
+import buildcraft.silicon.plug.FacadeType;
 import buildcraft.silicon.plug.PluggableFacade;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
@@ -43,15 +40,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemPluggableFacade extends Item implements IItemPluggable, IFacadeItem, ICreativeTabItemProvider {
+public class ItemPluggableFacade extends Item implements IItemPluggable, ICreativeTabItemProvider {
     public ItemPluggableFacade() {
         super(new Item.Properties().stacksTo(64));
-        FacadeAPI.facadeItem = this;
 //        setHasSubtypes(true);
     }
 
@@ -86,16 +81,6 @@ public class ItemPluggableFacade extends Item implements IItemPluggable, IFacade
         return FacadeInstance.readFromNbt(nbt.getCompound("facade"));
     }
 
-    @Nonnull
-    @Override
-    public ItemStack getFacadeForBlock(BlockState state) {
-        FacadeBlockStateInfo info = FacadeStateManager.validFacadeStates.get(state);
-        if (info == null) {
-            return StackUtil.EMPTY;
-        } else {
-            return createItemStack(FacadeInstance.createSingle(info, false));
-        }
-    }
 
     @Override
     public PipePluggable onPlace(@Nonnull ItemStack stack, IPipeHolder holder, Direction side, Player player,
@@ -188,15 +173,4 @@ public class ItemPluggableFacade extends Item implements IItemPluggable, IFacade
          }
 	}
 
-    // IFacadeItem
-
-    @Override
-    public ItemStack createFacadeStack(IFacade facade) {
-        return createItemStack((FacadeInstance) facade);
-    }
-
-    @Override
-    public IFacade getFacade(ItemStack facade) {
-        return getStates(facade);
-    }
 }
