@@ -6,7 +6,7 @@ import java.util.Set;
 
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.BCRoboticsBoards;

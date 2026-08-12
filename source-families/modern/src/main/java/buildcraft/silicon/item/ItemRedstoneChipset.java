@@ -6,7 +6,7 @@
 
 package buildcraft.silicon.item;
 
-import buildcraft.api.enums.EnumRedstoneChipset;
+import buildcraft.lib.internal.enums.EnumRedstoneChipset;
 import buildcraft.lib.item.ItemByEnum;
 import net.minecraft.world.item.ItemStack;
 

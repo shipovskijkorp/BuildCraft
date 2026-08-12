@@ -4,7 +4,7 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.block;
 
-import buildcraft.api.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.engine.BlockEngineBase_BC8;

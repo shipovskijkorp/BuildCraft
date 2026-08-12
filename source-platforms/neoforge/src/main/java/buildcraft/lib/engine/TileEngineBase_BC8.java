@@ -35,12 +35,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
-import buildcraft.api.enums.EnumEngineType;
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.core.client.model.ModelEngine;
 import buildcraft.lib.block.VanillaRotationHandlers;
 import buildcraft.lib.misc.NBTUtilBC;

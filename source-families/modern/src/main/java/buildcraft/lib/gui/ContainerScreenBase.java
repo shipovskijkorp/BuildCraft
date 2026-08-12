@@ -1,6 +1,6 @@
 package buildcraft.lib.gui;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.gui.component.ContainerComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

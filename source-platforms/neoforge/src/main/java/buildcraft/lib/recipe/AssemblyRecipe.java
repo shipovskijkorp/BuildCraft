@@ -13,7 +13,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import buildcraft.api.core.BuildCraftAPI;
+import buildcraft.lib.internal.core.BuildCraftAPI;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.silicon.BCSiliconRecipes;
 import net.minecraft.core.HolderLookup;

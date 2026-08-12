@@ -1,6 +1,6 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;

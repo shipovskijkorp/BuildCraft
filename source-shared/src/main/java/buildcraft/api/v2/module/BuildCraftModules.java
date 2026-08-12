@@ -12,6 +12,7 @@ public final class BuildCraftModules {
     public static final ResourceLocation BUILDERS = id("builders");
     public static final ResourceLocation SILICON = id("silicon");
     public static final ResourceLocation ROBOTICS = id("robotics");
+    public static final ResourceLocation COMPAT = id("compat");
 
     private BuildCraftModules() {}
     private static ResourceLocation id(String path) {

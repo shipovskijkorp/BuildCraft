@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.IConvertable;
+import buildcraft.lib.internal.core.IConvertable;
 import buildcraft.api.core.render.ISprite;
 import com.google.common.collect.ImmutableList;
 

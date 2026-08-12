@@ -8,7 +8,7 @@ package buildcraft.silicon;
 
 import java.util.List;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.facades.FacadeAPI;
 import buildcraft.core.BCCore;
 import buildcraft.lib.CreativeTabManager;

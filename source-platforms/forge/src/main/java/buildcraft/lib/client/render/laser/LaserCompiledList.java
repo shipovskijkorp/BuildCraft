@@ -20,7 +20,7 @@ import org.joml.Matrix4f;
 ?*/
 //?}
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.misc.RenderUtil;
 import buildcraft.lib.misc.RenderUtil.AutoTessellator;
 import net.minecraft.client.renderer.GameRenderer;

@@ -1,7 +1,7 @@
 package buildcraft.lib.misc;
 
-import buildcraft.api.enums.EnumPowerStage;
-import buildcraft.api.tiles.IControllable;
+import buildcraft.lib.internal.enums.EnumPowerStage;
+import buildcraft.lib.internal.tiles.IControllable;
 import buildcraft.lib.BCLib;
 import buildcraft.lib.expression.DefaultContexts;
 import buildcraft.lib.expression.FunctionContext;

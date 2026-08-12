@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.HashBiMap;
 import com.mojang.blaze3d.platform.NativeImage;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.BCLib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
@@ -76,7 +76,7 @@ public class FrozenTextureGenPackResources implements PackResources{
             return data;
 		} catch (IOException e) {
 			logger.error("fail to open NativeImage at "+srcLocation);
-			buildcraft.api.core.BCLog.logger.warn("Failed to read generated fluid texture", e);
+			buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to read generated fluid texture", e);
 		}
 		return null;
 	}

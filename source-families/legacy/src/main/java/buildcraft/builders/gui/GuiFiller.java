@@ -1,7 +1,7 @@
 package buildcraft.builders.gui;
 
 import buildcraft.builders.internal.filler.legacy.IFillerPattern;
-import buildcraft.api.tiles.IControllable.Mode;
+import buildcraft.lib.internal.tiles.IControllable.Mode;
 import buildcraft.builders.filler.FillerStatementContext;
 import buildcraft.builders.menu.ContainerFiller;
 import buildcraft.core.BCCoreSprites;

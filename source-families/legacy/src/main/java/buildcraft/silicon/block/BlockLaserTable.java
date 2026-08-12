@@ -6,7 +6,7 @@
 
 package buildcraft.silicon.block;
 
-import buildcraft.api.enums.EnumLaserTableType;
+import buildcraft.lib.internal.enums.EnumLaserTableType;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.silicon.tile.TileAdvancedCraftingTable;

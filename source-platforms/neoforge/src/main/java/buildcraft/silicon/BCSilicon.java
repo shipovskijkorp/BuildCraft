@@ -10,7 +10,7 @@ import buildcraft.lib.internal.mj.MjCapabilities;
 
 import java.util.List;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.facades.FacadeAPI;
 import buildcraft.core.BCCore;
 import buildcraft.lib.CreativeTabManager;
@@ -48,7 +48,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.tiles.TilesAPI;
+import buildcraft.lib.internal.tiles.TilesAPI;
 
 @Mod(BCSilicon.MODID)
 public class BCSilicon {

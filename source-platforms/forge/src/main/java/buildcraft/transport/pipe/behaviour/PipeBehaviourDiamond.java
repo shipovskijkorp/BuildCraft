@@ -8,7 +8,7 @@ package buildcraft.transport.pipe.behaviour;
 
 import java.util.List;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.PipeBehaviour;

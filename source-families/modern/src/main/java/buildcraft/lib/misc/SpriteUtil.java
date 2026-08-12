@@ -84,7 +84,7 @@ public class SpriteUtil {
             }
             return LOCATION_SKIN_LOADING;
         } catch (RuntimeException exception) {
-            buildcraft.api.core.BCLog.logger.warn("Failed to load sprite data", exception);
+            buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to load sprite data", exception);
             LOADING.remove(profile);
             return null;
         }

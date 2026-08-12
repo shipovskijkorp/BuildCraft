@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IPipe;

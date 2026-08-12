@@ -4,9 +4,9 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core;
 
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.statement.StatementManager;
-import buildcraft.api.tiles.IControllable.Mode;
+import buildcraft.lib.internal.tiles.IControllable.Mode;
 import buildcraft.core.statements.ActionMachineControl;
 import buildcraft.core.statements.ActionRedstoneOutput;
 import buildcraft.core.statements.BCStatement;

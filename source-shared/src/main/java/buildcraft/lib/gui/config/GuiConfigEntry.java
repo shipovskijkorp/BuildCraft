@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.expression.api.IExpressionNode;
 import buildcraft.lib.expression.api.NodeTypes;
 

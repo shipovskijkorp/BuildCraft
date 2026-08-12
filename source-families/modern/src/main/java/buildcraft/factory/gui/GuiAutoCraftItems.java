@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.factory.container.ContainerAutoCraftItems;
 import buildcraft.lib.gui.GuiBC8;
 import buildcraft.lib.gui.GuiIcon;

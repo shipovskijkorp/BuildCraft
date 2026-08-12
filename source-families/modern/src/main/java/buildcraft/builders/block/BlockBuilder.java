@@ -4,7 +4,7 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.builders.block;
 
-import buildcraft.api.enums.EnumOptionalSnapshotType;
+import buildcraft.lib.internal.enums.EnumOptionalSnapshotType;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.builders.tile.TileBuilder;
 import buildcraft.lib.block.BlockBCTile_Neptune;

@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.core.BCCoreBlocks;

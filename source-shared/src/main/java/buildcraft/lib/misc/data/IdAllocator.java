@@ -9,8 +9,8 @@ package buildcraft.lib.misc.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 
 public class IdAllocator {
     public static final boolean DEBUG = BCDebugging.shouldDebugLog("lib.id_alloc");

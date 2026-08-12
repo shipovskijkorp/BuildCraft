@@ -9,7 +9,7 @@ package buildcraft.lib.net.cache;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.net.MessageManager;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.DecoderException;

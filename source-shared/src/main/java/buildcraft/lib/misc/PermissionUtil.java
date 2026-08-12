@@ -6,7 +6,7 @@
 
 package buildcraft.lib.misc;
 
-import buildcraft.api.core.IPlayerOwned;
+import buildcraft.lib.internal.permission.IPlayerOwned;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.core.BlockPos;

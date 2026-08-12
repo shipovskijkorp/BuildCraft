@@ -12,8 +12,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Supplier;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.net.MessageManager;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;

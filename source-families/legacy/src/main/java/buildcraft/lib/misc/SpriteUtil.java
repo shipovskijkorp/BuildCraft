@@ -93,7 +93,7 @@ public class SpriteUtil {
             // Fix for https://github.com/BuildCraft/BuildCraft/issues/4419
             // I'm not quite sure why this throws an NPE but this should at
             // least stop it from crashing
-            buildcraft.api.core.BCLog.logger.warn("Failed to load sprite data", e);
+            buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to load sprite data", e);
             CACHED.put(profile, profile);
             return null;
         }

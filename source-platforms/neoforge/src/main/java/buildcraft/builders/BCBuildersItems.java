@@ -3,7 +3,7 @@ package buildcraft.builders;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.enums.EnumSnapshotType;
+import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.item.ItemConstructionMarker;
 import buildcraft.builders.item.ItemFillerPlanner;
 import buildcraft.builders.item.ItemSchematicSingle;

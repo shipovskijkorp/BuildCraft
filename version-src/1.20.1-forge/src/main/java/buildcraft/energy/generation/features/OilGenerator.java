@@ -13,8 +13,8 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.energy.BCEnergyConfig;
 import buildcraft.energy.generation.features.OilFeatureConfiguration.ExcessiveBiome;

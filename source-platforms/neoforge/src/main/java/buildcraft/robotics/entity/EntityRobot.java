@@ -14,9 +14,9 @@ import javax.annotation.Nullable;
 
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
 import com.mojang.authlib.GameProfile;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;
@@ -1685,7 +1685,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
         try {
             stack.inventoryTick(level(), this, slot, held);
         } catch (Exception e) {
-            buildcraft.api.core.BCLog.logger.warn("Disabling item inventoryTick in robot after it threw an exception: " + stack, e);
+            buildcraft.lib.internal.debug.BCLog.logger.warn("Disabling item inventoryTick in robot after it threw an exception: " + stack, e);
             BLACKLISTED_ITEMS_FOR_UPDATE.add(stack.getItem());
         }
     }

@@ -8,7 +8,7 @@ package buildcraft.energy;
 
 import java.util.function.Consumer;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.energy.MjAmount;
@@ -26,7 +26,7 @@ import buildcraft.api.v2.recipe.HeatExchangeRecipeDefinition;
 import buildcraft.api.v2.recipe.MachineRecipeService;
 import buildcraft.api.v2.recipe.RecipeDefinition;
 import buildcraft.api.v2.reload.DefinitionProvenance;
-import buildcraft.api.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.fluid.BCFluid;
 import buildcraft.lib.fluid.FuelApiBridge;

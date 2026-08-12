@@ -10,7 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.silicon.BCSiliconRecipes;
 import net.minecraft.advancements.Advancement;

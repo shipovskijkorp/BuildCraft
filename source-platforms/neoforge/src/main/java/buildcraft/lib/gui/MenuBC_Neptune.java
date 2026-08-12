@@ -15,8 +15,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.gui.slot.IPhantomSlot;
 import buildcraft.lib.gui.slot.SlotPhantom;
 import buildcraft.lib.misc.MessageUtil;

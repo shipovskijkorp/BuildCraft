@@ -7,7 +7,7 @@ package buildcraft.lib.block;
 import java.util.EnumMap;
 import java.util.Map;
 
-import buildcraft.api.blocks.ICustomRotationHandler;
+import buildcraft.lib.internal.block.ICustomRotationHandler;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.lib.tile.TileMarker;
 import net.minecraft.client.renderer.RenderType;

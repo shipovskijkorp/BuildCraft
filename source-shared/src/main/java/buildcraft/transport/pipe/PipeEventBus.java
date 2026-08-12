@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import buildcraft.api.core.BCDebugging;
+import buildcraft.lib.internal.debug.BCDebugging;
 import buildcraft.transport.internal.pipe.PipeEvent;
 import buildcraft.transport.internal.pipe.PipeEventHandler;
 import buildcraft.transport.internal.pipe.PipeEventPriority;

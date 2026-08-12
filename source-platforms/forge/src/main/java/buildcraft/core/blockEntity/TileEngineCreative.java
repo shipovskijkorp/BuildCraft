@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.core.BCCoreBlocks;

@@ -14,7 +14,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSyntaxException;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.lib.client.model.ResourceLoaderContext;
 import buildcraft.lib.client.model.json.JsonVariableModel.ITextureGetter;

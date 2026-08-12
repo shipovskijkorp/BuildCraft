@@ -9,7 +9,7 @@ package buildcraft.builders.block;
 import java.util.List;
 import java.util.Map;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.lib.block.BlockBCBase_Neptune;

@@ -2,7 +2,7 @@ package buildcraft.robotics.ai;
 
 import java.util.function.Predicate;
 
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import net.minecraft.world.entity.Entity;

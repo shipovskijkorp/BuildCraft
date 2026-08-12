@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonParseException;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.client.model.ModelUtil.TexturedFace;
 import buildcraft.lib.client.model.json.JsonTexture;
 import buildcraft.lib.client.model.json.JsonVariableModel;

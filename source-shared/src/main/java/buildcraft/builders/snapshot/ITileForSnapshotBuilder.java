@@ -6,7 +6,7 @@
 
 package buildcraft.builders.snapshot;
 
-import buildcraft.api.core.IPlayerOwned;
+import buildcraft.lib.internal.permission.IPlayerOwned;
 import buildcraft.lib.internal.mj.MjBattery;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

@@ -21,7 +21,7 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.BCLib;
 import buildcraft.lib.client.model.MutableVertex;
 import buildcraft.lib.misc.GuiUtil;
@@ -147,7 +147,7 @@ public class FluidRenderer {
     		}
         } catch (Exception e) {
         	BCLog.logger.error("Can not put generated fluidTextureResourcePack into ReourceManager");
-            buildcraft.api.core.BCLog.logger.error("Can not put generated fluidTextureResourcePack into ResourceManager", e);
+            buildcraft.lib.internal.debug.BCLog.logger.error("Can not put generated fluidTextureResourcePack into ResourceManager", e);
         }
     }
 

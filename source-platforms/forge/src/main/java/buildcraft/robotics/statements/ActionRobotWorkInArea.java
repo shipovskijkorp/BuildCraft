@@ -1,6 +1,6 @@
 package buildcraft.robotics.statements;
 
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.api.items.IMapLocation;
 import buildcraft.lib.internal.statement.IActionInternal;
 import buildcraft.lib.internal.statement.IStatement;

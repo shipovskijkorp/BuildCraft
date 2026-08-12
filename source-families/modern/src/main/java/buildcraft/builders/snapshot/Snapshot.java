@@ -13,7 +13,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.enums.EnumSnapshotType;
+import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.lib.misc.HashUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.RotationUtil;

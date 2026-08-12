@@ -13,8 +13,8 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.blocks.ICustomPaintHandler;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.block.ICustomPaintHandler;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.permission.AutomationActor;

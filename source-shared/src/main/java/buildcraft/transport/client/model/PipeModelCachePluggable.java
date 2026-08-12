@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.transport.internal.pluggable.IPluggableStaticBaker;
 import buildcraft.transport.internal.pluggable.PipePluggable;

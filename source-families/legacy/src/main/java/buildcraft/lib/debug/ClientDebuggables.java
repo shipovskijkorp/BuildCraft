@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.lib.item.ItemDebugger;
 
 import net.minecraft.client.Minecraft;

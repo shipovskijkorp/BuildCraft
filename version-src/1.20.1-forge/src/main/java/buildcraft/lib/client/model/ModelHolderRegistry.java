@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ModelEvent.BakingCompleted;

@@ -9,7 +9,7 @@ package buildcraft.builders.snapshot;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.net.MessageManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.LogicalSide;

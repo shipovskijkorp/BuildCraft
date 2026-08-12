@@ -11,9 +11,9 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.enums.EnumSnapshotType;
+import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.gui.MenuReplacer;

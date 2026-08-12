@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
-import buildcraft.api.enums.EnumEngineType;
-import buildcraft.api.enums.EnumSpring;
+import buildcraft.lib.internal.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumSpring;
 import buildcraft.api.items.IMapLocation.MapLocationType;
 import buildcraft.core.item.ItemFragileFluidContainer;
 import buildcraft.core.item.ItemList_BC8;

@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.client.model.json.JsonModel;
 import buildcraft.lib.client.model.json.JsonModelPart;
 import buildcraft.lib.client.model.json.JsonQuad;

@@ -1,6 +1,6 @@
 package buildcraft.robotics;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.robotics.BCRoboticsStatements;
 import buildcraft.robotics.internal.api2.RoboticsApi2Bootstrap;

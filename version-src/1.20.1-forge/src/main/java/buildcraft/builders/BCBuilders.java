@@ -10,7 +10,7 @@ import com.mojang.logging.LogUtils;
 
 import buildcraft.builders.snapshot.RulesLoader;
 import buildcraft.core.BCCore;
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.builders.client.render.RenderArchitectTable;
 import buildcraft.builders.client.render.RenderBuilder;
 import buildcraft.builders.client.render.RenderConstructionMarker;

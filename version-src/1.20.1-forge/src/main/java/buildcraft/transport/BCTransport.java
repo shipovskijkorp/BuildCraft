@@ -6,7 +6,7 @@
 
 package buildcraft.transport;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.builders.internal.schematic.legacy.SchematicBlockFactoryRegistry;
 import buildcraft.lib.BCLibRegistries;
 import buildcraft.lib.CreativeTabManager;

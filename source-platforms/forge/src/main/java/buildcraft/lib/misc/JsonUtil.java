@@ -23,7 +23,7 @@ import java.util.stream.StreamSupport;
 import org.antlr.runtime.misc.IntArray;
 import org.apache.commons.lang3.ArrayUtils;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.expression.GenericExpressionCompiler;
 import buildcraft.lib.expression.api.IExpressionNode.INodeLong;
 import buildcraft.lib.expression.api.InvalidExpressionException;

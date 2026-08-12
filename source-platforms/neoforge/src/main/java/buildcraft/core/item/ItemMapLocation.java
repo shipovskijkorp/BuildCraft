@@ -11,10 +11,10 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IAreaProvider;
-import buildcraft.api.core.IBox;
-import buildcraft.api.core.IPathProvider;
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IAreaProvider;
+import buildcraft.lib.internal.area.IBox;
+import buildcraft.lib.internal.area.IPathProvider;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.api.items.IMapLocation;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.misc.NBTUtilBC;

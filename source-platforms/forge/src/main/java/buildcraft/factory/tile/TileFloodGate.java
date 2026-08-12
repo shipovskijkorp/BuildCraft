@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.items.FluidItemDrops;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.block.BlockFloodGate;
 import buildcraft.lib.fluid.Tank;

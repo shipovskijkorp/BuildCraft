@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.IBox;
+import buildcraft.lib.internal.area.IBox;
 import buildcraft.lib.misc.data.Box;
 
 import net.minecraft.core.BlockPos;

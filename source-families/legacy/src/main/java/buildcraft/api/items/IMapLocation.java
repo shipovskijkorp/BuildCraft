@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IBox;
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IBox;
+import buildcraft.lib.internal.area.IZone;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

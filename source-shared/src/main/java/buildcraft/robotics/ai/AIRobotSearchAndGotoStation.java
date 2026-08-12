@@ -3,7 +3,7 @@ package buildcraft.robotics.ai;
 import java.util.HashSet;
 import java.util.Set;
 
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;

@@ -2,7 +2,7 @@ package buildcraft.energy;
 
 import java.util.List;
 
-import buildcraft.api.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;
 import buildcraft.energy.block.BlockDynamoMJ;

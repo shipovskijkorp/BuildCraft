@@ -9,7 +9,7 @@ package buildcraft.lib.client.render.laser;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.lib.misc.data.Box;

@@ -1,6 +1,6 @@
 package buildcraft.energy;
 
-import buildcraft.api.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.core.BCCore;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;

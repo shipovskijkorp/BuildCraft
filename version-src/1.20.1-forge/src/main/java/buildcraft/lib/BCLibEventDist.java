@@ -8,7 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import org.joml.Matrix4f;
 
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.lib.client.model.ModelHolderRegistry;
 import buildcraft.lib.client.model.json.VariablePartLed;
 import buildcraft.lib.client.reload.LibConfigChangeListener;

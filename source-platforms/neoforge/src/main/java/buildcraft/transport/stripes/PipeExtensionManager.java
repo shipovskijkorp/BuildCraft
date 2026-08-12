@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.transport.wire.WireManager;
 import buildcraft.transport.internal.pipe.IItemPipe;

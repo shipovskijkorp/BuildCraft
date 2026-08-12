@@ -23,10 +23,10 @@ import org.joml.Vector4f;
 ?*/
 //?}
 
-import buildcraft.api.core.IBox;
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IBox;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.api.items.IMapLocation.MapLocationType;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.core.BCCoreItems;
 import buildcraft.core.item.ItemMapLocation;
 import buildcraft.core.item.ItemMarkerConnector;

@@ -117,7 +117,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                 }
             } catch (RuntimeException ex) {
                 unreadableItems.add(itemTag.copy());
-                buildcraft.api.core.BCLog.logger.warn(
+                buildcraft.lib.internal.debug.BCLog.logger.warn(
                     "Could not migrate a travelling item at {}. Preserving its original NBT.",
                     pipe.getHolder().getPipePos(), ex
                 );

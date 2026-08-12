@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import buildcraft.api.BCModules;
-import buildcraft.api.enums.EnumSpring;
+import buildcraft.lib.internal.module.BCModules;
+import buildcraft.lib.internal.enums.EnumSpring;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.api.capabilities.IBCCapabilityProvider;
 import buildcraft.api.items.FluidItemDrops;

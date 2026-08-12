@@ -18,7 +18,7 @@ import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.JsonOps;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.energy.generation.features.OilFeatureConfiguration;
 import buildcraft.energy.generation.features.OilGenFeature;
 import buildcraft.lib.misc.JsonUtil;
@@ -183,7 +183,7 @@ public class BCEnergyWorldGen {
 			output.close();
 		} catch (Exception e) {
 			BCLog.logger.debug("BCEnergyBiomes:save:fail to open BiomeReplaceMent.json");
-			buildcraft.api.core.BCLog.logger.warn("Failed to save BuildCraft oil biome replacement cache", e);
+			buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to save BuildCraft oil biome replacement cache", e);
 			return false;
 		}
     	return true;
@@ -203,7 +203,7 @@ public class BCEnergyWorldGen {
 			loadMapIntoList(map);
 		} catch (Exception e) {
 			BCLog.logger.debug("BCEnergyBiomes:save:fail to open BiomeReplaceMent.json");
-			buildcraft.api.core.BCLog.logger.warn("Failed to load BuildCraft oil biome replacement cache", e);
+			buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to load BuildCraft oil biome replacement cache", e);
 			return false;
 		}
     	return true;

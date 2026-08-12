@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
-import buildcraft.api.enums.EnumRedstoneChipset;
+import buildcraft.lib.internal.enums.EnumRedstoneChipset;
 import buildcraft.lib.CreativeTabManager;
 import buildcraft.lib.item.ItemByEnum;
 import buildcraft.lib.item.ItemPluggableSimple;

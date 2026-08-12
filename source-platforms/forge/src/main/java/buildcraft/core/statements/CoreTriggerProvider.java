@@ -16,7 +16,7 @@ import buildcraft.lib.internal.statement.ITriggerInternal;
 import buildcraft.lib.internal.statement.ITriggerInternalSided;
 import buildcraft.lib.internal.statement.ITriggerProvider;
 import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
-import buildcraft.api.tiles.TilesAPI;
+import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.compat.CompatCapTransfromer;
 import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.misc.CapUtil;

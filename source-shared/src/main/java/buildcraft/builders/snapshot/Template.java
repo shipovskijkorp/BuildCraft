@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.enums.EnumSnapshotType;
+import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
 import buildcraft.lib.misc.VecUtil;
 import net.minecraft.core.BlockPos;

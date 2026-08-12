@@ -3,7 +3,7 @@ package buildcraft.factory;
 import buildcraft.lib.internal.mj.MjCapabilities;
 
 import buildcraft.api.capabilities.BCCapabilityRegistration;
-import buildcraft.api.tiles.TilesAPI;
+import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.core.BCCore;
 import buildcraft.factory.client.render.RenderDistiller;
 import buildcraft.factory.client.render.RenderHeatExchange;

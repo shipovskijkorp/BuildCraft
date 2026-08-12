@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.lib.internal.mj.MjBattery;
 
 public abstract class EntityRobotBase extends LivingEntity implements Container, IFluidHandler {

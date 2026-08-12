@@ -21,7 +21,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.block.BlockChute;
 import buildcraft.factory.container.ContainerChute;

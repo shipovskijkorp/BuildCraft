@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.lib.misc.AdvancementUtil;
 import com.mojang.authlib.GameProfile;

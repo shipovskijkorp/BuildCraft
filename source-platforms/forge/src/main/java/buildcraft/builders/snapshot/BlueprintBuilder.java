@@ -29,7 +29,7 @@ import com.mojang.authlib.GameProfile;
 import buildcraft.lib.misc.*;
 import org.apache.commons.lang3.tuple.Pair;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.internal.schematic.api2.Api2SchematicEntity;
 import buildcraft.builders.internal.schematic.legacy.ISchematicEntity;

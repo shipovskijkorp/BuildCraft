@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import net.minecraft.advancements.AdvancementHolder;
 //import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 
-//import buildcraft.api.core.BCLog;
+//import buildcraft.lib.internal.debug.BCLog;
 
 public class AdvancementUtil {
     private static final Set<ResourceLocation> UNKNOWN_ADVANCEMENTS = new HashSet<>();

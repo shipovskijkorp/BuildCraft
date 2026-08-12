@@ -1,6 +1,6 @@
 package buildcraft.silicon;
 
-import buildcraft.api.enums.EnumLaserTableType;
+import buildcraft.lib.internal.enums.EnumLaserTableType;
 import buildcraft.silicon.block.BlockLaser;
 import buildcraft.silicon.block.BlockLaserTable;
 import buildcraft.silicon.tile.TileAdvancedCraftingTable;

@@ -3,7 +3,7 @@ package buildcraft.compat.ic2;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.compat.CompatCapTransfromer;
 import buildcraft.energy.BCEnergy;
 import buildcraft.energy.BCEnergyFluids;

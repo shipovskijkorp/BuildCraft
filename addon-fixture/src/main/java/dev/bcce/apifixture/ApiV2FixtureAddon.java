@@ -3,6 +3,12 @@ package dev.bcce.apifixture;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftRegistries;
 import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.block.PaintContext;
+import buildcraft.api.v2.block.PaintResult;
+import buildcraft.api.v2.block.RotationContext;
+import buildcraft.api.v2.block.RotationResult;
+import buildcraft.api.v2.debug.DebugContext;
+import buildcraft.api.v2.module.BuildCraftModules;
 import buildcraft.api.v2.robot.RobotEventListener;
 import buildcraft.api.v2.robot.RobotEventDecision;
 import buildcraft.api.v2.map.MapLocationView;
@@ -64,6 +70,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Compile-only consumer proving that third-party common code can use the whole
@@ -244,6 +251,16 @@ public final class ApiV2FixtureAddon {
             context -> List.of(),
             () -> "api-v2-fixture"
         );
+        BuildCraftApi.registry(BuildCraftRegistries.ROTATION_HANDLERS).register(
+            id("rotation"),
+            context -> RotationResult.PASS,
+            () -> "api-v2-fixture"
+        );
+        BuildCraftApi.registry(BuildCraftRegistries.PAINT_HANDLERS).register(
+            id("painting"),
+            context -> PaintResult.PASS,
+            () -> "api-v2-fixture"
+        );
         BuildCraftApi.registry(BuildCraftRegistries.ROBOT_EVENT_LISTENERS).register(
             id("robot_events"),
             context -> RobotEventDecision.PASS,
@@ -270,6 +287,18 @@ public final class ApiV2FixtureAddon {
             .ifPresent(port -> port.connected());
         BuildCraftApi.service(BuildCraftServices.AUTOMATION).execute(
             new FixtureAutomationRequest(pos, AutomationActor.unknown(), OperationMode.SIMULATE)
+        );
+        AutomationActor actor = BuildCraftApi.service(BuildCraftServices.ACTORS).unknown();
+        BuildCraftApi.service(BuildCraftServices.MODULES).loaded(BuildCraftModules.CORE);
+        BuildCraftApi.service(BuildCraftServices.WRENCHES).isWrench(ItemStack.EMPTY);
+        BuildCraftApi.service(BuildCraftServices.DEBUG_VIEWS).collect(
+            new DebugContext(level, pos, Optional.of(side), level.isClientSide)
+        );
+        BuildCraftApi.service(BuildCraftServices.BLOCK_INTERACTIONS).rotate(
+            new RotationContext(level, pos, level.getBlockState(pos), side, actor, OperationMode.SIMULATE)
+        );
+        BuildCraftApi.service(BuildCraftServices.BLOCK_INTERACTIONS).paint(
+            new PaintContext(level, pos, level.getBlockState(pos), null, Vec3.atCenterOf(pos), side, actor, OperationMode.SIMULATE)
         );
         // Robotics/request runtime is discoverable without importing EntityRobotBase, AIRobot or DockingStation.
         BuildCraftApi.service(BuildCraftServices.ROBOTS).robots(level).stream().findFirst().ifPresent(robot ->

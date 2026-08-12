@@ -12,7 +12,7 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.fake.FakePlayerBC;
 import com.mojang.authlib.GameProfile;
 

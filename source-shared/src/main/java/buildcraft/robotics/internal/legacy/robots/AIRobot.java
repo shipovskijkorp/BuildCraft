@@ -92,7 +92,7 @@ public class AIRobot {
                 parentAI.delegateAIAborted(this);
             }
         } catch (Throwable throwable) {
-            buildcraft.api.core.BCLog.logger.error("Robot AI abort failed for " + getClass().getName(), throwable);
+            buildcraft.lib.internal.debug.BCLog.logger.error("Robot AI abort failed for " + getClass().getName(), throwable);
             delegateAI = null;
 
             if (parentAI != null) {
@@ -112,7 +112,7 @@ public class AIRobot {
                 update();
             }
         } catch (Throwable throwable) {
-            buildcraft.api.core.BCLog.logger.error("Robot AI cycle failed for " + getClass().getName(), throwable);
+            buildcraft.lib.internal.debug.BCLog.logger.error("Robot AI cycle failed for " + getClass().getName(), throwable);
             abort();
         }
     }
@@ -177,7 +177,7 @@ public class AIRobot {
                     }
                 }
             } catch (Throwable throwable) {
-                buildcraft.api.core.BCLog.logger.warn("Failed to load delegate robot AI from NBT", throwable);
+                buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to load delegate robot AI from NBT", throwable);
             }
         }
     }
@@ -199,7 +199,7 @@ public class AIRobot {
                 }
             }
         } catch (Throwable throwable) {
-            buildcraft.api.core.BCLog.logger.warn("Failed to load robot AI from NBT", throwable);
+            buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to load robot AI from NBT", throwable);
         }
 
         return ai;

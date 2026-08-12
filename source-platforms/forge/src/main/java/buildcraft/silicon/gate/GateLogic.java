@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
@@ -25,7 +25,7 @@ import buildcraft.api.v2.gate.GateProgram;
 import buildcraft.api.v2.gate.GateRule;
 import buildcraft.api.v2.gate.GateView;
 import buildcraft.api.v2.statement.StatementKind;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.transport.internal.gate.IGate;
 import buildcraft.lib.internal.statement.IActionExternal;

@@ -87,7 +87,7 @@ public class GlobalSavedDataSnapshots {
                             return Pair.of(snapshot, snapshotFile);
                         }
                     } catch (IOException e) {
-                        buildcraft.api.core.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, e);
+                        buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, e);
                     }
                 }
             }
@@ -107,7 +107,7 @@ public class GlobalSavedDataSnapshots {
                             listBuilder.add(snapshot.key);
                         }
                     } catch (IOException io) {
-                        buildcraft.api.core.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, io);
+                        buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, io);
                     }
                 }
             }
@@ -124,7 +124,7 @@ public class GlobalSavedDataSnapshots {
             try (FileOutputStream fileOutputStream = new FileOutputStream(snapshotFile)) {
                 NbtSquisher.squishVanilla(Snapshot.writeToNBT(snapshot), fileOutputStream);
             } catch (IOException e) {
-                buildcraft.api.core.BCLog.logger.warn("Failed to write the snapshot file: " + snapshotFile, e);
+                buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to write the snapshot file: " + snapshotFile, e);
             }
         }
         snapshotsCache.invalidate(snapshot.key);
@@ -134,7 +134,7 @@ public class GlobalSavedDataSnapshots {
     public void removeSnapshot(Snapshot.Key key) {
         Optional.ofNullable(readSnapshot(key)).map(Pair::getRight).ifPresent(snapshotFile -> {
             if (!snapshotFile.delete()) {
-                buildcraft.api.core.BCLog.logger.warn("Failed to delete the snapshot file: " + snapshotFile);
+                buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to delete the snapshot file: " + snapshotFile);
             }
             snapshotsCache.invalidate(key);
         });

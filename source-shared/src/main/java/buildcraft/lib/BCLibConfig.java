@@ -44,7 +44,7 @@ public class BCLibConfig {
     public static boolean colourBlindMode = false;
 
     /** If true, items in the common {@code c:tools/wrench} tag are accepted as BuildCraft wrenches.
-     * Items implementing the legacy {@link buildcraft.api.tools.IToolWrench} contract are always accepted. */
+     * Items implementing the legacy {@link buildcraft.lib.internal.tool.IToolWrench} contract are always accepted. */
     public static boolean useWrenchTag = true;
 
     /** The lifespan (in seconds) that spawned items will have, when dropped by a quarry or builder (etc) */

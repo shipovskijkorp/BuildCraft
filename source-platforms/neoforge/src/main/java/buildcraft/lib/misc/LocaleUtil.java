@@ -19,8 +19,8 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.BCLibConfig.TimeGap;
 

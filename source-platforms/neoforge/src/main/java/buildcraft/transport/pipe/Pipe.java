@@ -66,7 +66,7 @@ import buildcraft.api.v2.pipe.PipeMutationContext;
 import buildcraft.api.v2.pipe.PipeTickComponent;
 import buildcraft.api.v2.pipe.PipeType;
 import buildcraft.api.v2.platform.ExternalEnergyPort;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.ICustomPipeConnection;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IFlowItems;

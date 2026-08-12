@@ -8,7 +8,7 @@ package buildcraft.transport;
 
 import buildcraft.lib.internal.mj.MjCapabilities;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.capabilities.BCCapabilityRegistration;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.builders.internal.schematic.legacy.SchematicBlockFactoryRegistry;

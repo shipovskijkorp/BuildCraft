@@ -14,7 +14,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.transport.internal.pipe.EnumPipeColourType;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeDefinition;

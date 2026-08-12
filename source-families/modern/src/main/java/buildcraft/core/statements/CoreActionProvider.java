@@ -16,8 +16,8 @@ import buildcraft.lib.internal.statement.IActionInternalSided;
 import buildcraft.lib.internal.statement.IActionProvider;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.containers.IRedstoneStatementContainer;
-import buildcraft.api.tiles.IControllable;
-import buildcraft.api.tiles.TilesAPI;
+import buildcraft.lib.internal.tiles.IControllable;
+import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.misc.CapUtil;
 

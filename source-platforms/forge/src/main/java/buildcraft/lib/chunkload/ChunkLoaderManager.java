@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.BCLib;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.chunkload.IChunkLoadingTile.LoadType;

@@ -12,7 +12,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 
 public abstract class RobotManager {
     public static IRobotRegistryProvider registryProvider;

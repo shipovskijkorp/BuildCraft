@@ -5,8 +5,8 @@ import net.minecraftforge.fml.DistExecutor;
 import java.util.HashMap;
 import java.util.Map;
 
-import buildcraft.api.BCModules;
-import buildcraft.api.enums.EnumSpring;
+import buildcraft.lib.internal.module.BCModules;
+import buildcraft.lib.internal.enums.EnumSpring;
 import buildcraft.api.items.FluidItemDrops;
 import buildcraft.core.client.RenderTickListener;
 import buildcraft.core.client.model.ModelEngine;

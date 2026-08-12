@@ -6,7 +6,7 @@
 
 package buildcraft.lib.block;
 
-import buildcraft.api.blocks.ICustomRotationHandler;
+import buildcraft.lib.internal.block.ICustomRotationHandler;
 import buildcraft.lib.misc.RotationUtil;
 
 import net.minecraft.core.BlockPos;

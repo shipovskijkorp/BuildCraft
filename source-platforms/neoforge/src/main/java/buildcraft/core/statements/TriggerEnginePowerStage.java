@@ -1,7 +1,7 @@
 package buildcraft.core.statements;
 
 import buildcraft.api.core.render.ISprite;
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

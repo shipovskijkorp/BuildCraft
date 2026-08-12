@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.core.BuildCraftAPI;
+import buildcraft.lib.internal.core.BuildCraftAPI;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 

@@ -2,7 +2,7 @@ package buildcraft.robotics;
 
 import java.util.List;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.core.BCCore;
 import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.robotics.statements.RobotsActionProvider;

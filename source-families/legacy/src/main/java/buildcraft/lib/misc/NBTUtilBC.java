@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import com.google.common.collect.Sets;
 
 import net.minecraft.core.BlockPos;

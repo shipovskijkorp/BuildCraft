@@ -12,7 +12,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.misc.SpriteUtil;
 import buildcraft.transport.block.BlockPipeHolder;
 import buildcraft.transport.client.model.PipeModelCacheAll.PipeAllCutoutKey;

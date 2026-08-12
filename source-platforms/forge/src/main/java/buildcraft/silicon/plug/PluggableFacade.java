@@ -8,7 +8,7 @@ package buildcraft.silicon.plug;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.facades.FacadeType;
 import buildcraft.api.facades.IFacade;
 import buildcraft.api.facades.IFacadePhasedState;

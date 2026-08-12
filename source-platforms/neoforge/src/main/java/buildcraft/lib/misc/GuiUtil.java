@@ -6,7 +6,7 @@
 
 package buildcraft.lib.misc;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.lib.client.render.fluid.FluidRenderer;
 import buildcraft.lib.client.sprite.SpriteNineSliced;

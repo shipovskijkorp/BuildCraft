@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.lib.misc.NBTUtilBC;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

@@ -20,10 +20,10 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.internal.pipe.IPipe;
@@ -189,7 +189,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
                 } catch (InvalidInputDataException | RuntimeException e) {
                     // A broken custom payload must not make Minecraft discard the complete
                     // block entity (pipe, facade, gate and wire data). Keep the raw pipe NBT.
-                    buildcraft.api.core.BCLog.logger.warn(
+                    buildcraft.lib.internal.debug.BCLog.logger.warn(
                         "Failed to migrate pipe at {}; preserving its original NBT", worldPosition, e
                     );
                     pipe = Pipe.EMPTY;

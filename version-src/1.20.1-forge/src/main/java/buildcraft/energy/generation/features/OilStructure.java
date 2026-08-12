@@ -2,8 +2,8 @@ package buildcraft.energy.generation.features;
 
 import java.util.function.Predicate;
 
-import buildcraft.api.core.BCLog;
-import buildcraft.api.enums.EnumSpring;
+import buildcraft.lib.internal.debug.BCLog;
+import buildcraft.lib.internal.enums.EnumSpring;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.block.BlockSpring;
 import buildcraft.energy.BCEnergyFluids;

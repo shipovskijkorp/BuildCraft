@@ -1,6 +1,6 @@
 package buildcraft.core;
 
-import buildcraft.api.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.core.block.BlockEngine_BC8;
 import buildcraft.core.block.BlockMarkerPath;
 import buildcraft.core.block.BlockMarkerVolume;

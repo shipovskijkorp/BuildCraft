@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import com.mojang.authlib.GameProfile;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.misc.data.DelayedList;
 import buildcraft.lib.net.IPayloadWriter;
 import buildcraft.lib.net.MessageManager;

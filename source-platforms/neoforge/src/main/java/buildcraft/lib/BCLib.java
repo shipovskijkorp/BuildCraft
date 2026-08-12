@@ -4,8 +4,10 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.lib;
 
-import buildcraft.api.BCModules;
-import buildcraft.api.core.BCLog;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.module.ModuleInfo;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.lib.internal.mj.MjApi2PlatformBridge;
 import buildcraft.lib.block.VanillaRotationHandlers;
@@ -62,16 +64,17 @@ public class BCLib {
             BCLog.logger.info("    committed by " + GIT_COMMIT_AUTHOR);
         }
         BCLog.logger.info("");
+        var moduleService = BuildCraftApi.service(BuildCraftServices.MODULES);
         BCLog.logger.info("Loaded Modules:");
-        for (BCModules module : BCModules.VALUES) {
-            if (module.isLoaded()) {
-                BCLog.logger.info("  - " + module.lowerCaseName);
+        for (ModuleInfo module : moduleService.modules()) {
+            if (module.loaded()) {
+                BCLog.logger.info("  - " + module.id().getPath());
             }
         }
         BCLog.logger.info("Missing Modules:");
-        for (BCModules module : BCModules.VALUES) {
-            if (!module.isLoaded()) {
-                BCLog.logger.info("  - " + module.lowerCaseName);
+        for (ModuleInfo module : moduleService.modules()) {
+            if (!module.loaded()) {
+                BCLog.logger.info("  - " + module.id().getPath());
             }
         }
         BCLibItems.registry(modEventBus);

@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import java.io.IOException;
 import java.util.Arrays;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IFlowItems;

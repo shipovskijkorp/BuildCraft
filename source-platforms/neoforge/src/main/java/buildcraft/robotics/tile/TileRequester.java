@@ -15,7 +15,7 @@ import buildcraft.api.v2.item.ItemTransferResult;
 import buildcraft.api.v2.request.ItemRequest;
 import buildcraft.api.v2.request.RequestProvider;
 import buildcraft.robotics.internal.api2.RequestSupport;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.tile.TileBC_Neptune;

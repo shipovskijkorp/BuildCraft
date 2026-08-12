@@ -503,11 +503,13 @@ def validate_gameplay_gap_fixes() -> None:
 
 def validate_modpack_interop_fixes() -> None:
     wrench_util = "src/main/java/buildcraft/lib/misc/WrenchUtil.java"
+    wrench_service = "src/main/java/buildcraft/lib/internal/api/v2/WrenchServiceImpl.java"
     core_config = "src/main/java/buildcraft/core/BCCoreConfig.java"
     pipe_holder = "src/main/java/buildcraft/transport/block/BlockPipeHolder.java"
 
     for target in TARGETS:
-        wrench_text = require(target, wrench_util,
+        require(target, wrench_util, "BuildCraftServices.WRENCHES", ".isWrench(stack)")
+        wrench_text = require(target, wrench_service,
                 'WRENCH_TAG_NAMESPACE = "c"',
                 'WRENCH_TAG_PATH = "tools/wrench"',
                 "stack.getItem() instanceof IToolWrench",
@@ -515,7 +517,7 @@ def validate_modpack_interop_fixes() -> None:
         legacy_wrench = wrench_text.find("stack.getItem() instanceof IToolWrench")
         tagged_wrench = wrench_text.find("BCLibConfig.useWrenchTag && stack.getTags().anyMatch")
         if legacy_wrench < 0 or tagged_wrench < 0 or legacy_wrench > tagged_wrench:
-            fail(f"{target}: IToolWrench fallback must remain independent of the common-tag config toggle")
+            fail(f"{target}: internal IToolWrench fallback must remain independent of the common-tag config toggle")
         require(target, core_config,
                 '.define("useWrenchTag", true)',
                 "BCLibConfig.useWrenchTag = propUseWrenchTag.get();")

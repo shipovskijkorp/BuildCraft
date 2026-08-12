@@ -19,10 +19,10 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.internal.pipe.IPipe;
@@ -175,7 +175,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
                 }
             } catch (InvalidInputDataException e) {
                 // Unfortunately we can't throw an exception because then this tile won't persist :/
-                buildcraft.api.core.BCLog.logger.warn("Failed to load pipe data; preserving unknown pipe NBT", e);
+                buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to load pipe data; preserving unknown pipe NBT", e);
                 unknownData = nbt.getCompound("pipe").copy();
             }
         }

@@ -11,8 +11,8 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import buildcraft.api.core.BlockIndex;
-import buildcraft.api.core.IBox;
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IBox;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.robotics.zone.ZonePlan;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;

@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import buildcraft.api.core.BCLog;
-import buildcraft.api.enums.EnumSnapshotType;
+import buildcraft.lib.internal.debug.BCLog;
+import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.snapshot.Snapshot;
 import buildcraft.builders.snapshot.Snapshot.Header;
 import buildcraft.lib.item.ICreativeTabItemProvider;

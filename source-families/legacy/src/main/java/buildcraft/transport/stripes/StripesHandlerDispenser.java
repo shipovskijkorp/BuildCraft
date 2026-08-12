@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.v2.automation.StripesOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;

@@ -9,7 +9,7 @@ package buildcraft.lib.marker;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

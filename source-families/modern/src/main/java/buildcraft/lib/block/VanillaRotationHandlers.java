@@ -7,8 +7,8 @@ package buildcraft.lib.block;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import buildcraft.api.blocks.CustomRotationHelper;
-import buildcraft.api.blocks.ICustomRotationHandler;
+import buildcraft.lib.internal.block.CustomRotationHelper;
+import buildcraft.lib.internal.block.ICustomRotationHandler;
 import buildcraft.lib.misc.collect.OrderedEnumMap;
 
 import net.minecraft.core.BlockPos;

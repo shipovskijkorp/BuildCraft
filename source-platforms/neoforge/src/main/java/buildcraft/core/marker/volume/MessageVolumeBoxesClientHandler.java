@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;

@@ -9,11 +9,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
-import buildcraft.api.blocks.ICustomRotationHandler;
+import buildcraft.lib.internal.block.ICustomRotationHandler;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.v2.recipe.HeatExchangeRecipeDefinition;
 import buildcraft.lib.recipe.MachineRecipeApiBridge;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.block.BlockHeatExchange;
 import buildcraft.factory.client.gui.MenuHeatExchange;

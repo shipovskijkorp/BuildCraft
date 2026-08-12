@@ -3,7 +3,7 @@ package buildcraft.lib.net;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.marker.MarkerCache;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.Level;

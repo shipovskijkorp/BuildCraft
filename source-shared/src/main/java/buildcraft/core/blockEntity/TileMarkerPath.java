@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.core.IPathProvider;
+import buildcraft.lib.internal.area.IPathProvider;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.marker.PathCache;
 import buildcraft.core.marker.PathConnection;

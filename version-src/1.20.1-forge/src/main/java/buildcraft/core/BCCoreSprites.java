@@ -10,8 +10,8 @@ import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
 
-import buildcraft.api.enums.EnumPowerStage;
-import buildcraft.api.tiles.IControllable;
+import buildcraft.lib.internal.enums.EnumPowerStage;
+import buildcraft.lib.internal.tiles.IControllable;
 import buildcraft.core.statements.TriggerFluidContainer;
 import buildcraft.core.statements.TriggerFluidContainerLevel;
 import buildcraft.core.statements.TriggerInventory;

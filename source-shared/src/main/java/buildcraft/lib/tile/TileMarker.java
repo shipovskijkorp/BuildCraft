@@ -8,7 +8,7 @@ package buildcraft.lib.tile;
 
 import java.util.List;
 
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.marker.MarkerConnection;
 import buildcraft.lib.marker.MarkerSubCache;

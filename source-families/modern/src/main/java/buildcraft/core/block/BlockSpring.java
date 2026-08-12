@@ -7,7 +7,7 @@
 package buildcraft.core.block;
 
 import java.util.function.BiFunction;
-import buildcraft.api.enums.EnumSpring;
+import buildcraft.lib.internal.enums.EnumSpring;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.block.BlockBCBase_Neptune;

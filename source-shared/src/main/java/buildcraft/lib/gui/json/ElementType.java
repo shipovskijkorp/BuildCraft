@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 import com.google.gson.JsonSyntaxException;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.expression.FunctionContext;
 import buildcraft.lib.expression.GenericExpressionCompiler;
 import buildcraft.lib.expression.InternalCompiler;

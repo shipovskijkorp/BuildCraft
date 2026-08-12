@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.transport.internal.pipe.IPipeHolder;

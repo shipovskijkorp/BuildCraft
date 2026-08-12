@@ -1,6 +1,6 @@
 package buildcraft.lib;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.energy.BCEnergy;
 import buildcraft.energy.BCEnergyFluids;

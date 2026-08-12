@@ -2,7 +2,7 @@ package buildcraft.compat.forestry;
 
 import java.lang.reflect.InvocationTargetException;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.lists.ListRegistry;
 import buildcraft.compat.forestry.pipe.ForestryPipes;
 import buildcraft.compat.forestry.pipe.ForestryPropolisNetwork;

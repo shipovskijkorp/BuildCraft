@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.IBox;
+import buildcraft.lib.internal.area.IBox;
 import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.containers.IFillerStatementContainer;

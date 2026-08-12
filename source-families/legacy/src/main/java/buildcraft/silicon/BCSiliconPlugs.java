@@ -1,6 +1,6 @@
 package buildcraft.silicon;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pluggable.PluggableDefinition;
 import buildcraft.transport.internal.pluggable.PluggableDefinition.IPluggableCreator;

@@ -12,7 +12,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.core.client.render.RenderEngine_BC8;

@@ -12,8 +12,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.IAreaProvider;
-import buildcraft.api.core.IBox;
+import buildcraft.lib.internal.area.IAreaProvider;
+import buildcraft.lib.internal.area.IBox;
 import buildcraft.lib.client.render.laser.LaserData_BC8;
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
 import buildcraft.lib.misc.MessageUtil;

@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

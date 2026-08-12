@@ -11,7 +11,7 @@ import java.util.List;
 import com.google.gson.JsonObject;
 import org.joml.Vector3f;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.client.model.ModelUtil;
 import buildcraft.lib.client.model.ModelUtil.UvFaceData;
 import buildcraft.lib.client.model.MutableQuad;

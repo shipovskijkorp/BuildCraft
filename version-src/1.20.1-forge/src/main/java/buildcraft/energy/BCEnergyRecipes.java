@@ -8,7 +8,7 @@ package buildcraft.energy;
 
 import java.util.function.Consumer;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.energy.MjAmount;

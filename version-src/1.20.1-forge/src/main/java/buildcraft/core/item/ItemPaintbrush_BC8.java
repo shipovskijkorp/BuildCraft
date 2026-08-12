@@ -4,7 +4,7 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.item;
 
-import buildcraft.api.blocks.CustomPaintHelper;
+import buildcraft.lib.internal.api.v2.BlockInteractionRuntime;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.item.ItemByEnum;
 import buildcraft.lib.misc.SoundUtil;
@@ -36,8 +36,8 @@ public class ItemPaintbrush_BC8 extends ItemByEnum<DyeColor> {
         ItemStack stack = ctx.getItemInHand();
         Vec3 hitPos = ctx.getClickLocation();
 
-        InteractionResult result = CustomPaintHelper.INSTANCE.attemptPaintBlock(
-            level, pos, level.getBlockState(pos), hitPos, ctx.getClickedFace(), type
+        InteractionResult result = BlockInteractionRuntime.paint(
+            level, pos, level.getBlockState(pos), hitPos, ctx.getClickedFace(), type, player
         );
         if (result != InteractionResult.SUCCESS) {
             return InteractionResult.FAIL;
@@ -67,7 +67,7 @@ public class ItemPaintbrush_BC8 extends ItemByEnum<DyeColor> {
             return false;
         }
 
-        InteractionResult result = CustomPaintHelper.INSTANCE.attemptPaintBlock(world, pos, state, hitPos, side, type);
+        InteractionResult result = BlockInteractionRuntime.paint(world, pos, state, hitPos, side, type, player);
 
         if (result == InteractionResult.SUCCESS) {
 //            ParticleUtil.showChangeColour(world, hitPos, colour);

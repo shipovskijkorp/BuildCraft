@@ -2,7 +2,7 @@ package buildcraft.compat;
 
 import java.lang.reflect.InvocationTargetException;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;

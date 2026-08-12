@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
-import buildcraft.api.BCModules;
+import buildcraft.lib.internal.module.BCModules;
 import buildcraft.lib.net.MessageContainer;
 import buildcraft.lib.net.MessageDebugRequest;
 import buildcraft.lib.net.MessageDebugResponse;

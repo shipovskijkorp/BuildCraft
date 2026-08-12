@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.misc.VecUtil;

@@ -1,11 +1,11 @@
 package buildcraft.core.item;
 
-import buildcraft.api.blocks.CustomRotationHelper;
-import buildcraft.api.tools.IToolWrench;
+import buildcraft.lib.internal.api.v2.BlockInteractionRuntime;
+import buildcraft.lib.internal.tool.IToolWrench;
 import buildcraft.core.BCCore;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.engine.TileEngineBase_BC8;
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.misc.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -53,7 +53,7 @@ public class ItemWrench extends Item implements IToolWrench{
             && engine.getPowerStage() == EnumPowerStage.OVERHEAT) {
             AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_TOO_MUCH_POWER);
         }
-        InteractionResult result = CustomRotationHelper.INSTANCE.attemptRotateBlock(world, pos, state, side);
+        InteractionResult result = BlockInteractionRuntime.rotate(world, pos, state, side, player);
 
         if (result == InteractionResult.SUCCESS) {
             wrenchUsed(player, hand, player.getItemInHand(hand), BlockHitResult.miss(c, side, pos));

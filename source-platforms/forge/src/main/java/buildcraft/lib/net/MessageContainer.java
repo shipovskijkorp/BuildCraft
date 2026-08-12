@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.misc.MessageUtil;
 import io.netty.buffer.Unpooled;

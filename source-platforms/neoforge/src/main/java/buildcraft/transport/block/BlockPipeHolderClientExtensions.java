@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.transport.internal.EnumWirePart;
 import buildcraft.transport.internal.pipe.PipeDefinition;
 import buildcraft.transport.internal.pluggable.PipePluggable;

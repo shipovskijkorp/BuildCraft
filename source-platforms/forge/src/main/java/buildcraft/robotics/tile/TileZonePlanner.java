@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IZone;
+import buildcraft.lib.internal.area.IZone;
 import buildcraft.api.items.IMapLocation;
 import buildcraft.api.items.INamedItem;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.core.item.ItemMapLocation;
 import buildcraft.lib.delta.DeltaInt;
 import buildcraft.lib.delta.DeltaManager.EnumNetworkVisibility;

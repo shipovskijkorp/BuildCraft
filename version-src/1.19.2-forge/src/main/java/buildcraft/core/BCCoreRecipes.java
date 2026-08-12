@@ -8,7 +8,7 @@ package buildcraft.core;
 
 import java.util.function.Consumer;
 
-import buildcraft.api.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.core.item.ItemPaintbrush_BC8;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger.TriggerInstance;
 import net.minecraft.data.DataGenerator;

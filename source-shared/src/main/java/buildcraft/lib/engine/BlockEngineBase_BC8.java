@@ -10,8 +10,8 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-import buildcraft.api.blocks.ICustomRotationHandler;
-import buildcraft.api.core.IEngineType;
+import buildcraft.lib.internal.block.ICustomRotationHandler;
+import buildcraft.lib.internal.core.IEngineType;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.item.MultiBlockItem;
 import net.minecraft.core.BlockPos;

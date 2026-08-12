@@ -33,18 +33,18 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.IAreaProvider;
+import buildcraft.lib.internal.area.IAreaProvider;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
 import buildcraft.lib.internal.api.v2.MachineRuntimeView;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
-import buildcraft.api.tiles.IDebuggable;
-import buildcraft.api.tiles.IHasWork;
-import buildcraft.api.tiles.TilesAPI;
+import buildcraft.lib.internal.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IHasWork;
+import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.BCBuildersConfig;
 import buildcraft.builders.block.BlockQuarryDrillCollision;

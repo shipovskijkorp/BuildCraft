@@ -2,7 +2,7 @@ package buildcraft.lib.internal.statement.containers;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.IBox;
+import buildcraft.lib.internal.area.IBox;
 import buildcraft.builders.internal.filler.legacy.IFillerPattern;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

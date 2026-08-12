@@ -2,7 +2,7 @@ package buildcraft.silicon;
 
 import java.util.EnumMap;
 
-import buildcraft.api.enums.EnumRedstoneChipset;
+import buildcraft.lib.internal.enums.EnumRedstoneChipset;
 import buildcraft.core.BCCore;
 import buildcraft.lib.item.ItemByEnum;
 import buildcraft.lib.item.ItemPluggableSimple;

@@ -8,7 +8,7 @@ package buildcraft.lib.expression;
 
 import java.util.function.Consumer;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 
 /** Holds the debugging mechanisms for this project. The most useful part of this (for users) is the {@link #logger}
  * field: changing this allows rerouting expression debug logging. */

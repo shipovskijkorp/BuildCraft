@@ -15,8 +15,8 @@ import com.google.gson.JsonObject;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSet.Builder;
 
-import buildcraft.api.enums.EnumEngineType;
-import buildcraft.api.enums.EnumRedstoneChipset;
+import buildcraft.lib.internal.enums.EnumEngineType;
+import buildcraft.lib.internal.enums.EnumRedstoneChipset;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;

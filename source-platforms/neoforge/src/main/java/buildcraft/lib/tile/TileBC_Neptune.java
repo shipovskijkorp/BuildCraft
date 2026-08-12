@@ -14,9 +14,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
-import buildcraft.api.core.IPlayerOwned;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
+import buildcraft.lib.internal.permission.IPlayerOwned;
 import buildcraft.lib.cache.CachedChunk;
 import buildcraft.lib.cache.IChunkCache;
 import buildcraft.lib.cache.ITileCache;

@@ -1,7 +1,7 @@
 package buildcraft.silicon.recipe;
 
 import buildcraft.lib.misc.ItemStackUtil;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.BCLib;
 import buildcraft.silicon.BCSiliconRecipes;
 import buildcraft.silicon.gate.EnumGateLogic;

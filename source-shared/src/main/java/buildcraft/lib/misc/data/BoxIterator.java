@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IBox;
+import buildcraft.lib.internal.area.IBox;
 import buildcraft.lib.misc.StringUtilBC;
 import buildcraft.lib.misc.VecUtil;
 import net.minecraft.core.BlockPos;

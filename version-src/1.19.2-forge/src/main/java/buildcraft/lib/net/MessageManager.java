@@ -16,9 +16,9 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.IBuildCraftMod;
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.module.IBuildCraftMod;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

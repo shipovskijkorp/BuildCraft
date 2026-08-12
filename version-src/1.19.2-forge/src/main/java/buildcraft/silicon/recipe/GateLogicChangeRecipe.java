@@ -1,6 +1,6 @@
 package buildcraft.silicon.recipe;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.BCLib;
 import buildcraft.silicon.BCSiliconRecipes;
 import buildcraft.silicon.gate.EnumGateLogic;
@@ -67,7 +67,7 @@ public class GateLogicChangeRecipe extends CustomRecipe{
 			} catch (Exception e) {
 				BCLog.logger.error("GateLogicChangeRecipe:Encounter a gate with invaild gate nbt!");
 				if(BCLib.DEV)//TODO
-					buildcraft.api.core.BCLog.logger.warn("Failed to copy gate logic NBT", e);
+					buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to copy gate logic NBT", e);
 			}
 
 	      }

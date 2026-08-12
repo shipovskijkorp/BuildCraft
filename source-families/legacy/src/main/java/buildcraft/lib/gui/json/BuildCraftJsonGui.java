@@ -13,7 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 ?*/
 //?}
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.lib.client.model.ResourceLoaderContext;
 import buildcraft.lib.expression.DefaultContexts;
@@ -96,7 +96,7 @@ public class BuildCraftJsonGui extends BuildCraftGui {
         } catch (InvalidExpressionException iee) {
             throw new JsonSyntaxException("Failed to resolve the size of " + jsonGuiDefinition, iee);
         } catch (Exception e) {
-            buildcraft.api.core.BCLog.logger.error("Failed to load json gui " + jsonGuiDefinition, e);
+            buildcraft.lib.internal.debug.BCLog.logger.error("Failed to load json gui " + jsonGuiDefinition, e);
             throw new Error(e);
         }
         loadHistory.finishLoading();

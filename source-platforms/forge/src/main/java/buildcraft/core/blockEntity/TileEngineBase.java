@@ -1,6 +1,6 @@
 package buildcraft.core.blockEntity;
 
-import buildcraft.api.enums.EnumPowerStage;
+import buildcraft.lib.internal.enums.EnumPowerStage;
 
 /*
  * Copyright (c) 2017 SpaceToad and the BuildCraft team

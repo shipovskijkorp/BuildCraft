@@ -5,8 +5,8 @@
  */
 package buildcraft.lib.client.sprite;
 
-import buildcraft.api.core.BCDebugging;
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCDebugging;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.lib.misc.SpriteUtil;
 import com.mojang.blaze3d.platform.GlStateManager;

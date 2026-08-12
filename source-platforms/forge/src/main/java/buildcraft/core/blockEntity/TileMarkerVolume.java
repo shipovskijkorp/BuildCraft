@@ -12,8 +12,8 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ImmutableList;
 
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.tiles.ITileAreaProvider;
-import buildcraft.api.tiles.TilesAPI;
+import buildcraft.lib.internal.tiles.ITileAreaProvider;
+import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.marker.VolumeCache;
 import buildcraft.core.marker.VolumeConnection;

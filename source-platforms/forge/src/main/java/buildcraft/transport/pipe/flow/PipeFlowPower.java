@@ -28,7 +28,7 @@ import buildcraft.lib.internal.mj.IMjPassiveProvider;
 import buildcraft.lib.internal.mj.IMjReceiver;
 import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.lib.internal.mj.MjToFeAutoConverter;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowPower;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipe.ConnectedType;

@@ -15,15 +15,15 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.BCLog;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.IAreaProvider;
-import buildcraft.api.enums.EnumSnapshotType;
+import buildcraft.lib.internal.area.IAreaProvider;
+import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.internal.schematic.legacy.ISchematicEntity;
 import buildcraft.builders.internal.schematic.legacy.SchematicBlockContext;
 import buildcraft.builders.internal.schematic.legacy.SchematicEntityContext;
-import buildcraft.api.tiles.IDebuggable;
+import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.block.BlockArchitectTable;
 import buildcraft.builders.client.ClientArchitectTables;

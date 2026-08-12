@@ -67,6 +67,11 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final MjFormatterImpl mjFormatter = new MjFormatterImpl();
     private final PowerLossEffectServiceImpl powerLossEffects = new PowerLossEffectServiceImpl();
     private final AutomationServiceImpl automation = new AutomationServiceImpl();
+    private final ActorServiceImpl actors = new ActorServiceImpl();
+    private final ModuleServiceImpl modules = new ModuleServiceImpl();
+    private final WrenchServiceImpl wrenches = new WrenchServiceImpl();
+    private final BlockInteractionServiceImpl blockInteractions = new BlockInteractionServiceImpl();
+    private final DebugServiceImpl debugViews = new DebugServiceImpl();
 
     private BuildCraftApiRuntime() {
         services.put(BuildCraftServices.ENERGY, energy);
@@ -86,6 +91,11 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         services.put(BuildCraftServices.MJ_FORMATTER, mjFormatter);
         services.put(BuildCraftServices.POWER_LOSS_EFFECTS, powerLossEffects);
         services.put(BuildCraftServices.AUTOMATION, automation);
+        services.put(BuildCraftServices.ACTORS, actors);
+        services.put(BuildCraftServices.MODULES, modules);
+        services.put(BuildCraftServices.WRENCHES, wrenches);
+        services.put(BuildCraftServices.BLOCK_INTERACTIONS, blockInteractions);
+        services.put(BuildCraftServices.DEBUG_VIEWS, debugViews);
 
         registerRegistry(BuildCraftRegistries.ENGINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_TYPES);
