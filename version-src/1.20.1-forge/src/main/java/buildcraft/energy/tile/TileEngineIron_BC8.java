@@ -14,9 +14,9 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.IFluidFilter;
-import buildcraft.api.core.IFluidHandlerAdv;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.IFluidFilter;
+import buildcraft.lib.internal.core.IFluidHandlerAdv;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.fluid.FluidVariant;
@@ -25,7 +25,7 @@ import buildcraft.api.v2.fuels.EnergyFluidService;
 import buildcraft.api.v2.fuels.FuelProfile;
 import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.internal.mj.IMjConnector;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;

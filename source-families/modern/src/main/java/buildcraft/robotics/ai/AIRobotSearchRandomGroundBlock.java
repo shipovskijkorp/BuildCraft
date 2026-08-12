@@ -2,7 +2,7 @@ package buildcraft.robotics.ai;
 
 import java.util.Random;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.lib.internal.area.IBox;
 import buildcraft.lib.internal.area.IZone;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;

@@ -18,7 +18,7 @@ import java.util.Set;
 import com.mojang.authlib.GameProfile;
 
 import buildcraft.lib.internal.mj.IMjReadable;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.transport.internal.EnumWirePart;

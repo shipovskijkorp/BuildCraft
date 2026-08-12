@@ -1,6 +1,6 @@
 package buildcraft.lib.internal.statement.api2;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftRegistries;
 import buildcraft.api.v2.OperationMode;

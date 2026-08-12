@@ -1,6 +1,6 @@
 package buildcraft.lib.internal.enums;
 
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.state.BlockState;
 

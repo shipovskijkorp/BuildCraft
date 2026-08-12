@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
-import buildcraft.api.recipes.IngredientStack;
-import buildcraft.api.recipes.StackDefinition;
+import buildcraft.lib.internal.recipes.IngredientStack;
+import buildcraft.lib.internal.recipes.StackDefinition;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;

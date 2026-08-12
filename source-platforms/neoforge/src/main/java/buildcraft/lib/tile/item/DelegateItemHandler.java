@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.inventory.IItemHandlerFiltered;
+import buildcraft.lib.internal.inventory.IItemHandlerFiltered;
 
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.misc.ItemStackUtil;
 import com.google.common.collect.ImmutableList;
 

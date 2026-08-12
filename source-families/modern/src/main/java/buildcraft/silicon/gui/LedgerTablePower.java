@@ -6,7 +6,7 @@
 
 package buildcraft.silicon.gui;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.gui.BuildCraftGui;
 import buildcraft.lib.gui.GuiIcon;

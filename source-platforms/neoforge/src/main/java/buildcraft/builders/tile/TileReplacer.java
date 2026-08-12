@@ -12,7 +12,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.BCBuildersBlocks;

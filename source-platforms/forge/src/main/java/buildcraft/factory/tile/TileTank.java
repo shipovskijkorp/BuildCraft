@@ -16,9 +16,9 @@ import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.IFluidFilter;
-import buildcraft.api.core.IFluidHandlerAdv;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.IFluidFilter;
+import buildcraft.lib.internal.core.IFluidHandlerAdv;
 import buildcraft.lib.fluid.FluidDropRuntime;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;

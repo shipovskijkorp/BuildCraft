@@ -11,7 +11,7 @@ import buildcraft.api.v2.energy.MjAmount;
 import java.io.IOException;
 import java.util.List;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.mj.IMjReceiver;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;

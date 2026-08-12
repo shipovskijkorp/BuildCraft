@@ -8,7 +8,7 @@ package buildcraft.builders.snapshot.pattern.parameter;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.item.ItemSchematicSingle;
 import buildcraft.builders.item.ItemSnapshot;

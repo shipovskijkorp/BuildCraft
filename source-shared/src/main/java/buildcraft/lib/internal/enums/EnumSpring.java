@@ -3,7 +3,7 @@ package buildcraft.lib.internal.enums;
 import java.util.Locale;
 import java.util.function.BiFunction;
 
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.StringRepresentable;

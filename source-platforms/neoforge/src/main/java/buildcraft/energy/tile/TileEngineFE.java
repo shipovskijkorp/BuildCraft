@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.BCCoreItems;

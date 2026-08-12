@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 import com.google.common.collect.ImmutableList;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.MessageUtil;

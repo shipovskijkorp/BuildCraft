@@ -9,7 +9,7 @@ package buildcraft.transport.pipe.behaviour;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.PipeEventFluid;
 import buildcraft.transport.internal.pipe.PipeEventHandler;

@@ -2,7 +2,7 @@ package buildcraft.lib.recipe;
 
 import com.google.common.collect.ImmutableSet;
 
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;

@@ -19,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 import com.google.common.collect.ImmutableList;
 
-import buildcraft.api.core.IStackFilter;
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.core.IStackFilter;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.transport.internal.IInjectable;
 import buildcraft.api.v2.pipe.ItemTransportProfile;
 import buildcraft.transport.internal.pipe.IFlowItems;

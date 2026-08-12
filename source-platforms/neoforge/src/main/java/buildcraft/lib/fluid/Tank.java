@@ -16,8 +16,8 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.core.IFluidFilter;
-import buildcraft.api.core.IFluidHandlerAdv;
+import buildcraft.lib.internal.core.IFluidFilter;
+import buildcraft.lib.internal.core.IFluidHandlerAdv;
 import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.gui.elem.ToolTip;
 import buildcraft.lib.gui.help.ElementHelpInfo;

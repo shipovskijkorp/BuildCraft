@@ -17,8 +17,8 @@ import java.util.function.ToIntFunction;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
 import buildcraft.transport.internal.pipe.IPipe;

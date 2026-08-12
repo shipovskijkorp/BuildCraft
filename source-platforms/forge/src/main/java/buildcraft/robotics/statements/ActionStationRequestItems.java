@@ -3,7 +3,7 @@ package buildcraft.robotics.statements;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.core.statements.StatementParameterItemStackExact;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;

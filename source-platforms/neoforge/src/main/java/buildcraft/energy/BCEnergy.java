@@ -2,8 +2,8 @@ package buildcraft.energy;
 
 import buildcraft.lib.internal.mj.MjCapabilities;
 
-import buildcraft.api.capabilities.BCCapabilityRegistration;
-import buildcraft.api.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.capabilities.BCCapabilityRegistration;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
 import buildcraft.core.BCCore;
 import buildcraft.energy.tile.TileSpringOil;
 import buildcraft.lib.misc.AdvancementUtil;

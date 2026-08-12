@@ -9,7 +9,7 @@ package buildcraft.transport.pipe;
 import java.io.IOException;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pluggable.PipePluggable;

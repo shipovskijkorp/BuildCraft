@@ -3,7 +3,7 @@ package buildcraft.core.block;
 import java.util.function.BiFunction;
 
 import buildcraft.lib.internal.enums.EnumPowerStage;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.core.BCCore;
 import buildcraft.core.blockEntity.TileEngineBase;
 

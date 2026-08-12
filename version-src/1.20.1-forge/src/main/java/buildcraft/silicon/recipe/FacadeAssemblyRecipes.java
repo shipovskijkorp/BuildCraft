@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.recipe.AssemblyRecipeBasic;

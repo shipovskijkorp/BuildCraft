@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.recipe.CountedIngredient;

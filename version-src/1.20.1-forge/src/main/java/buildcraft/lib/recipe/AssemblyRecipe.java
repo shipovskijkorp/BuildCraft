@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import buildcraft.lib.internal.core.BuildCraftAPI;
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.silicon.BCSiliconRecipes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;

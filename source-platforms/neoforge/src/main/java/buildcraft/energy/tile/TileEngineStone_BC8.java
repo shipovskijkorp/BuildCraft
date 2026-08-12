@@ -11,10 +11,10 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.mj.IMjConnector;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.menu.ContainerEngineStone_BC8;

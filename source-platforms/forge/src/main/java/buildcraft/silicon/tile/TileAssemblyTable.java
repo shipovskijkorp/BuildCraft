@@ -18,7 +18,7 @@ import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.gui.ItemProvider;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.InventoryUtil;

@@ -19,10 +19,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.enums.EnumLaserTableType;
-import buildcraft.api.properties.BuildCraftProperties;
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.lib.misc.LocaleUtil;

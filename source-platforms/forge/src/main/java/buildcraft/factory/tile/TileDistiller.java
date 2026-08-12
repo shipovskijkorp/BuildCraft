@@ -11,8 +11,8 @@ import buildcraft.lib.internal.mj.MjFormatting;
 import java.io.IOException;
 import java.util.List;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.api.v2.content.BuildCraftContentIds;

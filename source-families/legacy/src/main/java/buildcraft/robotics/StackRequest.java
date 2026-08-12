@@ -2,7 +2,7 @@ package buildcraft.robotics;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.api.v2.request.RequestProvider;
 import buildcraft.robotics.internal.api2.RequestSupport;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;

@@ -2,7 +2,7 @@ package buildcraft.transport.statements;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.transport.internal.gate.IGate;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

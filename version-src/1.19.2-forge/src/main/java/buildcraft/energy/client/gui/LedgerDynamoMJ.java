@@ -7,7 +7,7 @@ package buildcraft.energy.client.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.energy.tile.TileDynamoMJ;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.gui.BuildCraftGui;

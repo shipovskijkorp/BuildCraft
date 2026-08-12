@@ -17,7 +17,7 @@ import com.mojang.authlib.GameProfile;
 
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.lib.internal.area.IZone;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;

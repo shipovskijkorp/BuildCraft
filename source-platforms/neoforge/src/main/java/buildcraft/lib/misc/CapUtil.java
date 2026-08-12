@@ -7,7 +7,7 @@ package buildcraft.lib.misc;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

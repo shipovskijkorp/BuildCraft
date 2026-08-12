@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.api.v2.pipe.PipeType;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.internal.pipe.IPipeRegistry;

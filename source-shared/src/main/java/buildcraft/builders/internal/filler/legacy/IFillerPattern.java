@@ -6,7 +6,7 @@ package buildcraft.builders.internal.filler.legacy;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.containers.IFillerStatementContainer;

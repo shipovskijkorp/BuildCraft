@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

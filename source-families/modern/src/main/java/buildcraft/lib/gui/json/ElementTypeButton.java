@@ -1,7 +1,7 @@
 package buildcraft.lib.gui.json;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.client.sprite.SpriteRaw;
 import buildcraft.lib.expression.FunctionContext;
 import buildcraft.lib.gui.GuiSpriteScaled;

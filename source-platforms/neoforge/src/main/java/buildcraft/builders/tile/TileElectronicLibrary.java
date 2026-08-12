@@ -18,8 +18,8 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.primitives.Bytes;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.data.NbtSquishConstants;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.data.NbtSquishConstants;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.item.ItemSnapshot;
 import buildcraft.builders.menu.ContainerElectronicLibrary;

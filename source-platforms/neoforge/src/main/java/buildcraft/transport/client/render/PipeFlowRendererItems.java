@@ -8,7 +8,7 @@ package buildcraft.transport.client.render;
 
 import java.util.List;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.transport.internal.pipe.IPipeFlowRenderer;
 import buildcraft.lib.client.model.ModelUtil;
 import buildcraft.lib.client.model.ModelUtil.UvFaceData;

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.BCSiliconRecipes;
 //? if >=1.20 {

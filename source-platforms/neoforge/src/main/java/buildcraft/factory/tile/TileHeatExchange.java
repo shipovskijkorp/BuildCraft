@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.lib.internal.block.ICustomRotationHandler;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.api.v2.recipe.HeatExchangeRecipeDefinition;
 import buildcraft.lib.recipe.MachineRecipeApiBridge;
 import buildcraft.lib.internal.tiles.IDebuggable;

@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 
 public class ResourceIdRequest extends ResourceId {
     private BlockIndex index = new BlockIndex();

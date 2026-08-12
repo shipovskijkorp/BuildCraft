@@ -8,7 +8,7 @@ package buildcraft.lib.client.sprite;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 
 import net.minecraft.resources.ResourceLocation;
 

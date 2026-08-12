@@ -109,8 +109,7 @@ for source_root in SOURCE_ROOTS:
         ):
             if marker in text:
                 errors.append(f"obsolete Forge lifecycle marker {marker!r} remains in {rel}")
-        if "TEMPORARY CLASS DO NOT USE" in text and str(rel).replace("\\", "/") != \
-                "source-shared/src/main/java/buildcraft/api/recipes/StackDefinition.java":
+        if "TEMPORARY CLASS DO NOT USE" in text:
             errors.append(f"temporary implementation marker remains in {rel}")
 
 

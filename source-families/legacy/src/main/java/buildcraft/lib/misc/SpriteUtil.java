@@ -11,7 +11,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.client.sprite.SpriteRaw;
 import com.mojang.authlib.GameProfile;

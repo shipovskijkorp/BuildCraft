@@ -24,7 +24,7 @@ import buildcraft.api.v2.recipe.MachineRecipeService;
 import buildcraft.api.v2.recipe.RecipeDefinition;
 import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.recipe.MachineRecipeApiBridge;
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.factory.BCFactoryItems;

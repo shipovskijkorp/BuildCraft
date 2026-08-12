@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.item.ItemTransferResult;
 import buildcraft.api.v2.request.ItemRequest;

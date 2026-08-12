@@ -2,7 +2,7 @@ package buildcraft.robotics.boards;
 
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.inventory.filter.ArrayStackOrListFilter;

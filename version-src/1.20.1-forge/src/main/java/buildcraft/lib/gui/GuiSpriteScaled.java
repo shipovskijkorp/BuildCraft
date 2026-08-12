@@ -8,7 +8,7 @@ package buildcraft.lib.gui;
 
 import net.minecraft.client.gui.GuiGraphics;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.gui.pos.GuiRectangle;
 import buildcraft.lib.gui.pos.IGuiArea;
 

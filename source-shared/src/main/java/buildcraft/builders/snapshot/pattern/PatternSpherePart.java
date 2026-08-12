@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Set;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
 import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
 import buildcraft.lib.internal.statement.IStatementParameter;

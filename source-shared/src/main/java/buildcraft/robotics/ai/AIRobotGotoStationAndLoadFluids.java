@@ -1,6 +1,6 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.core.IFluidFilter;
+import buildcraft.lib.internal.core.IFluidFilter;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 

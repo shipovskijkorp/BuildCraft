@@ -5,7 +5,7 @@
 package buildcraft.core.block;
 
 import buildcraft.lib.internal.enums.EnumEngineType;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.engine.BlockEngineBase_BC8;
 import net.minecraft.core.BlockPos;

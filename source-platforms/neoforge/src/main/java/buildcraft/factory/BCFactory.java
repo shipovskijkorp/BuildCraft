@@ -2,7 +2,7 @@ package buildcraft.factory;
 
 import buildcraft.lib.internal.mj.MjCapabilities;
 
-import buildcraft.api.capabilities.BCCapabilityRegistration;
+import buildcraft.lib.internal.capabilities.BCCapabilityRegistration;
 import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.core.BCCore;
 import buildcraft.factory.client.render.RenderDistiller;
@@ -81,12 +81,12 @@ public class BCFactory {
         BCCapabilityRegistration.registerBlockEntity(event, TilesAPI.CAP_HAS_WORK, autoWorkbench);
     }
 
-    private static <BE extends net.minecraft.world.level.block.entity.BlockEntity & buildcraft.api.capabilities.IBCCapabilityProvider>
+    private static <BE extends net.minecraft.world.level.block.entity.BlockEntity & buildcraft.lib.internal.capabilities.IBCCapabilityProvider>
     void registerMinerCapabilities(RegisterCapabilitiesEvent event, BlockEntityType<BE> type) {
         registerMachineCapabilities(event, type);
     }
 
-    private static <BE extends net.minecraft.world.level.block.entity.BlockEntity & buildcraft.api.capabilities.IBCCapabilityProvider>
+    private static <BE extends net.minecraft.world.level.block.entity.BlockEntity & buildcraft.lib.internal.capabilities.IBCCapabilityProvider>
     void registerMachineCapabilities(RegisterCapabilitiesEvent event, BlockEntityType<BE> type) {
         BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_CONNECTOR, type);
         BCCapabilityRegistration.registerBlockEntity(event, MjCapabilities.CAP_RECEIVER, type);

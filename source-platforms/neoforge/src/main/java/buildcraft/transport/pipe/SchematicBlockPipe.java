@@ -13,7 +13,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.internal.schematic.legacy.SchematicBlockContext;
 import buildcraft.lib.misc.NBTUtilBC;

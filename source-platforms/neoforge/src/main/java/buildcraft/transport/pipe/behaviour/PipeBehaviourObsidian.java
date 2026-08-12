@@ -14,7 +14,7 @@ import java.util.WeakHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;

@@ -25,7 +25,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.IMjPassiveProvider;
 import buildcraft.lib.internal.mj.IMjReceiver;

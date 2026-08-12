@@ -10,7 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import com.mojang.authlib.GameProfile;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.gui.BuildCraftGui;
 import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.config.GuiConfigManager;

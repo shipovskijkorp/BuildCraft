@@ -6,7 +6,7 @@ import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.ITriggerInternal;
 import buildcraft.core.statements.BCStatement;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.robotics.BCRoboticsSprites;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.network.chat.Component;

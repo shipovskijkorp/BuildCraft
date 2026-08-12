@@ -10,7 +10,7 @@ import buildcraft.api.v2.energy.MjAmount;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;

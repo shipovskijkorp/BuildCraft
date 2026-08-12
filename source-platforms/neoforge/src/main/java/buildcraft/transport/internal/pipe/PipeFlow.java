@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.transport.internal.pipe.IPipeHolder.IWriter;
 import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;
 

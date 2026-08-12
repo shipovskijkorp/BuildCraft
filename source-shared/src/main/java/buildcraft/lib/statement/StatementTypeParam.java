@@ -2,7 +2,7 @@ package buildcraft.lib.statement;
 
 import java.io.IOException;
 
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.StatementManager;
 import buildcraft.lib.internal.statement.StatementManager.IParamReaderBuf;

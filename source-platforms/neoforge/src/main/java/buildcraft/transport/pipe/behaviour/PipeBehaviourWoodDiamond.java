@@ -8,8 +8,8 @@ package buildcraft.transport.pipe.behaviour;
 
 import java.io.IOException;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.transport.internal.IItemPluggable;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IFlowItems;

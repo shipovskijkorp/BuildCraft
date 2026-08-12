@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.lib.internal.area.IBox;
 import buildcraft.lib.internal.area.IZone;
 import buildcraft.robotics.zone.ZonePlan;

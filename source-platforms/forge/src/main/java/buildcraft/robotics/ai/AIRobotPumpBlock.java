@@ -1,7 +1,7 @@
 package buildcraft.robotics.ai;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.misc.BlockUtil;

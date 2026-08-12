@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.IMjRedstoneReceiver;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;

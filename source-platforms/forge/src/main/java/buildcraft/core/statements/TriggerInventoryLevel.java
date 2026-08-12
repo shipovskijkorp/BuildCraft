@@ -8,7 +8,7 @@ package buildcraft.core.statements;
 
 import java.util.Locale;
 
-import buildcraft.api.inventory.IItemHandlerFiltered;
+import buildcraft.lib.internal.inventory.IItemHandlerFiltered;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.lib.internal.statement.IStatement;

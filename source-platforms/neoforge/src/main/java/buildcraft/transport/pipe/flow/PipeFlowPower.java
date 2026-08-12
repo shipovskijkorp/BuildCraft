@@ -20,8 +20,8 @@ import java.util.function.ToLongFunction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.IMjPassiveProvider;
 import buildcraft.lib.internal.mj.IMjReceiver;

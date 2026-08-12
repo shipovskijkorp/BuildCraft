@@ -8,7 +8,7 @@ package buildcraft.lib.inventory.filter;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.IStackFilter;
 
 import net.minecraft.world.item.ItemStack;
 

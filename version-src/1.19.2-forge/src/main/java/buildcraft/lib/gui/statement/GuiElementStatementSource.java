@@ -6,8 +6,8 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.internal.statement.IGuiSlot;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.gui.BuildCraftGui;

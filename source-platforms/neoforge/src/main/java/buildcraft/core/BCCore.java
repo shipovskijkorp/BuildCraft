@@ -8,8 +8,8 @@ import java.util.Map;
 
 import buildcraft.lib.internal.module.BCModules;
 import buildcraft.lib.internal.enums.EnumSpring;
-import buildcraft.api.capabilities.BCCapabilityRegistration;
-import buildcraft.api.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.capabilities.BCCapabilityRegistration;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftRegistries;
 import buildcraft.core.client.RenderTickListener;

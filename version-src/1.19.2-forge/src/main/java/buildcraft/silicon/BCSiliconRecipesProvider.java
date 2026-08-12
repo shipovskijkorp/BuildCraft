@@ -15,7 +15,7 @@ import com.google.common.collect.ImmutableSet.Builder;
 
 import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.lib.internal.enums.EnumRedstoneChipset;
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;
 import buildcraft.lib.misc.ColourUtil;

@@ -7,7 +7,7 @@ package buildcraft.lib.internal.statement;
 import java.util.Arrays;
 import java.util.Objects;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 
 
 

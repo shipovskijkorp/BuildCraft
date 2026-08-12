@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import buildcraft.builders.snapshot.RulesLoader;
-import buildcraft.api.capabilities.BCCapabilityRegistration;
-import buildcraft.api.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.capabilities.BCCapabilityRegistration;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
 import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.core.BCCore;

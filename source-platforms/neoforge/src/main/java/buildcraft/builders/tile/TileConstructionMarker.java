@@ -19,9 +19,9 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.enums.EnumSnapshotType;
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.internal.tiles.IDebuggable;

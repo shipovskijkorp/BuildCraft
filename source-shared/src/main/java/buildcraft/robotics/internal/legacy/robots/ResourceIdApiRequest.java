@@ -1,6 +1,6 @@
 package buildcraft.robotics.internal.legacy.robots;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;

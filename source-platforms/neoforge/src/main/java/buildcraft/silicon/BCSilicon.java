@@ -47,8 +47,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import buildcraft.api.capabilities.BCCapabilityRegistration;
-import buildcraft.api.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.capabilities.BCCapabilityRegistration;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
 import buildcraft.lib.internal.tiles.TilesAPI;
 
 @Mod(BCSilicon.MODID)

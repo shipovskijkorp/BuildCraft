@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.lib.internal.enums.EnumPowerStage;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.lib.internal.tiles.IDebuggable;

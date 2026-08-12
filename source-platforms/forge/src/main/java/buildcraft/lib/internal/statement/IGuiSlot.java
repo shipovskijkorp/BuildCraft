@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import buildcraft.lib.internal.core.IConvertable;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.network.chat.Component;

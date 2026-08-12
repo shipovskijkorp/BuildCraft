@@ -1,7 +1,7 @@
 package buildcraft.robotics.ai;
 
 import buildcraft.lib.internal.area.IBox;
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.lib.internal.area.IZone;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;

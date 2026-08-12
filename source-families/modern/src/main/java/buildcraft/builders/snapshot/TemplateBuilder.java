@@ -9,7 +9,7 @@ package buildcraft.builders.snapshot;
 import java.util.Collections;
 import java.util.List;
 
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.lib.misc.BlockUtil;

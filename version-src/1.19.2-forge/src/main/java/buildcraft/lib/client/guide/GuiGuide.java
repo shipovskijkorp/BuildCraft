@@ -44,8 +44,8 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import buildcraft.api.core.render.ISprite;
-import buildcraft.api.recipes.IngredientStack;
+import buildcraft.lib.internal.core.render.ISprite;
+import buildcraft.lib.internal.recipes.IngredientStack;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.client.sprite.SpriteNineSliced;

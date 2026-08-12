@@ -26,7 +26,7 @@ import buildcraft.api.v2.gate.GateRule;
 import buildcraft.api.v2.gate.GateView;
 import buildcraft.api.v2.statement.StatementKind;
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.transport.internal.gate.IGate;
 import buildcraft.lib.internal.statement.IActionExternal;
 import buildcraft.lib.internal.statement.IActionInternal;

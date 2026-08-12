@@ -13,7 +13,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
 import buildcraft.lib.internal.debug.BCDebugging;
 import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.permission.IPlayerOwned;

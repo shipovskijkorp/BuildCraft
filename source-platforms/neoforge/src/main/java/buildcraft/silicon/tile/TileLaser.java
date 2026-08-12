@@ -21,10 +21,10 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.lib.client.render.DetachedRenderer.IDetachedRenderer;
 import buildcraft.lib.misc.LocaleUtil;

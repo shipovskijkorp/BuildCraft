@@ -2,8 +2,8 @@ package buildcraft.transport.internal.pipe;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.IFluidFilter;
-import buildcraft.api.core.IFluidHandlerAdv;
+import buildcraft.lib.internal.core.IFluidFilter;
+import buildcraft.lib.internal.core.IFluidHandlerAdv;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;

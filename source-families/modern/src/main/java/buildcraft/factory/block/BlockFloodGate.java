@@ -3,7 +3,7 @@ package buildcraft.factory.block;
 import java.util.HashMap;
 import java.util.Map;
 
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.tile.TileFloodGate;

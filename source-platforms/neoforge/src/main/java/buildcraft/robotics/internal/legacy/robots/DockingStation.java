@@ -14,7 +14,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.api.v2.request.RequestProvider;
 import buildcraft.lib.internal.statement.StatementSlot;
 import buildcraft.transport.internal.IInjectable;

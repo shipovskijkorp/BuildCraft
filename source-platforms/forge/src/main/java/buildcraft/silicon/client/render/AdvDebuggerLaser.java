@@ -19,7 +19,7 @@ import org.joml.Matrix4f;
 ?*/
 //?}
 
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.lib.client.render.DetachedRenderer;
 import buildcraft.lib.debug.DebugRenderHelper;
 import buildcraft.lib.misc.VolumeUtil;

@@ -5,7 +5,7 @@ import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;
 import buildcraft.lib.internal.statement.StatementParameterItemStack;
 import buildcraft.core.statements.BCStatement;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;

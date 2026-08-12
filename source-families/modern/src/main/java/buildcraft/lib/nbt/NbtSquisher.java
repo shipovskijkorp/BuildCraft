@@ -20,8 +20,8 @@ import java.util.function.Function;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.data.NbtSquishConstants;
+import buildcraft.lib.internal.core.InvalidInputDataException;
+import buildcraft.lib.internal.data.NbtSquishConstants;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;

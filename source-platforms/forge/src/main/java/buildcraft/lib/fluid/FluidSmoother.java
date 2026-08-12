@@ -2,7 +2,7 @@ package buildcraft.lib.fluid;
 
 import java.util.List;
 
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.misc.MathUtil;

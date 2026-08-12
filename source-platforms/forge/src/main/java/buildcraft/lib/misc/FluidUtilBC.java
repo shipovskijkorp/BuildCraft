@@ -12,8 +12,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.IFluidFilter;
-import buildcraft.api.core.IFluidHandlerAdv;
+import buildcraft.lib.internal.core.IFluidFilter;
+import buildcraft.lib.internal.core.IFluidHandlerAdv;
 import buildcraft.compat.CompatCapTransfromer;
 import buildcraft.core.BCCoreItems;
 import buildcraft.core.item.ItemFragileFluidContainer;

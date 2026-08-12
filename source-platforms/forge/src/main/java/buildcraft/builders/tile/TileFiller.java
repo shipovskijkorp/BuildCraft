@@ -18,11 +18,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.area.IAreaProvider;
 import buildcraft.lib.internal.area.IBox;
 import buildcraft.builders.internal.filler.legacy.IFillerPattern;
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.lib.internal.statement.IStatementParameter;

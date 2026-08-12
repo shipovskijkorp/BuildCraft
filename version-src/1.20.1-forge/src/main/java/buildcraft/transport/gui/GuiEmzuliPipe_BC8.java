@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.core.BCCoreSprites;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.gui.GuiBC8;

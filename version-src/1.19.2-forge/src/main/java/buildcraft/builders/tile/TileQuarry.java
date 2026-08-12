@@ -35,7 +35,7 @@ import com.google.common.collect.ImmutableList;
 
 import buildcraft.lib.internal.debug.BCDebugging;
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.area.IAreaProvider;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.api.v2.content.BuildCraftContentIds;

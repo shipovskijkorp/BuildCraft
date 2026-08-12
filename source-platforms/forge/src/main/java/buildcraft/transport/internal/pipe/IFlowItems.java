@@ -3,7 +3,7 @@ package buildcraft.transport.internal.pipe;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.transport.internal.IInjectable;
 
 import net.minecraft.core.Direction;

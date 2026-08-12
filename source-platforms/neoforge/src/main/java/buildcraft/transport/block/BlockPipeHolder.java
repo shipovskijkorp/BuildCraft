@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 
 import buildcraft.lib.internal.block.ICustomPaintHandler;
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.permission.AutomationActor;
 import buildcraft.api.v2.pipe.PipeActivationResult;

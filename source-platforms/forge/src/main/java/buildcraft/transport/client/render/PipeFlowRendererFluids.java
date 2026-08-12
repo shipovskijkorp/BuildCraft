@@ -6,7 +6,7 @@
 
 package buildcraft.transport.client.render;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.transport.internal.pipe.IPipeFlowRenderer;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.lib.client.render.fluid.FluidRenderer;

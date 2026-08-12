@@ -219,8 +219,8 @@ def main() -> int:
         if row and row["disposition"] != "INTERNALIZE":
             errors.append(f"remaining Stage 9 symbol is not INTERNALIZE in migration map: {symbol}")
 
-    if len(current) != 18:
-        errors.append(f"expected 18 Stage 9 implementation-only legacy imports after Stage 8, found {len(current)}")
+    if not current.issubset(STAGE9):
+        errors.append("legacy imports outside the Stage 9 allowlist remain after Stage 8")
 
     if errors:
         print("Facades / Lists / Map API2 migration FAILED:")
@@ -231,7 +231,7 @@ def main() -> int:
     print(
         "Facades / Lists / Map API2 migration OK: 16 Stage 8 public symbols retired; "
         "facade/list/map/label/fluid-drop runtime uses API2; "
-        "18 implementation-only imports remain for Stage 9"
+        f"{len(current)} Stage 9 implementation-only imports remain"
     )
     return 0
 

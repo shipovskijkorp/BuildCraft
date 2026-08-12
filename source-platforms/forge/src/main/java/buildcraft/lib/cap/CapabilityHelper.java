@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;

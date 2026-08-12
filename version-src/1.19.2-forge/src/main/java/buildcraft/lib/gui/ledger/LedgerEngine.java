@@ -8,7 +8,7 @@ package buildcraft.lib.gui.ledger;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 import buildcraft.lib.gui.BuildCraftGui;

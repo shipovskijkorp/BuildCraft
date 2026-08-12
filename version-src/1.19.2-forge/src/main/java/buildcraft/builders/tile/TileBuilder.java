@@ -26,12 +26,12 @@ import org.jetbrains.annotations.NotNull;
 import com.google.common.collect.ImmutableList;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.area.IPathProvider;
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.enums.EnumOptionalSnapshotType;
 import buildcraft.lib.internal.enums.EnumSnapshotType;
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.lib.internal.tiles.IDebuggable;

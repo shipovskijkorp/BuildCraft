@@ -2,7 +2,7 @@ package buildcraft.builders.snapshot.pattern;
 
 import java.util.BitSet;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
 import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
 import buildcraft.lib.internal.statement.IStatementParameter;

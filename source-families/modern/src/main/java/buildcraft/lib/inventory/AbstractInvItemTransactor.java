@@ -10,8 +10,8 @@ import java.util.Arrays;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IStackFilter;
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.core.IStackFilter;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.lib.inventory.filter.StackFilter;
 import buildcraft.lib.misc.StackUtil;
 

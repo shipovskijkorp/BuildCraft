@@ -1,6 +1,6 @@
 package buildcraft.lib.gui.button;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.client.sprite.SpriteRaw;
 import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.ISimpleDrawable;

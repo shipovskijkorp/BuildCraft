@@ -6,7 +6,7 @@
 
 package buildcraft.lib.gui;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.gui.json.BuildCraftJsonGui;
 import buildcraft.lib.gui.json.InventorySlotHolder;
 import buildcraft.lib.gui.ledger.LedgerHelp;

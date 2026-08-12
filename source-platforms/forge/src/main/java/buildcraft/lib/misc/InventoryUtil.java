@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.transport.internal.IInjectable;
 import buildcraft.lib.inventory.ItemTransactorHelper;
 

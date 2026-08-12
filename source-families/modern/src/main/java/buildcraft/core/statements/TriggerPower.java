@@ -8,7 +8,7 @@ package buildcraft.core.statements;
 
 import buildcraft.lib.internal.mj.MjCapabilities;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.mj.IMjReadable;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;

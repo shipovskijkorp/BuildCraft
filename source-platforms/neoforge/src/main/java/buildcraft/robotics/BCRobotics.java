@@ -94,7 +94,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import buildcraft.api.capabilities.BCCapabilityRegistration;
+import buildcraft.lib.internal.capabilities.BCCapabilityRegistration;
 
 /**
  * BuildCraft Robotics bootstrap for the 1.20.1 port.

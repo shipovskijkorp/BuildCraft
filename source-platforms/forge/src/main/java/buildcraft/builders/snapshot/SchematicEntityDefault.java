@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.builders.internal.schematic.legacy.ISchematicEntity;
 import buildcraft.builders.internal.schematic.legacy.SchematicEntityContext;
 import buildcraft.lib.misc.NBTUtilBC;

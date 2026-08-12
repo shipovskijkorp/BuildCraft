@@ -2,7 +2,7 @@ package buildcraft.transport.internal.pluggable;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 
 import net.minecraft.core.Direction;

@@ -8,7 +8,7 @@ import com.google.gson.JsonSyntaxException;
 import net.minecraft.client.gui.GuiGraphics;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.client.model.ResourceLoaderContext;
 import buildcraft.lib.expression.DefaultContexts;
 import buildcraft.lib.expression.FunctionContext;

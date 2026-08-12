@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.internal.statement.IAction;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.IStatementContainer;

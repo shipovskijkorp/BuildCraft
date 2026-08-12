@@ -26,7 +26,7 @@ import org.lwjgl.opengl.GL12;
 
 import buildcraft.lib.internal.debug.BCDebugging;
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.misc.SpriteUtil;
 
 import com.mojang.blaze3d.platform.GlStateManager;

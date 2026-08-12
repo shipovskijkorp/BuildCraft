@@ -10,9 +10,9 @@ import java.util.Arrays;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.IStackFilter;
 
-import buildcraft.api.recipes.StackDefinition;
+import buildcraft.lib.internal.recipes.StackDefinition;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.Item;

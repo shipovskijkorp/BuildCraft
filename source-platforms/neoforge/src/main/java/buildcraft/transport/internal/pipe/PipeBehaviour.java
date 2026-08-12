@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.transport.client.render.RenderPipeHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

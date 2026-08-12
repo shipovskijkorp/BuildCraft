@@ -16,7 +16,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.area.IAreaProvider;
 import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;

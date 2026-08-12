@@ -13,8 +13,8 @@ import java.util.EnumSet;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.transport.internal.pipe.IFlowItems;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipeHolder.PipeMessageReceiver;

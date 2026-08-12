@@ -12,8 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import buildcraft.api.core.InvalidInputDataException;
-import buildcraft.api.data.NbtSquishConstants;
+import buildcraft.lib.internal.core.InvalidInputDataException;
+import buildcraft.lib.internal.data.NbtSquishConstants;
 import buildcraft.lib.misc.data.DecompactingBitSet;
 import it.unimi.dsi.fastutil.bytes.ByteArrayList;
 import it.unimi.dsi.fastutil.ints.IntArrayList;

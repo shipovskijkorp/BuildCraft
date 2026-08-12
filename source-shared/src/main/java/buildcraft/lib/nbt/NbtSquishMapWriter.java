@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import buildcraft.api.data.NbtSquishConstants;
+import buildcraft.lib.internal.data.NbtSquishConstants;
 import buildcraft.lib.misc.data.CompactingBitSet;
 import it.unimi.dsi.fastutil.bytes.ByteArrayList;
 import it.unimi.dsi.fastutil.bytes.ByteComparators;

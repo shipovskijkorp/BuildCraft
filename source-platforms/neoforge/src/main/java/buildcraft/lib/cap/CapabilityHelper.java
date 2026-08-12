@@ -14,8 +14,8 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import buildcraft.api.capabilities.IBCCapabilityProvider;
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.core.EnumPipePart;
 
 import net.minecraft.core.Direction;
 import net.neoforged.neoforge.capabilities.BlockCapability;

@@ -23,10 +23,10 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.IFluidFilter;
-import buildcraft.api.core.IFluidHandlerAdv;
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.IFluidFilter;
+import buildcraft.lib.internal.core.IFluidHandlerAdv;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IPipe;

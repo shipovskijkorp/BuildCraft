@@ -16,7 +16,7 @@ import com.mojang.math.Matrix4f;
 
 import net.minecraft.client.renderer.GameRenderer;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.gui.pos.IGuiArea;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

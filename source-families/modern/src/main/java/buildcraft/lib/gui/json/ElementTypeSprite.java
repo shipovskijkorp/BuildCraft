@@ -1,6 +1,6 @@
 package buildcraft.lib.gui.json;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.client.sprite.SpriteRaw;
 import buildcraft.lib.client.sprite.SubSpriteChanging;
 import buildcraft.lib.expression.FunctionContext;

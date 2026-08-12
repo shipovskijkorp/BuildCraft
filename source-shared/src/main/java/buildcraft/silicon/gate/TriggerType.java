@@ -3,8 +3,8 @@ package buildcraft.silicon.gate;
 import java.io.IOException;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.ITrigger;
 import buildcraft.lib.internal.statement.ITriggerInternal;

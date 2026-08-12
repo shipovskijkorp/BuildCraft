@@ -8,8 +8,8 @@ package buildcraft.lib.inventory;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IStackFilter;
-import buildcraft.api.inventory.IItemTransactor.IItemExtractable;
+import buildcraft.lib.internal.core.IStackFilter;
+import buildcraft.lib.internal.inventory.IItemTransactor.IItemExtractable;
 import buildcraft.lib.misc.EntityUtil;
 import buildcraft.lib.misc.StackUtil;
 

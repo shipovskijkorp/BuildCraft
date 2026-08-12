@@ -4,7 +4,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import buildcraft.api.capabilities.IBCCapabilityProvider;
+import buildcraft.lib.internal.capabilities.IBCCapabilityProvider;
 
 public interface IPipe extends IBCCapabilityProvider {
     IPipeHolder getHolder();

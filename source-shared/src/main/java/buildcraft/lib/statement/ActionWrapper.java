@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.statement.IAction;
 import buildcraft.lib.internal.statement.IActionExternal;
 import buildcraft.lib.internal.statement.IActionInternal;

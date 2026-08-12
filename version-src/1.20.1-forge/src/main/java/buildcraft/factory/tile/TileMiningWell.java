@@ -8,8 +8,8 @@ package buildcraft.factory.tile;
 
 import buildcraft.api.v2.energy.MjAmount;
 
-import buildcraft.api.core.EnumPipePart;
-import buildcraft.api.core.SafeTimeTracker;
+import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.mj.IMjReceiver;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.core.BCCoreConfig;

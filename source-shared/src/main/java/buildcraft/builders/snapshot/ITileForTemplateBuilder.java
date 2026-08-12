@@ -6,7 +6,7 @@
 
 package buildcraft.builders.snapshot;
 
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 
 public interface ITileForTemplateBuilder extends ITileForSnapshotBuilder {
     Template.BuildingInfo getTemplateBuildingInfo();

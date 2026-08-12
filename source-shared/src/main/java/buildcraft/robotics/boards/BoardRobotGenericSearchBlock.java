@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;

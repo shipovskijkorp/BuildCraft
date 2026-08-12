@@ -1,6 +1,6 @@
 package buildcraft.transport.internal.pipe;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.statement.IAction;
 import buildcraft.lib.internal.statement.IStatementParameter;
 

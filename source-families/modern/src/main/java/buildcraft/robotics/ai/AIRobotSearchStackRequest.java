@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import buildcraft.api.core.IStackFilter;
+import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.api.v2.request.ItemRequest;
 import buildcraft.api.v2.request.RequestProvider;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;

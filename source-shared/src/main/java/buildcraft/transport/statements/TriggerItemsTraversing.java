@@ -3,7 +3,7 @@ package buildcraft.transport.statements;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.transport.internal.gate.IGate;
 import buildcraft.lib.internal.statement.IStatementContainer;
 import buildcraft.lib.internal.statement.IStatementParameter;

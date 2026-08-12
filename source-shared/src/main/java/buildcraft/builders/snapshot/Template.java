@@ -11,7 +11,7 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
 
-import buildcraft.api.core.InvalidInputDataException;
+import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.lib.internal.enums.EnumSnapshotType;
 import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
 import buildcraft.lib.misc.VecUtil;

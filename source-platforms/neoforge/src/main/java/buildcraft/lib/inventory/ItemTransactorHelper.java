@@ -8,9 +8,9 @@ package buildcraft.lib.inventory;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.IStackFilter;
-import buildcraft.api.inventory.IItemTransactor;
-import buildcraft.api.inventory.IItemTransactor.IItemInsertable;
+import buildcraft.lib.internal.core.IStackFilter;
+import buildcraft.lib.internal.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor.IItemInsertable;
 import buildcraft.transport.internal.IInjectable;
 import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.lib.misc.BlockUtil;

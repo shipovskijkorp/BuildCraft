@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;

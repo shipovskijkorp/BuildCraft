@@ -9,7 +9,7 @@ package buildcraft.lib.client.render.laser;
 import java.util.Arrays;
 import java.util.Objects;
 
-import buildcraft.api.core.render.ISprite;
+import buildcraft.lib.internal.core.render.ISprite;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 
 import net.minecraft.world.phys.Vec3;

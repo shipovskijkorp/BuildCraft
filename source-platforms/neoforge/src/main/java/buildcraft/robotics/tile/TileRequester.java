@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import buildcraft.api.core.EnumPipePart;
+import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.item.ItemTransferResult;
 import buildcraft.api.v2.request.ItemRequest;

@@ -31,7 +31,7 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import buildcraft.builders.internal.filler.legacy.FillerManager;
 import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
 import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
-import buildcraft.api.inventory.IItemTransactor;
+import buildcraft.lib.internal.inventory.IItemTransactor;
 import buildcraft.api.v2.item.ItemTransferResult;
 import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.api.v2.list.ListMatchType;

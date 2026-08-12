@@ -5,7 +5,7 @@
 package buildcraft.builders.block;
 
 import buildcraft.lib.internal.enums.EnumOptionalSnapshotType;
-import buildcraft.api.properties.BuildCraftProperties;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.builders.tile.TileBuilder;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.block.IBlockWithFacing;

@@ -1,6 +1,6 @@
 package buildcraft.robotics.ai;
 
-import buildcraft.api.core.BlockIndex;
+import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.automation.UseItemRequest;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
