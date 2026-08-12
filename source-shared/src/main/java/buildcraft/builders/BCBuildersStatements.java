@@ -7,6 +7,7 @@
 package buildcraft.builders;
 
 import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 import buildcraft.builders.filler.FillerStatementContext;
 import buildcraft.builders.snapshot.pattern.Pattern;
 import buildcraft.builders.snapshot.pattern.PatternBox;
@@ -78,6 +79,7 @@ public class BCBuildersStatements {
         StatementManager.registerParameter(PatternParameterCenter::readFromNbt);
         StatementManager.registerParameter(PatternParameterHollow::readFromNbt);
         StatementManager.registerParameter(PatternParameterAxis::readFromNbt);
+        StatementApi2Bridge.mirrorLegacyStatements(PATTERNS);
     }
 
     public static void preInit() {

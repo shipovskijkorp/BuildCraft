@@ -53,9 +53,14 @@ def main() -> int:
         if token not in runtime:
             errors.append(f"BuildCraftApiRuntime: missing {token}")
 
+    bc_statement = text("source-shared/src/main/java/buildcraft/core/statements/BCStatement.java")
+    if "StatementApi2Bridge.mirrorLegacyStatement(this);" in bc_statement:
+        errors.append("BCStatement mirrors API2 during superclass construction; subclass parameter schema may be uninitialized")
+
     bridge = text("source-shared/src/main/java/buildcraft/lib/internal/statement/api2/StatementApi2Bridge.java")
     for token in [
         "mirrorLegacyStatement(",
+        "mirrorLegacyStatements(",
         "nativeInternalTriggers(",
         "nativeInternalActions(",
         "toApiParameters(",
@@ -80,6 +85,18 @@ def main() -> int:
         ]:
             if token not in src:
                 errors.append(f"{path}: missing API2 statement bridge {token}")
+
+    construction_safe_mirroring = {
+        "source-shared/src/main/java/buildcraft/builders/BCBuildersStatements.java": "StatementApi2Bridge.mirrorLegacyStatements(PATTERNS);",
+        "source-shared/src/main/java/buildcraft/silicon/BCSiliconStatements.java": "StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_LIGHT);",
+        "source-shared/src/main/java/buildcraft/transport/BCTransportStatements.java": "StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_PIPE_SIGNAL);",
+        "source-shared/src/main/java/buildcraft/robotics/BCRoboticsStatements.java": "StatementApi2Bridge.mirrorLegacyStatements(",
+        "source-families/legacy/src/main/java/buildcraft/core/BCCoreStatements.java": "StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_INVENTORY_ALL);",
+        "source-families/modern/src/main/java/buildcraft/core/BCCoreStatements.java": "StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_INVENTORY_ALL);",
+    }
+    for path, token in construction_safe_mirroring.items():
+        if token not in text(path):
+            errors.append(f"{path}: missing post-construction API2 statement mirroring")
 
     for path in [
         "source-platforms/forge/src/main/java/buildcraft/silicon/gate/GateLogic.java",

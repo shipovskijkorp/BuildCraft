@@ -1,5 +1,6 @@
 package buildcraft.robotics;
 
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 import buildcraft.robotics.statements.*;
 
 public class BCRoboticsStatements {
@@ -49,9 +50,18 @@ public class BCRoboticsStatements {
         ACTION_STATION_PROVIDE_ITEMS  = new ActionStationProvideItems();
         ACTION_STATION_REQUEST_ITEMS  = new ActionStationRequestItems();
         ACTION_STATION_MACHINE_REQUEST = new ActionStationRequestItemsMachine();
+
+        StatementApi2Bridge.mirrorLegacyStatements(
+            TRIGGER_ROBOT_IN_STATION, TRIGGER_ROBOT_SLEEP, TRIGGER_ROBOT_LINKED, TRIGGER_ROBOT_RESERVED,
+            ACTION_ROBOT_FILTER, ACTION_ROBOT_FILTER_TOOL, ACTION_ROBOT_GOTO_STATION, ACTION_ROBOT_WAKEUP,
+            ACTION_ROBOT_WORK_IN_AREA, ACTION_ROBOT_LOAD_UNLOAD_AREA,
+            ACTION_STATION_ACCEPT_FLUIDS, ACTION_STATION_ACCEPT_ITEMS, ACTION_STATION_FORBID_ROBOT,
+            ACTION_STATION_FORCE_ROBOT, ACTION_STATION_PROVIDE_FLUIDS, ACTION_STATION_PROVIDE_ITEMS,
+            ACTION_STATION_REQUEST_ITEMS, ACTION_STATION_MACHINE_REQUEST
+        );
     }
 
     public static void preInit() {
-        // static block is enough
+        // Static initialization performs construction-safe API2 mirroring.
     }
 }

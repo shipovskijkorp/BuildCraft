@@ -1,6 +1,7 @@
 package buildcraft.silicon;
 
 import buildcraft.silicon.api2.SiliconApi2;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 
 import buildcraft.silicon.statement.ActionPowerPulsar;
 import buildcraft.silicon.statement.TriggerLightSensor;
@@ -34,10 +35,14 @@ public class BCSiliconStatements {
         ACTION_PULSAR_CONSTANT = new ActionPowerPulsar(true);
         ACTION_PULSAR_SINGLE = new ActionPowerPulsar(false);
         ACTION_PULSAR = new ActionPowerPulsar[] { ACTION_PULSAR_CONSTANT, ACTION_PULSAR_SINGLE };
+
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_LIGHT);
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_TIMER);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_PULSAR);
     }
 
     public static void preInit() {
         SiliconApi2.install();
-        // The static block above registers the built-in statements through the API2 bridge.
+        // Built-in statements were mirrored after construction in the static block above.
     }
 }

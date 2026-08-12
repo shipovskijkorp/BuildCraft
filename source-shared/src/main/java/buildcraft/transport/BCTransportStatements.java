@@ -10,6 +10,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.core.Direction;
 
 import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 
 import buildcraft.lib.misc.ColourUtil;
 
@@ -93,6 +94,18 @@ public class BCTransportStatements {
 
         StatementManager.registerParameter(TriggerParameterSignal::readFromNbt, TriggerParameterSignal::readFromBuf);
         StatementManager.registerParameter(ActionParameterSignal::readFromNbt);
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_PIPE_SIGNAL);
+        StatementApi2Bridge.mirrorLegacyStatement(TRIGGER_POWER_REQUESTED);
+        StatementApi2Bridge.mirrorLegacyStatement(TRIGGER_ITEMS_TRAVERSING);
+        StatementApi2Bridge.mirrorLegacyStatement(TRIGGER_FLUIDS_TRAVERSING);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_PIPE_SIGNAL);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_PIPE_COLOUR);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_EXTRACTION_PRESET);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_PIPE_DIRECTION);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_IRON_POWER_LIMIT);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_DIAMOND_POWER_LIMIT);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_IRON_FE_LIMIT);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_DIAMOND_FE_LIMIT);
     }
 
     public static void preInit() {

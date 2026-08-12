@@ -6,6 +6,7 @@ package buildcraft.core;
 
 import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.statement.StatementManager;
+import buildcraft.lib.internal.statement.api2.StatementApi2Bridge;
 import buildcraft.lib.internal.tiles.IControllable.Mode;
 import buildcraft.core.statements.ActionMachineControl;
 import buildcraft.core.statements.ActionRedstoneOutput;
@@ -130,6 +131,17 @@ public class BCCoreStatements {
 
         StatementManager.registerParameter(StatementParamGateSideOnly::readFromNbt);
         StatementManager.registerParameter(StatementParameterItemStackExact::readFromNbt, StatementParameterItemStackExact::readFromBuf);
+        StatementApi2Bridge.mirrorLegacyStatement(TRIGGER_TRUE);
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_MACHINE);
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_REDSTONE);
+        StatementApi2Bridge.mirrorLegacyStatement(ACTION_REDSTONE);
+        StatementApi2Bridge.mirrorLegacyStatements(ACTION_MACHINE_CONTROL);
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_POWER);
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_INVENTORY_ALL);
+        StatementApi2Bridge.mirrorLegacyStatements(TRIGGER_FLUID_ALL);
+        StatementApi2Bridge.mirrorLegacyStatements(
+            TRIGGER_POWER_BLUE, TRIGGER_POWER_GREEN, TRIGGER_POWER_YELLOW, TRIGGER_POWER_RED, TRIGGER_POWER_OVERHEAT
+        );
     }
 
     public static void preInit() {

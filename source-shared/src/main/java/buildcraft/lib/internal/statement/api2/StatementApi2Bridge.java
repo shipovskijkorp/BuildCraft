@@ -88,6 +88,13 @@ public final class StatementApi2Bridge {
         parameterBridgeRegistered = true;
     }
 
+    public static void mirrorLegacyStatements(IStatement... statements) {
+        Objects.requireNonNull(statements, "statements");
+        for (IStatement statement : statements) {
+            mirrorLegacyStatement(statement);
+        }
+    }
+
     public static synchronized void mirrorLegacyStatement(IStatement statement) {
         Objects.requireNonNull(statement, "statement");
         if (statement instanceof NativeStatementAdapter) return;
