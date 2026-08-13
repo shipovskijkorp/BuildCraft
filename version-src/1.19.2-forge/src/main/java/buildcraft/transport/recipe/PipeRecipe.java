@@ -190,6 +190,19 @@ public final class PipeRecipe implements CraftingRecipe {
         return mode == Mode.BASE ? width >= 3 && height >= 1 : width * height >= ingredients.size();
     }
 
+    /**
+     * JEI cannot infer that BASE pipe recipes are a 3x1 shaped recipe because this
+     * serializer also represents shapeless upgrade and downgrade recipes.
+     */
+    public boolean hasShapedBasePattern() {
+        return mode == Mode.BASE;
+    }
+
+    /** Static result used by recipe viewers. Runtime crafting may additionally copy pipe colour. */
+    public ItemStack getDisplayResult() {
+        return result.copy();
+    }
+
     @Override
     public ItemStack getResultItem() {
         return result.copy();

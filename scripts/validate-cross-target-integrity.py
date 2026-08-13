@@ -268,7 +268,9 @@ def validate_hotspots(props: dict[str, str]) -> None:
         ),
         "buildcraft/robotics/gui/GuiZonePlanner.java": ("argbToAbgr(colour)",),
         "buildcraft/robotics/zone/ZonePlannerMapChunk.java": (
-            "Heightmap.Types.WORLD_SURFACE", "new MapColourData(current.posY, colour)",
+            "Heightmap.Types.WORLD_SURFACE",
+            "getChunkNow(key.chunkPos.x, key.chunkPos.z - 1)",
+            "mapNativeToArgb(nativeMapColour)",
         ),
         "buildcraft/transport/client/model/PipeBaseModelGenStandard.java": (
             "loadSpritesCache", "generateTranslucent", "getPipeModelColour",

@@ -56,6 +56,7 @@ import buildcraft.silicon.tile.TileProgrammingTable_Neptune;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeStateManager;
 import buildcraft.transport.BCTransportItems;
+import buildcraft.transport.recipe.PipeRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -81,6 +82,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
@@ -167,6 +169,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         // recipe lookups can select the matching variant inside the grouped lens pages.
         registration.registerSubtypeInterpreter(BCSiliconItems.PLUG_LENS_ITEM.get(),
                 (stack, context) -> Integer.toString(stack.getDamageValue()));
+    }
+
+    @Override
+    public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
+        registration.getCraftingCategory().addExtension(PipeRecipe.class, PipeCraftingCategoryExtension.INSTANCE);
     }
 
     @Override

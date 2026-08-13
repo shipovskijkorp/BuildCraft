@@ -43,10 +43,12 @@ def validate_zone_planner() -> None:
     ]
     for rel in variants:
         text = read(rel)
-        require(text, "new MapColourData(current.posY, colour)", rel)
+        require(text, "new MapColourData(current.posY, mapNativeToArgb(nativeMapColour))", rel)
         require(text, "chunk.getHeight(Heightmap.Types.WORLD_SURFACE, localX, localZ)", rel)
+        require(text, "getChunkNow(key.chunkPos.x, key.chunkPos.z - 1)", rel)
+        require(text, "mapNativeToArgb(int nativeMapColour)", rel)
         reject(text, "chunk.getHeight(Heightmap.Types.WORLD_SURFACE, localX, localZ) - 1", rel)
-        reject(text, "toGuiArgb", rel)
+        reject(text, "new MapColourData(current.posY, nativeMapColour)", rel)
     for rel in guis:
         require(read(rel), "argbToAbgr(colour)", rel)
 

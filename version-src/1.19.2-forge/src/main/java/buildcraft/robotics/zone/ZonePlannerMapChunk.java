@@ -38,11 +38,18 @@ public class ZonePlannerMapChunk {
         int baseZ = key.chunkPos.z << 4;
         SurfaceSample[][] samples = new SurfaceSample[16][16];
 
-        // Read only from the already-loaded target chunk. In particular, do not sample z = -1 from the
-        // northern neighbour, because that seemingly harmless map shading lookup can load or generate it.
+        // Only inspect chunks that are already loaded. This keeps the Zone Planner from generating terrain
+        // just to paint the map, while still allowing vanilla-style north/south height shading across a
+        // chunk edge whenever the northern neighbour is already present.
+        LevelChunk northChunk = world.getChunkSource().getChunkNow(key.chunkPos.x, key.chunkPos.z - 1);
+        SurfaceSample[] northEdge = northChunk == null ? null : new SurfaceSample[16];
+
         for (int localX = 0; localX < 16; localX++) {
             for (int localZ = 0; localZ < 16; localZ++) {
                 samples[localX][localZ] = sampleSurface(world, chunk, localX, localZ, baseX, baseZ);
+            }
+            if (northEdge != null) {
+                northEdge[localX] = sampleSurface(world, northChunk, localX, 15, baseX, baseZ - 16);
             }
         }
 
@@ -54,11 +61,13 @@ public class ZonePlannerMapChunk {
                     continue;
                 }
 
-                SurfaceSample previous = localZ == 0 ? null : samples[localX][localZ - 1];
+                SurfaceSample previous = localZ == 0
+                        ? (northEdge == null ? null : northEdge[localX])
+                        : samples[localX][localZ - 1];
                 int worldZ = baseZ + localZ;
                 MaterialColor.Brightness brightness = getVanillaBrightness(current, previous, worldX, worldZ);
-                int colour = current.mapColor.calculateRGBColor(brightness);
-                data[localX][localZ] = new MapColourData(current.posY, colour);
+                int nativeMapColour = current.mapColor.calculateRGBColor(brightness);
+                data[localX][localZ] = new MapColourData(current.posY, mapNativeToArgb(nativeMapColour));
             }
         }
     }
@@ -138,6 +147,19 @@ public class ZonePlannerMapChunk {
             return MaterialColor.Brightness.LOW;
         }
         return MaterialColor.Brightness.NORMAL;
+    }
+
+    /**
+     * Map colours are produced in the native byte order used by Minecraft's map texture. The Zone Planner
+     * keeps colours as ARGB while they travel through the network and while the zone overlay is blended,
+     * then GuiZonePlanner converts them back exactly once when writing the NativeImage.
+     */
+    private static int mapNativeToArgb(int nativeMapColour) {
+        int alpha = nativeMapColour & 0xFF_00_00_00;
+        int red = (nativeMapColour & 0x00_00_00_FF) << 16;
+        int green = nativeMapColour & 0x00_00_FF_00;
+        int blue = (nativeMapColour & 0x00_FF_00_00) >> 16;
+        return alpha | red | green | blue;
     }
 
     public ZonePlannerMapChunk(FriendlyByteBuf buffer) {
