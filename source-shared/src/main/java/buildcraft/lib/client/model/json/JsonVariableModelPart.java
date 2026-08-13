@@ -48,7 +48,9 @@ public abstract class JsonVariableModelPart {
             }
         }
         if ("face".equals(type)) {
-            throw new AbstractMethodError("// TODO: Implement face type!");
+            throw new JsonSyntaxException(
+                "Unsupported variable model part type 'face'; use a cuboid with explicit faces instead"
+            );
         } else if ("led".equals(type)) {
             return new VariablePartLed(obj, fnCtx);
         } else if ("texture_expand".equals(type)) {
@@ -60,7 +62,7 @@ public abstract class JsonVariableModelPart {
             return new VariablePartContainer(obj, fnCtx, ctx);
         } else {
             throw new JsonSyntaxException(
-                "Unknown type '" + type + "' -- known types are [ face, led, texture_expand, cuboid, container ]");
+                "Unknown type '" + type + "' -- known types are [ led, texture_expand, cuboid, container ]");
         }
     }
 
@@ -103,10 +105,6 @@ public abstract class JsonVariableModelPart {
             throw new JsonSyntaxException("Invalid expression " + expression, e);
         }
     }
-
-    // private static JsonVariableQuad[] readFace(JsonObject obj, FunctionContext fnCtx) {
-    // throw new AbstractMethodError("Implement this!");
-    // }
 
     public static INodeDouble[] readVariablePosition(JsonObject obj, String member, FunctionContext fnCtx) {
         String[] got = JsonUtil.getSubAsStringArray(obj, member);

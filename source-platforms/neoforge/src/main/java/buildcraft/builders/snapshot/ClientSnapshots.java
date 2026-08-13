@@ -76,9 +76,6 @@ public enum ClientSnapshots {
 
     @OnlyIn(Dist.CLIENT)
     public void renderSnapshot(PoseStack ignoredPose, Snapshot snapshot, int offsetX, int offsetY, int sizeX, int sizeY) {
-        if (1 == 1) {
-            return;
-        }
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || snapshot == null || snapshot.size == null) {
             return;
@@ -113,7 +110,6 @@ public enum ClientSnapshots {
                 viewportHeight
             );
             RenderSystem.clear(GlConst.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
-            RenderSystem.disableScissor();
             RenderSystem.viewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
             modelViewStack.identity();
@@ -143,6 +139,7 @@ public enum ClientSnapshots {
             renderEntities(minecraft, world, snapshotPose, bufferSource);
             bufferSource.endBatch();
         } finally {
+            RenderSystem.disableScissor();
             RenderSystem.viewport(0, 0, minecraft.getWindow().getWidth(), minecraft.getWindow().getHeight());
             RenderSystem.restoreProjectionMatrix();
             modelViewStack.popMatrix();

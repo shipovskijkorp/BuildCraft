@@ -39,6 +39,9 @@ jobs:
       - name: Validate API v2-only public surface
         run: python scripts/validate-api-v2-only.py
 
+      - name: Validate API2 runtime completeness
+        run: python scripts/validate-api2-runtime-completeness.py
+
       - name: Validate repository cleanliness
         run: python scripts/validate-repository-cleanliness.py
 
@@ -61,7 +64,7 @@ jobs:
     name: Build, test and smoke ${{ matrix.generation }} targets
     needs: validate
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     strategy:
       fail-fast: false
       matrix:
@@ -92,8 +95,13 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Install headless client runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0
+
       - name: Make build scripts executable
-        run: chmod +x builds/legacy/gradlew builds/modern/gradlew build-all.sh scripts/ci-server-smoke.sh scripts/source_layout.py scripts/validate-stonecutter.py scripts/validate-api-v2.py scripts/validate-api-v2-only.py
+        run: chmod +x builds/legacy/gradlew builds/modern/gradlew build-all.sh scripts/ci-server-smoke.sh scripts/ci-client-smoke.sh scripts/source_layout.py scripts/validate-stonecutter.py scripts/validate-api-v2.py scripts/validate-api-v2-only.py
 
       - name: Build and test generation
         shell: bash
@@ -131,6 +139,25 @@ jobs:
             STONECUTTER_TARGET="$target" bash scripts/ci-server-smoke.sh
           done
 
+      - name: Client smoke-test every production target in generation
+        shell: bash
+        env:
+          CLIENT_STARTUP_TIMEOUT: '480'
+          CLIENT_STABILITY_SECONDS: '20'
+          CLIENT_RUNTIME_PROFILE: jei
+        run: |
+          set -euo pipefail
+          mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets --generation "$BUILD_GENERATION")
+          client_status=0
+          for target in "${targets[@]}"; do
+            echo "Client smoke-testing ${BUILD_GENERATION}/${target}"
+            if ! STONECUTTER_TARGET="$target" bash scripts/ci-client-smoke.sh; then
+              client_status=1
+              echo "::error title=Client smoke failed::${BUILD_GENERATION}/${target} client smoke failed"
+            fi
+          done
+          exit "$client_status"
+
       - name: Upload build products and diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -149,24 +176,29 @@ jobs:
             run-server/${{ matrix.generation }}/*/crash-reports/**
             ci-server-${{ matrix.generation }}-*.log
             ci-server-install-${{ matrix.generation }}-*.log
+            ci-client-${{ matrix.generation }}-*.log
 
   compatibility-server:
-    name: Legacy compatibility (${{ matrix.profile }})
+    name: Compatibility (${{ matrix.target }} / ${{ matrix.profile }})
     needs:
       - validate
       - build-test-server
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        profile:
-          - forestry
-          - ic2
+        include:
+          - target: 1.19.2-forge
+            profile: forestry
+          - target: 1.19.2-forge
+            profile: ic2
+          - target: 1.20.1-forge
+            profile: forestry
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dfile.encoding=UTF-8
       BUILD_GENERATION: legacy
-      STONECUTTER_TARGET: 1.19.2-forge
+      STONECUTTER_TARGET: ${{ matrix.target }}
 
     steps:
       - name: Checkout
@@ -214,7 +246,6 @@ jobs:
       - name: Smoke-test compatibility server
         if: steps.support.outputs.supported == 'true'
         id: smoke
-        continue-on-error: true
         env:
           SERVER_STARTUP_TIMEOUT: '360'
           SERVER_RUNTIME_PROFILE: ${{ matrix.profile }}
@@ -230,18 +261,18 @@ jobs:
           if [[ "$OUTCOME" == success ]]; then
             echo "### $PROFILE compatibility: passed" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "::warning title=$PROFILE compatibility failed::The optional $PROFILE server stack did not reach the ready state."
-            echo "### $PROFILE compatibility: failed (advisory)" >> "$GITHUB_STEP_SUMMARY"
+            echo "::error title=$PROFILE compatibility failed::The $STONECUTTER_TARGET / $PROFILE server stack did not reach the ready state."
+            echo "### $STONECUTTER_TARGET / $PROFILE compatibility: failed" >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload compatibility diagnostics
         if: steps.support.outputs.supported == 'true' && always()
         uses: actions/upload-artifact@v4
         with:
-          name: buildcraft-compat-${{ matrix.profile }}-${{ github.run_number }}-${{ github.run_attempt }}
+          name: buildcraft-compat-${{ matrix.target }}-${{ matrix.profile }}-${{ github.run_number }}-${{ github.run_attempt }}
           if-no-files-found: ignore
           retention-days: 7
           path: |
-            run/legacy/1.19.2-forge/logs/**
-            run/legacy/1.19.2-forge/crash-reports/**
-            ci-server-legacy-1.19.2-forge-${{ matrix.profile }}.log
+            run/legacy/${{ matrix.target }}/logs/**
+            run/legacy/${{ matrix.target }}/crash-reports/**
+            ci-server-legacy-${{ matrix.target }}-${{ matrix.profile }}.log

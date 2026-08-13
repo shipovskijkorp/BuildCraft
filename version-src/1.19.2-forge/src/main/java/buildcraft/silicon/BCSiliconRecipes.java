@@ -31,8 +31,7 @@ public class BCSiliconRecipes {
     public static final RegistryObject<SimpleRecipeSerializer<FacadeAssemblyRecipes>> FACADE_SERIALIZER = SERIALIZERS.register("facade", () -> new SimpleRecipeSerializer<FacadeAssemblyRecipes>(FacadeAssemblyRecipes::getInstance)); 
     
 	public static void preInit(IEventBus modEventBus) {
-		SERIALIZERS.register("facade_swap_recipe_", () -> FacadeSwapRecipe.SERIALIZER);
-        TYPES.register("facade_swap", () -> FacadeSwapRecipe.TYPE);
+		SERIALIZERS.register("facade_swap", () -> FacadeSwapRecipe.SERIALIZER);
 		TYPES.register(modEventBus);
 		SERIALIZERS.register(modEventBus);
 		

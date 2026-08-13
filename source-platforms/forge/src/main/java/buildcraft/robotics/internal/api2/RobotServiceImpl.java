@@ -17,6 +17,7 @@ import buildcraft.api.v2.robot.BuildCraftDockPorts;
 import buildcraft.api.v2.robot.DockPortType;
 import buildcraft.api.v2.robot.RobotControl;
 import buildcraft.api.v2.robot.RobotDock;
+import buildcraft.api.v2.robot.RobotDockContext;
 import buildcraft.api.v2.robot.RobotEventContext;
 import buildcraft.api.v2.robot.RobotEventDecision;
 import buildcraft.api.v2.robot.RobotEventListener;
@@ -24,11 +25,13 @@ import buildcraft.api.v2.robot.RobotHandle;
 import buildcraft.api.v2.robot.RobotResource;
 import buildcraft.api.v2.robot.RobotResourceLease;
 import buildcraft.api.v2.robot.RobotResourceRequest;
+import buildcraft.api.v2.robot.RobotResourceType;
 import buildcraft.api.v2.robot.RobotService;
 import buildcraft.api.v2.robot.RobotStatus;
 import buildcraft.api.v2.robot.RobotTask;
 import buildcraft.api.v2.robot.RobotTaskContext;
 import buildcraft.api.v2.robot.RobotTaskResult;
+import buildcraft.api.v2.robot.RobotTaskType;
 import buildcraft.robotics.ai.AIRobotGotoBlock;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
@@ -99,9 +102,25 @@ public final class RobotServiceImpl implements RobotService {
     public Optional<RobotResourceLease> acquire(Level level, long robotId, RobotResourceRequest request) {
         IRobotRegistry registry = registry(level);
         if (registry == null || request == null || registry.getLoadedRobot(robotId) == null) return Optional.empty();
-        ResourceId legacy = toLegacyResource(request.resource());
-        if (legacy == null || request.amount() != 1 || !registry.take(legacy, robotId)) return Optional.empty();
-        return Optional.of(new Lease(registry, robotId, request.resource(), legacy));
+        RobotResource resource = request.resource();
+        RobotResourceType<?> type = BuildCraftApi.registry(BuildCraftRegistries.ROBOT_RESOURCE_TYPES).get(resource.typeId());
+        return type == null ? Optional.empty() : acquireRegistered(type, level, robotId, resource, request.amount());
+    }
+
+    private static <R extends RobotResource> Optional<RobotResourceLease> acquireRegistered(
+        RobotResourceType<R> type, Level level, long robotId, RobotResource resource, long amount
+    ) {
+        if (!type.resourceType().isInstance(resource)) return Optional.empty();
+        return type.acquirer().acquire(level, robotId, type.resourceType().cast(resource), amount);
+    }
+
+    static Optional<RobotResourceLease> acquireBlockResource(Level level, long robotId, BlockRobotResource resource, long amount) {
+        IRobotRegistry registry = registry(level);
+        if (registry == null || registry.getLoadedRobot(robotId) == null || amount != 1) return Optional.empty();
+        ResourceIdBlock legacy = new ResourceIdBlock(resource.position());
+        legacy.side = resource.side().orElse(null);
+        if (!registry.take(legacy, robotId)) return Optional.empty();
+        return Optional.of(new Lease(registry, robotId, resource, legacy));
     }
 
     @Override
@@ -122,14 +141,6 @@ public final class RobotServiceImpl implements RobotService {
         return level == null || RobotManager.registryProvider == null ? null : RobotManager.registryProvider.getRegistry(level);
     }
 
-    private static ResourceId toLegacyResource(RobotResource resource) {
-        if (resource instanceof BlockRobotResource block) {
-            ResourceIdBlock id = new ResourceIdBlock(block.position());
-            id.side = block.side().orElse(null);
-            return id;
-        }
-        return null;
-    }
 
     static Level level(EntityRobotBase robot) {
         //? if <1.20 {
@@ -201,6 +212,8 @@ public final class RobotServiceImpl implements RobotService {
             @Override
             public boolean assign(RobotTask task, OperationMode mode) {
                 if (task == null || !robot.isAlive()) return false;
+                RobotTaskType<?> type = BuildCraftApi.registry(BuildCraftRegistries.ROBOT_TASK_TYPES).get(task.typeId());
+                if (type == null || !type.taskType().isInstance(task)) return false;
                 if (mode == OperationMode.EXECUTE) robot.setMainAIOverride(new ApiTaskAI(robot, task, RobotHandleAdapter.this));
                 return true;
             }
@@ -245,16 +258,29 @@ public final class RobotServiceImpl implements RobotService {
         @Override public Optional<Direction> side() { return Optional.ofNullable(station.side()); }
 
         @Override
-        public <T> Optional<T> port(DockPortType<T> type) {
-            if (BuildCraftDockPorts.ITEMS.equals(type)
+        public <T> Optional<T> port(DockPortType<T> requestedType) {
+            DockPortType<?> registered = BuildCraftApi.registry(BuildCraftRegistries.ROBOT_DOCK_PORT_TYPES).get(requestedType.id());
+            if (registered == null || !registered.portType().equals(requestedType.portType())) return Optional.empty();
+            return portRegistered(castPortType(registered));
+        }
+
+        @SuppressWarnings("unchecked")
+        private static <T> DockPortType<T> castPortType(DockPortType<?> type) {
+            return (DockPortType<T>) type;
+        }
+
+        private <T> Optional<T> portRegistered(DockPortType<T> type) {
+            if (BuildCraftDockPorts.ITEMS.id().equals(type.id())
                     && (station.getItemOutput() != null || station.getItemInput() != null)) {
                 return Optional.of(type.portType().cast(new DockItemPort(station)));
             }
-            if (BuildCraftDockPorts.FLUIDS.equals(type)
+            if (BuildCraftDockPorts.FLUIDS.id().equals(type.id())
                     && (station.getFluidOutput() != null || station.getFluidInput() != null)) {
                 return Optional.of(type.portType().cast(new DockFluidPort(station)));
             }
-            return Optional.empty();
+            Level level = station.level();
+            if (level == null) return Optional.empty();
+            return type.resolve(new RobotDockContext(level, position(), side(), occupied()));
         }
 
         @Override public boolean occupied() { return station.isTaken(); }

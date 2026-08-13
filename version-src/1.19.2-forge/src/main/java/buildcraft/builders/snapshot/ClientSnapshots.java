@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -21,9 +19,8 @@ import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
-import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.net.MessageManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -46,7 +43,6 @@ public enum ClientSnapshots {
     private final List<Snapshot> snapshots = new ArrayList<>();
     private final List<Snapshot.Key> pending = new ArrayList<>();
     private final Map<Snapshot.Key, FakeWorld> worlds = new HashMap<>();
-    private final Map<Snapshot.Key, RenderedBuffer> buffers = new HashMap<>();
 
     public Snapshot getSnapshot(Snapshot.Key key) {
         Snapshot found = snapshots.stream().filter(snapshot -> snapshot.key.equals(key)).findFirst().orElse(null);
@@ -76,44 +72,42 @@ public enum ClientSnapshots {
 
     @OnlyIn(Dist.CLIENT)
     public void renderSnapshot(PoseStack pose, Snapshot snapshot, int offsetX, int offsetY, int sizeX, int sizeY) {
-        if(1 == 1) {
-        	return;
-        }
-    	FakeWorld world = worlds.computeIfAbsent(snapshot.key, key -> {
+        FakeWorld world = worlds.computeIfAbsent(snapshot.key, key -> {
         	Minecraft mc = Minecraft.getInstance();
             FakeWorld localWorld = new FakeWorld(mc.level);
             localWorld.uploadSnapshot(snapshot);
             return localWorld;
         });
-        //Minecraft.getInstance().renderBuffers()
-        RenderedBuffer bufferBuilder = buffers.computeIfAbsent(snapshot.key, key -> {
-            BufferBuilder localBuffer = new BufferBuilder(1024);
-            localBuffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
-            pose.pushPose();
-            for (int z = 0; z < snapshot.size.getZ(); z++) {
-                for (int y = 0; y < snapshot.size.getY(); y++) {
-                    for (int x = 0; x < snapshot.size.getX(); x++) {
-                        BlockPos pos = new BlockPos(x, y, z).offset(FakeWorld.BLUEPRINT_OFFSET);
-                        pose.translate(
-                            -FakeWorld.BLUEPRINT_OFFSET.getX(),
-                            -FakeWorld.BLUEPRINT_OFFSET.getY(),
-                            -FakeWorld.BLUEPRINT_OFFSET.getZ()
-                        );
-                        BlockState blockState = world.getBlockState(pos);
-                        BCLog.d("" + blockState);
-						Minecraft.getInstance().getBlockRenderer().renderBatched(
+        BufferBuilder localBuffer = new BufferBuilder(1024);
+        localBuffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
+        PoseStack blockPose = new PoseStack();
+        blockPose.translate(
+            -FakeWorld.BLUEPRINT_OFFSET.getX(),
+            -FakeWorld.BLUEPRINT_OFFSET.getY(),
+            -FakeWorld.BLUEPRINT_OFFSET.getZ()
+        );
+        for (int z = 0; z < snapshot.size.getZ(); z++) {
+            for (int y = 0; y < snapshot.size.getY(); y++) {
+                for (int x = 0; x < snapshot.size.getX(); x++) {
+                    BlockPos pos = new BlockPos(x, y, z).offset(FakeWorld.BLUEPRINT_OFFSET);
+                    BlockState blockState = world.getBlockState(pos);
+                    if (!blockState.isAir()) {
+                        Minecraft.getInstance().getBlockRenderer().renderBatched(
                             blockState,
                             pos,
                             world,
-                            pose, localBuffer, false, world.random, ModelData.EMPTY, RenderType.cutout()
+                            blockPose,
+                            localBuffer,
+                            false,
+                            world.random,
+                            ModelData.EMPTY,
+                            RenderType.cutout()
                         );
-                        pose.translate(0, 0, 0);
                     }
                 }
             }
-            pose.popPose();
-            return localBuffer.end();
-        });
+        }
+        RenderedBuffer bufferBuilder = localBuffer.end();
         pose.pushPose();
         RenderSystem.enableDepthTest();
         RenderSystem.enableBlend();
@@ -123,21 +117,14 @@ public enum ClientSnapshots {
         int viewportWidth = (int) (sizeX * window.getGuiScale());
         int viewportHeight = (int) (sizeY * window.getGuiScale());
         RenderSystem.enableScissor(viewportX, viewportY, viewportWidth, viewportHeight);
-        GL11.glScissor(
-            viewportX,
-            viewportY,
-            viewportWidth,
-            viewportHeight
-        );
-        RenderSystem.disableScissor();
         RenderSystem.viewport(viewportX, viewportY, viewportWidth, viewportHeight);
-        int snapshotSize = Math.max(Math.max(snapshot.size.getX(), snapshot.size.getY()), snapshot.size.getY());
+        int snapshotSize = Math.max(Math.max(snapshot.size.getX(), snapshot.size.getY()), snapshot.size.getZ());
         pose.translate(0, 0, -snapshotSize * 2d - 3);
-        pose.mulPose(new Quaternion(20, 1, 0, 0));
-        pose.mulPose(new Quaternion((System.currentTimeMillis() % 3600) / 10F, 0, 1, 0));
+        pose.mulPose(Vector3f.XP.rotationDegrees(20));
+        pose.mulPose(Vector3f.YP.rotationDegrees((System.currentTimeMillis() % 3600) / 10F));
         pose.translate(-snapshot.size.getX() / 2F, -snapshot.size.getY() / 2F, -snapshot.size.getZ() / 2F);
         pose.translate(0, snapshotSize * 0.1F, 0);
-        RenderSystem.setShaderTexture(snapshotSize, InventoryMenu.BLOCK_ATLAS);
+        RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
  //       
         RenderSystem.setShader(GameRenderer::getBlockShader);
         BufferUploader.drawWithShader(bufferBuilder);
@@ -169,10 +156,10 @@ public enum ClientSnapshots {
         }
         // noinspection Guava
         var win = Minecraft.getInstance().getWindow();
+        RenderSystem.disableScissor();
         RenderSystem.viewport(0, 0, win.getWidth(), win.getHeight());
         RenderSystem.disableBlend();
         RenderSystem.disableDepthTest();
         pose.popPose();
-        buffers.remove(snapshot.key);//FORTEST
     }
 }

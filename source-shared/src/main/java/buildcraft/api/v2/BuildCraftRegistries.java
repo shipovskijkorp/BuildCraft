@@ -17,17 +17,14 @@ import buildcraft.api.v2.debug.DebugContributor;
 import buildcraft.api.v2.facade.FacadeMaterialAdapter;
 import buildcraft.api.v2.filler.FillerPatternType;
 import buildcraft.api.v2.list.ListMatchAdapter;
-import buildcraft.api.v2.machine.ChipsetType;
 import buildcraft.api.v2.machine.EngineType;
 import buildcraft.api.v2.machine.MachineComponentType;
 import buildcraft.api.v2.machine.MachineType;
 import buildcraft.api.v2.machine.MachineProperty;
 import buildcraft.api.v2.machine.LaserTableType;
-import buildcraft.api.v2.network.PayloadType;
 import buildcraft.api.v2.pipe.PipeAttachmentType;
 import buildcraft.api.v2.pipe.PipeComponentType;
 import buildcraft.api.v2.pipe.PipeConnectionRule;
-import buildcraft.api.v2.pipe.PipeEventType;
 import buildcraft.api.v2.pipe.PipeSyncChannel;
 import buildcraft.api.v2.pipe.PipeType;
 import buildcraft.api.v2.registry.RegistryKey;
@@ -53,7 +50,6 @@ public final class BuildCraftRegistries {
     public static final RegistryKey<MachineType> MACHINE_TYPES = key("machine_types");
     public static final RegistryKey<MachineComponentType<?>> MACHINE_COMPONENT_TYPES = key("machine_component_types");
     public static final RegistryKey<MachineProperty<?>> MACHINE_PROPERTIES = key("machine_properties");
-    public static final RegistryKey<ChipsetType> CHIPSET_TYPES = key("chipset_types");
     public static final RegistryKey<LaserTableType> LASER_TABLE_TYPES = key("laser_table_types");
     public static final RegistryKey<MjConnectionRule> MJ_CONNECTION_RULES = key("mj_connection_rules");
 
@@ -62,7 +58,6 @@ public final class BuildCraftRegistries {
     public static final RegistryKey<PipeComponentType<?>> PIPE_COMPONENT_TYPES = key("pipe_component_types");
     public static final RegistryKey<PipeAttachmentType<?>> PIPE_ATTACHMENT_TYPES = key("pipe_attachment_types");
     public static final RegistryKey<PipeConnectionRule> PIPE_CONNECTION_RULES = key("pipe_connection_rules");
-    public static final RegistryKey<PipeEventType<?>> PIPE_EVENT_TYPES = key("pipe_event_types");
     public static final RegistryKey<PipeSyncChannel<?>> PIPE_SYNC_CHANNELS = key("pipe_sync_channels");
 
     public static final RegistryKey<ParameterType<?>> PARAMETER_TYPES = key("parameter_types");
@@ -95,7 +90,6 @@ public final class BuildCraftRegistries {
     public static final RegistryKey<RotationHandler> ROTATION_HANDLERS = key("rotation_handlers");
     public static final RegistryKey<PaintHandler> PAINT_HANDLERS = key("paint_handlers");
 
-    public static final RegistryKey<PayloadType<?>> PAYLOAD_TYPES = key("payload_types");
     public static final RegistryKey<ContentPresentation> CLIENT_PRESENTATIONS = key("client_presentations");
     public static final RegistryKey<PipePresentation> PIPE_PRESENTATIONS = key("pipe_presentations");
     public static final RegistryKey<StatementPresentation> STATEMENT_PRESENTATIONS = key("statement_presentations");

@@ -180,14 +180,46 @@ configurations {
 
 // Keep target-specific values out of the Java source snapshots.
 def generatedTargetSources = layout.buildDirectory.dir('generated/sources/buildcraftTarget/java')
+
+
+def gitMetadata = { List<String> args, String fallback ->
+    try {
+        def command = new ArrayList<String>()
+        command.add('git')
+        command.addAll(args)
+        def process = new ProcessBuilder(command)
+                .directory(repositoryRoot)
+                .redirectErrorStream(true)
+                .start()
+        def text = process.inputStream.getText('UTF-8').trim()
+        return process.waitFor() == 0 && !text.isBlank() ? text : fallback
+    } catch (Exception ignored) {
+        return fallback
+    }
+}
+
+def gitBranch = providers.environmentVariable('GITHUB_REF_NAME')
+        .getOrElse(gitMetadata(['rev-parse', '--abbrev-ref', 'HEAD'], 'unknown'))
+def gitCommitHash = providers.environmentVariable('GITHUB_SHA')
+        .getOrElse(gitMetadata(['rev-parse', 'HEAD'], 'unknown'))
+def gitCommitMessage = gitMetadata(['log', '-1', '--pretty=%s'], 'unknown')
+def gitCommitAuthor = gitMetadata(['log', '-1', '--pretty=%an <%ae>'], 'unknown')
 def targetValues = [
         minecraft: minecraftVersion,
         loader: 'neoforge',
-        protocol: requiredProperty('network.protocol')
+        protocol: requiredProperty('network.protocol'),
+        modVersion: project.version.toString(),
+        gitBranch: gitBranch,
+        gitCommitHash: gitCommitHash,
+        gitCommitMessage: gitCommitMessage,
+        gitCommitAuthor: gitCommitAuthor
 ]
 
 def javaLiteral = { String value ->
-    value.replace('\\', '\\\\').replace('"', '\\"')
+    value.replace('\\', '\\\\')
+            .replace('"', '\\"')
+            .replace('\r', '\\r')
+            .replace('\n', '\\n')
 }
 
 def generateBuildCraftTarget = tasks.register('generateBuildCraftTarget') {
@@ -205,6 +237,11 @@ public final class BuildCraftTarget {
     public static final String MINECRAFT_VERSION = \"${javaLiteral(targetValues.minecraft)}\";
     public static final String LOADER = \"${javaLiteral(targetValues.loader)}\";
     public static final String NETWORK_PROTOCOL = \"${javaLiteral(targetValues.protocol)}\";
+    public static final String MOD_VERSION = \"${javaLiteral(targetValues.modVersion)}\";
+    public static final String GIT_BRANCH = \"${javaLiteral(targetValues.gitBranch)}\";
+    public static final String GIT_COMMIT_HASH = \"${javaLiteral(targetValues.gitCommitHash)}\";
+    public static final String GIT_COMMIT_MESSAGE = \"${javaLiteral(targetValues.gitCommitMessage)}\";
+    public static final String GIT_COMMIT_AUTHOR = \"${javaLiteral(targetValues.gitCommitAuthor)}\";
 
     private BuildCraftTarget() {}
 }

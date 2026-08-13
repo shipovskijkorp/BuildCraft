@@ -9,12 +9,12 @@ package buildcraft.silicon.recipe;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.recipe.ChangingItemStack;
 import buildcraft.lib.recipe.IRecipeViewable;
+import buildcraft.silicon.BCSilicon;
 import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.item.ItemPluggableFacade;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeInstance;
 import buildcraft.silicon.plug.FacadeStateManager;
-import buildcraft.transport.BCTransport;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -33,9 +33,8 @@ public enum FacadeSwapRecipe implements Recipe<CraftingContainer>, IRecipeViewab
     private static final ChangingItemStack[] INPUTS = { null };
     private static ChangingItemStack OUTPUTS;
     
-    public static final ResourceLocation ID = new ResourceLocation(BCTransport.MODID, "facade_swap");
+    public static final ResourceLocation ID = new ResourceLocation(BCSilicon.MODID, "special/facade_swap");
     public static final RecipeSerializer<FacadeSwapRecipe> SERIALIZER = new SimpleRecipeSerializer<>((a)->INSTANCE);
-    public static final RecipeType<FacadeSwapRecipe> TYPE = RecipeType.simple(ID);
     
 
     public static void genRecipes() {
@@ -139,6 +138,6 @@ public enum FacadeSwapRecipe implements Recipe<CraftingContainer>, IRecipeViewab
 
 	@Override
 	public RecipeType<?> getType() {
-		return TYPE;
+		return RecipeType.CRAFTING;
 	}
 }

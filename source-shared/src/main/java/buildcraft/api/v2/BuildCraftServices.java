@@ -23,7 +23,6 @@ import buildcraft.api.v2.list.ItemListService;
 import buildcraft.api.v2.machine.MachineService;
 import buildcraft.api.v2.machine.LaserTargetService;
 import buildcraft.api.v2.module.ModuleService;
-import buildcraft.api.v2.network.NetworkService;
 import buildcraft.api.v2.permission.PermissionServiceRegistry;
 import buildcraft.api.v2.permission.ActorService;
 import buildcraft.api.v2.pipe.PipeService;
@@ -78,7 +77,6 @@ public final class BuildCraftServices {
     public static final ServiceKey<LaserTargetService> LASER_TARGETS = ServiceKey.of(id("laser_targets"));
     public static final ServiceKey<RobotService> ROBOTS = ServiceKey.of(id("robots"));
     public static final ServiceKey<SchematicService> SCHEMATICS = ServiceKey.of(id("schematics"));
-    public static final ServiceKey<NetworkService> NETWORK = ServiceKey.of(id("network"));
     public static final ServiceKey<ClientPresentationService> CLIENT_PRESENTATIONS = ServiceKey.of(id("client_presentations"));
     public static final ServiceKey<PlatformServices> PLATFORM = ServiceKey.of(id("platform"));
     public static final ServiceKey<MjFormatter> MJ_FORMATTER = ServiceKey.of(id("mj_formatter"));

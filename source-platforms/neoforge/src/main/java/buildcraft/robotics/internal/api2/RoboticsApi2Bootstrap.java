@@ -16,13 +16,22 @@ import buildcraft.api.v2.permission.PermissionVerdict;
 import buildcraft.api.v2.permission.WorldOperationContext;
 import buildcraft.api.v2.permission.WorldOperationKind;
 import buildcraft.api.v2.permission.WorldOperationTarget;
+import buildcraft.api.v2.robot.BlockRobotResource;
+import buildcraft.api.v2.robot.BuildCraftDockPorts;
 import buildcraft.api.v2.robot.BuildCraftRobotBoards;
+import buildcraft.api.v2.robot.DockPortType;
+import buildcraft.api.v2.robot.RobotResourceType;
+import buildcraft.api.v2.persistence.ApiCodec;
+import buildcraft.api.v2.persistence.CodecResult;
+import buildcraft.api.v2.persistence.OpaqueData;
+import buildcraft.api.v2.persistence.PersistentType;
 import buildcraft.api.v2.robot.RobotBoardType;
 import buildcraft.lib.internal.api.v2.BuildCraftApiRuntime;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.robotics.BCRoboticsBoards;
 import com.mojang.authlib.GameProfile;
+import java.nio.ByteBuffer;
 import java.util.Set;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -43,9 +52,90 @@ public final class RoboticsApi2Bootstrap {
         if (BuildCraftApiRuntime.INSTANCE.service(BuildCraftServices.REQUESTS).isEmpty()) {
             BuildCraftApiRuntime.INSTANCE.installService(BuildCraftServices.REQUESTS, new RequestServiceImpl());
         }
+        registerRobotResourceTypes();
+        registerDockPortTypes();
         registerBoards();
         registerAutomationActions();
         initialized = true;
+    }
+
+    private static void registerRobotResourceTypes() {
+        var registry = BuildCraftApi.registry(BuildCraftRegistries.ROBOT_RESOURCE_TYPES);
+        if (registry.get(BlockRobotResource.TYPE) != null) return;
+
+        ResourceLocation format = java.util.Objects.requireNonNull(ResourceLocation.tryParse("buildcraft:block_robot_resource_v1"));
+        ApiCodec<BlockRobotResource, OpaqueData> codec = new ApiCodec<>() {
+            @Override
+            public CodecResult<BlockRobotResource> decode(OpaqueData payload) {
+                if (!format.equals(payload.format())) {
+                    return CodecResult.failure("Unexpected block robot resource format: " + payload.format());
+                }
+                byte[] bytes = payload.bytes();
+                if (bytes.length != 13) {
+                    return CodecResult.failure("Invalid block robot resource payload length: " + bytes.length);
+                }
+                ByteBuffer buffer = ByteBuffer.wrap(bytes);
+                net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(buffer.getInt(), buffer.getInt(), buffer.getInt());
+                int sideId = buffer.get();
+                net.minecraft.core.Direction[] directions = net.minecraft.core.Direction.values();
+                if (sideId < -1 || sideId >= directions.length) {
+                    return CodecResult.failure("Invalid block robot resource side id: " + sideId);
+                }
+                return CodecResult.success(new BlockRobotResource(
+                    pos, sideId < 0 ? java.util.Optional.empty() : java.util.Optional.of(directions[sideId])
+                ));
+            }
+
+            @Override
+            public CodecResult<OpaqueData> encode(BlockRobotResource value) {
+                ByteBuffer buffer = ByteBuffer.allocate(13);
+                buffer.putInt(value.position().getX());
+                buffer.putInt(value.position().getY());
+                buffer.putInt(value.position().getZ());
+                buffer.put((byte) value.side().map(net.minecraft.core.Direction::ordinal).orElse(-1));
+                return CodecResult.success(new OpaqueData(format, buffer.array()));
+            }
+        };
+        PersistentType<BlockRobotResource, OpaqueData> persistence = PersistentType
+            .<BlockRobotResource, OpaqueData>builder(BlockRobotResource.TYPE, 0, codec)
+            .build();
+        registry.register(
+            BlockRobotResource.TYPE,
+            new RobotResourceType<>(
+                BlockRobotResource.TYPE,
+                BlockRobotResource.class,
+                persistence,
+                RobotServiceImpl::acquireBlockResource
+            ),
+            () -> "buildcraftrobotics"
+        );
+    }
+
+    private static void registerDockPortTypes() {
+        var registry = BuildCraftApi.registry(BuildCraftRegistries.ROBOT_DOCK_PORT_TYPES);
+        registerDockPort(registry, BuildCraftDockPorts.ITEMS);
+        registerDockPort(registry, BuildCraftDockPorts.FLUIDS);
+        registerDockPort(registry, new DockPortType<>(
+            BuildCraftDockPorts.MJ.id(),
+            buildcraft.api.v2.energy.MjPort.class,
+            context -> BuildCraftApi.service(BuildCraftServices.ENERGY).port(
+                context.level(), context.position(), context.side().orElse(null)
+            )
+        ));
+        registerDockPort(registry, new DockPortType<>(
+            BuildCraftDockPorts.EXTERNAL_ENERGY.id(),
+            buildcraft.api.v2.platform.ExternalEnergyPort.class,
+            context -> BuildCraftApi.service(BuildCraftServices.PLATFORM).energyTransfer()
+                .flatMap(transfer -> transfer.find(context.level(), context.position(), context.side().orElse(null)))
+        ));
+    }
+
+    private static <T> void registerDockPort(
+        buildcraft.api.v2.registry.ApiRegistry<DockPortType<?>> registry, DockPortType<T> type
+    ) {
+        if (registry.get(type.id()) == null) {
+            registry.register(type.id(), type, () -> "buildcraftrobotics");
+        }
     }
 
     private static void registerBoards() {

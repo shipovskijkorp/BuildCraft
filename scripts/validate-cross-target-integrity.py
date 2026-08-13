@@ -423,19 +423,155 @@ def validate_item_pipe_gametest_isolation() -> None:
                 fail(f"{path.relative_to(ROOT)}: cargo-isolated GameTest guard lost {token!r}")
 
 
+def validate_build_metadata_and_source_hygiene(props: dict[str, str]) -> None:
+    placeholders = ("$version", "${mcversion}", "${git_branch}", "${git_commit_hash}", "${git_commit_msg}", "${git_commit_author}")
+    source_roots = (ROOT / "source-shared", ROOT / "source-families", ROOT / "source-platforms", ROOT / "version-src")
+    for base in source_roots:
+        for path in base.rglob("*.java"):
+            if not path.is_file():
+                continue
+            text = path.read_text(encoding="utf-8")
+            for token in placeholders:
+                if token in text:
+                    fail(f"unresolved Java build metadata placeholder {token!r}: {path.relative_to(ROOT)}")
+        for path in base.rglob("*.jsonx"):
+            if path.is_file() and "src/main/resources" in path.as_posix():
+                fail(f"production resource tree contains ignored migration .jsonx: {path.relative_to(ROOT)}")
+
+    for rel in ("builds/legacy/build.forge.gradle", "builds/modern/build.neoforge.gradle"):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        for token in (
+            "generateBuildCraftTarget",
+            "BuildCraftTarget.java",
+            "MOD_VERSION",
+            "GIT_BRANCH",
+            "GIT_COMMIT_HASH",
+            "GIT_COMMIT_MESSAGE",
+            "GIT_COMMIT_AUTHOR",
+            "sourceSets.main.java.srcDir(generatedTargetSources)",
+            "dependsOn(generateBuildCraftTarget)",
+        ):
+            if token not in text:
+                fail(f"{rel}: generated Java build metadata wiring lost {token!r}")
+
+    for target in target_ids(props):
+        bclib = effective_java(target, "buildcraft/lib/BCLib.java", props)
+        for token in (
+            "BuildCraftTarget.MOD_VERSION",
+            "BuildCraftTarget.MINECRAFT_VERSION",
+            "BuildCraftTarget.GIT_BRANCH",
+            "BuildCraftTarget.GIT_COMMIT_HASH",
+            "BuildCraftTarget.GIT_COMMIT_MESSAGE",
+            "BuildCraftTarget.GIT_COMMIT_AUTHOR",
+            "!FMLEnvironment.production || Boolean.getBoolean(\"buildcraft.dev\")",
+        ):
+            if token not in bclib:
+                fail(f"{target}: BCLib build metadata/DEV mode lost {token!r}")
+        if "VERSION.startsWith" in bclib:
+            fail(f"{target}: DEV mode still depends on a version placeholder")
+
+
+def validate_facade_swap_recipe(props: dict[str, str]) -> None:
+    expected = {
+        "1.19.2-forge": "data/buildcraftsilicon/recipes/special/facade_swap.json",
+        "1.20.1-forge": "data/buildcraftsilicon/recipes/special/facade_swap.json",
+        "1.21.1-neoforge": "data/buildcraftsilicon/recipe/special/facade_swap.json",
+    }
+    for target, rel in expected.items():
+        resources = resource_map(target, props)
+        path = resources.get(rel)
+        if path is None:
+            fail(f"{target}: production facade swap recipe is missing: {rel}")
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            fail(f"{target}: invalid facade swap recipe {rel}: {exc}")
+        if data != {"type": "buildcraftsilicon:facade_swap"}:
+            fail(f"{target}: facade swap recipe must point at buildcraftsilicon:facade_swap, got {data}")
+
+    legacy_recipes = effective_java("1.19.2-forge", "buildcraft/silicon/BCSiliconRecipes.java", props)
+    if 'SERIALIZERS.register("facade_swap"' not in legacy_recipes or 'facade_swap_recipe_' in legacy_recipes:
+        fail("1.19.2-forge: facade swap serializer id is not normalized to buildcraftsilicon:facade_swap")
+
+
+def validate_snapshot_renderer_and_client_isolation(props: dict[str, str]) -> None:
+    snapshot_rel = "buildcraft/builders/snapshot/ClientSnapshots.java"
+    for target in target_ids(props):
+        text = effective_java(target, snapshot_rel, props)
+        if "if (1 == 1)" in text:
+            fail(f"{target}: snapshot renderer is still unconditionally disabled")
+        for token in ("RenderSystem.enableScissor", "RenderSystem.disableScissor"):
+            if token not in text:
+                fail(f"{target}: snapshot renderer lost viewport clipping token {token!r}")
+
+    bccore = effective_java("1.21.1-neoforge", "buildcraft/core/BCCore.java", props)
+    for forbidden in (
+        "net.minecraft.client",
+        "buildcraft.core.client",
+        "net.neoforged.neoforge.client",
+        "RenderTickListener",
+        "Dist.CLIENT",
+    ):
+        if forbidden in bccore:
+            fail(f"1.21.1-neoforge: common BCCore entrypoint still references client-only symbol {forbidden!r}")
+    client_path = ROOT / "source-platforms/neoforge/src/main/java/buildcraft/core/client/BCCoreClientModEvents.java"
+    if not client_path.is_file():
+        fail("1.21.1-neoforge: missing physically separated BCCore client event bootstrap")
+    client_text = client_path.read_text(encoding="utf-8")
+    for token in ("value = Dist.CLIENT", "RegisterMenuScreensEvent", "ModifyBakingResult", "RenderTickListener::renderOverlay"):
+        if token not in client_text:
+            fail(f"1.21.1-neoforge: client-only BCCore bootstrap lost {token!r}")
+
+
 def validate_ci_wiring() -> None:
     ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     for token in (
         "python scripts/validate-fe-compat.py",
         "python scripts/validate-cross-target-integrity.py",
+        "python scripts/validate-api2-runtime-completeness.py",
         "Run GameTests for every production target in generation",
         '":${target}:runGameTestServer"',
         "gametest_status=0",
-        "if ! ./gradlew --no-daemon --console=plain --stacktrace",
-        'exit "$gametest_status"',
+        "Client smoke-test every production target in generation",
+        "scripts/ci-client-smoke.sh",
+        "CLIENT_RUNTIME_PROFILE: jei",
+        "client_status=0",
+        "target: 1.19.2-forge",
+        "target: 1.20.1-forge",
+        "profile: forestry",
+        "profile: ic2",
+        "STONECUTTER_TARGET: ${{ matrix.target }}",
     ):
         if token not in ci:
             fail(f"CI is missing required validation/runtime coverage: {token}")
+    for entry in (
+        "- target: 1.19.2-forge\n            profile: forestry",
+        "- target: 1.19.2-forge\n            profile: ic2",
+        "- target: 1.20.1-forge\n            profile: forestry",
+    ):
+        if entry not in ci:
+            fail(f"compatibility CI matrix lost required target/profile pair: {entry.replace(chr(10), ' / ')}")
+    if "continue-on-error: true" in ci:
+        fail("compatibility smoke must be blocking; continue-on-error is still enabled")
+    client_script = ROOT / "scripts/ci-client-smoke.sh"
+    if not client_script.is_file():
+        fail("missing scripts/ci-client-smoke.sh")
+    client = client_script.read_text(encoding="utf-8")
+    for token in (":${target}:runClient", "xvfb-run", "blocks\\.png-atlas", "Missing model for variant"):
+        if token not in client:
+            fail(f"client smoke script lost {token!r}")
+
+    server_script = ROOT / "scripts/ci-server-smoke.sh"
+    if not server_script.is_file():
+        fail("missing scripts/ci-server-smoke.sh")
+    server = server_script.read_text(encoding="utf-8")
+    for token in (
+        "expected_buildcraft_version",
+        "Starting BuildCraft ${expected_buildcraft_version}",
+        "unresolved BuildCraft Java build metadata",
+    ):
+        if token not in server:
+            fail(f"server smoke script lost runtime build-metadata guard {token!r}")
 
 
 def main() -> None:
@@ -453,6 +589,9 @@ def main() -> None:
     validate_pipe_transfer_wiring()
     validate_randomium_facade_blacklist(props)
     validate_item_pipe_gametest_isolation()
+    validate_build_metadata_and_source_hygiene(props)
+    validate_facade_swap_recipe(props)
+    validate_snapshot_renderer_and_client_isolation(props)
     validate_ci_wiring()
     print("Cross-target integrity OK:")
     print(" - exact-case atlas/model resources verified")
@@ -462,7 +601,9 @@ def main() -> None:
     print(" - custom pipe recipe schema and configured transfer wiring verified")
     print(" - Randomium facade blacklist compatibility guarded on maintained targets")
     print(" - item-pipe GameTests track only their own marked cargo")
-    print(" - protected cross-target hotspots and CI GameTests guarded")
+    print(" - Java build metadata placeholders and production .jsonx files forbidden")
+    print(" - facade swap production recipe and snapshot/client isolation guarded")
+    print(" - client, GameTest and blocking compatibility CI coverage guarded")
 
 
 if __name__ == "__main__":

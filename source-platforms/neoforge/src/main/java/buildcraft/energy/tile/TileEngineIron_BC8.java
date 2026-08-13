@@ -480,21 +480,31 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         @Override
         public @NotNull FluidStack getFluidInTank(int tank) {
             return switch (tank) {
-                case 1 -> tankFuel.getFluid();
-                case 2 -> tankCoolant.getFluid();
-                case 3 -> tankResidue.getFluid();
+                case 0 -> tankFuel.getFluid();
+                case 1 -> tankCoolant.getFluid();
+                case 2 -> tankResidue.getFluid();
                 default -> FluidStack.EMPTY;
             };
         }
 
         @Override
         public int getTankCapacity(int tank) {
-            return 0;
+            return switch (tank) {
+                case 0 -> tankFuel.getCapacity();
+                case 1 -> tankCoolant.getCapacity();
+                case 2 -> tankResidue.getCapacity();
+                default -> 0;
+            };
         }
 
         @Override
         public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-            return false;
+            return switch (tank) {
+                case 0 -> isValidFuel(stack);
+                case 1 -> isValidCoolant(stack);
+                case 2 -> isResidue(stack);
+                default -> false;
+            };
         }
 
         @Override

@@ -7,6 +7,7 @@
 package buildcraft.lib;
 
 import buildcraft.transport.internal.pipe.PipeApi;
+import buildcraft.api.v2.ApiLifecycle;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.crops.CropService;
@@ -33,6 +34,9 @@ public class BCLibRegistries {
 
     public static void fmlPreInit() {
         BuildCraftApiRuntime.bootstrap();
+        if (BuildCraftApiRuntime.INSTANCE.lifecycle() == ApiLifecycle.TYPE_REGISTRATION) {
+            BuildCraftApiRuntime.INSTANCE.advanceLifecycle(ApiLifecycle.CONTENT_REGISTRATION);
+        }
         BuiltInApi2Content.register();
         initApiRegistries();
 
@@ -46,4 +50,20 @@ public class BCLibRegistries {
     }
 
     public static void fmlInit() {}
+
+    /** Freeze addon-facing registries only after every mod has completed normal registration. */
+    public static synchronized void fmlPostInit() {
+        ApiLifecycle phase = BuildCraftApiRuntime.INSTANCE.lifecycle();
+        if (phase == ApiLifecycle.TYPE_REGISTRATION) {
+            BuildCraftApiRuntime.INSTANCE.advanceLifecycle(ApiLifecycle.CONTENT_REGISTRATION);
+            phase = ApiLifecycle.CONTENT_REGISTRATION;
+        }
+        if (phase == ApiLifecycle.CONTENT_REGISTRATION) {
+            BuildCraftApiRuntime.INSTANCE.advanceLifecycle(ApiLifecycle.FROZEN);
+            phase = ApiLifecycle.FROZEN;
+        }
+        if (phase == ApiLifecycle.FROZEN) {
+            BuildCraftApiRuntime.INSTANCE.advanceLifecycle(ApiLifecycle.RUNNING);
+        }
+    }
 }

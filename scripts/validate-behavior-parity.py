@@ -136,12 +136,29 @@ def validate_java_invariants() -> None:
     fluid = "src/main/java/buildcraft/lib/fluid/BCFluid.java"
     frame = "src/main/java/buildcraft/builders/block/BlockFrame.java"
 
+    # The Iron Engine exposes three real tanks through IFluidHandler: fuel, coolant and residue.
+    # Keep this contract valid on every maintained loader/version instead of freezing the old
+    # off-by-one bug as a parity invariant.
+    for target in TARGETS:
+        engine_text = require(target, engine,
+            "public int getTanks()",
+            "tankFuel.getFluid()", "tankCoolant.getFluid()", "tankResidue.getFluid()",
+            "tankFuel.getCapacity()", "tankCoolant.getCapacity()", "tankResidue.getCapacity()",
+            "isValidFuel(stack)", "isValidCoolant(stack)", "isResidue(stack)")
+        normalized_engine = compact(engine_text)
+        if "return 3;" not in normalized_engine:
+            fail(f"{target}: Iron Engine fluid handler must expose exactly three tanks")
+        for index, tank_name in ((0, "tankFuel"), (1, "tankCoolant"), (2, "tankResidue")):
+            if not re.search(rf"case\s+{index}(?:\s*->|\s*:).*?{tank_name}\.getFluid\(\)", engine_text, re.DOTALL):
+                fail(f"{target}: Iron Engine tank {index} must expose {tank_name}")
+        if re.search(r"case\s+3(?:\s*->|\s*:)", engine_text):
+            fail(f"{target}: unreachable Iron Engine tank index 3 remains")
+        if "getTankCapacity(int tank) { return 0; }" in normalized_engine:
+            fail(f"{target}: Iron Engine tank capacity must not be hard-coded to zero")
+        if "isFluidValid(int tank, @NotNull FluidStack stack) { return false; }" in normalized_engine:
+            fail(f"{target}: Iron Engine fluid validity must reflect the addressed tank")
+
     for target in NEWER:
-        require_compact(target, engine,
-            "public int getTanks() { return 3; }",
-            "case 1 -> tankFuel.getFluid(); case 2 -> tankCoolant.getFluid(); case 3 -> tankResidue.getFluid(); default -> FluidStack.EMPTY;",
-            "public int getTankCapacity(int tank) { return 0; }",
-            "public boolean isFluidValid(int tank, @NotNull FluidStack stack) { return false; }")
         gate_text = require(target, gate, "if (!stack.isEmpty() && stack.getItem() instanceof ItemPluggableGate)")
         if "else if (!stack.isEmpty())" in gate_text:
             fail(f"{target}: gate-logic recipe rejects unrelated occupied slots")
@@ -156,7 +173,10 @@ def validate_java_invariants() -> None:
             "return InteractionResult.FAIL;",
             "return InteractionResult.SUCCESS;")
         forbid(target, paint, "result.consumesAction()", "InteractionResult.sidedSuccess")
-        require(target, snapshot, "if (1 == 1)", "return;")
+        snapshot_text = forbid(target, snapshot, "if (1 == 1)")
+        for token in ("renderBlocks", "RenderSystem.enableScissor", "RenderSystem.disableScissor"):
+            if token not in snapshot_text:
+                fail(f"{target}: snapshot renderer is not live/contained; missing {token!r}")
         require(target, wire, "manager.inBlockTickingRange(ChunkPos.asLong(element.blockPos))")
         forbid(target, wire, "isPlayerWatchingChunk")
         forbid(target, oil_generator, "genOilInEveryVanillaBiomes", "genOilInEveryModBiomes")
@@ -170,6 +190,19 @@ def validate_java_invariants() -> None:
             ".getFluidState().isEmpty()")
         require(target, frame, "Direction.fromDelta")
         forbid(target, frame, "if (d != null)")
+
+    legacy_snapshot = forbid("1.19.2-forge", snapshot, "if (1 == 1)")
+    for token in (
+        "BufferUploader.drawWithShader",
+        "Vector3f.XP.rotationDegrees",
+        "Vector3f.YP.rotationDegrees",
+        "RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS)",
+        "snapshot.size.getZ()",
+        "RenderSystem.enableScissor",
+        "RenderSystem.disableScissor",
+    ):
+        if token not in legacy_snapshot:
+            fail(f"1.19.2-forge: restored snapshot renderer lost {token!r}")
 
     for target in NEWER:
         if target != "1.21.1-neoforge":
@@ -367,7 +400,6 @@ def validate_persistence_and_reload_invariants() -> None:
 def validate_worldgen_resources() -> None:
     relatives = (
         "src/main/resources/data/buildcraftenergy/worldgen/configured_feature/oil_configured_feature.json",
-        "src/main/resources/data/buildcraftenergy/worldgen/configured_feature/oil_configured_feature.jsonx",
         "src/main/resources/data/buildcraftenergy/worldgen/placed_feature/oil_placed_feature.json",
     )
     for target in NEWER:

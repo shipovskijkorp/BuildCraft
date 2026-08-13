@@ -23,3 +23,11 @@ The repository enforces the completed state with two independent checks:
 2. `validate-api-v2-only.py` rejects any non-v2 `buildcraft.api` package/import/source path and verifies that Gradle and CI use the final API2-only gate rather than the temporary migration ledger.
 
 The Stage 7-9 migration ledger and burn-down documents were intentionally removed after completion. They described a temporary transition state and are no longer authoritative; the source tree and the final validators are.
+
+## Runtime-completeness follow-up
+
+The migration boundary is now also guarded for runtime completeness. Public API2 registries and services must be backed by production consumers rather than existing only as compile-time surface area. The lifecycle reaches `FROZEN` and `RUNNING` in normal loader startup, robot resource/task/dock registries dispatch through registered extension types, and loader-native transfer capabilities are exposed only through the loader-neutral platform service.
+
+Development-only API2 names that had no production backend (the provisional payload/network, chipset and generic pipe-event surfaces) were retired before the first stable API2 release instead of being frozen as non-functional contracts.
+
+See [`API2_RUNTIME_COMPLETENESS.md`](API2_RUNTIME_COMPLETENESS.md) for the runtime contract and its validation policy.

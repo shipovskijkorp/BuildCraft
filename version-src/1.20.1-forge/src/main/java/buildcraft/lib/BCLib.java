@@ -10,12 +10,14 @@ import buildcraft.api.v2.module.ModuleInfo;
 import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.block.VanillaRotationHandlers;
 import buildcraft.lib.internal.mj.MjApi2PlatformBridge;
+import buildcraft.lib.internal.api.v2.platform.PlatformApi2Bootstrap;
 import buildcraft.lib.chunkload.ChunkLoaderManager;
 import buildcraft.lib.expression.ExpressionDebugManager;
 import buildcraft.lib.list.VanillaListHandlers;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.misc.ExpressionCompat;
 import buildcraft.lib.net.MessageManager;
+import buildcraft.lib.net.BuildCraftTarget;
 import buildcraft.lib.net.cache.BuildCraftObjectCaches;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -30,17 +32,18 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 @Mod(BCLib.MODID)
 public class BCLib {
     public static final String MODID = "buildcraftlib";
-    public static final String VERSION = "$version";
-    public static final String MC_VERSION = "1.20.1";
-    public static final String GIT_BRANCH = "${git_branch}";
-    public static final String GIT_COMMIT_HASH = "${git_commit_hash}";
-    public static final String GIT_COMMIT_MSG = "${git_commit_msg}";
-    public static final String GIT_COMMIT_AUTHOR = "${git_commit_author}";
+    public static final String VERSION = BuildCraftTarget.MOD_VERSION;
+    public static final String MC_VERSION = BuildCraftTarget.MINECRAFT_VERSION;
+    public static final String GIT_BRANCH = BuildCraftTarget.GIT_BRANCH;
+    public static final String GIT_COMMIT_HASH = BuildCraftTarget.GIT_COMMIT_HASH;
+    public static final String GIT_COMMIT_MSG = BuildCraftTarget.GIT_COMMIT_MESSAGE;
+    public static final String GIT_COMMIT_AUTHOR = BuildCraftTarget.GIT_COMMIT_AUTHOR;
 
     public static final boolean DEV = !FMLEnvironment.production || Boolean.getBoolean("buildcraft.dev");
 
     public BCLib() {
         MjApi2PlatformBridge.install();
+        PlatformApi2Bootstrap.install();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 
@@ -55,7 +58,7 @@ public class BCLib {
         BCLog.logger.info("Starting BuildCraft " + BCLib.VERSION);
         BCLog.logger.info("Copyright (c) the BuildCraft team, 2011-2018");
         BCLog.logger.info("https://www.mod-buildcraft.com");
-        if (!GIT_COMMIT_HASH.startsWith("${")) {
+        if (!GIT_COMMIT_HASH.isBlank() && !"unknown".equals(GIT_COMMIT_HASH)) {
             BCLog.logger.info("Detailed Build Information:");
             BCLog.logger.info("  Branch " + GIT_BRANCH);
             BCLog.logger.info("  Commit " + GIT_COMMIT_HASH);
@@ -117,6 +120,7 @@ public class BCLib {
         MarkerCache.postInit();
         BuildCraftObjectCaches.fmlPostInit();
         MessageManager.fmlPostInit();
+        evt.enqueueWork(BCLibRegistries::fmlPostInit);
     }
 
     private static void initOptionalCompat(String modId, String className) {

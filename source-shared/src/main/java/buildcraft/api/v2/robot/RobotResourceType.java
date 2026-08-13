@@ -5,8 +5,20 @@ import buildcraft.api.v2.persistence.PersistentType;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 
-public record RobotResourceType<R extends RobotResource>(ResourceLocation id, PersistentType<R, OpaqueData> persistence) {
+/** Persisted robot resource type plus the runtime acquisition strategy that makes the extension live. */
+public record RobotResourceType<R extends RobotResource>(
+    ResourceLocation id,
+    Class<R> resourceType,
+    PersistentType<R, OpaqueData> persistence,
+    RobotResourceAcquirer<R> acquirer
+) {
     public RobotResourceType {
-        Objects.requireNonNull(id, "id"); Objects.requireNonNull(persistence, "persistence");
+        Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(resourceType, "resourceType");
+        Objects.requireNonNull(persistence, "persistence");
+        Objects.requireNonNull(acquirer, "acquirer");
+        if (!id.equals(persistence.id())) {
+            throw new IllegalArgumentException("Robot resource registry id must match persistent type id: " + id + " != " + persistence.id());
+        }
     }
 }

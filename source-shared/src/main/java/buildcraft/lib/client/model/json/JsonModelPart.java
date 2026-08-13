@@ -39,16 +39,16 @@ public class JsonModelPart {
             }
         }
         if ("face".equals(type)) {
-            quads = readFace(obj);
-        } else {
+            throw new JsonSyntaxException(
+                "Unsupported model part type 'face'; use a cuboid with an explicit faces object instead"
+            );
+        } else if ("cuboid".equals(type)) {
             quads = readCuboid(obj);
+        } else {
+            throw new JsonSyntaxException("Unknown model part type '" + type + "'; known types are [ cuboid ]");
         }
     }
 
-
-    private static JsonQuad[] readFace(JsonObject obj) {
-        throw new AbstractMethodError("Implement this!");
-    }
 
     private static float[] readFloatPositionSmaller(JsonObject obj, String member) {
         float[] got = JsonUtil.getSubAsFloatArray(obj, member);

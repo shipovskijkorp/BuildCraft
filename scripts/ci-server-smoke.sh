@@ -133,6 +133,12 @@ cleanup() {
 trap cleanup EXIT
 
 java_version="$(read_target_property java.version)"
+mod_version="$(read_property_file "$common_config" "common.mod.version")"
+expected_buildcraft_version="${mod_version}+${target//-/+}"
+if [[ -z "$mod_version" ]]; then
+  echo "Missing BuildCraft mod version metadata." >&2
+  exit 2
+fi
 if [[ -z "$java_version" ]]; then
   echo "Missing Java version metadata for ${target}." >&2
   exit 2
@@ -288,7 +294,17 @@ while (( SECONDS < deadline )); do
   [[ -n "$latest_log" && -f "$latest_log" ]] && log_files+=("$latest_log")
 
   if grep -Eiq "$success_regex" "${log_files[@]}" 2>/dev/null; then
-    echo "Dedicated server reached the ready state successfully."
+    if grep -Eq 'Starting BuildCraft[[:space:]]+(\$version|\$\{|.*\$\{)' "${log_files[@]}" 2>/dev/null; then
+      echo "Dedicated server started with unresolved BuildCraft Java build metadata."
+      show_log_tail
+      exit 1
+    fi
+    if ! grep -Fq "Starting BuildCraft ${expected_buildcraft_version}" "${log_files[@]}" 2>/dev/null; then
+      echo "Dedicated server did not report expected BuildCraft version ${expected_buildcraft_version}."
+      show_log_tail
+      exit 1
+    fi
+    echo "Dedicated server reached the ready state successfully with BuildCraft ${expected_buildcraft_version}."
     exit 0
   fi
 

@@ -43,7 +43,6 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         new ApiFeature(BuildCraftFeatures.ROBOTS, 1),
         new ApiFeature(BuildCraftFeatures.SCHEMATICS, 1),
         new ApiFeature(BuildCraftFeatures.MACHINES, 1),
-        new ApiFeature(BuildCraftFeatures.NETWORK, 1),
         new ApiFeature(BuildCraftFeatures.CLIENT_PRESENTATION, 1),
         new ApiFeature(BuildCraftFeatures.CONTENT_EXTENSION, 1),
         new ApiFeature(BuildCraftFeatures.GUIDE, 1),
@@ -58,6 +57,8 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final TemplateServiceImpl templates = new TemplateServiceImpl();
     private final FacadeRuleRegistryImpl facadeRules = new FacadeRuleRegistryImpl();
     private final WorldPropertyServiceImpl worldProperties = new WorldPropertyServiceImpl();
+    private final WorldRuleServiceImpl worldRules = new WorldRuleServiceImpl();
+    private final ApiDiagnosticsImpl diagnostics = new ApiDiagnosticsImpl();
     private final GuideServiceImpl guide = new GuideServiceImpl();
     private final WorldgenServiceImpl worldgen = new WorldgenServiceImpl();
     private final StatementServiceImpl statements = StatementServiceImpl.INSTANCE;
@@ -77,6 +78,7 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
     private final MapLocationServiceImpl mapLocations = new MapLocationServiceImpl();
     private final FluidDropServiceImpl fluidDrops = new FluidDropServiceImpl();
     private final FacadeServiceImpl facades = new FacadeServiceImpl();
+    private final ClientPresentationServiceImpl clientPresentations = new ClientPresentationServiceImpl();
 
     private BuildCraftApiRuntime() {
         services.put(BuildCraftServices.ENERGY, energy);
@@ -87,6 +89,8 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         services.put(BuildCraftServices.TEMPLATES, templates);
         services.put(BuildCraftServices.FACADE_RULES, facadeRules);
         services.put(BuildCraftServices.WORLD_PROPERTIES, worldProperties);
+        services.put(BuildCraftServices.WORLD_RULES, worldRules);
+        services.put(BuildCraftServices.DIAGNOSTICS, diagnostics);
         services.put(BuildCraftServices.GUIDE, guide);
         services.put(BuildCraftServices.WORLDGEN, worldgen);
         services.put(BuildCraftServices.STATEMENTS, statements);
@@ -106,19 +110,18 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         services.put(BuildCraftServices.MAP_LOCATIONS, mapLocations);
         services.put(BuildCraftServices.FLUID_DROPS, fluidDrops);
         services.put(BuildCraftServices.FACADES, facades);
+        services.put(BuildCraftServices.CLIENT_PRESENTATIONS, clientPresentations);
 
         registerRegistry(BuildCraftRegistries.ENGINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_COMPONENT_TYPES);
         registerRegistry(BuildCraftRegistries.MACHINE_PROPERTIES);
-        registerRegistry(BuildCraftRegistries.CHIPSET_TYPES);
         registerRegistry(BuildCraftRegistries.LASER_TABLE_TYPES);
         registerRegistry(BuildCraftRegistries.MJ_CONNECTION_RULES);
         registerRegistry(BuildCraftRegistries.PIPE_TYPES);
         registerRegistry(BuildCraftRegistries.PIPE_COMPONENT_TYPES);
         registerRegistry(BuildCraftRegistries.PIPE_ATTACHMENT_TYPES);
         registerRegistry(BuildCraftRegistries.PIPE_CONNECTION_RULES);
-        registerRegistry(BuildCraftRegistries.PIPE_EVENT_TYPES);
         registerRegistry(BuildCraftRegistries.PIPE_SYNC_CHANNELS);
         registerRegistry(BuildCraftRegistries.PARAMETER_TYPES);
         registerRegistry(BuildCraftRegistries.ACTION_TYPES);
@@ -145,7 +148,6 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         registerRegistry(BuildCraftRegistries.DEBUG_CONTRIBUTORS);
         registerRegistry(BuildCraftRegistries.ROTATION_HANDLERS);
         registerRegistry(BuildCraftRegistries.PAINT_HANDLERS);
-        registerRegistry(BuildCraftRegistries.PAYLOAD_TYPES);
         registerRegistry(BuildCraftRegistries.CLIENT_PRESENTATIONS);
         registerRegistry(BuildCraftRegistries.PIPE_PRESENTATIONS);
         registerRegistry(BuildCraftRegistries.STATEMENT_PRESENTATIONS);
@@ -184,7 +186,12 @@ public final class BuildCraftApiRuntime implements ApiRuntime {
         if (!(discovered instanceof BuildCraftApiRuntimeProvider provider) || provider.delegate() != INSTANCE) {
             throw new IllegalStateException("BuildCraft API runtime provider did not resolve to the BCCE Lib runtime");
         }
-        INSTANCE.advanceLifecycle(ApiLifecycle.TYPE_REGISTRATION);
+        // Several BuildCraft modules call bootstrap independently during construction.
+        // Once Lib has advanced into content registration those later calls are a no-op,
+        // never an attempt to move the lifecycle backwards.
+        if (INSTANCE.lifecycle == ApiLifecycle.DISCOVERY) {
+            INSTANCE.advanceLifecycle(ApiLifecycle.TYPE_REGISTRATION);
+        }
     }
 
     @Override

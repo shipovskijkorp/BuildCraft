@@ -10,6 +10,11 @@ import buildcraft.api.v2.block.RotationResult;
 import buildcraft.api.v2.debug.DebugContext;
 import buildcraft.api.v2.module.BuildCraftModules;
 import buildcraft.api.v2.robot.RobotEventListener;
+import buildcraft.api.v2.robot.DockPortType;
+import buildcraft.api.v2.robot.RobotResource;
+import buildcraft.api.v2.robot.RobotResourceLease;
+import buildcraft.api.v2.robot.RobotResourceType;
+import buildcraft.api.v2.robot.RobotTaskType;
 import buildcraft.api.v2.robot.RobotEventDecision;
 import buildcraft.api.v2.map.MapLocationView;
 import buildcraft.api.v2.map.MapLocationAdapter;
@@ -40,6 +45,7 @@ import buildcraft.api.v2.machine.MachineType;
 import buildcraft.api.v2.persistence.ApiCodec;
 import buildcraft.api.v2.persistence.CodecResult;
 import buildcraft.api.v2.persistence.OpaqueData;
+import buildcraft.api.v2.persistence.PersistentType;
 import buildcraft.api.v2.permission.AutomationActor;
 import buildcraft.api.v2.permission.PermissionDecision;
 import buildcraft.api.v2.permission.PermissionServiceRegistry;
@@ -99,6 +105,16 @@ public final class ApiV2FixtureAddon {
     };
     private static final ParameterType<Boolean> BOOL_PARAMETER = new ParameterType<>(
         BOOL_PARAMETER_ID, BOOL_CODEC, context -> List.of(Boolean.TRUE, Boolean.FALSE)
+    );
+    private static final ResourceLocation ROBOT_FORMAT = id("robot_payload");
+    private static final PersistentType<FixtureRobotTask, OpaqueData> ROBOT_TASK_PERSISTENCE = PersistentType
+        .<FixtureRobotTask, OpaqueData>builder(FixtureRobotTask.TYPE, 0, unitCodec(ROBOT_FORMAT, FixtureRobotTask::new))
+        .build();
+    private static final PersistentType<FixtureRobotResource, OpaqueData> ROBOT_RESOURCE_PERSISTENCE = PersistentType
+        .<FixtureRobotResource, OpaqueData>builder(FixtureRobotResource.TYPE, 0, unitCodec(ROBOT_FORMAT, FixtureRobotResource::new))
+        .build();
+    private static final DockPortType<String> FIXTURE_DOCK_PORT = new DockPortType<>(
+        id("fixture_dock_port"), String.class, context -> Optional.of("fixture@" + context.position())
     );
 
     private ApiV2FixtureAddon() {}
@@ -211,6 +227,24 @@ public final class ApiV2FixtureAddon {
             id("fixture_board"),
             new RobotBoardType(id("fixture_board"), 1, Set.of(id("fixture_task"))),
             () -> "api-v2-fixture"
+        );
+        BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.ROBOT_TASK_TYPES).register(
+            FixtureRobotTask.TYPE,
+            new RobotTaskType<>(FixtureRobotTask.TYPE, FixtureRobotTask.class, ROBOT_TASK_PERSISTENCE),
+            () -> "api-v2-fixture"
+        );
+        BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.ROBOT_RESOURCE_TYPES).register(
+            FixtureRobotResource.TYPE,
+            new RobotResourceType<>(
+                FixtureRobotResource.TYPE,
+                FixtureRobotResource.class,
+                ROBOT_RESOURCE_PERSISTENCE,
+                (level, robotId, resource, amount) -> Optional.of(new FixtureRobotLease(robotId, resource, amount))
+            ),
+            () -> "api-v2-fixture"
+        );
+        BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.ROBOT_DOCK_PORT_TYPES).register(
+            FIXTURE_DOCK_PORT.id(), FIXTURE_DOCK_PORT, () -> "api-v2-fixture"
         );
         BuildCraftApi.runtime().requireRegistry(BuildCraftRegistries.CLIENT_PRESENTATIONS).register(
             id("fixture_machine"),
@@ -326,10 +360,35 @@ public final class ApiV2FixtureAddon {
         BuildCraftApi.service(BuildCraftServices.ROBOTS).robots(level).stream().findFirst().ifPresent(robot ->
             robot.control().ifPresent(control -> control.assign(new FixtureRobotTask(), OperationMode.SIMULATE))
         );
-        BuildCraftApi.service(BuildCraftServices.ROBOTS).dock(level, pos, side);
+        BuildCraftApi.service(BuildCraftServices.ROBOTS).dock(level, pos, side)
+            .flatMap(dock -> dock.port(FIXTURE_DOCK_PORT));
         BuildCraftApi.service(BuildCraftServices.REQUESTS).provider(level, pos, side)
             .ifPresent(provider -> provider.requests().size());
         BuildCraftApi.registry(BuildCraftRegistries.ROBOT_BOARD_TYPES).get(BuildCraftRobotBoards.PICKER);
+    }
+
+    private record FixtureRobotResource() implements RobotResource {
+        private static final ResourceLocation TYPE = id("fixture_robot_resource");
+        @Override public ResourceLocation typeId() { return TYPE; }
+    }
+
+    private static final class FixtureRobotLease implements RobotResourceLease {
+        private final long robotId;
+        private final FixtureRobotResource resource;
+        private final long amount;
+        private boolean active = true;
+
+        private FixtureRobotLease(long robotId, FixtureRobotResource resource, long amount) {
+            this.robotId = robotId;
+            this.resource = resource;
+            this.amount = amount;
+        }
+
+        @Override public long robotId() { return robotId; }
+        @Override public RobotResource resource() { return resource; }
+        @Override public long amount() { return amount; }
+        @Override public boolean active() { return active; }
+        @Override public void close() { active = false; }
     }
 
     private static final class FixtureRobotTask implements RobotTask {
@@ -343,6 +402,22 @@ public final class ApiV2FixtureAddon {
     ) implements AutomationRequest {
         private static final ResourceLocation KIND = id("fixture_automation");
         @Override public ResourceLocation kind() { return KIND; }
+    }
+
+    private static <T> ApiCodec<T, OpaqueData> unitCodec(ResourceLocation format, java.util.function.Supplier<T> factory) {
+        return new ApiCodec<>() {
+            @Override
+            public CodecResult<T> decode(OpaqueData payload) {
+                return format.equals(payload.format())
+                    ? CodecResult.success(factory.get())
+                    : CodecResult.failure("Unexpected fixture payload format: " + payload.format());
+            }
+
+            @Override
+            public CodecResult<OpaqueData> encode(T value) {
+                return CodecResult.success(new OpaqueData(format, new byte[0]));
+            }
+        };
     }
 
     private static ResourceLocation id(String path) {
