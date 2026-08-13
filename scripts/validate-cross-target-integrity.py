@@ -594,11 +594,16 @@ def validate_snapshot_renderer_and_client_isolation(props: dict[str, str]) -> No
     snapshot_rel = "buildcraft/builders/snapshot/ClientSnapshots.java"
     for target in target_ids(props):
         text = effective_java(target, snapshot_rel, props)
-        if "if (1 == 1)" in text:
-            fail(f"{target}: snapshot renderer is still unconditionally disabled")
-        for token in ("RenderSystem.enableScissor", "RenderSystem.disableScissor"):
+        for token in (
+            "3D blueprint/template previews are intentionally disabled",
+            "Intentionally disabled on all maintained Minecraft versions.",
+            "public void renderSnapshot",
+        ):
             if token not in text:
-                fail(f"{target}: snapshot renderer lost viewport clipping token {token!r}")
+                fail(f"{target}: snapshot preview is not explicitly disabled; missing {token!r}")
+        for token in ("RenderSystem.", "FakeWorld", "renderBlocks(", "renderBlockEntities(", "renderEntities("):
+            if token in text:
+                fail(f"{target}: disabled snapshot preview still contains live renderer token {token!r}")
 
     bccore = effective_java("1.21.1-neoforge", "buildcraft/core/BCCore.java", props)
     for forbidden in (

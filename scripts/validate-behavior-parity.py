@@ -173,10 +173,16 @@ def validate_java_invariants() -> None:
             "return InteractionResult.FAIL;",
             "return InteractionResult.SUCCESS;")
         forbid(target, paint, "result.consumesAction()", "InteractionResult.sidedSuccess")
-        snapshot_text = forbid(target, snapshot, "if (1 == 1)")
-        for token in ("renderBlocks", "RenderSystem.enableScissor", "RenderSystem.disableScissor"):
-            if token not in snapshot_text:
-                fail(f"{target}: snapshot renderer is not live/contained; missing {token!r}")
+        snapshot_text = require(
+            target,
+            snapshot,
+            "3D blueprint/template previews are intentionally disabled",
+            "Intentionally disabled on all maintained Minecraft versions.",
+            "public void renderSnapshot",
+        )
+        for token in ("RenderSystem.", "FakeWorld", "renderBlocks(", "renderBlockEntities(", "renderEntities("):
+            if token in snapshot_text:
+                fail(f"{target}: disabled snapshot preview still contains live renderer token {token!r}")
         require(target, wire, "manager.inBlockTickingRange(ChunkPos.asLong(element.blockPos))")
         forbid(target, wire, "isPlayerWatchingChunk")
         forbid(target, oil_generator, "genOilInEveryVanillaBiomes", "genOilInEveryModBiomes")
@@ -191,18 +197,16 @@ def validate_java_invariants() -> None:
         require(target, frame, "Direction.fromDelta")
         forbid(target, frame, "if (d != null)")
 
-    legacy_snapshot = forbid("1.19.2-forge", snapshot, "if (1 == 1)")
-    for token in (
-        "BufferUploader.drawWithShader",
-        "Vector3f.XP.rotationDegrees",
-        "Vector3f.YP.rotationDegrees",
-        "RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS)",
-        "snapshot.size.getZ()",
-        "RenderSystem.enableScissor",
-        "RenderSystem.disableScissor",
-    ):
-        if token not in legacy_snapshot:
-            fail(f"1.19.2-forge: restored snapshot renderer lost {token!r}")
+    legacy_snapshot = require(
+        "1.19.2-forge",
+        snapshot,
+        "3D blueprint/template previews are intentionally disabled",
+        "Intentionally disabled on all maintained Minecraft versions.",
+        "public void renderSnapshot",
+    )
+    for token in ("RenderSystem.", "FakeWorld", "BufferUploader.drawWithShader"):
+        if token in legacy_snapshot:
+            fail(f"1.19.2-forge: disabled snapshot preview still contains live renderer token {token!r}")
 
     for target in NEWER:
         if target != "1.21.1-neoforge":
