@@ -61,7 +61,7 @@ public class AddonRendererFillerPlanner implements IFastAddonRenderer<AddonFille
     //    Minecraft.getInstance().getProfiler().push("render");
         for (BlockPos p : list) {
             AABB bb = new AABB(p, p.offset(1, 1, 1)).inflate(-0.1);
-            TextureAtlasSprite s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(new ResourceLocation("quartz_block_top"));//ModelLoader.White.INSTANCE;
+            TextureAtlasSprite s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(new ResourceLocation("minecraft", "block/quartz_block_top"));//ModelLoader.White.INSTANCE;
 
             vb.vertex(bb.minX, bb.maxY, bb.minZ).color(204, 204, 204, 127).uv(s.getU0(), s.getV0()).uv2(240, 0).endVertex();
             vb.vertex(bb.maxX, bb.maxY, bb.minZ).color(204, 204, 204, 127).uv(s.getU0(), s.getV1()).uv2(240, 0).endVertex();

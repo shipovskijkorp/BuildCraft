@@ -115,8 +115,11 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
         // Original BC8 draw order: base GUI -> gear icons -> translucent slot overlay.
         // Draw directly in the screen layer so GuiGraphics item depth is deterministic.
         GuiGraphics guiGraphics = getActiveGraphics();
+        RenderSystem.enableDepthTest();
         guiGraphics.renderItem(new ItemStack(BCCoreItems.GEAR_IRON.get()), leftPos + 60, topPos + 22);
         guiGraphics.renderItem(new ItemStack(BCCoreItems.GEAR_GOLD.get()), leftPos + 83, topPos + 22);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
         RenderSystem.disableDepthTest();
         RenderSystem.setShaderColor(1, 1, 1, 0.65f);
         OVERLAY.drawAt(guiGraphics, mainGui.rootElement.offset(39, 18));

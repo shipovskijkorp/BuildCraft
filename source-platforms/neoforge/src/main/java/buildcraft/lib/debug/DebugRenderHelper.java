@@ -67,7 +67,7 @@ public enum DebugRenderHelper implements IDetachedRenderer {
     }
 
     public static void renderAABB(PoseStack pose, Matrix4f matrix, BufferBuilder bb, AABB aabb, int colour) {
-    	if(s == null) s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ResourceLocation.parse("quartz_block_top"));//TODO change to white
+    	if(s == null) s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ResourceLocation.fromNamespaceAndPath("minecraft", "block/quartz_block_top"));//TODO change to white
     	pose.pushPose();
     	pose.translate(0, 0, 0);
     	Matrix3f normal = pose.last().normal();
@@ -95,7 +95,7 @@ public enum DebugRenderHelper implements IDetachedRenderer {
     }
 
     public static void renderSmallCuboid(PoseStack pose, Matrix4f matrix, BufferBuilder bb, BlockPos pos, int colour) {
-    	if(s == null) s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ResourceLocation.parse("quartz_block_top"));//TODO change to white
+    	if(s == null) s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ResourceLocation.fromNamespaceAndPath("minecraft", "block/quartz_block_top"));//TODO change to white
     	pose.pushPose();
         pose.translate(pos.getX(), pos.getY(), pos.getZ());
         Matrix3f normal = pose.last().normal();

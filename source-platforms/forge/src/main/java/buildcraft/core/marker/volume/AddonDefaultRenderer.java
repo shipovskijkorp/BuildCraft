@@ -23,7 +23,7 @@ public class AddonDefaultRenderer<T extends Addon> implements IFastAddonRenderer
 
     public AddonDefaultRenderer() {
         //? if <1.20 {
-        s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(new ResourceLocation("quartz_block_top"));//TODO change to white
+        s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(new ResourceLocation("minecraft", "block/quartz_block_top"));//TODO change to white
         //?} else {
         /*?
         s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(new ResourceLocation("minecraft", "block/quartz_block_top"));//TODO change to white

@@ -245,7 +245,7 @@ def buildcraftModIds = [
 def buildcraftModIdList = buildcraftModIds.join(',')
 def runDirectory = new File(repositoryRoot, "run/${buildGeneration}/${targetName}")
 def dataRunDirectory = new File(repositoryRoot, "run-data/${buildGeneration}/${targetName}")
-def generatedResources = new File(repositoryRoot, "build/generated-resources/${buildGeneration}/${targetName}")
+def generatedResources = layout.buildDirectory.dir("generated-resources/datagen").get().asFile
 
 neoForge {
     version = neoForgeVersion
@@ -302,10 +302,14 @@ neoForge {
     }
 }
 
-sourceSets.main.resources.srcDir(generatedResources)
-
 tasks.matching { it.name == 'runData' }.configureEach {
     dependsOn prepareEffectiveSource
+    doFirst {
+        // Datagen is an isolated, disposable workspace. Never let output from a
+        // previous run leak into a later production build or the next runData.
+        project.delete(generatedResources)
+        generatedResources.mkdirs()
+    }
 }
 
 // NeoForge's ModDev plugin derives Minecraft artifacts from the configured main

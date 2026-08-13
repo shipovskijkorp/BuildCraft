@@ -258,13 +258,20 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
             current = possible.next(current);
             if (isFacingReceiver(current)) {
                 if (currentDirection != current) {
+                    Direction previousDirection = currentDirection;
                     currentDirection = current;
                     // makeTileCache();
                     sendNetworkUpdate(NET_RENDER_DATA);
                     redrawBlock();
                     markChunkDirty();
                     capturePersistedState();
-//                    world.notifyNeighborsRespectDebug(getPos(), getBlockType(), true);
+                    // The exposed output capability changes with the engine direction. Notify both sides so adjacent
+                    // pipes immediately recompute their functional connection after automatic rotation.
+                    Block sourceBlock = getBlockState().getBlock();
+                    if (previousDirection != null && previousDirection != current) {
+                        level.neighborChanged(worldPosition.relative(previousDirection), sourceBlock, worldPosition);
+                    }
+                    level.neighborChanged(worldPosition.relative(current), sourceBlock, worldPosition);
                     return InteractionResult.SUCCESS;
                 }
                 return InteractionResult.FAIL;

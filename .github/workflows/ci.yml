@@ -48,6 +48,15 @@ jobs:
       - name: Validate cross-version gameplay parity
         run: python scripts/validate-behavior-parity.py
 
+      - name: Validate post-API2 gameplay and render regressions
+        run: python scripts/validate-post-api2-regressions.py
+
+      - name: Validate FE compatibility
+        run: python scripts/validate-fe-compat.py
+
+      - name: Validate resources, metadata and build hygiene
+        run: python scripts/validate-cross-target-integrity.py
+
   build-test-server:
     name: Build, test and smoke ${{ matrix.generation }} targets
     needs: validate
@@ -92,6 +101,17 @@ jobs:
           set -euo pipefail
           cd "builds/${BUILD_GENERATION}"
           ./gradlew --no-daemon --console=plain --stacktrace buildAndCollect
+
+      - name: Run GameTests for every production target in generation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets --generation "$BUILD_GENERATION")
+          cd "builds/${BUILD_GENERATION}"
+          for target in "${targets[@]}"; do
+            echo "Game-testing ${BUILD_GENERATION}/${target}"
+            ./gradlew --no-daemon --console=plain --stacktrace ":${target}:runGameTestServer"
+          done
 
       - name: Smoke-test every production jar in generation
         shell: bash

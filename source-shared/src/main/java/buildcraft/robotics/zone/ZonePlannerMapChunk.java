@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 
 public class ZonePlannerMapChunk {
     private final MapColourData[][] data = new MapColourData[16][16];
@@ -56,7 +56,7 @@ public class ZonePlannerMapChunk {
 
                 SurfaceSample previous = localZ == 0 ? null : samples[localX][localZ - 1];
                 int worldZ = baseZ + localZ;
-                MaterialColor.Brightness brightness = getVanillaBrightness(current, previous, worldX, worldZ);
+                MapColor.Brightness brightness = getVanillaBrightness(current, previous, worldX, worldZ);
                 int colour = current.mapColor.calculateRGBColor(brightness);
                 data[localX][localZ] = new MapColourData(current.posY, colour);
             }
@@ -77,12 +77,12 @@ public class ZonePlannerMapChunk {
         for (int y = topY; y >= minY; y--) {
             pos.setY(y);
             BlockState state = getMapState(world, pos, chunk.getBlockState(pos));
-            MaterialColor mapColor = state.getMapColor(world, pos);
-            if (mapColor == null || mapColor == MaterialColor.NONE) {
+            MapColor mapColor = state.getMapColor(world, pos);
+            if (mapColor == null || mapColor == MapColor.NONE) {
                 continue;
             }
 
-            int waterDepth = mapColor == MaterialColor.WATER
+            int waterDepth = mapColor == MapColor.WATER
                     ? countFluidDepth(chunk, worldX, y, worldZ, minY)
                     : 0;
             return new SurfaceSample(y, mapColor, waterDepth);
@@ -115,29 +115,29 @@ public class ZonePlannerMapChunk {
         return depth;
     }
 
-    private static MaterialColor.Brightness getVanillaBrightness(
+    private static MapColor.Brightness getVanillaBrightness(
             SurfaceSample current, @Nullable SurfaceSample previous, int worldX, int worldZ) {
         int checker = (worldX + worldZ) & 1;
-        if (current.mapColor == MaterialColor.WATER) {
+        if (current.mapColor == MapColor.WATER) {
             double waterShade = current.waterDepth * 0.1D + checker * 0.2D;
             if (waterShade < 0.5D) {
-                return MaterialColor.Brightness.HIGH;
+                return MapColor.Brightness.HIGH;
             }
             if (waterShade > 0.9D) {
-                return MaterialColor.Brightness.LOW;
+                return MapColor.Brightness.LOW;
             }
-            return MaterialColor.Brightness.NORMAL;
+            return MapColor.Brightness.NORMAL;
         }
 
         int previousY = previous == null ? current.posY : previous.posY;
         double slopeShade = current.posY - previousY + (checker - 0.5D) * 0.4D;
         if (slopeShade > 0.6D) {
-            return MaterialColor.Brightness.HIGH;
+            return MapColor.Brightness.HIGH;
         }
         if (slopeShade < -0.6D) {
-            return MaterialColor.Brightness.LOW;
+            return MapColor.Brightness.LOW;
         }
-        return MaterialColor.Brightness.NORMAL;
+        return MapColor.Brightness.NORMAL;
     }
 
     public ZonePlannerMapChunk(FriendlyByteBuf buffer) {
@@ -189,10 +189,10 @@ public class ZonePlannerMapChunk {
 
     private static final class SurfaceSample {
         private final int posY;
-        private final MaterialColor mapColor;
+        private final MapColor mapColor;
         private final int waterDepth;
 
-        private SurfaceSample(int posY, MaterialColor mapColor, int waterDepth) {
+        private SurfaceSample(int posY, MapColor mapColor, int waterDepth) {
             this.posY = posY;
             this.mapColor = mapColor;
             this.waterDepth = waterDepth;

@@ -154,19 +154,23 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftbuilders:blocks/fillerblock/front"
+      "resource": "buildcraftbuilders:blocks/filler_block/front",
+      "sprite": "buildcraftbuilders:blocks/fillerblock/front"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftbuilders:blocks/fillerblock/led_green"
+      "resource": "buildcraftbuilders:blocks/filler_block/led_green",
+      "sprite": "buildcraftbuilders:blocks/fillerblock/led_green"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftbuilders:blocks/fillerblock/led_red"
+      "resource": "buildcraftbuilders:blocks/filler_block/led_red",
+      "sprite": "buildcraftbuilders:blocks/fillerblock/led_red"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftbuilders:blocks/fillerblock/side"
+      "resource": "buildcraftbuilders:blocks/filler_block/side",
+      "sprite": "buildcraftbuilders:blocks/fillerblock/side"
     },
     {
       "type": "minecraft:single",
@@ -706,15 +710,18 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftcore:blocks/laserbox/blockbluelaser"
+      "resource": "buildcraftcore:blocks/laser_box/block_blue_laser",
+      "sprite": "buildcraftcore:blocks/laserbox/blockbluelaser"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftcore:blocks/laserbox/blockredlaser"
+      "resource": "buildcraftcore:blocks/laser_box/block_red_laser",
+      "sprite": "buildcraftcore:blocks/laserbox/blockredlaser"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftcore:blocks/laserbox/blockstripeslaser"
+      "resource": "buildcraftcore:blocks/laser_box/block_stripes_laser",
+      "sprite": "buildcraftcore:blocks/laserbox/blockstripeslaser"
     },
     {
       "type": "minecraft:single",
@@ -1274,6 +1281,14 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "buildcraftenergy:blocks/engine/fe/back"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftenergy:blocks/engine/fe/side"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "buildcraftenergy:blocks/engine/iron/back"
     },
     {
@@ -1578,11 +1593,25 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftenergy:items/bucketfuel"
+      "resource": "buildcraftenergy:blocks/mj_dynamo/back"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftenergy:items/bucketredplasma"
+      "resource": "buildcraftenergy:blocks/mj_dynamo/front"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftenergy:blocks/mj_dynamo/side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftenergy:items/bucket_fuel",
+      "sprite": "buildcraftenergy:items/bucketfuel"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftenergy:items/bucket_red_plasma",
+      "sprite": "buildcraftenergy:items/bucketredplasma"
     },
     {
       "type": "minecraft:single",
@@ -1758,11 +1787,13 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftfactory:blocks/hopperblock/bottom"
+      "resource": "buildcraftfactory:blocks/hopper_block/bottom",
+      "sprite": "buildcraftfactory:blocks/hopperblock/bottom"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftfactory:blocks/hopperblock/top"
+      "resource": "buildcraftfactory:blocks/hopper_block/top",
+      "sprite": "buildcraftfactory:blocks/hopperblock/top"
     },
     {
       "type": "minecraft:single",
@@ -2282,19 +2313,23 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftsilicon:blocks/advancedcraftingtable/default"
+      "resource": "buildcraftsilicon:blocks/advanced_crafting_table/default",
+      "sprite": "buildcraftsilicon:blocks/advancedcraftingtable/default"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftsilicon:blocks/chargingtable/default"
+      "resource": "buildcraftsilicon:blocks/charging_table/default",
+      "sprite": "buildcraftsilicon:blocks/chargingtable/default"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftsilicon:blocks/chargingtable/table4_dark"
+      "resource": "buildcraftsilicon:blocks/charging_table/table4_dark",
+      "sprite": "buildcraftsilicon:blocks/chargingtable/table4_dark"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftsilicon:blocks/chargingtable/table4_overlay"
+      "resource": "buildcraftsilicon:blocks/charging_table/table4_overlay",
+      "sprite": "buildcraftsilicon:blocks/chargingtable/table4_overlay"
     },
     {
       "type": "minecraft:single",
@@ -2522,11 +2557,13 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftsilicon:items/lens/filterframe"
+      "resource": "buildcraftsilicon:items/lens/filter_frame",
+      "sprite": "buildcraftsilicon:items/lens/filterframe"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcraftsilicon:items/lens/lensframe"
+      "resource": "buildcraftsilicon:items/lens/lens_frame",
+      "sprite": "buildcraftsilicon:items/lens/lensframe"
     },
     {
       "type": "minecraft:single",
@@ -2626,19 +2663,23 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:blocks/pipes/pipelensclearoverlay"
+      "resource": "buildcrafttransport:blocks/pipes/pipe_lens_clear_overlay",
+      "sprite": "buildcrafttransport:blocks/pipes/pipelensclearoverlay"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:blocks/pipes/piperobotstationlinked_cb"
+      "resource": "buildcrafttransport:blocks/pipes/pipe_robot_station_cb",
+      "sprite": "buildcrafttransport:blocks/pipes/piperobotstation_cb"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:blocks/pipes/piperobotstationreserved_cb"
+      "resource": "buildcrafttransport:blocks/pipes/pipe_robot_station_linked_cb",
+      "sprite": "buildcrafttransport:blocks/pipes/piperobotstationlinked_cb"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:blocks/pipes/piperobotstation_cb"
+      "resource": "buildcrafttransport:blocks/pipes/pipe_robot_station_reserved_cb",
+      "sprite": "buildcrafttransport:blocks/pipes/piperobotstationreserved_cb"
     },
     {
       "type": "minecraft:single",
@@ -2650,7 +2691,8 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:items/pipepoweradapter"
+      "resource": "buildcrafttransport:items/pipe_power_adapter",
+      "sprite": "buildcrafttransport:items/pipepoweradapter"
     },
     {
       "type": "minecraft:single",
@@ -2754,6 +2796,10 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/cobblestone_fe"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/cobblestone_fluid"
     },
     {
@@ -2847,6 +2893,46 @@
     {
       "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/diamnd_power_m128"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m0"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m1"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m128"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m16"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m2"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m32"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m4"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m64"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_fe_m8"
     },
     {
       "type": "minecraft:single",
@@ -2962,6 +3048,14 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_wood_fe_clear"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/diamond_wood_fe_filled"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/diamond_wood_fluid"
     },
     {
@@ -3022,6 +3116,18 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/fe_flow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/fe_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/gold_fe"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/gold_fluid"
     },
     {
@@ -3039,6 +3145,50 @@
     {
       "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/granite_item"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_clear"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_filled"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m0"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m1"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m128"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m16"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m2"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m32"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m4"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m64"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/iron_fe_m8"
     },
     {
       "type": "minecraft:single",
@@ -3182,15 +3332,18 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:pipes/pipepoweradapterbottom"
+      "resource": "buildcrafttransport:pipes/pipe_power_adapter_bottom",
+      "sprite": "buildcrafttransport:pipes/pipepoweradapterbottom"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:pipes/pipepoweradapterside"
+      "resource": "buildcrafttransport:pipes/pipe_power_adapter_side",
+      "sprite": "buildcrafttransport:pipes/pipepoweradapterside"
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:pipes/pipepoweradaptertop"
+      "resource": "buildcrafttransport:pipes/pipe_power_adapter_top",
+      "sprite": "buildcrafttransport:pipes/pipepoweradaptertop"
     },
     {
       "type": "minecraft:single",
@@ -3214,11 +3367,7 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "buildcrafttransport:pipes/fe_flow"
-    },
-    {
-      "type": "minecraft:single",
-      "resource": "buildcrafttransport:pipes/fe_top"
+      "resource": "buildcrafttransport:pipes/quartz_fe"
     },
     {
       "type": "minecraft:single",
@@ -3250,6 +3399,10 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/sandstone_fe"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/sandstone_fluid"
     },
     {
@@ -3259,6 +3412,10 @@
     {
       "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/sandstone_power"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/stone_fe"
     },
     {
       "type": "minecraft:single",
@@ -3291,6 +3448,14 @@
     {
       "type": "minecraft:single",
       "resource": "buildcrafttransport:pipes/void_item"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/wood_fe_clear"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:pipes/wood_fe_filled"
     },
     {
       "type": "minecraft:single",
