@@ -363,6 +363,37 @@ def validate_pipe_transfer_wiring() -> None:
 
 
 
+def validate_randomium_facade_blacklist(props: dict[str, str]) -> None:
+    """Keep facade variants out of Randomium's creative-tab loot scan.
+
+    Randomium 1.19/1.20 uses randomium:blacklist under the legacy item-tag
+    directory, while its 1.21 line renamed the tag to randomium:randomium_blacklist
+    and Minecraft 1.21 uses the singular item tag directory. The facade item emits
+    many creative-tab variants, so losing this compatibility tag can turn
+    Randomium's per-item linear de-duplication into a pathological startup cost.
+    """
+    expected = {
+        "1.19.2-forge": "data/randomium/tags/items/blacklist.json",
+        "1.20.1-forge": "data/randomium/tags/items/blacklist.json",
+        "1.21.1-neoforge": "data/randomium/tags/item/randomium_blacklist.json",
+    }
+    facade_id = "buildcraftsilicon:plug/facade"
+    for target, rel in expected.items():
+        resources = resource_map(target, props)
+        path = resources.get(rel)
+        if path is None:
+            fail(f"{target}: missing Randomium facade blacklist tag {rel}")
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            fail(f"{target}: invalid Randomium facade blacklist JSON {rel}: {exc}")
+        if data.get("replace") is not False:
+            fail(f"{target}: Randomium facade blacklist must merge with Randomium defaults")
+        values = data.get("values")
+        if not isinstance(values, list) or facade_id not in values:
+            fail(f"{target}: Randomium facade blacklist does not contain {facade_id}")
+
+
 def validate_item_pipe_gametest_isolation() -> None:
     """Item-pipe conservation tests must only count their own marked cargo.
 
@@ -418,6 +449,7 @@ def main() -> None:
     validate_hotspots(props)
     validate_pipe_recipe_schema(props)
     validate_pipe_transfer_wiring()
+    validate_randomium_facade_blacklist(props)
     validate_item_pipe_gametest_isolation()
     validate_ci_wiring()
     print("Cross-target integrity OK:")
@@ -426,6 +458,7 @@ def main() -> None:
     print(" - datagen isolated from production resources")
     print(" - main resources are en_us-only; localization addon ownership guarded")
     print(" - custom pipe recipe schema and configured transfer wiring verified")
+    print(" - Randomium facade blacklist compatibility guarded on maintained targets")
     print(" - item-pipe GameTests track only their own marked cargo")
     print(" - protected cross-target hotspots and CI GameTests guarded")
 
