@@ -361,6 +361,35 @@ def validate_pipe_transfer_wiring() -> None:
             if forbidden[rel] in text:
                 fail(f"{path.relative_to(ROOT)}: runtime flow still snapshots API2 profile instead of config override")
 
+
+
+def validate_item_pipe_gametest_isolation() -> None:
+    """Item-pipe conservation tests must only count their own marked cargo.
+
+    Forge 1.19.2 runs all GameTests in a shared world and can expose unrelated
+    ItemEntity instances inside a broad manually constructed AABB. A conservation
+    test must therefore track the exact stack it injected, while still failing if
+    that marked stack is actually duplicated/ejected by the pipe runtime.
+    """
+    for platform in ("forge", "neoforge"):
+        path = ROOT / f"source-platforms/{platform}/src/gametest/java/buildcraft/gametest/BuildCraftPipeTransportGameTests.java"
+        text = path.read_text(encoding="utf-8")
+        for forbidden in ("countDroppedItems(", "new BlockPos(7, 3, 7)"):
+            if forbidden in text:
+                fail(f"{path.relative_to(ROOT)}: broad unscoped item-entity assertion returned: {forbidden!r}")
+        for token in (
+            'CARGO_MARKER_KEY = "buildcraft_test"',
+            'TEST_BOUNDS_MAX = new BlockPos(6, 2, 6)',
+            'countDroppedCargo(helper, "straight_line")',
+            'countDroppedCargo(helper, "diamond_fallback")',
+            'countDroppedCargo(helper, "accepted_count")',
+            'countDroppedCargo(helper, "clay_preference")',
+            '.filter(entity -> hasCargoMarker(entity.getItem(), marker))',
+        ):
+            if token not in text:
+                fail(f"{path.relative_to(ROOT)}: cargo-isolated GameTest guard lost {token!r}")
+
+
 def validate_ci_wiring() -> None:
     ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     for token in (
@@ -389,6 +418,7 @@ def main() -> None:
     validate_hotspots(props)
     validate_pipe_recipe_schema(props)
     validate_pipe_transfer_wiring()
+    validate_item_pipe_gametest_isolation()
     validate_ci_wiring()
     print("Cross-target integrity OK:")
     print(" - exact-case atlas/model resources verified")
@@ -396,6 +426,7 @@ def main() -> None:
     print(" - datagen isolated from production resources")
     print(" - main resources are en_us-only; localization addon ownership guarded")
     print(" - custom pipe recipe schema and configured transfer wiring verified")
+    print(" - item-pipe GameTests track only their own marked cargo")
     print(" - protected cross-target hotspots and CI GameTests guarded")
 
 

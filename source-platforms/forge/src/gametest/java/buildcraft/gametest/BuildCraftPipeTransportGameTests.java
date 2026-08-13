@@ -29,6 +29,9 @@ import buildcraft.transport.tile.TilePipeHolder;
 @GameTestHolder(BCLib.MODID)
 @PrefixGameTestTemplate(false)
 public final class BuildCraftPipeTransportGameTests {
+    private static final String CARGO_MARKER_KEY = "buildcraft_test";
+    private static final BlockPos TEST_BOUNDS_MAX = new BlockPos(6, 2, 6);
+
     private BuildCraftPipeTransportGameTests() {
     }
 
@@ -47,7 +50,7 @@ public final class BuildCraftPipeTransportGameTests {
 
         ItemStack cargo = new ItemStack(Items.APPLE, 12);
         cargo.setHoverName(Component.literal("tagged pipe cargo"));
-        cargo.getOrCreateTag().putString("buildcraft_test", "straight_line");
+        markCargo(cargo, "straight_line");
 
         helper.runAfterDelay(5, () -> {
             require(helper, first.getPipe().isConnected(Direction.WEST), "first pipe did not connect to source chest");
@@ -67,14 +70,14 @@ public final class BuildCraftPipeTransportGameTests {
             require(helper, delivered.hasCustomHoverName()
                 && delivered.getHoverName().getString().equals("tagged pipe cargo"),
                 "custom name was lost in transit");
-            require(helper, delivered.hasTag()
-                && "straight_line".equals(delivered.getTag().getString("buildcraft_test")),
+            require(helper, hasCargoMarker(delivered, "straight_line"),
                 "custom NBT was lost in transit");
             require(helper, !((PipeFlowItems) first.getPipe().getFlow()).doesContainItems(),
                 "first pipe still contained cargo after delivery");
             require(helper, !((PipeFlowItems) second.getPipe().getFlow()).doesContainItems(),
                 "second pipe still contained cargo after delivery");
-            require(helper, countDroppedItems(helper) == 0, "straight route dropped an ItemEntity");
+            require(helper, countDroppedCargo(helper, "straight_line") == 0,
+                "straight route dropped tagged cargo");
             helper.succeed();
         });
     }
@@ -105,6 +108,7 @@ public final class BuildCraftPipeTransportGameTests {
             require(helper, holder.getPipe().isConnected(Direction.SOUTH), "diamond pipe did not connect to fallback chest");
 
             ItemStack input = new ItemStack(Items.APPLE, 13);
+            markCargo(input, "diamond_fallback");
             ItemStack leftover = ((IFlowItems) holder.getPipe().getFlow())
                 .injectItem(input, true, Direction.WEST, null, 0.05);
             require(helper, leftover.isEmpty(), "diamond pipe rejected initial input");
@@ -117,7 +121,8 @@ public final class BuildCraftPipeTransportGameTests {
                 "fallback route did not preserve all 13 items");
             require(helper, !((PipeFlowItems) holder.getPipe().getFlow()).doesContainItems(),
                 "diamond pipe kept retrying a rejected destination");
-            require(helper, countDroppedItems(helper) == 0, "diamond fallback dropped cargo");
+            require(helper, countDroppedCargo(helper, "diamond_fallback") == 0,
+                "diamond fallback dropped tagged cargo");
             helper.succeed();
         });
     }
@@ -137,6 +142,7 @@ public final class BuildCraftPipeTransportGameTests {
         helper.runAfterDelay(5, () -> {
             PipeFlowItems flow = (PipeFlowItems) holder.getPipe().getFlow();
             ItemStack input = new ItemStack(Items.APPLE, 10);
+            markCargo(input, "accepted_count");
 
             ItemStack simulatedLeftover = flow.injectItem(input, false, Direction.WEST, null, 0.05);
             require(helper, input.getCount() == 10, "simulated insertion mutated its input stack");
@@ -155,7 +161,8 @@ public final class BuildCraftPipeTransportGameTests {
                 "accepted-count clamp delivered the wrong number of items");
             require(helper, !((PipeFlowItems) holder.getPipe().getFlow()).doesContainItems(),
                 "accepted cargo remained stuck in the pipe");
-            require(helper, countDroppedItems(helper) == 0, "accepted-count test dropped cargo");
+            require(helper, countDroppedCargo(helper, "accepted_count") == 0,
+                "accepted-count test dropped tagged cargo");
             helper.succeed();
         });
     }
@@ -179,8 +186,10 @@ public final class BuildCraftPipeTransportGameTests {
             require(helper, clay.getPipe().isConnected(Direction.EAST), "clay pipe did not connect to inventory");
             require(helper, clay.getPipe().isConnected(Direction.SOUTH), "clay pipe did not connect to alternate pipe");
 
+            ItemStack input = new ItemStack(Items.IRON_INGOT, 8);
+            markCargo(input, "clay_preference");
             ItemStack leftover = ((IFlowItems) clay.getPipe().getFlow())
-                .injectItem(new ItemStack(Items.IRON_INGOT, 8), true, Direction.WEST, null, 0.05);
+                .injectItem(input, true, Direction.WEST, null, 0.05);
             require(helper, leftover.isEmpty(), "clay pipe rejected initial input");
         });
 
@@ -193,7 +202,8 @@ public final class BuildCraftPipeTransportGameTests {
                 "clay pipe still contained cargo after delivery");
             require(helper, !((PipeFlowItems) alternatePipe.getPipe().getFlow()).doesContainItems(),
                 "alternate pipe unexpectedly received cargo");
-            require(helper, countDroppedItems(helper) == 0, "clay route dropped cargo");
+            require(helper, countDroppedCargo(helper, "clay_preference") == 0,
+                "clay route dropped tagged cargo");
             helper.succeed();
         });
     }
@@ -224,14 +234,28 @@ public final class BuildCraftPipeTransportGameTests {
         return ItemStack.EMPTY;
     }
 
-    private static int countDroppedItems(GameTestHelper helper) {
-        BlockPos min = helper.absolutePos(BlockPos.ZERO);
-        BlockPos max = helper.absolutePos(new BlockPos(7, 3, 7));
+    private static void markCargo(ItemStack stack, String marker) {
+        stack.getOrCreateTag().putString(CARGO_MARKER_KEY, marker);
+    }
+
+    private static boolean hasCargoMarker(ItemStack stack, String marker) {
+        return stack.hasTag() && marker.equals(stack.getTag().getString(CARGO_MARKER_KEY));
+    }
+
+    private static int countDroppedCargo(GameTestHelper helper, String marker) {
+        BlockPos first = helper.absolutePos(BlockPos.ZERO);
+        BlockPos second = helper.absolutePos(TEST_BOUNDS_MAX);
         AABB bounds = new AABB(
-            min.getX(), min.getY(), min.getZ(),
-            max.getX(), max.getY(), max.getZ()
+            Math.min(first.getX(), second.getX()),
+            Math.min(first.getY(), second.getY()),
+            Math.min(first.getZ(), second.getZ()),
+            Math.max(first.getX(), second.getX()) + 1.0,
+            Math.max(first.getY(), second.getY()) + 1.0,
+            Math.max(first.getZ(), second.getZ()) + 1.0
         );
-        return helper.getLevel().getEntitiesOfClass(ItemEntity.class, bounds).size();
+        return (int) helper.getLevel().getEntitiesOfClass(ItemEntity.class, bounds).stream()
+            .filter(entity -> hasCargoMarker(entity.getItem(), marker))
+            .count();
     }
 
     public static final class ClampInsertHandler {
