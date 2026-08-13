@@ -92,7 +92,8 @@ public final class RoboticsApi2Bootstrap {
                 buffer.putInt(value.position().getX());
                 buffer.putInt(value.position().getY());
                 buffer.putInt(value.position().getZ());
-                buffer.put((byte) value.side().map(net.minecraft.core.Direction::ordinal).orElse(-1));
+                int sideId = value.side().map(net.minecraft.core.Direction::ordinal).orElse(-1);
+                buffer.put((byte) sideId);
                 return CodecResult.success(new OpaqueData(format, buffer.array()));
             }
         };

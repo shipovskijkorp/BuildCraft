@@ -178,8 +178,7 @@ jobs:
             ci-server-install-${{ matrix.generation }}-*.log
             ci-client-${{ matrix.generation }}-*.log
 
-  compatibility-server:
-    name: Compatibility (${{ matrix.target }} / ${{ matrix.profile }})
+  Compatibility:
     needs:
       - validate
       - build-test-server
