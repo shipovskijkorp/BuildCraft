@@ -18,7 +18,7 @@ When reporting a problem, always include:
 ## Roadmap 2.0
 
 - Drop support for 1.21.1 Forge [✔]
-- New API system - in progress
+- New API system [✔]
 - FE compatibility [✔]
 - Port to 1.20.1 Fabric
 - Port to 1.21.11 Fabric/NeoForge
