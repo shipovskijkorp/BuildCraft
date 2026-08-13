@@ -619,6 +619,30 @@ def validate_snapshot_renderer_and_client_isolation(props: dict[str, str]) -> No
             fail(f"1.21.1-neoforge: client-only BCCore bootstrap lost {token!r}")
 
 
+
+def validate_compat_runtime_dependencies(props: dict[str, str]) -> None:
+    """Guard compatibility smoke dependencies against known-broken upstream releases."""
+    target = "1.19.2-forge"
+    ic2 = props.get(f"target.{target}.deps.ic2", "").strip()
+    carbon = props.get(f"target.{target}.deps.carbon_config", "").strip()
+    if not ic2:
+        fail(f"{target}: IC2 compatibility is enabled without a runtime dependency")
+    if not carbon:
+        fail(f"{target}: IC2 compatibility is missing its Carbon Config runtime dependency")
+
+    # Carbon Config 2.0.0 crashes when IC2 saves its config during dedicated-server
+    # construction, before ServerLifecycleHooks has a current MinecraftServer. 2.0.2
+    # is the upstream hotfix release for exactly that startup path.
+    known_bad = "maven.modrinth:1jDdpgcc:8U1HA7TK"
+    required_hotfix = "maven.modrinth:1jDdpgcc:HMD2FUea"
+    if carbon == known_bad:
+        fail(f"{target}: Carbon Config 2.0.0 is known to crash IC2 dedicated-server startup")
+    if carbon != required_hotfix:
+        fail(
+            f"{target}: IC2 compatibility smoke must use the verified Carbon Config 2.0.2 hotfix "
+            f"({required_hotfix}); found {carbon!r}. Update this guard when intentionally upgrading."
+        )
+
 def validate_ci_wiring() -> None:
     ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     for token in (
@@ -700,6 +724,7 @@ def main() -> None:
     validate_build_metadata_and_source_hygiene(props)
     validate_facade_swap_recipe(props)
     validate_snapshot_renderer_and_client_isolation(props)
+    validate_compat_runtime_dependencies(props)
     validate_ci_wiring()
     print("Cross-target integrity OK:")
     print(" - exact-case atlas/model resources verified")
@@ -711,6 +736,7 @@ def main() -> None:
     print(" - item-pipe GameTests track only their own marked cargo")
     print(" - Java build metadata placeholders and production .jsonx files forbidden")
     print(" - facade swap production recipe and snapshot/client isolation guarded")
+    print(" - IC2 compatibility uses the dedicated-server-safe Carbon Config hotfix")
     print(" - client, GameTest and blocking compatibility CI coverage guarded")
 
 
