@@ -165,6 +165,32 @@ def validate_atlases_and_case(props: dict[str, str]) -> None:
             if required not in resources:
                 fail(f"{target}: missing BuildCraft variable-model resource {required}")
 
+        # Every registered FE pipe is an item and therefore needs a vanilla item-model
+        # declaration even though BuildCraft supplies the actual pipe geometry at runtime.
+        # Missing declarations are reported by ModelBakery only on the client.
+        for pipe_name in (
+            "wood_fe", "stone_fe", "cobblestone_fe", "sandstone_fe", "quartz_fe",
+            "gold_fe", "iron_fe", "diamond_fe", "diamond_wood_fe",
+        ):
+            model_rel = f"assets/buildcrafttransport/models/item/{pipe_name}.json"
+            if model_rel not in resources:
+                fail(f"{target}: missing FE pipe item model declaration {model_rel}")
+
+        # 1.20+ uses an explicit block atlas. All limiter sprites referenced by
+        # BCTransportSprites must be stitched, including FE and the zero-limit icon.
+        if atlas_rel in resources:
+            atlas = json.loads(resources[atlas_rel].read_text(encoding="utf-8"))
+            stitched = {
+                source.get("resource")
+                for source in atlas.get("sources", [])
+                if isinstance(source, dict) and source.get("type") == "minecraft:single"
+            }
+            for prefix in ("trigger_limiter", "trigger_fe_limiter"):
+                for shift in (256, 128, 64, 32, 16, 8, 4, 2, 0):
+                    sprite = f"buildcrafttransport:triggers/{prefix}_m{shift}"
+                    if sprite not in stitched:
+                        fail(f"{target}: limiter sprite is not stitched into the block atlas: {sprite}")
+
         holder_expectations = {
             "buildcraft/factory/BCFactoryModels.java": "buildcraftfactory:bcmodels/tiles/distiller.json",
             "buildcraft/silicon/BCSiliconModels.java": ":bcmodels/",

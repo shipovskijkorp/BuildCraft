@@ -3820,6 +3820,46 @@
     {
       "type": "minecraft:single",
       "resource": "buildcrafttransport:wires/yellow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_limiter_m0"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m256"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m128"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m64"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m32"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m16"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m8"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m4"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m2"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m0"
     }
   ]
 }
