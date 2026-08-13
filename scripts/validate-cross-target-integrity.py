@@ -557,9 +557,18 @@ def validate_ci_wiring() -> None:
     if not client_script.is_file():
         fail("missing scripts/ci-client-smoke.sh")
     client = client_script.read_text(encoding="utf-8")
-    for token in (":${target}:runClient", "xvfb-run", "blocks\\.png-atlas", "Missing model for variant"):
+    for token in (
+        ":${target}:runClient",
+        "xvfb-run",
+        "blocks\\.png-atlas",
+        "Missing model for variant",
+        'local var="JAVA_HOME_${major}_X64"',
+        'local home="${!var:-}"',
+    ):
         if token not in client:
             fail(f"client smoke script lost {token!r}")
+    if 'local major="$1" var=' in client:
+        fail("client smoke Java-home lookup must not use same-command local assignments with indirect expansion")
 
     server_script = ROOT / "scripts/ci-server-smoke.sh"
     if not server_script.is_file():

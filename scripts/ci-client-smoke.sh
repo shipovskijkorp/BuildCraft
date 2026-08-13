@@ -56,7 +56,9 @@ read_target_property() {
   printf '%s\n' "$value"
 }
 select_java_home() {
-  local major="$1" var="JAVA_HOME_${1}_X64" home="${!var:-}"
+  local major="$1"
+  local var="JAVA_HOME_${major}_X64"
+  local home="${!var:-}"
   if [[ -n "$home" && -x "$home/bin/java" ]]; then printf '%s\n' "$home"; return 0; fi
   if command -v java >/dev/null 2>&1; then
     local detected java_path
