@@ -55,25 +55,46 @@ public final class PipeApi {
 
     public static FluidTransferInfo getFluidTransferInfo(PipeDefinition def) {
         FluidTransferInfo info = fluidTransferData.get(def);
-        if (info == null) {
-            return fluidInfoDefault;
-        } else {
-            return info;
+        if (info != null) return info;
+        if (def != null && def.getApiType() != null) {
+            var profile = def.getApiType().fluidProfile().orElse(null);
+            if (profile != null) {
+                long amount = profile.maxPerTick().milliBuckets();
+                int transfer = (int) Math.min(Integer.MAX_VALUE, Math.max(0L, amount));
+                return new FluidTransferInfo(transfer, Math.max(1, profile.transferDelayTicks()));
+            }
         }
+        return fluidInfoDefault;
     }
 
     public static ForgeEnergyTransferInfo getForgeEnergyTransferInfo(PipeDefinition def) {
         ForgeEnergyTransferInfo info = forgeEnergyTransferData.get(def);
-        return info == null ? forgeEnergyInfoDefault : info;
+        if (info != null) return info;
+        if (def != null && def.getApiType() != null) {
+            var profile = def.getApiType().externalEnergyProfile().orElse(null);
+            if (profile != null) {
+                int transfer = (int) Math.min(Integer.MAX_VALUE, Math.max(1L, profile.maxPerTick()));
+                return new ForgeEnergyTransferInfo(transfer, profile.extractor());
+            }
+        }
+        return forgeEnergyInfoDefault;
     }
 
     public static PowerTransferInfo getPowerTransferInfo(PipeDefinition def) {
         PowerTransferInfo info = powerTransferData.get(def);
-        if (info == null) {
-            return powerInfoDefault;
-        } else {
-            return info;
+        if (info != null) return info;
+        if (def != null && def.getApiType() != null) {
+            var profile = def.getApiType().mjProfile().orElse(null);
+            if (profile != null) {
+                return new PowerTransferInfo(
+                    profile.maxPerTick().microMj(),
+                    profile.lossAtFullTransfer().microMj(),
+                    profile.resistancePerTick(),
+                    profile.extractor()
+                );
+            }
         }
+        return powerInfoDefault;
     }
 
     public static class FluidTransferInfo {

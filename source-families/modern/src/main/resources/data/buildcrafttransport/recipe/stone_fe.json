@@ -9,6 +9,6 @@
     "item": "minecraft:redstone"
   },
   "result": {
-    "id": "buildcrafttransport:stone_fe"
+    "item": "buildcrafttransport:stone_fe"
   }
 }

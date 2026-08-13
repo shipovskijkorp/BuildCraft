@@ -21,6 +21,10 @@ import net.minecraft.resources.ResourceLocation;
 /** Internal bridge making API2 pipe types authoritative for the legacy-compatible runtime implementation. */
 public final class PipeTypeBridge {
     private static final String COMPONENT_PREFIX = "runtime_component/";
+    private static final String BUILTIN_NAMESPACE = "buildcrafttransport";
+    private static final int DEFAULT_FLUID_BASE_RATE = 10;
+    private static final int DEFAULT_MJ_BASE_RATE = 4;
+    private static final int DEFAULT_FE_BASE_RATE = 40;
 
     private PipeTypeBridge() {}
 
@@ -76,29 +80,101 @@ public final class PipeTypeBridge {
             return builder.itemProfile(new ItemTransportProfile(64, 1)).build();
         }
         if (definition.flowType == PipeApi.flowFluids) {
-            PipeApi.FluidTransferInfo info = PipeApi.getFluidTransferInfo(definition);
-            return builder.fluidProfile(new FluidTransportProfile(
-                FluidAmount.of(Math.max(0, info.transferPerTick)),
-                Math.max(1, (int) Math.ceil(info.transferDelayMultiplier))
-            )).build();
+            FluidTransportProfile profile = builtinFluidProfile(definition);
+            if (profile == null) {
+                PipeApi.FluidTransferInfo info = PipeApi.getFluidTransferInfo(definition);
+                profile = new FluidTransportProfile(
+                    FluidAmount.of(Math.max(0, info.transferPerTick)),
+                    Math.max(1, (int) Math.ceil(info.transferDelayMultiplier))
+                );
+            }
+            return builder.fluidProfile(profile).build();
         }
         if (definition.flowType == PipeApi.flowPower) {
-            PipeApi.PowerTransferInfo info = PipeApi.getPowerTransferInfo(definition);
-            return builder.mjProfile(new PowerTransportProfile(
-                MjAmount.ofMicro(Math.max(1, info.transferPerTick)),
-                MjAmount.ofMicro(Math.max(0, info.lossPerTick)),
-                Math.max(0, Math.min(MjAmount.MICRO_MJ_PER_MJ, info.resistancePerTick)),
-                info.isReceiver
-            )).build();
+            PowerTransportProfile profile = builtinPowerProfile(definition);
+            if (profile == null) {
+                PipeApi.PowerTransferInfo info = PipeApi.getPowerTransferInfo(definition);
+                profile = new PowerTransportProfile(
+                    MjAmount.ofMicro(Math.max(1, info.transferPerTick)),
+                    MjAmount.ofMicro(Math.max(0, info.lossPerTick)),
+                    Math.max(0, Math.min(MjAmount.MICRO_MJ_PER_MJ, info.resistancePerTick)),
+                    info.isReceiver
+                );
+            }
+            return builder.mjProfile(profile).build();
         }
         if (definition.flowType == PipeApi.flowForgeEnergy) {
-            PipeApi.ForgeEnergyTransferInfo info = PipeApi.getForgeEnergyTransferInfo(definition);
-            return builder.externalEnergyProfile(new ExternalEnergyTransportProfile(
-                Math.max(1, info.transferPerTick),
-                info.isReceiver
-            )).build();
+            ExternalEnergyTransportProfile profile = builtinExternalEnergyProfile(definition);
+            if (profile == null) {
+                PipeApi.ForgeEnergyTransferInfo info = PipeApi.getForgeEnergyTransferInfo(definition);
+                profile = new ExternalEnergyTransportProfile(Math.max(1, info.transferPerTick), info.isReceiver);
+            }
+            return builder.externalEnergyProfile(profile).build();
         }
         return builder.medium(PipeMedium.STRUCTURE).build();
+    }
+
+    /**
+     * Built-in pipe types are registered before Forge/NeoForge config values are loaded. Do not snapshot
+     * PipeApi's generic fallback here: it would make every built-in pipe advertise the same transfer profile.
+     * These are the canonical BCCE defaults; runtime config overrides are applied by PipeApi later.
+     */
+    private static FluidTransportProfile builtinFluidProfile(PipeDefinition definition) {
+        if (!BUILTIN_NAMESPACE.equals(definition.identifier.getNamespace())) return null;
+        String path = definition.identifier.getPath();
+        int rate;
+        int delay = 10;
+        switch (path) {
+            case "wood_fluid", "cobblestone_fluid" -> rate = DEFAULT_FLUID_BASE_RATE;
+            case "stone_fluid", "sandstone_fluid" -> rate = DEFAULT_FLUID_BASE_RATE * 2;
+            case "clay_fluid", "iron_fluid", "quartz_fluid" -> rate = DEFAULT_FLUID_BASE_RATE * 4;
+            case "diamond_fluid", "diamond_wood_fluid", "void_fluid" -> rate = DEFAULT_FLUID_BASE_RATE * 8;
+            case "gold_fluid" -> {
+                rate = DEFAULT_FLUID_BASE_RATE * 8;
+                delay = 2;
+            }
+            default -> { return null; }
+        }
+        return new FluidTransportProfile(FluidAmount.of(rate), delay);
+    }
+
+    private static PowerTransportProfile builtinPowerProfile(PipeDefinition definition) {
+        if (!BUILTIN_NAMESPACE.equals(definition.identifier.getNamespace())) return null;
+        int multiplier;
+        int resistanceDivisor;
+        boolean extractor;
+        switch (definition.identifier.getPath()) {
+            case "cobblestone_power" -> { multiplier = 1; resistanceDivisor = 16; extractor = false; }
+            case "stone_power" -> { multiplier = 2; resistanceDivisor = 32; extractor = false; }
+            case "wood_power" -> { multiplier = 4; resistanceDivisor = 128; extractor = true; }
+            case "sandstone_power" -> { multiplier = 4; resistanceDivisor = 32; extractor = false; }
+            case "quartz_power", "iron_power" -> { multiplier = 8; resistanceDivisor = 32; extractor = false; }
+            case "gold_power" -> { multiplier = 16; resistanceDivisor = 32; extractor = false; }
+            case "diamond_power" -> { multiplier = 64; resistanceDivisor = 32; extractor = false; }
+            case "diamond_wood_power" -> { multiplier = 64; resistanceDivisor = 32; extractor = true; }
+            default -> { return null; }
+        }
+        long max = (long) DEFAULT_MJ_BASE_RATE * multiplier * MjAmount.MICRO_MJ_PER_MJ;
+        long resistance = MjAmount.MICRO_MJ_PER_MJ / resistanceDivisor;
+        return PowerTransportProfile.fromResistance(MjAmount.ofMicro(max), resistance, extractor);
+    }
+
+    private static ExternalEnergyTransportProfile builtinExternalEnergyProfile(PipeDefinition definition) {
+        if (!BUILTIN_NAMESPACE.equals(definition.identifier.getNamespace())) return null;
+        int multiplier;
+        boolean extractor;
+        switch (definition.identifier.getPath()) {
+            case "cobblestone_fe" -> { multiplier = 1; extractor = false; }
+            case "stone_fe" -> { multiplier = 2; extractor = false; }
+            case "wood_fe" -> { multiplier = 4; extractor = true; }
+            case "sandstone_fe" -> { multiplier = 4; extractor = false; }
+            case "quartz_fe", "iron_fe" -> { multiplier = 8; extractor = false; }
+            case "gold_fe" -> { multiplier = 32; extractor = false; }
+            case "diamond_fe" -> { multiplier = 64; extractor = false; }
+            case "diamond_wood_fe" -> { multiplier = 64; extractor = true; }
+            default -> { return null; }
+        }
+        return new ExternalEnergyTransportProfile((long) DEFAULT_FE_BASE_RATE * multiplier, extractor);
     }
 
     private static RegistrationContext owner(String namespace) {

@@ -26,7 +26,7 @@ import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowForgeEnergy;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
-import buildcraft.api.v2.pipe.ExternalEnergyTransportProfile;
+import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeEventForgeEnergy;
 import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.core.BCCoreConfig;
@@ -132,11 +132,9 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
     @Override
     public void reconfigure() {
         PipeEventForgeEnergy.Configure configure = new PipeEventForgeEnergy.Configure(pipe.getHolder(), this);
-        ExternalEnergyTransportProfile profile = pipe.getDefinition().getApiType().externalEnergyProfile().orElseThrow(() ->
-            new IllegalStateException("External-energy pipe has no API2 profile: " + pipe.getDefinition().identifier)
-        );
-        configure.setReceiver(profile.extractor());
-        configure.setMaxPower((int) Math.min(Integer.MAX_VALUE, profile.maxPerTick()));
+        PipeApi.ForgeEnergyTransferInfo transferInfo = PipeApi.getForgeEnergyTransferInfo(pipe.getDefinition());
+        configure.setReceiver(transferInfo.isReceiver);
+        configure.setMaxPower(transferInfo.transferPerTick);
         pipe.getHolder().fireEvent(configure);
         isReceiver = configure.isReceiver();
         maxPower = configure.getMaxPower();

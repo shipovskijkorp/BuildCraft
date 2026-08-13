@@ -79,18 +79,18 @@ def main() -> int:
     flow_checks = {
         "source-platforms/forge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowItems.java": ["applyItemRouting(", "requireItemProfile()", "maxItemsPerCycle()"],
         "source-platforms/neoforge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowItems.java": ["applyItemRouting(", "requireItemProfile()", "maxItemsPerCycle()"],
-        "source-platforms/forge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowFluids.java": ["requireFluidProfile()", "applyFluidRouting("],
-        "source-platforms/neoforge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowFluids.java": ["requireFluidProfile()", "applyFluidRouting("],
-        "source-platforms/forge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowPower.java": ["mjProfile()", "applyMjRouting("],
-        "source-platforms/neoforge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowPower.java": ["mjProfile()", "applyMjRouting("],
-        "source-platforms/forge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowForgeEnergy.java": ["externalEnergyProfile()", "applyExternalEnergyRouting("],
-        "source-platforms/neoforge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowForgeEnergy.java": ["externalEnergyProfile()", "applyExternalEnergyRouting("],
+        "source-platforms/forge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowFluids.java": ["PipeApi.getFluidTransferInfo(pipe.getDefinition())", "applyFluidRouting("],
+        "source-platforms/neoforge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowFluids.java": ["PipeApi.getFluidTransferInfo(pipe.getDefinition())", "applyFluidRouting("],
+        "source-platforms/forge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowPower.java": ["PipeApi.getPowerTransferInfo(pipe.getDefinition())", "applyMjRouting("],
+        "source-platforms/neoforge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowPower.java": ["PipeApi.getPowerTransferInfo(pipe.getDefinition())", "applyMjRouting("],
+        "source-platforms/forge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowForgeEnergy.java": ["PipeApi.getForgeEnergyTransferInfo(pipe.getDefinition())", "applyExternalEnergyRouting("],
+        "source-platforms/neoforge/src/main/java/buildcraft/transport/pipe/flow/PipeFlowForgeEnergy.java": ["PipeApi.getForgeEnergyTransferInfo(pipe.getDefinition())", "applyExternalEnergyRouting("],
     }
     for path, tokens in flow_checks.items():
         src = text(path)
         for token in tokens:
             if token not in src:
-                errors.append(f"{path}: missing authoritative API2 transport hook {token}")
+                errors.append(f"{path}: missing API2/config-aware transport hook {token}")
 
     for path in [
         "version-src/1.19.2-forge/src/main/java/buildcraft/transport/block/BlockPipeHolder.java",
@@ -107,10 +107,18 @@ def main() -> int:
         "source-families/modern/src/main/java/buildcraft/transport/item/ItemPipeHolder.java",
     ]:
         src = text(path)
-        if "getApiType()" not in src:
-            errors.append(f"{path}: tooltip does not read API2 transport profiles")
-        if any(old in src for old in ("getFluidTransferInfo", "getPowerTransferInfo", "getForgeEnergyTransferInfo")):
-            errors.append(f"{path}: tooltip still reads legacy PipeApi transfer metadata")
+        for token in ("getFluidTransferInfo", "getPowerTransferInfo", "getForgeEnergyTransferInfo"):
+            if token not in src:
+                errors.append(f"{path}: tooltip does not read effective configured transfer metadata via {token}")
+
+    for path in [
+        "source-platforms/forge/src/main/java/buildcraft/transport/internal/pipe/PipeApi.java",
+        "source-platforms/neoforge/src/main/java/buildcraft/transport/internal/pipe/PipeApi.java",
+    ]:
+        src = text(path)
+        for token in ("getApiType().fluidProfile()", "getApiType().mjProfile()", "getApiType().externalEnergyProfile()"):
+            if token not in src:
+                errors.append(f"{path}: configured transfer facade lost API2 profile fallback {token}")
 
     service = text("source-shared/src/main/java/buildcraft/transport/api2/PipeServiceImpl.java")
     for token in ["ensureRuntimeDefinition", "createItem(", "itemPipePort(", "placeAttachment(", "removeAttachment("]:

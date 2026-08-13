@@ -108,10 +108,15 @@ jobs:
           set -euo pipefail
           mapfile -t targets < <(python scripts/validate-stonecutter.py --list-targets --generation "$BUILD_GENERATION")
           cd "builds/${BUILD_GENERATION}"
+          gametest_status=0
           for target in "${targets[@]}"; do
             echo "Game-testing ${BUILD_GENERATION}/${target}"
-            ./gradlew --no-daemon --console=plain --stacktrace ":${target}:runGameTestServer"
+            if ! ./gradlew --no-daemon --console=plain --stacktrace ":${target}:runGameTestServer"; then
+              gametest_status=1
+              echo "::error title=GameTests failed::${BUILD_GENERATION}/${target} GameTests failed"
+            fi
           done
+          exit "$gametest_status"
 
       - name: Smoke-test every production jar in generation
         shell: bash

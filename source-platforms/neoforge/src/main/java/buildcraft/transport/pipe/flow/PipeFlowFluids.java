@@ -30,7 +30,7 @@ import buildcraft.lib.internal.core.SafeTimeTracker;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.transport.internal.pipe.IFlowFluid;
 import buildcraft.transport.internal.pipe.IPipe;
-import buildcraft.api.v2.pipe.FluidTransportProfile;
+import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeEventFluid;
 import buildcraft.transport.internal.pipe.PipeEventFluid.OnMoveToCentre;
 import buildcraft.transport.internal.pipe.PipeEventFluid.PreMoveToCentre;
@@ -88,9 +88,9 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     /** The number of pixels the fluid moves by per millisecond */
     public static final double FLOW_MULTIPLIER = 0.016;
 
-    private final FluidTransportProfile fluidTransportProfile = requireFluidProfile();
-    private final int transferPerTick = Math.toIntExact(fluidTransportProfile.maxPerTick().milliBuckets());
-    private final int transferDelayTicks = fluidTransportProfile.transferDelayTicks();
+    private final PipeApi.FluidTransferInfo fluidTransferInfo = PipeApi.getFluidTransferInfo(pipe.getDefinition());
+    private final int transferPerTick = Math.max(0, fluidTransferInfo.transferPerTick);
+    private final int transferDelayTicks = Math.max(1, (int) Math.ceil(fluidTransferInfo.transferDelayMultiplier));
 
     /* Default to an additional second of fluid inserting and removal. This means that (for a normal pipe like cobble)
      * it will be 20 * (10 + 12) = 20 * 22 = 440 - oh that's not good is it */
@@ -144,15 +144,6 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
 
     private static FluidStack readFluidStack(HolderLookup.Provider registries, CompoundTag nbt) {
         return FluidStackUtil.parseOptional(registries, nbt);
-    }
-
-    private FluidTransportProfile requireFluidProfile() {
-        if (pipe.getDefinition().getApiType() == null) {
-            throw new IllegalStateException("Pipe definition is not linked to API2: " + pipe.getDefinition().identifier);
-        }
-        return pipe.getDefinition().getApiType().fluidProfile().orElseThrow(() ->
-            new IllegalStateException("Fluid pipe has no API2 fluid profile: " + pipe.getDefinition().identifier)
-        );
     }
 
     @Override

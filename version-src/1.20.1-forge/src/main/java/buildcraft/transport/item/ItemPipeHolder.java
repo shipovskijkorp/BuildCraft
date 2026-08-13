@@ -11,6 +11,7 @@ import java.util.List;
 
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.BCTransportBlocks;
 import buildcraft.lib.misc.LocaleUtil;
 
@@ -94,18 +95,12 @@ public class ItemPipeHolder extends BlockItem implements IItemPipe {
         if (I18n.exists(tipName)) {
             tooltip.add(Component.translatable(tipName).setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)));
         }
-        if (definition.getApiType().fluidProfile().isPresent()) {
-            tooltip.add(LocaleUtil.localizeFluidFlow(
-                definition.getApiType().fluidProfile().orElseThrow().maxPerTick().milliBuckets()
-            ));
-        } else if (definition.getApiType().mjProfile().isPresent()) {
-            tooltip.add(LocaleUtil.localizeMjFlow(
-                definition.getApiType().mjProfile().orElseThrow().maxPerTick().microMj()
-            ));
-        } else if (definition.getApiType().externalEnergyProfile().isPresent()) {
-            tooltip.add(LocaleUtil.localizeFeFlow(
-                definition.getApiType().externalEnergyProfile().orElseThrow().maxPerTick()
-            ));
+        if (definition.flowType == PipeApi.flowFluids) {
+            tooltip.add(LocaleUtil.localizeFluidFlow(PipeApi.getFluidTransferInfo(definition).transferPerTick));
+        } else if (definition.flowType == PipeApi.flowPower) {
+            tooltip.add(LocaleUtil.localizeMjFlow(PipeApi.getPowerTransferInfo(definition).transferPerTick));
+        } else if (definition.flowType == PipeApi.flowForgeEnergy) {
+            tooltip.add(LocaleUtil.localizeFeFlow(PipeApi.getForgeEnergyTransferInfo(definition).transferPerTick));
         }
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

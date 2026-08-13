@@ -33,7 +33,7 @@ import buildcraft.transport.internal.pipe.IFlowPower;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipe.ConnectedType;
 import buildcraft.api.v2.energy.MjAmount;
-import buildcraft.api.v2.pipe.PowerTransportProfile;
+import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeEventPower;
 import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.transport.internal.pluggable.PipePluggable;
@@ -160,13 +160,11 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     @Override
     public void reconfigure() {
         PipeEventPower.Configure configure = new PipeEventPower.Configure(pipe.getHolder(), this);
-        PowerTransportProfile profile = pipe.getDefinition().getApiType().mjProfile().orElseThrow(() ->
-            new IllegalStateException("MJ pipe has no API2 power profile: " + pipe.getDefinition().identifier)
-        );
-        configure.setReceiver(profile.extractor());
-        configure.setMaxPower(profile.maxPerTick().microMj());
-        configure.setPowerLoss(profile.lossAtFullTransfer().microMj());
-        configure.setPowerResistance(profile.resistancePerTick());
+        PipeApi.PowerTransferInfo transferInfo = PipeApi.getPowerTransferInfo(pipe.getDefinition());
+        configure.setReceiver(transferInfo.isReceiver);
+        configure.setMaxPower(transferInfo.transferPerTick);
+        configure.setPowerLoss(transferInfo.lossPerTick);
+        configure.setPowerResistance(transferInfo.resistancePerTick);
         pipe.getHolder().fireEvent(configure);
         isReceiver = configure.isReceiver();
         maxPower = configure.getMaxPower();

@@ -3,8 +3,8 @@
 
 This catches classes of regressions that compile/parity-count checks miss:
 case-sensitive atlas/model resources, target metadata drift, stale datagen output,
-translation shadowing, stack-size parity, and copied target implementations that
-silently lose fixes on one maintained Minecraft line.
+translation ownership, stack-size parity, pipe recipe schemas, transfer-profile wiring,
+and copied target implementations that silently lose fixes on one maintained Minecraft line.
 """
 from __future__ import annotations
 
@@ -156,8 +156,8 @@ def validate_datagen_isolation() -> None:
 
 
 def validate_language_policy(props: dict[str, str]) -> None:
-    # English has one repository-wide source of truth. Other locales may be
-    # target-specific, but no effective target may define the same key twice.
+    # The main mod owns English only. Every other locale belongs to the separate
+    # localization addon and must never leak back into production source layers.
     en_us_files: list[Path] = []
     for base in (ROOT / "source-shared", ROOT / "source-families", ROOT / "source-platforms", ROOT / "version-src"):
         en_us_files.extend(p for p in base.rglob("src/main/resources/assets/*/lang/en_us.json") if p.is_file())
@@ -167,6 +167,14 @@ def validate_language_policy(props: dict[str, str]) -> None:
         fail(f"en_us must have one authoritative source; first extra: {unexpected[0]}")
     if not expected.is_file():
         fail("missing authoritative source-shared BuildCraft en_us.json")
+
+    for base in (ROOT / "source-shared", ROOT / "source-families", ROOT / "source-platforms", ROOT / "version-src"):
+        for path in base.rglob("src/main/resources/assets/*/lang/*.json"):
+            if path.is_file() and path.name != "en_us.json":
+                fail(f"main mod must contain en_us only; addon-owned locale remains: {path.relative_to(ROOT)}")
+        for path in base.rglob("src/main/resources/assets/*/guide/text/*.json"):
+            if path.is_file() and path.name != "en_us.json":
+                fail(f"main mod guide must contain en_us only; addon-owned locale remains: {path.relative_to(ROOT)}")
 
     duplicates: list[str] = []
     def hook(pairs):
@@ -280,6 +288,79 @@ def validate_hotspots(props: dict[str, str]) -> None:
                     fail(f"{target}: protected cross-target hotspot {rel} lost {token!r}")
 
 
+
+def validate_pipe_recipe_schema(props: dict[str, str]) -> None:
+    """Custom PipeRecipe uses result.item on every maintained target.
+
+    Minecraft 1.21's codec errors are easy to miss during static JSON counting because
+    the JSON remains syntactically valid. Validate the serializer contract explicitly.
+    """
+    for target in target_ids(props):
+        resources = resource_map(target, props)
+        for rel, path in resources.items():
+            if not rel.startswith("data/buildcrafttransport/") or not rel.endswith(".json"):
+                continue
+            if "/recipe/" not in rel and "/recipes/" not in rel:
+                continue
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                fail(f"{target}: invalid recipe JSON {rel}: {exc}")
+            if data.get("type") != "buildcrafttransport:pipe":
+                continue
+            result = data.get("result")
+            if not isinstance(result, dict):
+                fail(f"{target}: custom pipe recipe {rel} has no object result")
+            if "item" not in result:
+                fail(f"{target}: custom pipe recipe {rel} must encode result.item, got {result}")
+            if "id" in result:
+                fail(f"{target}: custom pipe recipe {rel} still uses unsupported result.id")
+
+
+def validate_pipe_transfer_wiring() -> None:
+    bridge_rel = "source-shared/src/main/java/buildcraft/transport/api2/PipeTypeBridge.java"
+    bridge = (ROOT / bridge_rel).read_text(encoding="utf-8")
+    for token in (
+        'DEFAULT_FLUID_BASE_RATE = 10',
+        'DEFAULT_MJ_BASE_RATE = 4',
+        'DEFAULT_FE_BASE_RATE = 40',
+        'case "wood_fluid", "cobblestone_fluid"',
+        'case "wood_power" -> { multiplier = 4; resistanceDivisor = 128; extractor = true; }',
+        'case "wood_fe" -> { multiplier = 4; extractor = true; }',
+    ):
+        if token not in bridge:
+            fail(f"{bridge_rel}: built-in API2 defaults lost {token!r}")
+
+    for platform in ("forge", "neoforge"):
+        base = ROOT / f"source-platforms/{platform}/src/main/java/buildcraft/transport"
+        api_rel = base / "internal/pipe/PipeApi.java"
+        api = api_rel.read_text(encoding="utf-8")
+        for token in (
+            "fluidTransferData.get(def)", "def.getApiType().fluidProfile()",
+            "powerTransferData.get(def)", "def.getApiType().mjProfile()",
+            "forgeEnergyTransferData.get(def)", "def.getApiType().externalEnergyProfile()",
+        ):
+            if token not in api:
+                fail(f"{api_rel.relative_to(ROOT)}: config/API2 fallback wiring lost {token!r}")
+
+        flow_expectations = {
+            "pipe/flow/PipeFlowFluids.java": "PipeApi.getFluidTransferInfo(pipe.getDefinition())",
+            "pipe/flow/PipeFlowPower.java": "PipeApi.getPowerTransferInfo(pipe.getDefinition())",
+            "pipe/flow/PipeFlowForgeEnergy.java": "PipeApi.getForgeEnergyTransferInfo(pipe.getDefinition())",
+        }
+        forbidden = {
+            "pipe/flow/PipeFlowFluids.java": "getApiType().fluidProfile()",
+            "pipe/flow/PipeFlowPower.java": "getApiType().mjProfile()",
+            "pipe/flow/PipeFlowForgeEnergy.java": "getApiType().externalEnergyProfile()",
+        }
+        for rel, token in flow_expectations.items():
+            path = base / rel
+            text = path.read_text(encoding="utf-8")
+            if token not in text:
+                fail(f"{path.relative_to(ROOT)}: runtime flow bypasses configured PipeApi transfer data")
+            if forbidden[rel] in text:
+                fail(f"{path.relative_to(ROOT)}: runtime flow still snapshots API2 profile instead of config override")
+
 def validate_ci_wiring() -> None:
     ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     for token in (
@@ -287,6 +368,9 @@ def validate_ci_wiring() -> None:
         "python scripts/validate-cross-target-integrity.py",
         "Run GameTests for every production target in generation",
         '":${target}:runGameTestServer"',
+        "gametest_status=0",
+        "if ! ./gradlew --no-daemon --console=plain --stacktrace",
+        'exit "$gametest_status"',
     ):
         if token not in ci:
             fail(f"CI is missing required validation/runtime coverage: {token}")
@@ -303,12 +387,15 @@ def main() -> None:
     validate_quartz_sprite_paths()
     validate_promoted_cross_generation_files()
     validate_hotspots(props)
+    validate_pipe_recipe_schema(props)
+    validate_pipe_transfer_wiring()
     validate_ci_wiring()
     print("Cross-target integrity OK:")
     print(" - exact-case atlas/model resources verified")
     print(" - item stack and Minecraft metadata parity verified")
     print(" - datagen isolated from production resources")
-    print(" - one authoritative en_us source; target locales have no duplicate keys")
+    print(" - main resources are en_us-only; localization addon ownership guarded")
+    print(" - custom pipe recipe schema and configured transfer wiring verified")
     print(" - protected cross-target hotspots and CI GameTests guarded")
 
 
