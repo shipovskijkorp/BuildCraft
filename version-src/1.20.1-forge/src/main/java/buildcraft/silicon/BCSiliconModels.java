@@ -95,7 +95,7 @@ public final class BCSiliconModels {
     }
 
     private static ModelHolderVariable getModel(String path, FunctionContext context) {
-        return new ModelHolderVariable(BCSilicon.MODID + ":models/" + path, context);
+        return new ModelHolderVariable(BCSilicon.MODID + ":bcmodels/" + path, context);
     }
 
     /** Forces model-holder initialization before the first model-bake event. */

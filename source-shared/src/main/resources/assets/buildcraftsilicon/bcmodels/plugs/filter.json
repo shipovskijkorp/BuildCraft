@@ -1,5 +1,5 @@
 {
-    "parent":"buildcraftsilicon:models/plugs/lens",
+    "parent":"buildcraftsilicon:bcmodels/plugs/lens",
     "textures": {
         "#main": "buildcraftsilicon:plugs/filter"
     },

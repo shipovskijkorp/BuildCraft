@@ -11,7 +11,7 @@ import buildcraft.lib.client.model.ModelHolderVariable;
 
 public class BCFactoryModels {
     public static final ModelHolderVariable DISTILLER = new ModelHolderVariable(
-        "buildcraftfactory:models/tiles/distiller.json",
+        "buildcraftfactory:bcmodels/tiles/distiller.json",
         TileDistiller_BC8.MODEL_FUNC_CTX
     );
 	public static void init() {

@@ -88,7 +88,7 @@ public class BCSiliconModels {
     }
 
     private static ModelHolderVariable getModel(String str, FunctionContext fnCtx) {
-        return new ModelHolderVariable("buildcraftsilicon:models/" + str, fnCtx);
+        return new ModelHolderVariable("buildcraftsilicon:bcmodels/" + str, fnCtx);
     }
 
 

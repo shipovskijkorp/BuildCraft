@@ -51,41 +51,88 @@ def effective_java(target: str, rel: str, props: dict[str, str]) -> str:
 def validate_atlases_and_case(props: dict[str, str]) -> None:
     for target in target_ids(props):
         resources = resource_map(target, props)
-        atlas_rel = "assets/minecraft/atlases/blocks.json"
-        if atlas_rel not in resources:
-            continue
-        atlas = json.loads(resources[atlas_rel].read_text(encoding="utf-8"))
-        lower = {rel.lower(): rel for rel in resources}
-        for index, source in enumerate(atlas.get("sources", [])):
-            if not isinstance(source, dict) or source.get("type") != "minecraft:single":
-                continue
-            resource = source.get("resource")
-            if not isinstance(resource, str) or ":" not in resource:
-                fail(f"{target}: atlas single source #{index} has invalid resource {resource!r}")
-            if resource != resource.lower():
-                fail(f"{target}: atlas resource is not lowercase: {resource}")
-            namespace, path = resource.split(":", 1)
-            if not namespace.startswith("buildcraft"):
-                continue
-            texture_rel = f"assets/{namespace}/textures/{path}.png"
-            if texture_rel not in resources:
-                ci = lower.get(texture_rel.lower())
-                suffix = f" (case-only candidate: {ci})" if ci else ""
-                fail(f"{target}: atlas resource does not exist exactly: {resource}{suffix}")
-            sprite = source.get("sprite")
-            if sprite is not None:
-                if not isinstance(sprite, str) or sprite != sprite.lower():
-                    fail(f"{target}: atlas sprite id is not lowercase: {sprite!r}")
 
-        # Catch the same class of regression in item models: if an exact texture
-        # path is absent but a case-insensitive BuildCraft path exists, fail.
+        # Minecraft resource locations are lowercase-only. Checking the effective
+        # pack itself catches stale camelCase files even when no current registry
+        # entry references them (1.21 logs these as "Invalid path in pack").
+        bad_asset_paths = sorted(
+            rel for rel in resources
+            if rel.startswith("assets/") and rel != rel.lower()
+        )
+        if bad_asset_paths:
+            fail(f"{target}: non-lowercase asset path remains: {bad_asset_paths[0]}")
+
+        atlas_rel = "assets/minecraft/atlases/blocks.json"
+        if atlas_rel in resources:
+            atlas = json.loads(resources[atlas_rel].read_text(encoding="utf-8"))
+            lower = {rel.lower(): rel for rel in resources}
+            for index, source in enumerate(atlas.get("sources", [])):
+                if not isinstance(source, dict) or source.get("type") != "minecraft:single":
+                    continue
+                resource = source.get("resource")
+                if not isinstance(resource, str) or ":" not in resource:
+                    fail(f"{target}: atlas single source #{index} has invalid resource {resource!r}")
+                if resource != resource.lower():
+                    fail(f"{target}: atlas resource is not lowercase: {resource}")
+                namespace, path = resource.split(":", 1)
+                if not namespace.startswith("buildcraft"):
+                    continue
+                texture_rel = f"assets/{namespace}/textures/{path}.png"
+                if texture_rel not in resources:
+                    ci = lower.get(texture_rel.lower())
+                    suffix = f" (case-only candidate: {ci})" if ci else ""
+                    fail(f"{target}: atlas resource does not exist exactly: {resource}{suffix}")
+                sprite = source.get("sprite")
+                if sprite is not None:
+                    if not isinstance(sprite, str) or sprite != sprite.lower():
+                        fail(f"{target}: atlas sprite id is not lowercase: {sprite!r}")
+
+        lower = {rel.lower(): rel for rel in resources}
+
+        def validate_vanilla_element(rel: str, value) -> None:
+            if isinstance(value, dict):
+                for key in ("from", "to"):
+                    coords = value.get(key)
+                    if isinstance(coords, list) and any(not isinstance(v, (int, float)) for v in coords):
+                        fail(
+                            f"{target}: BuildCraft variable-model expression leaked into vanilla model "
+                            f"{rel}: {key}={coords!r}"
+                        )
+                rotation = value.get("rotation")
+                if isinstance(rotation, (int, float)) and rotation not in (0, 90, 180, 270):
+                    fail(f"{target}: invalid vanilla model face rotation in {rel}: {rotation}")
+                for child in value.values():
+                    validate_vanilla_element(rel, child)
+            elif isinstance(value, list):
+                for child in value:
+                    validate_vanilla_element(rel, child)
+
+        # BuildCraft's variable-model DSL is parsed by ModelHolderVariable and must
+        # live below assets/<namespace>/bcmodels, never the vanilla models tree.
+        # Newer clients enumerate model JSON eagerly and otherwise try to parse DSL
+        # expressions such as "pos" or "y1 * 12" as vanilla floats.
         for rel, model_path in resources.items():
-            if "/models/item/" not in rel or not rel.endswith(".json"):
+            if not rel.startswith("assets/") or "/models/" not in rel or not rel.endswith(".json"):
                 continue
             try:
                 model = json.loads(model_path.read_text(encoding="utf-8"))
             except Exception as exc:
-                fail(f"{target}: invalid item model {rel}: {exc}")
+                fail(f"{target}: invalid model JSON {rel}: {exc}")
+            if not isinstance(model, dict):
+                continue
+            leaked = [key for key in ("variables", "rules", "inlines") if key in model]
+            if leaked:
+                fail(f"{target}: BuildCraft variable-model DSL leaked into vanilla model {rel}: {leaked}")
+            validate_vanilla_element(rel, model)
+
+            parent = model.get("parent")
+            if isinstance(parent, str) and ":" in parent:
+                namespace, path = parent.split(":", 1)
+                if namespace.startswith("buildcraft") and path != path.lower():
+                    fail(f"{target}: uppercase BuildCraft model parent in {rel}: {parent}")
+
+            # Validate exact-case BuildCraft texture references in every vanilla
+            # model, not only item models.
             textures = model.get("textures")
             if not isinstance(textures, dict):
                 continue
@@ -95,15 +142,38 @@ def validate_atlases_and_case(props: dict[str, str]) -> None:
                 namespace, path = value.split(":", 1)
                 if not namespace.startswith("buildcraft"):
                     continue
+                if path != path.lower():
+                    fail(f"{target}: uppercase BuildCraft texture id in {rel}: {value}")
                 texture_rel = f"assets/{namespace}/textures/{path}.png"
                 if texture_rel in resources:
                     continue
                 ci = lower.get(texture_rel.lower())
-                if ci:
-                    fail(
-                        f"{target}: case-sensitive item texture miss in {rel}: "
-                        f"{value} -> actual {ci}"
-                    )
+                suffix = f" (case-only candidate: {ci})" if ci else ""
+                fail(f"{target}: model texture does not exist exactly in {rel}: {value}{suffix}")
+
+        # All variable models actually consumed by the runtime must stay in the
+        # dedicated non-vanilla resource directory on every target.
+        for required in (
+            "assets/buildcraftfactory/bcmodels/tiles/distiller.json",
+            "assets/buildcraftsilicon/bcmodels/plugs/gate.json",
+            "assets/buildcraftsilicon/bcmodels/plugs/gate_dynamic.json",
+            "assets/buildcraftsilicon/bcmodels/plugs/pulsar_dynamic.json",
+            "assets/buildcraftsilicon/bcmodels/plugs/lens.json",
+            "assets/buildcraftsilicon/bcmodels/plugs/filter.json",
+            "assets/buildcrafttransport/bcmodels/pipes/stripes.json",
+        ):
+            if required not in resources:
+                fail(f"{target}: missing BuildCraft variable-model resource {required}")
+
+        holder_expectations = {
+            "buildcraft/factory/BCFactoryModels.java": "buildcraftfactory:bcmodels/tiles/distiller.json",
+            "buildcraft/silicon/BCSiliconModels.java": ":bcmodels/",
+            "buildcraft/transport/BCTransportModels.java": "buildcrafttransport:bcmodels/",
+        }
+        for rel, token in holder_expectations.items():
+            java = effective_java(target, rel, props)
+            if token not in java:
+                fail(f"{target}: variable-model holder {rel} is not isolated below bcmodels ({token!r})")
 
 
 def validate_stack_parity(props: dict[str, str]) -> None:
@@ -564,6 +634,9 @@ def validate_ci_wiring() -> None:
         "Missing model for variant",
         'local var="JAVA_HOME_${major}_X64"',
         'local home="${!var:-}"',
+        "Invalid path in pack: buildcraft",
+        "resource_error_seen=1",
+        "collecting the rest of the reload before failing",
     ):
         if token not in client:
             fail(f"client smoke script lost {token!r}")

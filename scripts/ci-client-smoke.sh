@@ -117,9 +117,10 @@ client_pid=$!
 
 ready_regex='Created: .*minecraft:textures/atlas/blocks\.png-atlas|minecraft:textures/atlas/blocks\.png-atlas'
 fatal_regex='Mod loading has failed|Loading errors encountered|Exception caught during firing event|A fatal error has been detected|UnsupportedClassVersionError|NoClassDefFoundError|ExceptionInInitializerError|ReportedException: Rendering|Caught exception from BuildCraft|Crash report saved to'
-resource_regex='(Missing model for variant|Failed to load model|Unable to load model|Using missing texture, unable to load).*(buildcraft)|buildcraft.*(Missing model for variant|Failed to load model|Unable to load model|Using missing texture, unable to load)'
+resource_regex='(Missing model for variant|Failed to load model|Unable to load model|Using missing texture, unable to load).*(buildcraft)|buildcraft.*(Missing model for variant|Failed to load model|Unable to load model|Using missing texture, unable to load)|Invalid path in pack: buildcraft'
 deadline=$((SECONDS + startup_timeout))
 ready_at=0
+resource_error_seen=0
 
 while (( SECONDS < deadline )); do
   logs=("$client_log")
@@ -131,9 +132,10 @@ while (( SECONDS < deadline )); do
     exit 1
   fi
   if grep -Eiq "$resource_regex" "${logs[@]}" 2>/dev/null; then
-    echo "Client reported a BuildCraft missing-model/texture error."
-    show_tail
-    exit 1
+    if (( resource_error_seen == 0 )); then
+      echo "Client reported a BuildCraft resource/model error; collecting the rest of the reload before failing."
+    fi
+    resource_error_seen=1
   fi
 
   if (( ready_at == 0 )) && grep -Eiq "$ready_regex" "${logs[@]}" 2>/dev/null; then
@@ -142,6 +144,11 @@ while (( SECONDS < deadline )); do
   fi
 
   if (( ready_at > 0 && SECONDS - ready_at >= stability_seconds )); then
+    if (( resource_error_seen != 0 )); then
+      echo "Client completed model/atlas startup but BuildCraft resource/model errors were detected."
+      show_tail
+      exit 1
+    fi
     echo "Client smoke reached model/atlas-ready state and remained stable."
     exit 0
   fi

@@ -80,7 +80,7 @@ public class BCTransportModels {
     }
 
     private static ModelHolderVariable getModel(String str, FunctionContext fnCtx) {
-        return new ModelHolderVariable("buildcrafttransport:models/" + str , fnCtx);
+        return new ModelHolderVariable("buildcrafttransport:bcmodels/" + str , fnCtx);
     }
 
 
