@@ -3860,6 +3860,38 @@
     {
       "type": "minecraft:single",
       "resource": "buildcrafttransport:triggers/trigger_fe_limiter_m0"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis_down"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis_up"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis_north"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis_south"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis_west"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis_east"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "buildcraftcompat:pipes/propolis_itemstack"
     }
   ]
 }

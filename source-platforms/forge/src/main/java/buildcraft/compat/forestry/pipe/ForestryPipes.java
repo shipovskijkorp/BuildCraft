@@ -4,17 +4,22 @@ import buildcraft.transport.internal.pipe.PipeApi;
 import buildcraft.transport.internal.pipe.PipeDefinition;
 import buildcraft.transport.internal.pipe.PipeDefinition.PipeDefinitionBuilder;
 import buildcraft.compat.BuildCraftCompat;
+import buildcraft.transport.BCTransport;
 import buildcraft.transport.item.ItemPipeHolder;
 import buildcraft.transport.pipe.PipeRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Collection;
+import java.util.List;
 
 /** Content registered by the Forestry compatibility module. */
 public final class ForestryPipes {
@@ -43,6 +48,19 @@ public final class ForestryPipes {
 
         ITEMS.register(modBus);
         MENUS.register(modBus);
+
+        // Compat-owned items are not part of BCTransportItems, so modern creative tabs will not
+        // discover them automatically. Register the Apiarist's Pipe as an explicit BuildCraft
+        // pipes-tab provider. On 1.19.2 the item also has the tab in Item.Properties; the tab's
+        // duplicate filtering keeps this provider harmless and gives both Forge targets one path.
+        BCTransport.tabPipes.addItemProvider(ForestryPipes::getCreativeTabItems);
+    }
+
+    public static Collection<ItemStack> getCreativeTabItems() {
+        if (PROPOLIS_PIPE_ITEM == null || !PROPOLIS_PIPE_ITEM.isPresent()) {
+            return List.of();
+        }
+        return List.of(PROPOLIS_PIPE_ITEM.get().getDefaultInstance());
     }
 
     public static synchronized PipeDefinition getOrCreatePropolisPipe() {

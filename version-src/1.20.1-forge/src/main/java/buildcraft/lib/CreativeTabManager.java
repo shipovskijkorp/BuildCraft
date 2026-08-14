@@ -189,6 +189,7 @@ public final class CreativeTabManager {
             "buildcrafttransport:daizuli_item",
             "buildcrafttransport:emzuli_item",
             "buildcrafttransport:stripes_item",
+            "buildcraftcompat:pipe_item_propolis",
 
             // Fluid pipes
             "buildcrafttransport:wood_fluid",

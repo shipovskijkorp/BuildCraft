@@ -669,6 +669,39 @@ def validate_forestry_model_bake_mutation() -> None:
            "private static void onModelBake(ModelEvent.BakingCompleted event)")
 
 
+def validate_forestry_propolis_pipe_presentation() -> None:
+    pipes = "src/main/java/buildcraft/compat/forestry/pipe/ForestryPipes.java"
+    for target in ("1.19.2-forge", "1.20.1-forge"):
+        require(target, pipes,
+                "BCTransport.tabPipes.addItemProvider(ForestryPipes::getCreativeTabItems)",
+                "PROPOLIS_PIPE_ITEM.get().getDefaultInstance()")
+        require(target, "src/main/java/buildcraft/lib/CreativeTabManager.java",
+                '"buildcraftcompat:pipe_item_propolis"')
+
+    # 1.19.2 injects registered pipe sprites in TextureStitchEvent.Pre. Forge 1.20 removed
+    # that event, so every compat pipe sprite used by the dynamic model must be in the atlas JSON.
+    atlas = TARGETS["1.20.1-forge"] / "src/main/resources/assets/minecraft/atlases/blocks.json"
+    try:
+        document = json.loads(atlas.read_text(encoding="utf-8"))
+    except Exception as exc:
+        fail(f"1.20.1-forge: invalid blocks atlas while validating Forestry pipe: {exc}")
+        return
+    actual = {source.get("resource") for source in document.get("sources", []) if isinstance(source, dict)}
+    expected = {
+        "buildcraftcompat:pipes/propolis",
+        "buildcraftcompat:pipes/propolis_down",
+        "buildcraftcompat:pipes/propolis_up",
+        "buildcraftcompat:pipes/propolis_north",
+        "buildcraftcompat:pipes/propolis_south",
+        "buildcraftcompat:pipes/propolis_west",
+        "buildcraftcompat:pipes/propolis_east",
+        "buildcraftcompat:pipes/propolis_itemstack",
+    }
+    missing = sorted(expected - actual)
+    if missing:
+        fail(f"1.20.1-forge: Forestry Apiarist's Pipe sprites missing from block atlas: {missing}")
+
+
 def validate_forge_atlas_reload_caches() -> None:
     transport = "src/main/java/buildcraft/transport/BCTransportEventDist.java"
     silicon = "src/main/java/buildcraft/silicon/BCSilicon.java"
@@ -857,6 +890,7 @@ def main() -> None:
     validate_modpack_interop_fixes()
     validate_jei_facade_scalability()
     validate_forestry_model_bake_mutation()
+    validate_forestry_propolis_pipe_presentation()
     validate_forge_atlas_reload_caches()
     validate_pipe_pluggable_contract()
     validate_gametest_runtime_guards()
