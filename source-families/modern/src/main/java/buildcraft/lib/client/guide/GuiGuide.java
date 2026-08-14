@@ -90,6 +90,7 @@ public final class GuiGuide extends Screen {
     private static final int CONTENT_ENTRY_HEIGHT = 17;
     private static final int CONTENT_SUBHEADING_HEIGHT = 15;
     private static final int CONTENT_CHAPTER_HEIGHT = 19;
+    private static final int LOADED_GUIDES_PER_PAGE = 10;
 
     private static final GuiIcon CHAPTER_MARKER_ICON = new GuiIcon(ICONS, 0, 56, 32, 32);
     private static final GuiIcon CHAPTER_MARKER_LEFT_ICON = new GuiIcon(ICONS, 0, 56, 24, 32);
@@ -317,7 +318,7 @@ public final class GuiGuide extends Screen {
         for (GuideContent.Entry entry : content.getListedEntries()) {
             // The original item opens the main BuildCraft book. The three buildcraftlib:meta pages belong to the
             // separate configuration guide and must not leak into this contents tree.
-            if (!"buildcraftcore:main".equals(entry.book) || !MAIN_TYPE_ORDER.contains(entry.type)) {
+            if (!"buildcraftcore:main".equals(entry.book)) {
                 continue;
             }
             if (query.isEmpty() || entry.searchText.contains(query)) {
@@ -395,7 +396,8 @@ public final class GuiGuide extends Screen {
             page.lines.add(line);
             if (line.kind == ContentsLineKind.CHAPTER) {
                 contentsChapters.add(new ChapterTab(
-                    line.groupKey, line.component.getString(), line.colour, contentsPages.size() + 1
+                    line.groupKey, line.component.getString(), line.colour,
+                    firstContentsPageIndex() + contentsPages.size() - 1
                 ));
             }
             usedHeight += line.height;
@@ -403,14 +405,24 @@ public final class GuiGuide extends Screen {
     }
 
     private void appendTypeOrderedLines(List<ContentsLine> lines) {
-        for (String type : MAIN_TYPE_ORDER) {
-            List<GuideContent.Entry> typeEntries = filteredEntries.stream()
-                .filter(entry -> type.equals(entry.type))
-                .collect(Collectors.toList());
+        // Native BuildCraft chapters keep MAIN_TYPE_ORDER through the comparator. API2 sections are ordinary dynamic
+        // chapters appended after them in section/order registration order instead of being filtered out.
+        Map<String, List<GuideContent.Entry>> byType = new LinkedHashMap<>();
+        for (GuideContent.Entry entry : filteredEntries) {
+            byType.computeIfAbsent(entry.type, ignored -> new ArrayList<>()).add(entry);
+        }
+        for (Map.Entry<String, List<GuideContent.Entry>> type : byType.entrySet()) {
+            List<GuideContent.Entry> typeEntries = type.getValue();
             if (typeEntries.isEmpty()) continue;
 
-            String typeName = typeEntries.get(0).typeName();
-            lines.add(ContentsLine.chapter(type, typeName, chapterColour(type)));
+            GuideContent.Entry first = typeEntries.get(0);
+            lines.add(ContentsLine.chapter(type.getKey(), first.typeName(), chapterColour(type.getKey())));
+
+            // GuideSection is already the API2 grouping primitive. Avoid duplicating the same title as a subtype.
+            if (first.isApiGuide()) {
+                for (GuideContent.Entry entry : typeEntries) lines.add(ContentsLine.entry(entry));
+                continue;
+            }
 
             Map<String, List<GuideContent.Entry>> bySubtype = new LinkedHashMap<>();
             for (GuideContent.Entry entry : typeEntries) {
@@ -504,10 +516,10 @@ public final class GuiGuide extends Screen {
 
     private void updateSearchVisibility() {
         if (searchBox != null) {
-            searchBox.setVisible(view == View.CONTENTS && contentsSpread > 0);
+            int leftPage = contentsSpread * 2;
+            searchBox.setVisible(view == View.CONTENTS && isContentsEntryPage(leftPage));
             if (searchBox.isFocused()) {
-                // EditBox#setFocused(boolean) is protected in 1.19.2. Clicking outside the widget
-                // clears focus through its public input path without depending on protected API.
+                // EditBox#setFocused(boolean) is protected in 1.19.2. Clicking outside the widget clears focus.
                 searchBox.mouseClicked(-1, -1, 0);
             }
         }
@@ -557,15 +569,27 @@ public final class GuiGuide extends Screen {
         int firstPage = contentsSpread * 2;
         if (firstPage == 0) {
             renderContentsIntroLeft(guiGraphics, mouseX, mouseY);
-            renderContentsIntroRight(guiGraphics);
         } else {
-            renderContentsPage(guiGraphics, firstPage, left + 23, mouseX, mouseY);
-            renderContentsPage(guiGraphics, firstPage + 1, left + PAGE_TEXTURE_WIDTH + 4, mouseX, mouseY);
+            renderContentsLogicalPage(guiGraphics, firstPage, left + 23, mouseX, mouseY);
         }
-        // BC8 draws the search tab on every even page, including the title page. The ordering buttons only appear
-        // once the actual contents start on page three.
-        renderContentsSearch(guiGraphics, mouseX, mouseY, firstPage > 0);
+        renderContentsLogicalPage(guiGraphics, firstPage + 1, left + PAGE_TEXTURE_WIDTH + 4, mouseX, mouseY);
+
+        boolean leftIsContents = isContentsEntryPage(firstPage);
+        if (firstPage == 0 || leftIsContents) {
+            renderContentsSearch(guiGraphics, mouseX, mouseY, leftIsContents);
+        }
         renderContentsChapters(guiGraphics, mouseX, mouseY);
+    }
+
+    private void renderContentsLogicalPage(GuiGraphics guiGraphics, int individualPage, int pageX,
+        int mouseX, int mouseY) {
+        if (individualPage <= 0 || individualPage >= currentContentsPageCount()) return;
+        int loadedPage = individualPage - 1;
+        if (loadedPage < loadedGuidePageCount()) {
+            renderLoadedGuidesPage(guiGraphics, loadedPage, pageX);
+        } else {
+            renderContentsPage(guiGraphics, individualPage, pageX, mouseX, mouseY);
+        }
     }
 
     private void renderContentsIntroLeft(GuiGraphics guiGraphics, int mouseX, int mouseY) {
@@ -605,41 +629,26 @@ public final class GuiGuide extends Screen {
         }));
     }
 
-    private void renderContentsIntroRight(GuiGraphics guiGraphics) {
-        int pageX = left + PAGE_TEXTURE_WIDTH + 4;
-        List<String> modules = new ArrayList<>();
-        addLoadedModule(modules, "buildcraftcore", "BuildCraft Core");
-        addLoadedModule(modules, "buildcraftbuilders", "BuildCraft Builders");
-        addLoadedModule(modules, "buildcraftenergy", "BuildCraft Energy");
-        addLoadedModule(modules, "buildcraftfactory", "BuildCraft Factory");
-        addLoadedModule(modules, "buildcraftrobotics", "BuildCraft Robotics");
-        addLoadedModule(modules, "buildcraftsilicon", "BuildCraft Silicon");
-        addLoadedModule(modules, "buildcrafttransport", "BuildCraft Transport");
-        addLoadedModule(modules, "buildcraftcompat", "BuildCraft Compat");
+    private void renderLoadedGuidesPage(GuiGraphics guiGraphics, int loadedPage, int pageX) {
+        List<String> sources = content.getLoadedGuideSources();
+        int from = loadedPage * LOADED_GUIDES_PER_PAGE;
+        int to = Math.min(sources.size(), from + LOADED_GUIDES_PER_PAGE);
 
         int perLineHeight = font.lineHeight + 3;
-        int blockHeight = (modules.size() + 1) * perLineHeight;
+        int visible = Math.max(0, to - from);
+        int blockHeight = (visible + 1) * perLineHeight;
         int y = top + PAGE_TEXT_TOP + (PAGE_TEXT_HEIGHT - blockHeight) / 2;
-        Component heading = Component.translatable("buildcraft.guide.contents.loaded_modules").withStyle(ChatFormatting.BOLD);
+        Component heading = Component.translatable("buildcraft.guide.contents.loaded").withStyle(ChatFormatting.BOLD);
         drawCentred(guiGraphics, heading, pageX, y, PAGE_TEXT_WIDTH, 0x17120E);
         y += perLineHeight;
-        for (String module : modules) {
-            drawCentred(guiGraphics, Component.literal(module), pageX, y, PAGE_TEXT_WIDTH, TEXT_COLOUR);
+        for (int index = from; index < to; index++) {
+            drawCentred(guiGraphics, Component.literal(sources.get(index)), pageX, y, PAGE_TEXT_WIDTH, TEXT_COLOUR);
             y += perLineHeight;
         }
     }
 
-    private void addLoadedModule(List<String> modules, String id, String displayName) {
-        for (GuideContent.Entry entry : content.getListedEntries()) {
-            if ("buildcraftcore:main".equals(entry.book) && id.equals(entry.module)) {
-                modules.add(displayName);
-                return;
-            }
-        }
-    }
-
     private void renderContentsPage(GuiGraphics guiGraphics, int individualPage, int pageX, int mouseX, int mouseY) {
-        int contentIndex = individualPage - 2;
+        int contentIndex = individualPage - firstContentsPageIndex();
         if (contentIndex < 0 || contentIndex >= contentsPages.size()) return;
         ContentsPage page = contentsPages.get(contentIndex);
         for (ContentsLine line : page.lines) {
@@ -664,7 +673,7 @@ public final class GuiGuide extends Screen {
             searchBox.render(guiGraphics, mouseX, mouseY, 0);
             clickRegions.add(new ClickRegion(pageX - 2, top + 3, 106, 16, () -> {
                 if (contentsSpread == 0) {
-                    contentsSpread = Math.min(1, maxContentsSpread());
+                    contentsSpread = Math.min(firstFullContentsSpread(), maxContentsSpread());
                     updateSearchVisibility();
                     persistGuideState();
                 }
@@ -1175,6 +1184,15 @@ public final class GuiGuide extends Screen {
 
         void addRecipeTag(@Nullable String tagType, @Nullable String rawStack, java.util.Map<String, String> attributes) {
             if (tagType == null) return;
+            if ("recipe_id".equals(tagType)) {
+                ResourceLocation recipeId = ResourceLocation.tryParse(rawStack);
+                if (recipeId == null) return;
+                allGuideRecipes().stream()
+                    .filter(recipe -> recipeId.equals(recipe.id()))
+                    .findFirst()
+                    .ifPresent(recipe -> addRecipe(recipe, ItemStack.EMPTY));
+                return;
+            }
             ItemStack stack = GuideContent.resolveStackForTag(rawStack, attributes);
             if (stack.isEmpty()) return;
             List<GuideRecipe> recipes = recipesFor(stack);
@@ -1590,7 +1608,7 @@ public final class GuiGuide extends Screen {
 
     private int currentPageCount() {
         if (view == View.CONTENTS) {
-            return Math.max(2, 2 + contentsPages.size());
+            return currentContentsPageCount();
         }
         return document == null ? 0 : Math.max(1, document.pages.size());
     }
@@ -1638,7 +1656,26 @@ public final class GuiGuide extends Screen {
     }
 
     private int currentContentsPageCount() {
-        return Math.max(2, 2 + contentsPages.size());
+        return Math.max(2, firstContentsPageIndex() + contentsPages.size());
+    }
+
+    private int loadedGuidePageCount() {
+        int size = content.getLoadedGuideSources().size();
+        return Math.max(1, (size + LOADED_GUIDES_PER_PAGE - 1) / LOADED_GUIDES_PER_PAGE);
+    }
+
+    private int firstContentsPageIndex() {
+        return 1 + loadedGuidePageCount();
+    }
+
+    private boolean isContentsEntryPage(int pageIndex) {
+        int first = firstContentsPageIndex();
+        return pageIndex >= first && pageIndex < first + contentsPages.size();
+    }
+
+    private int firstFullContentsSpread() {
+        // Search/sort widgets are anchored to the left page. Skip any Loaded-list continuation on that side.
+        return (firstContentsPageIndex() + 1) / 2;
     }
 
     @Override

@@ -221,6 +221,19 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
+    void apiGuideCanAddressOneExactRecipeById() {
+        GuideDocument document = GuideDocument.parse(
+            "<recipe_id id=\"api_v2_test:moon_quarry\"/>", true, false, false
+        );
+        GuideDocument.Block recipe = document.blocks.stream()
+            .filter(block -> block.kind == GuideDocument.Kind.RECIPES)
+            .findFirst()
+            .orElseThrow();
+        Assertions.assertEquals("recipe_id", recipe.secondary);
+        Assertions.assertEquals("api_v2_test:moon_quarry", recipe.target);
+    }
+
+    @Test
     void originalGuideRegistrySourcesAndInterfaceTexturesAreBundled() throws Exception {
         String[] namespaces = {
             "buildcraftlib", "buildcraftcore", "buildcraftbuilders", "buildcraftenergy",

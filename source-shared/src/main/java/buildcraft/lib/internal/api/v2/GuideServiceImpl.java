@@ -14,7 +14,7 @@ import java.util.Optional;
 import net.minecraft.resources.ResourceLocation;
 
 /** Internal storage/merge backend for code-owned Guide Book contributions. */
-public final class GuideServiceImpl implements GuideService {
+public final class GuideServiceImpl implements GuideService, GuideOwnershipView {
     private final Map<ResourceLocation, GuideSection> sections = new LinkedHashMap<>();
     private final Map<ResourceLocation, GuideEntry> entries = new LinkedHashMap<>();
     private final Map<ResourceLocation, String> sectionOwners = new LinkedHashMap<>();
@@ -77,6 +77,16 @@ public final class GuideServiceImpl implements GuideService {
         }
         result.sort(Comparator.comparingInt(GuideEntry::order).thenComparing(value -> value.id().toString()));
         return List.copyOf(result);
+    }
+
+    @Override
+    public synchronized Optional<String> ownerOfSection(ResourceLocation id) {
+        return Optional.ofNullable(sectionOwners.get(Objects.requireNonNull(id, "id")));
+    }
+
+    @Override
+    public synchronized Optional<String> ownerOfEntry(ResourceLocation id) {
+        return Optional.ofNullable(entryOwners.get(Objects.requireNonNull(id, "id")));
     }
 
     private static String owner(RegistrationContext context) {

@@ -11,10 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +45,7 @@ import buildcraft.api.v2.guide.GuideEntry;
 import buildcraft.api.v2.guide.GuidePage;
 import buildcraft.api.v2.guide.GuideSection;
 import buildcraft.api.v2.guide.GuideService;
+import buildcraft.lib.internal.api.v2.GuideOwnershipView;
 import buildcraft.lib.misc.ItemStackUtil;
 import buildcraft.lib.internal.statement.IStatement;
 import buildcraft.lib.internal.statement.StatementManager;
@@ -59,10 +62,12 @@ public final class GuideContent {
     private static final Pattern FIRST_CHAPTER = Pattern.compile("<chapter\\s+name=\"([^\"]+)\"[^>]*/>");
     private static final Pattern FIRST_HEADING = Pattern.compile("(?m)^#+\\s+(.+)$");
     private static final Pattern TAGS = Pattern.compile("<[^>]+>");
+    private static final String API_SECTION_TYPE_PREFIX = "api_section/";
 
     private final List<Entry> allEntries;
     private final List<Entry> listedEntries;
     private final Map<ResourceLocation, Entry> byId;
+    private final List<String> loadedGuideSources;
 
     private GuideContent(List<Entry> entries) {
         allEntries = Collections.unmodifiableList(entries);
@@ -76,6 +81,7 @@ public final class GuideContent {
         }
         listedEntries = Collections.unmodifiableList(listed);
         byId = Collections.unmodifiableMap(ids);
+        loadedGuideSources = Collections.unmodifiableList(buildLoadedGuideSources(entries));
     }
 
     public static GuideContent load() {
@@ -137,31 +143,104 @@ public final class GuideContent {
         Optional<GuideService> optional = BuildCraftApi.runtime().service(BuildCraftServices.GUIDE);
         if (optional.isEmpty()) return;
         GuideService guide = optional.get();
+        Set<ResourceLocation> appended = new LinkedHashSet<>();
+
+        // Sections are the public Guide API's ordering/grouping primitive. Walking them first makes section.order()
+        // authoritative in the native contents tree, while entries(section) already honours GuideEntry.order().
+        for (GuideSection section : guide.sections()) {
+            for (GuideEntry apiEntry : guide.entries(section.id())) {
+                appendApiEntry(entries, guide, apiEntry, section);
+                appended.add(apiEntry.id());
+            }
+        }
+        // Keep malformed/forward-compatible contributions reachable even if their section was not registered.
         for (GuideEntry apiEntry : guide.entries()) {
-            boolean duplicate = entries.stream().anyMatch(existing -> existing.id.equals(apiEntry.id()));
-            if (duplicate) {
-                BCLog.logger.warn("[lib.guide] Ignoring API v2 guide entry {} because that id is already present", apiEntry.id());
+            if (appended.add(apiEntry.id())) {
+                appendApiEntry(entries, guide, apiEntry, guide.section(apiEntry.section()).orElse(null));
+            }
+        }
+    }
+
+    private static void appendApiEntry(List<Entry> entries, GuideService guide, GuideEntry apiEntry,
+        @Nullable GuideSection section) {
+        boolean duplicate = entries.stream().anyMatch(existing -> existing.id.equals(apiEntry.id()));
+        if (duplicate) {
+            BCLog.logger.warn("[lib.guide] Ignoring API v2 guide entry {} because that id is already present", apiEntry.id());
+            return;
+        }
+
+        String owner = guideOwner(guide, apiEntry);
+        String sectionKey = section == null ? apiEntry.section().toString() : section.id().toString();
+        String sectionTitle = section == null
+            ? titleCase(apiEntry.section().getPath())
+            : guideSectionTitle(guide, section);
+        String title = translateOrLiteral(apiEntry.titleKey());
+        String stackId = apiEntry.icon().map(ResourceLocation::toString).orElse(null);
+        entries.add(new Entry(
+            apiEntry.id(),
+            apiEntry.id().toString(),
+            owner,
+            API_SECTION_TYPE_PREFIX + sectionKey,
+            sectionTitle,
+            title,
+            "buildcraftcore:main",
+            true,
+            stackId,
+            null,
+            resolveStack(stackId, null),
+            renderApiPages(apiEntry)
+        ));
+    }
+
+    private static String guideOwner(GuideService guide, GuideEntry entry) {
+        if (guide instanceof GuideOwnershipView ownership) {
+            return ownership.ownerOfEntry(entry.id()).orElse(entry.id().getNamespace());
+        }
+        return entry.id().getNamespace();
+    }
+
+    private static String guideSectionTitle(GuideService guide, GuideSection leaf) {
+        List<String> path = new ArrayList<>();
+        Set<ResourceLocation> visited = new LinkedHashSet<>();
+        GuideSection section = leaf;
+        while (section != null && visited.add(section.id())) {
+            path.add(0, translateOrLiteral(section.titleKey()));
+            section = section.parent().flatMap(guide::section).orElse(null);
+        }
+        return String.join(" / ", path);
+    }
+
+    private static List<String> buildLoadedGuideSources(List<Entry> entries) {
+        boolean hasBuildCraft = false;
+        Set<String> addonOwners = new LinkedHashSet<>();
+        for (Entry entry : entries) {
+            if (!entry.listed || !"buildcraftcore:main".equals(entry.book)) continue;
+            if (entry.isApiGuide()) {
+                addonOwners.add(entry.module);
+            } else if (entry.module.startsWith("buildcraft")) {
+                hasBuildCraft = true;
+            }
+        }
+        List<String> result = new ArrayList<>();
+        if (hasBuildCraft) result.add("BuildCraft");
+        for (String owner : addonOwners) {
+            // An official BuildCraft module that contributes through API2 is still displayed as one BuildCraft guide.
+            if (owner.startsWith("buildcraft")) {
+                if (!result.contains("BuildCraft")) result.add(0, "BuildCraft");
                 continue;
             }
-            GuideSection section = guide.section(apiEntry.section()).orElse(null);
-            String subtype = section == null ? apiEntry.section().getPath() : translateOrLiteral(section.titleKey());
-            String title = translateOrLiteral(apiEntry.titleKey());
-            String stackId = apiEntry.icon().map(ResourceLocation::toString).orElse(null);
-            entries.add(new Entry(
-                apiEntry.id(),
-                apiEntry.id().toString(),
-                apiEntry.id().getNamespace(),
-                "addon",
-                subtype,
-                title,
-                "buildcraftcore:main",
-                true,
-                stackId,
-                null,
-                resolveStack(stackId, null),
-                renderApiPages(apiEntry)
-            ));
+            result.add(modDisplayName(owner));
         }
+        return result;
+    }
+
+    private static String modDisplayName(String modId) {
+        if (modId == null || modId.isBlank()) return "Unknown";
+        if (modId.startsWith("buildcraft")) return "BuildCraft";
+        return ModList.get().getModContainerById(modId)
+            .map(container -> container.getModInfo().getDisplayName())
+            .filter(name -> name != null && !name.isBlank())
+            .orElse(modId);
     }
 
     private static String renderApiPages(GuideEntry entry) {
@@ -186,7 +265,7 @@ public final class GuideContent {
                 markdown.append(translateOrLiteral(item.textKey())).append('\n')
                     .append("<recipes_usages stack=\"").append(item.itemId()).append("\"/>\n");
             } else if (page instanceof GuidePage.Recipe recipe) {
-                markdown.append("Recipe: ").append(recipe.recipeId()).append('\n');
+                markdown.append("<recipe_id id=\"").append(recipe.recipeId()).append("\"/>\n");
             }
         }
         return markdown.toString();
@@ -376,6 +455,11 @@ public final class GuideContent {
         return listedEntries;
     }
 
+    /** BuildCraft first, followed by addons that actually contributed API2 guide entries. */
+    public List<String> getLoadedGuideSources() {
+        return loadedGuideSources;
+    }
+
     @Nullable
     public Entry get(ResourceLocation id) {
         return byId.get(id);
@@ -434,11 +518,20 @@ public final class GuideContent {
             this.statement = statement;
             this.stack = stack;
             this.markdown = markdown;
-            this.searchText = (title() + " " + id + " " + moduleName() + " " + plainText(markdown))
-                .toLowerCase(Locale.ROOT);
+            this.searchText = (title() + " " + id + " " + moduleName() + " " + typeName() + " "
+                + subtypeName() + " " + plainText(markdown)).toLowerCase(Locale.ROOT);
+        }
+
+        public boolean isApiGuide() {
+            return type.startsWith(API_SECTION_TYPE_PREFIX);
         }
 
         public String title() {
+            // API2 explicitly supplies a title key. The icon is only an icon and must not silently replace that title
+            // with the hovered item name. Native BC8 entries keep their original stack/statement naming rules.
+            if (isApiGuide()) {
+                return name;
+            }
             if (!stack.isEmpty()) {
                 return stack.getHoverName().getString();
             }
@@ -475,16 +568,18 @@ public final class GuideContent {
                 if (!translated.startsWith("buildcraft.guide.")) return translated;
                 return "BuildCraft " + Character.toUpperCase(suffix.charAt(0)) + suffix.substring(1);
             }
-            return module;
+            return modDisplayName(module);
         }
 
         public String typeName() {
+            if (isApiGuide()) return subtype;
             String key = "buildcraft.guide.chapter.type." + type;
             String translated = translateOrLiteral(key);
             return translated.equals(key) ? titleCase(type) : translated;
         }
 
         public String subtypeName() {
+            if (isApiGuide()) return subtype;
             String key = "buildcraft.guide.chapter.subtype." + subtype;
             String translated = translateOrLiteral(key);
             return translated.equals(key) ? titleCase(subtype) : translated;

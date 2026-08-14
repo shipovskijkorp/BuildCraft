@@ -153,6 +153,9 @@ public final class GuideDocument {
                     case "recipes_usages":
                         blocks.add(Block.recipes(parsed.name, parsed.attributes.get("stack"), parsed.attributes));
                         continue;
+                    case "recipe_id":
+                        blocks.add(Block.recipes(parsed.name, parsed.attributes.get("id"), parsed.attributes));
+                        continue;
                     case "group":
                         // No production BC8 pages currently depend on dynamic registry groups. Preserve the tag visibly
                         // instead of silently discarding content if an addon supplies one later.
