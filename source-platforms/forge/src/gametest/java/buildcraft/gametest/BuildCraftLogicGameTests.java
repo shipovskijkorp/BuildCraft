@@ -1,5 +1,8 @@
 package buildcraft.gametest;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.UUID;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
@@ -7,6 +10,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import io.netty.buffer.Unpooled;
+
+import com.mojang.authlib.GameProfile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,6 +23,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,6 +34,32 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.builders.BCBuildersBlocks;
+import buildcraft.builders.snapshot.ITileForTemplateBuilder;
+import buildcraft.builders.snapshot.SchematicBlockDefault;
+import buildcraft.builders.snapshot.SnapshotBuilder;
+import buildcraft.builders.snapshot.TemplateBuilder;
+import buildcraft.builders.tile.TileQuarry;
+import buildcraft.core.BCCoreBlocks;
+import buildcraft.core.BCCoreConfig;
+import buildcraft.core.BCCoreItems;
+import buildcraft.energy.BCEnergyBlocks;
+import buildcraft.energy.tile.TileDynamoMJ;
+import buildcraft.energy.tile.TileEngineFE;
+import buildcraft.factory.BCFactoryBlocks;
+import buildcraft.factory.tile.TilePump;
+import buildcraft.lib.BCLibConfig;
+import buildcraft.lib.internal.core.InvalidInputDataException;
+import buildcraft.lib.internal.enums.EnumEngineType;
+import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.lib.internal.properties.BuildCraftProperties;
+import buildcraft.transport.BCTransportBlocks;
+import buildcraft.transport.block.BlockPipeHolder;
 
 import buildcraft.builders.internal.filler.legacy.FillerManager;
 import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
@@ -407,6 +441,456 @@ public final class BuildCraftLogicGameTests {
         first.setCount(99);
         require(helper, rules.mappedStack(state).orElseThrow().getCount() == 2, "facade mapped stack was not defensively copied");
         helper.succeed();
+    }
+
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 40)
+    public static void pumpPreservesDetectedInfiniteWaterSource(GameTestHelper helper) {
+        boolean previous = BCCoreConfig.pumpsConsumeWater;
+        try {
+            BCCoreConfig.pumpsConsumeWater = false;
+            BlockPos pumpPos = new BlockPos(1, 4, 1);
+            BlockPos waterPos = new BlockPos(1, 2, 1);
+            BlockPos[] sources = {
+                waterPos,
+                waterPos.east(),
+                waterPos.south(),
+                waterPos.east().south()
+            };
+            for (BlockPos source : sources) {
+                helper.setBlock(source.below(), Blocks.STONE.defaultBlockState());
+                helper.setBlock(source, Blocks.WATER.defaultBlockState());
+            }
+            helper.setBlock(pumpPos, BCFactoryBlocks.PUMP_BLOCK.get().defaultBlockState());
+            BlockEntity blockEntity = helper.getBlockEntity(pumpPos);
+            require(helper, blockEntity instanceof TilePump, "pump block did not create TilePump");
+            TilePump pump = (TilePump) blockEntity;
+
+            invoke(pump, "beginQueueBuild");
+            for (int i = 0; i < 32 && readBooleanField(pump, "scanInProgress"); i++) {
+                invoke(pump, "continueQueueBuild");
+            }
+            require(helper, !readBooleanField(pump, "scanInProgress"), "pump fluid scan did not finish");
+            require(helper, readBooleanField(pump, "isInfiniteWaterSource"), "2x2 vanilla source was not detected as infinite water");
+
+            int sourcesBefore = countWaterSources(helper, sources);
+            MjBattery battery = (MjBattery) readField(pump, "battery");
+            battery.addPower(20L * MjAmount.MICRO_MJ_PER_MJ, FluidAction.EXECUTE);
+            pump.mine();
+            Tank tank = (Tank) readField(pump, "tank");
+
+            require(helper, tank.getFluidAmount() == 1_000, "pump did not produce one bucket from the infinite source");
+            require(helper, countWaterSources(helper, sources) == sourcesBefore,
+                "pump consumed a vanilla infinite-water source while pumpsConsumeWater=false");
+        } finally {
+            BCCoreConfig.pumpsConsumeWater = previous;
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void fillerTreatsReplaceableBlocksAsPlacementTargets(GameTestHelper helper) {
+        BlockPos target = new BlockPos(1, 1, 1);
+        helper.setBlock(target.below(), Blocks.STONE.defaultBlockState());
+        helper.setBlock(target, Blocks.SNOW.defaultBlockState());
+        BlockPos absolute = helper.absolutePos(target);
+        ProbeTemplateBuilder builder = new ProbeTemplateBuilder(new ProbeTemplateTile(helper.getLevel(), absolute));
+
+        require(helper, builder.canPlaceAt(absolute), "filler rejected a replaceable snow layer as a placement target");
+        helper.setBlock(target, Blocks.STONE.defaultBlockState());
+        require(helper, !builder.canPlaceAt(absolute), "filler treated a solid stone block as directly placeable");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void quarryFluidTraversalKeepsWaterPassableButMinesLavaAndWaterloggedBlocks(GameTestHelper helper) {
+        TileQuarry quarry = placeQuarry(helper, new BlockPos(1, 1, 1));
+        BlockPos water = new BlockPos(3, 1, 1);
+        BlockPos lava = new BlockPos(4, 1, 1);
+        BlockPos waterlogged = new BlockPos(5, 1, 1);
+        helper.setBlock(water, Blocks.WATER.defaultBlockState());
+        helper.setBlock(lava, Blocks.LAVA.defaultBlockState());
+        helper.setBlock(waterlogged, Blocks.OAK_SLAB.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, true));
+
+        require(helper, invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(water)),
+            "quarry drill no longer moves through standalone water");
+        require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(lava)),
+            "quarry drill incorrectly moves through high-viscosity lava");
+        require(helper, invokeBoolean(quarry, "canMine", helper.absolutePos(lava)),
+            "quarry silently skips lava instead of handling it as mineable work");
+        require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(waterlogged)),
+            "quarry incorrectly treats a waterlogged solid block as standalone water");
+        require(helper, invokeBoolean(quarry, "canMine", helper.absolutePos(waterlogged)),
+            "quarry cannot mine the solid part of a waterlogged block");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void quarryFramePlannerReplacesFluidsAndExcavatesSolidObstacles(GameTestHelper helper) {
+        TileQuarry quarry = placeQuarry(helper, new BlockPos(1, 1, 1));
+        BlockPos water = new BlockPos(3, 1, 1);
+        BlockPos stone = new BlockPos(4, 1, 1);
+        BlockPos frame = new BlockPos(5, 1, 1);
+        helper.setBlock(water, Blocks.WATER.defaultBlockState());
+        helper.setBlock(stone, Blocks.STONE.defaultBlockState());
+        helper.setBlock(frame, BCBuildersBlocks.FRAME.get().defaultBlockState());
+
+        require(helper, !invokeBoolean(quarry, "canIgnoreInFrameBox", helper.absolutePos(water)),
+            "quarry frame planner classified fluid as a solid obstacle instead of replacing it with frame");
+        require(helper, invokeBoolean(quarry, "canIgnoreInFrameBox", helper.absolutePos(stone)),
+            "quarry frame planner no longer schedules solid obstacles for excavation");
+        require(helper, invokeBoolean(quarry, "canIgnoreInFrameBox", helper.absolutePos(frame)),
+            "existing frame unexpectedly stopped being a normal non-fluid frame-box block");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void schematicPlacementHonoursVanillaCanSurvive(GameTestHelper helper) {
+        ProbeSchematicBlock schematic = new ProbeSchematicBlock(Blocks.OAK_SAPLING.defaultBlockState());
+        BlockPos target = new BlockPos(2, 2, 2);
+        BlockPos absolute = helper.absolutePos(target);
+
+        helper.setBlock(target, Blocks.AIR.defaultBlockState());
+        helper.setBlock(target.below(), Blocks.STONE.defaultBlockState());
+        require(helper, !schematic.canBuild(helper.getLevel(), absolute),
+            "schematic allowed a sapling on an invalid support block");
+        require(helper, !schematic.build(helper.getLevel(), absolute),
+            "schematic built a block whose vanilla state cannot survive");
+
+        helper.setBlock(target.below(), Blocks.DIRT.defaultBlockState());
+        require(helper, schematic.canBuild(helper.getLevel(), absolute),
+            "schematic rejected a sapling with valid dirt support");
+        require(helper, schematic.build(helper.getLevel(), absolute), "schematic failed a valid canSurvive placement");
+        require(helper, helper.getLevel().getBlockState(absolute).is(Blocks.OAK_SAPLING),
+            "valid schematic placement produced the wrong block");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void schematicLeavesBecomePersistentAfterSerializationRoundTrip(GameTestHelper helper) {
+        BlockState capturedLeaves = Blocks.OAK_LEAVES.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, false);
+        ProbeSchematicBlock original = new ProbeSchematicBlock(capturedLeaves);
+        ProbeSchematicBlock restored = new ProbeSchematicBlock();
+        try {
+            restored.deserializeNBT(original.serializeNBT());
+        } catch (InvalidInputDataException e) {
+            helper.fail("schematic leaves failed NBT round-trip: " + e.getMessage());
+            return;
+        }
+
+        BlockPos target = new BlockPos(2, 2, 2);
+        BlockPos absolute = helper.absolutePos(target);
+        helper.setBlock(target, Blocks.AIR.defaultBlockState());
+        require(helper, restored.build(helper.getLevel(), absolute), "restored leaf schematic failed to build");
+        BlockState placed = helper.getLevel().getBlockState(absolute);
+        require(helper, placed.is(Blocks.OAK_LEAVES), "restored leaf schematic placed the wrong block");
+        require(helper, placed.getValue(BlockStateProperties.PERSISTENT),
+            "blueprint-built leaves were not forced persistent and may decay immediately");
+        require(helper, restored.isBuilt(helper.getLevel(), absolute),
+            "schematic did not recognise its persistent leaf placement as complete");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void commonWrenchTagToggleControlsExternalTaggedItemsOnly(GameTestHelper helper) {
+        boolean previous = BCLibConfig.useWrenchTag;
+        try {
+            ItemStack externalTaggedWrench = new ItemStack(Items.STICK);
+            ItemStack buildCraftWrench = new ItemStack(BCCoreItems.WRENCH.get());
+            BCLibConfig.useWrenchTag = true;
+            require(helper, BuildCraftApi.service(BuildCraftServices.WRENCHES).isWrench(externalTaggedWrench),
+                "GameTest c:tools/wrench item was not accepted while useWrenchTag=true");
+
+            BCLibConfig.useWrenchTag = false;
+            require(helper, !BuildCraftApi.service(BuildCraftServices.WRENCHES).isWrench(externalTaggedWrench),
+                "external c:tools/wrench item remained accepted while useWrenchTag=false");
+            require(helper, BuildCraftApi.service(BuildCraftServices.WRENCHES).isWrench(buildCraftWrench),
+                "native BuildCraft wrench was incorrectly disabled together with the common tag");
+        } finally {
+            BCLibConfig.useWrenchTag = previous;
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void pipeHolderWaterloggingPreservesTheWaterFluidState(GameTestHelper helper) {
+        BlockPos pipePos = new BlockPos(2, 1, 2);
+        BlockState waterlogged = BCTransportBlocks.pipeHolder.get().defaultBlockState()
+            .setValue(BlockPipeHolder.WATERLOGGED, true);
+        helper.setBlock(pipePos, waterlogged);
+        BlockPos absolute = helper.absolutePos(pipePos);
+
+        require(helper, helper.getLevel().getBlockState(absolute).getValue(BlockPipeHolder.WATERLOGGED),
+            "pipe holder lost WATERLOGGED=true after placement");
+        require(helper, helper.getLevel().getFluidState(absolute).isSource()
+                && helper.getLevel().getFluidState(absolute).getType() == Fluids.WATER,
+            "waterlogged pipe holder does not expose a vanilla water source fluid state");
+
+        helper.setBlock(pipePos.east(), Blocks.STONE.defaultBlockState());
+        require(helper, helper.getLevel().getBlockState(absolute).getValue(BlockPipeHolder.WATERLOGGED),
+            "pipe holder lost waterlogging after a neighbour update");
+        require(helper, helper.getLevel().getFluidState(absolute).getType() == Fluids.WATER,
+            "neighbour update removed water from a waterlogged pipe holder");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 30)
+    public static void feMjConverterRoundTripConservesEnergy(GameTestHelper helper) {
+        TileEngineFE engine = placeFeEngine(helper, new BlockPos(1, 1, 1));
+        TileDynamoMJ dynamo = placeMjDynamo(helper, new BlockPos(3, 1, 1));
+        engine.isRedstonePowered = true;
+        dynamo.isRedstonePowered = true;
+
+        long ratio = BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjPerFe();
+        require(helper, ratio > 0, "FE/MJ conversion ratio is not positive");
+        long inserted = engine.externalEnergyPort(Direction.NORTH).orElseThrow().insert(80, OperationMode.EXECUTE);
+        require(helper, inserted == 80, "FE Engine did not accept the test FE input");
+
+        invoke(engine, "burn");
+        long generatedMj = engine.getEnergyStored();
+        require(helper, generatedMj > 0 && generatedMj % ratio == 0,
+            "FE Engine produced an invalid MJ amount for the configured conversion ratio");
+
+        var extracted = engine.mjPort(Direction.UP).orElseThrow()
+            .extract(MjAmount.ofMicro(generatedMj), OperationMode.EXECUTE);
+        require(helper, extracted.completed(), "FE Engine API2 MJ output did not extract all generated MJ");
+        var acceptedMj = dynamo.mjPort(Direction.NORTH).orElseThrow()
+            .insert(extracted.transferred(), OperationMode.EXECUTE);
+        require(helper, acceptedMj.completed(), "MJ Dynamo API2 input rejected generated MJ");
+        invoke(dynamo, "burn");
+
+        require(helper, engine.getEnergyStored() == 0, "FE Engine retained MJ after complete extraction");
+        require(helper, dynamo.getMjStored() == 0, "MJ Dynamo retained convertible MJ after burn");
+        require(helper, engine.getCurrentFe() + dynamo.getCurrentFe() == 80,
+            "FE -> MJ -> FE round-trip created or destroyed integer FE units");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void feMjConverterSimulationDoesNotMutateMachineBuffers(GameTestHelper helper) {
+        TileEngineFE engine = placeFeEngine(helper, new BlockPos(1, 1, 1));
+        TileDynamoMJ dynamo = placeMjDynamo(helper, new BlockPos(3, 1, 1));
+        long offeredMj = 4L * MjAmount.MICRO_MJ_PER_MJ;
+
+        long simulatedFe = engine.externalEnergyPort(Direction.NORTH).orElseThrow().insert(80, OperationMode.SIMULATE);
+        require(helper, simulatedFe == 80, "FE Engine simulation reported the wrong accepted amount");
+        require(helper, engine.getCurrentFe() == 0, "FE Engine simulation mutated its FE buffer");
+
+        var simulatedMj = dynamo.mjPort(Direction.NORTH).orElseThrow()
+            .insert(MjAmount.ofMicro(offeredMj), OperationMode.SIMULATE);
+        require(helper, simulatedMj.completed(), "MJ Dynamo simulation reported an unexpected remainder");
+        require(helper, dynamo.getMjStored() == 0, "MJ Dynamo simulation mutated its MJ buffer");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 30)
+    public static void converterMachineStateSurvivesPersistenceRoundTrip(GameTestHelper helper) {
+        BlockState engineState = feEngineState();
+        BlockState dynamoState = BCEnergyBlocks.DYNAMO_MJ.get().defaultBlockState();
+        TileEngineFE engine = placeFeEngine(helper, new BlockPos(1, 1, 1));
+        TileDynamoMJ dynamo = placeMjDynamo(helper, new BlockPos(3, 1, 1));
+        engine.isRedstonePowered = true;
+        dynamo.isRedstonePowered = true;
+
+        engine.externalEnergyPort(Direction.NORTH).orElseThrow().insert(123, OperationMode.EXECUTE);
+        invoke(engine, "burn");
+        dynamo.mjPort(Direction.NORTH).orElseThrow()
+            .insert(MjAmount.ofMicro(6L * MjAmount.MICRO_MJ_PER_MJ), OperationMode.EXECUTE);
+        invoke(dynamo, "burn");
+
+        CompoundTag engineTag = saveMachineState(engine, helper);
+        CompoundTag dynamoTag = saveMachineState(dynamo, helper);
+        TileEngineFE restoredEngine = new TileEngineFE(helper.absolutePos(new BlockPos(5, 1, 1)), engineState);
+        TileDynamoMJ restoredDynamo = new TileDynamoMJ(helper.absolutePos(new BlockPos(6, 1, 1)), dynamoState);
+        loadMachineState(restoredEngine, engineTag, helper);
+        loadMachineState(restoredDynamo, dynamoTag, helper);
+
+        require(helper, restoredEngine.getCurrentFe() == engine.getCurrentFe(), "FE Engine lost FE buffer across persistence round-trip");
+        require(helper, restoredEngine.getEnergyStored() == engine.getEnergyStored(), "FE Engine lost MJ buffer across persistence round-trip");
+        require(helper, restoredDynamo.getCurrentFe() == dynamo.getCurrentFe(), "MJ Dynamo lost FE buffer across persistence round-trip");
+        require(helper, restoredDynamo.getMjStored() == dynamo.getMjStored(), "MJ Dynamo lost MJ buffer across persistence round-trip");
+        helper.succeed();
+    }
+
+
+    private static TileQuarry placeQuarry(GameTestHelper helper, BlockPos relativePos) {
+        helper.setBlock(relativePos, BCBuildersBlocks.QUARRY.get().defaultBlockState());
+        BlockEntity blockEntity = helper.getBlockEntity(relativePos);
+        if (!(blockEntity instanceof TileQuarry quarry)) {
+            helper.fail("quarry block did not create TileQuarry");
+            throw new IllegalStateException("missing TileQuarry");
+        }
+        return quarry;
+    }
+
+    private static TileEngineFE placeFeEngine(GameTestHelper helper, BlockPos relativePos) {
+        helper.setBlock(relativePos, feEngineState());
+        BlockEntity blockEntity = helper.getBlockEntity(relativePos);
+        if (!(blockEntity instanceof TileEngineFE engine)) {
+            helper.fail("FE engine block did not create TileEngineFE");
+            throw new IllegalStateException("missing TileEngineFE");
+        }
+        return engine;
+    }
+
+    private static TileDynamoMJ placeMjDynamo(GameTestHelper helper, BlockPos relativePos) {
+        helper.setBlock(relativePos, BCEnergyBlocks.DYNAMO_MJ.get().defaultBlockState());
+        BlockEntity blockEntity = helper.getBlockEntity(relativePos);
+        if (!(blockEntity instanceof TileDynamoMJ dynamo)) {
+            helper.fail("MJ dynamo block did not create TileDynamoMJ");
+            throw new IllegalStateException("missing TileDynamoMJ");
+        }
+        return dynamo;
+    }
+
+    private static BlockState feEngineState() {
+        return BCCoreBlocks.ENGINE_BC8.get().defaultBlockState()
+            .setValue(BuildCraftProperties.ENGINE_TYPE, EnumEngineType.FE);
+    }
+
+    private static int countWaterSources(GameTestHelper helper, BlockPos[] relativePositions) {
+        int count = 0;
+        for (BlockPos relative : relativePositions) {
+            var fluid = helper.getLevel().getFluidState(helper.absolutePos(relative));
+            if (fluid.isSource() && fluid.getType() == Fluids.WATER) count++;
+        }
+        return count;
+    }
+
+    private static Object readField(Object target, String name) {
+        for (Class<?> type = target.getClass(); type != null; type = type.getSuperclass()) {
+            try {
+                Field field = type.getDeclaredField(name);
+                field.setAccessible(true);
+                return field.get(target);
+            } catch (NoSuchFieldException ignored) {
+                // Continue through the hierarchy.
+            } catch (ReflectiveOperationException e) {
+                throw new IllegalStateException("Cannot read " + name + " from " + target.getClass().getName(), e);
+            }
+        }
+        throw new IllegalStateException("Missing field " + name + " on " + target.getClass().getName());
+    }
+
+    private static boolean readBooleanField(Object target, String name) {
+        return (Boolean) readField(target, name);
+    }
+
+    private static Object invoke(Object target, String name, Object... args) {
+        Method method = findMethod(target.getClass(), name, args.length);
+        try {
+            method.setAccessible(true);
+            return method.invoke(target, args);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("Cannot invoke " + name + " on " + target.getClass().getName(), e);
+        }
+    }
+
+    private static boolean invokeBoolean(Object target, String name, Object... args) {
+        return (Boolean) invoke(target, name, args);
+    }
+
+    private static Method findMethod(Class<?> start, String name, int parameterCount) {
+        for (Class<?> type = start; type != null; type = type.getSuperclass()) {
+            for (Method method : type.getDeclaredMethods()) {
+                if (method.getName().equals(name) && method.getParameterCount() == parameterCount) {
+                    return method;
+                }
+            }
+        }
+        throw new IllegalStateException("Missing method " + name + "/" + parameterCount + " on " + start.getName());
+    }
+
+    private static CompoundTag saveMachineState(BlockEntity blockEntity, GameTestHelper helper) {
+        CompoundTag tag = new CompoundTag();
+        Method oneArg = findMethodOrNull(blockEntity.getClass(), "saveAdditional", 1);
+        Method twoArg = findMethodOrNull(blockEntity.getClass(), "saveAdditional", 2);
+        try {
+            if (oneArg != null) {
+                oneArg.setAccessible(true);
+                oneArg.invoke(blockEntity, tag);
+                return tag;
+            }
+            if (twoArg != null) {
+                twoArg.setAccessible(true);
+                twoArg.invoke(blockEntity, tag, helper.getLevel().registryAccess());
+                return tag;
+            }
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("Cannot save machine state for " + blockEntity.getClass().getName(), e);
+        }
+        throw new IllegalStateException("No saveAdditional method for " + blockEntity.getClass().getName());
+    }
+
+    private static void loadMachineState(BlockEntity blockEntity, CompoundTag tag, GameTestHelper helper) {
+        Method load = findMethodOrNull(blockEntity.getClass(), "load", 1);
+        Method loadAdditional = findMethodOrNull(blockEntity.getClass(), "loadAdditional", 2);
+        try {
+            if (load != null) {
+                load.setAccessible(true);
+                load.invoke(blockEntity, tag.copy());
+                return;
+            }
+            if (loadAdditional != null) {
+                loadAdditional.setAccessible(true);
+                loadAdditional.invoke(blockEntity, tag.copy(), helper.getLevel().registryAccess());
+                return;
+            }
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("Cannot load machine state for " + blockEntity.getClass().getName(), e);
+        }
+        throw new IllegalStateException("No load method for " + blockEntity.getClass().getName());
+    }
+
+    private static Method findMethodOrNull(Class<?> start, String name, int parameterCount) {
+        for (Class<?> type = start; type != null; type = type.getSuperclass()) {
+            for (Method method : type.getDeclaredMethods()) {
+                if (method.getName().equals(name) && method.getParameterCount() == parameterCount) {
+                    return method;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static final class ProbeTemplateBuilder extends TemplateBuilder {
+        private ProbeTemplateBuilder(ITileForTemplateBuilder tile) {
+            super(tile);
+        }
+
+        private boolean canPlaceAt(BlockPos pos) {
+            return canPlace(pos);
+        }
+    }
+
+    private static final class ProbeTemplateTile implements ITileForTemplateBuilder {
+        private final Level level;
+        private final BlockPos pos;
+
+        private ProbeTemplateTile(Level level, BlockPos pos) {
+            this.level = level;
+            this.pos = pos;
+        }
+
+        @Override public Level getWorldBC() { return level; }
+        @Override public MjBattery getBattery() { return null; }
+        @Override public BlockPos getBuilderPos() { return pos; }
+        @Override public boolean canExcavate() { return true; }
+        @Override public SnapshotBuilder<?> getBuilder() { return null; }
+        @Override public boolean needMeterial() { return false; }
+        @Override public GameProfile getOwner() { return new GameProfile(new UUID(0L, 1L), "gametest"); }
+        @Override public Template.BuildingInfo getTemplateBuildingInfo() { return null; }
+        @Override public IItemTransactor getInvResources() { return null; }
+    }
+
+    private static final class ProbeSchematicBlock extends SchematicBlockDefault {
+        private ProbeSchematicBlock() {
+        }
+
+        private ProbeSchematicBlock(BlockState state) {
+            this.blockState = state;
+            this.placeBlock = state.getBlock();
+        }
     }
 
     private static ResourceLocation id(String path) {

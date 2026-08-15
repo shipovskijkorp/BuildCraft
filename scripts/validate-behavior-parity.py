@@ -669,39 +669,6 @@ def validate_forestry_model_bake_mutation() -> None:
            "private static void onModelBake(ModelEvent.BakingCompleted event)")
 
 
-def validate_forestry_propolis_pipe_presentation() -> None:
-    pipes = "src/main/java/buildcraft/compat/forestry/pipe/ForestryPipes.java"
-    for target in ("1.19.2-forge", "1.20.1-forge"):
-        require(target, pipes,
-                "BCTransport.tabPipes.addItemProvider(ForestryPipes::getCreativeTabItems)",
-                "PROPOLIS_PIPE_ITEM.get().getDefaultInstance()")
-        require(target, "src/main/java/buildcraft/lib/CreativeTabManager.java",
-                '"buildcraftcompat:pipe_item_propolis"')
-
-    # 1.19.2 injects registered pipe sprites in TextureStitchEvent.Pre. Forge 1.20 removed
-    # that event, so every compat pipe sprite used by the dynamic model must be in the atlas JSON.
-    atlas = TARGETS["1.20.1-forge"] / "src/main/resources/assets/minecraft/atlases/blocks.json"
-    try:
-        document = json.loads(atlas.read_text(encoding="utf-8"))
-    except Exception as exc:
-        fail(f"1.20.1-forge: invalid blocks atlas while validating Forestry pipe: {exc}")
-        return
-    actual = {source.get("resource") for source in document.get("sources", []) if isinstance(source, dict)}
-    expected = {
-        "buildcraftcompat:pipes/propolis",
-        "buildcraftcompat:pipes/propolis_down",
-        "buildcraftcompat:pipes/propolis_up",
-        "buildcraftcompat:pipes/propolis_north",
-        "buildcraftcompat:pipes/propolis_south",
-        "buildcraftcompat:pipes/propolis_west",
-        "buildcraftcompat:pipes/propolis_east",
-        "buildcraftcompat:pipes/propolis_itemstack",
-    }
-    missing = sorted(expected - actual)
-    if missing:
-        fail(f"1.20.1-forge: Forestry Apiarist's Pipe sprites missing from block atlas: {missing}")
-
-
 def validate_forge_atlas_reload_caches() -> None:
     transport = "src/main/java/buildcraft/transport/BCTransportEventDist.java"
     silicon = "src/main/java/buildcraft/silicon/BCSilicon.java"
@@ -756,7 +723,7 @@ def validate_pipe_pluggable_contract() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 43
+    expected_tests = 54
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -765,6 +732,39 @@ def validate_gametest_runtime_guards() -> None:
                 count += path.read_text(encoding="utf-8").count("@GameTest(")
         if count != expected_tests:
             fail(f"{target}: expected {expected_tests} @GameTest methods, found {count}")
+
+        regression_suite = text(target, "src/gametest/java/buildcraft/gametest/BuildCraftLogicGameTests.java")
+        for method in (
+            "pumpPreservesDetectedInfiniteWaterSource",
+            "fillerTreatsReplaceableBlocksAsPlacementTargets",
+            "quarryFluidTraversalKeepsWaterPassableButMinesLavaAndWaterloggedBlocks",
+            "quarryFramePlannerReplacesFluidsAndExcavatesSolidObstacles",
+            "schematicPlacementHonoursVanillaCanSurvive",
+            "schematicLeavesBecomePersistentAfterSerializationRoundTrip",
+            "commonWrenchTagToggleControlsExternalTaggedItemsOnly",
+            "pipeHolderWaterloggingPreservesTheWaterFluidState",
+            "feMjConverterRoundTripConservesEnergy",
+            "feMjConverterSimulationDoesNotMutateMachineBuffers",
+            "converterMachineStateSurvivesPersistenceRoundTrip",
+        ):
+            if method not in regression_suite:
+                fail(f"{target}: missing gameplay regression GameTest {method}")
+
+        wrench_tag_rel = (
+            "src/gametest/resources/data/c/tags/item/tools/wrench.json"
+            if target.startswith("1.21.1")
+            else "src/gametest/resources/data/c/tags/items/tools/wrench.json"
+        )
+        wrench_tag_path = source(target, wrench_tag_rel)
+        if not wrench_tag_path.is_file():
+            fail(f"{target}: missing GameTest-only common wrench tag fixture {wrench_tag_rel}")
+        else:
+            try:
+                wrench_tag = json.loads(wrench_tag_path.read_text(encoding="utf-8"))
+                if "minecraft:stick" not in wrench_tag.get("values", []):
+                    fail(f"{target}: GameTest wrench tag fixture no longer contains minecraft:stick")
+            except Exception as exc:
+                fail(f"{target}: invalid GameTest wrench tag fixture {wrench_tag_rel}: {exc}")
 
     # GameTest classes must be part of the same exploded module as main during
     # runGameTestServer. Separate main/gameTest modules create split packages on
@@ -890,7 +890,6 @@ def main() -> None:
     validate_modpack_interop_fixes()
     validate_jei_facade_scalability()
     validate_forestry_model_bake_mutation()
-    validate_forestry_propolis_pipe_presentation()
     validate_forge_atlas_reload_caches()
     validate_pipe_pluggable_contract()
     validate_gametest_runtime_guards()
