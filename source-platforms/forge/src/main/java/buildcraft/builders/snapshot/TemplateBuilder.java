@@ -12,6 +12,9 @@ import java.util.List;
 import buildcraft.lib.internal.core.IStackFilter;
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -64,6 +67,12 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
 
     @Override
     protected boolean doPlaceTask(PlaceTask placeTask) {
+        if (!AutomationPermissionUtil.mayBlock(
+            tile.getWorldBC(), tile.getBuilderPos(), placeTask.pos, tile.getOwner(),
+            AutomationPermissionUtil.SOURCE_BUILDER, WorldOperationKind.BLOCK_PLACE, OperationMode.EXECUTE
+        )) {
+            return false;
+        }
         FakePlayer fakePlayer = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(
             (ServerLevel) tile.getWorldBC(),
             tile.getOwner(),

@@ -6,7 +6,9 @@
 
 package buildcraft.builders.snapshot;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.permission.WorldOperationKind;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -306,8 +308,13 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     }
 
     private RobotBuildTask makeRobotBreakTask(EntityRobotBase robot, BlockPos blockPos) {
+        GameProfile owner = getAutomationOwner(robot);
         if (BlockUtil.getFluidWithFlowing(tile.getWorldBC(), blockPos) != Fluids.EMPTY
-            || BlockUtil.isUnbreakableBlock(tile.getWorldBC(), blockPos, tile.getOwner())) {
+            || BlockUtil.isUnbreakableBlock(tile.getWorldBC(), blockPos, owner)
+            || !AutomationPermissionUtil.mayBlock(
+                tile.getWorldBC(), tile.getBuilderPos(), blockPos, owner, AutomationPermissionUtil.SOURCE_ROBOT,
+                WorldOperationKind.BLOCK_BREAK, OperationMode.SIMULATE
+            )) {
             return null;
         }
         ResourceIdBlock resource = new ResourceIdBlock(blockPos);
@@ -319,6 +326,13 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     }
 
     private RobotBuildTask makeRobotTask(EntityRobotBase robot, BlockPos blockPos, boolean needMaterial) {
+        GameProfile owner = getAutomationOwner(robot);
+        if (!AutomationPermissionUtil.mayBlock(
+            tile.getWorldBC(), tile.getBuilderPos(), blockPos, owner, AutomationPermissionUtil.SOURCE_ROBOT,
+            WorldOperationKind.BLOCK_PLACE, OperationMode.SIMULATE
+        )) {
+            return null;
+        }
         int index = posToIndex(blockPos);
         List<FluidStack> requiredFluids = getBuildingInfo().toPlaceRequiredFluids[index];
         if (requiredFluids != null && requiredFluids.stream().anyMatch(stack -> stack != null && !stack.isEmpty())) {
@@ -368,9 +382,14 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 if (checkResults[posToIndex(blockPos)] == CHECK_RESULT_CORRECT || tile.getWorldBC().isEmptyBlock(blockPos)) {
                     return true;
                 }
+                GameProfile owner = getAutomationOwner(robot);
                 if (!tile.canExcavate()
                     || BlockUtil.getFluidWithFlowing(tile.getWorldBC(), blockPos) != Fluids.EMPTY
-                    || BlockUtil.isUnbreakableBlock(tile.getWorldBC(), blockPos, tile.getOwner())) {
+                    || BlockUtil.isUnbreakableBlock(tile.getWorldBC(), blockPos, owner)
+                    || !AutomationPermissionUtil.mayBlock(
+                        tile.getWorldBC(), tile.getBuilderPos(), blockPos, owner, AutomationPermissionUtil.SOURCE_ROBOT,
+                        WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
+                    )) {
                     return false;
                 }
                 Optional<List<ItemStack>> drops = tile.getWorldBC() instanceof ServerLevel serverLevel
@@ -378,7 +397,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                         serverLevel,
                         blockPos,
                         new ItemStack(Items.DIAMOND_PICKAXE),
-                        tile.getOwner()
+                        owner
                     )
                     : Optional.empty();
                 boolean broken = drops.isPresent();
@@ -408,6 +427,13 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 return false;
             }
 
+            GameProfile owner = getAutomationOwner(robot);
+            if (!AutomationPermissionUtil.mayBlock(
+                tile.getWorldBC(), tile.getBuilderPos(), blockPos, owner, AutomationPermissionUtil.SOURCE_ROBOT,
+                WorldOperationKind.BLOCK_PLACE, OperationMode.EXECUTE
+            )) {
+                return false;
+            }
             Player actor = getAutomationPlayer(robot, blockPos);
             boolean built = schematicBlock.build(tile.getWorldBC(), blockPos, actor);
             if (built) {
@@ -669,19 +695,28 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
         if (getBuildingInfo() == null || getSchematicBlock(placeTask.pos) == null) {
             return false;
         }
+        if (!AutomationPermissionUtil.mayBlock(
+            tile.getWorldBC(), tile.getBuilderPos(), placeTask.pos, tile.getOwner(),
+            AutomationPermissionUtil.SOURCE_BUILDER, WorldOperationKind.BLOCK_PLACE, OperationMode.EXECUTE
+        )) {
+            return false;
+        }
         Player actor = getAutomationPlayer(null, placeTask.pos);
         return getSchematicBlock(placeTask.pos).build(tile.getWorldBC(), placeTask.pos, actor);
+    }
+
+    private GameProfile getAutomationOwner(EntityRobotBase robot) {
+        if (robot instanceof EntityRobot entityRobot) {
+            return entityRobot.getOwnerProfile();
+        }
+        return tile.getOwner();
     }
 
     private Player getAutomationPlayer(EntityRobotBase robot, BlockPos pos) {
         if (!(tile.getWorldBC() instanceof ServerLevel serverLevel)) {
             return null;
         }
-        GameProfile owner = tile.getOwner();
-        if (robot instanceof EntityRobot entityRobot) {
-            owner = entityRobot.getOwnerProfile();
-        }
-        return FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, pos);
+        return FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, getAutomationOwner(robot), pos);
     }
 
     private boolean processDeferredInventoryContents() {

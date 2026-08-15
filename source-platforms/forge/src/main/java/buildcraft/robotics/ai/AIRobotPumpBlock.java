@@ -1,5 +1,9 @@
 package buildcraft.robotics.ai;
 
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
+import buildcraft.robotics.internal.api2.RobotAutomationSupport;
+
 import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.core.BlockIndex;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
@@ -59,6 +63,14 @@ public class AIRobotPumpBlock extends AIRobot {
         if (!robot.level().isLoaded(pos)) {
         ?*/
         //?}
+            setSuccess(false);
+            terminate();
+            return;
+        }
+
+        if (!RobotAutomationSupport.permitsBlock(
+            robot, pos, WorldOperationKind.FLUID_DRAIN, OperationMode.EXECUTE
+        )) {
             setSuccess(false);
             terminate();
             return;

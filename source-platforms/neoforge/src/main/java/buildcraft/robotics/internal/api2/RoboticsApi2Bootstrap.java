@@ -33,6 +33,7 @@ import buildcraft.robotics.BCRoboticsBoards;
 import com.mojang.authlib.GameProfile;
 import java.nio.ByteBuffer;
 import java.util.Set;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -190,7 +191,8 @@ public final class RoboticsApi2Bootstrap {
         PermissionDecision permission = permission(request.actor(), level, request.origin(), request.target(), WorldOperationKind.BLOCK_PLACE, request.mode(), request.kind());
         if (permission.verdict() == PermissionVerdict.DENY) return denied(permission);
         if (request.mode() == OperationMode.SIMULATE) return AutomationResult.success(1);
-        return level.setBlock(request.target(), request.state(), 3)
+        Player player = fakePlayer(level, request.actor(), request.origin());
+        return BlockUtil.placeBlock(level, request.target(), request.state(), player, Direction.UP, 3)
             ? AutomationResult.success(1)
             : new AutomationResult(AutomationResult.Status.FAILED, 0, "place_failed");
     }

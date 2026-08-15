@@ -2,11 +2,13 @@ package buildcraft.robotics.ai;
 
 import buildcraft.api.v2.BuildCraftApi;
 import buildcraft.api.v2.BuildCraftServices;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
 import buildcraft.lib.internal.core.BlockIndex;
+import buildcraft.robotics.internal.api2.RobotAutomationSupport;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.lib.misc.FakePlayerProvider;
-import buildcraft.robotics.entity.EntityRobot;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -62,9 +64,14 @@ public class AIRobotPlant extends AIRobot {
         }
 
         BlockPos pos = blockFound.toBlockPos();
-        GameProfile owner = robot instanceof EntityRobot entityRobot
-            ? entityRobot.getOwnerProfile()
-            : FakePlayerProvider.NULL_PROFILE;
+        if (!RobotAutomationSupport.permitsBlock(
+            robot, serverLevel, pos, WorldOperationKind.ITEM_USE, OperationMode.EXECUTE
+        )) {
+            setSuccess(false);
+            terminate();
+            return;
+        }
+        GameProfile owner = RobotAutomationSupport.owner(robot);
         Player player = FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, robot.blockPosition());
         player.setPos(robot.getX(), robot.getY(), robot.getZ());
 

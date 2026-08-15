@@ -38,6 +38,8 @@ import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.area.IAreaProvider;
 import buildcraft.lib.internal.mj.MjBattery;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
 import buildcraft.api.v2.content.BuildCraftContentIds;
 import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
 import buildcraft.lib.internal.api.v2.MachineRuntimeView;
@@ -58,6 +60,7 @@ import buildcraft.lib.chunkload.ChunkLoaderManager;
 import buildcraft.lib.chunkload.IChunkLoadingTile;
 import buildcraft.lib.inventory.AutomaticProvidingTransactor;
 import buildcraft.lib.misc.AdvancementUtil;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.BoundingBoxUtil;
 import buildcraft.lib.misc.CapUtil;
@@ -637,6 +640,13 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         long now = serverLevel.getGameTime();
         long retryAt = deniedBreakUntil.getOrDefault(pos, 0L);
         if (retryAt > now) {
+            return false;
+        }
+        if (!AutomationPermissionUtil.mayBlock(
+            serverLevel, worldPosition, pos, getOwner(), AutomationPermissionUtil.SOURCE_QUARRY,
+            WorldOperationKind.BLOCK_BREAK, OperationMode.SIMULATE
+        )) {
+            deniedBreakUntil.put(pos.immutable(), now + 200);
             return false;
         }
         Player actor = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, getOwner(), pos);
@@ -1450,6 +1460,15 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             if (!canMine(breakPos)) {
                 return true;
             }
+            if (!AutomationPermissionUtil.mayBlock(
+                level, worldPosition, breakPos, getOwner(), AutomationPermissionUtil.SOURCE_QUARRY,
+                WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
+            )) {
+                if (level instanceof ServerLevel serverLevel) {
+                    deniedBreakUntil.put(breakPos.immutable(), serverLevel.getGameTime() + 200);
+                }
+                return false;
+            }
             level.destroyBlockProgress(breakPos.hashCode(), breakPos, -1);
             Optional<List<ItemStack>> stacks = BlockUtil.breakBlockAndGetDrops(
                 (ServerLevel) level, breakPos, new ItemStack(Items.DIAMOND_PICKAXE), getOwner(), false
@@ -1536,6 +1555,13 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 return false;
             }
             if (!(level instanceof ServerLevel serverLevel)) {
+                return false;
+            }
+            if (!AutomationPermissionUtil.mayBlock(
+                serverLevel, worldPosition, framePos, getOwner(), AutomationPermissionUtil.SOURCE_QUARRY,
+                WorldOperationKind.BLOCK_PLACE, OperationMode.EXECUTE
+            )) {
+                deniedBreakUntil.put(framePos.immutable(), serverLevel.getGameTime() + 200);
                 return false;
             }
             Player actor = buildcraft.lib.misc.FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, getOwner(), framePos);

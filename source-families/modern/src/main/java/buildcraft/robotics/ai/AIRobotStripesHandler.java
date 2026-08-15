@@ -1,8 +1,11 @@
 package buildcraft.robotics.ai;
 
 import buildcraft.lib.internal.core.BlockIndex;
+import buildcraft.robotics.internal.api2.RobotAutomationSupport;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
 import buildcraft.api.v2.automation.StripesOutput;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.transport.pipe.StripesRegistry;
@@ -71,10 +74,18 @@ public class AIRobotStripesHandler extends AIRobot implements StripesOutput {
             return;
         }
 
-        Direction direction = chooseDirection(useToBlock.toBlockPos());
-        GameProfile owner = robot instanceof EntityRobot entityRobot
-            ? entityRobot.getOwnerProfile()
-            : FakePlayerProvider.NULL_PROFILE;
+        BlockPos target = useToBlock.toBlockPos();
+        Direction direction = chooseDirection(target);
+        if (!RobotAutomationSupport.permitsBlock(
+            robot, serverLevel, target, WorldOperationKind.ITEM_USE, OperationMode.EXECUTE
+        ) || workingIsBlockPlacement(held) && !RobotAutomationSupport.permitsBlock(
+            robot, serverLevel, target, WorldOperationKind.BLOCK_PLACE, OperationMode.EXECUTE
+        )) {
+            setSuccess(false);
+            terminate();
+            return;
+        }
+        GameProfile owner = RobotAutomationSupport.owner(robot);
         Player player = FakePlayerProvider.INSTANCE.getFakePlayer(serverLevel, owner, robot.blockPosition());
         player.getInventory().clearContent();
         player.setPos(robot.getX(), robot.getY(), robot.getZ());
@@ -82,7 +93,7 @@ public class AIRobotStripesHandler extends AIRobot implements StripesOutput {
         ItemStack working = held.copy();
         player.getInventory().setItem(player.getInventory().selected, working);
 
-        boolean handled = handleHeldItem(serverLevel, useToBlock.toBlockPos(), direction, working, player);
+        boolean handled = handleHeldItem(serverLevel, target, direction, working, player);
         if (handled) {
             robot.setItemInUse(ItemStack.EMPTY);
             returnPlayerInventory(player, direction);
@@ -91,6 +102,10 @@ public class AIRobotStripesHandler extends AIRobot implements StripesOutput {
             setSuccess(false);
         }
         terminate();
+    }
+
+    private static boolean workingIsBlockPlacement(ItemStack stack) {
+        return stack.getItem() instanceof IItemPipe && stack.getItem() instanceof BlockItem;
     }
 
     private boolean handleHeldItem(ServerLevel serverLevel, BlockPos target, Direction direction, ItemStack working,

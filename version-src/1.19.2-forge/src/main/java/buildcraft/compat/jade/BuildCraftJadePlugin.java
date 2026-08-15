@@ -31,6 +31,7 @@ import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 import buildcraft.lib.fluid.Tank;
+import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.tile.TileZonePlanner;
@@ -234,6 +235,12 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
 
             CompoundTag root = new CompoundTag();
             CompoundTag robotTag = new CompoundTag();
+            GameProfile owner = robot.getOwnerProfile();
+            if (owner != null
+                && !FakePlayerProvider.NULL_PROFILE.getId().equals(owner.getId())
+                && owner.getName() != null && !owner.getName().isBlank()) {
+                robotTag.putString("Owner", owner.getName());
+            }
             if (robot.getBoardEntry() != null) {
                 if (robot.getBoardEntry().id() != null) {
                     robotTag.putString("Board", robot.getBoardEntry().id());
@@ -276,6 +283,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
                 return;
             }
 
+            if (robotTag.contains("Owner")) {
+                tooltip.add(line("robot.owner", Component.literal(robotTag.getString("Owner")).withStyle(ChatFormatting.WHITE)));
+            }
             if (robotTag.contains("BoardKey")) {
                 tooltip.add(line("robot.board", Component.translatable("buildcraft.boardRobot." + robotTag.getString("BoardKey")).withStyle(ChatFormatting.WHITE)));
             } else if (robotTag.contains("Board")) {

@@ -723,7 +723,7 @@ def validate_pipe_pluggable_contract() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 54
+    expected_tests = 58
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -749,6 +749,16 @@ def validate_gametest_runtime_guards() -> None:
         ):
             if method not in regression_suite:
                 fail(f"{target}: missing gameplay regression GameTest {method}")
+
+        permission_suite = text(target, "src/gametest/java/buildcraft/gametest/PermissionOwnerGameTests.java")
+        for method in (
+            "machineOwnerIdentitySurvivesPersistenceRoundTrip",
+            "robotOwnerIdentitySurvivesPersistenceAndFeedsApi2Actor",
+            "api2PermissionProviderSeesOwnerAcrossWorldOperationKinds",
+            "platformProtectionHooksReceiveMachineOwnerForBreakAndPlace",
+        ):
+            if method not in permission_suite:
+                fail(f"{target}: missing permission/owner GameTest {method}")
 
         wrench_tag_rel = (
             "src/gametest/resources/data/c/tags/item/tools/wrench.json"

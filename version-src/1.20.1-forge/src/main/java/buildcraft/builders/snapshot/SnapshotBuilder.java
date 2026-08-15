@@ -6,7 +6,9 @@
 
 package buildcraft.builders.snapshot;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.permission.WorldOperationKind;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -23,6 +25,7 @@ import com.google.common.collect.ImmutableList;
 
 import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.inventory.IItemTransactor;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.MessageUtil;
@@ -497,6 +500,10 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             Arrays.stream(blocks)
                 .mapToObj(this::indexToPos)
                 .filter(blockPos -> BlockUtil.getFluidWithFlowing(tile.getWorldBC(), blockPos) == Fluids.EMPTY)
+                .filter(blockPos -> AutomationPermissionUtil.mayBlock(
+                    tile.getWorldBC(), tile.getBuilderPos(), blockPos, tile.getOwner(),
+                    AutomationPermissionUtil.SOURCE_BUILDER, WorldOperationKind.BLOCK_BREAK, OperationMode.SIMULATE
+                ))
                 .map(blockPos ->
                     new BreakTask(
                         blockPos,
@@ -577,6 +584,17 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                     renderWork = true;
                 }
                 if (breakTask.power >= target) {
+                    if (!AutomationPermissionUtil.mayBlock(
+                        tile.getWorldBC(), tile.getBuilderPos(), breakTask.pos, tile.getOwner(),
+                        AutomationPermissionUtil.SOURCE_BUILDER, WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
+                    )) {
+                        cancelBreakTask(breakTask);
+                        if (check(breakTask.pos)) {
+                            checkResultsChanged = true;
+                        }
+                        iterator.remove();
+                        continue;
+                    }
                     tile.getWorldBC().getProfiler().push("work");
                     tile.getWorldBC().destroyBlockProgress(
                         breakTask.pos.hashCode(),
