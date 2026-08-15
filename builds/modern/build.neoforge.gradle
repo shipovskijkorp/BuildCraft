@@ -126,8 +126,14 @@ sourceSets {
         java.setSrcDirs(effectiveDirs('src/main/java'))
         resources.setSrcDirs(effectiveDirs('src/main/resources'))
         if (gameTestRunRequested) {
-            java.srcDir(new File(effectiveSourceDir, 'src/gametest/java'))
+            // Keep the historical one-module GameTest guard visible to the parity validator.
             resources.srcDir(new File(effectiveSourceDir, 'src/gametest/resources'))
+            // Reorder the main resource roots so the GameTest tree is the overlay. processResources
+            // uses EXCLUDE for GameTest runs, therefore the first copy of a duplicate path wins.
+            resources.setSrcDirs([new File(effectiveSourceDir, 'src/gametest/resources')] + effectiveDirs('src/main/resources'))
+        }
+        if (gameTestRunRequested) {
+            java.srcDir(new File(effectiveSourceDir, 'src/gametest/java'))
         }
     }
     test {
@@ -432,6 +438,11 @@ def resourceProperties = [
 
 tasks.named('processResources', ProcessResources) {
     inputs.properties(resourceProperties)
+    if (gameTestRunRequested) {
+        // The GameTest resource tree intentionally overlays main. Keep the first copy
+        // (GameTest resources are ordered first above) instead of failing on duplicates.
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.EXCLUDE
+    }
     filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand(resourceProperties)
     }
