@@ -83,7 +83,7 @@ public class BCCore {
         MENUS.register(modEventBus);
         BCCoreConfig.registry();
         modContainer.registerConfig(Type.COMMON, BCCoreConfig.config);
-        MessageManager.registerMessageClass(BCModules.CORE, MessageVolumeBoxes.class, MessageVolumeBoxes.HANDLER, MessageVolumeBoxes::toBytes, MessageVolumeBoxes::new/*, Side.CLIENT*/);
+        MessageManager.registerClientboundMessageClass(BCModules.CORE, MessageVolumeBoxes.class, MessageVolumeBoxes.HANDLER, MessageVolumeBoxes::toBytes, MessageVolumeBoxes::new);
 		BCCoreStatements.preInit();
     }
 

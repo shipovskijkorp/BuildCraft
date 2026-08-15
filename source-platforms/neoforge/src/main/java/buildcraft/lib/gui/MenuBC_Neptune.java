@@ -26,7 +26,9 @@ import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.net.IPayloadWriter;
 import buildcraft.lib.net.MessageContainer;
 import buildcraft.lib.net.MessageManager;
+import buildcraft.lib.net.NetworkSecurity;
 import buildcraft.lib.tile.item.IItemHandlerAdv;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -157,13 +159,7 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
         if (id == NET_WIDGET) {
             int widgetId = buffer.readUnsignedShort();
             if (widgetId < 0 || widgetId >= widgets.size()) {
-                if (DEBUG) {
-                    String string = "Received unknown or invalid widget ID " + widgetId + " on side " + side;
-                    if (side == LogicalSide.SERVER) {
-                        string += " (for player " + playerInventory.getName() + ")";
-                    }
-                    BCLog.logger.warn(string);
-                }
+                throw new DecoderException("Unknown widget id " + widgetId + " for " + getClass().getName());
             } else {
                 Widget_Neptune<?> widget = widgets.get(widgetId);
                 if (side == LogicalSide.SERVER) {
@@ -176,7 +172,8 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
             if (id == NET_SET_PHANTOM) {
                 readSingleSetPhantom(buffer, ctx);
             } else if (id == NET_SET_PHANTOM_MULTI) {
-                int count = buffer.readUnsignedByte();
+                int count = NetworkSecurity.requireCount(buffer.readUnsignedByte(), Math.min(255, slots.size()),
+                    "phantom slot update count");
                 for (int i = 0; i < count; i++) {
                     readSingleSetPhantom(buffer, ctx);
                 }
@@ -195,23 +192,13 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
                 if (handler instanceof IItemHandlerModifiable && handler.canSet(ph.handlerIndex, stack)) {
                     ((IItemHandlerModifiable) handler).setStackInSlot(ph.handlerIndex, stack);
                 } else {
-                    // log rather than throw an exception because of bugged/naughty clients
-                    String s2 = "[lib.container] Received an illegal phantom slot setting request! ";
-                    s2 += "[The item handler disallowed the replacement] (Client = ";
-                    s2 += ctx.player().getName() + ", slot_index = " + idx;
-                    s2 += ", stack = " + stack + ")";
-                    BCLog.logger.warn(s2);
+                    throw new DecoderException("Phantom slot " + idx + " rejected the requested stack");
                 }
                 return;
             }
         }
 
-        // log rather than throw an exception because of bugged/naughty clients
-        String s2 = "[lib.container] Received an illegal phantom slot setting request! ";
-        s2 += "[Didn't find a phantom slot for the given index] (Client = ";
-        s2 += ctx.player().getName() + ", slot_index = " + idx;
-        s2 += ", stack = " + stack + ")";
-        BCLog.logger.warn(s2);
+        throw new DecoderException("No phantom slot exists at index " + idx);
     }
 
     /** @throws IllegalArgumentException if a {@link SlotPhantom} couldn't be found with that handler and index */
@@ -278,6 +265,9 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
     private void sendSetPhantomSlots(int[] indexes, NonNullList<ItemStack> stacks) {
         if (indexes.length != stacks.size()) {
             throw new IllegalArgumentException("Sizes don't match! (" + indexes.length + " vs " + stacks.size() + ")");
+        }
+        if (indexes.length > 255) {
+            throw new IllegalArgumentException("Too many phantom slot updates for one packet: " + indexes.length);
         }
         sendMessage(NET_SET_PHANTOM_MULTI, (buffer) -> {
             buffer.writeByte(indexes.length);

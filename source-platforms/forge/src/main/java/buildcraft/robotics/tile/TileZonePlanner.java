@@ -49,6 +49,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 
 public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, MenuProvider {
+    public static final int MAX_MAP_NAME_LENGTH = 64;
     protected static final IdAllocator IDS = TileBC_Neptune.IDS.makeChild("zone_planner");
 
     public static final int LAYER_COUNT = 16;
@@ -206,7 +207,8 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
     }
 
     public void setMapName(String mapName) {
-        this.mapName = mapName == null ? "" : mapName;
+        String clean = mapName == null ? "" : mapName;
+        this.mapName = clean.length() <= MAX_MAP_NAME_LENGTH ? clean : clean.substring(0, MAX_MAP_NAME_LENGTH);
         setChanged();
     }
 
@@ -214,7 +216,7 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
     public void writePayload(int id, FriendlyByteBuf buffer, LogicalSide side) {
         super.writePayload(id, buffer, side);
         if (side == LogicalSide.SERVER && id == NET_RENDER_DATA) {
-            buffer.writeUtf(mapName);
+            buffer.writeUtf(mapName, MAX_MAP_NAME_LENGTH);
             buffer.writeByte(currentSelectedArea);
             for (ZonePlan layer : layers) {
                 (layer == null ? new ZonePlan() : layer).writeToByteBuf(buffer);
@@ -226,7 +228,7 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
     public void readPayload(int id, FriendlyByteBuf buffer, LogicalSide side, NetworkEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == LogicalSide.CLIENT && id == NET_RENDER_DATA) {
-            mapName = buffer.readUtf();
+            mapName = buffer.readUtf(MAX_MAP_NAME_LENGTH);
             currentSelectedArea = buffer.readUnsignedByte();
             for (int i = 0; i < layers.length; i++) {
                 layers[i].readFromByteBuf(buffer);

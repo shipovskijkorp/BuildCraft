@@ -81,7 +81,7 @@ public class ContainerDiamondWoodPipe extends ContainerPipe {
     @Override
     public void readMessage(int id, FriendlyByteBuf buffer, LogicalSide side, IPayloadContext ctx) throws IOException {
         super.readMessage(id, buffer, side, ctx);
-        if (side == LogicalSide.SERVER && behaviour != null) {
+        if (side == LogicalSide.SERVER && id == NET_DATA && behaviour != null) {
             behaviour.filterMode = buffer.readEnum(FilterMode.class);
             behaviour.pipe.getHolder().scheduleNetworkUpdate(PipeMessageReceiver.BEHAVIOUR);
         }

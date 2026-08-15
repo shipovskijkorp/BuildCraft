@@ -24,9 +24,21 @@ import net.minecraft.network.FriendlyByteBuf;
 
 class NbtSquishMapReader {
     private final NbtSquishMap map = new NbtSquishMap();
+    private long remainingBudget;
+
+    private NbtSquishMapReader(long maxBudget) {
+        if (maxBudget < 0) {
+            throw new IllegalArgumentException("maxBudget must be non-negative");
+        }
+        remainingBudget = maxBudget;
+    }
 
     public static NbtSquishMap read(DataInput in) throws IOException {
-        return new NbtSquishMapReader().readInternal(in);
+        return new NbtSquishMapReader(Long.MAX_VALUE).readInternal(in);
+    }
+
+    public static NbtSquishMap read(DataInput in, long maxBudget) throws IOException {
+        return new NbtSquishMapReader(maxBudget).readInternal(in);
     }
 
     private NbtSquishMap readInternal(DataInput in) throws IOException {
@@ -34,52 +46,53 @@ class NbtSquishMapReader {
         int flags = in.readInt();
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_BYTES)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 map.bytes.add(in.readByte());
             }
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_SHORTS)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 map.shorts.add(in.readShort());
             }
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_INTS)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 map.ints.add(in.readInt());
             }
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_LONGS)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 map.longs.add(in.readLong());
             }
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_FLOATS)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 map.floats.add(in.readFloat());
             }
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_DOUBLES)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 map.doubles.add(in.readDouble());
             }
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_BYTE_ARRAYS)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 int arraySize = in.readUnsignedShort();
-                ByteArrayList list = new ByteArrayList();
+                consumeBudget(arraySize, "byte array contents");
+                ByteArrayList list = new ByteArrayList(arraySize);
                 for (int j = 0; j < arraySize; j++) {
                     list.add(in.readByte());
                 }
@@ -88,10 +101,11 @@ class NbtSquishMapReader {
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_INT_ARRAYS)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 int arraySize = in.readUnsignedShort();
-                IntArrayList list = new IntArrayList();
+                consumeBudget(arraySize, "int array contents");
+                IntArrayList list = new IntArrayList(arraySize);
                 for (int j = 0; j < arraySize; j++) {
                     list.add(in.readInt());
                 }
@@ -100,9 +114,10 @@ class NbtSquishMapReader {
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_STRINGS)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 int length = in.readUnsignedShort();
+                consumeBudget(length, "string bytes");
                 byte[] bytes = new byte[length];
                 in.readFully(bytes);
                 map.strings.add(new String(bytes, StandardCharsets.UTF_8));
@@ -110,7 +125,7 @@ class NbtSquishMapReader {
         }
 
         if (isFlag(flags, NbtSquishConstants.FLAG_HAS_COMPLEX)) {
-            int count = readVarInt(in);
+            int count = readCount(in, "entry count");
             for (int i = 0; i < count; i++) {
                 int complexType = in.readUnsignedByte();
                 if (complexType == NbtSquishConstants.COMPLEX_COMPOUND) {
@@ -126,6 +141,24 @@ class NbtSquishMapReader {
         }
 
         return map;
+    }
+
+    private int readCount(DataInput in, String what) throws IOException {
+        int count = readVarInt(in);
+        if (count < 0) {
+            throw new InvalidInputDataException("Negative " + what + ": " + count);
+        }
+        consumeBudget(count, what);
+        return count;
+    }
+
+    private void consumeBudget(long amount, String what) throws InvalidInputDataException {
+        if (amount < 0 || amount > remainingBudget) {
+            throw new InvalidInputDataException(
+                "NBT squish " + what + " exceeds decode budget: " + amount + " > " + remainingBudget
+            );
+        }
+        remainingBudget -= amount;
     }
 
     /** Similar to {@link FriendlyByteBuf#readVarInt()} */
@@ -153,7 +186,7 @@ class NbtSquishMapReader {
 
     private CompoundTag readCompound(WrittenType type, DataInput in) throws IOException {
         WrittenType stringType = WrittenType.getForSize(map.stringSize());
-        int count = readVarInt(in);
+        int count = readCount(in, "entry count");
         CompoundTag nbt = new CompoundTag();
         for (int i = 0; i < count; i++) {
             String key = map.getStringForReading(stringType.readIndex(in));
@@ -164,7 +197,7 @@ class NbtSquishMapReader {
     }
 
     private ListTag readNormalList(WrittenType type, DataInput in) throws IOException {
-        int count = readVarInt(in);
+        int count = readCount(in, "entry count");
         ListTag list = new ListTag();
 
         for (int i = 0; i < count; i++) {
@@ -177,7 +210,7 @@ class NbtSquishMapReader {
 
     private ListTag readPackedList(WrittenType type, DataInput in) throws IOException {
         // First make the dictionary
-        int count = readVarInt(in);
+        int count = readCount(in, "entry count");
         List<Tag> dictionary = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             int index = type.readIndex(in);
@@ -187,7 +220,10 @@ class NbtSquishMapReader {
         List<Tag> list = new ArrayList<>();
         IntArrayList left = new IntArrayList();
         int bits = 1;
-        int entries = readVarInt(in);
+        int entries = readCount(in, "packed list entries");
+        if (entries > 0 && dictionary.isEmpty()) {
+            throw new InvalidInputDataException("Packed list has entries but no dictionary");
+        }
 
         for (int i = 0; i < entries; i++) {
             list.add(null);
@@ -195,7 +231,7 @@ class NbtSquishMapReader {
         }
 
         while (!dictionary.isEmpty()) {
-            int bitsetSize = readVarInt(in);
+            int bitsetSize = readCount(in, "packed list bitset bytes");
             byte[] bitsetData = new byte[bitsetSize];
             in.readFully(bitsetData);
             DecompactingBitSet decompactor = new DecompactingBitSet(bits, bitsetData);

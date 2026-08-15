@@ -10,6 +10,7 @@ import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.gui.slot.SlotBase;
 import buildcraft.lib.gui.slot.SlotOutput;
 import buildcraft.lib.misc.data.IdAllocator;
+import buildcraft.lib.net.NetworkSecurity;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.robotics.BCRoboticsGuis;
 import buildcraft.robotics.tile.TileZonePlanner;
@@ -90,13 +91,15 @@ public class ContainerZonePlanner extends ContainerBCTile<TileZonePlanner> {
     }
 
     public void sendNameToServer(String name) {
-        String clean = name == null ? "" : name;
+        String requested = name == null ? "" : name;
+        String clean = requested.length() <= TileZonePlanner.MAX_MAP_NAME_LENGTH
+            ? requested : requested.substring(0, TileZonePlanner.MAX_MAP_NAME_LENGTH);
         if (!clean.equals(mapName)) {
             mapName = clean;
             if (tile != null) {
                 tile.mapName = clean;
             }
-            sendMessage(ID_SET_NAME, buffer -> buffer.writeUtf(clean));
+            sendMessage(ID_SET_NAME, buffer -> buffer.writeUtf(clean, TileZonePlanner.MAX_MAP_NAME_LENGTH));
         }
     }
 
@@ -105,7 +108,8 @@ public class ContainerZonePlanner extends ContainerBCTile<TileZonePlanner> {
         super.readMessage(id, buffer, side, ctx);
         if (side == LogicalSide.SERVER) {
             if (id == ID_LOAD_AREA) {
-                int index = buffer.readUnsignedByte();
+                int index = NetworkSecurity.requireRange(buffer.readUnsignedByte(), 0, TileZonePlanner.LAYER_COUNT - 1,
+                    "zone planner layer");
                 if (tile != null) {
                     ZonePlan area = tile.selectArea(index);
                     sendMessage(ID_AREA_LOADED, out -> {
@@ -114,7 +118,8 @@ public class ContainerZonePlanner extends ContainerBCTile<TileZonePlanner> {
                     });
                 }
             } else if (id == ID_SAVE_AREA) {
-                int index = buffer.readUnsignedByte();
+                int index = NetworkSecurity.requireRange(buffer.readUnsignedByte(), 0, TileZonePlanner.LAYER_COUNT - 1,
+                    "zone planner layer");
                 ZonePlan area = new ZonePlan().readFromByteBuf(buffer);
                 if (tile != null) {
                     tile.selectArea(index);
@@ -122,12 +127,13 @@ public class ContainerZonePlanner extends ContainerBCTile<TileZonePlanner> {
                 }
             } else if (id == ID_SET_NAME) {
                 if (tile != null) {
-                    tile.setMapName(buffer.readUtf());
+                    tile.setMapName(buffer.readUtf(TileZonePlanner.MAX_MAP_NAME_LENGTH));
                 }
             }
         } else if (side == LogicalSide.CLIENT) {
             if (id == ID_AREA_LOADED) {
-                currentLayer = buffer.readUnsignedByte();
+                currentLayer = NetworkSecurity.requireRange(buffer.readUnsignedByte(), 0, TileZonePlanner.LAYER_COUNT - 1,
+                    "zone planner layer");
                 currentAreaSelection = new ZonePlan().readFromByteBuf(buffer);
                 if (tile != null && currentLayer >= 0 && currentLayer < tile.layers.length) {
                     tile.layers[currentLayer] = new ZonePlan(currentAreaSelection);

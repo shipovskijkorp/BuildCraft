@@ -49,6 +49,15 @@ public class IdAllocator {
         return idNameMap.get(id);
     }
 
+    /** Returns whether this allocator (including inherited parent IDs) knows the supplied wire ID. */
+    public boolean isAllocated(int id) {
+        return id >= 0 && id < idNameMap.size();
+    }
+
+    public int getAllocatedCount() {
+        return idNameMap.size();
+    }
+
     public int allocId(String allocName) {
         if (hasChildren) {
             throw new IllegalStateException("A child of this object has already allocated ID's!"//

@@ -10,6 +10,7 @@ import com.google.common.base.Charsets;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 
@@ -18,6 +19,8 @@ import net.minecraft.util.Mth;
  * @Deprecated {@link FriendlyByteBuf} is useful enough
  * */
 public class PacketBufferBC extends FriendlyByteBuf {
+    private static final int MAX_STRING_BYTES = 32 * 1024;
+
 
     // Byte-based flag access
     private int readPartialOffset = 8;// so it resets down to 0 and reads a byte on read
@@ -279,18 +282,20 @@ public class PacketBufferBC extends FriendlyByteBuf {
         if (enums.length == 1) return enums[0];
         int length = Mth.ceillog2(enums.length);
         int index = readFixedBits(length);
+        if (index < 0 || index >= enums.length) {
+            throw new DecoderException("Invalid " + enumClass.getSimpleName() + " ordinal " + index
+                + " (values=" + enums.length + ")");
+        }
         return enums[index];
     }
 
-    /**
-     * Reads string of any possible length
-     */
+    /** Reads a legacy BuildCraft string with a defensive byte limit. */
     public String readString() {
         int length = readVarInt();
+        NetworkSecurity.requireCount(length, MAX_STRING_BYTES, "BuildCraft string length");
+        NetworkSecurity.requireReadable(this, length, "BuildCraft string");
         byte[] array = new byte[length];
-        for (int i =0; i < length; i++) {
-            array[i] = readByte();
-        }
+        readBytes(array);
         return new String(array, Charsets.UTF_8);
     }
 }

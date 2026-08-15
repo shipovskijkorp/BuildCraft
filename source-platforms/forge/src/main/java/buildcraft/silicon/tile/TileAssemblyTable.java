@@ -25,6 +25,7 @@ import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.net.MessageManager;
+import buildcraft.lib.net.NetworkSecurity;
 import buildcraft.lib.net.MessageUpdateTile;
 import buildcraft.lib.recipe.AssemblyRecipeBasic;
 import buildcraft.lib.tile.TileBC_Neptune;
@@ -61,6 +62,8 @@ import net.minecraftforge.network.NetworkHooks;
 public class TileAssemblyTable extends TileLaserTableBase implements MenuProvider{
     public static final IdAllocator IDS = TileBC_Neptune.IDS.makeChild("assembly_table");
     public static final int NET_RECIPE_STATE = IDS.allocId("RECIPE_STATE");
+    private static final int MAX_RECIPE_ID_LENGTH = 256;
+    private static final int MAX_RECIPE_STATES = 4096;
 
     public final ItemHandlerSimple inv = itemManager.addInvHandler(
         "inv",
@@ -272,7 +275,7 @@ public class TileAssemblyTable extends TileLaserTableBase implements MenuProvide
         if (id == NET_GUI_DATA) {
             buffer.writeInt(recipesStates.size());
             recipesStates.forEach((instruction, state) -> {
-                buffer.writeUtf(instruction.recipe.getId().toString());
+                buffer.writeUtf(instruction.recipe.getId().toString(), MAX_RECIPE_ID_LENGTH);
                 buffer.writeItem(instruction.output);
                 buffer.writeInt(state.ordinal());
             });
@@ -285,25 +288,36 @@ public class TileAssemblyTable extends TileLaserTableBase implements MenuProvide
 
         if (id == NET_GUI_DATA) {
             recipesStates.clear();
-            int count = buffer.readInt();
+            int count = NetworkSecurity.requireCount(buffer.readInt(), MAX_RECIPE_STATES, "assembly recipe states");
             for (int i = 0; i < count; i++) {
-                AssemblyInstruction instruction = lookupRecipe(buffer.readUtf(), buffer.readItem());
-                recipesStates.put(instruction, EnumAssemblyRecipeState.values()[buffer.readInt()]);
+                String recipeName = buffer.readUtf(MAX_RECIPE_ID_LENGTH);
+                ItemStack output = buffer.readItem();
+                int stateIndex = NetworkSecurity.requireRange(
+                    buffer.readInt(), 0, EnumAssemblyRecipeState.values().length - 1, "assembly recipe state"
+                );
+                AssemblyInstruction instruction = lookupRecipe(recipeName, output);
+                if (instruction != null) {
+                    recipesStates.put(instruction, EnumAssemblyRecipeState.values()[stateIndex]);
+                }
             }
         }
 
         if (id == NET_RECIPE_STATE) {
-            AssemblyInstruction recipe = lookupRecipe(buffer.readUtf(), buffer.readItem());
-            EnumAssemblyRecipeState state = EnumAssemblyRecipeState.values()[buffer.readInt()];
-            if (recipesStates.containsKey(recipe)) {
-                recipesStates.put(recipe, state);
+            String recipeName = buffer.readUtf(MAX_RECIPE_ID_LENGTH);
+            ItemStack output = buffer.readItem();
+            int stateIndex = NetworkSecurity.requireRange(
+                buffer.readInt(), 0, EnumAssemblyRecipeState.values().length - 1, "assembly recipe state"
+            );
+            AssemblyInstruction recipe = lookupRecipe(recipeName, output);
+            if (recipe != null && recipesStates.containsKey(recipe)) {
+                recipesStates.put(recipe, EnumAssemblyRecipeState.values()[stateIndex]);
             }
         }
     }
 
     public void sendRecipeStateToServer(AssemblyInstruction instruction, EnumAssemblyRecipeState state) {
     	MessageUpdateTile message = createMessage(NET_RECIPE_STATE, (buffer) -> {
-            buffer.writeUtf(instruction.recipe.getId().toString());
+            buffer.writeUtf(instruction.recipe.getId().toString(), MAX_RECIPE_ID_LENGTH);
             buffer.writeItem(instruction.output);
             buffer.writeInt(state.ordinal());
         });

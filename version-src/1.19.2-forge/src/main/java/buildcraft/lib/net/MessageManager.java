@@ -222,12 +222,9 @@ public class MessageManager {
         if (messageHandler == null) {
             return (message, context) -> {
                 if (context.get().getDirection() == NetworkDirection.PLAY_TO_SERVER) {
-                    // Bad/Buggy client
                     ServerPlayer player = context.get().getSender();
-                    BCLog.logger.warn(
-                        "[lib.messages] The client " + player.getName() + " (ID = " + player.getGameProfile().getId()
-                            + ") sent an invalid message " + messageClass + ", when they should only receive them!");
-
+                    BCLog.logger.debug("[lib.messages] Dropped client attempt to send client-only {} from {}",
+                        messageClass.getName(), player == null ? "unknown" : player.getGameProfile().getId());
                 } else {
                     BCLog.logger.error("Received message " + messageClass
                         + " on the client, when it should only be sent by the client and received on the server!");
@@ -246,16 +243,21 @@ public class MessageManager {
                     context.get().setPacketHandled(true);
                 };
             } else {
-	            return (message, context) -> {
-	                ServerPlayer player = context.get().getSender();
-	                if (player == null || player.level == null) {
-	                    return;
-	                }
-	                context.get().enqueueWork(() -> messageHandler.accept(message, context));
-	                context.get().setPacketHandled(true);
-	                return;
-	            };
-        	}
+                return (message, context) -> {
+                    context.get().setPacketHandled(true);
+                    ServerPlayer player = context.get().getSender();
+                    if (player == null) {
+                        return;
+                    }
+                    context.get().enqueueWork(() -> {
+                        try {
+                            messageHandler.accept(message, context);
+                        } catch (RuntimeException exception) {
+                            BCLog.logger.debug("[lib.messages] Dropped invalid client payload {}", messageClass.getName(), exception);
+                        }
+                    });
+                };
+            }
         }
     }
 

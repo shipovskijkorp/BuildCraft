@@ -19,8 +19,9 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class MessageObjectCacheResponse {
 
-    private static final int MAX_IDS = 4096;
-    private static final int MAX_VALUE_SIZE = 0xFFFF;
+    private static final int MAX_IDS = MessageObjectCacheRequest.MAX_IDS;
+    static final int MAX_VALUE_SIZE = 0xFFFF;
+    static final int MAX_TOTAL_VALUE_BYTES = 2 * 1024 * 1024;
 
     private int cacheId;
 
@@ -40,9 +41,14 @@ public class MessageObjectCacheResponse {
     public static void toBytes(MessageObjectCacheResponse msg, ByteBuf buf) {
         buf.writeByte(msg.cacheId);
         buf.writeShort(msg.ids.length);
+        int totalBytes = 0;
         for (int i = 0; i < msg.ids.length; i++) {
             if (msg.values[i].length > MAX_VALUE_SIZE) {
                 throw new IllegalStateException("Object cache response value is too large: " + msg.values[i].length);
+            }
+            totalBytes += msg.values[i].length;
+            if (totalBytes > MAX_TOTAL_VALUE_BYTES) {
+                throw new IllegalStateException("Object cache response is too large: " + totalBytes);
             }
             buf.writeInt(msg.ids[i]);
             buf.writeShort(msg.values[i].length);
@@ -58,6 +64,7 @@ public class MessageObjectCacheResponse {
         }
         ids = new int[idCount];
         values = new byte[idCount][];
+        int totalBytes = 0;
         for (int i = 0; i < idCount; i++) {
             if (buf.readableBytes() < Integer.BYTES + Short.BYTES) {
                 throw new DecoderException("Truncated object cache response header");
@@ -67,6 +74,10 @@ public class MessageObjectCacheResponse {
             if (valueSize > MAX_VALUE_SIZE || valueSize > buf.readableBytes()) {
                 throw new DecoderException("Invalid object cache response value size: " + valueSize
                     + " readable=" + buf.readableBytes());
+            }
+            totalBytes += valueSize;
+            if (totalBytes > MAX_TOTAL_VALUE_BYTES) {
+                throw new DecoderException("Object cache response exceeds total byte limit: " + totalBytes);
             }
             values[i] = new byte[valueSize];
             buf.readBytes(values[i]);

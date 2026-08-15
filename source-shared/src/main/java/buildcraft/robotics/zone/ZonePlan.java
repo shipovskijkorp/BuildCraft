@@ -17,6 +17,7 @@ import com.google.common.collect.ImmutableList;
 
 import buildcraft.lib.internal.area.IZone;
 import buildcraft.lib.misc.NBTUtilBC;
+import buildcraft.lib.net.NetworkSecurity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,6 +26,8 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
 public class ZonePlan implements IZone {
+    public static final int MAX_SERIALIZED_CHUNKS = 4096;
+
     private final HashMap<ChunkPos, ZoneChunk> chunkMapping = new HashMap<>();
 
     public ZonePlan() {}
@@ -199,7 +202,7 @@ public class ZonePlan implements IZone {
 
     public ZonePlan readFromByteBuf(FriendlyByteBuf buf) {
         chunkMapping.clear();
-        int size = buf.readInt();
+        int size = NetworkSecurity.requireCount(buf.readInt(), MAX_SERIALIZED_CHUNKS, "zone-plan chunk count");
         for (int i = 0; i < size; i++) {
             ChunkPos key = new ChunkPos(buf.readInt(), buf.readInt());
             ZoneChunk value = new ZoneChunk();
@@ -210,6 +213,9 @@ public class ZonePlan implements IZone {
     }
 
     public void writeToByteBuf(FriendlyByteBuf buf) {
+        if (chunkMapping.size() > MAX_SERIALIZED_CHUNKS) {
+            throw new IllegalStateException("Zone plan is too large for a network packet: " + chunkMapping.size());
+        }
         buf.writeInt(chunkMapping.size());
         for (Map.Entry<ChunkPos, ZoneChunk> e : chunkMapping.entrySet()) {
             buf.writeInt(e.getKey().x);

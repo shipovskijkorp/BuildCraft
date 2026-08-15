@@ -9,7 +9,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 import buildcraft.lib.internal.debug.BCLog;
-import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.tile.TileBC_Neptune;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.DecoderException;
@@ -122,7 +121,7 @@ public class MessageUpdateTile {
 
             payloadBuffer = new FriendlyByteBuf(Unpooled.wrappedBuffer(message.payload));
             receiver.receivePayload(context, payloadBuffer);
-            MessageUtil.ensureEmpty(payloadBuffer, clientSide, tile.getClass().getName());
+            NetworkSecurity.requireFullyRead(payloadBuffer, tile.getClass().getName());
         } catch (IOException | RuntimeException exception) {
             if (clientSide) {
                 BCLog.logger.warn("Dropped invalid BuildCraft tile update packet", exception);

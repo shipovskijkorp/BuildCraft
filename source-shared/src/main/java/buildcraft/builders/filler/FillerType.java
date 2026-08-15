@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class FillerType extends StatementType<IFillerPattern> {
+    private static final int MAX_NETWORK_ID_LENGTH = 256;
     public static final FillerType INSTANCE = new FillerType();
 
     private FillerType() {
@@ -38,7 +39,7 @@ public class FillerType extends StatementType<IFillerPattern> {
 
     @Override
     public IFillerPattern readFromBuffer(FriendlyByteBuf buffer) {
-        String kind = buffer.readUtf();
+        String kind = buffer.readUtf(MAX_NETWORK_ID_LENGTH);
         IFillerPattern pattern = FillerRegistry.INSTANCE.getPattern(kind);
         if (pattern == null) {
             return defaultStatement;
@@ -48,6 +49,6 @@ public class FillerType extends StatementType<IFillerPattern> {
 
     @Override
     public void writeToBuffer(FriendlyByteBuf buffer, IFillerPattern slot) {
-        buffer.writeUtf(slot.getUniqueTag());
+        buffer.writeUtf(slot.getUniqueTag(), MAX_NETWORK_ID_LENGTH);
     }
 }

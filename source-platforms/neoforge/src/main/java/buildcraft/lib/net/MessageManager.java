@@ -19,6 +19,7 @@ import javax.annotation.Nullable;
 import buildcraft.lib.internal.module.IBuildCraftMod;
 import buildcraft.lib.internal.debug.BCDebugging;
 import buildcraft.lib.internal.debug.BCLog;
+import io.netty.handler.codec.DecoderException;
 
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -38,7 +39,8 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public final class MessageManager {
     public static final boolean DEBUG = BCDebugging.shouldDebugLog("lib.messages");
-    public static final int PROTOCOL_VERSION = Math.max(1, BuildCraftTarget.NETWORK_PROTOCOL.hashCode() & Integer.MAX_VALUE);
+    public static final String PROTOCOL_VERSION = BuildCraftTarget.NETWORK_PROTOCOL;
+    private static final int MAX_MESSAGE_CLASS_NAME = 256;
 
     private static final CustomPacketPayload.Type<BuildCraftPayload> TYPE =
         new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("buildcraftlib", "messages"));
@@ -117,6 +119,17 @@ public final class MessageManager {
         registerMessageClass(module, clazz, null, encoder, decoder, sides);
     }
 
+    /** Registers a handler that is valid only for packets delivered to a client. */
+    public static <I> void registerClientboundMessageClass(
+        IBuildCraftMod module,
+        Class<I> messageClass,
+        @Nullable BiConsumer<I, Supplier<IPayloadContext>> messageHandler,
+        BiConsumer<I, ? super RegistryFriendlyByteBuf> encoder,
+        Function<? super RegistryFriendlyByteBuf, I> decoder
+    ) {
+        registerMessageClass(module, messageClass, messageHandler, encoder, decoder, Dist.CLIENT);
+    }
+
     public static synchronized <I> void registerMessageClass(
         IBuildCraftMod module,
         Class<I> messageClass,
@@ -174,7 +187,7 @@ public final class MessageManager {
 
     /** Registers BuildCraft's envelope payload on the NeoForge mod event bus. */
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        event.registrar(Integer.toString(PROTOCOL_VERSION))
+        event.registrar(PROTOCOL_VERSION)
             .playBidirectional(TYPE, STREAM_CODEC, MessageManager::handlePayload);
     }
 
@@ -195,17 +208,19 @@ public final class MessageManager {
     private static void encodePayload(RegistryFriendlyByteBuf buffer, BuildCraftPayload payload) {
         Object message = payload.message();
         PerMessageInfo<Object> info = getInfo(message);
-        buffer.writeUtf(info.messageClass.getName());
+        buffer.writeUtf(info.messageClass.getName(), MAX_MESSAGE_CLASS_NAME);
         info.encoder.accept(message, buffer);
     }
 
     private static BuildCraftPayload decodePayload(RegistryFriendlyByteBuf buffer) {
-        String className = buffer.readUtf();
+        String className = buffer.readUtf(MAX_MESSAGE_CLASS_NAME);
         PerMessageInfo<?> info = MESSAGE_HANDLERS_BY_NAME.get(className);
         if (info == null) {
-            throw new IllegalArgumentException("Received unregistered BuildCraft message class " + className);
+            throw new DecoderException("Received unregistered BuildCraft message class " + className);
         }
-        return new BuildCraftPayload(info.decoder.apply(buffer));
+        Object decoded = info.decoder.apply(buffer);
+        NetworkSecurity.requireFullyRead(buffer, className);
+        return new BuildCraftPayload(decoded);
     }
 
     private static void handlePayload(BuildCraftPayload payload, IPayloadContext context) {
@@ -215,17 +230,28 @@ public final class MessageManager {
         BiConsumer<Object, Supplier<IPayloadContext>> handler =
             clientbound ? info.clientHandler : info.serverHandler;
 
+        if (!clientbound && !(context.player() instanceof ServerPlayer)) {
+            BCLog.logger.debug("[lib.messages] Dropped server-bound {} without a ServerPlayer", info.messageClass.getName());
+            return;
+        }
         if (handler == null) {
-            String side = clientbound ? "client" : "server";
-            BCLog.logger.warn(
-                "[lib.messages] Dropped {} because it has no {} handler",
-                info.messageClass.getName(),
-                side
-            );
+            if (clientbound) {
+                BCLog.logger.warn("[lib.messages] Dropped {} because it has no client handler", info.messageClass.getName());
+            } else {
+                BCLog.logger.debug("[lib.messages] Dropped client attempt to send client-only {}", info.messageClass.getName());
+            }
             return;
         }
 
-        handler.accept(message, () -> context);
+        try {
+            handler.accept(message, () -> context);
+        } catch (RuntimeException exception) {
+            if (clientbound) {
+                BCLog.logger.warn("[lib.messages] Failed to handle server payload {}", info.messageClass.getName(), exception);
+            } else {
+                BCLog.logger.debug("[lib.messages] Dropped invalid client payload {}", info.messageClass.getName(), exception);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

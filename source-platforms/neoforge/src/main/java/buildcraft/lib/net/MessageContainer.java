@@ -90,22 +90,30 @@ public class MessageContainer {
                 LogicalSide side = context.flow() == PacketFlow.CLIENTBOUND
                     ? LogicalSide.CLIENT
                     : LogicalSide.SERVER;
-                if (player != null && player.containerMenu.containerId == id
+                if (side == LogicalSide.SERVER && player != null && player.containerMenu.containerId == id
                     && player.containerMenu instanceof MenuBC_Neptune container) {
-
+                    if (!container.stillValid(player) || !container.getIdAllocator().isAllocated(message.msgId)) {
+                        return;
+                    }
                     container.readMessage(message.msgId, payloadBuffer, side, context);
-                    String extra = container.getClass() + ", id = "
-                        + container.getIdAllocator().getNameFor(message.msgId);
-                    MessageUtil.ensureEmpty(payloadBuffer, side == LogicalSide.CLIENT, extra);
+                    NetworkSecurity.requireFullyRead(payloadBuffer, container.getClass().getName() + "#"
+                        + container.getIdAllocator().getNameFor(message.msgId));
                 } else if (side == LogicalSide.CLIENT
                     && MessageContainerClientHandler.getClientContainerMenu() instanceof MenuBC_Neptune container) {
+                    if (!container.getIdAllocator().isAllocated(message.msgId)) {
+                        throw new DecoderException("Unknown client container message id " + message.msgId);
+                    }
                     container.readMessage(message.msgId, payloadBuffer, side, context);
                     String extra = container.getClass() + ", id = "
                         + container.getIdAllocator().getNameFor(message.msgId);
                     MessageUtil.ensureEmpty(payloadBuffer, true, extra);
                 }
             } catch (IOException | RuntimeException e) {
-                BCLog.logger.warn("Dropped invalid BuildCraft container packet", e);
+                if (context.flow() == PacketFlow.CLIENTBOUND) {
+                    BCLog.logger.warn("Dropped invalid BuildCraft container packet", e);
+                } else {
+                    BCLog.logger.debug("Dropped invalid client BuildCraft container packet", e);
+                }
             } finally {
                 payloadBuffer.release();
             }

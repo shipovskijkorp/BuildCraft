@@ -24,6 +24,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 public class MessageMarker {
     private static final boolean DEBUG = MessageManager.DEBUG;
+    private static final int MAX_POSITIONS = 8192;
 
     public boolean add, multiple, connection;
     public int cacheId, count;
@@ -37,7 +38,7 @@ public class MessageMarker {
         connection = buf.readBoolean();
         cacheId = buf.readShort();
         if (multiple) {
-            count = buf.readShort();
+            count = NetworkSecurity.requireCount(buf.readUnsignedShort(), MAX_POSITIONS, "marker position count");
         } else {
             count = 1;
         }
@@ -50,6 +51,9 @@ public class MessageMarker {
     
     public static void toBytes(MessageMarker msg, FriendlyByteBuf buf) {
         msg.count = msg.positions.size();
+        if (msg.count > MAX_POSITIONS) {
+            throw new IllegalStateException("Too many marker positions: " + msg.count);
+        }
         msg.multiple = msg.count != 1;
         buf.writeBoolean(msg.add);
         buf.writeBoolean(msg.multiple);

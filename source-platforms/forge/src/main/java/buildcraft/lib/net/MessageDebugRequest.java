@@ -22,6 +22,7 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
 public class MessageDebugRequest {
+	private static final double MAX_INTERACTION_DISTANCE_SQR = 64.0D;
 	private BlockPos pos;
 	private Direction side;
 
@@ -53,13 +54,20 @@ public class MessageDebugRequest {
 				MessageManager.sendTo(new MessageDebugResponse(), player);
 				return;
 			}
-			//? if <1.20 {
-			BlockEntity tile = player.level.getBlockEntity(message.pos);
-			//?} else {
-			/*?
-			BlockEntity tile = player.level().getBlockEntity(message.pos);
-			?*/
-			//?}
+            // Debug packets are never a remote-inspection API: the sender must be near an already-loaded tile.
+            //? if <1.20 {
+            if (!player.level.hasChunkAt(message.pos)
+                || player.distanceToSqr(message.pos.getX() + 0.5D, message.pos.getY() + 0.5D, message.pos.getZ() + 0.5D)
+                    > MAX_INTERACTION_DISTANCE_SQR) return;
+            BlockEntity tile = player.level.getBlockEntity(message.pos);
+            //?} else {
+            /*?
+            if (!player.level().hasChunkAt(message.pos)
+                || player.distanceToSqr(message.pos.getX() + 0.5D, message.pos.getY() + 0.5D, message.pos.getZ() + 0.5D)
+                    > MAX_INTERACTION_DISTANCE_SQR) return;
+            BlockEntity tile = player.level().getBlockEntity(message.pos);
+            ?*/
+            //?}
 			if (tile instanceof IDebuggable) {
 				List<String> left = new ArrayList<>();
 				List<String> right = new ArrayList<>();

@@ -20,6 +20,7 @@ import buildcraft.lib.misc.RotationUtil;
 import buildcraft.lib.misc.StringUtilBC;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.lib.misc.data.Box;
+import buildcraft.lib.net.NetworkSecurity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -176,13 +177,34 @@ public abstract class Snapshot {
         }
 
         public Key(CompoundTag nbt) {
+            this(nbt, true);
+        }
+
+        private Key(CompoundTag nbt, boolean allowHeader) {
             hash = nbt.getByteArray("hash");
-            header = nbt.contains("header") ? new Header(nbt.getCompound("header")) : null;
+            boolean hasHeader = nbt.contains("header");
+            if (hasHeader && !allowHeader) {
+                throw new IllegalArgumentException("Nested snapshot key headers are not valid");
+            }
+            header = hasHeader ? new Header(nbt.getCompound("header")) : null;
         }
 
         public Key(FriendlyByteBuf buffer) {
-            hash = buffer.readByteArray();
-            header = buffer.readBoolean() ? new Header(buffer) : null;
+            this(buffer, true);
+        }
+
+        private Key(FriendlyByteBuf buffer, boolean allowHeader) {
+            int hashLength = NetworkSecurity.requireRange(
+                buffer.readVarInt(), HashUtil.DIGEST_LENGTH, HashUtil.DIGEST_LENGTH, "snapshot key hash length"
+            );
+            NetworkSecurity.requireReadable(buffer, hashLength, "snapshot key hash");
+            hash = new byte[hashLength];
+            buffer.readBytes(hash);
+            boolean hasHeader = buffer.readBoolean();
+            if (hasHeader && !allowHeader) {
+                throw new io.netty.handler.codec.DecoderException("Nested snapshot key headers are not valid");
+            }
+            header = hasHeader ? new Header(buffer) : null;
         }
 
         public CompoundTag serializeNBT() {
@@ -195,6 +217,16 @@ public abstract class Snapshot {
         }
 
         public void writeToByteBuf(FriendlyByteBuf buffer) {
+            writeToByteBuf(buffer, true);
+        }
+
+        private void writeToByteBuf(FriendlyByteBuf buffer, boolean allowHeader) {
+            if (hash.length != HashUtil.DIGEST_LENGTH) {
+                throw new IllegalStateException("Cannot send an uncomputed snapshot key (hash length " + hash.length + ")");
+            }
+            if (header != null && !allowHeader) {
+                throw new IllegalStateException("Nested snapshot key headers are not valid");
+            }
             buffer.writeByteArray(hash);
             buffer.writeBoolean(header != null);
             if (header != null) {
@@ -223,6 +255,9 @@ public abstract class Snapshot {
     }
 
     public static class Header {
+        private static final int MAX_OWNER_NAME_LENGTH = 64;
+        private static final int MAX_BLUEPRINT_NAME_LENGTH = 256;
+
         public final Key key;
         public final UUID owner;
         public final String ownerName;
@@ -259,7 +294,7 @@ public abstract class Snapshot {
         }
 
         public Header(CompoundTag nbt) {
-            key = new Key(nbt.getCompound("key"));
+            key = new Key(nbt.getCompound("key"), false);
             owner = nbt.getUUID("owner");
             ownerName = nbt.contains("ownerName", Tag.TAG_STRING) ? nbt.getString("ownerName") : "";
             created = new Date(nbt.getLong("created"));
@@ -272,11 +307,11 @@ public abstract class Snapshot {
         }
 
         public Header(FriendlyByteBuf buffer) {
-            key = new Key(buffer);
+            key = new Key(buffer, false);
             owner = buffer.readUUID();
-            ownerName = buffer.readUtf();
+            ownerName = buffer.readUtf(MAX_OWNER_NAME_LENGTH);
             created = new Date(buffer.readLong());
-            name = buffer.readUtf();
+            name = buffer.readUtf(MAX_BLUEPRINT_NAME_LENGTH);
             allowCreative = buffer.readBoolean();
             canRotate = buffer.readBoolean();
             canExcavate = buffer.readBoolean();
@@ -296,11 +331,11 @@ public abstract class Snapshot {
         }
 
         public void writeToByteBuf(FriendlyByteBuf buffer) {
-            key.writeToByteBuf(buffer);
+            key.writeToByteBuf(buffer, false);
             buffer.writeUUID(owner);
-            buffer.writeUtf(ownerName);
+            buffer.writeUtf(ownerName, MAX_OWNER_NAME_LENGTH);
             buffer.writeLong(created.getTime());
-            buffer.writeUtf(name);
+            buffer.writeUtf(name, MAX_BLUEPRINT_NAME_LENGTH);
             buffer.writeBoolean(allowCreative);
             buffer.writeBoolean(canRotate);
             buffer.writeBoolean(canExcavate);

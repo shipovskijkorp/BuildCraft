@@ -13,6 +13,7 @@ import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -115,6 +116,39 @@ public class NbtSquisher {
         return expand(new ByteBufInputStream(buf));
     }
 
+    /**
+     * Decodes the BuildCraft V1 squish format with limits suitable for untrusted network input.
+     * This deliberately does not accept vanilla/legacy fallback formats: callers using a known
+     * network protocol should not let the remote peer choose an arbitrary decoder.
+     */
+    public static CompoundTag expandBuildCraftV1Limited(byte[] bytes, long maxExpandedBytes, long maxDecodeBudget)
+        throws IOException {
+        if (maxExpandedBytes <= 0 || maxDecodeBudget <= 0) {
+            throw new IllegalArgumentException("Decode limits must be positive");
+        }
+        ByteArrayInputStream raw = new ByteArrayInputStream(bytes);
+        int byte1 = raw.read();
+        int byte2 = raw.read();
+        int type = raw.read();
+        if (byte1 != NbtSquishConstants.BUILDCRAFT_MAGIC_1 || byte2 != NbtSquishConstants.BUILDCRAFT_MAGIC_2) {
+            throw new InvalidInputDataException("Electronic-library upload is not BuildCraft squished NBT");
+        }
+
+        InputStream decoded;
+        if (type == TYPE_BC_1) {
+            decoded = raw;
+        } else if (type == TYPE_BC_1_GZIP) {
+            decoded = new GZIPInputStream(raw);
+        } else {
+            throw new InvalidInputDataException("Electronic-library upload uses unsupported NBT type " + type);
+        }
+
+        try (InputStream limited = new LimitedInputStream(decoded, maxExpandedBytes);
+             DataInputStream input = new DataInputStream(limited)) {
+            return readBuildCraftV1Direct(input, maxDecodeBudget);
+        }
+    }
+
     public static CompoundTag expand(InputStream stream) throws IOException {
         if (!stream.markSupported()) {
             stream = new BufferedInputStream(stream);
@@ -174,6 +208,63 @@ public class NbtSquisher {
         WrittenType type = map.getWrittenType();
         int index = type.readIndex(in);
         return map.getFullyReadComp(index);
+    }
+
+    private static CompoundTag readBuildCraftV1Direct(DataInput in, long maxDecodeBudget) throws IOException {
+        NbtSquishMap map = NbtSquishMapReader.read(in, maxDecodeBudget);
+        WrittenType type = map.getWrittenType();
+        int index = type.readIndex(in);
+        return map.getFullyReadComp(index);
+    }
+
+    private static final class LimitedInputStream extends FilterInputStream {
+        private long remaining;
+
+        private LimitedInputStream(InputStream input, long limit) {
+            super(input);
+            remaining = limit;
+        }
+
+        @Override
+        public int read() throws IOException {
+            ensureRemaining();
+            int value = super.read();
+            if (value >= 0) {
+                remaining--;
+            }
+            return value;
+        }
+
+        @Override
+        public int read(byte[] bytes, int off, int len) throws IOException {
+            if (len == 0) {
+                return 0;
+            }
+            ensureRemaining();
+            int allowed = (int) Math.min((long) len, remaining);
+            int read = super.read(bytes, off, allowed);
+            if (read > 0) {
+                remaining -= read;
+            }
+            return read;
+        }
+
+        @Override
+        public long skip(long count) throws IOException {
+            if (count <= 0) {
+                return 0;
+            }
+            ensureRemaining();
+            long skipped = super.skip(Math.min(count, remaining));
+            remaining -= skipped;
+            return skipped;
+        }
+
+        private void ensureRemaining() throws InvalidInputDataException {
+            if (remaining <= 0) {
+                throw new InvalidInputDataException("Expanded BuildCraft NBT exceeds network decode limit");
+            }
+        }
     }
 
     private static void squishBuildCraftV1Direct(CompoundTag nbt, DataOutput to) throws IOException {

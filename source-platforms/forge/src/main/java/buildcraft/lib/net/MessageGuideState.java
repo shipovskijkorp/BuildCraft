@@ -4,12 +4,14 @@
  */
 package buildcraft.lib.net;
 
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import buildcraft.lib.item.ItemGuide;
+import io.netty.handler.codec.DecoderException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +22,8 @@ import net.minecraftforge.network.NetworkEvent;
 
 /** Persists the current guide screen state in the exact guide stack used to open it. */
 public final class MessageGuideState {
+    private static final Set<String> VALID_SORT_MODES = Set.of("TYPE", "MODULE", "ALPHABETICAL");
+    private static final int MAX_SPREAD = 1_000_000;
     private final InteractionHand hand;
     private final boolean showLore;
     private final boolean showHints;
@@ -43,9 +47,12 @@ public final class MessageGuideState {
         showLore = buffer.readBoolean();
         showHints = buffer.readBoolean();
         sortMode = buffer.readUtf(32);
+        if (!VALID_SORT_MODES.contains(sortMode)) {
+            throw new DecoderException("Invalid guide sort mode " + sortMode);
+        }
         document = buffer.readBoolean();
         entry = buffer.readBoolean() ? buffer.readResourceLocation() : null;
-        spread = Math.max(0, buffer.readVarInt());
+        spread = NetworkSecurity.requireRange(buffer.readVarInt(), 0, MAX_SPREAD, "guide spread");
     }
 
     public static void toBytes(MessageGuideState message, FriendlyByteBuf buffer) {
@@ -58,7 +65,7 @@ public final class MessageGuideState {
         if (message.entry != null) {
             buffer.writeResourceLocation(message.entry);
         }
-        buffer.writeVarInt(Math.max(0, message.spread));
+        buffer.writeVarInt(NetworkSecurity.requireRange(message.spread, 0, MAX_SPREAD, "guide spread"));
     }
 
     private ItemGuide.GuideState state() {

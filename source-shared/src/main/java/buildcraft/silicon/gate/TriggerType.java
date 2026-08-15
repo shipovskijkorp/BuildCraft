@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class TriggerType extends StatementType<TriggerWrapper> {
+    private static final int MAX_NETWORK_ID_LENGTH = 256;
     public static final TriggerType INSTANCE = new TriggerType();
 
     private TriggerType() {
@@ -65,7 +66,7 @@ public class TriggerType extends StatementType<TriggerWrapper> {
     @Override
     public TriggerWrapper readFromBuffer(FriendlyByteBuf buffer) throws IOException {
         if (buffer.readBoolean()) {
-            String name = buffer.readUtf();
+            String name = buffer.readUtf(MAX_NETWORK_ID_LENGTH);
             EnumPipePart part = buffer.readEnum(EnumPipePart.class);
             IStatement statement = StatementManager.statements.get(name);
             if (statement == null) statement = StatementApi2Bridge.ensureNativeAdapter(name);
@@ -85,7 +86,7 @@ public class TriggerType extends StatementType<TriggerWrapper> {
             buffer.writeBoolean(false);
         } else {
             buffer.writeBoolean(true);
-            buffer.writeUtf(slot.getUniqueTag());
+            buffer.writeUtf(slot.getUniqueTag(), MAX_NETWORK_ID_LENGTH);
             buffer.writeEnum(slot.getSourcePart());
         }
     }

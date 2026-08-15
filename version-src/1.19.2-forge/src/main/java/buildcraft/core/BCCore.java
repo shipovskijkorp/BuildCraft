@@ -79,7 +79,7 @@ public class BCCore {
         MENUS.register(modEventBus);
         BCCoreConfig.registry();
         ModLoadingContext.get().registerConfig(Type.COMMON, BCCoreConfig.config);
-        MessageManager.registerMessageClass(BCModules.CORE, MessageVolumeBoxes.class, MessageVolumeBoxes.HANDLER, MessageVolumeBoxes::toBytes, MessageVolumeBoxes::new/*, Side.CLIENT*/);
+        MessageManager.registerMessageClass(BCModules.CORE, MessageVolumeBoxes.class, MessageVolumeBoxes.HANDLER, MessageVolumeBoxes::toBytes, MessageVolumeBoxes::new, Dist.CLIENT);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(BCLibEventDist.class);
 		IEventBus eventBus = MinecraftForge.EVENT_BUS;

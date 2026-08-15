@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 import buildcraft.lib.debug.ClientDebuggables;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,6 +17,8 @@ import net.minecraft.network.protocol.PacketFlow;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class MessageDebugResponse {
+    private static final int MAX_LINES = 1024;
+    private static final int MAX_LINE_LENGTH = 1024;
     private final List<String> left = new ArrayList<>();
     private final List<String> right = new ArrayList<>();
 
@@ -29,19 +30,20 @@ public class MessageDebugResponse {
     }
 
     public static void toBytes(MessageDebugResponse msg, FriendlyByteBuf buffer) {
+        if (msg.left.size() > MAX_LINES || msg.right.size() > MAX_LINES) {
+            throw new IllegalStateException("Too many debugger response lines");
+        }
         buffer.writeInt(msg.left.size());
-        msg.left.forEach(buffer::writeUtf);
+        msg.left.forEach(line -> buffer.writeUtf(line, MAX_LINE_LENGTH));
         buffer.writeInt(msg.right.size());
-        msg.right.forEach(buffer::writeUtf);
+        msg.right.forEach(line -> buffer.writeUtf(line, MAX_LINE_LENGTH));
     }
 
     public MessageDebugResponse(FriendlyByteBuf buffer) {
-        IntStream.range(0, buffer.readInt())
-            .mapToObj(i -> buffer.readUtf())
-            .forEach(left::add);
-        IntStream.range(0, buffer.readInt())
-            .mapToObj(i -> buffer.readUtf())
-            .forEach(right::add);
+        int leftCount = NetworkSecurity.requireCount(buffer.readInt(), MAX_LINES, "debug left line count");
+        for (int i = 0; i < leftCount; i++) left.add(buffer.readUtf(MAX_LINE_LENGTH));
+        int rightCount = NetworkSecurity.requireCount(buffer.readInt(), MAX_LINES, "debug right line count");
+        for (int i = 0; i < rightCount; i++) right.add(buffer.readUtf(MAX_LINE_LENGTH));
     }
 
     public static final BiConsumer<MessageDebugResponse, Supplier<IPayloadContext>> HANDLER = (message, ctx) -> {

@@ -722,8 +722,132 @@ def validate_pipe_pluggable_contract() -> None:
     forbid("1.21.1-neoforge", plugin, "BCTransportItems.PIPE_STRUCTURE.isPresent()")
 
 
+def validate_network_hardening() -> None:
+    network_security = "src/main/java/buildcraft/lib/net/NetworkSecurity.java"
+    packet_buffer = "src/main/java/buildcraft/lib/net/PacketBufferBC.java"
+    permission_util = "src/main/java/buildcraft/lib/misc/PermissionUtil.java"
+    container_message = "src/main/java/buildcraft/lib/net/MessageContainer.java"
+    tile_message = "src/main/java/buildcraft/lib/net/MessageUpdateTile.java"
+    cache_request = "src/main/java/buildcraft/lib/net/cache/MessageObjectCacheRequest.java"
+    cache_response = "src/main/java/buildcraft/lib/net/cache/MessageObjectCacheResponse.java"
+    marker_message = "src/main/java/buildcraft/lib/net/MessageMarker.java"
+    debug_request = "src/main/java/buildcraft/lib/net/MessageDebugRequest.java"
+    debug_response = "src/main/java/buildcraft/lib/net/MessageDebugResponse.java"
+    zone_plan = "src/main/java/buildcraft/robotics/zone/ZonePlan.java"
+    zone_chunk = "src/main/java/buildcraft/robotics/zone/ZoneChunk.java"
+    zone_tile = "src/main/java/buildcraft/robotics/tile/TileZonePlanner.java"
+    snapshot = "src/main/java/buildcraft/builders/snapshot/Snapshot.java"
+    electronic_library = "src/main/java/buildcraft/builders/tile/TileElectronicLibrary.java"
+    assembly_table = "src/main/java/buildcraft/silicon/tile/TileAssemblyTable.java"
+    nbt_squisher = "src/main/java/buildcraft/lib/nbt/NbtSquisher.java"
+    nbt_map_reader = "src/main/java/buildcraft/lib/nbt/NbtSquishMapReader.java"
+
+    for target in TARGETS:
+        require(target, network_security,
+                "requireRange", "requireCount", "requireReadable", "requireFullyRead",
+                "ownership is execution attribution")
+        require(target, packet_buffer,
+                "MAX_STRING_BYTES = 32 * 1024",
+                "Invalid \" + enumClass.getSimpleName() + \" ordinal",
+                "NetworkSecurity.requireReadable(this, length, \"BuildCraft string\")")
+
+        # Player-facing access is authenticated by the actual sender/context, never by BuildCraft ownership.
+        require(target, permission_util,
+                "BuildCraft ownership is attribution and an execution identity, not an internal claim system",
+                "public static boolean hasPermission(Object type, Player attempting, PermissionBlock target)",
+                "return true;")
+        for rel in (container_message, tile_message):
+            forbid(target, rel, "getKnownOwner", "getOwnerProfile")
+
+        require(target, container_message,
+                "container.stillValid(player)",
+                "container.getIdAllocator().isAllocated(message.msgId)",
+                "NetworkSecurity.requireFullyRead")
+        require(target, tile_message,
+                "NetworkSecurity.requireFullyRead")
+        require(target, cache_request,
+                "MAX_IDS = 256",
+                "MessageObjectCacheResponse.MAX_TOTAL_VALUE_BYTES")
+        require(target, cache_response,
+                "MAX_TOTAL_VALUE_BYTES = 2 * 1024 * 1024",
+                "MAX_VALUE_SIZE = 0xFFFF")
+        require(target, marker_message, "MAX_POSITIONS = 8192", "NetworkSecurity.requireCount")
+        require(target, debug_request, "MAX_INTERACTION_DISTANCE_SQR = 64.0D")
+        require(target, debug_response, "MAX_LINES = 1024", "MAX_LINE_LENGTH = 1024")
+        require(target, zone_plan, "MAX_SERIALIZED_CHUNKS = 4096", "NetworkSecurity.requireCount")
+        require(target, zone_chunk, "MAX_NETWORK_BYTES = 32", "NetworkSecurity.requireReadable")
+        require(target, zone_tile, "MAX_MAP_NAME_LENGTH = 64", "readUtf(MAX_MAP_NAME_LENGTH)")
+        require(target, snapshot,
+                "HashUtil.DIGEST_LENGTH, HashUtil.DIGEST_LENGTH, \"snapshot key hash length\"",
+                "MAX_OWNER_NAME_LENGTH = 64",
+                "MAX_BLUEPRINT_NAME_LENGTH = 256")
+        require(target, electronic_library,
+                "MAX_UPLOAD_PART_BYTES = 4 * 1024",
+                "MAX_UPLOAD_TOTAL_BYTES = 8 * 1024 * 1024",
+                "MAX_CONCURRENT_UPLOADS = 64",
+                "MAX_UPLOAD_EXPANDED_BYTES = 64L * 1024 * 1024",
+                "NetworkSecurity.requireReadable(buffer, partLength",
+                "sender.containerMenu instanceof ContainerElectronicLibrary menu",
+                "menu.tile != this || !menu.stillValid(sender)",
+                "expandBuildCraftV1Limited",
+                "ownership in BuildCraft is attribution for automated")
+        require(target, assembly_table,
+                "MAX_RECIPE_ID_LENGTH = 256",
+                "MAX_RECIPE_STATES = 4096",
+                "NetworkSecurity.requireRange")
+        require(target, nbt_squisher,
+                "expandBuildCraftV1Limited",
+                "LimitedInputStream",
+                "maxDecodeBudget")
+        require(target, nbt_map_reader,
+                "remainingBudget",
+                "packed list entries",
+                "Packed list has entries but no dictionary")
+
+        manager = "src/main/java/buildcraft/lib/net/MessageManager.java"
+        require(target, manager, "PROTOCOL_VERSION = BuildCraftTarget.NETWORK_PROTOCOL")
+        if target == "1.21.1-neoforge":
+            require(target, manager,
+                    "MAX_MESSAGE_CLASS_NAME = 256",
+                    "buffer.readUtf(MAX_MESSAGE_CLASS_NAME)",
+                    "NetworkSecurity.requireFullyRead(buffer, className)")
+
+    packet_tests = ROOT / "source-shared/src/test/java/buildcraft/lib/net/PacketBufferBCTester.java"
+    if not packet_tests.is_file():
+        fail("missing PacketBufferBC malformed-input regression tests")
+    else:
+        packet_test_text = packet_tests.read_text(encoding="utf-8")
+        for method in ("invalidPackedEnumOrdinalIsRejected", "oversizedLegacyStringIsRejectedBeforeAllocation",
+                       "truncatedLegacyStringIsRejected"):
+            if method not in packet_test_text:
+                fail(f"missing PacketBufferBC regression test {method}")
+
+
+    nbt_tests = ROOT / "source-shared/src/test/java/buildcraft/lib/nbt/NbtSquisherTester.java"
+    if not nbt_tests.is_file():
+        fail("missing bounded network NBT regression tests")
+    else:
+        nbt_test_text = nbt_tests.read_text(encoding="utf-8")
+        for method in ("limitedNetworkDecodeAcceptsNormalBuildCraftNbt",
+                       "limitedNetworkDecodeRejectsExpansionAndComplexityBombs",
+                       "limitedNetworkDecodeRejectsVanillaFormatNegotiation"):
+            if method not in nbt_test_text:
+                fail(f"missing bounded NBT regression test {method}")
+
+
+    zone_tests = ROOT / "source-shared/src/test/java/buildcraft/robotics/zone/ZoneNetworkSecurityTester.java"
+    if not zone_tests.is_file():
+        fail("missing zone network malformed-input regression tests")
+    else:
+        zone_test_text = zone_tests.read_text(encoding="utf-8")
+        for method in ("oversizedZonePlanChunkCountIsRejected", "oversizedZoneChunkBitsetIsRejectedBeforeAllocation",
+                       "unknownZoneChunkFlagsAreRejected"):
+            if method not in zone_test_text:
+                fail(f"missing zone network regression test {method}")
+
+
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 58
+    expected_tests = 60
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -756,6 +880,8 @@ def validate_gametest_runtime_guards() -> None:
             "robotOwnerIdentitySurvivesPersistenceAndFeedsApi2Actor",
             "api2PermissionProviderSeesOwnerAcrossWorldOperationKinds",
             "platformProtectionHooksReceiveMachineOwnerForBreakAndPlace",
+            "manualInteractionIsNotOwnerLocked",
+            "robotDismantleIsNotOwnerLocked",
         ):
             if method not in permission_suite:
                 fail(f"{target}: missing permission/owner GameTest {method}")
@@ -902,6 +1028,7 @@ def main() -> None:
     validate_forestry_model_bake_mutation()
     validate_forge_atlas_reload_caches()
     validate_pipe_pluggable_contract()
+    validate_network_hardening()
     validate_gametest_runtime_guards()
 
     if ERRORS:

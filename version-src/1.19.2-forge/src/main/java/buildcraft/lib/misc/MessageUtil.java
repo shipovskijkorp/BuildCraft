@@ -6,6 +6,7 @@
 
 package buildcraft.lib.misc;
 
+import buildcraft.lib.net.NetworkSecurity;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -203,7 +204,7 @@ public class MessageUtil {
             block = Blocks.AIR;
         }
         BlockState state = block.defaultBlockState();
-        int count = buf.readVarInt();
+        int count = NetworkSecurity.requireCount(buf.readVarInt(), 64, "block-state property count");
         Map<String, Property<?>> properties = state.getProperties().stream()
             .collect(Collectors.toMap(Property::getName, a -> a, (a, b) -> a));
         for (int p = 0; p < count; p++) {
@@ -219,7 +220,9 @@ public class MessageUtil {
 
     private static <T extends Comparable<T>> BlockState propertyReadHelper(BlockState state, String value,
         Property<T> prop) {
-        return state.setValue(prop, prop.getValue(value).orElse(null));
+        return prop.getValue(value)
+            .map(parsed -> state.setValue(prop, parsed))
+            .orElse(state);
     }
 
     /** {@link FriendlyByteBuf#writeEnum(Enum)} can only write *actual* enum values - so not null. This method allows

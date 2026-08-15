@@ -35,6 +35,43 @@ public class NbtSquisherTester {
         Assertions.assertEquals(original, restored);
     }
 
+
+    static IntStream buildCraftFormats() {
+        return IntStream.of(
+            NbtSquishConstants.BUILDCRAFT_V1,
+            NbtSquishConstants.BUILDCRAFT_V1_COMPRESSED
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("buildCraftFormats")
+    void limitedNetworkDecodeAcceptsNormalBuildCraftNbt(int format) throws IOException {
+        CompoundTag original = createTag();
+        byte[] encoded = NbtSquisher.squish(original, format);
+        CompoundTag restored = NbtSquisher.expandBuildCraftV1Limited(encoded, 1024 * 1024, 100_000);
+        Assertions.assertEquals(original, restored);
+    }
+
+    @ParameterizedTest
+    @MethodSource("buildCraftFormats")
+    void limitedNetworkDecodeRejectsExpansionAndComplexityBombs(int format) {
+        byte[] encoded = NbtSquisher.squish(createTag(), format);
+        Assertions.assertThrows(IOException.class, () ->
+            NbtSquisher.expandBuildCraftV1Limited(encoded, 1, 100_000)
+        );
+        Assertions.assertThrows(IOException.class, () ->
+            NbtSquisher.expandBuildCraftV1Limited(encoded, 1024 * 1024, 1)
+        );
+    }
+
+    @org.junit.jupiter.api.Test
+    void limitedNetworkDecodeRejectsVanillaFormatNegotiation() {
+        byte[] encoded = NbtSquisher.squish(createTag(), NbtSquishConstants.VANILLA_COMPRESSED);
+        Assertions.assertThrows(IOException.class, () ->
+            NbtSquisher.expandBuildCraftV1Limited(encoded, 1024 * 1024, 100_000)
+        );
+    }
+
     private static CompoundTag createTag() {
         CompoundTag root = new CompoundTag();
         root.putByte("byte", (byte) 1);

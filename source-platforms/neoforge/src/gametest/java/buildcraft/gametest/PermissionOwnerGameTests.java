@@ -8,6 +8,7 @@ import buildcraft.api.v2.permission.PermissionDecision;
 import buildcraft.api.v2.permission.WorldOperationKind;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.tile.TileQuarry;
+import buildcraft.core.BCCoreItems;
 import buildcraft.lib.BCLib;
 import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.BlockUtil;
@@ -26,6 +27,8 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -125,6 +128,54 @@ public final class PermissionOwnerGameTests {
             level, origin, target, otherOwner, AutomationPermissionUtil.SOURCE_QUARRY,
             WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
         ), "owner-scoped GameTest permission provider leaked to another owner");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void manualInteractionIsNotOwnerLocked(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos relative = new BlockPos(1, 1, 1);
+        BlockPos absolute = helper.absolutePos(relative);
+        helper.setBlock(relative, BCBuildersBlocks.QUARRY.get().defaultBlockState());
+        BlockEntity blockEntity = helper.getBlockEntity(relative);
+        if (!(blockEntity instanceof TileQuarry quarry)) {
+            helper.fail("quarry block did not create TileQuarry");
+            return;
+        }
+
+        Player owner = FakePlayerProvider.INSTANCE.getFakePlayer(level, DENIED_OWNER, absolute);
+        quarry.onPlacedBy(owner, ItemStack.EMPTY);
+        GameProfile otherProfile = new GameProfile(
+            UUID.fromString("68732f53-9f41-44dd-87e3-9ccfd3054676"), "BCTestOtherPlayer"
+        );
+        Player otherPlayer = FakePlayerProvider.INSTANCE.getFakePlayer(level, otherProfile, absolute);
+
+        require(helper, !DENIED_OWNER_ID.equals(otherPlayer.getUUID()), "test player unexpectedly matches machine owner");
+        require(helper, quarry.canInteractWith(otherPlayer),
+            "machine owner became an ACL: another nearby player must still be able to interact with/steal the machine");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void robotDismantleIsNotOwnerLocked(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos absolute = helper.absolutePos(new BlockPos(1, 1, 1));
+        EntityRobot robot = new EntityRobot(level, BCRoboticsBoards.EMPTY);
+        robot.setOwner(DENIED_OWNER);
+        robot.setPos(absolute.getX() + 0.5D, absolute.getY(), absolute.getZ() + 0.5D);
+        level.addFreshEntity(robot);
+
+        GameProfile otherProfile = new GameProfile(
+            UUID.fromString("7db6ac5a-38f7-45a9-9eea-7c30f17b04e0"), "BCTestRobotThief"
+        );
+        Player otherPlayer = FakePlayerProvider.INSTANCE.getFakePlayer(level, otherProfile, absolute);
+        otherPlayer.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(BCCoreItems.WRENCH.get()));
+        otherPlayer.setShiftKeyDown(true);
+
+        InteractionResult result = robot.interact(otherPlayer, InteractionHand.MAIN_HAND);
+        require(helper, result != InteractionResult.PASS,
+            "robot owner became an ACL: another player must still be able to dismantle/steal the robot");
+        require(helper, robot.isRemoved(), "non-owner wrench dismantle did not convert the robot back to items");
         helper.succeed();
     }
 

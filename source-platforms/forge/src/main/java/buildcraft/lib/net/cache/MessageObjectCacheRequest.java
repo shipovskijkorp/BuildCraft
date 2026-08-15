@@ -22,7 +22,7 @@ import net.minecraftforge.network.NetworkEvent;
  */
 public class MessageObjectCacheRequest {
 
-    static final int MAX_IDS = 4096;
+    static final int MAX_IDS = 256;
 
     private int cacheId;
 
@@ -65,7 +65,7 @@ public class MessageObjectCacheRequest {
         NetworkEvent.Context context = ctx.get();
         context.enqueueWork(() -> {
             if (message.cacheId < 0 || message.cacheId >= BuildCraftObjectCaches.CACHES.size()) {
-                BCLog.logger.warn("Dropped object cache request with invalid cache id {}", message.cacheId);
+                BCLog.logger.debug("Dropped object cache request with invalid cache id {}", message.cacheId);
                 return;
             }
             NetworkedObjectCache<?> cache = BuildCraftObjectCaches.CACHES.get(message.cacheId);
@@ -73,10 +73,19 @@ public class MessageObjectCacheRequest {
 
             FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
             try {
+                int totalBytes = 0;
                 for (int i = 0; i < values.length; i++) {
                     int id = message.ids[i];
                     cache.writeObjectServer(id, buffer);
-                    values[i] = new byte[buffer.readableBytes()];
+                    int valueSize = buffer.readableBytes();
+                    if (valueSize > MessageObjectCacheResponse.MAX_VALUE_SIZE) {
+                        throw new IllegalStateException("Object cache value is too large: " + valueSize);
+                    }
+                    totalBytes += valueSize;
+                    if (totalBytes > MessageObjectCacheResponse.MAX_TOTAL_VALUE_BYTES) {
+                        throw new IllegalStateException("Object cache response is too large: " + totalBytes);
+                    }
+                    values[i] = new byte[valueSize];
                     buffer.readBytes(values[i]);
                     buffer.clear();
                 }
@@ -85,7 +94,7 @@ public class MessageObjectCacheRequest {
                         context.getSender());
                 }
             } catch (RuntimeException e) {
-                BCLog.logger.warn("Dropped invalid object cache request", e);
+                BCLog.logger.debug("Dropped invalid object cache request", e);
             } finally {
                 buffer.release();
             }

@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class StatementTypeParam extends StatementType<IStatementParameter> {
+    private static final int MAX_NETWORK_ID_LENGTH = 256;
     public static final StatementTypeParam INSTANCE = new StatementTypeParam();
 
     public StatementTypeParam() {
@@ -46,7 +47,7 @@ public class StatementTypeParam extends StatementType<IStatementParameter> {
     @Override
     public IStatementParameter readFromBuffer(FriendlyByteBuf buffer) throws IOException {
         if (buffer.readBoolean()) {
-            String tag = buffer.readUtf();
+            String tag = buffer.readUtf(MAX_NETWORK_ID_LENGTH);
             IParamReaderBuf reader = StatementManager.paramsBuf.get(tag);
             if (reader == null) {
                 throw new InvalidInputDataException("Unknown paramater type " + tag);
@@ -63,7 +64,7 @@ public class StatementTypeParam extends StatementType<IStatementParameter> {
             buffer.writeBoolean(false);
         } else {
             buffer.writeBoolean(true);
-            buffer.writeUtf(slot.getUniqueTag());
+            buffer.writeUtf(slot.getUniqueTag(), MAX_NETWORK_ID_LENGTH);
             slot.writeToBuf(buffer);
         }
     }

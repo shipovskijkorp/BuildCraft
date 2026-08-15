@@ -30,6 +30,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 /** Dedicated packets for Forestry's genetic filter UI hosted by a BuildCraft pipe. */
 public final class ForestryPropolisNetwork {
     private static final String PROTOCOL = "1";
+    private static final int MAX_RULE_ID_LENGTH = 256;
     private static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
         new ResourceLocation(BuildCraftCompat.MODID, "forestry_propolis"),
         () -> PROTOCOL,
@@ -163,12 +164,12 @@ public final class ForestryPropolisNetwork {
         private static void encode(RuleChange message, FriendlyByteBuf buffer) {
             buffer.writeBlockPos(message.pos);
             buffer.writeByte(message.facing.ordinal());
-            buffer.writeUtf(message.ruleId);
+            buffer.writeUtf(message.ruleId, MAX_RULE_ID_LENGTH);
         }
 
         private static RuleChange decode(FriendlyByteBuf buffer) {
             return new RuleChange(buffer.readBlockPos(), Direction.from3DDataValue(buffer.readUnsignedByte()),
-                buffer.readUtf());
+                buffer.readUtf(MAX_RULE_ID_LENGTH));
         }
     }
 

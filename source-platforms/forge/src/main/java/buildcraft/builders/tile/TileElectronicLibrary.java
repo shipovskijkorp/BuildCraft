@@ -18,6 +18,8 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.primitives.Bytes;
 
+import io.netty.handler.codec.DecoderException;
+
 import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.data.NbtSquishConstants;
 import buildcraft.builders.BCBuildersBlocks;
@@ -29,6 +31,7 @@ import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.nbt.NbtSquisher;
 import buildcraft.lib.net.MessageManager;
+import buildcraft.lib.net.NetworkSecurity;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
@@ -86,12 +89,19 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
     );
     public static final int TRANSFER_TIME = 50;
 
+    private static final int MAX_UPLOAD_PART_BYTES = 4 * 1024;
+    private static final int MAX_UPLOAD_TOTAL_BYTES = 8 * 1024 * 1024;
+    private static final int MAX_UPLOAD_PARTS = MAX_UPLOAD_TOTAL_BYTES / MAX_UPLOAD_PART_BYTES + 1;
+    private static final int MAX_CONCURRENT_UPLOADS = 64;
+    private static final long MAX_UPLOAD_EXPANDED_BYTES = 64L * 1024 * 1024;
+    private static final long MAX_UPLOAD_NBT_DECODE_BUDGET = 20_000_000L;
+
     public Snapshot.Key selected = null;
     private int progressDown = -1;
     private int progressUp = -1;
     private int progressDownLast = -1;
     private int progressUpLast = -1;
-    private final Map<Pair<UUID, Snapshot.Key>, List<byte[]>> upSnapshotsParts = new HashMap<>();
+    private final Map<Pair<UUID, Snapshot.Key>, UploadAccumulator> upSnapshotsParts = new HashMap<>();
 
     public TileElectronicLibrary(BlockPos pos, BlockState state) {
 		super(BCBuildersBlocks.LIBRARY_TILE_BC8.get(), pos, state);
@@ -312,39 +322,96 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
         if (side == LogicalSide.SERVER) {
             if (id == NET_UP) {
                 ServerPlayer sender = ctx == null ? null : ctx.getSender();
-                UUID playerId = sender == null ? new UUID(0L, 0L) : sender.getUUID();
+                if (sender == null) {
+                    throw new DecoderException("Electronic-library upload has no server sender");
+                }
+                if (!(sender.containerMenu instanceof ContainerElectronicLibrary menu)
+                    || menu.tile != this || !menu.stillValid(sender)) {
+                    throw new DecoderException("Electronic-library upload does not match the sender's open library menu");
+                }
+
+                UUID playerId = sender.getUUID();
                 Snapshot.Key key = new Snapshot.Key(buffer);
                 Pair<UUID, Snapshot.Key> pair = Pair.of(playerId, key);
                 boolean last = buffer.readBoolean();
-                upSnapshotsParts.computeIfAbsent(pair, localPair -> new ArrayList<>()).add(buffer.readByteArray());
-                if (last && upSnapshotsParts.containsKey(pair)) {
-                    try {
-                        if (selected == null || !selected.equals(key) || !isCleanSnapshot(invUpIn.getStackInSlot(0)) || !invUpOut.getStackInSlot(0).isEmpty()) {
-                            return;
-                        }
-                        Snapshot snapshot = Snapshot.readFromNBT(
-                            NbtSquisher.expand(
-                                Bytes.concat(
-                                    upSnapshotsParts.get(pair)
-                                        .toArray(new byte[0][])
-                                )
-                            )
-                        );
-                        Snapshot.Header header = snapshot.key.header;
-                        if (header == null) {
-                            return;
-                        }
-                        snapshot = snapshot.copy();
-                        snapshot.key = new Snapshot.Key(snapshot.key, (Snapshot.Header) null);
-                        snapshot.computeKey();
-                        GlobalSavedDataSnapshots.get(level).addSnapshot(snapshot);
-                        invUpOut.setStackInSlot(0, ItemSnapshot.getUsed(snapshot.getType(), header));
-                        invUpIn.setStackInSlot(0, StackUtil.EMPTY);
-                    } finally {
+
+                try {
+                    // Owner identity is deliberately irrelevant here. The actual sender only needs to be
+                    // interacting with this library; ownership in BuildCraft is attribution for automated
+                    // actions, not an ACL that makes machines private.
+                    if (selected == null || !selected.equals(key)
+                        || !isCleanSnapshot(invUpIn.getStackInSlot(0))
+                        || !invUpOut.getStackInSlot(0).isEmpty()) {
+                        throw new DecoderException("Electronic-library upload no longer matches the active transfer");
+                    }
+
+                    int partLength = NetworkSecurity.requireCount(
+                        buffer.readVarInt(), MAX_UPLOAD_PART_BYTES, "electronic-library upload part bytes"
+                    );
+                    if (!last && partLength == 0) {
+                        throw new DecoderException("Electronic-library upload contains an empty non-final part");
+                    }
+                    NetworkSecurity.requireReadable(buffer, partLength, "electronic-library upload part");
+                    byte[] part = new byte[partLength];
+                    buffer.readBytes(part);
+
+                    // A client may have only one in-flight upload for this library. Changing selection
+                    // abandons the old transfer rather than retaining attacker-controlled partial buffers.
+                    upSnapshotsParts.entrySet().removeIf(entry ->
+                        entry.getKey().getLeft().equals(playerId) && !entry.getKey().equals(pair)
+                    );
+                    if (!upSnapshotsParts.containsKey(pair) && upSnapshotsParts.size() >= MAX_CONCURRENT_UPLOADS) {
+                        throw new DecoderException("Too many concurrent electronic-library uploads");
+                    }
+
+                    UploadAccumulator upload = upSnapshotsParts.computeIfAbsent(pair, ignored -> new UploadAccumulator());
+                    upload.add(part);
+                    if (!last) {
+                        return;
+                    }
+
+                    Snapshot snapshot = Snapshot.readFromNBT(NbtSquisher.expandBuildCraftV1Limited(
+                        upload.join(), MAX_UPLOAD_EXPANDED_BYTES, MAX_UPLOAD_NBT_DECODE_BUDGET
+                    ));
+                    Snapshot.Header header = snapshot.key.header;
+                    if (header == null) {
+                        throw new DecoderException("Electronic-library upload has no snapshot header");
+                    }
+                    snapshot = snapshot.copy();
+                    snapshot.key = new Snapshot.Key(snapshot.key, (Snapshot.Header) null);
+                    snapshot.computeKey();
+                    GlobalSavedDataSnapshots.get(level).addSnapshot(snapshot);
+                    invUpOut.setStackInSlot(0, ItemSnapshot.getUsed(snapshot.getType(), header));
+                    invUpIn.setStackInSlot(0, StackUtil.EMPTY);
+                } catch (IOException | RuntimeException e) {
+                    upSnapshotsParts.remove(pair);
+                    throw e;
+                } finally {
+                    if (last) {
                         upSnapshotsParts.remove(pair);
                     }
                 }
             }
+        }
+    }
+
+    private static final class UploadAccumulator {
+        private final List<byte[]> parts = new ArrayList<>();
+        private int totalBytes;
+
+        private void add(byte[] part) {
+            if (parts.size() >= MAX_UPLOAD_PARTS) {
+                throw new DecoderException("Electronic-library upload has too many parts");
+            }
+            if (part.length > MAX_UPLOAD_TOTAL_BYTES - totalBytes) {
+                throw new DecoderException("Electronic-library upload exceeds compressed size limit");
+            }
+            parts.add(part);
+            totalBytes += part.length;
+        }
+
+        private byte[] join() {
+            return Bytes.concat(parts.toArray(new byte[0][]));
         }
     }
 

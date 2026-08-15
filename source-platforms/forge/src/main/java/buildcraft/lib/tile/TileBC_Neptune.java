@@ -36,6 +36,7 @@ import buildcraft.lib.net.IPayloadReceiver;
 import buildcraft.lib.net.IPayloadWriter;
 import buildcraft.lib.net.MessageManager;
 import buildcraft.lib.net.MessageUpdateTile;
+import buildcraft.lib.net.NetworkSecurity;
 import buildcraft.lib.tile.item.ItemHandlerManager;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
@@ -618,7 +619,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
             spawnReceiveParticles(id);
         } catch (Exception e) {
             // A malformed render-data packet for a single tile must NOT disconnect the player on join.
-            // (The custom-channel path in receivePayload already swallows these exceptions the same way.)
+            // (The custom-channel path rejects malformed payloads at the packet boundary and keeps serverbound failures at DEBUG.)
             BCLog.logger.error("[lib.tile] Failed to read update tag for " + getClass() + " at " + worldPosition, e);
         } finally {
             buf.release();
@@ -642,23 +643,18 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
 
     @Override
     public final void receivePayload(NetworkEvent.Context ctx, FriendlyByteBuf buffer) throws IOException {
-    	try {
         int id = buffer.readUnsignedShort();
+        if (!getIdAllocator().isAllocated(id)) {
+            throw new io.netty.handler.codec.DecoderException("Unknown tile payload id " + id + " for " + getClass().getName());
+        }
 
         LogicalSide direction = ctx.getDirection().getReceptionSide();
-        readPayload(id, buffer, direction ,ctx);
-
-        // Make sure that we actually read the entire message rather than just discarding it
-        MessageUtil.ensureEmpty(buffer, level.isClientSide, getClass() + ", id = " + getIdAllocator().getNameFor(id));
+        readPayload(id, buffer, direction, ctx);
+        NetworkSecurity.requireFullyRead(buffer, getClass().getName() + "#" + getIdAllocator().getNameFor(id));
 
         if (direction == LogicalSide.CLIENT) {
             spawnReceiveParticles(id);
         }
-    	}
-    	catch (Exception e) {
-    		BCLog.logger.error(""+this.getClass().getName()+"\n"+e.getMessage());
-		}
-        return ;
     }
 
     // ######################

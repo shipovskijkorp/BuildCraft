@@ -42,7 +42,7 @@ public class MessageSnapshotRequest{
                     MessageManager.sendTo(new MessageSnapshotResponse(snapshot), context.getSender());
                 }
             } catch (RuntimeException e) {
-                BCLog.logger.warn("Dropped invalid snapshot request packet", e);
+                BCLog.logger.debug("Dropped invalid snapshot request packet: {}", e.toString());
             }
         });
         context.setPacketHandled(true);

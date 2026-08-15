@@ -12,12 +12,15 @@ import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
 
+import buildcraft.lib.net.NetworkSecurity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec2;
 
 public class ZoneChunk {
+    private static final int MAX_NETWORK_BYTES = 32;
+
     public BitSet property;
     private boolean fullSet = false;
 
@@ -125,8 +128,14 @@ public class ZoneChunk {
 
     public ZoneChunk readFromByteBuf(FriendlyByteBuf buf) {
         int flags = buf.readUnsignedByte();
+        NetworkSecurity.requireRange(flags, 0, 3, "zone-chunk flags");
+        property = null;
         if ((flags & 1) != 0) {
-            property = BitSet.valueOf(buf.readByteArray());
+            int length = NetworkSecurity.requireCount(buf.readVarInt(), MAX_NETWORK_BYTES, "zone-chunk bitset bytes");
+            NetworkSecurity.requireReadable(buf, length, "zone-chunk bitset");
+            byte[] bits = new byte[length];
+            buf.readBytes(bits);
+            property = BitSet.valueOf(bits);
         }
         fullSet = (flags & 2) != 0;
 
@@ -137,7 +146,11 @@ public class ZoneChunk {
         int flags = (fullSet ? 2 : 0) | (property != null ? 1 : 0);
         buf.writeByte(flags);
         if (property != null) {
-            buf.writeByteArray(property.toByteArray());
+            byte[] bits = property.toByteArray();
+            if (bits.length > MAX_NETWORK_BYTES) {
+                throw new IllegalStateException("ZoneChunk contains out-of-range bits: " + bits.length + " bytes");
+            }
+            buf.writeByteArray(bits);
         }
     }
 }

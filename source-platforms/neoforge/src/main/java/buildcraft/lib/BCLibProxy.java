@@ -51,7 +51,8 @@ public abstract class BCLibProxy {
             MessageMarker.class,
             MessageMarker.HANDLER,
             MessageMarker::toBytes,
-            MessageMarker::new
+            MessageMarker::new,
+            Dist.CLIENT
         );
         MessageManager.registerMessageClass(
             BCModules.LIB,
@@ -82,7 +83,8 @@ public abstract class BCLibProxy {
             MessageDebugResponse.class,
             MessageDebugResponse.HANDLER,
             MessageDebugResponse::toBytes,
-            MessageDebugResponse::new
+            MessageDebugResponse::new,
+            Dist.CLIENT
         );
         MessageManager.registerMessageClass(
             BCModules.LIB,

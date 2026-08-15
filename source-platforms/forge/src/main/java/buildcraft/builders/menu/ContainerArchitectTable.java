@@ -16,6 +16,7 @@ import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.gui.slot.SlotBase;
 import buildcraft.lib.gui.slot.SlotOutput;
 import buildcraft.lib.misc.data.IdAllocator;
+import buildcraft.lib.net.NetworkSecurity;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
@@ -28,6 +29,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable> {
+    private static final int MAX_BLUEPRINT_NAME_LENGTH = 128;
     private static final IdAllocator IDS = MenuBC_Neptune.IDS.makeChild("architect_table");
     private static final int ID_NAME = IDS.allocId("NAME");
     private static final int ID_SETTINGS = IDS.allocId("SETTINGS");
@@ -64,10 +66,13 @@ public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable>
     }
 
     public void sendNameToServer(String name) {
-    	if(!this.name.equals(name)) {
-    		sendMessage(ID_NAME, buffer -> buffer.writeUtf(name));
-    		this.name = name;
-    	}
+        String requested = name == null ? "" : name;
+        String clean = requested.length() <= MAX_BLUEPRINT_NAME_LENGTH
+            ? requested : requested.substring(0, MAX_BLUEPRINT_NAME_LENGTH);
+        if (!this.name.equals(clean)) {
+            sendMessage(ID_NAME, buffer -> buffer.writeUtf(clean, MAX_BLUEPRINT_NAME_LENGTH));
+            this.name = clean;
+        }
     }
 
     public void sendSettingsToServer(int settings) {
@@ -80,11 +85,11 @@ public class ContainerArchitectTable extends ContainerBCTile<TileArchitectTable>
         super.readMessage(id, buffer, side, ctx);
         if (side == LogicalSide.SERVER) {
             if (id == ID_NAME) {
-                tile.name = buffer.readUtf();
+                tile.name = buffer.readUtf(MAX_BLUEPRINT_NAME_LENGTH);
                 tile.sendNetworkUpdate(TileBC_Neptune.NET_RENDER_DATA);
             } else if (id == ID_SETTINGS) {
                 Player sender = ctx.getSender() == null ? playerInventory.player : ctx.getSender();
-                tile.setSnapshotSettingsFromPlayer(buffer.readVarInt(), sender);
+                tile.setSnapshotSettingsFromPlayer(NetworkSecurity.requireRange(buffer.readVarInt(), 0, 0b111, "architect settings"), sender);
             }
         }
  /*       if (side == LogicalSide.CLIENT) {
