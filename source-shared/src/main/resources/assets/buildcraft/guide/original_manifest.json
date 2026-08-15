@@ -456,6 +456,28 @@
       "page": "buildcraftenergy/block/engine_iron"
     },
     {
+      "id": "buildcraftenergy:block/engine_fe",
+      "module": "buildcraftenergy",
+      "type": "block",
+      "subtype": "engine",
+      "name": "engine_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcraftenergy:engine_fe",
+      "page": "buildcraftenergy/block/engine_fe"
+    },
+    {
+      "id": "buildcraftenergy:block/mj_dynamo",
+      "module": "buildcraftenergy",
+      "type": "block",
+      "subtype": "engine",
+      "name": "mj_dynamo",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcraftenergy:mj_dynamo",
+      "page": "buildcraftenergy/block/mj_dynamo"
+    },
+    {
       "id": "buildcraftfactory:block/distiller",
       "module": "buildcraftfactory",
       "type": "block",
@@ -2168,6 +2190,105 @@
       "listed": true,
       "stack": "buildcrafttransport:diamond_wood_power",
       "page": "buildcrafttransport/pipe/diamond_wood_power"
+    },
+    {
+      "id": "buildcrafttransport:pipe/wood_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "wood_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:wood_fe",
+      "page": "buildcrafttransport/pipe/wood_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/cobblestone_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "cobblestone_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:cobblestone_fe",
+      "page": "buildcrafttransport/pipe/cobblestone_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/stone_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "stone_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:stone_fe",
+      "page": "buildcrafttransport/pipe/stone_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/sandstone_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "sandstone_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:sandstone_fe",
+      "page": "buildcrafttransport/pipe/sandstone_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/quartz_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "quartz_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:quartz_fe",
+      "page": "buildcrafttransport/pipe/quartz_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/gold_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "gold_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:gold_fe",
+      "page": "buildcrafttransport/pipe/gold_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/iron_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "iron_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:iron_fe",
+      "page": "buildcrafttransport/pipe/iron_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/diamond_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "diamond_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:diamond_fe",
+      "page": "buildcrafttransport/pipe/diamond_fe"
+    },
+    {
+      "id": "buildcrafttransport:pipe/diamond_wood_fe",
+      "module": "buildcrafttransport",
+      "type": "pipe",
+      "subtype": "pipe_fe",
+      "name": "diamond_wood_fe",
+      "book": "buildcraftcore:main",
+      "listed": true,
+      "stack": "buildcrafttransport:diamond_wood_fe",
+      "page": "buildcrafttransport/pipe/diamond_wood_fe"
     },
     {
       "id": "buildcrafttransport:item/waterproof",

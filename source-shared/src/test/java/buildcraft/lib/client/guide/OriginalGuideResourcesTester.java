@@ -42,7 +42,7 @@ class OriginalGuideResourcesTester {
         Assertions.assertEquals(1, manifest.get("text_pack_format").getAsInt());
 
         JsonArray entries = manifest.getAsJsonArray("entries");
-        Assertions.assertTrue(entries.size() >= 209, "The current guide must retain every documented entry");
+        Assertions.assertTrue(entries.size() >= 220, "The current guide must retain every documented entry");
         Set<String> pageKeys = new HashSet<>();
         int listed = 0;
         for (JsonElement element : entries) {
@@ -54,10 +54,10 @@ class OriginalGuideResourcesTester {
                 listed++;
             }
         }
-        Assertions.assertTrue(listed >= 204, "The current guide must retain every contents entry");
+        Assertions.assertTrue(listed >= 215, "The current guide must retain every contents entry");
         Assertions.assertEquals(pageKeys, layouts.keySet(), "Manifest and shared layouts disagree");
         Assertions.assertEquals(pageKeys, english.keySet(), "Default English text pack is incomplete");
-        Assertions.assertEquals(207, pageKeys.size(), "Unexpected number of distinct authored guide pages");
+        Assertions.assertEquals(218, pageKeys.size(), "Unexpected number of distinct authored guide pages");
     }
 
     @Test
@@ -128,6 +128,9 @@ class OriginalGuideResourcesTester {
             "buildcraftrobotics:block/requester", "buildcraftrobotics:robot/builder",
             "buildcraftsilicon:block/assembly_table", "buildcraftsilicon:block/programming_table",
             "buildcrafttransport:pipe/wood_power", "buildcrafttransport:pipe/diamond_power",
+            "buildcraftenergy:block/engine_fe", "buildcraftenergy:block/mj_dynamo",
+            "buildcrafttransport:pipe/wood_fe", "buildcrafttransport:pipe/diamond_fe",
+            "buildcrafttransport:pipe/diamond_wood_fe",
             "buildcraftcore:item/map_location", "buildcraftfactory:item/water_gel",
             "buildcraftenergy:item/oil", "buildcraftenergy:item/fuel_gaseous",
             "buildcraftenergy:item/oil_residue", "buildcraftcompat:pipe/propolis_item"
@@ -179,6 +182,81 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
+    void forgeEnergyInteropIsDocumentedEndToEnd() throws Exception {
+        JsonObject root = json(MANIFEST);
+        Set<String> ids = new HashSet<>();
+        for (JsonElement element : root.getAsJsonArray("entries")) {
+            ids.add(element.getAsJsonObject().get("id").getAsString());
+        }
+        for (String id : List.of(
+            "buildcraftenergy:block/engine_fe", "buildcraftenergy:block/mj_dynamo",
+            "buildcrafttransport:pipe/wood_fe", "buildcrafttransport:pipe/cobblestone_fe",
+            "buildcrafttransport:pipe/stone_fe", "buildcrafttransport:pipe/sandstone_fe",
+            "buildcrafttransport:pipe/quartz_fe", "buildcrafttransport:pipe/gold_fe",
+            "buildcrafttransport:pipe/iron_fe", "buildcrafttransport:pipe/diamond_fe",
+            "buildcrafttransport:pipe/diamond_wood_fe"
+        )) {
+            Assertions.assertTrue(ids.contains(id), "Missing FE guide entry " + id);
+        }
+
+        String basics = rendered("buildcraftcore/block/engine_basics", ENGLISH);
+        Assertions.assertTrue(basics.contains("1 MJ = 10 FE"));
+        Assertions.assertTrue(basics.contains("MJ_ONLY"));
+        Assertions.assertTrue(basics.contains("MJ_AUTOCONVERT_FE"));
+        Assertions.assertTrue(basics.contains("DISPLAY_FE"));
+        Assertions.assertTrue(basics.contains("per second"));
+
+        String engine = rendered("buildcraftenergy/block/engine_fe", ENGLISH);
+        Assertions.assertTrue(engine.contains("10,000 FE"));
+        Assertions.assertTrue(engine.contains("4 MJ/t"));
+        Assertions.assertTrue(engine.contains("Iron Gear"));
+        Assertions.assertTrue(engine.contains("Gold Gear"));
+
+        String dynamo = rendered("buildcraftenergy/block/mj_dynamo", ENGLISH);
+        Assertions.assertTrue(dynamo.contains("1 FE per tick"));
+        Assertions.assertTrue(dynamo.contains("MJ_ONLY"));
+    }
+
+    @Test
+    void modernBehaviourNotesDoNotRegressToLegacyGuideClaims() throws Exception {
+        String autoWorkbench = rendered("buildcraftfactory/block/auto_workbench", ENGLISH);
+        Assertions.assertFalse(autoWorkbench.toLowerCase().contains("power free"));
+        Assertions.assertTrue(autoWorkbench.contains("40 MJ"));
+        Assertions.assertTrue(autoWorkbench.contains("0.2 MJ/t"));
+
+        String pump = rendered("buildcraftfactory/block/pump", ENGLISH);
+        Assertions.assertTrue(pump.contains("pumpMaxDistance"));
+        Assertions.assertTrue(pump.contains("pumpsConsumeWater"));
+        Assertions.assertTrue(pump.contains("infinite water"));
+
+        String architect = rendered("buildcraftbuilders/block/architect", ENGLISH);
+        Assertions.assertFalse(architect.contains("preview looks correct"));
+        Assertions.assertTrue(architect.contains("does not provide a full 3D schematic preview"));
+
+        String quarry = rendered("buildcraftbuilders/block/quarry", ENGLISH);
+        Assertions.assertTrue(quarry.contains("chunk loading is enabled"));
+        Assertions.assertTrue(quarry.contains("owner identity"));
+
+        String planner = rendered("buildcraftrobotics/block/zone_planner", ENGLISH);
+        Assertions.assertTrue(planner.contains("already loaded/generated"));
+        Assertions.assertTrue(planner.contains("force-generating"));
+
+        String wrench = rendered("buildcraftcore/item/wrench", ENGLISH);
+        Assertions.assertTrue(wrench.contains("c:tools/wrench"));
+
+        String markers = rendered("buildcraftcore/item/marker_land", ENGLISH);
+        Assertions.assertTrue(markers.contains("markerMaxDistance"));
+
+        String filler = rendered("buildcraftbuilders/block/filler", ENGLISH);
+        Assertions.assertTrue(filler.contains("replaceable blocks"));
+        Assertions.assertTrue(filler.contains("owner identity"));
+
+        String miningWell = rendered("buildcraftfactory/block/mining_well", ENGLISH);
+        Assertions.assertTrue(miningWell.contains("miningMaxDepth"));
+        Assertions.assertTrue(miningWell.contains("owner identity"));
+    }
+
+    @Test
     void everyListedPageHasOptionalHints() throws Exception {
         JsonObject manifest = json(MANIFEST);
         JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
@@ -204,7 +282,7 @@ class OriginalGuideResourcesTester {
             Assertions.assertTrue(visible.blocks.size() > hidden.blocks.size(),
                 "Show Hints must reveal additional content in " + page);
         }
-        Assertions.assertTrue(checked.size() >= 204,
+        Assertions.assertTrue(checked.size() >= 215,
             "The current guide should retain practical hints for every listed page");
     }
 
