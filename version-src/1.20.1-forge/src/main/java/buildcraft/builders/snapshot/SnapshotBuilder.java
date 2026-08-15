@@ -39,12 +39,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.BlockPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
@@ -268,14 +270,43 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
      * Executed if break task failed
      */
     private void cancelBreakTask(BreakTask breakTask) {
-        queuePowerRefund(breakTask.power);
+        queuePowerRefund(breakTask.reservedPower);
     }
 
     /**
      * Executed if {@link #doPlaceTask} failed
      */
     protected void cancelPlaceTask(PlaceTask placeTask) {
-        queuePowerRefund(placeTask.power);
+        queuePowerRefund(placeTask.reservedPower);
+    }
+
+    private PlacementRollback capturePlacementRollback(BlockPos pos) {
+        if (!(tile.getWorldBC() instanceof ServerLevel level)) {
+            return null;
+        }
+        return new PlacementRollback(
+            BlockSnapshot.create(level.dimension(), level, pos),
+            level.getBlockState(pos)
+        );
+    }
+
+    private boolean rollbackPlacement(PlacementRollback rollback, BlockPos pos) {
+        if (rollback == null) {
+            // SnapshotBuilder work is server-side; retain the legacy refund behaviour for non-server test worlds.
+            return true;
+        }
+        rollback.snapshot.restore(true);
+        return tile.getWorldBC().getBlockState(pos).equals(rollback.previousState);
+    }
+
+    private static final class PlacementRollback {
+        private final BlockSnapshot snapshot;
+        private final BlockState previousState;
+
+        private PlacementRollback(BlockSnapshot snapshot, BlockState previousState) {
+            this.snapshot = snapshot;
+            this.previousState = previousState;
+        }
     }
 
     private void queuePowerRefund(long power) {
@@ -571,13 +602,18 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             for (Iterator<BreakTask> iterator = breakTasks.iterator(); iterator.hasNext(); ) {
                 BreakTask breakTask = iterator.next();
                 if (breakTask.isImpossible()) {
+                    // A task may become unbreakable after energy was reserved (for example after a protection/config
+                    // change). Do not leave its reservation trapped forever.
+                    cancelBreakTask(breakTask);
+                    iterator.remove();
                     continue;
                 }
                 long target = breakTask.getTarget();
                 long progress = extractProgressPower(
                     target,
                     breakTask.power,
-                    max / breakTasks.size()
+                    max / breakTasks.size(),
+                    extracted -> breakTask.reservedPower = saturatingAdd(breakTask.reservedPower, extracted)
                 );
                 breakTask.power += progress;
                 if (progress > 0) {
@@ -636,7 +672,8 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                 long progress = extractProgressPower(
                     target,
                     placeTask.power,
-                    max / placeTasks.size()
+                    max / placeTasks.size(),
+                    extracted -> placeTask.reservedPower = saturatingAdd(placeTask.reservedPower, extracted)
                 );
                 placeTask.power += progress;
                 if (progress > 0) {
@@ -644,8 +681,20 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                 }
                 if (placeTask.power >= target) {
                     tile.getWorldBC().getProfiler().push("work");
-                    if (!doPlaceTask(placeTask)) {
-                        cancelPlaceTask(placeTask);
+                    PlacementRollback rollback = capturePlacementRollback(placeTask.pos);
+                    doPlaceTask(placeTask);
+                    // Commit resources only when the requested schematic state exists. If a handler partially changed
+                    // the target and then failed, restore the exact pre-placement block snapshot before refunding.
+                    // If rollback itself cannot be proven, keep the reservation consumed rather than creating items/MJ.
+                    if (!isBlockCorrect(placeTask.pos)) {
+                        if (rollbackPlacement(rollback, placeTask.pos)) {
+                            cancelPlaceTask(placeTask);
+                        } else {
+                            BCLog.logger.warn(
+                                "Builder placement at {} failed and could not be rolled back; keeping reservations consumed",
+                                placeTask.pos
+                            );
+                        }
                     }
                     tile.getWorldBC().getProfiler().pop();
                     if (check(placeTask.pos)) {
@@ -672,18 +721,34 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     }
 
 
-    private long extractProgressPower(long target, long currentProgress, long maxPower) {
+    private long extractProgressPower(long target, long currentProgress, long maxPower,
+                                      java.util.function.LongConsumer reservePower) {
         long remainingProgress = target - currentProgress;
         if (remainingProgress <= 0 || maxPower <= 0) {
             return 0;
         }
         long wantedPower = Math.min(ceilDiv(remainingProgress, POWER_EFFICIENCY_MULTIPLIER), maxPower);
         long extractedPower = tile.getBattery().extractPower(0, wantedPower);
+        if (extractedPower > 0) {
+            // Progress is deliberately accelerated by POWER_EFFICIENCY_MULTIPLIER, but refunds must use the
+            // physical amount removed from the battery. Refunding progress used to duplicate up to 2x the MJ.
+            reservePower.accept(extractedPower);
+        }
         return Math.min(remainingProgress, extractedPower * POWER_EFFICIENCY_MULTIPLIER);
     }
 
+    static long legacyReservedPowerForProgress(long progress) {
+        return progress <= 0 ? 0 : ceilDiv(progress, POWER_EFFICIENCY_MULTIPLIER);
+    }
+
+    static long saturatingAdd(long left, long right) {
+        if (right <= 0) return Math.max(0, left);
+        if (left >= Long.MAX_VALUE - right) return Long.MAX_VALUE;
+        return Math.max(0, left) + right;
+    }
+
     private static long ceilDiv(long value, long divisor) {
-        return (value + divisor - 1) / divisor;
+        return value <= 0 ? 0 : 1 + (value - 1) / divisor;
     }
 
     protected int posToIndex(BlockPos blockPos) {
@@ -814,24 +879,32 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     public class BreakTask {
         public final BlockPos pos;
+        /** Visual/work progress. This is not necessarily equal to MJ withdrawn from the battery. */
         public long power;
+        /** Exact battery energy reserved for this task and refundable until the world mutation commits. */
+        public long reservedPower;
 
        
         public BreakTask(BlockPos pos, long power) {
             this.pos = pos;
             this.power = power;
+            this.reservedPower = legacyReservedPowerForProgress(power);
         }
 
        
         public BreakTask(FriendlyByteBuf buffer) {
             pos = MessageUtil.readBlockPos(buffer);
             power = buffer.readLong();
+            reservedPower = 0; // render payloads never own server-side reservations
         }
 
        
         public BreakTask(CompoundTag nbt) {
             pos = NbtUtils.readBlockPos(nbt.getCompound("pos"));
             power = nbt.getLong("power");
+            reservedPower = nbt.contains("reservedPower")
+                ? Math.max(0, nbt.getLong("reservedPower"))
+                : legacyReservedPowerForProgress(power);
         }
 
        
@@ -852,6 +925,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             CompoundTag nbt = new CompoundTag();
             nbt.put("pos", NbtUtils.writeBlockPos(pos));
             nbt.putLong("power", power);
+            nbt.putLong("reservedPower", reservedPower);
             return nbt;
         }
     }
@@ -859,13 +933,17 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     public class PlaceTask {
         public final BlockPos pos;
         public final List<ItemStack> items;
+        /** Visual/work progress. */
         public long power;
+        /** Exact battery energy reserved for this task and refundable until placement commits. */
+        public long reservedPower;
 
        
         public PlaceTask(BlockPos pos, List<ItemStack> items, long power) {
             this.pos = pos;
             this.items = Optional.ofNullable(items).map(ImmutableList::copyOf).orElse(null);
             this.power = power;
+            this.reservedPower = legacyReservedPowerForProgress(power);
         }
 
        
@@ -875,6 +953,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                 return buffer.readItem();
             }).collect(Collectors.toList());
             power = buffer.readLong();
+            reservedPower = 0; // render payloads never own server-side reservations
         }
 
        
@@ -885,6 +964,9 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                     .map(ItemStack::of).toList()
             );
             power = nbt.getLong("power");
+            reservedPower = nbt.contains("reservedPower")
+                ? Math.max(0, nbt.getLong("reservedPower"))
+                : legacyReservedPowerForProgress(power);
         }
 
         public long getTarget() {
@@ -903,6 +985,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
             nbt.put("pos", NbtUtils.writeBlockPos(pos));
             nbt.put("items", NBTUtilBC.writeObjectList(items.stream().map(ItemStack::serializeNBT)));
             nbt.putLong("power", power);
+            nbt.putLong("reservedPower", reservedPower);
             return nbt;
         }
     }

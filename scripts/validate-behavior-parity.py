@@ -340,6 +340,40 @@ def validate_persistence_and_reload_invariants() -> None:
     if refund_pos < 0 or recheck_pos < 0 or refund_pos > recheck_pos:
         fail("1.21.1-neoforge: saved builder tasks must be refunded before forcing a rescan")
 
+    # Builder/Filler/Quarry work is transactional: reserve exact physical power/materials, mutate the world,
+    # then commit or refund. These guards catch the historical progress-as-MJ dupe and partial-reservation losses.
+    blueprint_rel = "src/main/java/buildcraft/builders/snapshot/BlueprintBuilder.java"
+    quarry_rel = "src/main/java/buildcraft/builders/tile/TileQuarry.java"
+    template_rel = "src/main/java/buildcraft/builders/snapshot/TemplateBuilder.java"
+    for target in TARGETS:
+        require(target, snapshot_rel,
+                "reservedPower",
+                "queuePowerRefund(breakTask.reservedPower)",
+                "queuePowerRefund(placeTask.reservedPower)",
+                "legacyReservedPowerForProgress",
+                "capturePlacementRollback(placeTask.pos)",
+                "rollbackPlacement(rollback, placeTask.pos)",
+                "keeping reservations consumed",
+                "if (!isBlockCorrect(placeTask.pos))")
+        require(target, blueprint_rel,
+                "rollbackReservation(reserved, drained)",
+                "refundReservedItem",
+                "if (!tile.needMeterial() || placeTask.items == null)",
+                "FluidAction.SIMULATE",
+                "FluidAction.EXECUTE",
+                "boolean committed = isBlockCorrect(blockPos)",
+                "isSchematicEntityPresent(schematicEntity, level)")
+        require(target, template_rel,
+                "!tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, true).isEmpty()",
+                "!tile.needMeterial()",
+                "Collections.singletonList(reserved.copy())")
+        require(target, quarry_rel,
+                "pendingTaskPowerRefund",
+                "reservedPower",
+                "addPower(added, withdrawn)",
+                "queueTaskPowerRefund(reservedPower)",
+                "cancelCurrentTaskWithRefund()")
+
     # Unknown/custom pipe payloads must survive missing registrations and unchecked migration/codec failures.
     holder_rel = "src/main/java/buildcraft/transport/tile/TilePipeHolder.java"
     require("1.21.1-neoforge", holder_rel,
@@ -847,7 +881,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 60
+    expected_tests = 63
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -870,6 +904,9 @@ def validate_gametest_runtime_guards() -> None:
             "feMjConverterRoundTripConservesEnergy",
             "feMjConverterSimulationDoesNotMutateMachineBuffers",
             "converterMachineStateSurvivesPersistenceRoundTrip",
+            "builderResourceReservationRollsBackAfterMidTransactionFailure",
+            "creativeBuilderCancellationDoesNotMintDisplayRequirements",
+            "quarryCancelledTaskRefundsExactWithdrawnPower",
         ):
             if method not in regression_suite:
                 fail(f"{target}: missing gameplay regression GameTest {method}")

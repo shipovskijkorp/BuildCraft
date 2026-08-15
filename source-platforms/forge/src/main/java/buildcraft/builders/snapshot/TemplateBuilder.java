@@ -57,12 +57,14 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
 
     @Override
     protected boolean hasEnoughToPlaceItems(BlockPos blockPos) {
-        return !tile.needMeterial() || !tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, true).isEmpty();
+        // Templates still need one block item as the placement selector even in creative/no-material mode.
+        return !tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, true).isEmpty();
     }
 
     @Override
     protected List<ItemStack> getToPlaceItems(BlockPos blockPos) {
-        return Collections.singletonList(tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, false));
+        ItemStack reserved = tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, !tile.needMeterial());
+        return reserved.isEmpty() ? null : Collections.singletonList(reserved.copy());
     }
 
     @Override
@@ -89,7 +91,7 @@ public class TemplateBuilder extends SnapshotBuilder<ITileForTemplateBuilder> {
     @Override
     protected void cancelPlaceTask(PlaceTask placeTask) {
         super.cancelPlaceTask(placeTask);
-        if (placeTask.items == null || placeTask.items.isEmpty()) {
+        if (!tile.needMeterial() || placeTask.items == null || placeTask.items.isEmpty()) {
             return;
         }
         ItemStack remainder = tile.getInvResources().insert(placeTask.items.get(0).copy(), false, false);

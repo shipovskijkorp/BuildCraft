@@ -40,6 +40,8 @@ import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.energy.MjAmount;
 import buildcraft.builders.BCBuildersBlocks;
+import buildcraft.builders.snapshot.BlueprintBuilder;
+import buildcraft.builders.snapshot.ITileForBlueprintBuilder;
 import buildcraft.builders.snapshot.ITileForTemplateBuilder;
 import buildcraft.builders.snapshot.SchematicBlockDefault;
 import buildcraft.builders.snapshot.SnapshotBuilder;
@@ -713,6 +715,65 @@ public final class BuildCraftLogicGameTests {
     }
 
 
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void builderResourceReservationRollsBackAfterMidTransactionFailure(GameTestHelper helper) {
+        FailingSecondExtractionTransactor resources = new FailingSecondExtractionTransactor();
+        ProbeBlueprintTile tile = new ProbeBlueprintTile(
+            helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), resources
+        );
+        BlueprintBuilder builder = new BlueprintBuilder(tile);
+
+        Object result = invoke(
+            builder, "tryExtractRequired",
+            List.of(new ItemStack(Items.APPLE), new ItemStack(Items.IRON_INGOT)),
+            List.of(),
+            false
+        );
+        require(helper, result instanceof java.util.Optional<?> optional && optional.isEmpty(),
+            "builder accepted an incomplete material reservation");
+        require(helper, resources.apples == 1,
+            "builder did not roll back the first item after a later reservation failed");
+        require(helper, resources.iron == 1,
+            "failed reservation unexpectedly consumed the second item");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void creativeBuilderCancellationDoesNotMintDisplayRequirements(GameTestHelper helper) {
+        FailingSecondExtractionTransactor resources = new FailingSecondExtractionTransactor();
+        ProbeBlueprintTile tile = new ProbeBlueprintTile(
+            helper.getLevel(), helper.absolutePos(new BlockPos(1, 1, 1)), resources, false
+        );
+        BlueprintBuilder builder = new BlueprintBuilder(tile);
+        Object task = builder.new PlaceTask(
+            helper.absolutePos(new BlockPos(2, 1, 1)), List.of(new ItemStack(Items.APPLE)), 0
+        );
+
+        invoke(builder, "cancelPlaceTask", task);
+        require(helper, resources.apples == 1,
+            "creative/no-material cancellation refunded a display-only requirement and minted an item");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void quarryCancelledTaskRefundsExactWithdrawnPower(GameTestHelper helper) {
+        TileQuarry quarry = placeQuarry(helper, new BlockPos(1, 1, 1));
+        MjBattery battery = (MjBattery) readField(quarry, "battery");
+        long initial = 5L * MjAmount.MICRO_MJ_PER_MJ;
+        battery.addPower(initial, FluidAction.EXECUTE);
+        long before = battery.getStored();
+        long withdrawn = battery.extractPower(0, MjAmount.MICRO_MJ_PER_MJ);
+        require(helper, withdrawn > 0, "quarry test could not withdraw task power");
+
+        Object task = newQuarryTask(quarry, "TaskBreakBlock", helper.absolutePos(new BlockPos(5, 1, 1)));
+        boolean cancelled = (Boolean) invoke(task, "addPower", withdrawn, withdrawn);
+        require(helper, cancelled, "stale quarry break task did not cancel");
+        require(helper, battery.getStored() == before,
+            "cancelled quarry task did not refund exactly the battery energy withdrawn for it");
+        helper.succeed();
+    }
+
+
     private static TileQuarry placeQuarry(GameTestHelper helper, BlockPos relativePos) {
         helper.setBlock(relativePos, BCBuildersBlocks.QUARRY.get().defaultBlockState());
         BlockEntity blockEntity = helper.getBlockEntity(relativePos);
@@ -755,6 +816,22 @@ public final class BuildCraftLogicGameTests {
             if (fluid.isSource() && fluid.getType() == Fluids.WATER) count++;
         }
         return count;
+    }
+
+    private static Object newQuarryTask(TileQuarry quarry, String simpleName, Object argument) {
+        for (Class<?> nested : TileQuarry.class.getDeclaredClasses()) {
+            if (!nested.getSimpleName().equals(simpleName)) continue;
+            for (java.lang.reflect.Constructor<?> constructor : nested.getDeclaredConstructors()) {
+                if (constructor.getParameterCount() != 2) continue;
+                try {
+                    constructor.setAccessible(true);
+                    return constructor.newInstance(quarry, argument);
+                } catch (ReflectiveOperationException e) {
+                    throw new IllegalStateException("Cannot create quarry task " + simpleName, e);
+                }
+            }
+        }
+        throw new IllegalStateException("Missing quarry task " + simpleName);
     }
 
     private static Object readField(Object target, String name) {
@@ -851,6 +928,76 @@ public final class BuildCraftLogicGameTests {
             }
         }
         return null;
+    }
+
+    private static final class FailingSecondExtractionTransactor implements IItemTransactor {
+        private int apples = 1;
+        private int iron = 1;
+        private int executeExtractions;
+
+        @Override
+        public ItemStack insert(ItemStack stack, boolean allOrNone, boolean simulate) {
+            if (stack.isEmpty()) return ItemStack.EMPTY;
+            if (stack.getItem() == Items.APPLE) {
+                if (!simulate) apples += stack.getCount();
+                return ItemStack.EMPTY;
+            }
+            if (stack.getItem() == Items.IRON_INGOT) {
+                if (!simulate) iron += stack.getCount();
+                return ItemStack.EMPTY;
+            }
+            return stack;
+        }
+
+        @Override
+        public ItemStack extract(buildcraft.lib.internal.core.IStackFilter filter, int min, int max, boolean simulate) {
+            ItemStack candidate = ItemStack.EMPTY;
+            if (apples >= min) {
+                ItemStack apple = new ItemStack(Items.APPLE, Math.min(max, apples));
+                if (filter == null || filter.matches(apple)) candidate = apple;
+            }
+            if (candidate.isEmpty() && iron >= min) {
+                ItemStack ingot = new ItemStack(Items.IRON_INGOT, Math.min(max, iron));
+                if (filter == null || filter.matches(ingot)) candidate = ingot;
+            }
+            if (candidate.isEmpty()) return ItemStack.EMPTY;
+            if (simulate) return candidate;
+            executeExtractions++;
+            if (executeExtractions == 2) return ItemStack.EMPTY;
+            if (candidate.getItem() == Items.APPLE) apples -= candidate.getCount();
+            else if (candidate.getItem() == Items.IRON_INGOT) iron -= candidate.getCount();
+            return candidate;
+        }
+    }
+
+    private static final class ProbeBlueprintTile implements ITileForBlueprintBuilder {
+        private final Level level;
+        private final BlockPos pos;
+        private final IItemTransactor resources;
+        private final boolean needMaterial;
+        private final TankManager tanks = new TankManager(new Tank("transaction", 1_000, null));
+
+        private ProbeBlueprintTile(Level level, BlockPos pos, IItemTransactor resources) {
+            this(level, pos, resources, true);
+        }
+
+        private ProbeBlueprintTile(Level level, BlockPos pos, IItemTransactor resources, boolean needMaterial) {
+            this.level = level;
+            this.pos = pos;
+            this.resources = resources;
+            this.needMaterial = needMaterial;
+        }
+
+        @Override public Level getWorldBC() { return level; }
+        @Override public MjBattery getBattery() { return null; }
+        @Override public BlockPos getBuilderPos() { return pos; }
+        @Override public boolean canExcavate() { return true; }
+        @Override public SnapshotBuilder<?> getBuilder() { return null; }
+        @Override public boolean needMeterial() { return needMaterial; }
+        @Override public GameProfile getOwner() { return new GameProfile(new UUID(0L, 2L), "transaction"); }
+        @Override public buildcraft.builders.snapshot.Blueprint.BuildingInfo getBlueprintBuildingInfo() { return null; }
+        @Override public IItemTransactor getInvResources() { return resources; }
+        @Override public TankManager getTankManager() { return tanks; }
     }
 
     private static final class ProbeTemplateBuilder extends TemplateBuilder {

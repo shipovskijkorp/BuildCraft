@@ -137,6 +137,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     );
     private final Set<BlockPos> framePlaceFramePoses = new HashSet<>();
     public Task currentTask = null;
+    /** Battery energy withdrawn for cancelled quarry tasks that is still owed back to the machine. */
+    private long pendingTaskPowerRefund;
     public Vec3 drillPos;
     public Vec3 clientDrillPos;
     public Vec3 prevClientDrillPos;
@@ -608,7 +610,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 frameBox.reset();
                 miningBox.reset();
                 drillPos = null;
-                currentTask = null;
+                cancelCurrentTaskWithRefund();
                 boxIterator = null;
                 initialFrameScan = null;
                 framePoses.clear();
@@ -720,6 +722,10 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             return;
         }
 
+        // Refunds are part of the transaction ledger, not best-effort battery writes. If the battery was full when
+        // a task was cancelled, keep retrying instead of silently losing the already-withdrawn MJ.
+        flushPendingTaskPowerRefund();
+
         if (chunkLoadingDirty) {
             if (chunkLoadingStartupDelay > 0) {
                 chunkLoadingStartupDelay--;
@@ -788,21 +794,23 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
 
                 long needed = currentTask.getRequiredPowerThisTick();
                 long added;
+                long withdrawn;
                 final int mult = BCBuildersConfig.quarryTaskPowerDivisor;
                 if (mult > 0) {
                     long nNeeded = needed * (mult + i) / mult;
                     long leftover = (needed * (mult + i)) % mult;
-                    long power = battery.extractPower(0, Math.min(max, nNeeded));
-                    max -= power;
-                    added = power * mult / (mult + i);
-                    if (leftover > 0) {
+                    withdrawn = battery.extractPower(0, Math.min(max, nNeeded));
+                    max -= withdrawn;
+                    added = withdrawn * mult / (mult + i);
+                    if (leftover > 0 && withdrawn > 0) {
                         added++;
                     }
                 } else {
-                    added = battery.extractPower(0, Math.min(max, needed));
-                    max -= added;
+                    withdrawn = battery.extractPower(0, Math.min(max, needed));
+                    max -= withdrawn;
+                    added = withdrawn;
                 }
-                if (currentTask.addPower(added)) {
+                if (currentTask.addPower(added, withdrawn)) {
                     currentTask = null;
                 } else {
                     sendUpdate = true;
@@ -1105,6 +1113,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             nbt.put("boxIterator", boxIterator.writeToNbt());
         }
         nbt.put("battery", battery.serializeNBT());
+        if (pendingTaskPowerRefund > 0) {
+            nbt.putLong("pendingTaskPowerRefund", pendingTaskPowerRefund);
+        }
         if (currentTask != null) {
             nbt.putByte(
                 "currentTaskId", (byte) Arrays.stream(EnumTaskType.values()).filter(
@@ -1126,12 +1137,17 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         frameBox.initialize(nbt.getCompound("frame"));
         boxIterator = BoxIterator.readFromNbt(nbt.getCompound("boxIterator"));
         battery.deserializeNBT(nbt.getCompound("battery"));
+        pendingTaskPowerRefund = Math.max(0, nbt.getLong("pendingTaskPowerRefund"));
         if (nbt.contains("currentTaskId") && nbt.contains("currentTaskData")) {
             int currentTaskId = Byte.toUnsignedInt(nbt.getByte("currentTaskId"));
             if (currentTaskId >= 0 && currentTaskId < EnumTaskType.values().length) {
                 currentTask = EnumTaskType.values()[currentTaskId].supplier.apply(this);
                 currentTask.readFromNBT(nbt.getCompound("currentTaskData"));
+                if (!currentTask.valid) {
+                    cancelCurrentTaskWithRefund();
+                }
             } else {
+                queueTaskPowerRefund(readSerializedTaskReservedPower(nbt.getCompound("currentTaskData")));
                 currentTask = null;
             }
         } else {
@@ -1190,7 +1206,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             frameBox.reset();
             miningBox.reset();
             drillPos = null;
+            cancelCurrentTaskWithRefund();
         }
+        flushPendingTaskPowerRefund();
     }
 
     @Override
@@ -1301,6 +1319,41 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         return new AdvDebuggerQuarry(this);
     }*/
 
+    private void cancelCurrentTaskWithRefund() {
+        if (currentTask == null) return;
+        queueTaskPowerRefund(currentTask.reservedPower);
+        currentTask = null;
+    }
+
+    private void queueTaskPowerRefund(long power) {
+        if (power <= 0) return;
+        pendingTaskPowerRefund = saturatingAdd(pendingTaskPowerRefund, power);
+        setChanged();
+        flushPendingTaskPowerRefund();
+    }
+
+    private void flushPendingTaskPowerRefund() {
+        if (pendingTaskPowerRefund <= 0) return;
+        long free = Math.max(0, battery.getCapacity() - battery.getStored());
+        long refunded = Math.min(free, pendingTaskPowerRefund);
+        if (refunded > 0) {
+            battery.addPower(refunded, FluidAction.EXECUTE);
+            pendingTaskPowerRefund -= refunded;
+            setChanged();
+        }
+    }
+
+    private static long readSerializedTaskReservedPower(CompoundTag nbt) {
+        if (nbt == null) return 0;
+        return Math.max(0, nbt.contains("reservedPower") ? nbt.getLong("reservedPower") : nbt.getLong("power"));
+    }
+
+    private static long saturatingAdd(long left, long right) {
+        if (right <= 0) return Math.max(0, left);
+        if (left >= Long.MAX_VALUE - right) return Long.MAX_VALUE;
+        return Math.max(0, left) + right;
+    }
+
     private enum EnumTaskType {
         BREAK_BLOCK(TaskBreakBlock.class, quarry -> quarry.new TaskBreakBlock()),
         ADD_FRAME(TaskAddFrame.class, quarry -> quarry.new TaskAddFrame()),
@@ -1330,21 +1383,30 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     private abstract class Task {
+        /** Effective work progress. */
         public long power;
+        /** Exact amount physically withdrawn from the battery and refundable until this task commits. */
+        public long reservedPower;
         public long clientPower;
         public long prevClientPower;
+        private boolean valid = true;
 
         CompoundTag serializeNBT() {
             CompoundTag nbt = new CompoundTag();
             nbt.putLong("power", power);
+            nbt.putLong("reservedPower", reservedPower);
             return nbt;
         }
 
         void readFromNBT(CompoundTag nbt) {
-            power = nbt.getLong("power");
-            if (power < 0) {
-                power = 0;
-            }
+            power = Math.max(0, nbt.getLong("power"));
+            // Older saves only tracked effective progress. Treat it as the refundable floor rather than inventing
+            // more energy; new saves persist the exact physical withdrawal.
+            reservedPower = Math.max(0, nbt.contains("reservedPower") ? nbt.getLong("reservedPower") : power);
+        }
+
+        void invalidateLoadedTask() {
+            valid = false;
         }
 
         void toBytes(FriendlyByteBuf buffer) {
@@ -1373,20 +1435,25 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         protected abstract boolean finish(long added, long target);
 
         /** @return {@code true} if this task has been completed, or cancelled. */
-        final boolean addPower(long microJoules) {
-            power += microJoules;
+        final boolean addPower(long progressMicroJoules, long withdrawnMicroJoules) {
+            power = saturatingAdd(power, progressMicroJoules);
+            reservedPower = saturatingAdd(reservedPower, withdrawnMicroJoules);
             long target = getTarget();
             if (target <= 0) {
-                return finish(0, 0);
+                boolean committed = finish(0, 0);
+                if (!committed) queueTaskPowerRefund(reservedPower);
+                return true;
             }
             if (power >= target) {
-                if (!finish(microJoules, target)) {
-                    battery.addPower(Math.min(power, battery.getCapacity() - battery.getStored()), FluidAction.EXECUTE);
-                }
+                boolean committed = finish(progressMicroJoules, target);
+                if (!committed) queueTaskPowerRefund(reservedPower);
                 return true;
-            } else {
-                return onReceivePower(microJoules, target);
             }
+            boolean cancelled = onReceivePower(progressMicroJoules, target);
+            if (cancelled) {
+                queueTaskPowerRefund(reservedPower);
+            }
+            return cancelled;
         }
     }
 
@@ -1411,7 +1478,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             super.readFromNBT(nbt);
             if (!nbt.contains("breakPos", Tag.TAG_LONG)) {
                 // Missing task data must not silently turn into the world origin.
-                currentTask = null;
+                invalidateLoadedTask();
                 return;
             }
             breakPos = BlockPos.of(nbt.getLong("breakPos"));
@@ -1465,7 +1532,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         protected boolean finish(long added, long target) {
             blockPercentSoFar += target <= 0 ? 1.0 : added / (double) target;
             if (!canMine(breakPos)) {
-                return true;
+                // The target disappeared or became irrelevant while energy was reserved: cancel, don't charge.
+                return false;
             }
             if (!AutomationPermissionUtil.mayBlock(
                 level, worldPosition, breakPos, getOwner(), AutomationPermissionUtil.SOURCE_QUARRY,
@@ -1527,7 +1595,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         void readFromNBT(CompoundTag nbt) {
             super.readFromNBT(nbt);
             if (!nbt.contains("framePos", Tag.TAG_LONG)) {
-                currentTask = null;
+                invalidateLoadedTask();
                 return;
             }
             // BlockPos.ZERO.asLong() is a valid position, so field presence is the validity check.
@@ -1619,8 +1687,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             from = NBTUtilBC.readVec3(nbt.get("from"));
             to = NBTUtilBC.readVec3(nbt.get("to"));
             if (from == null || to == null) {
-                // We failed to read. Abort.
-                currentTask = null;
+                // We failed to read. Abort and refund the persisted reservation.
+                invalidateLoadedTask();
             }
         }
 
