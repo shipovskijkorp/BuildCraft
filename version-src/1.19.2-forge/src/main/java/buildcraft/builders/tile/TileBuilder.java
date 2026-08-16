@@ -145,7 +145,6 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
 
     private boolean shouldInit = false;
     
-    //TODO
     private boolean needMaterial = true;
     private boolean canRotate = true;
     private boolean canExcavate = true;
@@ -461,7 +460,7 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     }
 
     @Override
-    public void update() {//TODO dont update every tick
+    public void update() {// TODO: Avoid ticking Builder every server tick when it has no pending work.
 //    	if(true)return;
     	if(shouldInit) {
     		updateBasePoses();

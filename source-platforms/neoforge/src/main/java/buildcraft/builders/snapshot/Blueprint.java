@@ -170,7 +170,7 @@ public class Blueprint extends Snapshot {
         palette.clear();
         for (CompoundTag schematicBlockTag :
             NBTUtilBC.readCompoundList(nbt.get("palette")).collect(Collectors.toList())) {
-            // TODO: Allow reading blueprints partially - invalid elements should be replaced with air
+            // TODO: Support partial blueprint loading when some schematic elements are unavailable.
             // (Although this needs to add a "pass-through" ISchematicBlock that will store the
             // invalid CompoundTag and show up in the tooltip as an error, so that we can migrate
             // schematics through mod additions/deletions)

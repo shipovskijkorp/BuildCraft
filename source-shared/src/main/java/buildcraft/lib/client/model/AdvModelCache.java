@@ -101,7 +101,7 @@ public class AdvModelCache {
         // if (indexedIsFull) {
         return indexedCache;
         // }
-        // TODO: Fallback to a complex cache
+        // TODO: Add a fallback cache for models that cannot be represented by the indexed cache.
         /*
          * TODO: Add a cache that will split up the model based on dependencies to variables! (sub-cache for different
          * model parts)

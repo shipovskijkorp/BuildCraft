@@ -176,7 +176,7 @@ public class LaserRenderer_BC8 {
     }
 
     public static void renderLaserStatic(PoseStack pose, Matrix4f matrix, LaserData_BC8 data) {
-        LaserCompiledList compiled = COMPILED_STATIC_LASERS.getUnchecked(data);//TODO
+        LaserCompiledList compiled = COMPILED_STATIC_LASERS.getUnchecked(data);
         setupLaserRenderState();
         SpriteUtil.bindBlockTextureMap();
         compiled.render(pose, matrix);

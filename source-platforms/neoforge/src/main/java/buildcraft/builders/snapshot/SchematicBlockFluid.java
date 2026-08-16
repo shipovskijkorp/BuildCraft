@@ -81,7 +81,7 @@ public class SchematicBlockFluid implements ISchematicBlock {
     public boolean canBuild(Level world, BlockPos blockPos) {
         return world.isEmptyBlock(blockPos) ||
             BlockUtil.getFluidWithFlowing(world, blockPos) == BlockUtil.getFluidWithFlowing(blockState.getBlock()) &&
-                BlockUtil.getFluid(world, blockPos) == Fluids.EMPTY;//TODO check
+                BlockUtil.getFluid(world, blockPos) == Fluids.EMPTY;
     }
 
     @Override

@@ -70,7 +70,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
     @Override
     public ChangingItemStack[] getRecipeInputs() {
         ChangingItemStack[] inputs = new ChangingItemStack[2];
-        inputs[0] = new ChangingItemStack(baseRequirementStack());//TODO
+        inputs[0] = new ChangingItemStack(baseRequirementStack());
         NonNullList<ItemStack> list = NonNullList.create();
         for (FacadeBlockStateInfo info : FacadeStateManager.validFacadeStates.values()) {
             if (info.isVisible) {
@@ -154,7 +154,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
     @Override
     public boolean canCraftInDimensions(int p_43999_, int p_44000_) {
-        return true;//TODO
+        return true;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class WireManager {
     public final Map<EnumWireBetween, DyeColor> betweens = new EnumMap<>(EnumWireBetween.class);
     private final Map<Direction, EnumSet<DyeColor>> signalOutputs = new EnumMap<>(Direction.class);
     public boolean initialised = false;
-    // TODO: Wire connections to adjacent blocks
+    // TODO: Support wire connections from pipes to adjacent blocks where applicable.
 
     public WireManager(IPipeHolder holder) {
         this.holder = holder;

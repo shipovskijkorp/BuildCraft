@@ -100,7 +100,7 @@ public class JsonUtil {
             if (obj.has("amount")) {
                 amount = obj.get("amount").getAsInt();
             }
-            // TODO: NBT
+            // TODO: Support NBT/components in FluidStack JSON deserialization.
             return new FluidStack(fluid, amount);
         } else {
             throw new JsonSyntaxException("Expected either a string or an object, got " + json);
@@ -432,7 +432,6 @@ public class JsonUtil {
     public static void registerTypeAdaptors(GsonBuilder builder) {
         builder.registerTypeAdapter(FluidStack.class, FLUID_STACK_DESERIALIZER);
         builder.registerTypeAdapter(ItemStack.class, ITEM_STACK_DESERIALIZER);
-        // TODO: Ingredient deserialiser!
         registerNbtSerializersDeserializers(builder);
     }
 

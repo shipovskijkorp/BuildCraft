@@ -520,7 +520,7 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
     }
 
     private void init() {
-        // TODO: use this for initialising the tile cache
+        // TODO: Initialize and reuse a neighbour/tile cache for power-pipe lookups.
     }
 
     private void requestPower(Direction from, long amount) {

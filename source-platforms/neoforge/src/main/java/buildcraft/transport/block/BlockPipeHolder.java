@@ -256,7 +256,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 						radius = VecUtil.replaceValue(radius, face.getAxis(), conSizes[i] / 2);
 						Vec3 min = center.subtract(radius);
 						Vec3 max = center.add(radius);
-						aabb = Shapes.create(BoundingBoxUtil.makeFrom(min, max));// TODO cache this
+						aabb = Shapes.create(BoundingBoxUtil.makeFrom(min, max)); // TODO: Cache variable-length pipe ray-trace connection shapes.
 					}
 					centerShape = Shapes.or(centerShape, aabb);
 				}
@@ -271,7 +271,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		if (tile == null) {
 			return new BCBlockHitResult(Shapes.block().clip(start, end, pos), 400);
 		}
-		BlockHitResult preResult = centerShapes.clip(start, end, pos);//TODO 
+		BlockHitResult preResult = centerShapes.clip(start, end, pos);
 		Vec3 preClip = preResult == null ? null : preResult.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
 		double preDist = preResult == null ? Double.MAX_VALUE : preResult.getLocation().distanceToSqr(start);
 		double maxX = start.x - end.x;
@@ -894,7 +894,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	}
 
 	@Override
-	public List<ItemStack> getDrops(BlockState p_60537_, LootParams.Builder builder) {//TODO move to TilePipeHolder
+	public List<ItemStack> getDrops(BlockState p_60537_, LootParams.Builder builder) {// TODO: Move pipe-specific drop assembly into TilePipeHolder.
 		NonNullList<ItemStack> toDrop = NonNullList.create();
 		BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
 		if (blockEntity != null && blockEntity instanceof TilePipeHolder tile) {

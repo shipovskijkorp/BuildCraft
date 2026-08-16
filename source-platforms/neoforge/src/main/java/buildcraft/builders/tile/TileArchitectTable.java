@@ -235,7 +235,6 @@ public class TileArchitectTable extends TileBC_Neptune implements IDebuggable, M
 
         if (!invSnapshotIn.getStackInSlot(0).isEmpty() && invSnapshotOut.getStackInSlot(0).isEmpty() && isValid) {
             if (!scanning) {
-            	//TODO add blueprint info
                 snapshotType = ItemSnapshot.EnumItemSnapshotType.getFromStack(
                     invSnapshotIn.getStackInSlot(0)
                 ).snapshotType;

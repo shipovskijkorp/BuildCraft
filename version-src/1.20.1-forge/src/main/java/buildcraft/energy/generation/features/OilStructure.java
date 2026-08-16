@@ -97,7 +97,7 @@ public abstract class OilStructure {
         IS_FOR_LAKE {
             @Override
             public boolean canReplace(WorldGenLevel world, BlockPos pos) {
-                return ALWAYS.canReplace(world, pos);//TODO
+                return ALWAYS.canReplace(world, pos);
             }
         };
         public abstract boolean canReplace(WorldGenLevel world, BlockPos pos);
@@ -207,7 +207,7 @@ public abstract class OilStructure {
                     int pz = z - box.min().getZ();
 
                     if (pattern[px][pz]) {
-                        BlockPos.MutableBlockPos upper = world.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, pos.set(x, 0, z)).mutable().move(0, -1, 0);//TODO CHECK
+                        BlockPos.MutableBlockPos upper = world.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, pos.set(x, 0, z)).mutable().move(0, -1, 0);
                         int h = upper.getY();
                         if (canReplaceForOil(world, upper)) {
                             for (int y = 0; y < 5; y++) {
@@ -237,8 +237,6 @@ public abstract class OilStructure {
     }
 
     public static class Spout extends OilStructure {
-        // TODO: Use a terrain generator from mc terrain generation to get the height of the world
-        // A hook will go in compat for help when using cubic chunks or a different type of terrain generator
         public final BlockPos start;
         public final int radius;
         public final int height;
@@ -268,7 +266,7 @@ public abstract class OilStructure {
                 if (state.isAir()) {
                     continue;
                 }
-                if (BlockUtil.getFluidWithoutFlowing(state) != Fluids.EMPTY) {//TODO CHECK!
+                if (BlockUtil.getFluidWithoutFlowing(state) != Fluids.EMPTY) {
                     break;
                 }
                 if (state.blocksMotion()) {

@@ -59,7 +59,7 @@ public class ElementTypeSprite extends ElementType {
         INodeBoolean visible = getEquationBool(json, "visible", ctx, true);
         boolean foreground = resolveEquationBool(json, "foreground", ctx, false);
 
-        // TODO: Allow the source sprite to be changing as well!
+        // TODO: Allow GUI JSON sprite sources to be expression-driven.
         SrcTexture tex = resolveTexture(info, json, "source");
         String origin = tex.origin;
         int texSize = tex.texSize;

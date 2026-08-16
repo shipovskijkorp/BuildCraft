@@ -32,9 +32,6 @@ import net.minecraft.nbt.Tag;
 
 /** Defines a map of commonly used tags. */
 public class NbtSquishMap {
-    // TODO: Try adding "ImmutableTagCompound" and "ImmutableTagList" to see if the equals() and hashCode() of compounds
-    // is a problem atm
-    // perhaps use "TCustomHashSet" with a similar deduplication functionality of FoamFix?
 
     // I'm not completely convinced that this one is necessary.
     // However it completes the set so, meh

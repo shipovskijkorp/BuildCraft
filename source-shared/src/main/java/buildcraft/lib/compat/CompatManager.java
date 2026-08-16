@@ -17,13 +17,6 @@ public class CompatManager {
     }
 
     static {
-        // Non-compile-dependent compat functions
-//        if (Loader.isModLoaded("cubicchunks")) {
-            // Our chunk-caching optimisation is basically useless with cubic chunks -
-            // we should really replace this with one in the real compat module, later.
-//            blockAccessor = DefaultBlockAccessor.DIRECT;
-//        } else {
-            blockAccessor = DefaultBlockAccessor.VIA_CHUNK;
-//        }
+        blockAccessor = DefaultBlockAccessor.VIA_CHUNK;
     }
 }

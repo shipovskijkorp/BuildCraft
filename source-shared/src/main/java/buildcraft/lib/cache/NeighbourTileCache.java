@@ -20,9 +20,6 @@ import net.minecraft.world.level.chunk.LevelChunk;
 /** An {@link ITileCache} that only caches the immediate neighbours of a {@link BlockEntity}. (Essentially caches
  * everything that {@link TileBC_Neptune#getNeighbourTile(Direction)} can return). */
 public class NeighbourTileCache implements ITileCache {
-
-    // TODO: Test the performance!
-
     private final BlockEntity tile;
     private BlockPos lastSeenTilePos;
     private final Map<Direction, WeakReference<BlockEntity>> cachedTiles = new EnumMap<>(Direction.class);

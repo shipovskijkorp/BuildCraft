@@ -318,7 +318,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                 continue;
             }
             if (world.isClientSide()) {
-                // TODO: Client item advancing/intelligent stuffs
+                // TODO: Add client-side item advancement/interpolation between network updates.
              //   items.add((int) (item.tickFinished - currentTime), item);
                 continue;
             }
@@ -781,7 +781,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         }
         if (pipe.isConnected(side)) {
             if (pipe.getConnectedType(side) == ConnectedType.TILE) {
-                // TODO: Check the length between this pipes centre and the next block along
+                // TODO: Derive insertion travel distance from the actual connected geometry.
                 return 0.5 + 0.25;// Tiny distance for fully pushing items in.
             }
             return 0.5;

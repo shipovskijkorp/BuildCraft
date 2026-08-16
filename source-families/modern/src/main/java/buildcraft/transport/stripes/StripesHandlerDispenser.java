@@ -73,10 +73,6 @@ public enum StripesHandlerDispenser {
             return false;
         }
         DispenseItemBehavior behaviour = DISPENSER_REGISTRY.get(stack.getItem());
-        // Temp: for testing
-        // if (!shouldHandle(stack)) {
-        // return false;
-        // }
         
         ServerLevel serverLevel = (ServerLevel) world;
         BlockState dispenserState = Blocks.DISPENSER.defaultBlockState().setValue(DispenserBlock.FACING, direction);

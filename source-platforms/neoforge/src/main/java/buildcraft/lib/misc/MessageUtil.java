@@ -296,9 +296,6 @@ public class MessageUtil {
         int readableBytes = buf.readableBytes();
         int rb = readableBytes;
 
-//        if (buf instanceof PacketBufferBC) {
-            // TODO: Find a way of checking if the partial bits have been fully read!
-//        }
 
         if (readableBytes > 0) {
             int ri = buf.readerIndex();

@@ -62,7 +62,7 @@ public class RenderUtil {
 
     public static void registerBlockColour(@Nullable Block block, BlockColor colour) {
         if (block != null) {
-            Minecraft.getInstance().getBlockColors().register(colour, block);//TODO
+            Minecraft.getInstance().getBlockColors().register(colour, block);
         }
     }
 
@@ -78,7 +78,7 @@ public class RenderUtil {
         float green = (color >> 8 & 255) / 255.0F;
         float blue = (color & 255) / 255.0F;
 
-        RenderSystem.setShaderColor(red, green, blue, 1.0f);//TODO DEBUG
+        RenderSystem.setShaderColor(red, green, blue, 1.0f);
     }
 
     /** Takes ARGB */

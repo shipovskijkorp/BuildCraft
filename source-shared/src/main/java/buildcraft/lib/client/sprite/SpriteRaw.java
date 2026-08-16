@@ -35,7 +35,7 @@ public class SpriteRaw implements ISprite {
 
     @Override
     public void bindTexture() {
-    	RenderSystem.setShaderTexture(0, location);//TODO use TextureAtlas
+            RenderSystem.setShaderTexture(0, location);
     }
 
     @Override

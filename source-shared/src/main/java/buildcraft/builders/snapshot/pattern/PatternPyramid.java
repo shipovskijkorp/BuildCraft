@@ -66,8 +66,6 @@ public class PatternPyramid extends Pattern implements IFillerPatternShape {
                 return null;
         }
     }
-
-    // TODO: convert to for loops?
     @Override
     public boolean fillTemplate(IFilledTemplate filledTemplate, IStatementParameter[] params) {
         // noinspection RedundantCast

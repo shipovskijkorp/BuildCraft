@@ -127,7 +127,7 @@ public class ModelUtil {
     }
 
     public static void mapBoxToUvs(AABB box, Direction side, UvFaceData uvs) {
-        // TODO: Fix these!
+        // TODO: Verify and correct per-face UV orientation/mirroring.
         switch (side) {
             case WEST: /* -X */ {
                 uvs.minU = (float) box.minZ;

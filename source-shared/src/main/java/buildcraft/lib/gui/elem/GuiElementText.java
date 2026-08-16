@@ -31,7 +31,7 @@ public class GuiElementText extends GuiElementSimple {
 
     private final Supplier<Component> text;
     private final IntSupplier colour;
-    private final DoubleSupplier scale;// TODO: Use this and then use this for the guide!
+    private final DoubleSupplier scale;
 
     public GuiElementText(BuildCraftGui gui, IGuiPosition parent, Supplier<Component> text, IntSupplier colour) {
         this(gui, parent, text, colour, NodeConstantDouble.ONE);
@@ -43,7 +43,7 @@ public class GuiElementText extends GuiElementSimple {
 
     public GuiElementText(BuildCraftGui gui, IGuiPosition parent, Supplier<Component> text, IntSupplier colour,
         DoubleSupplier scale) {
-        super(gui, GuiRectangle.ZERO.offset(parent));// TODO: link this up like in GuidePageContents!
+        super(gui, GuiRectangle.ZERO.offset(parent));
         this.text = text;
         this.colour = colour;
         this.scale = scale;

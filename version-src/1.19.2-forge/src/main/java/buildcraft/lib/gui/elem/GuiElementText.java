@@ -30,7 +30,7 @@ public class GuiElementText extends GuiElementSimple {
 
     private final Supplier<Component> text;
     private final IntSupplier colour;
-    private final DoubleSupplier scale;// TODO: Use this and then use this for the guide!
+    private final DoubleSupplier scale;
 
     public GuiElementText(BuildCraftGui gui, IGuiPosition parent, Supplier<Component> text, IntSupplier colour) {
         this(gui, parent, text, colour, NodeConstantDouble.ONE);
@@ -42,7 +42,7 @@ public class GuiElementText extends GuiElementSimple {
 
     public GuiElementText(BuildCraftGui gui, IGuiPosition parent, Supplier<Component> text, IntSupplier colour,
         DoubleSupplier scale) {
-        super(gui, GuiRectangle.ZERO.offset(parent));// TODO: link this up like in GuidePageContents!
+        super(gui, GuiRectangle.ZERO.offset(parent));
         this.text = text;
         this.colour = colour;
         this.scale = scale;
@@ -107,7 +107,7 @@ public class GuiElementText extends GuiElementSimple {
             centered, (float) scale.getAsDouble()*/);
     	else
     		mc.font.draw(pose, content, (int) getX() - (centered ? mc.font.width(content)/2 : 0), (int) getY(), colour.getAsInt()/*, dropShadow,
-    	            centered, (float) scale.getAsDouble()*/);//TODO scale
+                    centered, (float) scale.getAsDouble()*/); // TODO: Apply the scale supplier during 1.19.2 text rendering.
         // final double s = scale.getAsDouble();
         // final boolean needsScaling = s != 1;
         // FontRenderer fr = Minecraft.getMinecraft().fontRenderer;

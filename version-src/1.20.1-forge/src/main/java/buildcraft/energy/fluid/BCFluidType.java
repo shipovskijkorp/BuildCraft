@@ -55,7 +55,7 @@ public class BCFluidType extends FluidType{
             @Override
             public ResourceLocation getRenderOverlayTexture(Minecraft mc)
             {
-                return UNDERWATER_LOCATION;//TODO
+                return UNDERWATER_LOCATION;
             }
 
             @Override

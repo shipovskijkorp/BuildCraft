@@ -92,7 +92,6 @@ public enum ModelPipeItem implements BakedModel {
 
     private static List<BakedQuad> getQuads(PipeFaceTex center, PipeFaceTex top, PipeFaceTex bottom,
         TextureAtlasSprite[] sprites, int colour, EnumPipeColourType colourType) {
-        // TEMP!
         top = center;
         bottom = center;
 
@@ -101,7 +100,7 @@ public enum ModelPipeItem implements BakedModel {
         // if (center == top && center == bottom) {
         addQuads(QUADS_SAME, sprites, quads, center);
         // } else {
-        // TODO: Differing sprite quads
+        // TODO: Render distinct item-pipe quads when center/top/bottom sprites differ.
         // }
 
         if (colour > 0 && colour <= 16) {

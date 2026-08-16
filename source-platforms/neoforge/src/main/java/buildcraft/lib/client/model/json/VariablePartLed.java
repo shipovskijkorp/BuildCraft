@@ -43,7 +43,7 @@ public class VariablePartLed extends VariablePartCuboidBase {
     public static void onTextureStitchPost(TextureAtlasStitchedEvent event) {
     	if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
             FACE_DATA.sprite = event.getAtlas()
-            		.getSprite(BuiltInRegistries.BLOCK.getKey(Blocks.QUARTZ_BLOCK));//TEMP
+                .getSprite(BuiltInRegistries.BLOCK.getKey(Blocks.QUARTZ_BLOCK)); // TODO: Replace the quartz placeholder with a dedicated LED fallback sprite.
     	}
 
     }

@@ -182,7 +182,7 @@ public class BCSiliconRecipesProvider extends RecipeProvider{
 
         if (!BCSiliconItems.REDSTONE_CHIPSET_ITEMS.isEmpty()) {
             ImmutableSet<IngredientStack> input = ImmutableSet.of(IngredientStack.of(Tags.Items.DUSTS_REDSTONE));
-            ItemStack output = EnumRedstoneChipset.RED.getStack(1);//TODO
+            ItemStack output = EnumRedstoneChipset.RED.getStack(1);
             new AssemblyRecipeBuilder(assemblyCost(10000), input, output)
             .group("buildcraftsilicon:chipsets")
             .unlockedBy("has_"+BCSiliconItems.ASSEMBLY_TABLE_ITEM.get().getDescriptionId(), TriggerInstance.hasItems(BCSiliconItems.ASSEMBLY_TABLE_ITEM.get()))

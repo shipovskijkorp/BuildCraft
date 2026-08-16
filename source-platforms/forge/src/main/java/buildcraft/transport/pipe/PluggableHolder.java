@@ -25,7 +25,7 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.network.NetworkEvent;
 
 public final class PluggableHolder {
-    // TODO: Networking is kinda sub-par at the moment for pluggables
+    // TODO: Give pluggables a structured state-sync contract instead of ad-hoc networking.
     // perhaps add some sort of interface for allowing pluggables to correctly write data?
     private static final IdAllocator ID_ALLOC = new IdAllocator("PlugHolder");
     public static final int ID_REMOVE_PLUG = ID_ALLOC.allocId("REMOVE_PLUG");

@@ -72,7 +72,6 @@ public class TriggerInventory extends BCStatement implements ITriggerExternal {
                 hasSlots = true;
                 ItemStack stack = handler.getStackInSlot(i);
 
-                // TODO: Replace some of this with
                 foundItems |= !stack.isEmpty() && (searchedStack.isEmpty() || StackUtil.canStacksOrListsMerge(stack, searchedStack));
 
                 foundSpace |= (stack.isEmpty() || (StackUtil.canStacksOrListsMerge(stack, searchedStack) && stack.getCount() < stack.getMaxStackSize()))//

@@ -47,8 +47,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 /** Can render 3D fluid cuboid's, up to 1x1x1 in size. Note that they *must* be contained within the 1x1x1 block space -
  * you can't use this to render off large multiblocks. Not thread safe -- this uses static variables so you should only
  * call this from the main client thread. */
-// TODO: thread safety (per thread context?)
-// TODO: Adapt to high resolution texture
+// TODO: Make fluid UV tiling independent of assumed texture resolution.
 // Perhaps move this into IModelRenderer? And that way we get the buffer, force shaders to cope with fluids (?!), etc
 @OnlyIn(Dist.CLIENT)
 public class FluidRenderer {
@@ -72,7 +71,7 @@ public class FluidRenderer {
     
 
     static {
-        // TODO: allow the caller to change the light level
+        // TODO: Let callers provide the fluid-render light level instead of forcing full-bright.
         vertex.lighti(0xF, 0xF);
         for (FluidSpriteType type : FluidSpriteType.values()) {
             fluidSprites.put(type, new HashMap<>());
@@ -252,7 +251,7 @@ public class FluidRenderer {
         vertex.colouri(IClientFluidTypeExtensions.of(fluidType).getTintColor());
 
         texmap = TexMap.XZ;
-        // TODO: Enable/disable inversion for the correct faces
+        // TODO: Correctly control UV inversion per rendered fluid face.
         invertU = false;
         invertV = false;
         if (sideRender[Direction.UP.ordinal()]) {
@@ -351,7 +350,7 @@ public class FluidRenderer {
     	
         vertex.positiond(x, y, z);
         texmap.apply(x - xTexDiff, y - yTexDiff, z - zTexDiff);
-        vertex.renderAsBlock(pose.pose(), pose.normal(), bb);//TODO
+        vertex.renderAsBlock(pose.pose(), pose.normal(), bb);
     }
 
     /** Fills up the given region with the fluids texture, repeated. Ignores the value of {@link FluidStack#amount}. Use

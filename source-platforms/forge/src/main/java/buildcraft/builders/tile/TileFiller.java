@@ -616,6 +616,6 @@ public class TileFiller extends TileBC_Neptune
 
 	@Override
 	public boolean needMeterial() {
-		return true;//TODO
+		return true;
 	}
 }

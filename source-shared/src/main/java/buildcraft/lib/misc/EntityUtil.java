@@ -78,8 +78,7 @@ public class EntityUtil {
 
     @Nonnull
     public static ItemStack getArrowStack(AbstractArrow arrow) {
-        // FIXME: Replace this with an invocation of arrow.getArrowStack
-        // (but its protected so we can't)
+        // Vanilla does not expose the pickup stack here, so mirror the known arrow types.
         if (arrow instanceof SpectralArrow) 
             return new ItemStack(Items.SPECTRAL_ARROW);
         else if(arrow instanceof ThrownTrident)

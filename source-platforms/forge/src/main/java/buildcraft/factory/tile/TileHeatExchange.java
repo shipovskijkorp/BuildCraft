@@ -184,13 +184,13 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                             if (sectionStart == null) {
                                 sectionStart = (ExchangeSectionStart) exchange.section;
                             } else {
-                                // TODO: Attempt to merge sections together!
+                                // TODO: Merge compatible adjacent Heat Exchanger sections instead of discarding duplicates.
                             }
                         } else if (exchange.section instanceof ExchangeSectionEnd) {
                             if (sectionEnd == null) {
                                 sectionEnd = (ExchangeSectionEnd) exchange.section;
                             } else {
-                                // TODO: Attempt to merge sections together!
+                                // TODO: Merge compatible adjacent Heat Exchanger sections instead of discarding duplicates.
                             }
                         }
                         exchange.section = null;
@@ -373,7 +373,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
     @Override
 	public AABB getRenderBoundingBox() {
         if (section instanceof ExchangeSectionStart) {
-            // Temp
+            // TODO: Derive the render bounds from the connected Heat Exchanger section instead of a fixed radius.
             return BoundingBoxUtil.makeAround(VecUtil.convertCenter(getBlockPos()), 10);
         }
         return super.getRenderBoundingBox();

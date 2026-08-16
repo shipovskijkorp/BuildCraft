@@ -22,7 +22,7 @@ public class AddonDefaultRenderer<T extends Addon> implements IFastAddonRenderer
     private final TextureAtlasSprite s;
 
     public AddonDefaultRenderer() {
-        s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ResourceLocation.fromNamespaceAndPath("minecraft", "block/quartz_block_top"));//TODO change to white
+        s = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ResourceLocation.fromNamespaceAndPath("minecraft", "block/quartz_block_top")); // TODO: Use a dedicated white fallback sprite instead of quartz_block_top.
     }
 
     public AddonDefaultRenderer(TextureAtlasSprite s) {

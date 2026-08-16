@@ -152,7 +152,7 @@ public class ItemHandlerManager implements IBCCapabilityProvider, INBTSerializab
 
     private static class Wrapper {
         private final List<IItemHandlerModifiable> handlers = new ArrayList<>();
-        private IItemHandlerModifiable combined = null;// TODO: This should be an IItemTransactor as well.
+        private IItemHandlerModifiable combined = null; // TODO: Expose the combined item wrapper through IItemTransactor as well.
 
         public void genWrapper() {
             if (handlers.size() == 1) {

@@ -143,7 +143,7 @@ public class GuiUtil {
      * @param font the font for drawing the text in the tooltip box */
     public static int drawHoveringText(List<Component> textLines, final int mouseX, final int mouseY,
         final int screenWidth, final int screenHeight, final int maxTextWidth, Font font, PoseStack pose) {
-        if (!textLines.isEmpty()) {//TODO
+        if (!textLines.isEmpty()) {
         	pose.translate(0, 0, 400);
         	Matrix4f matrix = pose.last().pose();
         	
@@ -406,8 +406,6 @@ public class GuiUtil {
     public static Component getStackDisplayName(ItemStack stack) {
         Component name = stack.getDisplayName();
         if (name == null) {
-            // Temp workaround for headcrumbs
-            // TODO: Remove this after https://github.com/BuildCraft/BuildCraft/issues/4268 is fixed from their side! */
             Item item = stack.getItem();
             String info = ForgeRegistries.ITEMS.getKey(item) + " " + item.getClass() + " (" + stack.serializeNBT() + ")";
             BCLog.logger.warn("[lib.guide] Found null display name! " + info);

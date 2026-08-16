@@ -52,7 +52,7 @@ public class VariablePartTextureExpand extends JsonVariableModelPart {
             int rgba = RenderUtil.swapARGBforRGBA((int) colour.evaluate());
 
  /*           VariableFaceData data = faceUv.evaluate(spriteLookup);
-            // TODO: Use the UV data! (only take part of the texture)
+            // TODO: Restore texture_expand rendering and apply the requested UV sub-region.
             ItemLayerModel model = new ItemLayerModel(ImmutableList.of(), IntSet.of(), Int2ObjectMaps.emptyMap());
             BakedModel baked = model.bake(ModelRotation.X0_Y0, DefaultVertexFormats.ITEM, (loc) -> data.sprite);
             List<BakedQuad> quads = baked.getQuads(null, null, 0);

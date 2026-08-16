@@ -72,10 +72,8 @@ public abstract class ActionWrapper extends StatementWrapper implements IActionI
                 int i = j + possible.length;
                 part = part.next();
                 ActionWrapper action = wrap(delegate, part.face);
-                if (true) {
-                    // TODO: Check the gui container to see if this is a valid action!
-                    list.add(action);
-                }
+                // TODO: Validate generated side-wrapped gate actions against the active GUI/container context.
+                list.add(action);
             }
         }
         return list.toArray(new ActionWrapper[0]);

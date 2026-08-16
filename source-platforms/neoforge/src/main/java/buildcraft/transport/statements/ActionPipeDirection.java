@@ -33,8 +33,9 @@ public class ActionPipeDirection extends BCStatement implements IActionInternal 
 
     @Override
     public Component getDescription() {
+        // TODO: Localize the direction argument instead of relying on enum string formatting.
         return Component.translatable("gate.action.pipe.direction", direction);//, ColourUtil.getTextFullTooltip(direction));
-    }//TODO fina Direction Locale
+    }
 
     @Override
     public IStatement rotateLeft() {

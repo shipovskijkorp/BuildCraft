@@ -64,7 +64,6 @@ public class ItemWaterGel extends Item {
             world.setBlockAndUpdate(ray.getBlockPos(), BCFactoryBlocks.WATER_GEL.get().defaultBlockState().setValue(BlockWaterGel.PROP_STAGE, GelStage.SPREAD_0));
             world.scheduleTick(ray.getBlockPos(), BCFactoryBlocks.WATER_GEL.get(), 200);
 
-            // TODO: Snowball stuff
 
             // EntitySnowball entitysnowball = new EntitySnowball(world, player);
             // entitysnowball.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);

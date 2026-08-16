@@ -707,7 +707,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
             level.getProfiler().push("notify");
             updateBlockOffsets.stream()
                 .map(blockPos::offset)
-                .forEach(updatePos -> level.updateNeighborsAt(updatePos, placeBlock));//TODO : check
+                .forEach(updatePos -> level.updateNeighborsAt(updatePos, placeBlock));
             level.getProfiler().pop();
             if (tileNbt != null && placedBlockState.hasBlockEntity()) {
                 level.getProfiler().push("prepare tile");

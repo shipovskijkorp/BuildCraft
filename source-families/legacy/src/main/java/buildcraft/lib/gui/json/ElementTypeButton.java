@@ -36,7 +36,7 @@ public class ElementTypeButton extends ElementType {
     @Override
     public IGuiElement deserialize0(BuildCraftJsonGui gui, IGuiPosition parent, JsonGuiInfo info, JsonGuiElement json) {
         FunctionContext ctx = createContext(json);
-        // TODO: Find a sane way of making the position variable!
+        // TODO: Support variable/expression-driven button positions cleanly.
         inheritProperty(json, "area[0]", "pos[0]");
         inheritProperty(json, "area[1]", "pos[1]");
         inheritProperty(json, "area[2]", "size[0]");

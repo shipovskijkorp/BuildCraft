@@ -122,7 +122,7 @@ public class SpriteNineSliced {
     }
 
     private void vertex(Matrix4f matrix4f, BufferBuilder vb, double x, double y, double texU, double texV) {
-        vb.vertex(matrix4f, (float)(x+transX), (float)(y+transY), 0);//TODO change all double to float
+        vb.vertex(matrix4f, (float)(x+transX), (float)(y+transY), 0);
         vb.uv(sprite.getInterpU(texU), sprite.getInterpV(texV));
         vb.endVertex();
     }

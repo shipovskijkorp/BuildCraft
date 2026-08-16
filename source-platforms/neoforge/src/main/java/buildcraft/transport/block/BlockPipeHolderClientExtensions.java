@@ -47,7 +47,7 @@ final class BlockPipeHolderClientExtensions implements IClientBlockExtensions {
         BlockPos pos = pipeHolder.getBlockPos();
 
         Vec3 location = target.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
-        Vec3 dvec = location.subtract(0.5f, 0.5f, 0.5f).scale(-0.00125);//FIXME Temp use
+        Vec3 dvec = location.subtract(0.5f, 0.5f, 0.5f).scale(-0.00125);
         location = location.add(dvec);
         int p = BlockPipeHolder.computSubhit(pipeHolder, location, BlockPipeHolder.computHitOctant(location));
         VoxelShape aabb = null;

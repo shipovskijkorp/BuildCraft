@@ -485,7 +485,7 @@ public class MutableVertex {
         position_x *= x;
         position_y *= y;
         position_z *= z;
-        // TODO: scale normals?
+        // TODO: Transform/renormalize normals when vertices are non-uniformly scaled.
         return this;
     }
 

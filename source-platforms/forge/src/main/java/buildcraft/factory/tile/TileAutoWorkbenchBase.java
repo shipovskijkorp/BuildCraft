@@ -56,8 +56,6 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
 
     private static final ResourceLocation ADVANCEMENT_AUTOCRAFT = new ResourceLocation("buildcraftfactory:lazy_crafting");
 
-    // TODO: Store output in the next slot!
-    // (Can be used to differentiate between different recipes)
     public final ItemHandlerSimple invBlueprint;
     public final ItemHandlerSimple invMaterialFilter;
     public final ItemHandlerFiltered invMaterials;

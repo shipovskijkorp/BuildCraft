@@ -90,9 +90,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     private final int transferPerTick = Math.max(0, fluidTransferInfo.transferPerTick);
     private final int transferDelayTicks = Math.max(1, (int) Math.ceil(fluidTransferInfo.transferDelayMultiplier));
 
-    /* Default to an additional second of fluid inserting and removal. This means that (for a normal pipe like cobble)
-     * it will be 20 * (10 + 12) = 20 * 22 = 440 - oh that's not good is it */
-    public final int capacity = Math.max(FluidType.BUCKET_VOLUME, transferPerTick * 10);// TEMP!
+    // TODO: Revisit the fluid-pipe buffer capacity formula; it currently uses a 10-tick transfer window with a one-bucket floor.
+    public final int capacity = Math.max(FluidType.BUCKET_VOLUME, transferPerTick * 10);
 
     private final Map<EnumPipePart, Section> sections = new EnumMap<>(EnumPipePart.class);
     private FluidStack currentFluid = FluidStack.EMPTY;
@@ -277,7 +276,6 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         }
         IFluidHandler fluidHandler = pipe.getHolder().getCapabilityFromPipe(from, CapUtil.CAP_FLUIDS).orElse(null);
         if (fluidHandler == null) {
-            // FIXME: WRONG PLACE!!!
             return PASSED_EXTRACT;
         }
         Section section = sections.get(EnumPipePart.fromFacing(from));
@@ -649,7 +647,6 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                         center.drainInternal(filled, true);
                         section.ticksInDirection = COOLDOWN_OUTPUT;
                     }
-                    // FIXME: This is the animated flow variable
                     // flow[direction.ordinal()] = 1;
                 }
             }

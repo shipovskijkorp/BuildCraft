@@ -313,7 +313,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     }
 
     protected Biome getBiome() {
-        // TODO: Cache this!
+        // TODO: Cache the biome lookup until the engine changes position/world.
         return level.getBiome(worldPosition).value();
     }
 
@@ -583,7 +583,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         BlockEntity getTile();
     }
 
-    /** Temp! This should be replaced with a tile buffer! */
+    /** TODO: Replace direct neighbour lookup with a reusable tile/capability buffer. */
     public ITileBuffer getTileBuffer(Direction side) {
         BlockEntity tile = level.getBlockEntity(worldPosition.offset(side.getNormal()));
         return () -> tile;

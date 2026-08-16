@@ -55,8 +55,6 @@ public class SoundUtil {
         if (colour == null) {
             soundEvent = SoundEvents.BUCKET_EMPTY;
         } else {
-            // FIXME: is this a good sound? Idk tbh.
-            // TODO: Look into configuring this kind of stuff.
             soundEvent = SoundEvents.SLIME_SQUISH;
         }
         float volume = (soundType.getVolume() + 1.0F) / 2.0F;

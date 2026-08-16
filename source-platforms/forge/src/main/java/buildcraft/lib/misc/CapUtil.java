@@ -45,7 +45,6 @@ public class CapUtil {
         CAP_FLUIDS = getCapNonNull(ForgeCapabilities.FLUID_HANDLER, IFluidHandler.class);
         CAP_FE = getCapNonNull(ForgeCapabilities.ENERGY, IEnergyStorage.class);
         CAP_ITEM_TRANSACTOR = CapabilityManager.get(new CapabilityToken<>(){});
-        // FIXME: Move cap registration into API!
 
     }
 

@@ -80,7 +80,6 @@ public class ItemList_BC8 extends Item implements ItemListAdapter, ItemLabelAdap
 
 
 
-    //TODO ItemStack:getHoverName
     public String getLabelName(@Nonnull ItemStack stack) {
         return stack.hasTag() ? stack.getTag().getString("label") : "";
     }

@@ -201,7 +201,7 @@ public class BCLibEventDist {
                 if (debuggable instanceof BlockEntity tile && mouseOver instanceof BlockHitResult blockHit) {
                     MessageManager.sendToServer(new MessageDebugRequest(tile.getBlockPos(), blockHit.getDirection()));
                 } else if (debuggable instanceof Entity) {
-                    // TODO: Support entities!
+                    // TODO: Add entity debug-info request/response support.
                 }
             }
         }

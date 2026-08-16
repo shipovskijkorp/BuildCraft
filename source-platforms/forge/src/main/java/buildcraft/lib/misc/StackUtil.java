@@ -54,7 +54,7 @@ public class StackUtil {
     }
 
     /** Checks to see if the two input stacks are equal in all but stack size. Note that this doesn't check anything
-     * todo with stack size, so if you pass in two stacks of 64 cobblestone this will return true. If you pass in null
+     * related to stack size, so if you pass in two stacks of 64 cobblestone this will return true. If you pass in null
      * (at all) then this will only return true if both are null. */
     public static boolean canMerge(@Nonnull ItemStack a, @Nonnull ItemStack b) {
         // Checks item, damage
@@ -163,7 +163,7 @@ public class StackUtil {
             return nbt;
         }
         nbt.remove("_data");
-        // TODO: Remove all of the non functional stuff (name, desc, etc)
+        // TODO: Strip non-functional display metadata when normalizing ItemStacks.
         return nbt;
     }
 

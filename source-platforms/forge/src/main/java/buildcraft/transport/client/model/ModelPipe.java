@@ -118,7 +118,7 @@ public enum ModelPipe implements IDynamicBakedModel {
 		//? if <1.20 {
 		if(data == ModelData.EMPTY)
 			return SpriteUtil.missingSprite();
-		ResourceLocation identifier = data.get(PipeTypeModelKey).getPipe().definition.textures[0];//TODO find correct tex
+		ResourceLocation identifier = data.get(PipeTypeModelKey).getPipe().definition.textures[0]; // TODO: Derive the particle sprite from the active pipe model instead of textures[0].
 		//?} else {
 		/*?
         if (data == ModelData.EMPTY) {
@@ -128,7 +128,7 @@ public enum ModelPipe implements IDynamicBakedModel {
         if (tile == null || tile.getPipe() == Pipe.EMPTY || tile.getPipe().definition.textures.length == 0) {
             return SpriteUtil.missingSprite();
         }
-        ResourceLocation identifier = tile.getPipe().definition.textures[0]; // TODO find correct texture
+        ResourceLocation identifier = tile.getPipe().definition.textures[0]; // TODO: Derive the particle sprite from the active pipe model instead of textures[0].
 		?*/
 		//?}
 		return particleIcon.computeIfAbsent(identifier,

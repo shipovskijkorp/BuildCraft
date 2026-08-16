@@ -333,12 +333,10 @@ public abstract class TileEngineBase extends BlockEntity {
 //        sendNetworkUpdate(NET_RENDER_DATA);
 	}
 
-	// TEMP
 	public interface ITileBuffer {
 		BlockEntity getTile();
 	}
 
-	/** Temp! This should be replaced with a tile buffer! */
 	public ITileBuffer getTileBuffer(Direction side) {
 		BlockEntity tile = level.getBlockEntity(getBlockPos().offset(side.getNormal()));
 		return () -> tile;
@@ -375,8 +373,7 @@ public abstract class TileEngineBase extends BlockEntity {
 //        lastPower += microJoules;
 
 		if (getPowerStage() == EnumPowerStage.OVERHEAT) {
-			// TODO: turn engine off
-			// worldObj.createExplosion(null, xCoord, yCoord, zCoord, explosionRange(),
+						// worldObj.createExplosion(null, xCoord, yCoord, zCoord, explosionRange(),
 			// true);
 			// worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 		}

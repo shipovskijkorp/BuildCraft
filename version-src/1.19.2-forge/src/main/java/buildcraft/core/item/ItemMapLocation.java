@@ -95,7 +95,7 @@ public class ItemMapLocation extends Item implements MapLocationAdapter, ItemLab
                     int zLength = cpt.getInt("zMax") - z + 1;
 
                     strings.add(Component.translatable(
-                        "{" + x + ", " + y + ", " + z + "} + {" + xLength + " x " + yLength + " x " + zLength + "}"));//TODO
+                        "{" + x + ", " + y + ", " + z + "} + {" + xLength + " x " + yLength + " x " + zLength + "}"));
                 }
                 break;
             }

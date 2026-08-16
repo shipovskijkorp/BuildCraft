@@ -19,7 +19,7 @@ public enum EnumRedstoneChipset implements StringRepresentable {
     private final String name = name().toLowerCase(Locale.ROOT);
     
     public ItemStack getStack(int stackSize) {
-        Item chipset = BCSiliconItems.REDSTONE_CHIPSET_ITEMS.get(this);//BCItems.Silicon.REDSTONE_CHIPSET; TODO
+        Item chipset = BCSiliconItems.REDSTONE_CHIPSET_ITEMS.get(this);
         if (chipset == null) {
             return ItemStack.EMPTY;
         }

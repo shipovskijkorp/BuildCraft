@@ -105,7 +105,7 @@ public abstract class GuiBC8<C extends MenuBC_Neptune> extends AbstractContainer
             (int) area.getEndY(), startColor, endColor);
     }
 
-    /** Compatibility hook for screens that have not yet converted their local drawing method to GuiGraphics. */
+    /** TODO: Remove this compatibility hook after all screens use GuiGraphics directly. */
     @Deprecated
     public void drawGradientRect(PoseStack pose, IGuiArea area, int startColor, int endColor) {
         drawGradientRect(requireGraphics(), area, startColor, endColor);

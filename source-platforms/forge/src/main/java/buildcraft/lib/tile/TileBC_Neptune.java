@@ -265,7 +265,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
 /*        NonNullList<ItemStack> toDrop = NonNullList.create();
         if(dropSelf)
         	toDrop.add(this.getBlockState()
-        			.getBlock().getCloneItemStack(getBlockState(), null, level, worldPosition, null));//TODO
+                    .getBlock().getCloneItemStack(getBlockState(), null, level, worldPosition, null));
         addDrops(toDrop, 0);
         Containers.dropContents(level, worldPosition, toDrop);*/
     }

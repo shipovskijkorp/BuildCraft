@@ -226,7 +226,7 @@ public class BCLibEventDist {
                         BlockEntity tile = (BlockEntity) debuggable;
                         MessageManager.sendToServer(new MessageDebugRequest(tile.getBlockPos(), Direction.getNearest(mouseOver.getLocation().x, mouseOver.getLocation().y, mouseOver.getLocation().z)));
                     } else if (debuggable instanceof Entity) {
-                        // TODO: Support entities!
+                        // TODO: Add entity debug-info request/response support.
                     }
                 }
             }

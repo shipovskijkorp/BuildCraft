@@ -31,7 +31,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** Provides a simple way of rendering an item model with just a list of quads. This provides some transforms to use
- * that make it simple to render as a block, item or tool (todo) */
+ * that make it simple to render as a block, item or tool. */
 @SuppressWarnings("deprecation")
 public class ModelItemSimple implements BakedModel {
     public static final ItemTransforms TRANSFORM_DEFAULT = ItemTransforms.NO_TRANSFORMS;
@@ -40,7 +40,6 @@ public class ModelItemSimple implements BakedModel {
     public static final ItemTransforms TRANSFORM_PLUG_AS_ITEM_BIGGER;
     public static final ItemTransforms TRANSFORM_PLUG_AS_BLOCK;
     public static final ItemTransforms TRANSFORM_ITEM;
-    // TODO: TRANSFORM_TOOL
 
     static {
         // Values taken from "minecraft:models/block/block.json"

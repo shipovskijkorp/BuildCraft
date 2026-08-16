@@ -520,7 +520,7 @@ public class GateLogic implements IGate, IRedstoneStatementContainer, GateView, 
                     int actionIndex = triggerIndex - i;
                     StatementPair fullAction = statements[actionIndex];
 
-                    // TODO: add merging / overriding functionality for actions
+                    // TODO: Define merge/override semantics when multiple gate actions target the same setting.
                     // such that
                     // - (face direction: east)
                     // - (face direction: west)

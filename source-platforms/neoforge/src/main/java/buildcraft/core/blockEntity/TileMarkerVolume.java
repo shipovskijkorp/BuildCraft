@@ -154,11 +154,6 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
     
     
 
-/*	@Override
-    @OnlyIn(Dist.CLIENT)
-    public double getMaxRenderDistanceSquared() {
-        return BCCoreConfig.markerMaxDistance * 4 * BCCoreConfig.markerMaxDistance;//TODO getViewDistence()
-    }*/
 
     public void onManualConnectionAttempt(Player player) {
         MarkerSubCache<VolumeConnection> cache = this.getLocalCache();

@@ -108,7 +108,7 @@ public class RenderTickListener {
         if (debuggable != null) {
             List<String> clientLeft = new ArrayList<>();
             List<String> clientRight = new ArrayList<>();
-            Direction face = mc.cameraEntity.getDirection().getOpposite();//TODO CHECK
+            Direction face = mc.cameraEntity.getDirection().getOpposite();
             debuggable.getDebugInfo(clientLeft, clientRight, face);
             String headerFirst = DIFF_HEADER_FORMATTING + "SERVER:";
             String headerSecond = DIFF_HEADER_FORMATTING + "CLIENT:";

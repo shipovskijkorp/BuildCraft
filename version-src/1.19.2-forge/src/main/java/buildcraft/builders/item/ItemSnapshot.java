@@ -45,7 +45,7 @@ public class ItemSnapshot extends Item {
     public static ItemStack getClean(EnumSnapshotType snapshotType) {
     	int id = snapshotType.ordinal();
     	if(snapshots[id] == null) {
-    		BCLog.logger.warn("ItemSnapshot : getClean called to early");//TODO
+            BCLog.logger.warn("ItemSnapshot : getClean called to early");
     		return ItemStack.EMPTY;
     	}
     	//CompoundTag nbt = new CompoundTag();

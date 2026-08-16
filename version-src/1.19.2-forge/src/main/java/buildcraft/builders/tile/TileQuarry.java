@@ -1428,7 +1428,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             return Math.max(0, getTarget() - power);
         }
 
-        /** @param target TODO
+        /** @param target the total power target for this task
          * @return {@code true} if this task has been completed, or cancelled. */
         protected abstract boolean onReceivePower(long added, long target);
 

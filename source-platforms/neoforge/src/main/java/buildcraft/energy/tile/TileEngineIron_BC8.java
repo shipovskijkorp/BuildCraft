@@ -119,18 +119,6 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     public TileEngineIron_BC8(BlockPos pos, BlockState state) {
         super(BCEnergyBlocks.ENGINE_IRON_TILE_BC8.get(), pos, state);
         tankManager.addAll(tankFuel, tankCoolant, tankResidue);
-
-        // TODO: Auto list of example fuels!
-/*        tankFuel.helpInfo = new ElementHelpInfo(tankFuel.helpInfo.title, 0xFF_FF_33_33, Tank.DEFAULT_HELP_KEY, null,
-            "buildcraft.help.tank.fuel");
-
-        // TODO: Auto list of example coolants!
-        tankCoolant.helpInfo = new ElementHelpInfo(tankCoolant.helpInfo.title, 0xFF_55_55_FF, Tank.DEFAULT_HELP_KEY,
-            null, "buildcraft.help.tank.coolant");
-
-        tankResidue.helpInfo = new ElementHelpInfo(tankResidue.helpInfo.title, 0xFF_AA_33_AA, Tank.DEFAULT_HELP_KEY,
-            null, "buildcraft.help.tank.residue");
-*/
         caps.addCapabilityInstance(CapUtil.CAP_FLUIDS, fluidHandler, EnumPipePart.VALUES);
     }
 

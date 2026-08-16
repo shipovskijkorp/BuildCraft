@@ -120,10 +120,6 @@ public enum StripesHandlerDispenser {
             return false;
         }
         DispenseItemBehavior behaviour = DISPENSER_REGISTRY.get(stack.getItem());
-        // Temp: for testing
-        // if (!shouldHandle(stack)) {
-        // return false;
-        // }
         
         BlockSource source = new Source((ServerLevel)world, pos, direction);
         ItemStack output = behaviour.dispense(source, stack.copy());

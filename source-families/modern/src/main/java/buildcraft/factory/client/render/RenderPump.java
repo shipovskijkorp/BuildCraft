@@ -142,7 +142,7 @@ public class RenderPump implements BlockEntityRenderer<TilePump> {
             LED_POWER[i].render(pose, normalMatrix, buffer);
             LED_STATUS[i].render(pose, normalMatrix, buffer);
 
-            // TODO: fluid rendering
+            // TODO: Render the pumped fluid in the pump renderer.
         }
 
         tubeRenderer.render(tile, partialTicks, matrix, builder, statusLight, overlay);;

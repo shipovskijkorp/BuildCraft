@@ -261,7 +261,7 @@ public class CreativeTabManager {
     public static class CreativeTabBC extends CreativeModeTab {
         private final String name;
         private final List<Supplier<? extends Collection<ItemStack>>> itemProviders = new CopyOnWriteArrayList<>();
-        private ItemStack item = new ItemStack(Items.COMPARATOR); // Temp.
+        private ItemStack item = new ItemStack(Items.COMPARATOR); // Fallback until the module assigns its icon.
 
         private CreativeTabBC(String name) {
             super(name);

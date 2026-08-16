@@ -31,7 +31,6 @@ public class LaserBoxRenderer {
     private static final double RENDER_SCALE = 1 / 16.05;
 
     public static void renderLaserBoxStatic(PoseStack pose, Matrix4f matrix, Box box, LaserType type, boolean center) {
-//    	BCLog.logger.debug("LaserBoxRenderer.renderLaserBoxStatic:call unimplemented method");
         if (box == null || box.min() == null || box.max() == null) {
             return;
         }
@@ -51,7 +50,7 @@ public class LaserBoxRenderer {
         makeLaserBox(box, type, center);
 
         for (LaserData_BC8 data : box.laserData) {
-            LaserRenderer_BC8.renderLaserDynamic(pose, normal, data, bb);//TODO temporary
+            LaserRenderer_BC8.renderLaserDynamic(pose, normal, data, bb); // TODO: Restore/use the static laser-box path instead of rendering every segment dynamically.
         }
     }
 

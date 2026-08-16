@@ -62,11 +62,6 @@ public class BlockLaserTable extends BlockBCTile_Neptune {
 		return false;
 	}
 
- /*   @Override
-    public RenderType getBlockLayer() {
-        return RenderType.CUTOUT;//TODO
-    }*/
-
     @Override
     public TileBC_Neptune newBlockEntity(BlockPos pos, BlockState state) {
         switch(type) {
