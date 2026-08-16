@@ -20,6 +20,7 @@ import buildcraft.lib.block.BlockBCBase_Neptune;
 import buildcraft.lib.block.VanillaRotationHandlers;
 import buildcraft.lib.cap.CapabilityHelper;
 import buildcraft.lib.fluid.FluidSmoother;
+import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.fluid.FluidSmoother.FluidStackInterp;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.fluid.TankManager;
@@ -811,46 +812,114 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
             if (h_diff < 1 || c_diff < 1) {
                 throw new IllegalStateException("Invalid recipe " + c_recipe + ", " + h_recipe);
             }
-
-            // Find the minimum common amount that we can process from each tank up to `max_amount`
-            // min_common_multiplier == 0 indicates that we can no longer process (tanks full/empty)
             if (middleCount < 1 || middleCount > FLUID_MULT.length) {
                 progressState = EnumProgressState.STOPPING;
                 return;
             }
-            int max_amount = FLUID_MULT[middleCount - 1];
-            FluidStack c_in_f = setAmount(c_in.getFluid(), max_amount);
-            FluidStack c_out_f = recipeOutput(c_recipe, max_amount);
-            FluidStack h_in_f = setAmount(h_in.getFluid(), max_amount);
-            FluidStack h_out_f = recipeOutput(h_recipe, max_amount);
 
-            // fluid == null => the fluid is consumed in the process (e.g. water, lava)
-            int c_out_amount = c_out_f == null ? max_amount : c_out.fillInternal(c_out_f, FluidAction.SIMULATE);
-            int h_out_amount = h_out_f == null ? max_amount : h_out.fillInternal(h_out_f, FluidAction.SIMULATE);
-
-            int c_in_amount = drainableAmount(c_in, c_in_f);
-            int h_in_amount = drainableAmount(h_in, h_in_f);
-
-            final int min_common_multiplier
-                = Math.min(Math.min(Math.min(c_out_amount, h_out_amount), c_in_amount), h_in_amount);
-
-            if (min_common_multiplier > 0) {
-                c_in_f = setAmount(c_in.getFluid(), min_common_multiplier);
-                c_out_f = recipeOutput(c_recipe, min_common_multiplier);
-                h_in_f = setAmount(h_in.getFluid(), min_common_multiplier);
-                h_out_f = recipeOutput(h_recipe, min_common_multiplier);
-
-                if (progressState == EnumProgressState.OFF) {
-                    progressState = EnumProgressState.PREPARING;
-                } else if (progressState == EnumProgressState.RUNNING) {
-                    fill(c_out, c_out_f);
-                    drain(c_in, c_in_f);
-
-                    fill(h_out, h_out_f);
-                    drain(h_in, h_in_f);
-                }
-            } else {
+            int maxAmount = FLUID_MULT[middleCount - 1];
+            ExchangeAmounts amounts = findExchangeAmounts(
+                c_recipe, c_in, c_out, c_diff,
+                h_recipe, h_in, h_out, h_diff,
+                maxAmount
+            );
+            if (amounts == null) {
                 progressState = EnumProgressState.STOPPING;
+                return;
+            }
+
+            FluidStack c_in_f = setAmount(c_in.getFluid(), amounts.coolingInput);
+            FluidStack c_out_f = recipeOutputForInput(c_recipe, amounts.coolingInput);
+            FluidStack h_in_f = setAmount(h_in.getFluid(), amounts.heatingInput);
+            FluidStack h_out_f = recipeOutputForInput(h_recipe, amounts.heatingInput);
+
+            if (progressState == EnumProgressState.OFF) {
+                progressState = EnumProgressState.PREPARING;
+            } else if (progressState == EnumProgressState.RUNNING) {
+                fill(c_out, c_out_f);
+                drain(c_in, c_in_f);
+
+                fill(h_out, h_out_f);
+                drain(h_in, h_in_f);
+            }
+        }
+
+        /**
+         * Finds an exact integer-mB exchange. Heat is conserved as inputAmount * heatDelta on both sides and each
+         * recipe output is scaled by its own input/output ratio. maxAmount remains the per-side throughput ceiling.
+         */
+        @Nullable
+        private static ExchangeAmounts findExchangeAmounts(
+            HeatExchangeRecipeDefinition coolingRecipe, Tank coolingInputTank, Tank coolingOutputTank, int coolingDelta,
+            HeatExchangeRecipeDefinition heatingRecipe, Tank heatingInputTank, Tank heatingOutputTank, int heatingDelta,
+            int maxAmount
+        ) {
+            for (int coolingInput = maxAmount; coolingInput > 0; coolingInput--) {
+                long heat = (long) coolingInput * coolingDelta;
+                if (heat % heatingDelta != 0) {
+                    continue;
+                }
+                long heatingInputLong = heat / heatingDelta;
+                if (heatingInputLong <= 0 || heatingInputLong > maxAmount || heatingInputLong > Integer.MAX_VALUE) {
+                    continue;
+                }
+                int heatingInput = (int) heatingInputLong;
+
+                FluidStack coolingInputStack = setAmount(coolingInputTank.getFluid(), coolingInput);
+                FluidStack heatingInputStack = setAmount(heatingInputTank.getFluid(), heatingInput);
+                FluidStack coolingOutputStack = recipeOutputForInput(coolingRecipe, coolingInput);
+                FluidStack heatingOutputStack = recipeOutputForInput(heatingRecipe, heatingInput);
+                if (coolingOutputStack == INVALID_RECIPE_AMOUNT || heatingOutputStack == INVALID_RECIPE_AMOUNT) {
+                    continue;
+                }
+                if (drainableAmount(coolingInputTank, coolingInputStack) != coolingInput
+                    || drainableAmount(heatingInputTank, heatingInputStack) != heatingInput) {
+                    continue;
+                }
+                if (!canFillExactly(coolingOutputTank, coolingOutputStack)
+                    || !canFillExactly(heatingOutputTank, heatingOutputStack)) {
+                    continue;
+                }
+                return new ExchangeAmounts(coolingInput, heatingInput);
+            }
+            return null;
+        }
+
+        private static final FluidStack INVALID_RECIPE_AMOUNT = FluidStack.EMPTY;
+
+        /** Returns null for consumed output and INVALID_RECIPE_AMOUNT when this integer-mB slice cannot preserve ratio. */
+        private static FluidStack recipeOutputForInput(HeatExchangeRecipeDefinition recipe, int inputAmount) {
+            if (recipe == null || recipe.output().isEmpty()) {
+                return null;
+            }
+            long recipeInput = recipe.input().amount().milliBuckets();
+            long recipeOutput = recipe.output().amount().milliBuckets();
+            if (recipeInput <= 0 || recipeOutput <= 0 || recipeOutput > Long.MAX_VALUE / inputAmount) {
+                return INVALID_RECIPE_AMOUNT;
+            }
+            long scaledNumerator = recipeOutput * inputAmount;
+            if (scaledNumerator % recipeInput != 0) {
+                return INVALID_RECIPE_AMOUNT;
+            }
+            long scaledOutput = scaledNumerator / recipeInput;
+            if (scaledOutput <= 0 || scaledOutput > Integer.MAX_VALUE) {
+                return INVALID_RECIPE_AMOUNT;
+            }
+            FluidStack output = FuelApiBridge.stackOfVariant(recipe.output().requireVariant(), (int) scaledOutput);
+            return output.isEmpty() ? INVALID_RECIPE_AMOUNT : output;
+        }
+
+        private static boolean canFillExactly(Tank tank, FluidStack fluid) {
+            return fluid == null || tank.fillInternal(fluid, FluidAction.SIMULATE) == fluid.getAmount();
+        }
+
+        private static final class ExchangeAmounts {
+            final int coolingInput;
+            final int heatingInput;
+
+            ExchangeAmounts(int coolingInput, int heatingInput) {
+                this.coolingInput = coolingInput;
+                this.heatingInput = heatingInput;
             }
         }
 
@@ -915,13 +984,6 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                 IFluidHandler endOut = endSection.getFluidAutoOutputTarget();
                 FluidUtilBC.move(endSection.tankOutput, endOut, 1000);
             }
-        }
-
-        private static FluidStack recipeOutput(HeatExchangeRecipeDefinition recipe, int amount) {
-            if (recipe == null || recipe.output().isEmpty()) {
-                return null;
-            }
-            return setAmount(MachineRecipeApiBridge.outputStack(recipe.output()), amount);
         }
 
         private static FluidStack setAmount(FluidStack fluid, int mult) {

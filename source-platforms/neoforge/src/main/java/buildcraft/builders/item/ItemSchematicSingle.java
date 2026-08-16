@@ -14,6 +14,7 @@ import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.builders.internal.schematic.legacy.ISchematicBlock;
 import buildcraft.builders.internal.schematic.legacy.SchematicBlockContext;
+import buildcraft.builders.snapshot.SchematicBlockDefault;
 import buildcraft.builders.snapshot.SchematicBlockManager;
 import buildcraft.lib.inventory.InventoryWrapper;
 import buildcraft.lib.misc.ItemStackUtil;
@@ -36,7 +37,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
@@ -104,14 +104,21 @@ public class ItemSchematicSingle extends Item {
         if (!world.getWorldBorder().isWithinBounds(placePos)) {
             return InteractionResult.FAIL;
         }
-        if (replaceable && !world.isEmptyBlock(placePos) && !world.setBlockAndUpdate(placePos, Blocks.AIR.defaultBlockState())) {
-            return InteractionResult.FAIL;
-        }
 
         try {
             ISchematicBlock schematicBlock = getSchematic(stack);
             if (schematicBlock != null) {
-                if (!schematicBlock.isBuilt(world, placePos) && schematicBlock.canBuild(world, placePos)) {
+                // A replaceable target must remain untouched until every resource check has passed. The actor-aware
+                // build path below replaces it atomically and loader place hooks can roll the snapshot back on cancel.
+                boolean canAttemptBuild = schematicBlock.canBuild(world, placePos);
+                if (!canAttemptBuild && replaceable && !world.isEmptyBlock(placePos)
+                    && schematicBlock instanceof SchematicBlockDefault) {
+                    // Default schematics reject any occupied target before checking survival. For an explicitly
+                    // replaceable clicked block, defer that final survival check to build(..., player). Do not bypass
+                    // addon/API2 canPlace() decisions, which may encode additional placement policy.
+                    canAttemptBuild = true;
+                }
+                if (!schematicBlock.isBuilt(world, placePos) && canAttemptBuild) {
                     // Only the block itself is mandatory. Saved inventory contents are restored after
                     // placement with as many matching items as the player currently has available.
                     List<ItemStack> placementItems = schematicBlock.computeRequiredItemsForPlacement(world);
@@ -136,7 +143,7 @@ public class ItemSchematicSingle extends Item {
                             ).isEmpty()
                         );
                         if (hasPlacementItems) {
-                            if (schematicBlock.build(world, placePos)) {
+                            if (schematicBlock.build(world, placePos, player)) {
                                 if (!player.isCreative()) {
                                     mergedPlacementItems.forEach(s ->
                                         itemTransactor.extract(

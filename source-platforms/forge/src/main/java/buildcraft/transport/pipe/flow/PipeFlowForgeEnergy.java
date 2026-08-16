@@ -77,6 +77,13 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
         super(pipe, nbt);
         isReceiver = nbt.getBoolean("isReceiver");
         initSections();
+        CompoundTag energyBuffers = nbt.getCompound("energyBuffers");
+        for (Direction face : Direction.values()) {
+            CompoundTag sectionNbt = energyBuffers.getCompound(Integer.toString(face.ordinal()));
+            Section section = sections.get(face);
+            section.internalPower = Math.max(0, sectionNbt.getInt("power"));
+            section.internalNextPower = Math.max(0, sectionNbt.getInt("nextPower"));
+        }
     }
 
     private void initSections() {
@@ -87,7 +94,21 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
     public CompoundTag writeToNbt() {
         CompoundTag nbt = super.writeToNbt();
         nbt.putBoolean("isReceiver", isReceiver);
+        CompoundTag energyBuffers = new CompoundTag();
+        for (Direction face : Direction.values()) {
+            Section section = sections.get(face);
+            CompoundTag sectionNbt = new CompoundTag();
+            sectionNbt.putInt("power", Math.max(0, section.internalPower));
+            sectionNbt.putInt("nextPower", Math.max(0, section.internalNextPower));
+            energyBuffers.put(Integer.toString(face.ordinal()), sectionNbt);
+        }
+        nbt.put("energyBuffers", energyBuffers);
         return nbt;
+    }
+
+    @Override
+    public boolean requiresPeriodicSave() {
+        return sections.values().stream().anyMatch(section -> section.internalPower > 0 || section.internalNextPower > 0);
     }
 
     @Override
@@ -153,7 +174,8 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
 
         step();
         Section section = sections.get(from);
-        int free = Math.max(0, maxPower - section.internalNextPower);
+        int buffered = saturatingAdd(Math.max(0, section.internalPower), Math.max(0, section.internalNextPower));
+        int free = Math.max(0, maxPower - buffered);
         int requested = Math.min(Math.min(maxExtracted, maxPower), Math.min(getPowerRequested(from), free));
         if (requested <= 0) return 0;
         int simulated = Math.max(0, Math.min(requested, storage.extractEnergy(requested, true)));
@@ -446,7 +468,10 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
         void step() {
             powerQuery = Math.min(maxPower, Math.max(0, nextPowerQuery));
             nextPowerQuery = 0;
-            internalPower = saturatingAdd(internalPower, Math.max(0, internalNextPower));
+            internalPower = Math.min(
+                maxPower,
+                saturatingAdd(Math.max(0, internalPower), Math.max(0, internalNextPower))
+            );
             internalNextPower = 0;
         }
 
@@ -458,7 +483,8 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
             ensureConfigured();
             if (disabled || sent <= 0) return sent;
             step();
-            int free = Math.max(0, maxPower - internalNextPower);
+            int buffered = saturatingAdd(Math.max(0, internalPower), Math.max(0, internalNextPower));
+            int free = Math.max(0, maxPower - buffered);
             int accepted = Math.min(sent, free);
             internalNextPower += accepted;
             return sent - accepted;
@@ -467,15 +493,21 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
             if (!isReceiver || disabled || maxReceive <= 0) return 0;
-            int free = Math.max(0, maxPower - internalNextPower);
+            ensureConfigured();
             int requested = Math.max(0, getPowerRequested(side));
-            int accepted = Math.min(maxReceive, Math.min(free, requested > 0 ? requested : maxPower));
+            if (requested <= 0) return 0;
+            int buffered = saturatingAdd(Math.max(0, internalPower), Math.max(0, internalNextPower));
+            int free = Math.max(0, maxPower - buffered);
+            int accepted = Math.min(maxReceive, Math.min(free, requested));
             if (!simulate && accepted > 0) accepted -= receivePowerInternal(accepted);
             return accepted;
         }
 
         @Override public int extractEnergy(int maxExtract, boolean simulate) { return 0; }
-        @Override public int getEnergyStored() { return Math.max(0, internalPower + internalNextPower); }
+        @Override public int getEnergyStored() {
+            ensureConfigured();
+            return Math.min(maxPower, saturatingAdd(Math.max(0, internalPower), Math.max(0, internalNextPower)));
+        }
         @Override public int getMaxEnergyStored() { ensureConfigured(); return maxPower; }
         @Override public boolean canExtract() { return false; }
         @Override public boolean canReceive() { return isReceiver && !disabled; }

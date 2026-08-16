@@ -346,21 +346,28 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         }
 
         List<TileTank> tanks = getConnectedTanks();
-        TileTank bottom = tanks.get(0);
-        TileTank top = tanks.get(tanks.size() - 1);
-        FluidStack total = bottom.tank.getFluid();
-        if (total.isEmpty()) {
-            total = top.tank.getFluid();
+        boolean gas = false;
+        for (TileTank tile : tanks) {
+            FluidStack fluid = tile.tank.getFluid();
+            if (!fluid.isEmpty()) {
+                gas = fluid.getFluid().getFluidType().isLighterThanAir();
+                break;
+            }
         }
-        if (total.isEmpty()) {
-            return FluidStack.EMPTY;
+        // Match drain ordering so getFluidInTank() advertises the same fluid that drain(int) will return.
+        if (!gas) {
+            Collections.reverse(tanks);
         }
 
-        total = total.copy();
-        total.setAmount(0);
+        FluidStack total = FluidStack.EMPTY;
         for (TileTank t : tanks) {
             FluidStack other = t.tank.getFluid();
-            if (!other.isEmpty()) {
+            if (other.isEmpty()) {
+                continue;
+            }
+            if (total.isEmpty()) {
+                total = other.copy();
+            } else if (FluidCompatRegistry.areEquivalent(total, other)) {
                 total.grow(other.getAmount());
             }
         }
@@ -436,11 +443,14 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         if (maxDrain <= 0) {
             return FluidStack.EMPTY;
         }
+        if (filter == null) {
+            return FluidStack.EMPTY;
+        }
         List<TileTank> tanks = getConnectedTanks();
         boolean gas = false;
         for (TileTank tile : tanks) {
             FluidStack fluid = tile.tank.getFluid();
-            if (!fluid.isEmpty()) {
+            if (!fluid.isEmpty() && filter.matches(fluid)) {
                 gas = fluid.getFluid().getFluidType().isLighterThanAir();
                 break;
             }
@@ -454,14 +464,26 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
             if (realMax <= 0) {
                 break;
             }
-            FluidStack drained = t.tank.drain(filter, realMax, doDrain);
+            FluidStack current = t.tank.getFluid();
+            if (current.isEmpty() || !filter.matches(current)) {
+                continue;
+            }
+            if (!total.isEmpty() && !FluidCompatRegistry.areEquivalent(total, current)) {
+                continue;
+            }
+            // Once the first tank chooses the drained fluid, lock every later tank to that equivalent fluid.
+            FluidStack drained = t.tank.drain(
+                stack -> filter.matches(stack) && FluidCompatRegistry.areEquivalent(current, stack),
+                realMax,
+                doDrain
+            );
             if (drained.isEmpty()) continue;
             if (isPlayerInteracting & doDrain == FluidAction.EXECUTE) {
                 t.sendNetworkUpdate(NET_RENDER_DATA);
             }
             if (total.isEmpty()) {
                 total = drained.copy();
-                if(total.isEmpty()) return FluidStack.EMPTY;
+                if (total.isEmpty()) return FluidStack.EMPTY;
                 total.setAmount(0);
             }
             total.grow(drained.getAmount());
