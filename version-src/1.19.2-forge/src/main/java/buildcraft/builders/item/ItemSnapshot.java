@@ -11,6 +11,8 @@ import java.util.Locale;
 
 import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.enums.EnumSnapshotType;
+import buildcraft.builders.snapshot.Blueprint;
+import buildcraft.builders.snapshot.ClientSnapshots;
 import buildcraft.builders.snapshot.Snapshot;
 import buildcraft.builders.snapshot.Snapshot.Header;
 import buildcraft.lib.misc.HashUtil;
@@ -135,6 +137,18 @@ public class ItemSnapshot extends Item {
         }
         if (ownerName != null && !ownerName.isBlank()) {
             tooltip.add(Component.translatable("item.blueprint.author", ownerName).withStyle(ChatFormatting.DARK_GRAY));
+        }
+
+        if (type.snapshotType == EnumSnapshotType.BLUEPRINT) {
+            Snapshot snapshot = ClientSnapshots.INSTANCE.getSnapshot(header.key);
+            if (snapshot instanceof Blueprint blueprint) {
+                int unavailable = blueprint.getUnavailableSchematicCount();
+                if (unavailable > 0) {
+                    tooltip.add(Component.translatable(
+                        "item.buildcraftbuilders.blueprint.unavailable_elements", unavailable
+                    ).withStyle(ChatFormatting.RED));
+                }
+            }
         }
 
         tooltip.add(Component.translatable(

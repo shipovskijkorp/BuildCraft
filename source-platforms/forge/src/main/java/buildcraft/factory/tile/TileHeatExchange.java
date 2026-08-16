@@ -184,13 +184,13 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
                             if (sectionStart == null) {
                                 sectionStart = (ExchangeSectionStart) exchange.section;
                             } else {
-                                // TODO: Merge compatible adjacent Heat Exchanger sections instead of discarding duplicates.
+                                mergeDuplicateSection(sectionStart, (ExchangeSectionStart) exchange.section, exchange);
                             }
                         } else if (exchange.section instanceof ExchangeSectionEnd) {
                             if (sectionEnd == null) {
                                 sectionEnd = (ExchangeSectionEnd) exchange.section;
                             } else {
-                                // TODO: Merge compatible adjacent Heat Exchanger sections instead of discarding duplicates.
+                                mergeDuplicateSection(sectionEnd, (ExchangeSectionEnd) exchange.section, exchange);
                             }
                         }
                         exchange.section = null;
@@ -241,6 +241,40 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         }
         if (section != null) {
             section.tick();
+        }
+    }
+
+    /**
+     * Preserves fluid when neighbouring exchanger structures collapse into one. Compatible contents are merged into
+     * the retained section; anything that cannot fit is emitted through the normal fluid-drop path instead of being
+     * silently lost when the duplicate section object is discarded.
+     */
+    private static void mergeDuplicateSection(
+        ExchangeSection retained, ExchangeSection duplicate, TileHeatExchange duplicateTile
+    ) {
+        mergeTankContents(retained.tankInput, duplicate.tankInput);
+        mergeTankContents(retained.tankOutput, duplicate.tankOutput);
+
+        NonNullList<ItemStack> overflowDrops = NonNullList.create();
+        duplicate.tankManager.addDrops(overflowDrops);
+        if (!overflowDrops.isEmpty()) {
+            InventoryUtil.dropAll(duplicateTile.getLevel(), duplicateTile.getBlockPos(), overflowDrops);
+        }
+    }
+
+    private static void mergeTankContents(Tank target, Tank source) {
+        FluidStack sourceFluid = source.getFluid();
+        if (sourceFluid.isEmpty()) {
+            return;
+        }
+        int accepted = target.fillInternal(sourceFluid, FluidAction.SIMULATE);
+        if (accepted <= 0) {
+            return;
+        }
+        FluidStack transfer = new FluidStack(sourceFluid, accepted);
+        int filled = target.fillInternal(transfer, FluidAction.EXECUTE);
+        if (filled > 0) {
+            source.drainInternal(filled, FluidAction.EXECUTE);
         }
     }
 

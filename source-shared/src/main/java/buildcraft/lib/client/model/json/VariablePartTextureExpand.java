@@ -6,9 +6,9 @@ import java.util.Set;
 
 import com.google.gson.JsonObject;
 
-import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.lib.client.model.json.JsonVariableModel.ITextureGetter;
+import buildcraft.lib.client.model.json.VariablePartCuboidBase.VariableFaceData;
 import buildcraft.lib.expression.FunctionContext;
 import buildcraft.lib.expression.api.IExpressionNode.INodeBoolean;
 import buildcraft.lib.expression.api.IExpressionNode.INodeDouble;
@@ -16,9 +16,16 @@ import buildcraft.lib.expression.api.IExpressionNode.INodeLong;
 import buildcraft.lib.expression.api.IExpressionNode.INodeObject;
 import buildcraft.lib.expression.node.value.NodeConstantBoolean;
 import buildcraft.lib.expression.node.value.NodeConstantLong;
-import buildcraft.lib.misc.RenderUtil;
+import buildcraft.lib.internal.debug.BCLog;
 import net.minecraft.core.Direction;
 
+/**
+ * Renders a textured face expanded to the requested 3D bounds.
+ *
+ * <p>The old implementation delegated this to a loader-specific item-layer model and never applied the requested UV
+ * sub-region. The current implementation builds the quad directly, which keeps the same JSON feature available on all
+ * maintained loaders and makes {@link JsonVariableFaceUV} the single source of texture/UV/rotation semantics.</p>
+ */
 public class VariablePartTextureExpand extends JsonVariableModelPart {
     public final INodeDouble[] from;
     public final INodeDouble[] to;
@@ -43,35 +50,45 @@ public class VariablePartTextureExpand extends JsonVariableModelPart {
 
     @Override
     public void addQuads(List<MutableQuad> addTo, ITextureGetter spriteLookup) {
-        if (visible.evaluate()) {
-            float[] f = bakePosition(from);
-            float[] t = bakePosition(to);
-            float[] size = { t[0] - f[0], t[1] - f[1], t[2], f[2] };
-            boolean s = shade.evaluate();
-            int l = (int) (light.evaluate() & 15);
-            int rgba = RenderUtil.swapARGBforRGBA((int) colour.evaluate());
-
- /*           VariableFaceData data = faceUv.evaluate(spriteLookup);
-            // TODO: Restore texture_expand rendering and apply the requested UV sub-region.
-            ItemLayerModel model = new ItemLayerModel(ImmutableList.of(), IntSet.of(), Int2ObjectMaps.emptyMap());
-            BakedModel baked = model.bake(ModelRotation.X0_Y0, DefaultVertexFormats.ITEM, (loc) -> data.sprite);
-            List<BakedQuad> quads = baked.getQuads(null, null, 0);
-            for (BakedQuad q : quads) {
-                MutableQuad mut = new MutableQuad();
-                mut.fromBakedItem(q);
-                mut.translated(0, 0, -(7.5 / 16.0));
-                mut.scaled(1, 1, 16);
-                mut.rotate(Direction.SOUTH, evaluateFace(this.face), 0.5f, 0.5f, 0.5f);
-                mut.scalef(size[0], size[1], size[2]);
-                mut.translated(f[0], f[1], f[2]);
-                mut.setCalculatedNormal();
-                mut.setShade(s);
-                mut.lighti(l, 0);
-                mut.colouri(rgba);
-                mut.setSprite(data.sprite);
-                addTo.add(mut);
-            }*/
+        if (!visible.evaluate() || !faceUv.visible.evaluate()) {
+            return;
         }
+
+        float[] f = bakePosition(from);
+        float[] t = bakePosition(to);
+        float sx = t[0] - f[0];
+        float sy = t[1] - f[1];
+        float sz = t[2] - f[2];
+
+        VariableFaceData data = faceUv.evaluate(spriteLookup);
+        Direction targetFace = evaluateFace(face);
+
+        // Start with the +Z face of a unit cube. Rotating before applying the non-uniform bounds maps this face onto
+        // the requested side while preserving the from/to box on every axis.
+        MutableQuad quad = new MutableQuad(-1, Direction.SOUTH);
+        quad.vertex_0.positionf(0, 1, 1).texf(data.uvs.minU, data.uvs.minV);
+        quad.vertex_1.positionf(0, 0, 1).texf(data.uvs.minU, data.uvs.maxV);
+        quad.vertex_2.positionf(1, 0, 1).texf(data.uvs.maxU, data.uvs.maxV);
+        quad.vertex_3.positionf(1, 1, 1).texf(data.uvs.maxU, data.uvs.minV);
+
+        quad.rotateTextureUp(data.rotations);
+        quad.rotate(Direction.SOUTH, targetFace, 0.5f, 0.5f, 0.5f);
+        quad.setFace(targetFace);
+        quad.scaled(sx, sy, sz);
+        quad.translated(f[0], f[1], f[2]);
+        quad.setCalculatedNormal();
+        quad.lighti((int) (light.evaluate() & 15), 0);
+        quad.colouri((int) colour.evaluate());
+        quad.texFromSprite(data.sprite);
+        quad.setSprite(data.sprite);
+        quad.setShade(shade.evaluate());
+
+        if (data.bothSides) {
+            addTo.add(quad.copyAndInvertNormal());
+        } else if (data.invertNormal) {
+            quad = quad.copyAndInvertNormal();
+        }
+        addTo.add(quad);
     }
 
     private Direction evaluateFace(INodeObject<String> node) {
@@ -82,8 +99,7 @@ public class VariablePartTextureExpand extends JsonVariableModelPart {
                 BCLog.logger.warn("Invalid facing '" + s + "' from expression '" + node + "'");
             }
             return Direction.UP;
-        } else {
-            return side;
         }
+        return side;
     }
 }

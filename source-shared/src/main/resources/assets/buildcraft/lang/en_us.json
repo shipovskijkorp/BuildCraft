@@ -1019,6 +1019,7 @@
   "block.architect.excavate": "Excavate",
   "item.buildcraftbuilders.snapshot.clean_hint": "Write it in an Architect Table to save an area.",
   "item.buildcraftbuilders.blueprint.used_hint": "Contains block types, block states and supported tile data.",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Contains %s unavailable schematic element(s); those parts will be skipped.",
   "item.buildcraftbuilders.template.used_hint": "Contains only the structure shape.",
   "item.buildcraftbuilders.snapshot.hash": "Hash: %s",
   "item.buildcraftbuilders.snapshot.created": "Created: %s",

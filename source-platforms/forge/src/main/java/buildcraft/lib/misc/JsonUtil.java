@@ -418,9 +418,7 @@ public class JsonUtil {
                     continue;
                 }
                 if (!obj.has(name)) {
-                    /* FIXME: We really need to deep-copy the element, as then we protect against removing an element
-                     * from it and ruining it for everyone. */
-                    obj.add(name, entry.getValue());
+                    obj.add(name, entry.getValue().deepCopy());
                 }
             }
         }

@@ -881,7 +881,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 77
+    expected_tests = 80
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -890,6 +890,15 @@ def validate_gametest_runtime_guards() -> None:
                 count += path.read_text(encoding="utf-8").count("@GameTest(")
         if count != expected_tests:
             fail(f"{target}: expected {expected_tests} @GameTest methods, found {count}")
+
+        todo_p1_suite = text(target, "src/gametest/java/buildcraft/gametest/TodoP1GameTests.java")
+        for method in (
+            "unavailableBlueprintElementsRoundTripLosslessly",
+            "relatedGateActionVariantsTargetOneSetting",
+            "jsonInlineCopiesAreIndependent",
+        ):
+            if method not in todo_p1_suite:
+                fail(f"{target}: missing TODO-P1 GameTest {method}")
 
         regression_suite = text(target, "src/gametest/java/buildcraft/gametest/BuildCraftLogicGameTests.java")
         for method in (

@@ -16,6 +16,11 @@ public final class UnavailableSchematicAdapters {
         @Override public boolean supports(SchematicCaptureContext context) { return false; }
         @Override public Optional<? extends SnapshotElement> capture(SchematicCaptureContext context) { return Optional.empty(); }
         @Override public boolean supportsElement(SnapshotElement element) { return true; }
+        @Override public boolean canPlace(SnapshotElement element, SchematicPlacementContext context) { return false; }
+        @Override public boolean readyToPlace(SnapshotElement element, SchematicPlacementContext context) { return false; }
+        @Override public boolean isPlaced(SnapshotElement element, net.minecraft.world.level.Level level, net.minecraft.core.BlockPos position) {
+            return true;
+        }
         @Override public SchematicResult place(SnapshotElement element, SchematicPlacementContext context) {
             return new SchematicResult(SchematicResult.Status.FAILED, "Snapshot type is unavailable: " + element.typeId());
         }

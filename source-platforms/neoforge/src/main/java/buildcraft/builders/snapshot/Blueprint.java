@@ -50,6 +50,25 @@ public class Blueprint extends Snapshot {
         return blueprint;
     }
 
+    /** Counts unavailable block positions and entity elements that will be skipped while their addon is absent. */
+    public int getUnavailableSchematicCount() {
+        int count = 0;
+        if (data != null && !palette.isEmpty()) {
+            for (int paletteIndex : data) {
+                if (paletteIndex >= 0 && paletteIndex < palette.size()
+                    && SchematicBlockManager.isUnavailable(palette.get(paletteIndex))) {
+                    count++;
+                }
+            }
+        }
+        for (ISchematicEntity schematicEntity : entities) {
+            if (SchematicEntityManager.isUnavailable(schematicEntity)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     /**
      * Counts blueprint blocks whose palette entry matches {@code schematicBlock}. This counts placed blocks, not palette
      * rows, so a single palette entry used one hundred times returns 100.
@@ -170,11 +189,7 @@ public class Blueprint extends Snapshot {
         palette.clear();
         for (CompoundTag schematicBlockTag :
             NBTUtilBC.readCompoundList(nbt.get("palette")).collect(Collectors.toList())) {
-            // TODO: Support partial blueprint loading when some schematic elements are unavailable.
-            // (Although this needs to add a "pass-through" ISchematicBlock that will store the
-            // invalid CompoundTag and show up in the tooltip as an error, so that we can migrate
-            // schematics through mod additions/deletions)
-            palette.add(SchematicBlockManager.readFromNBT(schematicBlockTag));
+            palette.add(SchematicBlockManager.readFromNBTAllowUnavailable(schematicBlockTag));
         }
         data = new int[Snapshot.getDataSize(size)];
         ListTag serializedDataList = nbt.contains("data", Tag.TAG_LIST)
@@ -207,7 +222,7 @@ public class Blueprint extends Snapshot {
         }
         for (CompoundTag schematicEntityTag :
             NBTUtilBC.readCompoundList(nbt.get("entities")).collect(Collectors.toList())) {
-            entities.add(SchematicEntityManager.readFromNBT(schematicEntityTag));
+            entities.add(SchematicEntityManager.readFromNBTAllowUnavailable(schematicEntityTag));
         }
     }
 
@@ -263,6 +278,9 @@ public class Blueprint extends Snapshot {
             ImmutableMap.Builder<ISchematicEntity, List<FluidStack>> entitiesRequiredFluidsBuilder =
                 ImmutableMap.builder();
             for (ISchematicEntity schematicEntity : getSnapshot().entities) {
+                if (SchematicEntityManager.isUnavailable(schematicEntity)) {
+                    continue;
+                }
                 ISchematicEntity rotatedSchematicEntity = schematicEntity.getRotated(rotation);
                 entitiesBuilder.add(rotatedSchematicEntity);
                 entitiesRequiredItemsBuilder.put(rotatedSchematicEntity, schematicEntity.computeRequiredItems(level));

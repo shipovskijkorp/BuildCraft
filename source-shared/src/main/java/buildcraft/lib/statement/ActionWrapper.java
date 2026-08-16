@@ -72,11 +72,38 @@ public abstract class ActionWrapper extends StatementWrapper implements IActionI
                 int i = j + possible.length;
                 part = part.next();
                 ActionWrapper action = wrap(delegate, part.face);
-                // TODO: Validate generated side-wrapped gate actions against the active GUI/container context.
+                // StatementContext owns availability: GuiElementStatement filters these generated variants against
+                // ctx.getAllPossible() before presenting them, while this wrapper remains context-free.
                 list.add(action);
             }
         }
         return list.toArray(new ActionWrapper[0]);
+    }
+
+    /**
+     * Returns whether two actions write the same logical setting and therefore should not both be committed in one
+     * gate resolution pass. Related variants are identified through the statement's getPossible() family.
+     */
+    public boolean targetsSameSetting(ActionWrapper other) {
+        if (other == null || sourcePart != other.sourcePart) {
+            return false;
+        }
+        IStatement mine = getDelegate();
+        IStatement theirs = other.getDelegate();
+        if (mine == theirs || mine.getUniqueTag().equals(theirs.getUniqueTag())) {
+            return true;
+        }
+        return containsVariant(mine.getPossible(), theirs) && containsVariant(theirs.getPossible(), mine);
+    }
+
+    private static boolean containsVariant(IStatement[] variants, IStatement candidate) {
+        String tag = candidate.getUniqueTag();
+        for (IStatement variant : variants) {
+            if (variant == candidate || variant.getUniqueTag().equals(tag)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void actionDeactivated(IStatementContainer source, IStatementParameter[] parameters) {

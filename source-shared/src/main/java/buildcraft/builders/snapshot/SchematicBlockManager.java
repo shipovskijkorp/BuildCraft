@@ -10,6 +10,7 @@ import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.permission.AutomationActor;
 import buildcraft.api.v2.schematic.SchematicCaptureContext;
 import buildcraft.api.v2.schematic.SnapshotElement;
+import buildcraft.api.v2.schematic.UnknownSnapshotElement;
 import buildcraft.builders.internal.schematic.api2.Api2SchematicBlock;
 import buildcraft.builders.internal.schematic.api2.Api2SnapshotPersistence;
 import buildcraft.builders.internal.schematic.api2.SchematicServiceImpl;
@@ -56,6 +57,9 @@ public class SchematicBlockManager {
 
     @Nonnull
     public static CompoundTag writeToNBT(ISchematicBlock schematicBlock) {
+        if (schematicBlock instanceof UnavailableSchematicBlock unavailable) {
+            return unavailable.serializedEnvelope();
+        }
         CompoundTag tag = new CompoundTag();
         if (schematicBlock instanceof Api2SchematicBlock api2) {
             tag.putBoolean("api2", true);
@@ -65,6 +69,35 @@ public class SchematicBlockManager {
         tag.putString("name", SchematicBlockFactoryRegistry.getFactoryByInstance(schematicBlock).name.toString());
         tag.put("data", schematicBlock.serializeNBT());
         return tag;
+    }
+
+    /**
+     * Blueprint-only tolerant loader. Missing legacy addon types are preserved losslessly instead of invalidating the
+     * complete blueprint. Known types still use the strict loader so malformed data remains an error.
+     */
+    @Nonnull
+    public static ISchematicBlock readFromNBTAllowUnavailable(CompoundTag tag) throws InvalidInputDataException {
+        if (!tag.getBoolean("api2")) {
+            ResourceLocation name = ResourceLocation.tryParse(tag.getString("name"));
+            if (name == null) {
+                throw new InvalidInputDataException("Invalid schematic type id " + tag.getString("name"));
+            }
+            if (SchematicBlockFactoryRegistry.getFactoryByName(name) == null) {
+                return new UnavailableSchematicBlock(tag);
+            }
+        }
+        return readFromNBT(tag);
+    }
+
+    public static boolean isUnavailable(ISchematicBlock schematicBlock) {
+        if (schematicBlock instanceof UnavailableSchematicBlock) {
+            return true;
+        }
+        if (schematicBlock instanceof Api2SchematicBlock api2) {
+            return api2.adapter() == UnavailableSchematicAdapters.BLOCK
+                || api2.element() instanceof UnknownSnapshotElement;
+        }
+        return false;
     }
 
     @Nonnull

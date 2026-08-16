@@ -10,6 +10,7 @@ import buildcraft.api.v2.BuildCraftServices;
 import buildcraft.api.v2.permission.AutomationActor;
 import buildcraft.api.v2.schematic.SchematicEntityCaptureContext;
 import buildcraft.api.v2.schematic.SnapshotElement;
+import buildcraft.api.v2.schematic.UnknownSnapshotElement;
 import buildcraft.builders.internal.schematic.api2.Api2SchematicEntity;
 import buildcraft.builders.internal.schematic.api2.Api2SnapshotPersistence;
 import buildcraft.builders.internal.schematic.api2.SchematicServiceImpl;
@@ -55,6 +56,9 @@ public class SchematicEntityManager {
 
     @Nonnull
     public static CompoundTag writeToNBT(ISchematicEntity schematicEntity) {
+        if (schematicEntity instanceof UnavailableSchematicEntity unavailable) {
+            return unavailable.serializedEnvelope();
+        }
         CompoundTag tag = new CompoundTag();
         if (schematicEntity instanceof Api2SchematicEntity api2) {
             tag.putBoolean("api2", true);
@@ -64,6 +68,31 @@ public class SchematicEntityManager {
         tag.putString("name", SchematicEntityFactoryRegistry.getFactoryByInstance(schematicEntity).name.toString());
         tag.put("data", schematicEntity.serializeNBT());
         return tag;
+    }
+
+    @Nonnull
+    public static ISchematicEntity readFromNBTAllowUnavailable(CompoundTag tag) throws InvalidInputDataException {
+        if (!tag.getBoolean("api2")) {
+            ResourceLocation name = ResourceLocation.tryParse(tag.getString("name"));
+            if (name == null) {
+                throw new InvalidInputDataException("Invalid schematic entity type id " + tag.getString("name"));
+            }
+            if (SchematicEntityFactoryRegistry.getFactoryByName(name) == null) {
+                return new UnavailableSchematicEntity(tag);
+            }
+        }
+        return readFromNBT(tag);
+    }
+
+    public static boolean isUnavailable(ISchematicEntity schematicEntity) {
+        if (schematicEntity instanceof UnavailableSchematicEntity) {
+            return true;
+        }
+        if (schematicEntity instanceof Api2SchematicEntity api2) {
+            return api2.adapter() == UnavailableSchematicAdapters.ENTITY
+                || api2.element() instanceof UnknownSnapshotElement;
+        }
+        return false;
     }
 
     @Nonnull

@@ -63,6 +63,9 @@ jobs:
       - name: Validate P3 gameplay and parity guards
         run: python scripts/validate-p3-regressions.py
 
+      - name: Validate TODO-audit P1 completion guards
+        run: python scripts/validate-todo-p1-regressions.py
+
       - name: Validate resources, metadata and build hygiene
         run: python scripts/validate-cross-target-integrity.py
 

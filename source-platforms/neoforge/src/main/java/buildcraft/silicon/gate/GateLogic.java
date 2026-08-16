@@ -472,6 +472,19 @@ public class GateLogic implements IGate, IRedstoneStatementContainer, GateView, 
 
     // Internal Logic
 
+
+    private static final class PendingGateAction {
+        final int actionIndex;
+        final ActionWrapper action;
+        final IStatementParameter[] parameters;
+
+        PendingGateAction(int actionIndex, ActionWrapper action, IStatementParameter[] parameters) {
+            this.actionIndex = actionIndex;
+            this.action = action;
+            this.parameters = parameters;
+        }
+    }
+
     /** @return True if the gate GUI should be split into 2 separate columns. Needed on the server for the values of
      *         {@link #connections} */
     public boolean isSplitInTwo() {
@@ -491,6 +504,7 @@ public class GateLogic implements IGate, IRedstoneStatementContainer, GateView, 
         Arrays.fill(actionOn, false);
 
         activeActions.clear();
+        List<PendingGateAction> pendingActions = new ArrayList<>();
 
         EnumSet<DyeColor> previousBroadcasts = EnumSet.copyOf(wireBroadcasts);
         wireBroadcasts.clear();
@@ -519,46 +533,51 @@ public class GateLogic implements IGate, IRedstoneStatementContainer, GateView, 
                 for (int i = groupCount - 1; i >= 0; i--) {
                     int actionIndex = triggerIndex - i;
                     StatementPair fullAction = statements[actionIndex];
-
-                    // TODO: Define merge/override semantics when multiple gate actions target the same setting.
-                    // such that
-                    // - (face direction: east)
-                    // - (face direction: west)
-                    // can be merged (in a single tick) to just
-                    // - (face direction: west)
-                    // As there's no point in facing both east AND west at the same time
-                    // Currently this just faces the pipe east, then west
-                    // however it would be *really* useful to optimise that east face set out
-                    // in addition we want feedback in the GUI for:
-                    // - triggers are on/off
-                    // - current action state (for stateful actions)
-                    // - and if an action is being overriden (like in the example above)
-                    // We might need to expand GUI elements and statements a *lot* for this to work though.
-                    // (specifically adding full json-based statement icons and
-                    // and full GUI hovers for action + trigger states.)
-
                     ActionWrapper action = fullAction.action.get();
-                    actionOn[actionIndex] = allActionsActive;
-                    if (action != null) {
-                        if (allActionsActive) {
-                            isOn = true;
-                            StatementSlot slot = new StatementSlot();
-                            slot.statement = action.getDelegate();
-                            slot.parameters = fullAction.action.getParameters().clone();
-                            slot.part = action.getSourcePart();
-                            activeActions.add(slot);
-                            action.actionActivate(this, slot.parameters);
-                            PipeEvent evt = new PipeEventActionActivate(getPipeHolder(), action.getDelegate(),
-                                slot.parameters, action.getSourcePart());
-                            getPipeHolder().fireEvent(evt);
-                        } else {
-                            action.actionDeactivated(this, fullAction.action.getParameters());
-                        }
+                    if (action == null) {
+                        actionOn[actionIndex] = allActionsActive;
+                    } else if (allActionsActive) {
+                        pendingActions.add(new PendingGateAction(
+                            actionIndex, action, fullAction.action.getParameters().clone()
+                        ));
+                    } else {
+                        action.actionDeactivated(this, fullAction.action.getParameters());
                     }
                 }
                 groupActive = 0;
                 groupCount = 0;
             }
+        }
+
+        // A gate is ordered: when multiple active rows write the same setting, the last row wins. This preserves the
+        // historical final state while avoiding intermediate mutations/events (for example EAST immediately followed
+        // by WEST on a directional pipe action). Different source parts remain independent targets.
+        for (int i = 0; i < pendingActions.size(); i++) {
+            PendingGateAction pending = pendingActions.get(i);
+            boolean overridden = false;
+            for (int j = i + 1; j < pendingActions.size(); j++) {
+                if (pending.action.targetsSameSetting(pendingActions.get(j).action)) {
+                    overridden = true;
+                    break;
+                }
+            }
+            if (overridden) {
+                pending.action.actionDeactivated(this, pending.parameters);
+                continue;
+            }
+
+            actionOn[pending.actionIndex] = true;
+            isOn = true;
+            StatementSlot slot = new StatementSlot();
+            slot.statement = pending.action.getDelegate();
+            slot.parameters = pending.parameters;
+            slot.part = pending.action.getSourcePart();
+            activeActions.add(slot);
+            pending.action.actionActivate(this, slot.parameters);
+            PipeEvent evt = new PipeEventActionActivate(
+                getPipeHolder(), pending.action.getDelegate(), slot.parameters, pending.action.getSourcePart()
+            );
+            getPipeHolder().fireEvent(evt);
         }
 
         if (BCModules.TRANSPORT.isLoaded() && !getPipeHolder().getPipeWorld().isClientSide
