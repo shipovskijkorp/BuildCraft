@@ -229,7 +229,16 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
     private void rebuildMatchingRecipes(Level world) {
         matchingRecipes.clear();
         matchingRecipeIds.clear();
-        CraftingInput input = asCraftInput();
+
+        // TransientCraftingContainer#asCraftInput() reads its internal crafting grid directly,
+        // while this workbench keeps the blueprint in a separate phantom inventory. Build a
+        // temporary crafting grid from the blueprint so recipe lookup sees the intended pattern
+        // without touching any transient items left over from an interrupted craft.
+        TransientCraftingContainer blueprintGrid = new TransientCraftingContainer(CONTAINER_EVENT_HANDLER, width, height);
+        for (int slot = 0; slot < craftTableSize; slot++) {
+            blueprintGrid.setItem(slot, invBlueprint.getStackInSlot(slot).copy());
+        }
+        CraftingInput input = blueprintGrid.asCraftInput();
         for (RecipeHolder<CraftingRecipe> holder : world.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING)) {
             CraftingRecipe recipe = holder.value();
             if (recipe.matches(input, world)) {
