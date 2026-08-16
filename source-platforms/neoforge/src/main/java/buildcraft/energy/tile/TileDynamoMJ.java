@@ -28,7 +28,6 @@ import buildcraft.lib.internal.mj.MjBattery;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.BCCoreItems;
-import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.menu.ContainerDynamoMJ;
 import buildcraft.lib.engine.TileEngineBase_BC8;
@@ -38,7 +37,6 @@ import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -377,10 +375,6 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
         return new ContainerDynamoMJ(id, inventory, invUpgrades, ContainerLevelAccess.create(level, worldPosition));
     }
 
-    @Override public TextureAtlasSprite getTextureBack() { return RenderEngine_BC8.DYNAMO_BACK; }
-    @Override public TextureAtlasSprite getTextureFront() { return RenderEngine_BC8.DYNAMO_FRONT; }
-    @Override public TextureAtlasSprite getTextureSide() { return RenderEngine_BC8.DYNAMO_SIDE; }
-
     private static boolean isMjCapability(BlockCapability<?, ?> capability) {
         return capability == MjCapabilities.CAP_CONNECTOR
             || capability == MjCapabilities.CAP_RECEIVER
@@ -421,4 +415,10 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
         @Override public boolean canExtract() { return true; }
         @Override public boolean canReceive() { return false; }
     }
+
+    @Override
+    public EngineVisualType getVisualType() {
+        return EngineVisualType.MJ_DYNAMO;
+    }
+
 }

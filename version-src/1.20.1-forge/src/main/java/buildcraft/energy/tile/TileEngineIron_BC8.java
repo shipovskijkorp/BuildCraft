@@ -27,7 +27,6 @@ import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.transport.internal.pipe.IItemPipe;
-import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.menu.ContainerEngineIron_BC8;
 import buildcraft.lib.engine.EngineConnector;
@@ -39,7 +38,6 @@ import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.EntityUtil;
 import buildcraft.lib.misc.FluidUtilBC;
 import buildcraft.lib.misc.StackUtil;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -513,16 +511,6 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                 return drain(maxDrain, doDrain);
             else return FluidStack.EMPTY;
         }
-    }
-
-    @Override
-    public TextureAtlasSprite getTextureBack() {
-        return RenderEngine_BC8.IRON_BACK;
-    }
-
-    @Override
-    public TextureAtlasSprite getTextureSide() {
-        return RenderEngine_BC8.IRON_SIDE;
     }
 
     @Override

@@ -14,11 +14,9 @@ import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.misc.WrenchUtil;
 import buildcraft.core.BCCoreBlocks;
-import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.lib.engine.EngineConnector;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -153,14 +151,4 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
         currentOutputIndex = nbt.getInt("currentOutputIndex");
         currentOutputIndex = Mth.clamp(currentOutputIndex, 0, outputs.length - 1);
     }
-
-	@Override
-	public TextureAtlasSprite getTextureBack() {
-		return RenderEngine_BC8.CREATIVE_BACK;
-	}
-
-	@Override
-	public TextureAtlasSprite getTextureSide() {
-		return RenderEngine_BC8.CREATIVE_SIDE;
-	}
 }

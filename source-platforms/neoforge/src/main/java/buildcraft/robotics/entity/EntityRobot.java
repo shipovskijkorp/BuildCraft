@@ -1,8 +1,6 @@
 package buildcraft.robotics.entity;
 
-import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.energy.MjAmount;
-import buildcraft.api.v2.permission.WorldOperationKind;
 import buildcraft.lib.internal.mj.MjFormatting;
 
 import java.util.ArrayList;
@@ -24,7 +22,6 @@ import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.DockingStation;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.api.v2.robot.RobotEventKind;
-import buildcraft.robotics.internal.api2.RobotAutomationSupport;
 import buildcraft.robotics.internal.api2.RobotEventSupport;
 import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
 import buildcraft.robotics.internal.legacy.robots.RobotManager;
@@ -870,11 +867,6 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
             mainAI.writeToNBT(aiTag);
             tag.put("mainAI", aiTag);
         }
-        if (board != null && (mainAI == null || mainAI.getDelegateAI() != board)) {
-            CompoundTag boardTag = new CompoundTag();
-            board.writeToNBT(boardTag);
-            tag.put("boardAI", boardTag);
-        }
         if (!tank.isEmpty()) {
             tag.put("tank", FluidStackUtil.saveOptional(tank, registries));
         }
@@ -1114,11 +1106,6 @@ public class EntityRobot extends EntityRobotBase implements IEntityWithComplexSp
         }
 
         ServerLevel serverLevel = (ServerLevel) level();
-        if (!RobotAutomationSupport.permitsEntity(
-            this, serverLevel, target, WorldOperationKind.ENTITY_ATTACK, OperationMode.EXECUTE
-        )) {
-            return;
-        }
         Player fakePlayer = FakePlayerProvider.INSTANCE.getFakePlayer(
             serverLevel, getOwnerProfile(), blockPosition()
         );

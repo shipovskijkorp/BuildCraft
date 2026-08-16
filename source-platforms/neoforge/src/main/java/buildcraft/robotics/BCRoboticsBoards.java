@@ -315,6 +315,13 @@ public final class BCRoboticsBoards {
         public RedstoneBoardRobotNBT getNBTHandler() {
             return nbt;
         }
+
+        @Override
+        public boolean canLoadFromNBT() {
+            // This no-op board is reconstructed from boardId and has no runtime state of its own. It is intentionally
+            // not registered in RobotManager, so serializing it as an AIRobot would produce a null aiName.
+            return false;
+        }
     }
 
     private static class SimpleRedstoneBoardRegistry extends RedstoneBoardRegistry {

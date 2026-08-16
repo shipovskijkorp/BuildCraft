@@ -142,6 +142,32 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
 	
 
 	
+    private static TextureAtlasSprite getBackSprite(TileEngineBase_BC8.EngineVisualType type) {
+        return switch (type) {
+            case REDSTONE -> REDSTONE_BACK;
+            case STONE -> STONE_BACK;
+            case IRON -> IRON_BACK;
+            case CREATIVE -> CREATIVE_BACK;
+            case FE -> FE_BACK;
+            case MJ_DYNAMO -> DYNAMO_BACK;
+        };
+    }
+
+    private static TextureAtlasSprite getFrontSprite(TileEngineBase_BC8.EngineVisualType type) {
+        return type == TileEngineBase_BC8.EngineVisualType.MJ_DYNAMO ? DYNAMO_FRONT : getBackSprite(type);
+    }
+
+    private static TextureAtlasSprite getSideSprite(TileEngineBase_BC8.EngineVisualType type) {
+        return switch (type) {
+            case REDSTONE -> REDSTONE_SIDE;
+            case STONE -> STONE_SIDE;
+            case IRON -> IRON_SIDE;
+            case CREATIVE -> CREATIVE_SIDE;
+            case FE -> FE_SIDE;
+            case MJ_DYNAMO -> DYNAMO_SIDE;
+        };
+    }
+
 	@Override
 	public void render(TileEngineBase_BC8 tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
 		matrix.pushPose();
@@ -153,9 +179,9 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
         float offset  = tile.RenderProgress * 8/16f;
 //        float f1 = neighborcombineresult.<Float2FloatFunction>apply(ChestBlock.opennessCombiner(tile)).get(light)
 //        int i = neighborcombineresult.<Int2IntFunction>apply(new BrightnessCombiner<>()).applyAsInt(light);
-        TextureAtlasSprite BACK = tile.getTextureBack();
-        TextureAtlasSprite FRONT = tile.getTextureFront();
-        TextureAtlasSprite SIDE = tile.getTextureSide();
+        TextureAtlasSprite BACK = getBackSprite(tile.getVisualType());
+        TextureAtlasSprite FRONT = getFrontSprite(tile.getVisualType());
+        TextureAtlasSprite SIDE = getSideSprite(tile.getVisualType());
         VertexConsumer builder = buffer.getBuffer(RenderType.solid());
         int texoffset = 0;
         switch(tile.getCurrentFacing()) {

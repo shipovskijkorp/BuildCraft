@@ -18,7 +18,6 @@ import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.transport.internal.pipe.IItemPipe;
 import buildcraft.core.BCCoreItems;
-import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.menu.ContainerEngineFE;
 import buildcraft.lib.engine.EngineConnector;
@@ -28,7 +27,6 @@ import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -193,8 +191,6 @@ public class TileEngineFE extends TileEngineBase_BC8 implements MenuProvider {
     @Override public float explosionRange() { return 4; }
     @Override protected int getMaxChainLength() { return 4; }
     @Override public long getCurrentOutput() { return currentFe > 0 ? getMjPerTick() : 0; }
-    @Override public TextureAtlasSprite getTextureBack() { return RenderEngine_BC8.FE_BACK; }
-    @Override public TextureAtlasSprite getTextureSide() { return RenderEngine_BC8.FE_SIDE; }
 
     @Override
     public InteractionResult onActivated(Player player, InteractionHand hand, BlockHitResult hit) {

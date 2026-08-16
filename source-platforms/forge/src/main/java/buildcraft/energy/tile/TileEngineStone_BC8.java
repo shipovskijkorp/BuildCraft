@@ -15,7 +15,6 @@ import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.properties.BuildCraftProperties;
-import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.menu.ContainerEngineStone_BC8;
 import buildcraft.lib.delta.DeltaInt;
@@ -26,7 +25,6 @@ import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -230,16 +228,6 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
         left.add("burnTime = " + burnTime);
         left.add("delta = " + deltaFuelLeft.getDynamic(0));
     }
-
-	@Override
-	public TextureAtlasSprite getTextureBack() {
-		return RenderEngine_BC8.STONE_BACK;
-	}
-
-	@Override
-	public TextureAtlasSprite getTextureSide() {
-		return RenderEngine_BC8.STONE_SIDE;
-	}
 
 
 	@Override

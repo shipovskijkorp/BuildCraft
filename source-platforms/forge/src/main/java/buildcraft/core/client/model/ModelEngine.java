@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import buildcraft.lib.internal.debug.BCLog;
+import buildcraft.lib.engine.TileEngineBase_BC8;
 import buildcraft.lib.client.model.MutableQuad;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -18,13 +19,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
 
 public class ModelEngine implements IDynamicBakedModel{
 	
 //	protected static final List<MutableQuad> STATIC = new ArrayList<MutableQuad>();
 
-	public static final ModelProperty<Direction> EngineModelFacingKey = new ModelProperty<Direction>();
 	protected static List<MutableQuad> back_faces = null;
 	protected static List<MutableQuad> side_faces = null;
 	protected static List<MutableQuad> trunk_faces = null;
@@ -77,7 +76,7 @@ public class ModelEngine implements IDynamicBakedModel{
 	@Override
 	public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,
 			@NotNull RandomSource rand, @NotNull ModelData data, @Nullable RenderType renderType) {
-		Direction dir = data.get(EngineModelFacingKey);
+		Direction dir = data.get(TileEngineBase_BC8.ENGINE_MODEL_FACING);
 		return faces.get(dir == null ? Direction.UP : dir);
 //		return BakedModel.super.getQuads(state, side, rand, data, renderType);
 	}

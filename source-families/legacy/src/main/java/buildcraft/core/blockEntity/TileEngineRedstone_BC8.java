@@ -10,11 +10,9 @@ import javax.annotation.Nonnull;
 
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.core.BCCoreBlocks;
-import buildcraft.core.client.render.RenderEngine_BC8;
 import buildcraft.lib.engine.EngineConnector;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -105,14 +103,4 @@ public class TileEngineRedstone_BC8 extends TileEngineBase_BC8 {
     public long getCurrentOutput() {
         return MjAmount.MICRO_MJ_PER_MJ / 20;
     }
-
-	@Override
-	public TextureAtlasSprite getTextureBack() {
-		return RenderEngine_BC8.REDSTONE_BACK;
-	}
-
-	@Override
-	public TextureAtlasSprite getTextureSide() {
-		return RenderEngine_BC8.REDSTONE_SIDE;
-	}
 }

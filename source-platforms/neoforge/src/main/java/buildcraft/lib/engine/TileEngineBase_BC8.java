@@ -41,14 +41,12 @@ import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.mj.MjCapabilityHelper;
 import buildcraft.lib.internal.tiles.IDebuggable;
-import buildcraft.core.client.model.ModelEngine;
 import buildcraft.lib.block.VanillaRotationHandlers;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.collect.OrderedEnumMap;
 import buildcraft.lib.tile.TileBC_Neptune;
 
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -66,11 +64,29 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebuggable, EngineView, MjPortProvider {
+
+    /**
+     * Server-safe visual family used by the client renderer. Keeping this as plain enum data is important: block
+     * entities are loaded on dedicated servers and therefore must never expose Minecraft client classes in their
+     * method signatures or bytecode dependencies.
+     */
+    public enum EngineVisualType {
+        REDSTONE,
+        STONE,
+        IRON,
+        CREATIVE,
+        FE,
+        MJ_DYNAMO
+    }
+
+    /** Model-data key shared with the client model without making the block entity depend on a client model class. */
+    public static final ModelProperty<Direction> ENGINE_MODEL_FACING = new ModelProperty<>();
 
     private static final ResourceLocation ADVANCEMENT_POWERING_UP =
         ResourceLocation.parse("buildcraftenergy:powering_up");
@@ -809,24 +825,27 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 //        clientModelData.addDebugInfo(left);
     }
     
-    @OnlyIn(Dist.CLIENT)
-	public abstract TextureAtlasSprite getTextureBack();
-
     /**
-     * Texture used by the moving piston face. Normal engines use their back texture; converters such as the
-     * BuildCraft 8 MJ Dynamo can override this without duplicating the engine renderer.
+     * Selects the renderer texture family without exposing client-only texture classes to dedicated servers.
+     * Standard engine blocks already carry their family in ENGINE_TYPE; standalone converter blocks override this.
      */
-    @OnlyIn(Dist.CLIENT)
-    public TextureAtlasSprite getTextureFront() {
-        return getTextureBack();
+    public EngineVisualType getVisualType() {
+        BlockState state = getBlockState();
+        if (state.hasProperty(BuildCraftProperties.ENGINE_TYPE)) {
+            return switch (state.getValue(BuildCraftProperties.ENGINE_TYPE)) {
+                case WOOD -> EngineVisualType.REDSTONE;
+                case STONE -> EngineVisualType.STONE;
+                case IRON -> EngineVisualType.IRON;
+                case CREATIVE -> EngineVisualType.CREATIVE;
+                case FE -> EngineVisualType.FE;
+            };
+        }
+        return EngineVisualType.REDSTONE;
     }
-
-    @OnlyIn(Dist.CLIENT)
-	public abstract TextureAtlasSprite getTextureSide();
 
 	@Override
 	public @NotNull ModelData getModelData() {
-		return ModelData.builder().with(ModelEngine.EngineModelFacingKey, currentDirection).build();
+		return ModelData.builder().with(ENGINE_MODEL_FACING, currentDirection).build();
 	}
     
     

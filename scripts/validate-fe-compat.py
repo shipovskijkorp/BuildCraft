@@ -175,7 +175,7 @@ for loader in ("forge", "neoforge"):
         "4L * MjAmount.MICRO_MJ_PER_MJ",
         "getMaxChainLength() { return 3; }",
         "MAX_FE / 10",
-        "RenderEngine_BC8.DYNAMO_FRONT",
+        "EngineVisualType.MJ_DYNAMO",
         "getFeReceiver",
         "case BLUE -> 0.04",
         "case GREEN -> 0.05",
@@ -211,7 +211,36 @@ for path in (
     "version-src/1.20.1-forge/src/main/java/buildcraft/core/client/render/RenderEngine_BC8.java",
     "source-platforms/neoforge/src/main/java/buildcraft/core/client/render/RenderEngine_BC8.java",
 ):
-    require(path, "DYNAMO_BACK", "DYNAMO_FRONT", "DYNAMO_SIDE", "getTrunkLightSprite", "getChamberSprite")
+    require(
+        path,
+        "DYNAMO_BACK", "DYNAMO_FRONT", "DYNAMO_SIDE",
+        "getFrontSprite", "EngineVisualType.MJ_DYNAMO",
+        "getTrunkLightSprite", "getChamberSprite",
+    )
+
+# Engine block entities are common/server code. Client texture/model classes in their signatures make dedicated servers
+# fail as soon as converter GameTests instantiate them, even if the offending methods are only used by renderers.
+server_engine_paths = [
+    "source-platforms/forge/src/main/java/buildcraft/lib/engine/TileEngineBase_BC8.java",
+    "source-platforms/neoforge/src/main/java/buildcraft/lib/engine/TileEngineBase_BC8.java",
+]
+for root in (
+    ROOT / "source-platforms/forge/src/main/java",
+    ROOT / "source-platforms/neoforge/src/main/java",
+    ROOT / "source-families/legacy/src/main/java",
+    ROOT / "source-families/modern/src/main/java",
+    ROOT / "version-src/1.19.2-forge/src/main/java",
+    ROOT / "version-src/1.20.1-forge/src/main/java",
+):
+    if root.is_dir():
+        for candidate in root.rglob("*.java"):
+            data = candidate.read_text(encoding="utf-8")
+            if "extends TileEngineBase_BC8" in data:
+                server_engine_paths.append(candidate.relative_to(ROOT).as_posix())
+for path in sorted(set(server_engine_paths)):
+    data = text(path)
+    if "net.minecraft.client." in data or "buildcraft.core.client." in data:
+        fail(f"{path}: engine block entity leaks client-only rendering classes onto dedicated server")
 for path in (
     "version-src/1.19.2-forge/src/main/java/buildcraft/energy/client/render/RenderDynamoMJ.java",
     "version-src/1.20.1-forge/src/main/java/buildcraft/energy/client/render/RenderDynamoMJ.java",

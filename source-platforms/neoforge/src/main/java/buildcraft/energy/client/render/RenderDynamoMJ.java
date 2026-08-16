@@ -29,7 +29,7 @@ public class RenderDynamoMJ implements BlockEntityRenderer<TileDynamoMJ> {
     public void render(TileDynamoMJ tile, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int light, int overlay) {
         TextureAtlasSprite chamber = RenderEngine_BC8.getChamberSprite();
         TextureAtlasSprite trunkLight = RenderEngine_BC8.getTrunkLightSprite();
-        TextureAtlasSprite front = tile.getTextureFront();
+        TextureAtlasSprite front = RenderEngine_BC8.DYNAMO_FRONT;
         if (front == null || chamber == null || trunkLight == null) return;
 
         matrix.pushPose();
