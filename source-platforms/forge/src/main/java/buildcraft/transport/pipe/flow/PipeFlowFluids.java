@@ -90,8 +90,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     private final int transferPerTick = Math.max(0, fluidTransferInfo.transferPerTick);
     private final int transferDelayTicks = Math.max(1, (int) Math.ceil(fluidTransferInfo.transferDelayMultiplier));
 
-    // TODO: Revisit the fluid-pipe buffer capacity formula; it currently uses a 10-tick transfer window with a one-bucket floor.
-    public final int capacity = Math.max(FluidType.BUCKET_VOLUME, transferPerTick * 10);
+    /** Per-section capacity derived from the pipe type's throughput/delay contract. */
+    public final int capacity = fluidTransferInfo.bufferCapacity;
 
     private final Map<EnumPipePart, Section> sections = new EnumMap<>(EnumPipePart.class);
     private FluidStack currentFluid = FluidStack.EMPTY;

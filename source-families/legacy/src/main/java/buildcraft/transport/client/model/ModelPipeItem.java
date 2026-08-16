@@ -49,7 +49,7 @@ public enum ModelPipeItem implements BakedModel {
     INSTANCE;
 
     private static final MutableQuad[] QUADS_SAME;
-    // private static final MutableQuad[][] QUADS_DIFFERENT;
+    private static final MutableQuad[] QUADS_TOP, QUADS_CENTER, QUADS_BOTTOM;
     private static final MutableQuad[] QUADS_COLOUR;
 
     static {
@@ -66,9 +66,11 @@ public enum ModelPipeItem implements BakedModel {
             }
         }
 
-        // Different sprite for any of the 3 sections
+        // Separate sprites for the top cap, middle band and bottom cap. Internal horizontal faces are omitted.
         {
-            // QUADS_DIFFERENT = new MutableQuad[3];
+            QUADS_TOP = createSectionQuads(0.75f, 1.0f, true, false);
+            QUADS_CENTER = createSectionQuads(0.25f, 0.75f, false, false);
+            QUADS_BOTTOM = createSectionQuads(0.0f, 0.25f, false, true);
         }
 
         // Translucent Coloured pipes
@@ -85,6 +87,20 @@ public enum ModelPipeItem implements BakedModel {
         }
     }
 
+    private static MutableQuad[] createSectionQuads(float minY, float maxY, boolean includeTop, boolean includeBottom) {
+        MutableQuad[] quads = new MutableQuad[6];
+        Vector3f center = new Vector3f(0.5f, (minY + maxY) * 0.5f, 0.5f);
+        Vector3f radius = new Vector3f(0.25f, (maxY - minY) * 0.5f, 0.25f);
+        UvFaceData sideUvs = UvFaceData.from16(4, minY * 16.0f, 12, maxY * 16.0f);
+        UvFaceData capUvs = UvFaceData.from16(4, 4, 12, 12);
+        for (Direction face : Direction.values()) {
+            if (face == Direction.UP && !includeTop) continue;
+            if (face == Direction.DOWN && !includeBottom) continue;
+            quads[face.ordinal()] = ModelUtil.createFace(face, center, radius, face.getAxis() == Axis.Y ? capUvs : sideUvs);
+        }
+        return quads;
+    }
+
     @Override
     public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand) {
         return ImmutableList.of();
@@ -92,16 +108,15 @@ public enum ModelPipeItem implements BakedModel {
 
     private static List<BakedQuad> getQuads(PipeFaceTex center, PipeFaceTex top, PipeFaceTex bottom,
         TextureAtlasSprite[] sprites, int colour, EnumPipeColourType colourType) {
-        top = center;
-        bottom = center;
-
         List<BakedQuad> quads = new ArrayList<>();
 
-        // if (center == top && center == bottom) {
-        addQuads(QUADS_SAME, sprites, quads, center);
-        // } else {
-        // TODO: Render distinct item-pipe quads when center/top/bottom sprites differ.
-        // }
+        if (center.equals(top) && center.equals(bottom)) {
+            addQuads(QUADS_SAME, sprites, quads, center);
+        } else {
+            addQuads(QUADS_TOP, sprites, quads, top);
+            addQuads(QUADS_CENTER, sprites, quads, center);
+            addQuads(QUADS_BOTTOM, sprites, quads, bottom);
+        }
 
         if (colour > 0 && colour <= 16) {
             DyeColor rColour = DyeColor.byId(colour - 1);

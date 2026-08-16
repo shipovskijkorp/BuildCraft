@@ -100,8 +100,31 @@ public class JsonUtil {
             if (obj.has("amount")) {
                 amount = obj.get("amount").getAsInt();
             }
-            // TODO: Support NBT/components in FluidStack JSON deserialization.
-            return new FluidStack(fluid, amount);
+            CompoundTag encoded = new CompoundTag();
+            encoded.putString("id", id);
+            encoded.putInt("amount", amount);
+            try {
+                if (obj.has("components")) {
+                    String serialized = obj.get("components").isJsonPrimitive()
+                        ? obj.get("components").getAsString()
+                        : obj.get("components").toString();
+                    encoded.put("components", TagParser.parseTag(serialized));
+                } else if (obj.has("data") || obj.has("nbt")) {
+                    JsonElement raw = obj.has("data") ? obj.get("data") : obj.get("nbt");
+                    String serialized = raw.isJsonPrimitive() ? raw.getAsString() : raw.toString();
+                    CompoundTag customData = TagParser.parseTag(serialized);
+                    CompoundTag components = new CompoundTag();
+                    components.put("minecraft:custom_data", customData);
+                    encoded.put("components", components);
+                }
+            } catch (CommandSyntaxException e) {
+                throw new JsonSyntaxException("Invalid fluid data for '" + id + "'", e);
+            }
+            FluidStack stack = FluidStackUtil.parseOptional(ItemStackUtil.requireActiveRegistryProvider(), encoded);
+            if (stack.isEmpty() && amount > 0) {
+                throw new JsonSyntaxException("Unable to deserialize fluid stack '" + id + "' with its components");
+            }
+            return stack;
         } else {
             throw new JsonSyntaxException("Expected either a string or an object, got " + json);
         }

@@ -25,12 +25,11 @@ import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public final class PluggableHolder {
-    // TODO: Give pluggables a structured state-sync contract instead of ad-hoc networking.
-    // perhaps add some sort of interface for allowing pluggables to correctly write data?
     private static final IdAllocator ID_ALLOC = new IdAllocator("PlugHolder");
     public static final int ID_REMOVE_PLUG = ID_ALLOC.allocId("REMOVE_PLUG");
     public static final int ID_UPDATE_PLUG = ID_ALLOC.allocId("UPDATE_PLUG");
     public static final int ID_CREATE_PLUG = ID_ALLOC.allocId("CREATE_PLUG");
+    public static final int ID_SYNC_STATE = ID_ALLOC.allocId("SYNC_STATE");
 
     public final TilePipeHolder holder;
     public /*final*/ Direction side;
@@ -144,43 +143,50 @@ public final class PluggableHolder {
     }
 
     public void writePayload(FriendlyByteBuf buffer, LogicalSide netSide) {
-        if (netSide == LogicalSide.CLIENT) {
-            buffer.writeByte(ID_UPDATE_PLUG);
-            if (pluggable != PipePluggable.EMPTY) {
-                pluggable.writePayload(buffer, netSide);
-            }
+        if (pluggable == PipePluggable.EMPTY) {
+            // A client is never allowed to remove a server pluggable by sending an empty holder update.
+            buffer.writeByte(netSide == LogicalSide.CLIENT ? ID_REMOVE_PLUG : ID_UPDATE_PLUG);
+            return;
+        }
+
+        CompoundTag state = pluggable.writeSyncState(netSide);
+        if (state != null) {
+            buffer.writeByte(ID_SYNC_STATE);
+            buffer.writeNbt(state);
         } else {
-            if (pluggable == PipePluggable.EMPTY) {
-                buffer.writeByte(ID_REMOVE_PLUG);
-            } else {
-                buffer.writeByte(ID_UPDATE_PLUG);
-                pluggable.writePayload(buffer, netSide);
-            }
+            buffer.writeByte(ID_UPDATE_PLUG);
+            pluggable.writePayload(buffer, netSide);
         }
     }
 
     public void readPayload(FriendlyByteBuf buffer, LogicalSide netSide, IPayloadContext ctx) throws IOException {
         int id = buffer.readUnsignedByte();
         if (netSide == LogicalSide.SERVER) {
+            if (pluggable == PipePluggable.EMPTY) return;
             if (id == ID_UPDATE_PLUG) {
-                if (pluggable != PipePluggable.EMPTY) {
-                    pluggable.readPayload(buffer, netSide, ctx);
-                }
-            } else {
-                throw new InvalidInputDataException("Unknown ID " + ID_ALLOC.getNameFor(id));
-            }
-        } else {
-            if (id == ID_REMOVE_PLUG) {
-                holder.eventBus.unregisterHandler(pluggable);
-                pluggable = PipePluggable.EMPTY;
-                unknownData = null;
-            } else if (id == ID_UPDATE_PLUG) {
                 pluggable.readPayload(buffer, netSide, ctx);
-            } else if (id == ID_CREATE_PLUG) {
-                readCreateInternal(buffer);
-            } else {
-                throw new InvalidInputDataException("Unknown ID " + ID_ALLOC.getNameFor(id));
+            } else if (id == ID_SYNC_STATE) {
+                CompoundTag state = buffer.readNbt();
+                pluggable.readSyncState(state == null ? new CompoundTag() : state, netSide, ctx);
             }
+            return;
+        }
+
+        if (id == ID_REMOVE_PLUG) {
+            holder.eventBus.unregisterHandler(pluggable);
+            pluggable = PipePluggable.EMPTY;
+            unknownData = null;
+        } else if (id == ID_UPDATE_PLUG) {
+            if (pluggable != PipePluggable.EMPTY) pluggable.readPayload(buffer, netSide, ctx);
+        } else if (id == ID_SYNC_STATE) {
+            if (pluggable != PipePluggable.EMPTY) {
+                CompoundTag state = buffer.readNbt();
+                pluggable.readSyncState(state == null ? new CompoundTag() : state, netSide, ctx);
+            }
+        } else if (id == ID_CREATE_PLUG) {
+            readCreateInternal(buffer);
+        } else {
+            throw new InvalidInputDataException("Invalid pluggable payload id " + ID_ALLOC.getNameFor(id));
         }
     }
 

@@ -415,13 +415,23 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
     }
 
     @OnlyIn(Dist.CLIENT)
-	public AABB getRenderBoundingBox() {
-        if (section instanceof ExchangeSectionStart) {
-            // TODO: Derive the render bounds from the connected Heat Exchanger section instead of a fixed radius.
-            return BoundingBoxUtil.makeAround(VecUtil.convertCenter(getBlockPos()), 10);
+    public AABB getRenderBoundingBox() {
+        if (section instanceof ExchangeSectionStart start) {
+            Direction facing = getFacing();
+            if (facing != null) {
+                Direction towardEnd = facing.getCounterClockWise();
+                BlockPos endPos = worldPosition.relative(towardEnd, Math.max(1, start.middleCount + 1));
+                double minX = Math.min(worldPosition.getX(), endPos.getX());
+                double minY = Math.min(worldPosition.getY(), endPos.getY());
+                double minZ = Math.min(worldPosition.getZ(), endPos.getZ());
+                double maxX = Math.max(worldPosition.getX(), endPos.getX()) + 1;
+                double maxY = Math.max(worldPosition.getY(), endPos.getY()) + 1;
+                double maxZ = Math.max(worldPosition.getZ(), endPos.getZ()) + 1;
+                return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
+            }
         }
         return new AABB(worldPosition);
-	}
+    }
 
     @Override
     @Nullable

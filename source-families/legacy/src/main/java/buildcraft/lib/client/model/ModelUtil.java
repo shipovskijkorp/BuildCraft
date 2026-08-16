@@ -127,53 +127,34 @@ public class ModelUtil {
     }
 
     public static void mapBoxToUvs(AABB box, Direction side, UvFaceData uvs) {
-        // TODO: Verify and correct per-face UV orientation/mirroring.
+        // Vanilla-style automatic block UV mapping. Mirroring is represented by face winding, not reversed min/max.
         switch (side) {
-            case WEST: /* -X */ {
-                uvs.minU = (float) box.minZ;
-                uvs.maxU = (float) box.maxZ;
-                uvs.minV = 1 - (float) box.maxY;
-                uvs.maxV = 1 - (float) box.minY;
+            case WEST:
+                uvs.minU = (float) box.minZ; uvs.maxU = (float) box.maxZ;
+                uvs.minV = 1 - (float) box.maxY; uvs.maxV = 1 - (float) box.minY;
                 return;
-            }
-            case EAST: /* +X */ {
-                uvs.minU = 1 - (float) box.minZ;
-                uvs.maxU = 1 - (float) box.maxZ;
-                uvs.minV = 1 - (float) box.maxY;
-                uvs.maxV = 1 - (float) box.minY;
+            case EAST:
+                uvs.minU = 1 - (float) box.maxZ; uvs.maxU = 1 - (float) box.minZ;
+                uvs.minV = 1 - (float) box.maxY; uvs.maxV = 1 - (float) box.minY;
                 return;
-            }
-            case DOWN: /* -Y */ {
-                uvs.minU = (float) box.minX;
-                uvs.maxU = (float) box.maxX;
-                uvs.minV = 1 - (float) box.maxZ;
-                uvs.maxV = 1 - (float) box.minZ;
+            case DOWN:
+                uvs.minU = (float) box.minX; uvs.maxU = (float) box.maxX;
+                uvs.minV = 1 - (float) box.maxZ; uvs.maxV = 1 - (float) box.minZ;
                 return;
-            }
-            case UP: /* +Y */ {
-                uvs.minU = (float) box.minX;
-                uvs.maxU = (float) box.maxX;
-                uvs.minV = (float) box.maxZ;
-                uvs.maxV = (float) box.minZ;
+            case UP:
+                uvs.minU = (float) box.minX; uvs.maxU = (float) box.maxX;
+                uvs.minV = (float) box.minZ; uvs.maxV = (float) box.maxZ;
                 return;
-            }
-            case NORTH: /* -Z */ {
-                uvs.minU = 1 - (float) box.minX;
-                uvs.maxU = 1 - (float) box.maxX;
-                uvs.minV = 1 - (float) box.maxY;
-                uvs.maxV = 1 - (float) box.minY;
+            case NORTH:
+                uvs.minU = 1 - (float) box.maxX; uvs.maxU = 1 - (float) box.minX;
+                uvs.minV = 1 - (float) box.maxY; uvs.maxV = 1 - (float) box.minY;
                 return;
-            }
-            case SOUTH: /* +Z */ {
-                uvs.minU = (float) box.minX;
-                uvs.maxU = (float) box.maxX;
-                uvs.minV = 1 - (float) box.maxY;
-                uvs.maxV = 1 - (float) box.minY;
+            case SOUTH:
+                uvs.minU = (float) box.minX; uvs.maxU = (float) box.maxX;
+                uvs.minV = 1 - (float) box.maxY; uvs.maxV = 1 - (float) box.minY;
                 return;
-            }
-            default: {
+            default:
                 throw new IllegalStateException("Unknown Direction " + side);
-            }
         }
     }
 

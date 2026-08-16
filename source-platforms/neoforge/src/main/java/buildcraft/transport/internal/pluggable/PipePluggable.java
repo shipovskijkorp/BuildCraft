@@ -60,8 +60,21 @@ public abstract class PipePluggable {
 
     }
 
+    /**
+     * Optional structured state-sync contract. Returning non-null makes PluggableHolder send this tag instead of the
+     * legacy ad-hoc FriendlyByteBuf payload. Existing pluggables remain source/binary compatible through the null
+     * default, while addons can opt into a versionable named-state format.
+     */
+    @Nullable
+    public CompoundTag writeSyncState(LogicalSide side) {
+        return null;
+    }
+
     public void readPayload(FriendlyByteBuf buffer, LogicalSide side, IPayloadContext ctx) throws IOException {
 
+    }
+
+    public void readSyncState(CompoundTag state, LogicalSide side, IPayloadContext ctx) throws IOException {
     }
 
     public final void scheduleNetworkUpdate() {

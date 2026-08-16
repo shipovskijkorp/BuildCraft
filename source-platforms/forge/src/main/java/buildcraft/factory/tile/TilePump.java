@@ -444,6 +444,15 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
         scheduleQueueRebuild();
     }
     
+    /** Client render snapshot of the pump buffer. */
+    public FluidStack getFluidStackForRender() {
+        return tank.getFluid().copy();
+    }
+
+    public int getFluidCapacityForRender() {
+        return tank.getCapacity();
+    }
+
     public Fluid getFluidInTank() {
     	return tank.getFluidType();
     }

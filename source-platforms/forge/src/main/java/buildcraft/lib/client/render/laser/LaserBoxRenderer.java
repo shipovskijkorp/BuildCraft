@@ -56,9 +56,7 @@ public class LaserBoxRenderer {
 
         makeLaserBox(box, type, center);
 
-        for (LaserData_BC8 data : box.laserData) {
-            LaserRenderer_BC8.renderLaserDynamic(pose, normal, data, bb); // TODO: Restore/use the static laser-box path instead of rendering every segment dynamically.
-        }
+        LaserRenderer_BC8.renderLaserBoxDynamic(pose, normal, box.laserData, bb);
     }
 
     private static void makeLaserBox(Box box, LaserType type, boolean center) {

@@ -7,6 +7,7 @@
 package buildcraft.lib.client.render.laser;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -47,6 +48,7 @@ public class LaserRenderer_BC8 {
     private static final LoadingCache<LaserData_BC8, LaserCompiledList> COMPILED_STATIC_LASERS;
     private static final Map<LaserType, CompiledLaserType> COMPILED_LASER_TYPES = new HashMap<>();
     private static final LoadingCache<LaserData_BC8, LaserCompiledBuffer> COMPILED_DYNAMIC_LASERS;
+    private static final LoadingCache<List<LaserData_BC8>, LaserCompiledBuffer> COMPILED_DYNAMIC_BOXES;
 
     public static final VertexFormat FORMAT_LESS, FORMAT_ALL;
 
@@ -59,6 +61,11 @@ public class LaserRenderer_BC8 {
         COMPILED_DYNAMIC_LASERS = CacheBuilder.newBuilder()//
             .expireAfterWrite(5, TimeUnit.SECONDS)//
             .build(CacheLoader.from(LaserRenderer_BC8::makeDynamicLaser));
+
+        COMPILED_DYNAMIC_BOXES = CacheBuilder.newBuilder()//
+            .maximumSize(256)//
+            .expireAfterAccess(10, TimeUnit.SECONDS)//
+            .build(CacheLoader.from(LaserRenderer_BC8::makeDynamicLaserBox));
 
         FORMAT_LESS = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder()
         		.put("Position", DefaultVertexFormat.ELEMENT_POSITION)
@@ -95,6 +102,8 @@ public class LaserRenderer_BC8 {
         // Dynamic lasers are CPU-side vertex arrays with the atlas UVs baked into them.
         COMPILED_DYNAMIC_LASERS.invalidateAll();
         COMPILED_DYNAMIC_LASERS.cleanUp();
+        COMPILED_DYNAMIC_BOXES.invalidateAll();
+        COMPILED_DYNAMIC_BOXES.cleanUp();
     }
 
     /**
@@ -218,6 +227,21 @@ public class LaserRenderer_BC8 {
     /** Assumes the buffer uses {@link DefaultVertexFormats#BLOCK} */
     public static void renderLaserDynamic(Matrix4f pose, Matrix3f normal, LaserData_BC8 data, VertexConsumer buffer) {
         LaserCompiledBuffer compiled = COMPILED_DYNAMIC_LASERS.getUnchecked(data);
+        compiled.render(pose, normal, buffer);
+    }
+
+    private static LaserCompiledBuffer makeDynamicLaserBox(List<LaserData_BC8> data) {
+        LaserCompiledBuffer.Builder renderer = new LaserCompiledBuffer.Builder(true);
+        for (LaserData_BC8 segment : data) {
+            makeLaser(segment, renderer, segment.isOrgin);
+        }
+        return renderer.build();
+    }
+
+    /** Renders an immutable laser-box segment list as one cached CPU buffer instead of dispatching each edge. */
+    public static void renderLaserBoxDynamic(Matrix4f pose, Matrix3f normal, List<LaserData_BC8> data, VertexConsumer buffer) {
+        if (data.isEmpty()) return;
+        LaserCompiledBuffer compiled = COMPILED_DYNAMIC_BOXES.getUnchecked(List.copyOf(data));
         compiled.render(pose, normal, buffer);
     }
 }

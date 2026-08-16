@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.internal.core.EnumPipePart;
+import buildcraft.lib.internal.inventory.IItemTransactor;
+import buildcraft.lib.inventory.ItemHandlerWrapper;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.InventoryUtil;
 
@@ -127,9 +129,12 @@ public class ItemHandlerManager implements ICapabilityProvider, INBTSerializable
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+        Wrapper wrapper = wrappers.get(EnumPipePart.fromFacing(facing));
         if (capability == CapUtil.CAP_ITEMS) {
-            Wrapper wrapper = wrappers.get(EnumPipePart.fromFacing(facing));
             return wrapper.combined == null ? LazyOptional.empty() : LazyOptional.of(() -> wrapper.combined).cast();
+        }
+        if (capability == CapUtil.CAP_ITEM_TRANSACTOR) {
+            return wrapper.transactor == null ? LazyOptional.empty() : LazyOptional.of(() -> wrapper.transactor).cast();
         }
         return LazyOptional.empty();
     }
@@ -154,17 +159,22 @@ public class ItemHandlerManager implements ICapabilityProvider, INBTSerializable
 
     private static class Wrapper {
         private final List<IItemHandlerModifiable> handlers = new ArrayList<>();
-        private IItemHandlerModifiable combined = null; // TODO: Expose the combined item wrapper through IItemTransactor as well.
+        private IItemHandlerModifiable combined = null;
+        private IItemTransactor transactor = null;
 
         public void genWrapper() {
-            if (handlers.size() == 1) {
-                // No need to wrap it
-                combined = handlers.get(0);
+            if (handlers.isEmpty()) {
+                combined = null;
+                transactor = null;
                 return;
             }
-            IItemHandlerModifiable[] arr = new IItemHandlerModifiable[handlers.size()];
-            arr = handlers.toArray(arr);
-            combined = new CombinedItemHandlerWrapper(arr);
+            if (handlers.size() == 1) {
+                combined = handlers.get(0);
+            } else {
+                IItemHandlerModifiable[] arr = handlers.toArray(new IItemHandlerModifiable[0]);
+                combined = new CombinedItemHandlerWrapper(arr);
+            }
+            transactor = combined instanceof IItemTransactor direct ? direct : new ItemHandlerWrapper(combined);
         }
     }
 }

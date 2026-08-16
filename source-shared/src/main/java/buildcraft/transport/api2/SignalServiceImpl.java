@@ -8,6 +8,7 @@ import buildcraft.api.v2.signal.SignalChannelType;
 import buildcraft.api.v2.signal.SignalEndpoint;
 import buildcraft.api.v2.signal.SignalNetworkView;
 import buildcraft.api.v2.signal.SignalPort;
+import buildcraft.api.v2.signal.SignalPortProvider;
 import buildcraft.api.v2.signal.SignalService;
 import buildcraft.api.v2.signal.SignalUpdateResult;
 import buildcraft.transport.tile.TilePipeHolder;
@@ -46,6 +47,11 @@ public final class SignalServiceImpl implements SignalService {
         if (rawType == null) return Optional.empty();
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof SignalPortProvider provider) {
+            Optional<? extends SignalPort<?>> provided = provider.signalPort(side, channelId);
+            if (provided.isEmpty() || provided.get().channel() != rawType) return Optional.empty();
+            return Optional.of(new ExternalSignalPort(level, pos, side, color, provided.get()));
+        }
         if (!(blockEntity instanceof TilePipeHolder holder)) return Optional.empty();
         WireManager manager = holder.getWireManager();
 
@@ -82,6 +88,48 @@ public final class SignalServiceImpl implements SignalService {
         return List.copyOf(result);
     }
 
+
+    private static final class ExternalSignalPort implements SignalPort<Object> {
+        private final Level level;
+        private final BlockPos pos;
+        private final Direction side;
+        private final DyeColor color;
+        private final SignalPort<Object> delegate;
+
+        @SuppressWarnings("unchecked")
+        private ExternalSignalPort(Level level, BlockPos pos, Direction side, DyeColor color, SignalPort<?> delegate) {
+            this.level = level;
+            this.pos = pos;
+            this.side = side;
+            this.color = color;
+            this.delegate = (SignalPort<Object>) delegate;
+        }
+
+        @Override public SignalChannelType<Object> channel() { return delegate.channel(); }
+        @Override public boolean connected() { return hasMatchingWire(); }
+        @Override public Object value() { return delegate.value(); }
+        @Override public Object publishedValue() { return delegate.publishedValue(); }
+        @Override public SignalUpdateResult<Object> receive(Object value, OperationMode mode) { return delegate.receive(value, mode); }
+
+        @Override
+        public SignalUpdateResult<Object> publish(Object value, OperationMode mode) {
+            SignalUpdateResult<Object> result = delegate.publish(value, mode);
+            if (mode == OperationMode.EXECUTE && result.changed() && !level.isClientSide()) {
+                BlockEntity adjacent = level.getBlockEntity(pos.relative(side));
+                if (adjacent instanceof TilePipeHolder holder && holder.getWireManager().hasPartOfColor(color)) {
+                    WorldSavedDataWireSystems.get(level).gatesChanged = true;
+                    holder.getWireManager().updateBetweens(false);
+                }
+            }
+            return result;
+        }
+
+        private boolean hasMatchingWire() {
+            BlockEntity adjacent = level.getBlockEntity(pos.relative(side));
+            return adjacent instanceof TilePipeHolder holder && holder.getWireManager().hasPartOfColor(color);
+        }
+    }
+
     private record ClassicWireNetwork(
         SignalChannelType<Boolean> channel,
         Boolean value,
@@ -104,6 +152,7 @@ public final class SignalServiceImpl implements SignalService {
         @Override public SignalChannelType<Boolean> channel() { return channel; }
         @Override public boolean connected() { return manager.hasPartOfColor(color); }
         @Override public Boolean value() { return connected() && manager.isAnyPowered(color); }
+        @Override public Boolean publishedValue() { return manager.isSignalOutputActive(side, color); }
 
         @Override
         public SignalUpdateResult<Boolean> publish(Boolean value, OperationMode mode) {

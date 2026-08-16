@@ -195,14 +195,10 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
             return 0;
         }
 
-        BlockEntity tile = pipe.getConnectedTile(from);
-        if (tile == null) {
-            return 0;
-        }
-        IMjPassiveProvider provider = tile.getCapability(MjCapabilities.CAP_PASSIVE_PROVIDER, from.getOpposite()).orElse(null);
-        if (provider == null) {
-            return 0;
-        }
+        LazyOptional<IMjPassiveProvider> providerCapability =
+            pipe.getHolder().getCapabilityFromPipe(from, MjCapabilities.CAP_PASSIVE_PROVIDER);
+        IMjPassiveProvider provider = providerCapability == null ? null : providerCapability.orElse(null);
+        if (provider == null) return 0;
 
         step();
         Section section = sections.get(from);
@@ -331,7 +327,6 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
         step();
 
-        init();
 
         for (Direction face : Direction.values()) {
             Section s = sections.get(face);
@@ -511,9 +506,6 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         }
     }
 
-    private void init() {
-        // TODO: Initialize and reuse a neighbour/tile cache for power-pipe lookups.
-    }
 
     private void requestPower(Direction from, long amount) {
         if (disabled || amount <= 0) {

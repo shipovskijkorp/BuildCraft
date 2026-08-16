@@ -74,15 +74,15 @@ public class GuiElementText extends GuiElementSimple {
     @Override
     public double getWidth() {
         Minecraft mc = Minecraft.getInstance();
-		Font fr = mc.font;
-        return fr.width(text.get());
+        Font fr = mc.font;
+        return fr.width(text.get()) * Math.max(0, scale.getAsDouble());
     }
 
     @Override
     public double getHeight() {
         Minecraft mc = Minecraft.getInstance();
-		Font fr = mc.font;
-        return fr.lineHeight;
+        Font fr = mc.font;
+        return fr.lineHeight * Math.max(0, scale.getAsDouble());
     }
 
     @Override
@@ -100,30 +100,23 @@ public class GuiElementText extends GuiElementSimple {
     }
 
     private void draw(PoseStack pose) {
-    	Minecraft mc = Minecraft.getInstance();
-		Component content = text.get();
-		if(dropShadow)
-    		mc.font.drawShadow(pose, content, (int) getX() - (centered ? mc.font.width(content)/2 : 0), (int) getY(), colour.getAsInt()/*, dropShadow,
-            centered, (float) scale.getAsDouble()*/);
-    	else
-    		mc.font.draw(pose, content, (int) getX() - (centered ? mc.font.width(content)/2 : 0), (int) getY(), colour.getAsInt()/*, dropShadow,
-                    centered, (float) scale.getAsDouble()*/); // TODO: Apply the scale supplier during 1.19.2 text rendering.
-        // final double s = scale.getAsDouble();
-        // final boolean needsScaling = s != 1;
-        // FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
-        // if (needsScaling) {
-        // GuiUtil.drawScaledText(fr, text.get(), getX(), getY(), colour.getAsInt(), dropShadow, centered, s);
-        // return;
-        // }
-        // if (centered) {
-        // String str = text.get();
-        // int width = fr.getStringWidth(str);
-        // double x = getX() - width / 2;
-        // fr.drawString(str, (float) x, (float) getY(), colour.getAsInt(), dropShadow);
-        // } else {
-        // fr.drawString(text.get(), (float) getX(), (float) getY(), colour.getAsInt(), dropShadow);
-        // }
-        // RenderUtil.setGLColorFromInt(-1);
+        Minecraft mc = Minecraft.getInstance();
+        Component content = text.get();
+        double rawScale = scale.getAsDouble();
+        if (!Double.isFinite(rawScale) || rawScale <= 0) {
+            return;
+        }
+        float s = (float) rawScale;
+        float x = centered ? -mc.font.width(content) / 2.0F : 0.0F;
+        pose.pushPose();
+        pose.translate(getX(), getY(), 0);
+        pose.scale(s, s, 1.0F);
+        if (dropShadow) {
+            mc.font.drawShadow(pose, content, x, 0, colour.getAsInt());
+        } else {
+            mc.font.draw(pose, content, x, 0, colour.getAsInt());
+        }
+        pose.popPose();
     }
 
     @Override

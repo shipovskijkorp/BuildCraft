@@ -339,7 +339,6 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 
         step();
 
-        init();
 
         for (Direction face : Direction.values()) {
             Section s = sections.get(face);
@@ -519,9 +518,6 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         }
     }
 
-    private void init() {
-        // TODO: Initialize and reuse a neighbour/tile cache for power-pipe lookups.
-    }
 
     private void requestPower(Direction from, long amount) {
         if (disabled || amount <= 0) {

@@ -107,12 +107,21 @@ public final class PipeApi {
          * the actual delay. */
         public final double transferDelayMultiplier;
 
+        /**
+         * Internal per-section buffer. The buffer must hold at least one bucket and at least one complete
+         * configured transfer-delay window, so custom high-rate/slow pipes cannot overflow merely because their
+         * delay differs from BuildCraft's historical 10-tick default.
+         */
+        public final int bufferCapacity;
+
         public FluidTransferInfo(int transferPerTick, int transferDelay) {
-            this.transferPerTick = transferPerTick;
+            this.transferPerTick = Math.max(0, transferPerTick);
             if (transferDelay <= 0) {
                 transferDelay = 1;
             }
             this.transferDelayMultiplier = transferDelay;
+            long delayWindow = (long) this.transferPerTick * transferDelay;
+            this.bufferCapacity = (int) Math.min(Integer.MAX_VALUE, Math.max(1000L, delayWindow));
         }
     }
 

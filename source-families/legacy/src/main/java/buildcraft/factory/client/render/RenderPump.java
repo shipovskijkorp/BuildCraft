@@ -22,6 +22,8 @@ import org.joml.Matrix4f;
 
 import buildcraft.factory.BCFactorySprites;
 import buildcraft.factory.tile.TilePump;
+import buildcraft.lib.client.render.fluid.FluidRenderer;
+import buildcraft.lib.client.render.fluid.FluidSpriteType;
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserRow;
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
 import buildcraft.lib.client.render.tile.RenderPartCube;
@@ -149,10 +151,20 @@ public class RenderPump implements BlockEntityRenderer<TilePump> {
             LED_POWER[i].render(pose, normalMatrix, buffer);
             LED_STATUS[i].render(pose, normalMatrix, buffer);
 
-            // TODO: Render the pumped fluid in the pump renderer.
         }
 
-        tubeRenderer.render(tile, partialTicks, matrix, builder, statusLight, overlay);;
+        var pumpedFluid = tile.getFluidStackForRender();
+        if (!pumpedFluid.isEmpty()) {
+            VertexConsumer fluidBuffer = builder.getBuffer(RenderType.translucent());
+            FluidRenderer.renderFluid(
+                FluidSpriteType.STILL, pumpedFluid, pumpedFluid.getAmount(), tile.getFluidCapacityForRender(),
+                new Vec3(5.5 / 16.0, 4.0 / 16.0, 5.5 / 16.0),
+                new Vec3(10.5 / 16.0, 12.0 / 16.0, 10.5 / 16.0),
+                fluidBuffer, p, null, combinedLight
+            );
+        }
+
+        tubeRenderer.render(tile, partialTicks, matrix, builder, statusLight, overlay);
 
 		
 	}

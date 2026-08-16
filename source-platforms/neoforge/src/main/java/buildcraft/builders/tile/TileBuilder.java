@@ -461,47 +461,54 @@ public class TileBuilder extends TileBC_Neptune implements IDebuggable, ITileFor
     }
 
     @Override
-    public void update() {// TODO: Avoid ticking Builder every server tick when it has no pending work.
-//    	if(true)return;
-    	if(shouldInit) {
-    		updateBasePoses();
-    		shouldInit = false;
-    	}
+    public void update() {
+        if (shouldInit) {
+            updateBasePoses();
+            shouldInit = false;
+        }
 
         level.getProfiler().push("main");
-        level.getProfiler().push("power");
-        battery.tick(getLevel(), getBlockPos());
-        level.getProfiler().popPush("builder");
         if (!level.isClientSide) {
             restartSnapshotAfterLoad();
         }
+
         SnapshotBuilder<?> builder = getBuilder();
-        if (builder != null) {
-            if (level.isClientSide) {
-                // Client-side ticking only interpolates data that the server already sent.
-                // Do not gate this on the local client battery value: it is not the source of truth
-                // and it can stay at 0, which makes the builder drone disappear forever.
-                builder.tick();
+        if (builder == null) {
+            // Idle builders need no per-tick construction work. Only service an overfilled battery and render-state
+            // changes; slot/NBT callbacks wake the real builder path immediately when a snapshot appears.
+            if (!level.isClientSide && battery.getStored() > battery.getCapacity() * 2L) {
+                battery.tick(getLevel(), getBlockPos());
+            }
+            if (!level.isClientSide) {
+                syncRenderDataIfNeeded();
+            }
+            level.getProfiler().pop();
+            return;
+        }
+
+        level.getProfiler().push("power");
+        battery.tick(getLevel(), getBlockPos());
+        level.getProfiler().popPush("builder");
+        if (level.isClientSide) {
+            // Client-side ticking only interpolates data that the server already sent.
+            builder.tick();
+        } else {
+            builder.resetWorkRendering();
+            if (battery.getStored() <= 0) {
+                builder.stopRenderingForNoPower();
+                isDone = false;
             } else {
-                builder.resetWorkRendering();
-                if (battery.getStored() <= 0) {
-                    builder.stopRenderingForNoPower();
-                    isDone = false;
+                isDone = builder.tick();
+            }
+            if (isDone) {
+                int nextBasePosIndex = findNextBasePosIndex();
+                if (nextBasePosIndex >= 0) {
+                    currentBasePosIndex = nextBasePosIndex;
+                    updateSnapshot(true);
                 } else {
-                    isDone = builder.tick();
-                }
-                if (isDone) {
-                    int nextBasePosIndex = findNextBasePosIndex();
-                    if (nextBasePosIndex >= 0) {
-                        currentBasePosIndex = nextBasePosIndex;
-                        updateSnapshot(true);
-                    } else {
-                        finishCurrentSnapshot();
-                    }
+                    finishCurrentSnapshot();
                 }
             }
-        }
-        if (!level.isClientSide) {
             syncRenderDataIfNeeded();
         }
         level.getProfiler().pop();

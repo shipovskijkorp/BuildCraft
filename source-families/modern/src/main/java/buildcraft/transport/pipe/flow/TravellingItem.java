@@ -51,6 +51,7 @@ public class TravellingItem {
     /** If true then events won't be fired for this, and this item won't be dropped by the pipe. However it will affect
      * pipe.isEmpty and related gate triggers. */
     boolean isPhantom = false;
+    boolean clientAtDestination = false;
 
     // @formatter:off
     /* States (server side):
@@ -206,6 +207,7 @@ public class TravellingItem {
             vecFrom = center;
             vecTo = vecSide;
         }
+        if (clientAtDestination) return vecTo;
 
         return VecUtil.scale(vecFrom, 1 - interp).add(VecUtil.scale(vecTo, interp));
     }

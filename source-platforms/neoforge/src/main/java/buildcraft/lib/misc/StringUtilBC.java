@@ -8,7 +8,9 @@ package buildcraft.lib.misc;
 
 import java.text.DecimalFormat;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import com.google.common.base.Splitter;
@@ -24,6 +26,18 @@ public final class StringUtilBC {
     public static final Splitter newLineSplitter = Splitter.on('\n');
 
     private static final DecimalFormat displayDecimalFormat = new DecimalFormat("#####0.00");
+
+    /**
+     * Remembers the unmodified source for recently converted strings. This makes the common tooltip -> book
+     * conversion reversible even where multiple original colours map to the same high-contrast colour. The cache is
+     * deliberately small: it is only provenance for live UI strings, not persistent application state.
+     */
+    private static final Map<String, String> FORMAT_SOURCES = new LinkedHashMap<>(128, 0.75F, true) {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+            return size() > 512;
+        }
+    };
 
     /** Deactivate constructor */
     private StringUtilBC() {}
@@ -49,36 +63,38 @@ public final class StringUtilBC {
     }
 
     private static String formatStringImpl(String string, Function<ChatFormatting, ChatFormatting> fn) {
-        /*
-         * FIXME: Normal usage (changing an item's text from onBlack to onWhite) has the disadvantage that colours will
-         * be changed to onBlack FIRST, and then onWhite, which means that BLACK will be changed to GRAY despite BLACK
-         * being absolutely fine on white. One possible fix could be to emit ORIGINAL_COLOUR + CHANGED_TO_COLOUR from
-         * ColourUtil.convertColourToTextFormat as a pair, and then use the ORIGINAL_COLOUR, but change CHANGED_COLOUR
-         * when calling this.
-         */
-        StringBuilder out = new StringBuilder(string.length());
-        for (int i = 0; i < string.length(); i++) {
-            char c = string.charAt(i);
-            if (c == '\u00a7' & string.length() > i + 2) {// \u00a7 - § - the control char used by text formatting
+        String source;
+        synchronized (FORMAT_SOURCES) {
+            source = FORMAT_SOURCES.getOrDefault(string, string);
+        }
+        StringBuilder out = new StringBuilder(source.length());
+        for (int i = 0; i < source.length(); i++) {
+            char c = source.charAt(i);
+            if (c == '\u00a7' && source.length() > i + 1) {
                 i++;
-                char after = string.charAt(i);
+                char after = source.charAt(i);
                 ChatFormatting colour = null;
-                if (after >= '0' & after <= '9') {
+                if (after >= '0' && after <= '9') {
                     colour = ChatFormatting.getById(after - '0');
-                } else if (after >= 'a' & after <= 'f') {
+                } else if (after >= 'a' && after <= 'f') {
                     colour = ChatFormatting.getById(after - 'a' + 10);
+                } else if (after >= 'A' && after <= 'F') {
+                    colour = ChatFormatting.getById(after - 'A' + 10);
                 }
                 if (colour == null) {
-                    out.append(c);
-                    out.append(after);
+                    out.append(c).append(after);
                 } else {
-                    out.append(fn.apply(colour).toString());
+                    out.append(fn.apply(colour));
                 }
             } else {
                 out.append(c);
             }
         }
-        return out.toString();
+        String formatted = out.toString();
+        synchronized (FORMAT_SOURCES) {
+            FORMAT_SOURCES.put(formatted, source);
+        }
+        return formatted;
     }
 
     public static String blockPosToString(BlockPos pos) {

@@ -15,6 +15,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
+import buildcraft.api.v2.signal.BuildCraftSignalChannels;
+import buildcraft.api.v2.signal.SignalChannelType;
+import buildcraft.api.v2.signal.SignalPort;
+import buildcraft.api.v2.signal.SignalPortProvider;
+
 import buildcraft.transport.internal.EnumWirePart;
 import buildcraft.transport.internal.pipe.IPipe;
 import buildcraft.transport.internal.pipe.IPipeHolder;
@@ -37,7 +44,6 @@ public class WireManager {
     public final Map<EnumWireBetween, DyeColor> betweens = new EnumMap<>(EnumWireBetween.class);
     private final Map<Direction, EnumSet<DyeColor>> signalOutputs = new EnumMap<>(Direction.class);
     public boolean initialised = false;
-    // TODO: Support wire connections from pipes to adjacent blocks where applicable.
 
     public WireManager(IPipeHolder holder) {
         this.holder = holder;
@@ -164,13 +170,16 @@ public class WireManager {
                         || (betweenParts[1] == part && getColorOfPart(betweenParts[0]) == color)) {
                         betweens.put(between, color);
                     }
-                } else if (WireSystem.canWireConnect(holder, between.to)) {
+                } else {
                     IPipe pipe = holder.getNeighbourPipe(between.to);
-                    if (pipe != Pipe.EMPTY) {
+                    if (pipe != Pipe.EMPTY && WireSystem.canWireConnect(holder, between.to)) {
                         WireManager wireManager = pipe.getHolder().getWireManager();
                         if (betweenParts[0] == part && wireManager.getColorOfPart(betweenParts[1]) == color) {
                             betweens.put(between, color);
                         }
+                    } else if (pipe == Pipe.EMPTY && betweenParts[0] == part && hasExternalSignalPort(between.to, color)) {
+                        // Extend the wire to the block face even though there is no neighbouring pipe model.
+                        betweens.put(between, color);
                     }
                 }
             }
@@ -184,6 +193,18 @@ public class WireManager {
                 }
             }
         }
+    }
+
+    private boolean hasExternalSignalPort(Direction side, DyeColor color) {
+        BlockEntity blockEntity = holder.getPipeWorld().getBlockEntity(holder.getPipePos().relative(side));
+        if (!(blockEntity instanceof SignalPortProvider provider)) return false;
+        var channelId = BuildCraftSignalChannels.id(color);
+        SignalChannelType<?> expected = BuildCraftApi.registry(BuildCraftRegistries.SIGNAL_CHANNEL_TYPES).get(channelId);
+        if (expected == null) return false;
+        return provider.signalPort(side.getOpposite(), channelId)
+            .map(SignalPort::channel)
+            .map(channel -> channel == expected)
+            .orElse(false);
     }
 
     public DyeColor getColorOfPart(EnumWirePart part) {

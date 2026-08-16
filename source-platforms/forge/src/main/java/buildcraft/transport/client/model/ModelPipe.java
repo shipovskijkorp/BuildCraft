@@ -15,6 +15,8 @@ import org.jetbrains.annotations.Nullable;
 import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.misc.SpriteUtil;
 import buildcraft.transport.block.BlockPipeHolder;
+import buildcraft.transport.internal.pipe.PipeDefinition;
+import buildcraft.transport.internal.pipe.PipeFaceTex;
 import buildcraft.transport.client.model.PipeModelCacheAll.PipeAllCutoutKey;
 import buildcraft.transport.client.model.PipeModelCacheAll.PipeAllTranslucentKey;
 import buildcraft.transport.client.model.PipeModelCacheBase.PipeBaseCutoutKey;
@@ -118,7 +120,7 @@ public enum ModelPipe implements IDynamicBakedModel {
 		//? if <1.20 {
 		if(data == ModelData.EMPTY)
 			return SpriteUtil.missingSprite();
-		ResourceLocation identifier = data.get(PipeTypeModelKey).getPipe().definition.textures[0]; // TODO: Derive the particle sprite from the active pipe model instead of textures[0].
+		ResourceLocation identifier = getParticleTexture(data.get(PipeTypeModelKey).getPipe().definition);
 		//?} else {
 		/*?
         if (data == ModelData.EMPTY) {
@@ -128,9 +130,10 @@ public enum ModelPipe implements IDynamicBakedModel {
         if (tile == null || tile.getPipe() == Pipe.EMPTY || tile.getPipe().definition.textures.length == 0) {
             return SpriteUtil.missingSprite();
         }
-        ResourceLocation identifier = tile.getPipe().definition.textures[0]; // TODO: Derive the particle sprite from the active pipe model instead of textures[0].
+        ResourceLocation identifier = getParticleTexture(tile.getPipe().definition);
 		?*/
 		//?}
+        if (identifier == null) return SpriteUtil.missingSprite();
 		return particleIcon.computeIfAbsent(identifier,
 				(a) -> {
 					TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(a);
@@ -139,6 +142,14 @@ public enum ModelPipe implements IDynamicBakedModel {
 					return sprite;
 				});
 	}
+
+    private static ResourceLocation getParticleTexture(PipeDefinition definition) {
+        if (definition == null || definition.textures.length == 0) return null;
+        PipeFaceTex center = definition.itemModelCenter;
+        int index = center == null || center.getCount() == 0 ? 0 : center.getTexture(0);
+        if (index < 0 || index >= definition.textures.length) index = 0;
+        return definition.textures[index];
+    }
 
 	@Override
 	public ItemOverrides getOverrides() {

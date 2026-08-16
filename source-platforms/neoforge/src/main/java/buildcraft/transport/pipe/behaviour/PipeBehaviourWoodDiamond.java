@@ -185,7 +185,7 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood implements MenuP
             advanceFilter();
         }
         int extracted = flow.tryExtractItems(1, getCurrentDir(), null, getStackFilter(), simulate);
-        if (extracted > 0 & filterMode == FilterMode.ROUND_ROBIN && simulate.execute()) {
+        if (extracted > 0 && filterMode == FilterMode.ROUND_ROBIN && simulate.execute()) {
             advanceFilter();
         }
         return extracted;
@@ -193,7 +193,7 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood implements MenuP
 
     @Override
     protected FluidStack extractFluid(IFlowFluid flow, Direction dir, int millibuckets, FluidAction simulate) {
-        if (filters.getStackInSlot(currentFilter).isEmpty()) {
+        if (filterMode != FilterMode.ROUND_ROBIN && filters.getStackInSlot(currentFilter).isEmpty()) {
             advanceFilter();
         }
 
@@ -241,8 +241,40 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood implements MenuP
                 FluidStack blacklistedResult = flow.tryExtractFluidAdv(millibuckets, dir, filter, simulate).getObject();
                 return blacklistedResult == null ? FluidStack.EMPTY : blacklistedResult;
             case ROUND_ROBIN:
-                // We can't do this -- amounts might differ and its just ugly
+                int slots = filters.getSlots();
+                for (int offset = 0; offset < slots; offset++) {
+                    int filterIndex = (currentFilter + offset) % slots;
+                    ItemStack stack = filters.getStackInSlot(filterIndex);
+                    FluidStack target = stack.isEmpty() ? FluidStack.EMPTY : FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+                    if (target.isEmpty()) continue;
+
+                    FluidStack roundRobinResult = flow.tryExtractFluid(millibuckets, dir, target, simulate);
+                    if (roundRobinResult != null && !roundRobinResult.isEmpty() && roundRobinResult.getAmount() > 0) {
+                        if (simulate.execute()) {
+                            currentFilter = filterIndex;
+                            filterValid = true;
+                            advanceFluidFilter();
+                        }
+                        return roundRobinResult;
+                    }
+                }
                 return FluidStack.EMPTY;
+        }
+    }
+
+    private void advanceFluidFilter() {
+        int lastFilter = currentFilter;
+        filterValid = false;
+        do {
+            currentFilter = (currentFilter + 1) % filters.getSlots();
+            ItemStack candidate = filters.getStackInSlot(currentFilter);
+            if (!candidate.isEmpty() && FluidUtil.getFluidContained(candidate).filter(stack -> !stack.isEmpty()).isPresent()) {
+                filterValid = true;
+                break;
+            }
+        } while (currentFilter != lastFilter);
+        if (lastFilter != currentFilter) {
+            pipe.getHolder().scheduleNetworkGuiUpdate(PipeMessageReceiver.BEHAVIOUR);
         }
     }
 

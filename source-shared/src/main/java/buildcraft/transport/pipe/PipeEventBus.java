@@ -25,11 +25,11 @@ import buildcraft.transport.internal.pipe.PipeEventPriority;
 
 public class PipeEventBus {
     public static final boolean DEBUG = BCDebugging.shouldDebugLog("transport.pipe.event_bus");
-    // TODO: Add a cheap handler-presence mask to avoid dispatch work for unused PipeEvent types.
 
     private static final Map<Class<?>, List<Handler>> allHandlers = new HashMap<>();
 
     private final List<LocalHandler> currentHandlers = new ArrayList<>();
+    private final Map<Class<?>, Boolean> eventPresence = new HashMap<>();
 
     private static List<LocalHandler> getAndBindHandlers(Object obj) {
         Class<?> cls = obj instanceof Class ? (Class<?>) obj : obj.getClass();
@@ -91,6 +91,7 @@ public class PipeEventBus {
         }
         currentHandlers.addAll(getAndBindHandlers(obj));
         Collections.sort(currentHandlers);
+        eventPresence.clear();
     }
 
     public void unregisterHandler(Object obj) {
@@ -99,12 +100,22 @@ public class PipeEventBus {
         }
 
         currentHandlers.removeIf(next -> next.target == obj);
+        eventPresence.clear();
     }
 
     /** Sends this event to all of the registered handlers.
      * 
      * @return True if at least 1 event handler was called, 0 if no handlers were called. */
     public boolean fireEvent(PipeEvent event) {
+        Class<?> eventClass = event.getClass();
+        boolean present = eventPresence.computeIfAbsent(eventClass, cls -> {
+            for (LocalHandler handler : currentHandlers) {
+                if (handler.classHandled.isAssignableFrom(cls)) return true;
+            }
+            return false;
+        });
+        if (!present) return false;
+
         boolean handled = false;
         if (DEBUG) {
             String error = event.checkStateForErrors();

@@ -154,6 +154,9 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     private int persistedProgressPart = Integer.MIN_VALUE;
     private Direction persistedDirection;
     private boolean persistedRedstonePowered;
+    private Level cachedBiomeLevel;
+    private BlockPos cachedBiomePos;
+    private Biome cachedBiome;
 
     // Needed: Power stored
 
@@ -327,8 +330,15 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     }
 
     protected Biome getBiome() {
-        // TODO: Cache the biome lookup until the engine changes position/world.
-        return level.getBiome(worldPosition).value();
+        if (level == null) {
+            throw new IllegalStateException("Cannot query an engine biome before it is attached to a level");
+        }
+        if (cachedBiome == null || cachedBiomeLevel != level || !worldPosition.equals(cachedBiomePos)) {
+            cachedBiomeLevel = level;
+            cachedBiomePos = worldPosition.immutable();
+            cachedBiome = level.getBiome(worldPosition).value();
+        }
+        return cachedBiome;
     }
 
     /** @return The heat of the current biome, in celsius. */
@@ -617,24 +627,25 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         BlockEntity getTile();
     }
 
-    /** TODO: Replace direct neighbour lookup with a reusable tile/capability buffer. */
+    /** Returns the neighbour through TileBC's invalidation-aware neighbour cache. */
     public ITileBuffer getTileBuffer(Direction side) {
-        BlockEntity tile = level.getBlockEntity(worldPosition.offset(side.getNormal()));
-        return () -> tile;
+        return () -> getNeighbourTile(side);
     }
 
     @Override
     public void setRemoved() {
         super.setRemoved();
-        // tileCache = null;
-        // checkOrientation = true;
+        cachedBiomeLevel = null;
+        cachedBiomePos = null;
+        cachedBiome = null;
     }
 
     @Override
     public void clearRemoved() {
         super.clearRemoved();
-        // tileCache = null;
-        // checkOrientation = true;
+        cachedBiomeLevel = null;
+        cachedBiomePos = null;
+        cachedBiome = null;
     }
 
     /* STATE INFORMATION */

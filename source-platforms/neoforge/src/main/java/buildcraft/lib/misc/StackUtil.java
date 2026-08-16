@@ -157,7 +157,8 @@ public class StackUtil {
             return nbt;
         }
         nbt.remove("_data");
-        // TODO: Strip non-functional display metadata when normalizing ItemStacks.
+        // Legacy display data (custom name, lore, dye presentation) is visual-only for BuildCraft matching keys.
+        nbt.remove("display");
         return nbt;
     }
 

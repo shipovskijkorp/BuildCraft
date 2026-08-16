@@ -226,44 +226,11 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	}
 	
 	public BCBlockHitResult rayTrace(BlockGetter world, BlockPos pos, Vec3 start, Vec3 end) {
-		Pipe pipe = getPipe(world, pos, false).getPipe();
-		VoxelShape centerShape = BOX_CENTER;
-		if (pipe != Pipe.EMPTY) {
-//			boolean canUseCache = true;
-			Direction[] direTogen = new Direction[6];
-			float[] conSizes = new float[6];
-			int len = 0;
-			
-			for(int i=0;i<6;i++) {
-				Direction d = Direction.values()[i];
-				conSizes[len] = pipe.getConnectedDist(Direction.values()[i]);
-				if(conSizes[len]>0) {
-//					canUseCache &= conSizes[len] == 0.25f;
-					direTogen[len++] = d;
-				}
-			}
-//			if(canUseCache)
-//				shape = getCachedPipeShape(direTogen, len);
-//			else
-			for (int i = 0; i < len; i++) {
-				Direction face = direTogen[i];
-				if (conSizes[i] > 0) {
-					VoxelShape aabb = BOX_FACES[face.get3DDataValue()];
-					if (conSizes[i] != 0.25f) {
-						Vec3 center = VecUtil.offset(new Vec3(0.5, 0.5, 0.5), face, 0.25 + (conSizes[i] / 2));
-						Vec3 radius = new Vec3(0.25, 0.25, 0.25);
-						radius = VecUtil.replaceValue(radius, face.getAxis(), conSizes[i] / 2);
-						Vec3 min = center.subtract(radius);
-						Vec3 max = center.add(radius);
-						aabb = Shapes.create(BoundingBoxUtil.makeFrom(min, max)); // TODO: Cache variable-length pipe ray-trace connection shapes.
-					}
-					centerShape = Shapes.or(centerShape, aabb);
-				}
-			}
-		}
-		return rayTrace(world, pos, start, end, centerShape);
-	}
-	
+        Pipe pipe = getPipe(world, pos, false).getPipe();
+        VoxelShape centerShape = pipe == Pipe.EMPTY ? BOX_CENTER : getCachedConnectionShapes(pipe).combined();
+        return rayTrace(world, pos, start, end, centerShape);
+    }
+
 	@Nullable
 	public BCBlockHitResult rayTrace(BlockGetter world, BlockPos pos, Vec3 start, Vec3 end, VoxelShape centerShapes) {
 		TilePipeHolder tile = getPipe(world, pos, false);

@@ -47,7 +47,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 /** Can render 3D fluid cuboid's, up to 1x1x1 in size. Note that they *must* be contained within the 1x1x1 block space -
  * you can't use this to render off large multiblocks. Not thread safe -- this uses static variables so you should only
  * call this from the main client thread. */
-// TODO: Make fluid UV tiling independent of assumed texture resolution.
 // Perhaps move this into IModelRenderer? And that way we get the buffer, force shaders to cope with fluids (?!), etc
 @OnlyIn(Dist.CLIENT)
 public class FluidRenderer {
@@ -62,8 +61,6 @@ public class FluidRenderer {
     private static VertexConsumer bb;
     private static Pose pose;
     private static TextureAtlasSprite sprite;
-    private static int spriteW = 16;//may change
-    private static int spriteH = 16;
     private static TexMap texmap;
     private static int color = 0xFFFFFFFF; //ARGB
     private static boolean invertU, invertV;
@@ -71,8 +68,6 @@ public class FluidRenderer {
     
 
     static {
-        // TODO: Let callers provide the fluid-render light level instead of forcing full-bright.
-        vertex.lighti(0xF, 0xF);
         for (FluidSpriteType type : FluidSpriteType.values()) {
             fluidSprites.put(type, new HashMap<>());
         }
@@ -162,7 +157,7 @@ public class FluidRenderer {
         Vec3 max, VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender) {
         if (fluid == null || fluid.getFluid() == null || amount <= 0 ) 
             return;
-        renderFluidInteral(type,fluid, fluid.getFluid(), amount, cap, min, max, fluidBuffer, matrix, sideRender);
+        renderFluidInteral(type, fluid, fluid.getFluid(), amount, cap, min, max, fluidBuffer, matrix, sideRender, 0x00F000F0);
     }
     
     /** Use only {@link Fluid} for render in order to avoid too often {@link FluidStack} creation
@@ -184,18 +179,30 @@ public class FluidRenderer {
 	        Vec3 max, VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender) {
         if (fluidType == null || amount <= 0 ) 
             return;
-        renderFluidInteral(type, FluidStack.EMPTY, fluidType, amount, cap, min, max, fluidBuffer, matrix, sideRender);
+        renderFluidInteral(type, FluidStack.EMPTY, fluidType, amount, cap, min, max, fluidBuffer, matrix, sideRender, 0x00F000F0);
     }
     
+    /** Same as the interpolated FluidStack overload, but uses the caller-provided packed block/sky light. */
+    public static void renderFluid(FluidSpriteType type, FluidStack fluid, double amount, double cap, Vec3 min, Vec3 max,
+        VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender, int packedLight) {
+        if (fluid == null || fluid.isEmpty() || amount <= 0) return;
+        renderFluidInteral(type, fluid, fluid.getFluid(), amount, cap, min, max, fluidBuffer, matrix, sideRender, packedLight);
+    }
+
+    /** Same as the raw-fluid overload, but uses the caller-provided packed block/sky light. */
+    public static void renderFluid(FluidSpriteType type, Fluid fluidType, double amount, double cap, Vec3 min, Vec3 max,
+        VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender, int packedLight) {
+        if (fluidType == null || amount <= 0) return;
+        renderFluidInteral(type, FluidStack.EMPTY, fluidType, amount, cap, min, max, fluidBuffer, matrix, sideRender, packedLight);
+    }
+
     private static void renderFluidInteral(FluidSpriteType type, FluidStack texParam, Fluid fluidType, double amount, double cap, Vec3 min,
-	        Vec3 max, VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender) {
+	        Vec3 max, VertexConsumer fluidBuffer, Pose matrix, boolean[] sideRender, int packedLight) {
         if (sideRender == null) 
             sideRender = DEFAULT_FACES;
         if (type == null) 
             type = FluidSpriteType.STILL;
         sprite = getFluidSprite(type, fluidType, texParam);
-        spriteW = sprite.contents().width();
-        spriteH = sprite.contents().height();
 
         double height = Mth.clamp(amount / cap, 0, 1);
         final Vec3 realMin, realMax;
@@ -209,6 +216,7 @@ public class FluidRenderer {
 
         bb = fluidBuffer;
         pose = matrix;
+        vertex.lighti(packedLight);
 
 
         final double xs = realMin.x;
@@ -250,10 +258,7 @@ public class FluidRenderer {
 //        vertex.colouri(RenderUtil.swapARGBforABGR(fluid.getFluid()));
         vertex.colouri(IClientFluidTypeExtensions.of(fluidType).getTintColor());
 
-        texmap = TexMap.XZ;
-        // TODO: Correctly control UV inversion per rendered fluid face.
-        invertU = false;
-        invertV = false;
+        setTexMap(TexMap.XZ, false, false);
         if (sideRender[Direction.UP.ordinal()]) {
             vertex.normalf(0, 1, 0);
             vertex(xs, yb, zb);
@@ -262,6 +267,7 @@ public class FluidRenderer {
             vertex(xs, yb, zs);
         }
 
+        setTexMap(TexMap.XZ, false, true);
         if (sideRender[Direction.DOWN.ordinal()]) {
             vertex.normalf(0, -1, 0);
             vertex(xs, ys, zs);
@@ -270,7 +276,7 @@ public class FluidRenderer {
             vertex(xs, ys, zb);
         }
 
-        texmap = TexMap.ZY;
+        setTexMap(TexMap.ZY, false, true);
         if (sideRender[Direction.WEST.ordinal()]) {
             vertex.normalf(-1, 0, 0);
             vertex(xs, ys, zs);
@@ -279,6 +285,7 @@ public class FluidRenderer {
             vertex(xs, yb, zs);
         }
 
+        setTexMap(TexMap.ZY, true, true);
         if (sideRender[Direction.EAST.ordinal()]) {
             vertex.normalf(1, 0, 0);
             vertex(xb, yb, zs);
@@ -287,7 +294,7 @@ public class FluidRenderer {
             vertex(xb, ys, zs);
         }
 
-        texmap = TexMap.XY;
+        setTexMap(TexMap.XY, true, true);
         if (sideRender[Direction.NORTH.ordinal()]) {
             vertex.normalf(0, 0, -1);
             vertex(xs, yb, zs);
@@ -296,6 +303,7 @@ public class FluidRenderer {
             vertex(xs, ys, zs);
         }
 
+        setTexMap(TexMap.XY, false, true);
         if (sideRender[Direction.SOUTH.ordinal()]) {
             vertex.normalf(0, 0, 1);
             vertex(xs, ys, zb);
@@ -311,6 +319,12 @@ public class FluidRenderer {
         pose = null;
     }
 
+
+    private static void setTexMap(TexMap map, boolean flipU, boolean flipV) {
+        texmap = map;
+        invertU = flipU;
+        invertV = flipV;
+    }
 
     public static TextureAtlasSprite getFluidSprite(FluidSpriteType type, Fluid fluid, FluidStack stack) {
         if (fluid == null) {
@@ -371,8 +385,6 @@ public class FluidRenderer {
         if (sprite == null) {
             sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
         }
-        spriteW = sprite.contents().width();
-        spriteH = sprite.contents().height();
 //        Minecraft.getInstance().getBlockRenderer().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 //        RenderUtil.setGLColorFromInt(fluid.getFluid().getFluidType(fluid));
 

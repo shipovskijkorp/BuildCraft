@@ -71,16 +71,11 @@ public class GuiDiamondWoodPipe extends GuiBC8<ContainerDiamondWoodPipe> impleme
         this.blackListButton.registerListener(this);
         this.mainGui.shownElements.add(this.blackListButton);
 
-        if (pipe.pipe.getFlow() instanceof IFlowItems) {
-            // TODO: Implement round-robin extraction for fluid Diamond Wooden Pipes before exposing this mode.
-            this.roundRobinButton = new GuiImageButton(mainGui, ROUND_ROBIN_BUTTON_ID, this.leftPos + 7 + 36, this.topPos + 41, 18, TEXTURE_BUTTON, 55, 19);
-            this.roundRobinButton.setToolTip(ToolTip.createLocalized("tip.PipeItemsEmerald.roundrobin"));
-            this.roundRobinButton.registerListener(this);
-            this.mainGui.shownElements.add(this.roundRobinButton);
-            IButtonBehaviour.createAndSetRadioButtons(whiteListButton, blackListButton, roundRobinButton);
-        } else {
-            IButtonBehaviour.createAndSetRadioButtons(whiteListButton, blackListButton);
-        }
+        this.roundRobinButton = new GuiImageButton(mainGui, ROUND_ROBIN_BUTTON_ID, this.leftPos + 7 + 36, this.topPos + 41, 18, TEXTURE_BUTTON, 55, 19);
+        this.roundRobinButton.setToolTip(ToolTip.createLocalized("tip.PipeItemsEmerald.roundrobin"));
+        this.roundRobinButton.registerListener(this);
+        this.mainGui.shownElements.add(this.roundRobinButton);
+        IButtonBehaviour.createAndSetRadioButtons(whiteListButton, blackListButton, roundRobinButton);
 
         switch (pipe.filterMode) {
             case WHITE_LIST:

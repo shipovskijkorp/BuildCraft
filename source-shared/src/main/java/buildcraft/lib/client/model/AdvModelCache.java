@@ -9,6 +9,8 @@ package buildcraft.lib.client.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -75,43 +77,114 @@ public class AdvModelCache {
         variables.clear();
         variables.addAll(modelCtxInfo.variables.values());
 
-        // First try to make an indexed cache
+        // A dense indexed cache is ideal only when every dimension is complete and the cartesian product remains
+        // reasonably small. Older code allocated the full product even for incomplete variable sets, then knowingly
+        // missed the cache at runtime.
         int[] multipliers = new int[variables.size()];
-        List<VariableInfo<?>> missKeys = new ArrayList<>();
-        int m = 1;
+        long possible = 1;
+        boolean fullyIndexed = true;
         for (int i = 0; i < variables.size(); i++) {
-            multipliers[i] = m;
             VariableInfo<?> info = variables.get(i);
-            m *= info.getPossibleValues().size();
-            if (!info.setIsComplete) {
-                missKeys.add(info);
-            }
+            multipliers[i] = (int) possible;
+            int values = Math.max(1, info.getPossibleValues().size());
+            possible *= values;
+            fullyIndexed &= info.setIsComplete && info.cacheType != VariableInfo.CacheType.NEVER;
+            if (possible > 4096) fullyIndexed = false;
         }
-        CacheIndexed indexedCache = new CacheIndexed(multipliers, m);
-
-        if (!missKeys.isEmpty()) {
-            BCLog.logger.warn(
-                "[lib.model.adv_cache] Creating an indexed cache despite knowing that there will be cache misses!");
-            for (VariableInfo<?> info : missKeys) {
-                BCLog.logger.warn("[lib.model.adv_cache]  - " + info.node + " (" + info.cacheType + ", "
-                    + info.getPossibleValues() + ")");
-            }
+        if (fullyIndexed && possible <= 4096) {
+            return new CacheIndexed(multipliers, (int) possible);
         }
 
-        // if (indexedIsFull) {
-        return indexedCache;
-        // }
-        // TODO: Add a fallback cache for models that cannot be represented by the indexed cache.
-        /*
-         * TODO: Add a cache that will split up the model based on dependencies to variables! (sub-cache for different
-         * model parts)
-         */
+        // Split finite/complete dimensions from open-ended ones. Each finite combination gets a small bounded fallback
+        // map keyed only by the remaining variable values. This keeps common booleans/enums cheap while still caching
+        // models whose dynamic values cannot be represented by the old indexed cache.
+        return new CacheHybrid();
+    }
+
+    private static Object currentValueKey(VariableInfo<?> info) {
+        if (info instanceof VariableInfo.VariableInfoBoolean value) return value.node.value;
+        if (info instanceof VariableInfo.VariableInfoLong value) return value.node.value;
+        if (info instanceof VariableInfo.VariableInfoDouble value) return value.node.value;
+        if (info instanceof VariableInfo.VariableInfoObject<?> value) return value.node.value;
+        return info.getCurrentOrdinal();
     }
 
     abstract class CacheBase {
         abstract CacheValue getCurrentValue();
 
         abstract void clear();
+    }
+
+    class CacheHybrid extends CacheBase {
+        private static final int MAX_BUCKETS = 256;
+        private static final int MAX_VALUES_PER_BUCKET = 128;
+
+        final List<Integer> indexedVariables = new ArrayList<>();
+        final List<Integer> dynamicVariables = new ArrayList<>();
+        final int[] multipliers;
+        final Map<List<Object>, CacheValue>[] buckets;
+
+        @SuppressWarnings("unchecked")
+        CacheHybrid() {
+            long possible = 1;
+            List<Integer> multipliersList = new ArrayList<>();
+            for (int i = 0; i < variables.size(); i++) {
+                VariableInfo<?> info = variables.get(i);
+                int count = Math.max(1, info.getPossibleValues().size());
+                if (info.setIsComplete && info.cacheType != VariableInfo.CacheType.NEVER
+                    && possible * count <= MAX_BUCKETS) {
+                    indexedVariables.add(i);
+                    multipliersList.add((int) possible);
+                    possible *= count;
+                } else {
+                    dynamicVariables.add(i);
+                }
+            }
+            multipliers = multipliersList.stream().mapToInt(Integer::intValue).toArray();
+            buckets = new Map[(int) Math.max(1, possible)];
+        }
+
+        @Override
+        CacheValue getCurrentValue() {
+            int bucketIndex = 0;
+            for (int i = 0; i < indexedVariables.size(); i++) {
+                VariableInfo<?> info = variables.get(indexedVariables.get(i));
+                if (!info.shouldCacheCurrentValue()) return computeFullModel();
+                int ordinal = info.getCurrentOrdinal();
+                if (ordinal < 0) return computeFullModel();
+                bucketIndex += ordinal * multipliers[i];
+            }
+
+            List<Object> key = new ArrayList<>(dynamicVariables.size());
+            for (int variableIndex : dynamicVariables) {
+                VariableInfo<?> info = variables.get(variableIndex);
+                if (!info.shouldCacheCurrentValue()) return computeFullModel();
+                key.add(currentValueKey(info));
+            }
+
+            Map<List<Object>, CacheValue> bucket = buckets[bucketIndex];
+            if (bucket == null) {
+                bucket = new LinkedHashMap<List<Object>, CacheValue>(16, 0.75F, true) {
+                    @Override
+                    protected boolean removeEldestEntry(Map.Entry<List<Object>, CacheValue> eldest) {
+                        return size() > MAX_VALUES_PER_BUCKET;
+                    }
+                };
+                buckets[bucketIndex] = bucket;
+            }
+            List<Object> stableKey = List.copyOf(key);
+            CacheValue value = bucket.get(stableKey);
+            if (value == null) {
+                value = computeFullModel();
+                bucket.put(stableKey, value);
+            }
+            return value;
+        }
+
+        @Override
+        void clear() {
+            Arrays.fill(buckets, null);
+        }
     }
 
     class CacheIndexed extends CacheBase {

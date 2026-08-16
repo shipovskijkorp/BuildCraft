@@ -365,8 +365,12 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                 continue;
             }
             if (world.isClientSide()) {
-                // TODO: Add client-side item advancement/interpolation between network updates.
-             //   items.add((int) (item.tickFinished - currentTime), item);
+                // Keep the item at its locally interpolated destination until the next authoritative transport packet.
+                // Previously the timing wheel simply discarded it, causing visible blink/disappear gaps.
+                item.clientAtDestination = true;
+                item.tickStarted = currentTime;
+                item.tickFinished = currentTime + 1;
+                items.add(1, item);
                 continue;
             }
             if (item.toCenter) {
@@ -833,8 +837,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         }
         if (pipe.isConnected(side)) {
             if (pipe.getConnectedType(side) == ConnectedType.TILE) {
-                // TODO: Derive insertion travel distance from the actual connected geometry.
-                return 0.5 + 0.25;// Tiny distance for fully pushing items in.
+                return 0.5 + Math.max(0.0, ((Pipe) pipe).getConnectedDist(side));
             }
             return 0.5;
         } else {

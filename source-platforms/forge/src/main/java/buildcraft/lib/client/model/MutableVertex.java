@@ -471,10 +471,7 @@ public class MutableVertex {
     }
 
     public MutableVertex scalef(float scale) {
-        position_x *= scale;
-        position_y *= scale;
-        position_z *= scale;
-        return this;
+        return scalef(scale, scale, scale);
     }
 
     public MutableVertex scaled(double scale) {
@@ -485,7 +482,19 @@ public class MutableVertex {
         position_x *= x;
         position_y *= y;
         position_z *= z;
-        // TODO: Transform/renormalize normals when vertices are non-uniformly scaled.
+
+        // Normals transform by the inverse transpose of the position transform. For a diagonal scale matrix this is
+        // simply component-wise division by the scale followed by normalization. This also handles reflections.
+        float nx = x == 0 ? 0 : normal_x / x;
+        float ny = y == 0 ? 0 : normal_y / y;
+        float nz = z == 0 ? 0 : normal_z / z;
+        float lenSq = nx * nx + ny * ny + nz * nz;
+        if (lenSq > 1.0e-12F && Float.isFinite(lenSq)) {
+            float invLen = Mth.invSqrt(lenSq);
+            normal_x = nx * invLen;
+            normal_y = ny * invLen;
+            normal_z = nz * invLen;
+        }
         return this;
     }
 

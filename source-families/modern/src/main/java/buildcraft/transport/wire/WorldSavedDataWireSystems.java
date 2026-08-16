@@ -18,14 +18,23 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 
 import buildcraft.lib.internal.debug.BCLog;
+import buildcraft.api.v2.BuildCraftApi;
+import buildcraft.api.v2.BuildCraftRegistries;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.signal.BuildCraftSignalChannels;
+import buildcraft.api.v2.signal.SignalChannelType;
+import buildcraft.api.v2.signal.SignalPort;
+import buildcraft.api.v2.signal.SignalPortProvider;
 import buildcraft.transport.internal.EnumWirePart;
 import buildcraft.transport.internal.pipe.IPipeHolder;
 import buildcraft.lib.net.MessageManager;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.player.Player;
@@ -106,10 +115,32 @@ public class WorldSavedDataWireSystems extends SavedData {
             BCLog.logger.warn("[transport.wire] Ghost loading " + element.blockPos + " to resolve an API2 signal endpoint!");
         }
         BlockEntity tile = world.getBlockEntity(element.blockPos);
-        if (tile instanceof IPipeHolder holder) {
-            return holder.getWireManager().isSignalOutputActive(element.emitterSide, color);
+        if (!(tile instanceof IPipeHolder holder)) return false;
+        if (holder.getWireManager().isSignalOutputActive(element.emitterSide, color)) return true;
+        SignalPort<Boolean> external = getExternalPort(element, color);
+        return external != null && Boolean.TRUE.equals(external.publishedValue());
+    }
+
+    @SuppressWarnings("unchecked")
+    private SignalPort<Boolean> getExternalPort(WireSystem.WireElement element, DyeColor color) {
+        BlockPos externalPos = element.blockPos.relative(element.emitterSide);
+        if (!world.isLoaded(externalPos)) return null;
+        BlockEntity blockEntity = world.getBlockEntity(externalPos);
+        if (!(blockEntity instanceof SignalPortProvider provider)) return null;
+        ResourceLocation channelId = BuildCraftSignalChannels.id(color);
+        SignalChannelType<?> expected = BuildCraftApi.registry(BuildCraftRegistries.SIGNAL_CHANNEL_TYPES).get(channelId);
+        if (expected == null) return null;
+        SignalPort<?> port = provider.signalPort(element.emitterSide.getOpposite(), channelId).orElse(null);
+        if (port == null || port.channel() != expected) return null;
+        return (SignalPort<Boolean>) port;
+    }
+
+    private void publishExternalSignal(WireSystem wireSystem, boolean powered) {
+        for (WireSystem.WireElement element : wireSystem.elements) {
+            if (element.type != WireSystem.WireElement.Type.EMITTER_SIDE) continue;
+            SignalPort<Boolean> external = getExternalPort(element, wireSystem.color);
+            if (external != null) external.receive(powered, OperationMode.EXECUTE);
         }
-        return false;
     }
 
     public void tick() {
@@ -123,6 +154,7 @@ public class WorldSavedDataWireSystems extends SavedData {
                 if (oldPowered != newPowered) {
                     changedSystems.add(wireSystem);
                 }
+                publishExternalSignal(wireSystem, newPowered);
                 return newPowered;
             });
         }

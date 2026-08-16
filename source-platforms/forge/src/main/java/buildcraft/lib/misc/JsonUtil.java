@@ -107,8 +107,17 @@ public class JsonUtil {
             if (obj.has("amount")) {
                 amount = obj.get("amount").getAsInt();
             }
-            // TODO: Support NBT/components in FluidStack JSON deserialization.
-            return new FluidStack(fluid, amount);
+            FluidStack stack = new FluidStack(fluid, amount);
+            CompoundTag data = null;
+            if (obj.has("data")) {
+                data = JsonUtils.readNBT(obj, "data");
+            } else if (obj.has("nbt")) {
+                data = JsonUtils.readNBT(obj, "nbt");
+            }
+            if (data != null && !data.isEmpty()) {
+                stack.setTag(data);
+            }
+            return stack;
         } else {
             throw new JsonSyntaxException("Expected either a string or an object, got " + json);
         }
