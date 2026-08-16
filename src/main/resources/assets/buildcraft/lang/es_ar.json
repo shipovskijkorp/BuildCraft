@@ -2005,5 +2005,6 @@
   "buildcraft.help.mj_dynamo.fe_battery.desc": "Convierte entre BuildCraft MJ y Forge Energy.",
   "buildcraft.help.fe_engine.fe_battery.title": "Batería FE",
   "buildcraft.help.fe_engine.fe_battery.desc": "Convierte entre Forge Energy y BuildCraft MJ.",
-  "config.display.timeGap": "Unidades de caudal (/t o /s)"
+  "config.display.timeGap": "Unidades de caudal (/t o /s)",
+  "item.buildcrafttransport.filtered_buffer": "Búfer filtrado"
 }

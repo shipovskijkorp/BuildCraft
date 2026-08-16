@@ -6,8 +6,170 @@
       "name": "English (US)",
       "fallback": []
     },
+    "cs_cz": {
+      "name": "Čeština",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "da_dk": {
+      "name": "Dansk",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "de_de": {
+      "name": "Deutsch",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "es_ar": {
+      "name": "Español (Argentina)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "es_es": {
+      "name": "Español (España)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "es_mx": {
+      "name": "Español (México)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "es_uy": {
+      "name": "Español (Uruguay)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "es_ve": {
+      "name": "Español (Venezuela)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "et_ee": {
+      "name": "Eesti",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "fi_fi": {
+      "name": "Suomi",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "fr_ca": {
+      "name": "Français (Canada)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "fr_fr": {
+      "name": "Français (France)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "hr_hr": {
+      "name": "Hrvatski",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "hu_hu": {
+      "name": "Magyar",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "it_it": {
+      "name": "Italiano",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "ja_jp": {
+      "name": "日本語",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "ko_kr": {
+      "name": "한국어",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "lt_lt": {
+      "name": "Lietuvių",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "nl_nl": {
+      "name": "Nederlands",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "no_no": {
+      "name": "Norsk (Bokmål)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "pl_pl": {
+      "name": "Polski",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "pt_br": {
+      "name": "Português (Brasil)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "pt_pt": {
+      "name": "Português (Portugal)",
+      "fallback": [
+        "en_us"
+      ]
+    },
     "ru_ru": {
       "name": "Русский",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "sk_sk": {
+      "name": "Slovenčina",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "sr_sp": {
+      "name": "Srpski",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "sv_se": {
+      "name": "Svenska",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "tr_tr": {
+      "name": "Türkçe",
       "fallback": [
         "en_us"
       ]
@@ -20,30 +182,6 @@
     },
     "zh_tw": {
       "name": "繁體中文",
-      "fallback": [
-        "en_us"
-      ]
-    },
-    "et_ee": {
-      "name": "Eesti",
-      "fallback": [
-        "en_us"
-      ]
-    },
-    "pt_br": {
-      "name": "Português (Brasil)",
-      "fallback": [
-        "en_us"
-      ]
-    },
-    "es_mx": {
-      "name": "Español (México)",
-      "fallback": [
-        "en_us"
-      ]
-    },
-    "es_es": {
-      "name": "Español (España)",
       "fallback": [
         "en_us"
       ]

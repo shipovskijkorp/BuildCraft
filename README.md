@@ -51,4 +51,4 @@ A target-specific translation override may also be placed in the corresponding v
 ./gradlew check
 ```
 
-The verification task rejects bundled `en_us`, invalid JSON values, empty Guide Book packs, and blank Guide Book segments.
+The verification task enforces the complete locale sets, exact ordinary-translation key sets, current Guide Book page/layout coverage, valid text-pack metadata, and runtime-compatible fallback slots. It also rejects bundled `en_us`, invalid JSON values, blank translated Guide Book segments, and missing BuildCraft/Iron Tanks locale pairs.

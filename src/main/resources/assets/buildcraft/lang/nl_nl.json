@@ -2005,5 +2005,6 @@
   "tip.PipeRedstoneFluxDiamond": "Instelbare limietpijp",
   "tip.PipeRedstoneFluxIron": "Instelbare limietpijp",
   "tip.PipeRedstoneFluxSandstone": "Verbindt alleen met andere pijpen",
-  "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux Invoer Pijp"
+  "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux Invoer Pijp",
+  "item.buildcrafttransport.filtered_buffer": "Gefilterde buffer"
 }

@@ -1,689 +1,1784 @@
 {
-  "language": "日本語",
+  "format": 1,
+  "language": "ja_jp",
   "pages": {
     "buildcraftcore/item/gear_wood": [
-      "木製歯車はBuildCraftを始める際の基本部品で、多くの機械や上位歯車の材料になります。"
+      "木製歯車はBuildCraftを始める際の基本部品で、多くの機械や上位歯車の材料になります。",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_stone": [
-      "石の歯車は木製歯車の上位段階で、より頑丈な機械の材料になります。"
+      "石の歯車は木製歯車の上位段階で、より頑丈な機械の材料になります。",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_iron": [
-      "鉄の歯車はエンジンやより複雑な機械に使われる中間段階の歯車です。"
+      "鉄の歯車はエンジンやより複雑な機械に使われる中間段階の歯車です。",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_gold": [
-      "金の歯車は広い範囲で動作する高度な機械などに使われます。"
+      "金の歯車は広い範囲で動作する高度な機械などに使われます。",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_diamond": [
-      "ダイヤモンド歯車は標準の最上位歯車で、最も複雑な機械に必要です。"
+      "ダイヤモンド歯車は標準の最上位歯車で、最も複雑な機械に必要です。",
+      null,
+      null
     ],
     "buildcraftcore/item/wrench": [
       "BuildCraftのレンチは対応する機械、向きのあるパイプ、その他のBuildCraftブロックを回転・再設定します。",
-      "<bold>互換性:</bold> 既定では共通タグ <code>c:tools/wrench</code> に入っている工具も同じレンチ操作を行えます。サーバーパックは <code>useWrenchTag</code> でタグ互換を無効化できますが、BuildCraft自身のレンチ実装は常に対応します。"
+      "<bold>互換性:</bold> 既定では共通タグ <code>c:tools/wrench</code> に入っている工具も同じレンチ操作を行えます。サーバーパックは <code>useWrenchTag</code> でタグ互換を無効化できますが、BuildCraft自身のレンチ実装は常に対応します。",
+      null
     ],
     "buildcraftcore/item/paintbrush": [
-      "ペイントブラシは対応ブロックを16色に塗れます。色の違うパイプ同士は接続しないため、装飾だけでなく配管の分離にも使えます。"
+      "ペイントブラシは対応ブロックを16色に塗れます。色の違うパイプ同士は接続しないため、装飾だけでなく配管の分離にも使えます。",
+      null,
+      null
     ],
     "buildcraftcore/item/marker_connector": [
       "Marker Connectorは互換マーカーを接続し、Volume BoxやPath Markのレーザー形状を直接編集します。",
-      "<bold>距離:</bold> 接続はCore設定 <code>markerMaxDistance</code> の範囲内だけで行えます。レーザーボックスに使用して編集を開始し、移動後にもう一度使用して確定します。スニーク使用で対象ボックスを削除できます。"
+      "<bold>距離:</bold> 接続はCore設定 <code>markerMaxDistance</code> の範囲内だけで行えます。レーザーボックスに使用して編集を開始し、移動後にもう一度使用して確定します。スニーク使用で対象ボックスを削除できます。",
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/marker_path": [
-      "Path Markは経路対応機械が順番にたどるルートを定義します。Marker Connectorで移動順に接続します。"
+      "Path Markは経路対応機械が順番にたどるルートを定義します。Marker Connectorで移動順に接続します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/list": [
-      "Listはパイプ、ゲート、ロボットステーションで再利用できるアイテムフィルターを保存します。"
+      "Listはパイプ、ゲート、ロボットステーションで再利用できるアイテムフィルターを保存します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/block/engine_wood": [
       "レッドストーンエンジンはレッドストーン信号だけで動作し、0.05 MJ/tを生成する最小のBuildCraft MJエンジンです。",
       "軽負荷の直接MJ消費先や抽出補助向けで、通常のKinesis/Power Pipeネットワークへは接続しません。過熱で爆発することはありません。レンチで向きを変え、可動端を対象へ向けます。",
-      "表示設定によりGUIの流量は/tまたは/sで表示されますが、実際の速度は変わりません。"
+      "表示設定によりGUIの流量は/tまたは/sで表示されますが、実際の速度は変わりません。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/always_on": [
-      "常に成立し、接続されたゲートアクションを常時有効にします。"
+      "常に成立し、接続されたゲートアクションを常時有効にします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/redstone_active": [
-      "ゲートを置いた対象がレッドストーン信号を受けていると成立します。必要ならゲート側だけを判定できます。"
+      "ゲートを置いた対象がレッドストーン信号を受けていると成立します。必要ならゲート側だけを判定できます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/redstone_inactive": [
-      "ゲートを置いた対象がレッドストーン信号を受けていないと成立します。必要ならゲート側だけを判定できます。"
+      "ゲートを置いた対象がレッドストーン信号を受けていないと成立します。必要ならゲート側だけを判定できます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_empty": [
-      "隣接インベントリが空のとき成立します。"
+      "隣接インベントリが空のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_contains": [
-      "隣接インベントリに指定したアイテムまたはListの条件に合うアイテムがあると成立します。"
+      "隣接インベントリに指定したアイテムまたはListの条件に合うアイテムがあると成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_space": [
-      "隣接インベントリに指定アイテムを受け入れられる空きがあると成立します。"
+      "隣接インベントリに指定アイテムを受け入れられる空きがあると成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_full": [
-      "隣接インベントリが満杯で追加アイテムを受け入れられないと成立します。"
+      "隣接インベントリが満杯で追加アイテムを受け入れられないと成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_below_25": [
-      "隣接インベントリの使用量が25%未満のとき成立します。"
+      "隣接インベントリの使用量が25%未満のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_below_50": [
-      "隣接インベントリの使用量が50%未満のとき成立します。"
+      "隣接インベントリの使用量が50%未満のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_below_75": [
-      "隣接インベントリの使用量が75%未満のとき成立します。"
+      "隣接インベントリの使用量が75%未満のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_empty": [
-      "隣接タンクが空のとき成立します。"
+      "隣接タンクが空のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_contains": [
-      "隣接タンクに指定した流体が入っていると成立します。"
+      "隣接タンクに指定した流体が入っていると成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_space": [
-      "隣接タンクに指定流体を受け入れられる空きがあると成立します。"
+      "隣接タンクに指定流体を受け入れられる空きがあると成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_full": [
-      "隣接タンクが満杯のとき成立します。"
+      "隣接タンクが満杯のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_below_25": [
-      "隣接タンクの充填量が25%未満のとき成立します。"
+      "隣接タンクの充填量が25%未満のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_below_50": [
-      "隣接タンクの充填量が50%未満のとき成立します。"
+      "隣接タンクの充填量が50%未満のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_below_75": [
-      "隣接タンクの充填量が75%未満のとき成立します。"
+      "隣接タンクの充填量が75%未満のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_blue": [
-      "隣接エンジンの温度段階が青のとき成立します。"
+      "隣接エンジンの温度段階が青のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_green": [
-      "隣接エンジンの温度段階が緑のとき成立します。"
+      "隣接エンジンの温度段階が緑のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_yellow": [
-      "隣接エンジンの温度段階が黄のとき成立します。"
+      "隣接エンジンの温度段階が黄のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_red": [
-      "隣接エンジンの温度段階が赤のとき成立します。"
+      "隣接エンジンの温度段階が赤のとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_overheat": [
-      "隣接エンジンが過熱段階に達したとき成立します。"
+      "隣接エンジンが過熱段階に達したとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/machine_active": [
-      "隣接機械に実行可能な作業があると成立します。"
+      "隣接機械に実行可能な作業があると成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/machine_inactive": [
-      "隣接機械の作業が完了し、現在処理していないと成立します。"
+      "隣接機械の作業が完了し、現在処理していないと成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/redstone": [
-      "ゲート条件が成立している間、レッドストーン信号を出力します。"
+      "ゲート条件が成立している間、レッドストーン信号を出力します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/machine_control_on": [
-      "対応する隣接機械をゲートから有効化します。"
+      "対応する隣接機械をゲートから有効化します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/machine_control_off": [
-      "対応する隣接機械をゲートから停止します。"
+      "対応する隣接機械をゲートから停止します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/machine_control_loop": [
-      "対応する隣接機械を繰り返し動作モードに設定します。"
+      "対応する隣接機械を繰り返し動作モードに設定します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_stone": [
-      "スターリングエンジンはかまど燃料を燃やし、内部MJバッファの状態に応じておよそ0.33〜1 MJ/tを生成します。設定された自動FE互換モードではFE機器にも供給できます。"
+      "スターリングエンジンはかまど燃料を燃やし、内部MJバッファの状態に応じておよそ0.33〜1 MJ/tを生成します。設定された自動FE互換モードではFE機器にも供給できます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_iron": [
-      "燃焼エンジンはBuildCraftの液体燃料を燃やし、冷却材で温度を制御します。汚れた燃料はResidueを生成し、精製燃料はResidueを出しません。"
+      "燃焼エンジンはBuildCraftの液体燃料を燃やし、冷却材で温度を制御します。汚れた燃料はResidueを生成し、精製燃料はResidueを出しません。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/distiller": [
-      "蒸留器はMJを消費して流体を1つの気体出力と1つの液体出力に分離します。"
+      "蒸留器はMJを消費して流体を1つの気体出力と1つの液体出力に分離します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/heat_exchange": [
-      "熱交換器は2系統の流体間で熱を移し、BuildCraft流体をCool・Hot・Searing状態の間で変換します。"
+      "熱交換器は2系統の流体間で熱を移し、BuildCraft流体をCool・Hot・Searing状態の間で変換します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/tank": [
-      "タンクはバケツやチェストを使わずに流体を直接保存するためのブロックです。"
+      "タンクはバケツやチェストを使わずに流体を直接保存するためのブロックです。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/pump": [
       "Pumpは自身の下にある連結流体を段階的に探索して回収し、隣接する流体ハンドラーへ出力します。",
-      "水平探索距離は <code>pumpMaxDistance</code> で、既定64・設定範囲16〜128ブロックです。既定では <code>pumpsConsumeWater=false</code> のため、バニラ式の無限水源を壊さず水を生成します。レッドストーン信号で停止します。"
+      "水平探索距離は <code>pumpMaxDistance</code> で、既定64・設定範囲16〜128ブロックです。既定では <code>pumpsConsumeWater=false</code> のため、バニラ式の無限水源を壊さず水を生成します。レッドストーン信号で停止します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/flood_gate": [
-      "Flood Gateは流体を受け取り、MJを消費せず到達可能な空間へ1バケツずつ流体源ブロックを配置します。レッドストーン信号で停止します。"
+      "Flood Gateは流体を受け取り、MJを消費せず到達可能な空間へ1バケツずつ流体源ブロックを配置します。レッドストーン信号で停止します。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/mining_well": [
       "Mining Wellは真下の1列だけを採掘し、シャフトへチューブを伸ばしながらドロップを出力します。",
-      "ブロック破壊は機械の所有者IDで権限確認されます。最大深度はCoreの <code>miningMaxDepth</code> と実際のワールド高さに従い、単純に「岩盤まで」ではありません。レッドストーン信号で停止します。"
+      "ブロック破壊は機械の所有者IDで権限確認されます。最大深度はCoreの <code>miningMaxDepth</code> と実際のワールド高さに従い、単純に「岩盤まで」ではありません。レッドストーン信号で停止します。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/chute": [
-      "Chuteはホッパーに似た搬送ブロックで、上下のインベントリやパイプとの自動搬送に使います。"
+      "Chuteはホッパーに似た搬送ブロックで、上下のインベントリやパイプとの自動搬送に使います。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/auto_workbench": [
-      "Auto Workbenchは設定したレシピを繰り返しクラフトします。1回に40 MJ分の進捗が必要で、無給電でも内部で0.2 MJ/tを生成し、外部MJで高速化できます。"
+      "Auto Workbenchは設定したレシピを繰り返しクラフトします。1回に40 MJ分の進捗が必要で、無給電でも内部で0.2 MJ/tを生成し、外部MJで高速化できます。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/registry_overview": [
-      "BuildCraft CEのGuide Bookで使う言語非依存のマニフェストと、ページ登録・アドオン統合の仕組みを説明します。"
+      "BuildCraft CEのGuide Bookで使う言語非依存のマニフェストと、ページ登録・アドオン統合の仕組みを説明します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/json_insn_format": [
-      "リソース互換性のために残されている従来のBuildCraft JSON命令形式を説明する技術ページです。"
+      "リソース互換性のために残されている従来のBuildCraft JSON命令形式を説明する技術ページです。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/guide_page_format": [
-      "BuildCraft CEが使用するローカライズ済みGuide Bookページの格納形式を説明する技術ページです。"
+      "BuildCraft CEが使用するローカライズ済みGuide Bookページの格納形式を説明する技術ページです。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_facade": [
-      "Facadeはパイプ面に取り付け、周囲の建築ブロックに見た目を合わせるためのカバーです。"
+      "Facadeはパイプ面に取り付け、周囲の建築ブロックに見た目を合わせるためのカバーです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_gate": [
-      "Gateはパイプ面に取り付ける論理制御部品で、トリガー条件とアクションを組み合わせて配管や機械を自動制御します。"
+      "Gateはパイプ面に取り付ける論理制御部品で、トリガー条件とアクションを組み合わせて配管や機械を自動制御します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_pulsar": [
-      "Pipe Pulsarはゲートから制御できるMJパルス源で、対応する抽出パイプなどを直接駆動します。"
+      "Pipe Pulsarはゲートから制御できるMJパルス源で、対応する抽出パイプなどを直接駆動します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_light_sensor": [
-      "Light Sensorは正面ブロックの明るさを検出し、同じパイプの隣接Gateへ状態を提供します。"
+      "Light Sensorは正面ブロックの明るさを検出し、同じパイプの隣接Gateへ状態を提供します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_lens": [
-      "LensとFilterは色付きのパイプ用プラグインで、同じアイテムのバリエーションとして保存されます。"
+      "LensとFilterは色付きのパイプ用プラグインで、同じアイテムのバリエーションとして保存されます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/light_high": [
-      "同じ色のLight Sensorが十分に明るい状態を検出すると成立します。"
+      "同じ色のLight Sensorが十分に明るい状態を検出すると成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/light_low": [
-      "同じ色のLight Sensorが暗い状態を検出すると成立します。"
+      "同じ色のLight Sensorが暗い状態を検出すると成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/action/pulsar_constant": [
-      "同じパイプのPipe Pulsarを継続的に動作させます。"
+      "同じパイプのPipe Pulsarを継続的に動作させます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/action/pulsar_single": [
-      "同じパイプのPipe Pulsarへ単発の電力パルスを送ります。"
+      "同じパイプのPipe Pulsarへ単発の電力パルスを送ります。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/structure": [
-      "Structure PipeはGateやPipe Wireを取り付けられる構造用パイプで、アイテム・流体・電力は通しません。"
+      "Structure PipeはGateやPipe Wireを取り付けられる構造用パイプで、アイテム・流体・電力は通しません。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_item": [
-      "木製輸送パイプはMJパルスを受けると隣接インベントリからアイテムを取り出します。"
+      "木製輸送パイプはMJパルスを受けると隣接インベントリからアイテムを取り出します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobble_item": [
-      "丸石輸送パイプはアイテムを接続先へ搬送し、石・クォーツ系パイプとは直接接続しません。"
+      "丸石輸送パイプはアイテムを接続先へ搬送し、石・クォーツ系パイプとは直接接続しません。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_item": [
-      "石輸送パイプはアイテムを接続先へ搬送し、丸石系パイプとは直接接続しません。"
+      "石輸送パイプはアイテムを接続先へ搬送し、丸石系パイプとは直接接続しません。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_item": [
-      "クォーツ輸送パイプはアイテムを接続先へ搬送する独立した材質系統のパイプです。"
+      "クォーツ輸送パイプはアイテムを接続先へ搬送する独立した材質系統のパイプです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_item": [
-      "鉄輸送パイプはアイテムの出口を1方向に固定します。レンチやGateで向きを変更できます。"
+      "鉄輸送パイプはアイテムの出口を1方向に固定します。レンチやGateで向きを変更できます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_item": [
-      "金輸送パイプは通過するアイテムを加速し、長距離搬送を高速化します。"
+      "金輸送パイプは通過するアイテムを加速し、長距離搬送を高速化します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_item": [
-      "ダイヤモンド輸送パイプは面ごとの色付きフィルターでアイテムの行き先を振り分けます。"
+      "ダイヤモンド輸送パイプは面ごとの色付きフィルターでアイテムの行き先を振り分けます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/obsidian_item": [
-      "黒曜石輸送パイプはワールド上に落ちているアイテムを吸い込み、接続パイプやインベントリへ送ります。"
+      "黒曜石輸送パイプはワールド上に落ちているアイテムを吸い込み、接続パイプやインベントリへ送ります。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_item": [
-      "砂岩輸送パイプは他のパイプ同士を接続してアイテムを運びますが、隣接インベントリには直接接続しません。"
+      "砂岩輸送パイプは他のパイプ同士を接続してアイテムを運びますが、隣接インベントリには直接接続しません。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/clay_item": [
-      "粘土輸送パイプは分岐でパイプを進むよりも接続インベントリへアイテムを入れる経路を優先します。"
+      "粘土輸送パイプは分岐でパイプを進むよりも接続インベントリへアイテムを入れる経路を優先します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/void_item": [
-      "Void輸送パイプは流れ込んだアイテムを破棄します。"
+      "Void輸送パイプは流れ込んだアイテムを破棄します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stripes_item": [
-      "Stripes輸送パイプは正面のブロック破壊・設置や、流れてきたアイテムの使用を行うワールド操作パイプです。"
+      "Stripes輸送パイプは正面のブロック破壊・設置や、流れてきたアイテムの使用を行うワールド操作パイプです。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_item": [
-      "木製ダイヤモンド輸送パイプはMJを受けると、設定フィルターに一致するアイテムだけを隣接インベントリから抽出します。"
+      "木製ダイヤモンド輸送パイプはMJを受けると、設定フィルターに一致するアイテムだけを隣接インベントリから抽出します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/lapis_item": [
-      "Lazuli輸送パイプは通過アイテムに設定色を付け、後段の色ルーティングに利用できます。"
+      "Lazuli輸送パイプは通過アイテムに設定色を付け、後段の色ルーティングに利用できます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/daizuli_item": [
-      "Daizuli輸送パイプは指定色のアイテムを設定した1方向へ送り出します。"
+      "Daizuli輸送パイプは指定色のアイテムを設定した1方向へ送り出します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/emzuli_item": [
-      "Emzuli輸送パイプはGateのExtraction Presetで選択した色付きフィルターに従い、MJでアイテムを抽出します。"
+      "Emzuli輸送パイプはGateのExtraction Presetで選択した色付きフィルターに従い、MJでアイテムを抽出します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_fluid": [
-      "木製流体パイプはMJパルスを受けると隣接タンクから流体を抽出します。既定搬送量は0.2バケツ/秒です。"
+      "木製流体パイプはMJパルスを受けると隣接タンクから流体を抽出します。既定搬送量は0.2バケツ/秒です。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobble_fluid": [
-      "丸石流体パイプは低速で流体を運び、石・クォーツ流体パイプとは直接接続しません。既定は0.2バケツ/秒です。"
+      "丸石流体パイプは低速で流体を運び、石・クォーツ流体パイプとは直接接続しません。既定は0.2バケツ/秒です。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_fluid": [
-      "石流体パイプは流体を搬送し、丸石流体パイプとは直接接続しません。既定は0.4バケツ/秒です。"
+      "石流体パイプは流体を搬送し、丸石流体パイプとは直接接続しません。既定は0.4バケツ/秒です。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_fluid": [
-      "クォーツ流体パイプは中速の独立した流体系統で、既定は0.8バケツ/秒です。"
+      "クォーツ流体パイプは中速の独立した流体系統で、既定は0.8バケツ/秒です。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_fluid": [
-      "鉄流体パイプは流体の出口を1方向に固定し、既定で0.8バケツ/秒を搬送します。レンチやGateで向きを変更できます。"
+      "鉄流体パイプは流体の出口を1方向に固定し、既定で0.8バケツ/秒を搬送します。レンチやGateで向きを変更できます。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_fluid": [
-      "金流体パイプは高速流体搬送用で、既定は1.6バケツ/秒です。"
+      "金流体パイプは高速流体搬送用で、既定は1.6バケツ/秒です。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_fluid": [
-      "ダイヤモンド流体パイプは面ごとのフィルターで流体の行き先を振り分け、既定で1.6バケツ/秒を搬送します。"
+      "ダイヤモンド流体パイプは面ごとのフィルターで流体の行き先を振り分け、既定で1.6バケツ/秒を搬送します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_fluid": [
-      "砂岩流体パイプは他のパイプ間で流体を運びますが、隣接タンクや機械には直接接続しません。既定は0.4バケツ/秒です。"
+      "砂岩流体パイプは他のパイプ間で流体を運びますが、隣接タンクや機械には直接接続しません。既定は0.4バケツ/秒です。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/clay_fluid": [
-      "粘土流体パイプは分岐でパイプを進むよりも隣接タンクや流体機器へ入る経路を優先します。"
+      "粘土流体パイプは分岐でパイプを進むよりも隣接タンクや流体機器へ入る経路を優先します。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/void_fluid": [
-      "Void流体パイプは流れ込んだ流体を破棄します。"
+      "Void流体パイプは流れ込んだ流体を破棄します。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_fluid": [
-      "木製ダイヤモンド流体パイプはMJを受けると、フィルターで選択した流体だけを隣接タンクから抽出します。"
+      "木製ダイヤモンド流体パイプはMJを受けると、フィルターで選択した流体だけを隣接タンクから抽出します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/wire": [
-      "Pipe Wireはパイプネットワークに沿って色別のGate信号を長距離伝送します。"
+      "Pipe Wireはパイプネットワークに沿って色別のGate信号を長距離伝送します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/plug_power_adaptor": [
-      "Power AdaptorはMJ Kinesis/Power Pipeネットワークから対応する電力式抽出パイプへ動力を渡すパイプ用プラグインです。"
+      "Power AdaptorはMJ Kinesis/Power Pipeネットワークから対応する電力式抽出パイプへ動力を渡すパイプ用プラグインです。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/plug_blocker": [
-      "Pipe Plugはその面で他のパイプやPipe Wireとの接続を遮断します。"
+      "Pipe Plugはその面で他のパイプやPipe Wireとの接続を遮断します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/items_traversing": [
-      "Transport Pipe内をアイテムが通過していると成立するGateトリガーです。"
+      "Transport Pipe内をアイテムが通過していると成立するGateトリガーです。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/fluids_traversing": [
-      "Fluid Pipe内を流体が通過していると成立するGateトリガーです。"
+      "Fluid Pipe内を流体が通過していると成立するGateトリガーです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/pipe_empty": [
-      "対象のTransport/Fluid Pipe内に搬送中の内容物がないと成立します。"
+      "対象のTransport/Fluid Pipe内に搬送中の内容物がないと成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/pipe_signal_active": [
-      "同色のPipe Wire信号がオンのとき成立します。"
+      "同色のPipe Wire信号がオンのとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/pipe_signal_inactive": [
-      "同色のPipe Wire信号がオフのとき成立します。"
+      "同色のPipe Wire信号がオフのとき成立します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_north": [
-      "方向設定を必要とする対応パイプの出力方向を北側に設定します。"
+      "方向設定を必要とする対応パイプの出力方向を北側に設定します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_east": [
-      "方向設定を必要とする対応パイプの出力方向を東側に設定します。"
+      "方向設定を必要とする対応パイプの出力方向を東側に設定します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_south": [
-      "方向設定を必要とする対応パイプの出力方向を南側に設定します。"
+      "方向設定を必要とする対応パイプの出力方向を南側に設定します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_west": [
-      "方向設定を必要とする対応パイプの出力方向を西側に設定します。"
+      "方向設定を必要とする対応パイプの出力方向を西側に設定します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_above": [
-      "方向設定を必要とする対応パイプの出力方向を上側に設定します。"
+      "方向設定を必要とする対応パイプの出力方向を上側に設定します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_below": [
-      "方向設定を必要とする対応パイプの出力方向を下側に設定します。"
+      "方向設定を必要とする対応パイプの出力方向を下側に設定します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_signal_active": [
-      "同色のPipe Wireへオン信号を出力します。"
+      "同色のPipe Wireへオン信号を出力します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_colour": [
-      "Lazuli/Daizuli輸送パイプで使うアイテム色をGateから設定します。"
+      "Lazuli/Daizuli輸送パイプで使うアイテム色をGateから設定します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/extraction_preset": [
-      "Emzuli輸送パイプで使用するExtraction PresetフィルターをGateから選択します。"
+      "Emzuli輸送パイプで使用するExtraction PresetフィルターをGateから選択します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/block/engine_basics": [
       "BuildCraftはMJを標準エネルギーとして使用します。既定換算は <bold>1 MJ = 10 FE</bold> で、<code>power.mjPerFe</code> から変更できます。",
       "<code>MJ_ONLY</code> では通常のBuildCraft機械はMJ専用ですが、FE Engine・MJ Dynamo・FE Pipeは使用できます。<code>MJ_AUTOCONVERT_FE</code> は通常機械にも自動変換を許可し、<code>DISPLAY_FE</code> は同じ互換動作に加えて一般表示をFE優先にします。",
-      "Guideは/tで記載します。Coreの <code>timeGap</code> は実表示を/tまたは/sに切り替えるだけで、機械速度や容量は変更しません。"
+      "Guideは/tで記載します。Coreの <code>timeGap</code> は実表示を/tまたは/sに切り替えるだけで、機械速度や容量は変更しません。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/box_volume": [
-      "Volume BoxはMarker Connectorで移動・調整できる作業範囲マーカーです。"
+      "Volume BoxはMarker Connectorで移動・調整できる作業範囲マーカーです。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/marker_land": [
       "Land MarkはQuarry、Filler、Architect Tableなどの長方形作業範囲を定義します。Marker Connectorで同じ軸上のマーカーを接続します。",
-      "軸方向の探索距離は <code>markerMaxDistance</code> で、既定64・設定範囲16〜256ブロックです。機械は接続済みマーカーのボックスを作業範囲として取得します。"
+      "軸方向の探索距離は <code>markerMaxDistance</code> で、既定64・設定範囲16〜256ブロックです。機械は接続済みマーカーのボックスを作業範囲として取得します。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/item/guide": [
-      "この本にはBuildCraft Community Editionと、Guide APIページを公開する導入済みアドオンのゲーム内ドキュメントが収録されます。"
+      "この本にはBuildCraft Community Editionと、Guide APIページを公開する導入済みアドオンのゲーム内ドキュメントが収録されます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_filter": [
-      "Filterは同じ色に塗られた搬送アイテムだけを選別して通すパイプ用プラグインです。"
+      "Filterは同じ色に塗られた搬送アイテムだけを選別して通すパイプ用プラグインです。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/map_location": [
-      "Map Locationは地点、範囲、経路、またはRoboticsのZoneを保存し、Gateやロボット制御で再利用します。"
+      "Map Locationは地点、範囲、経路、またはRoboticsのZoneを保存し、Gateやロボット制御で再利用します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/fragile_fluid_shard": [
-      "Fragile Fluid Shardは最大500 mBの流体を保持する一時的な一方向コンテナです。"
+      "Fragile Fluid Shardは最大500 mBの流体を保持する一時的な一方向コンテナです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/block/engine_creative": [
-      "Creative Engineは燃料なしで設定可能なMJを生成するクリエイティブ向け試験用エンジンです。レンチで1〜256 MJ/tの段階を切り替えられます。"
+      "Creative Engineは燃料なしで設定可能なMJを生成するクリエイティブ向け試験用エンジンです。レンチで1〜256 MJ/tの段階を切り替えられます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/blueprint": [
-      "Blueprintは読み取った範囲の正確なブロック、BlockState、対応BlockEntityデータを保存します。"
+      "Blueprintは読み取った範囲の正確なブロック、BlockState、対応BlockEntityデータを保存します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/template": [
-      "Templateは範囲内の占有形状だけを保存し、Builderが供給された材料で同じ形を再構築できるようにします。"
+      "Templateは範囲内の占有形状だけを保存し、Builderが供給された材料で同じ形を再構築できるようにします。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/schematic_single": [
-      "Single Block Schematicは1つのBlockStateを保存し、Replacerで置換対象または置換先として使います。"
+      "Single Block Schematicは1つのBlockStateを保存し、Replacerで置換対象または置換先として使います。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/filler_planner": [
-      "Filler PlannerはFillerのパターンとパラメーターをVolume Boxの追加情報として保存します。"
+      "Filler PlannerはFillerのパターンとパラメーターをVolume Boxの追加情報として保存します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/architect": [
-      "Architect Tableはマークされた範囲をスキャンし、BlueprintまたはTemplateとして記録します。"
+      "Architect Tableはマークされた範囲をスキャンし、BlueprintまたはTemplateとして記録します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/builder": [
       "Builderは使用済みBlueprintまたはTemplateと資材・流体・MJを使って構造物を建築します。Path Markの経路がある場合は経路上で設計を繰り返せます。",
-      "配置・掘削は機械の所有者IDで権限確認されます。作業状態と予約資源は保存され、再読み込み後は未完了タスクを再検証し、予約済み資源を安全に返してから再開します。"
+      "配置・掘削は機械の所有者IDで権限確認されます。作業状態と予約資源は保存され、再読み込み後は未完了タスクを再検証し、予約済み資源を安全に返してから再開します。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/filler": [
       "FillerはLand MarkまたはVolume Boxで指定した範囲へClear、Fill、Box、Frame、Horizon、Flatten、Cylinder、Pyramid、Stairs、2D/3D形状などのパターンを適用します。",
-      "配置対象には通常の置換可能ブロックも含まれ、掘削パターンは既存ブロックを除去できます。ワールド変更は機械の所有者IDで保護権限を確認します。"
+      "配置対象には通常の置換可能ブロックも含まれ、掘削パターンは既存ブロックを除去できます。ワールド変更は機械の所有者IDで保護権限を確認します。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/library": [
-      "Electronic LibraryはBlueprint/Templateアイテムと保存済みスナップショットデータベースの間で設計データを移動します。"
+      "Electronic LibraryはBlueprint/Templateアイテムと保存済みスナップショットデータベースの間で設計データを移動します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/replacer": [
-      "Replacerは使用済みBlueprint内の一致するBlockStateを、指定した別のBlockStateへ一括置換します。"
+      "Replacerは使用済みBlueprint内の一致するBlockStateを、指定した別のBlockStateへ一括置換します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/marker_construction": [
       "Construction Markerは使用済みBlueprintから建築タスクを生成してBuilder Robotへ公開します。自身はMJを消費せず、ブロックも配置しません。",
-      "Blueprintの回転・掘削・所有権設定を使い、近くのBuilder Robotがタスクを予約して資材を集め、施工します。"
+      "Blueprintの回転・掘削・所有権設定を使い、近くのBuilder Robotがタスクを予約して資材を集め、施工します。",
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/frame": [
-      "FrameはQuarryや建築システムが一時的な構造として使う軽量フレームブロックです。"
+      "FrameはQuarryや建築システムが一時的な構造として使う軽量フレームブロックです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/quarry": [
       "QuarryはLand Markで指定した範囲にフレームを構築し、許可されたブロックを自動採掘します。マーカーがない場合は前方に小さな既定範囲を作ります。",
       "BuildCraftのチャンクローディングが有効で、設定されたレベルがQuarryを許可する場合だけ作業範囲のチャンクチケットを要求します。サーバー側で無効化・制限できるため、遠隔Quarryが必ずロード維持されるとは限りません。",
-      "採掘物は隣接インベントリやアイテムパイプへ出力されます。保護ブロックはQuarryの所有者IDで判定され、プレイヤー権限を無視しません。"
+      "採掘物は隣接インベントリやアイテムパイプへ出力されます。保護ブロックはQuarryの所有者IDで判定され、プレイヤー権限を無視しません。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/robot": [
       "RobotはRedstone Boardで職業が決まる移動作業員です。Programming TableでBoardを書き込み、Integration TableでRobotへ組み込みます。",
-      "Docking Stationへ配置したプレイヤーが所有者になります。Robotは充電・積み込み・荷下ろしのため必要に応じてステーションへ戻り、ブロック破壊・配置・使用・攻撃は所有者IDで通常の保護判定を受けます。"
+      "Docking Stationへ配置したプレイヤーが所有者になります。Robotは充電・積み込み・荷下ろしのため必要に応じてステーションへ戻り、ブロック破壊・配置・使用・攻撃は所有者IDで通常の保護判定を受けます。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/redstone_board": [
-      "Redstone BoardはRobotへインストールする職業プログラムを保存します。Programming Tableで書き込み、Integration TableでRobotへ組み込みます。"
+      "Redstone BoardはRobotへインストールする職業プログラムを保存します。Programming Tableで書き込み、Integration TableでRobotへ組み込みます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/robot_station": [
-      "Docking Stationはパイプ面に取り付けるロボット用ステーションで、リンク、充電、入出庫、Gate制御を行います。"
+      "Docking Stationはパイプ面に取り付けるロボット用ステーションで、リンク、充電、入出庫、Gate制御を行います。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/block/zone_planner": [
       "Zone PlannerはMap Locationへ16個の独立レイヤーを持つ2048×2048座標のRobot作業Zoneを描画します。",
-      "地図は既に読み込み済み/生成済みのチャンクだけから取得します。未利用地形へ描画・インポートしても新規チャンクを強制生成せず、サーバーが提供できる範囲へ切り詰めます。120 tick後、出力スロットに現在のZone Planを保存したMap Locationが生成されます。"
+      "地図は既に読み込み済み/生成済みのチャンクだけから取得します。未利用地形へ描画・インポートしても新規チャンクを強制生成せず、サーバーが提供できる範囲へ切り詰めます。120 tick後、出力スロットに現在のZone Planを保存したMap Locationが生成されます。",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/block/requester": [
-      "Requesterは設定したアイテム在庫量を維持し、不足分をDelivery Robotが処理できる要求として公開します。"
+      "Requesterは設定したアイテム在庫量を維持し、不足分をDelivery Robotが処理できる要求として公開します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/picker": [
-      "Picker Robotは作業Zone内のドロップアイテムを拾い、ステーションのアイテムフィルターを適用してから戻って荷下ろしします。"
+      "Picker Robotは作業Zone内のドロップアイテムを拾い、ステーションのアイテムフィルターを適用してから戻って荷下ろしします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/carrier": [
-      "Carrier Robotは供給ステーションから一致するアイテムを積み、受け入れ可能な別ステーションへ運びます。"
+      "Carrier Robotは供給ステーションから一致するアイテムを積み、受け入れ可能な別ステーションへ運びます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/fluid_carrier": [
-      "Tank Robotはステーションとタンク間で流体を運び、ステーションの流体フィルターで積み下ろし対象を選びます。"
+      "Tank Robotはステーションとタンク間で流体を運び、ステーションの流体フィルターで積み下ろし対象を選びます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/lumberjack": [
-      "Lumberjack Robotは斧を取得し、作業Zone内の木から連結した原木を伐採します。"
+      "Lumberjack Robotは斧を取得し、作業Zone内の木から連結した原木を伐採します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/harvester": [
-      "Harvester Robotは作業Zone内の成熟作物を収穫し、ドロップをステーションへ持ち帰ります。"
+      "Harvester Robotは作業Zone内の成熟作物を収穫し、ドロップをステーションへ持ち帰ります。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/miner": [
-      "Miner Robotはツルハシを取得し、作業Zone内で到達可能な鉱石ブロックを採掘します。"
+      "Miner Robotはツルハシを取得し、作業Zone内で到達可能な鉱石ブロックを採掘します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/planter": [
-      "Planter Robotはフィルターに合う種を積み、作業Zone内の有効な土壌へ植えます。"
+      "Planter Robotはフィルターに合う種を積み、作業Zone内の有効な土壌へ植えます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/farmer": [
-      "Farmer Robotはクワを取得し、植え付け用に適した土・草ブロックを耕します。"
+      "Farmer Robotはクワを取得し、植え付け用に適した土・草ブロックを耕します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/leave_cutter": [
-      "Leaf Cutter Robotは適切な切断工具を取得し、作業Zone内の葉ブロックを除去します。"
+      "Leaf Cutter Robotは適切な切断工具を取得し、作業Zone内の葉ブロックを除去します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/butcher": [
-      "Butcher Robotは剣を取得して対象の友好Mobを狩りますが、猫・犬・保護されたテイムMobは避けます。"
+      "Butcher Robotは剣を取得して対象の友好Mobを狩りますが、猫・犬・保護されたテイムMobは避けます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/shovelman": [
-      "Shovelman Robotはシャベルを取得し、作業Zone内のシャベル採掘対象ブロックを掘ります。"
+      "Shovelman Robotはシャベルを取得し、作業Zone内のシャベル採掘対象ブロックを掘ります。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/pump": [
-      "Pump Robotは一致するワールド流体ブロックを内部タンクへ回収し、ステーションへ戻って流体を荷下ろしします。"
+      "Pump Robotは一致するワールド流体ブロックを内部タンクへ回収し、ステーションへ戻って流体を荷下ろしします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/delivery": [
-      "Delivery RobotはRequesterやステーションのRequest Itemsアクションが公開したアイテム要求を処理します。"
+      "Delivery RobotはRequesterやステーションのRequest Itemsアクションが公開したアイテム要求を処理します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/knight": [
-      "Knight Robotは武器を取得し、割り当てられた作業Zone内の敵対Mobを攻撃します。"
+      "Knight Robotは武器を取得し、割り当てられた作業Zone内の敵対Mobを攻撃します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/bomber": [
       "Bomber Robotは64,000 MJで職業をプログラムし、TNTを積んで作業Zone内の有効な地面上へ点火済みTNTを投下します。",
-      "<bold>注意:</bold> 爆発物を使うため、狭く隔離したZoneでのみ運用し、所有者権限とサーバーの爆発保護設定を事前に確認してください。"
+      "<bold>注意:</bold> 爆発物を使うため、狭く隔離したZoneでのみ運用し、所有者権限とサーバーの爆発保護設定を事前に確認してください。",
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/stripes": [
-      "Stripes Robotは使用可能なアイテムを積み、Stripes Transport Pipeと同じアイテム使用処理を空いている対象ブロックへ適用します。"
+      "Stripes Robotは使用可能なアイテムを積み、Stripes Transport Pipeと同じアイテム使用処理を空いている対象ブロックへ適用します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/builder": [
-      "Builder Robotは近くのBuilderまたはConstruction Markerから建築タスクを予約し、材料を取得して施工します。"
+      "Builder Robotは近くのBuilderまたはConstruction Markerから建築タスクを予約し、材料を取得して施工します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/in_station": [
-      "Robotが現在このDocking Stationにドッキングしている間だけ成立します。"
+      "Robotが現在このDocking Stationにドッキングしている間だけ成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/sleep": [
-      "リンクしたRobotが作業待ちでスリープ中のとき成立します。"
+      "リンクしたRobotが作業待ちでスリープ中のとき成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/linked": [
-      "Robotがステーションにリンクされていれば、現在ドッキング中でなくても成立します。"
+      "Robotがステーションにリンクされていれば、現在ドッキング中でなくても成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/reserved": [
-      "ステーションまたはRobotが何らかの処理に予約されている間成立します。"
+      "ステーションまたはRobotが何らかの処理に予約されている間成立します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/work_filter": [
-      "ロボット作業およびステーションの積み下ろしに使うアイテム/流体フィルターを設定します。アイテム、流体、Listをパラメーターにできます。"
+      "ロボット作業およびステーションの積み下ろしに使うアイテム/流体フィルターを設定します。アイテム、流体、Listをパラメーターにできます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/work_filter_tool": [
-      "工具を使う職業のRobotが取得してよい工具を制限します。"
+      "工具を使う職業のRobotが取得してよい工具を制限します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/goto_station": [
-      "Gate条件が成立している間、リンクしたRobotへこのDocking Stationへ戻るよう指示します。"
+      "Gate条件が成立している間、リンクしたRobotへこのDocking Stationへ戻るよう指示します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/wakeup": [
-      "スリープ中のリンクRobotを起こし、再び作業検索を開始させます。"
+      "スリープ中のリンクRobotを起こし、再び作業検索を開始させます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/work_in_area": [
-      "Map LocationのZoneをRobotの作業範囲として割り当てます。"
+      "Map LocationのZoneをRobotの作業範囲として割り当てます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/load_unload_area": [
-      "Robotが積み込み・荷下ろし先ステーションを探せる範囲を制限します。"
+      "Robotが積み込み・荷下ろし先ステーションを探せる範囲を制限します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/accept_fluids": [
-      "一致する流体をRobotがこのステーションまたは接続流体ハンドラーへ荷下ろしできるようにします。"
+      "一致する流体をRobotがこのステーションまたは接続流体ハンドラーへ荷下ろしできるようにします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/accept_items": [
-      "一致するアイテムをRobotがこのステーションまたは接続インベントリへ荷下ろしできるようにします。"
+      "一致するアイテムをRobotがこのステーションまたは接続インベントリへ荷下ろしできるようにします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/forbid_robot": [
-      "有効な間、Robotがこのステーションを選択することを禁止します。"
+      "有効な間、Robotがこのステーションを選択することを禁止します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/force_robot": [
-      "有効な間、リンクRobotにこのステーションを優先または帰還させます。"
+      "有効な間、リンクRobotにこのステーションを優先または帰還させます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/provide_fluids": [
-      "Robotが積み込める流体として一致する流体をこのステーションから公開します。"
+      "Robotが積み込める流体として一致する流体をこのステーションから公開します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/provide_items": [
-      "Robotが積み込めるアイテムとして一致するアイテムをこのステーションから公開します。"
+      "Robotが積み込めるアイテムとして一致するアイテムをこのステーションから公開します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/request_items": [
-      "Delivery Robotが処理できるアイテム要求を作成します。"
+      "Delivery Robotが処理できるアイテム要求を作成します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/provide_machine_request": [
-      "隣接する互換機械が生成したアイテム要求をDelivery Robotへ公開します。"
+      "隣接する互換機械が生成したアイテム要求をDelivery Robotへ公開します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/item/water_gel": [
-      "Water Gelifierは接続された水源と水生植物から一時的なWater Gelを生成します。"
+      "Water Gelifierは接続された水源と水生植物から一時的なWater Gelを生成します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/item/gel": [
-      "Gelled WaterはWater Gelから回収される固体素材です。"
+      "Gelled WaterはWater Gelから回収される固体素材です。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/laser": [
-      "LaserはMJをレーザー電力へ変換し、近くの対応BuildCraftテーブルへ供給します。"
+      "LaserはMJをレーザー電力へ変換し、近くの対応BuildCraftテーブルへ供給します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/assembly_table": [
-      "Assembly Tableはレーザー電力を使ってBuildCraft部品やパイプ用プラグインを製造します。"
+      "Assembly Tableはレーザー電力を使ってBuildCraft部品やパイプ用プラグインを製造します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/charging_table": [
-      "Charging Tableはレーザー電力を使ってForge Energy対応アイテムを充電します。"
+      "Charging Tableはレーザー電力を使ってForge Energy対応アイテムを充電します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/integration_table": [
-      "Integration Tableはレーザー電力を使い、対応するアップグレードや部品を対象アイテムへ組み込みます。"
+      "Integration Tableはレーザー電力を使い、対応するアップグレードや部品を対象アイテムへ組み込みます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/advanced_crafting_table": [
-      "Advanced Crafting Tableは設定レシピを、供給材料とMJを使って自動的に繰り返しクラフトします。"
+      "Advanced Crafting Tableは設定レシピを、供給材料とMJを使って自動的に繰り返しクラフトします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/programming_table": [
-      "Programming Tableはレーザー電力を使い、選択したRobot職業を空のRedstone Boardへ書き込みます。"
+      "Programming Tableはレーザー電力を使い、選択したRobot職業を空のRedstone Boardへ書き込みます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/redstone_crystal": [
-      "Redstone CrystalはAssembly Tableで作る高度なBuildCraftレシピに使われる部品です。"
+      "Redstone CrystalはAssembly Tableで作る高度なBuildCraftレシピに使われる部品です。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/gate_copier": [
-      "Gate Copierは1つのGate設定を保存し、互換Gateへ同じ設定を適用します。"
+      "Gate Copierは1つのGate設定を保存し、互換Gateへ同じ設定を適用します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_timer": [
-      "Timerはパイプ用プラグインで、5秒・10秒・15秒周期のGateトリガーを追加します。"
+      "Timerはパイプ用プラグインで、5秒・10秒・15秒周期のGateトリガーを追加します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_red": [
-      "Red ChipsetはGateやSilicon系レシピで使う基本のレッドストーン論理部品です。"
+      "Red ChipsetはGateやSilicon系レシピで使う基本のレッドストーン論理部品です。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_iron": [
-      "Iron Chipsetはより強力なGateや機械に使う鉄段階の論理部品です。"
+      "Iron Chipsetはより強力なGateや機械に使う鉄段階の論理部品です。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_gold": [
-      "Gold Chipsetは高容量Gateや機械レシピに使う金段階の論理部品です。"
+      "Gold Chipsetは高容量Gateや機械レシピに使う金段階の論理部品です。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_quartz": [
-      "Quartz Chipsetはパラメーターやタイミング系レシピに使うクォーツ論理部品です。"
+      "Quartz Chipsetはパラメーターやタイミング系レシピに使うクォーツ論理部品です。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_diamond": [
-      "Diamond Chipsetは高度なGate拡張や精密機械に使う標準最上位チップセットです。"
+      "Diamond Chipsetは高度なGate拡張や精密機械に使う標準最上位チップセットです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/timer_short": [
-      "Timerが同じパイプにある間、5秒ごとに1回パルスします。"
+      "Timerが同じパイプにある間、5秒ごとに1回パルスします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/timer_medium": [
-      "Timerが同じパイプにある間、10秒ごとに1回パルスします。"
+      "Timerが同じパイプにある間、10秒ごとに1回パルスします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/timer_long": [
-      "Timerが同じパイプにある間、15秒ごとに1回パルスします。"
+      "Timerが同じパイプにある間、15秒ごとに1回パルスします。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_power": [
-      "木製Power Pipeは隣接する対応MJ生成機からMJを抽出し、Power Pipeネットワークへ投入します。"
+      "木製Power Pipeは隣接する対応MJ生成機からMJを抽出し、Power Pipeネットワークへ投入します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobblestone_power": [
-      "丸石Power Pipeは基本的な低容量MJ搬送パイプです。"
+      "丸石Power Pipeは基本的な低容量MJ搬送パイプです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_power": [
-      "石Power Pipeは汎用の低容量MJ搬送パイプです。"
+      "石Power Pipeは汎用の低容量MJ搬送パイプです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_power": [
-      "砂岩Power Pipeは隣接機械へ直接接続せず、パイプ間だけでMJを搬送します。"
+      "砂岩Power Pipeは隣接機械へ直接接続せず、パイプ間だけでMJを搬送します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_power": [
-      "クォーツPower Pipeは石・丸石系から独立した中容量MJ搬送パイプです。"
+      "クォーツPower Pipeは石・丸石系から独立した中容量MJ搬送パイプです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_power": [
-      "金Power Pipeは高容量のMJ搬送パイプです。"
+      "金Power Pipeは高容量のMJ搬送パイプです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_power": [
-      "鉄Power Pipeは設定可能なMJ転送リミッターです。"
+      "鉄Power Pipeは設定可能なMJ転送リミッターです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_power": [
-      "ダイヤモンドPower Pipeは非常に高容量で設定可能なMJ転送リミッターです。"
+      "ダイヤモンドPower Pipeは非常に高容量で設定可能なMJ転送リミッターです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_power": [
-      "木製ダイヤモンドPower Pipeは高容量のMJ抽出パイプです。"
+      "木製ダイヤモンドPower Pipeは高容量のMJ抽出パイプです。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/waterproof": [
-      "Pipe Sealantは輸送系材料を流体パイプ部品へ変換するクラフト素材です。"
+      "Pipe Sealantは輸送系材料を流体パイプ部品へ変換するクラフト素材です。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/block/filtered_buffer": [
-      "Filtered Bufferは9実スロットのインベントリで、各スロットへの受け入れ条件を対応するファントムフィルターで制御します。"
+      "Filtered Bufferは9実スロットのインベントリで、各スロットへの受け入れ条件を対応するファントムフィルターで制御します。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil": [
-      "OilはBuildCraftの燃料処理チェーンの自然生成される出発原料です。"
+      "OilはBuildCraftの燃料処理チェーンの自然生成される出発原料です。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_residue": [
-      "Residueは汚れた燃料の燃焼や一部の高温蒸留で生じる重い副産物です。"
+      "Residueは汚れた燃料の燃焼や一部の高温蒸留で生じる重い副産物です。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_heavy": [
-      "Heavy OilはCool Oilを蒸留して得る汚れた中間燃料です。"
+      "Heavy OilはCool Oilを蒸留して得る汚れた中間燃料です。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_dense": [
-      "Dense OilはHot OilまたはHot Distilled Oilから得る汚れた中間燃料です。"
+      "Dense OilはHot OilまたはHot Distilled Oilから得る汚れた中間燃料です。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_distilled": [
-      "Distilled Oilは気体・軽質・高密度の燃料成分を含む、クリーンに燃える中間生成物です。"
+      "Distilled Oilは気体・軽質・高密度の燃料成分を含む、クリーンに燃える中間生成物です。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_gaseous": [
-      "Gaseous Fuelは精製燃料中で最大出力の燃焼エンジン燃料で、Residueなしで8 MJ/tを生成します。"
+      "Gaseous Fuelは精製燃料中で最大出力の燃焼エンジン燃料で、Residueなしで8 MJ/tを生成します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_light": [
-      "Light FuelはResidueなしで燃焼し、燃焼エンジンで6 MJ/tを生成する精製燃料です。"
+      "Light FuelはResidueなしで燃焼し、燃焼エンジンで6 MJ/tを生成する精製燃料です。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_dense": [
-      "Dense Fuelは長時間燃焼するクリーンな精製燃料で、燃焼エンジンで4 MJ/tを生成します。"
+      "Dense Fuelは長時間燃焼するクリーンな精製燃料で、燃焼エンジンで4 MJ/tを生成します。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_mixed_light": [
-      "Mixed Light Fuelはクリーンな中間燃料で、そのまま燃焼エンジンで3 MJ/tの燃料としても使えます。"
+      "Mixed Light Fuelはクリーンな中間燃料で、そのまま燃焼エンジンで3 MJ/tの燃料としても使えます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_mixed_heavy": [
-      "Mixed Heavy Fuelはクリーンな中間燃料で、そのまま燃焼エンジンで5 MJ/tの燃料としても使えます。"
+      "Mixed Heavy Fuelはクリーンな中間燃料で、そのまま燃焼エンジンで5 MJ/tの燃料としても使えます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcompat/pipe/propolis_item": [
-      "Apiarist's PipeはForestry互換のアイテムパイプで、遺伝情報を持つアイテムを各面独立のフィルターで振り分けます。"
+      "Apiarist's PipeはForestry互換のアイテムパイプで、遺伝情報を持つアイテムを各面独立のフィルターで振り分けます。",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_fe": [
       "FE EngineはForge Energyを受け取り、BuildCraftのMJへ変換する方向付きエンジンです。Coreが <code>MJ_ONLY</code> でも動作します。",
       "内部には10,000 FE入力バッファと1,000 MJ出力バッファがあり、基本出力は4 MJ/tです。既定の1 MJ = 10 FEでは最大40 FE/tを消費します。レッドストーン信号が必要で、MJ側に空きがない場合はFEを無駄に消費しません。",
-      "GUIには4つのアップグレード枠があり、各枠に対応歯車を1個入れられます。鉄の歯車1個につき+2 MJ/t、金の歯車1個につき+3 MJ/t。実際のFE消費量は <code>power.mjPerFe</code> に従います。レンチでMJ出力面を回転できます。"
+      "GUIには4つのアップグレード枠があり、各枠に対応歯車を1個入れられます。鉄の歯車1個につき+2 MJ/t、金の歯車1個につき+3 MJ/t。実際のFE消費量は <code>power.mjPerFe</code> に従います。レンチでMJ出力面を回転できます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/mj_dynamo": [
       "MJ DynamoはBuildCraft MJをForge Energyへ変換し、向いている面からFEを出力します。Coreが <code>MJ_ONLY</code> でも動作します。",
       "最大1,000 MJと10,000 FEを保持し、基本変換速度は4 MJ/t相当です。既定換算では40 FE/t。MJは出力面以外から入り、FEは正面から出ます。FEバッファが満杯になる変換は実行しません。",
-      "4つのアップグレード枠はFE Engineと同じで、鉄の歯車1個につき+2 MJ/t、金の歯車1個につき+3 MJ/t。レッドストーン信号で変換し、無効時は保存FEが1 FE/tで自己放電します。レンチでFE出力面を回転できます。"
+      "4つのアップグレード枠はFE Engineと同じで、鉄の歯車1個につき+2 MJ/t、金の歯車1個につき+3 MJ/t。レッドストーン信号で変換し、無効時は保存FEが1 FE/tで自己放電します。レンチでFE出力面を回転できます。",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_fe": [
       "木製FEパイプはFE専用ネットワークで既定 <bold>160 FE/t</bold> まで搬送します。隣接するFE供給源からエネルギーを取り出してネットワークへ注入します。別の木製FE抽出パイプとは直接接続しません。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobblestone_fe": [
       "丸石FEパイプはFE専用ネットワークで既定 <bold>40 FE/t</bold> まで搬送します。低容量の搬送用です。丸石系と石系のFEパイプは直接接続しないため、隣接配線を分離できます。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_fe": [
       "石FEパイプはFE専用ネットワークで既定 <bold>80 FE/t</bold> まで搬送します。汎用の低容量搬送用です。石系と丸石系のFEパイプは直接接続しません。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_fe": [
       "砂岩FEパイプはFE専用ネットワークで既定 <bold>160 FE/t</bold> まで搬送します。パイプ同士だけを接続し、隣接する機械へ直接接続しません。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_fe": [
       "クォーツFEパイプはFE専用ネットワークで既定 <bold>320 FE/t</bold> まで搬送します。通常のFE搬送用です。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_fe": [
       "金FEパイプはFE専用ネットワークで既定 <bold>1280 FE/t</bold> まで搬送します。通常のFE搬送用です。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_fe": [
       "鉄FEパイプはFE専用ネットワークで既定 <bold>320 FE/t</bold> まで搬送します。レンチまたは対応Gateアクションで上限を半分ずつ下げ、1/64の次に停止、その後フルへ戻せる調整用パイプです。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_fe": [
       "ダイヤモンドFEパイプはFE専用ネットワークで既定 <bold>2560 FE/t</bold> まで搬送します。非常に高容量で、レンチまたは対応Gateアクションから搬送上限を下げたり停止したりできます。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_fe": [
       "ダイヤモンド木製FEパイプはFE専用ネットワークで既定 <bold>2560 FE/t</bold> まで搬送します。隣接するFE供給源から高容量でエネルギーを取り出します。別の木製FE抽出パイプとは直接接続しません。",
-      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。"
+      "全FEパイプの速度は既定40 FE/tの <code>pipes.baseFeRate</code> から派生します。ネットワークが使える量だけを要求し、受け入れられなかったFEを複製・消失させません。<code>MJ_ONLY</code> でも使用でき、現在のMinecraftではPipe Holderを水没させられます。",
+      null,
+      null,
+      null
     ]
   }
 }

@@ -2005,5 +2005,6 @@
   "tip.PipeRedstoneFluxDiamond": "Izborni Limiter Cijev",
   "tip.PipeRedstoneFluxIron": "Izborni Limiter Cijev",
   "tip.PipeRedstoneFluxSandstone": "Spaja se samo s drugim cijevima",
-  "tip.PipeRedstoneFluxWoodenDiamond": "Crveni kamen Tok Ulaz Cijev"
+  "tip.PipeRedstoneFluxWoodenDiamond": "Crveni kamen Tok Ulaz Cijev",
+  "item.buildcrafttransport.filtered_buffer": "Filtered Međuspremnik"
 }

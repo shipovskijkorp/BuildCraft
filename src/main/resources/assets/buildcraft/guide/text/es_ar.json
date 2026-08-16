@@ -1,5 +1,6 @@
 {
-  "language": "Español (Argentina)",
+  "format": 1,
+  "language": "es_ar",
   "pages": {
     "buildcraftcore/item/gear_wood": [
       "En tus esfuerzos por crear una automatización sencilla has encontrado una pieza útil: ¡un engranaje que puede girar!\nEstá hecho únicamente de madera, así que tendrás que mejorarlo para tareas más exigentes...",
@@ -28,7 +29,8 @@
     ],
     "buildcraftcore/item/wrench": [
       "La llave inglesa de BuildCraft rota y reconfigura máquinas compatibles, tuberías direccionales y otros bloques de BuildCraft.",
-      "<bold>Compatibilidad:</bold> por defecto, los objetos del tag común <code>c:tools/wrench</code> pueden hacer las mismas interacciones. Un servidor puede desactivar esa compatibilidad con <code>useWrenchTag</code>; las llaves propias de BuildCraft siguen funcionando."
+      "<bold>Compatibilidad:</bold> por defecto, los objetos del tag común <code>c:tools/wrench</code> pueden hacer las mismas interacciones. Un servidor puede desactivar esa compatibilidad con <code>useWrenchTag</code>; las llaves propias de BuildCraft siguen funcionando.",
+      null
     ],
     "buildcraftcore/item/paintbrush": [
       "Aunque la variedad de colores que hay por el mundo es impresionante, imagina poder cambiar el color de ciertos bloques con una simple pincelada.\nPintar bloques como decoración está bien, pero también puede tener usos prácticos, como separar tuberías.",
@@ -37,7 +39,10 @@
     ],
     "buildcraftcore/item/marker_connector": [
       "El Marker Connector enlaza marcadores compatibles y permite editar directamente la geometría de Volume Box y Path Mark.",
-      "Las conexiones siguen limitadas por <code>markerMaxDistance</code>. Usalo sobre una caja láser para empezar a moverla y otra vez para confirmar; agachado, podés eliminar esa caja."
+      "Las conexiones siguen limitadas por <code>markerMaxDistance</code>. Usalo sobre una caja láser para empezar a moverla y otra vez para confirmar; agachado, podés eliminar esa caja.",
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/marker_path": [
       "Las líneas rectas son útiles, pero los proyectos grandes suelen necesitar una ruta que rodee el terreno y la maquinaria.",
@@ -60,7 +65,11 @@
     "buildcraftcore/block/engine_wood": [
       "El Motor de redstone es el motor MJ más pequeño de BuildCraft: solo necesita una señal de redstone y produce 0,05 MJ/t.",
       "Está pensado para consumidores directos de poca demanda y extracción auxiliar; no alimenta una red normal de tuberías cinéticas/Power Pipe. No explota por sobrecalentamiento y se rota con la llave inglesa.",
-      "El indicador puede mostrarse por tick o por segundo según la opción de Core; eso no cambia la velocidad real."
+      "El indicador puede mostrarse por tick o por segundo según la opción de Core; eso no cambia la velocidad real.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/always_on": [
       "Pase lo que pase, este activador siempre estará encendido.",
@@ -330,11 +339,23 @@
     ],
     "buildcraftenergy/block/engine_stone": [
       "El Motor Stirling quema combustibles normales de horno y produce aproximadamente entre 0,33 y 1 MJ/t según cuánta energía haya en su búfer interno de 1.000 MJ.",
-      "Necesita redstone y se orienta con una llave inglesa. Si la salida queda bloqueada, el búfer se llena, el motor llega a sobrecalentamiento y deja de generar hasta que pueda descargar y enfriarse. En <code>MJ_AUTOCONVERT_FE</code> o <code>DISPLAY_FE</code> también puede exponer su salida a consumidores FE mediante la relación configurada."
+      "Necesita redstone y se orienta con una llave inglesa. Si la salida queda bloqueada, el búfer se llena, el motor llega a sobrecalentamiento y deja de generar hasta que pueda descargar y enfriarse. En <code>MJ_AUTOCONVERT_FE</code> o <code>DISPLAY_FE</code> también puede exponer su salida a consumidores FE mediante la relación configurada.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_iron": [
       "El Motor de combustión quema combustibles líquidos de BuildCraft, usa refrigerante para controlar la temperatura y almacena el Residue producido por los combustibles sucios.",
-      "Tiene tanques separados de combustible, refrigerante y residuo. Crude Oil, Heavy Oil y Dense Oil producen Residue; los combustibles refinados no. El agua es el refrigerante líquido normal y el hielo también puede convertirse en agua con mayor efecto refrigerante. Biomas calientes empeoran la refrigeración y los fríos la mejoran. Si el receptor no acepta MJ, la energía queda almacenada en el motor."
+      "Tiene tanques separados de combustible, refrigerante y residuo. Crude Oil, Heavy Oil y Dense Oil producen Residue; los combustibles refinados no. El agua es el refrigerante líquido normal y el hielo también puede convertirse en agua con mayor efecto refrigerante. Biomas calientes empeoran la refrigeración y los fríos la mejoran. Si el receptor no acepta MJ, la energía queda almacenada en el motor.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/distiller": [
       "El petróleo crudo es una mezcla compleja de fluidos útiles que espera a que alguien los separe.",
@@ -364,7 +385,11 @@
     ],
     "buildcraftfactory/block/pump": [
       "La Bomba busca de forma gradual un cuerpo de fluido conectado debajo suyo, lo drena y entrega el fluido a handlers adyacentes.",
-      "El alcance horizontal usa <code>pumpMaxDistance</code>: 64 bloques por defecto y de 16 a 128 configurable. Con <code>pumpsConsumeWater=false</code> —el valor predeterminado— una fuente infinita de agua vanilla se conserva. Una señal de redstone pausa la Bomba."
+      "El alcance horizontal usa <code>pumpMaxDistance</code>: 64 bloques por defecto y de 16 a 128 configurable. Con <code>pumpsConsumeWater=false</code> —el valor predeterminado— una fuente infinita de agua vanilla se conserva. Una señal de redstone pausa la Bomba.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/flood_gate": [
       "En grandes proyectos de construcción, inundar áreas extensas con fluidos es una tarea tediosa que conviene automatizar.",
@@ -376,7 +401,12 @@
     ],
     "buildcraftfactory/block/mining_well": [
       "El Pozo de minería excava una sola columna debajo suyo, extiende el tubo por el pozo y entrega los drops.",
-      "La rotura de bloques se comprueba usando la identidad del dueño de la máquina. La profundidad máxima depende de <code>miningMaxDepth</code> y de los límites reales de altura del mundo, no simplemente de “llegar a la bedrock”. El redstone lo pausa."
+      "La rotura de bloques se comprueba usando la identidad del dueño de la máquina. La profundidad máxima depende de <code>miningMaxDepth</code> y de los límites reales de altura del mundo, no simplemente de “llegar a la bedrock”. El redstone lo pausa.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/chute": [
       "Una tolva básica está bien, pero no es demasiado funcional ni original.",
@@ -388,7 +418,11 @@
     ],
     "buildcraftfactory/block/auto_workbench": [
       "El Auto Workbench guarda una receta, acepta ingredientes mediante automatización y la fabrica repetidamente.",
-      "Cada crafteo necesita 40 MJ de progreso. Sin energía externa genera 0,2 MJ/t por sí mismo, así que tarda unos diez segundos sin interrupciones; el MJ externo acelera el proceso. Si la receta deja de ser válida, el progreso acumulado decae. En modos de compatibilidad FE automática, su receptor MJ normal también puede alimentarse mediante conversión FE."
+      "Cada crafteo necesita 40 MJ de progreso. Sin energía externa genera 0,2 MJ/t por sí mismo, así que tarda unos diez segundos sin interrupciones; el MJ externo acelera el proceso. Si la receta deja de ser válida, el progreso acumulado decae. En modos de compatibilidad FE automática, su receptor MJ normal también puede alimentarse mediante conversión FE.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/registry_overview": [
       "El registro de la guía es el índice que hay detrás del libro: decide qué existe, dónde aparece y qué icono lo representa.",
@@ -898,7 +932,13 @@
     "buildcraftcore/block/engine_basics": [
       "BuildCraft usa MJ como energía nativa. La conversión predeterminada es <bold>1 MJ = 10 FE</bold> y se puede cambiar con <code>power.mjPerFe</code>.",
       "En <code>MJ_ONLY</code> las máquinas comunes siguen siendo solo MJ, pero el Motor FE, el Dínamo MJ y las tuberías FE siguen disponibles. <code>MJ_AUTOCONVERT_FE</code> habilita conversión automática para máquinas normales y <code>DISPLAY_FE</code> además prioriza FE en los indicadores genéricos.",
-      "La guía expresa tasas por tick. <code>timeGap</code> solo cambia la presentación entre /t y /s; no altera la velocidad ni la capacidad."
+      "La guía expresa tasas por tick. <code>timeGap</code> solo cambia la presentación entre /t y /s; no altera la velocidad ni la capacidad.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/box_volume": [
       "Mover cuatro marcadores de terreno cada vez que cambia el tamaño de un proyecto acaba convirtiéndose en otro proyecto.",
@@ -911,7 +951,12 @@
     ],
     "buildcraftcore/item/marker_land": [
       "Los Land Marks definen áreas rectangulares para Quarry, Filler, Architect Table y otras máquinas. Se enlazan sobre los mismos ejes con el Marker Connector.",
-      "El alcance por eje usa <code>markerMaxDistance</code>: 64 bloques por defecto, configurable de 16 a 256. La máquina toma la caja conectada como su área de trabajo."
+      "El alcance por eje usa <code>markerMaxDistance</code>: 64 bloques por defecto, configurable de 16 a 256. La máquina toma la caja conectada como su área de trabajo.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/item/guide": [
       "Un taller grande es más fácil de construir cuando cada máquina incluye notas en lugar de exigir adivinanzas.",
@@ -996,11 +1041,21 @@
     ],
     "buildcraftbuilders/block/builder": [
       "El Builder consume MJ y recursos para construir un Blueprint o Template usado; con una ruta de Path Marks puede repetir el diseño a lo largo del recorrido.",
-      "Las acciones sobre el mundo usan la identidad del dueño de la máquina, así que las protecciones pueden rechazar colocaciones o excavaciones. El estado y los recursos reservados se guardan y se revalidan de forma segura al recargar."
+      "Las acciones sobre el mundo usan la identidad del dueño de la máquina, así que las protecciones pueden rechazar colocaciones o excavaciones. El estado y los recursos reservados se guardan y se revalidan de forma segura al recargar.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/filler": [
       "El Filler aplica patrones geométricos configurables dentro de un área marcada, incluidos Clear, Fill, Box, Frame, Horizon, Flatten, Cylinder, Pyramid, Stairs y formas 2D/3D.",
-      "Puede colocar sobre bloques reemplazables y los patrones de excavación pueden quitar bloques. Los cambios usan la identidad del dueño de la máquina y respetan los sistemas de protección."
+      "Puede colocar sobre bloques reemplazables y los patrones de excavación pueden quitar bloques. Los cambios usan la identidad del dueño de la máquina y respetan los sistemas de protección.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/library": [
       "Un buen diseño debería durar más que la hoja en la que se registró por primera vez.",
@@ -1020,7 +1075,10 @@
     ],
     "buildcraftbuilders/block/marker_construction": [
       "El Construction Marker expone tareas de construcción de un Blueprint a los Builder Robots. No consume MJ ni coloca bloques por sí mismo.",
-      "Usa la rotación, excavación y propiedad guardadas en el snapshot; los Builder Robots cercanos reservan tareas, consiguen materiales y construyen."
+      "Usa la rotación, excavación y propiedad guardadas en el snapshot; los Builder Robots cercanos reservan tareas, consiguen materiales y construyen.",
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/frame": [
       "Un gran taladro móvil resulta menos alarmante cuando tiene un andamio visible alrededor del área de trabajo.",
@@ -1032,11 +1090,20 @@
     "buildcraftbuilders/block/quarry": [
       "La Quarry construye un marco y mina automáticamente los bloques permitidos dentro del área marcada. Sin Land Marks válidos crea un área predeterminada más chica delante suyo.",
       "Solo solicita tickets de chunk si el chunk loading de BuildCraft está habilitado y el nivel configurado permite a la Quarry. El servidor puede desactivarlos o restringirlos, así que una Quarry remota no siempre se mantiene cargada.",
-      "Los bloques protegidos se comprueban con la identidad del dueño de la Quarry en vez de saltearse la protección normal del jugador."
+      "Los bloques protegidos se comprueban con la identidad del dueño de la Quarry en vez de saltearse la protección normal del jugador.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/robot": [
       "Un Robot es un trabajador móvil cuya profesión depende del Redstone Board instalado. El Board se programa en la Programming Table y se instala con la Integration Table.",
-      "El jugador que coloca el Robot en una Docking Station pasa a ser su dueño. El Robot vuelve para cargar, cargar recursos o descargar cuando hace falta, y las acciones de romper, colocar, usar o atacar se ejecutan con la identidad de ese dueño."
+      "El jugador que coloca el Robot en una Docking Station pasa a ser su dueño. El Robot vuelve para cargar, cargar recursos o descargar cuando hace falta, y las acciones de romper, colocar, usar o atacar se ejecutan con la identidad de ese dueño.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/redstone_board": [
       "Una máquina puede moverse, pero sin una placa no sabe si debe transportar, plantar, minar o huir de la vaca más cercana.",
@@ -1058,7 +1125,12 @@
     ],
     "buildcraftrobotics/block/zone_planner": [
       "El Zone Planner pinta zonas de trabajo de robots sobre Map Locations, con 16 capas editables independientes en una cuadrícula de 2048 × 2048.",
-      "Solo lee chunks ya cargados o generados. Pintar o importar sobre terreno no disponible se recorta a los chunks que el servidor puede entregar, sin generar mundo nuevo. Después de 120 ticks aparece en la salida un Map Location con el Zone Plan actual."
+      "Solo lee chunks ya cargados o generados. Pintar o importar sobre terreno no disponible se recorta a los chunks que el servidor puede entregar, sin generar mundo nuevo. Después de 120 ticks aparece en la salida un Map Location con el Zone Plan actual.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/block/requester": [
       "Un almacén es mucho más útil cuando puede solicitar las existencias que faltan antes de que alguien vea la estantería vacía.",
@@ -1169,7 +1241,10 @@
     ],
     "buildcraftrobotics/robot/bomber": [
       "El Bomber Robot se programa por 64.000 MJ, carga TNT, vuela sobre terreno válido dentro de su zona de trabajo y deja caer explosivos encendidos.",
-      "<bold>Cuidado:</bold> usalo solo en una zona bien aislada y verificá los permisos del dueño y la protección contra explosiones antes de darle TNT."
+      "<bold>Cuidado:</bold> usalo solo en una zona bien aislada y verificá los permisos del dueño y la protección contra explosiones antes de darle TNT.",
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/stripes": [
       "Un trabajador especializado suele ser más fiable que un robot intentando decidir si la prioridad de hoy es un árbol, un cofre o un creeper.",
@@ -1623,48 +1698,87 @@
     "buildcraftenergy/block/engine_fe": [
       "El Motor FE recibe Forge Energy y la convierte en MJ de BuildCraft como un motor direccional. Funciona incluso con Core en <code>MJ_ONLY</code>.",
       "Tiene un búfer de entrada de 10.000 FE y uno de salida de 1.000 MJ. Su potencia base es 4 MJ/t; con la relación predeterminada de 1 MJ = 10 FE consume hasta 40 FE/t. Necesita señal de redstone y no gasta FE si el búfer MJ no puede aceptar otro pulso.",
-      "La GUI tiene cuatro ranuras de mejora, una rueda compatible por ranura. Cada rueda de hierro suma +2 MJ/t y cada rueda de oro +3 MJ/t. El costo en FE sigue <code>power.mjPerFe</code>. Giralo con una llave inglesa para elegir la cara de salida MJ."
+      "La GUI tiene cuatro ranuras de mejora, una rueda compatible por ranura. Cada rueda de hierro suma +2 MJ/t y cada rueda de oro +3 MJ/t. El costo en FE sigue <code>power.mjPerFe</code>. Giralo con una llave inglesa para elegir la cara de salida MJ.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/mj_dynamo": [
       "El Dínamo MJ convierte MJ de BuildCraft en Forge Energy y entrega FE por su cara de salida. Funciona incluso con Core en <code>MJ_ONLY</code>.",
       "Almacena hasta 1.000 MJ y 10.000 FE. La conversión base equivale a 4 MJ/t, o 40 FE/t con la relación predeterminada. El MJ entra por las caras que no son la salida y el FE sale por el frente. No consume MJ si el siguiente pulso llenaría o desbordaría el búfer FE.",
-      "Las cuatro ranuras de mejora usan las mismas reglas que el Motor FE: rueda de hierro +2 MJ/t y de oro +3 MJ/t. La señal de redstone activa la conversión; apagado, el FE almacenado se descarga a 1 FE/t. La salida se rota con una llave inglesa."
+      "Las cuatro ranuras de mejora usan las mismas reglas que el Motor FE: rueda de hierro +2 MJ/t y de oro +3 MJ/t. La señal de redstone activa la conversión; apagado, el FE almacenado se descarga a 1 FE/t. La salida se rota con una llave inglesa.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_fe": [
       "Tubería FE de madera tiene un límite predeterminado de <bold>160 FE/t</bold> y extrae FE de una fuente adyacente y lo inyecta en la red; no se conecta directamente a otra tubería FE extractora de madera.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobblestone_fe": [
       "Tubería FE de adoquín tiene un límite predeterminado de <bold>40 FE/t</bold> y es la conducción básica de baja capacidad; las familias de adoquín y piedra no se conectan directamente entre sí.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_fe": [
       "Tubería FE de piedra tiene un límite predeterminado de <bold>80 FE/t</bold> y es una conducción general de baja capacidad; las familias de piedra y adoquín no se conectan directamente entre sí.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_fe": [
       "Tubería FE de arenisca tiene un límite predeterminado de <bold>160 FE/t</bold> y se conecta con otras tuberías pero no directamente con máquinas vecinas.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_fe": [
       "Tubería FE de cuarzo tiene un límite predeterminado de <bold>320 FE/t</bold> y transporta FE normalmente.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_fe": [
       "Tubería FE de oro tiene un límite predeterminado de <bold>1280 FE/t</bold> y transporta FE normalmente.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_fe": [
       "Tubería FE de hierro tiene un límite predeterminado de <bold>320 FE/t</bold> y es un limitador configurable; una llave inglesa o la acción de Gate correspondiente reduce el límite a la mitad repetidamente hasta 1/64, luego lo desactiva y finalmente vuelve al máximo.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_fe": [
       "Tubería FE de diamante tiene un límite predeterminado de <bold>2560 FE/t</bold> y es un limitador configurable de muy alta capacidad; una llave inglesa o la acción de Gate correspondiente puede reducir o desactivar su límite.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_fe": [
       "Tubería FE de madera y diamante tiene un límite predeterminado de <bold>2560 FE/t</bold> y extrae FE de una fuente adyacente a gran capacidad; no se conecta directamente a otra tubería FE extractora de madera.",
-      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua."
+      "Las velocidades de toda la familia derivan de <code>pipes.baseFeRate</code>, que por defecto vale 40 FE/t. La red pide solo la energía que puede usar y conserva el FE no aceptado sin duplicarlo. Estas tuberías son transporte FE dedicado, funcionan en <code>MJ_ONLY</code> y los Pipe Holder pueden contener agua.",
+      null,
+      null,
+      null
     ]
   }
 }

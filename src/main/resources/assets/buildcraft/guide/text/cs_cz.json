@@ -1,689 +1,1784 @@
 {
-  "language": "Čeština",
+  "format": 1,
+  "language": "cs_cz",
   "pages": {
     "buildcraftcore/item/gear_wood": [
-      "Dřevěné ozubené kolo je základní součást BuildCraftu a slouží jako materiál pro mnoho strojů i vyšší úrovně ozubených kol."
+      "Dřevěné ozubené kolo je základní součást BuildCraftu a slouží jako materiál pro mnoho strojů i vyšší úrovně ozubených kol.",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_stone": [
-      "Kamenné ozubené kolo je vylepšením dřevěného kola a používá se ve robustnějších strojích."
+      "Kamenné ozubené kolo je vylepšením dřevěného kola a používá se ve robustnějších strojích.",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_iron": [
-      "Železné ozubené kolo je vyšší stupeň používaný v motorech a složitějších strojích."
+      "Železné ozubené kolo je vyšší stupeň používaný v motorech a složitějších strojích.",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_gold": [
-      "Zlaté ozubené kolo je vyšší stupeň používaný zejména ve výkonnějších a plošných strojích."
+      "Zlaté ozubené kolo je vyšší stupeň používaný zejména ve výkonnějších a plošných strojích.",
+      null,
+      null
     ],
     "buildcraftcore/item/gear_diamond": [
-      "Diamantové ozubené kolo je nejvyšší běžný stupeň a používá se v nejsložitějších strojích."
+      "Diamantové ozubené kolo je nejvyšší běžný stupeň a používá se v nejsložitějších strojích.",
+      null,
+      null
     ],
     "buildcraftcore/item/wrench": [
       "Klíč BuildCraftu otáčí a přenastavuje podporované stroje, směrová potrubí a další bloky BuildCraftu.",
-      "<bold>Kompatibilita:</bold> Ve výchozím stavu mohou stejné interakce provádět také nástroje ze společného tagu <code>c:tools/wrench</code>. Server může tagovou kompatibilitu vypnout pomocí <code>useWrenchTag</code>; vlastní klíče BuildCraftu zůstávají podporované."
+      "<bold>Kompatibilita:</bold> Ve výchozím stavu mohou stejné interakce provádět také nástroje ze společného tagu <code>c:tools/wrench</code>. Server může tagovou kompatibilitu vypnout pomocí <code>useWrenchTag</code>; vlastní klíče BuildCraftu zůstávají podporované.",
+      null
     ],
     "buildcraftcore/item/paintbrush": [
-      "Štětec barví podporované bloky jednou ze 16 barev. Různě obarvená potrubí se nespojí, takže barvy slouží i k oddělení sítí."
+      "Štětec barví podporované bloky jednou ze 16 barev. Různě obarvená potrubí se nespojí, takže barvy slouží i k oddělení sítí.",
+      null,
+      null
     ],
     "buildcraftcore/item/marker_connector": [
       "Marker Connector propojuje kompatibilní značky a přímo upravuje geometrii Volume Boxů a Path Marků.",
-      "<bold>Dosah:</bold> spojení omezuje nastavení Core <code>markerMaxDistance</code>. Použitím na viditelný laserový box zahájíte úpravu, dalším použitím ji potvrdíte; při plížení lze box odstranit."
+      "<bold>Dosah:</bold> spojení omezuje nastavení Core <code>markerMaxDistance</code>. Použitím na viditelný laserový box zahájíte úpravu, dalším použitím ji potvrdíte; při plížení lze box odstranit.",
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/marker_path": [
-      "Path Marky definují uspořádanou trasu pro stroje podporující práci po cestě. Propojují se v pořadí pomocí Marker Connectoru."
+      "Path Marky definují uspořádanou trasu pro stroje podporující práci po cestě. Propojují se v pořadí pomocí Marker Connectoru.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/list": [
-      "List ukládá znovupoužitelné filtry předmětů pro potrubí, hradla a robotické stanice."
+      "List ukládá znovupoužitelné filtry předmětů pro potrubí, hradla a robotické stanice.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/block/engine_wood": [
       "Redstonový motor potřebuje pouze redstonový signál a vyrábí 0,05 MJ/t. Je to nejmenší MJ motor BuildCraftu.",
       "Je určen pro lehké přímé spotřebiče a pomocnou extrakci; běžnou síť Kinesis/Power Pipe nenapájí. Přehřátím nevybuchne. Klíčem otočte pracovní konec k cíli.",
-      "GUI může podle nastavení zobrazovat rychlosti za tick nebo za sekundu; skutečný výkon se tím nemění."
+      "GUI může podle nastavení zobrazovat rychlosti za tick nebo za sekundu; skutečný výkon se tím nemění.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/always_on": [
-      "Je vždy splněn a trvale aktivuje připojené akce hradla."
+      "Je vždy splněn a trvale aktivuje připojené akce hradla.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/redstone_active": [
-      "Je aktivní, když blok s hradlem přijímá redstonový signál; parametr může omezit kontrolu pouze na stranu hradla."
+      "Je aktivní, když blok s hradlem přijímá redstonový signál; parametr může omezit kontrolu pouze na stranu hradla.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/redstone_inactive": [
-      "Je aktivní, když blok s hradlem nepřijímá redstonový signál; parametr může omezit kontrolu pouze na stranu hradla."
+      "Je aktivní, když blok s hradlem nepřijímá redstonový signál; parametr může omezit kontrolu pouze na stranu hradla.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_empty": [
-      "Je aktivní, když je sousední inventář prázdný."
+      "Je aktivní, když je sousední inventář prázdný.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_contains": [
-      "Je aktivní, když sousední inventář obsahuje předmět odpovídající zadanému filtru nebo Listu."
+      "Je aktivní, když sousední inventář obsahuje předmět odpovídající zadanému filtru nebo Listu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_space": [
-      "Je aktivní, když má sousední inventář místo pro zadaný předmět."
+      "Je aktivní, když má sousední inventář místo pro zadaný předmět.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_full": [
-      "Je aktivní, když je sousední inventář plný a nemůže přijmout další předměty."
+      "Je aktivní, když je sousední inventář plný a nemůže přijmout další předměty.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_below_25": [
-      "Je aktivní, když je sousední inventář zaplněn méně než z 25 %."
+      "Je aktivní, když je sousední inventář zaplněn méně než z 25 %.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_below_50": [
-      "Je aktivní, když je sousední inventář zaplněn méně než z 50 %."
+      "Je aktivní, když je sousední inventář zaplněn méně než z 50 %.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/inventory_below_75": [
-      "Je aktivní, když je sousední inventář zaplněn méně než ze 75 %."
+      "Je aktivní, když je sousední inventář zaplněn méně než ze 75 %.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_empty": [
-      "Je aktivní, když je sousední nádrž prázdná."
+      "Je aktivní, když je sousední nádrž prázdná.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_contains": [
-      "Je aktivní, když sousední nádrž obsahuje zadanou kapalinu."
+      "Je aktivní, když sousední nádrž obsahuje zadanou kapalinu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_space": [
-      "Je aktivní, když má sousední nádrž místo pro zadanou kapalinu."
+      "Je aktivní, když má sousední nádrž místo pro zadanou kapalinu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_full": [
-      "Je aktivní, když je sousední nádrž plná."
+      "Je aktivní, když je sousední nádrž plná.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_below_25": [
-      "Je aktivní, když je sousední nádrž naplněna méně než z 25 %."
+      "Je aktivní, když je sousední nádrž naplněna méně než z 25 %.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_below_50": [
-      "Je aktivní, když je sousední nádrž naplněna méně než z 50 %."
+      "Je aktivní, když je sousední nádrž naplněna méně než z 50 %.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/fluid_below_75": [
-      "Je aktivní, když je sousední nádrž naplněna méně než ze 75 %."
+      "Je aktivní, když je sousední nádrž naplněna méně než ze 75 %.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_blue": [
-      "Je aktivní, když je sousední motor v modrém teplotním stupni."
+      "Je aktivní, když je sousední motor v modrém teplotním stupni.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_green": [
-      "Je aktivní, když je sousední motor v zeleném teplotním stupni."
+      "Je aktivní, když je sousední motor v zeleném teplotním stupni.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_yellow": [
-      "Je aktivní, když je sousední motor ve žlutém teplotním stupni."
+      "Je aktivní, když je sousední motor ve žlutém teplotním stupni.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_red": [
-      "Je aktivní, když je sousední motor v červeném teplotním stupni."
+      "Je aktivní, když je sousední motor v červeném teplotním stupni.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/engine_overheat": [
-      "Je aktivní, když sousední motor dosáhne přehřátého stupně."
+      "Je aktivní, když sousední motor dosáhne přehřátého stupně.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/machine_active": [
-      "Je aktivní, když má sousední stroj práci, kterou může provádět."
+      "Je aktivní, když má sousední stroj práci, kterou může provádět.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/machine_inactive": [
-      "Je aktivní, když sousední stroj dokončil práci a právě nepracuje."
+      "Je aktivní, když sousední stroj dokončil práci a právě nepracuje.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/redstone": [
-      "Při splnění podmínky hradla vysílá redstonový signál."
+      "Při splnění podmínky hradla vysílá redstonový signál.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/machine_control_on": [
-      "Zapne podporovaný sousední stroj pomocí hradla."
+      "Zapne podporovaný sousední stroj pomocí hradla.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/machine_control_off": [
-      "Vypne podporovaný sousední stroj pomocí hradla."
+      "Vypne podporovaný sousední stroj pomocí hradla.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/action/machine_control_loop": [
-      "Nastaví podporovaný sousední stroj do opakovaného pracovního režimu."
+      "Nastaví podporovaný sousední stroj do opakovaného pracovního režimu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_stone": [
-      "Stirlingův motor spaluje běžná paliva do pece a podle stavu vnitřního MJ bufferu vyrábí přibližně 0,33 až 1 MJ/t. V automatických režimech kompatibility může napájet také FE spotřebiče."
+      "Stirlingův motor spaluje běžná paliva do pece a podle stavu vnitřního MJ bufferu vyrábí přibližně 0,33 až 1 MJ/t. V automatických režimech kompatibility může napájet také FE spotřebiče.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_iron": [
-      "Spalovací motor spaluje kapalná paliva BuildCraftu a teplotu řídí chladivem. Špinavá paliva vytvářejí Residue, zatímco rafinovaná paliva zbytek nevytvářejí."
+      "Spalovací motor spaluje kapalná paliva BuildCraftu a teplotu řídí chladivem. Špinavá paliva vytvářejí Residue, zatímco rafinovaná paliva zbytek nevytvářejí.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/distiller": [
-      "Destilátor spotřebovává MJ a rozděluje kapalinu na jeden plynný a jeden kapalný výstup."
+      "Destilátor spotřebovává MJ a rozděluje kapalinu na jeden plynný a jeden kapalný výstup.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/heat_exchange": [
-      "Tepelný výměník přenáší teplo mezi dvěma proudy kapalin a mění BuildCraft kapaliny mezi stavy Cool, Hot a Searing."
+      "Tepelný výměník přenáší teplo mezi dvěma proudy kapalin a mění BuildCraft kapaliny mezi stavy Cool, Hot a Searing.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/tank": [
-      "Nádrž přímo uchovává kapaliny bez nutnosti kbelíků a truhel."
+      "Nádrž přímo uchovává kapaliny bez nutnosti kbelíků a truhel.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/pump": [
       "Pumpa postupně vyhledá propojenou kapalinu pod sebou, odčerpává ji a posílá do sousedních fluidních handlerů.",
-      "Vodorovný dosah řídí <code>pumpMaxDistance</code>: výchozí hodnota je 64 bloků a rozsah nastavení 16 až 128. Ve výchozím stavu <code>pumpsConsumeWater=false</code>, takže vanilkový nekonečný zdroj vody zůstane zachován. Redstonový signál pumpu pozastaví."
+      "Vodorovný dosah řídí <code>pumpMaxDistance</code>: výchozí hodnota je 64 bloků a rozsah nastavení 16 až 128. Ve výchozím stavu <code>pumpsConsumeWater=false</code>, takže vanilkový nekonečný zdroj vody zůstane zachován. Redstonový signál pumpu pozastaví.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/flood_gate": [
-      "Flood Gate přijímá kapalinu a bez spotřeby MJ pokládá po jednom kbelíku zdrojové bloky do dosažitelného volného prostoru. Redstonový signál pokládání zastaví."
+      "Flood Gate přijímá kapalinu a bez spotřeby MJ pokládá po jednom kbelíku zdrojové bloky do dosažitelného volného prostoru. Redstonový signál pokládání zastaví.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/mining_well": [
       "Mining Well těží jediný sloupec přímo pod sebou, prodlužuje šachtou trubici a vydává vytěžené předměty.",
-      "Ničení bloků se kontroluje identitou vlastníka stroje. Maximální hloubku omezuje <code>miningMaxDepth</code> a skutečné limity výšky světa, nikoli prosté „až na bedrock“. Redstonový signál stroj pozastaví."
+      "Ničení bloků se kontroluje identitou vlastníka stroje. Maximální hloubku omezuje <code>miningMaxDepth</code> a skutečné limity výšky světa, nikoli prosté „až na bedrock“. Redstonový signál stroj pozastaví.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/chute": [
-      "Chute je transportní blok podobný násypce a slouží k automatickému přesunu předmětů mezi inventáři a potrubím."
+      "Chute je transportní blok podobný násypce a slouží k automatickému přesunu předmětů mezi inventáři a potrubím.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/auto_workbench": [
-      "Auto Workbench opakovaně vyrábí nastavený recept. Jeden craft vyžaduje 40 MJ postupu; bez napájení si vytváří 0,2 MJ/t a externí MJ jej zrychluje."
+      "Auto Workbench opakovaně vyrábí nastavený recept. Jeden craft vyžaduje 40 MJ postupu; bez napájení si vytváří 0,2 MJ/t a externí MJ jej zrychluje.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/registry_overview": [
-      "Popisuje jazykově neutrální manifest Guide Booku v BuildCraft CE a způsob registrace stránek a addonů."
+      "Popisuje jazykově neutrální manifest Guide Booku v BuildCraft CE a způsob registrace stránek a addonů.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/json_insn_format": [
-      "Technická stránka popisující starší instrukční jazyk BuildCraft JSON zachovaný kvůli kompatibilitě zdrojů."
+      "Technická stránka popisující starší instrukční jazyk BuildCraft JSON zachovaný kvůli kompatibilitě zdrojů.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/guide_page_format": [
-      "Technická stránka popisující zabalený lokalizovaný formát stránek Guide Booku v BuildCraft CE."
+      "Technická stránka popisující zabalený lokalizovaný formát stránek Guide Booku v BuildCraft CE.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_facade": [
-      "Facade je kryt připevněný na stranu potrubí, který vzhledově zapadne do okolní stavby."
+      "Facade je kryt připevněný na stranu potrubí, který vzhledově zapadne do okolní stavby.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_gate": [
-      "Gate je logický modul na straně potrubí, který kombinuje spouštěče a akce pro automatické řízení potrubí a strojů."
+      "Gate je logický modul na straně potrubí, který kombinuje spouštěče a akce pro automatické řízení potrubí a strojů.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_pulsar": [
-      "Pipe Pulsar je zdroj pulzů MJ ovládaný hradlem a může přímo pohánět kompatibilní extrakční potrubí."
+      "Pipe Pulsar je zdroj pulzů MJ ovládaný hradlem a může přímo pohánět kompatibilní extrakční potrubí.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_light_sensor": [
-      "Light Sensor měří úroveň světla bloku před sebou a poskytuje stav sousednímu Gate na stejném potrubí."
+      "Light Sensor měří úroveň světla bloku před sebou a poskytuje stav sousednímu Gate na stejném potrubí.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_lens": [
-      "Lens a Filter jsou barevné zásuvné moduly potrubí uložené jako varianty stejného předmětu."
+      "Lens a Filter jsou barevné zásuvné moduly potrubí uložené jako varianty stejného předmětu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/light_high": [
-      "Je aktivní, když Light Sensor stejné barvy naměří dostatečně vysokou úroveň světla."
+      "Je aktivní, když Light Sensor stejné barvy naměří dostatečně vysokou úroveň světla.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/light_low": [
-      "Je aktivní, když Light Sensor stejné barvy naměří nízkou úroveň světla."
+      "Je aktivní, když Light Sensor stejné barvy naměří nízkou úroveň světla.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/action/pulsar_constant": [
-      "Zapne nepřetržitý provoz Pipe Pulsaru na stejném potrubí."
+      "Zapne nepřetržitý provoz Pipe Pulsaru na stejném potrubí.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/action/pulsar_single": [
-      "Vyšle jediný výkonový pulz z Pipe Pulsaru na stejném potrubí."
+      "Vyšle jediný výkonový pulz z Pipe Pulsaru na stejném potrubí.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/structure": [
-      "Structure Pipe je konstrukční potrubí pro Gate a Pipe Wire; nepřenáší předměty, kapaliny ani energii."
+      "Structure Pipe je konstrukční potrubí pro Gate a Pipe Wire; nepřenáší předměty, kapaliny ani energii.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_item": [
-      "Dřevěné transportní potrubí po přijetí pulzu MJ vytahuje předměty ze sousedního inventáře."
+      "Dřevěné transportní potrubí po přijetí pulzu MJ vytahuje předměty ze sousedního inventáře.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobble_item": [
-      "Dlážděné transportní potrubí přenáší předměty a přímo se nespojuje s kamennou ani křemennou rodinou potrubí."
+      "Dlážděné transportní potrubí přenáší předměty a přímo se nespojuje s kamennou ani křemennou rodinou potrubí.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_item": [
-      "Kamenné transportní potrubí přenáší předměty a přímo se nespojuje s dlážděnou rodinou potrubí."
+      "Kamenné transportní potrubí přenáší předměty a přímo se nespojuje s dlážděnou rodinou potrubí.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_item": [
-      "Křemenné transportní potrubí přenáší předměty jako samostatná materiálová rodina potrubí."
+      "Křemenné transportní potrubí přenáší předměty jako samostatná materiálová rodina potrubí.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_item": [
-      "Železné transportní potrubí vynucuje jediný výstupní směr, který lze měnit klíčem nebo Gate."
+      "Železné transportní potrubí vynucuje jediný výstupní směr, který lze měnit klíčem nebo Gate.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_item": [
-      "Zlaté transportní potrubí urychluje procházející předměty a zrychluje delší trasy."
+      "Zlaté transportní potrubí urychluje procházející předměty a zrychluje delší trasy.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_item": [
-      "Diamantové transportní potrubí směruje předměty podle barevných filtrů jednotlivých stran."
+      "Diamantové transportní potrubí směruje předměty podle barevných filtrů jednotlivých stran.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/obsidian_item": [
-      "Obsidiánové transportní potrubí sbírá předměty ležící ve světě a posílá je do připojeného potrubí nebo inventáře."
+      "Obsidiánové transportní potrubí sbírá předměty ležící ve světě a posílá je do připojeného potrubí nebo inventáře.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_item": [
-      "Pískovcové transportní potrubí propojuje a přenáší předměty mezi potrubími, ale nepřipojuje se přímo k sousedním inventářům."
+      "Pískovcové transportní potrubí propojuje a přenáší předměty mezi potrubími, ale nepřipojuje se přímo k sousedním inventářům.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/clay_item": [
-      "Hliněné transportní potrubí na odbočkách upřednostňuje vložení předmětu do připojeného inventáře před pokračováním potrubím."
+      "Hliněné transportní potrubí na odbočkách upřednostňuje vložení předmětu do připojeného inventáře před pokračováním potrubím.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/void_item": [
-      "Void transportní potrubí ničí předměty, které do něj vstoupí."
+      "Void transportní potrubí ničí předměty, které do něj vstoupí.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stripes_item": [
-      "Stripes transportní potrubí provádí světové akce: před sebou může bloky ničit či pokládat a používat předměty, které jím projdou."
+      "Stripes transportní potrubí provádí světové akce: před sebou může bloky ničit či pokládat a používat předměty, které jím projdou.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_item": [
-      "Dřevěné diamantové transportní potrubí po přijetí MJ vytahuje ze sousedního inventáře pouze předměty odpovídající filtru."
+      "Dřevěné diamantové transportní potrubí po přijetí MJ vytahuje ze sousedního inventáře pouze předměty odpovídající filtru.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/lapis_item": [
-      "Lazuli transportní potrubí obarvuje procházející předměty nastavenou barvou pro další barevné směrování."
+      "Lazuli transportní potrubí obarvuje procházející předměty nastavenou barvou pro další barevné směrování.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/daizuli_item": [
-      "Daizuli transportní potrubí směruje předměty zvolené barvy do nastaveného výstupního směru."
+      "Daizuli transportní potrubí směruje předměty zvolené barvy do nastaveného výstupního směru.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/emzuli_item": [
-      "Emzuli transportní potrubí pomocí MJ vytahuje předměty podle barevného filtru vybraného akcí Extraction Preset na Gate."
+      "Emzuli transportní potrubí pomocí MJ vytahuje předměty podle barevného filtru vybraného akcí Extraction Preset na Gate.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_fluid": [
-      "Dřevěné kapalinové potrubí po pulzu MJ vytahuje kapalinu ze sousední nádrže. Výchozí přenos je 0,2 kbelíku za sekundu."
+      "Dřevěné kapalinové potrubí po pulzu MJ vytahuje kapalinu ze sousední nádrže. Výchozí přenos je 0,2 kbelíku za sekundu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobble_fluid": [
-      "Dlážděné kapalinové potrubí přenáší kapaliny pomalu a přímo se nespojuje s kamenným ani křemenným potrubím. Výchozí rychlost je 0,2 kbelíku za sekundu."
+      "Dlážděné kapalinové potrubí přenáší kapaliny pomalu a přímo se nespojuje s kamenným ani křemenným potrubím. Výchozí rychlost je 0,2 kbelíku za sekundu.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_fluid": [
-      "Kamenné kapalinové potrubí přenáší kapaliny a přímo se nespojuje s dlážděným potrubím. Výchozí rychlost je 0,4 kbelíku za sekundu."
+      "Kamenné kapalinové potrubí přenáší kapaliny a přímo se nespojuje s dlážděným potrubím. Výchozí rychlost je 0,4 kbelíku za sekundu.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_fluid": [
-      "Křemenné kapalinové potrubí je samostatná středně rychlá rodina s výchozí rychlostí 0,8 kbelíku za sekundu."
+      "Křemenné kapalinové potrubí je samostatná středně rychlá rodina s výchozí rychlostí 0,8 kbelíku za sekundu.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_fluid": [
-      "Železné kapalinové potrubí vynucuje jediný výstupní směr, přenáší výchozích 0,8 kbelíku za sekundu a lze je otočit klíčem nebo Gate."
+      "Železné kapalinové potrubí vynucuje jediný výstupní směr, přenáší výchozích 0,8 kbelíku za sekundu a lze je otočit klíčem nebo Gate.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_fluid": [
-      "Zlaté kapalinové potrubí slouží k rychlému přenosu kapalin; výchozí rychlost je 1,6 kbelíku za sekundu."
+      "Zlaté kapalinové potrubí slouží k rychlému přenosu kapalin; výchozí rychlost je 1,6 kbelíku za sekundu.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_fluid": [
-      "Diamantové kapalinové potrubí směruje kapaliny podle filtrů stran a přenáší výchozích 1,6 kbelíku za sekundu."
+      "Diamantové kapalinové potrubí směruje kapaliny podle filtrů stran a přenáší výchozích 1,6 kbelíku za sekundu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_fluid": [
-      "Pískovcové kapalinové potrubí přenáší kapalinu mezi potrubími, ale nepřipojuje se přímo k nádržím ani strojům. Výchozí rychlost je 0,4 kbelíku za sekundu."
+      "Pískovcové kapalinové potrubí přenáší kapalinu mezi potrubími, ale nepřipojuje se přímo k nádržím ani strojům. Výchozí rychlost je 0,4 kbelíku za sekundu.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/clay_fluid": [
-      "Hliněné kapalinové potrubí na odbočkách upřednostňuje vložení kapaliny do sousední nádrže či stroje před pokračováním potrubím."
+      "Hliněné kapalinové potrubí na odbočkách upřednostňuje vložení kapaliny do sousední nádrže či stroje před pokračováním potrubím.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/void_fluid": [
-      "Void kapalinové potrubí ničí kapalinu, která do něj vstoupí."
+      "Void kapalinové potrubí ničí kapalinu, která do něj vstoupí.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_fluid": [
-      "Dřevěné diamantové kapalinové potrubí po přijetí MJ vytahuje ze sousední nádrže pouze kapaliny vybrané filtrem."
+      "Dřevěné diamantové kapalinové potrubí po přijetí MJ vytahuje ze sousední nádrže pouze kapaliny vybrané filtrem.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/wire": [
-      "Pipe Wire přenáší barevné signály Gate podél potrubní sítě na libovolnou vzdálenost."
+      "Pipe Wire přenáší barevné signály Gate podél potrubní sítě na libovolnou vzdálenost.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/plug_power_adaptor": [
-      "Power Adaptor je zásuvný modul, který umožní síti MJ Kinesis/Power Pipe napájet kompatibilní výkonové extrakční potrubí."
+      "Power Adaptor je zásuvný modul, který umožní síti MJ Kinesis/Power Pipe napájet kompatibilní výkonové extrakční potrubí.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/plug_blocker": [
-      "Pipe Plug na dané straně blokuje spojení s jiným potrubím i Pipe Wire."
+      "Pipe Plug na dané straně blokuje spojení s jiným potrubím i Pipe Wire.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/items_traversing": [
-      "Gate spouštěč je aktivní, když transportním potrubím právě procházejí předměty."
+      "Gate spouštěč je aktivní, když transportním potrubím právě procházejí předměty.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/fluids_traversing": [
-      "Gate spouštěč je aktivní, když kapalinovým potrubím právě proudí kapalina."
+      "Gate spouštěč je aktivní, když kapalinovým potrubím právě proudí kapalina.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/pipe_empty": [
-      "Je aktivní, když cílovým transportním či kapalinovým potrubím nic neprochází."
+      "Je aktivní, když cílovým transportním či kapalinovým potrubím nic neprochází.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/pipe_signal_active": [
-      "Je aktivní, když je signál Pipe Wire stejné barvy zapnutý."
+      "Je aktivní, když je signál Pipe Wire stejné barvy zapnutý.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/trigger/pipe_signal_inactive": [
-      "Je aktivní, když je signál Pipe Wire stejné barvy vypnutý."
+      "Je aktivní, když je signál Pipe Wire stejné barvy vypnutý.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_north": [
-      "Nastaví výstupní směr podporovaného směrového potrubí na sever."
+      "Nastaví výstupní směr podporovaného směrového potrubí na sever.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_east": [
-      "Nastaví výstupní směr podporovaného směrového potrubí na východ."
+      "Nastaví výstupní směr podporovaného směrového potrubí na východ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_south": [
-      "Nastaví výstupní směr podporovaného směrového potrubí na jih."
+      "Nastaví výstupní směr podporovaného směrového potrubí na jih.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_west": [
-      "Nastaví výstupní směr podporovaného směrového potrubí na západ."
+      "Nastaví výstupní směr podporovaného směrového potrubí na západ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_above": [
-      "Nastaví výstupní směr podporovaného směrového potrubí na nahoru."
+      "Nastaví výstupní směr podporovaného směrového potrubí na nahoru.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_direction_below": [
-      "Nastaví výstupní směr podporovaného směrového potrubí na dolů."
+      "Nastaví výstupní směr podporovaného směrového potrubí na dolů.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_signal_active": [
-      "Zapne signál Pipe Wire stejné barvy."
+      "Zapne signál Pipe Wire stejné barvy.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/pipe_colour": [
-      "Nastaví pomocí Gate barvu předmětů používanou potrubím Lazuli nebo Daizuli."
+      "Nastaví pomocí Gate barvu předmětů používanou potrubím Lazuli nebo Daizuli.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/action/extraction_preset": [
-      "Vybere pomocí Gate barevný Extraction Preset používaný potrubím Emzuli."
+      "Vybere pomocí Gate barevný Extraction Preset používaný potrubím Emzuli.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/block/engine_basics": [
       "BuildCraft používá MJ jako nativní energii. Výchozí poměr je <bold>1 MJ = 10 FE</bold> a lze jej změnit přes <code>power.mjPerFe</code>.",
       "V režimu <code>MJ_ONLY</code> zůstávají běžné stroje BuildCraftu čistě MJ, ale FE Engine, MJ Dynamo a FE Pipe fungují. <code>MJ_AUTOCONVERT_FE</code> povoluje automatický převod i běžným strojům a <code>DISPLAY_FE</code> navíc preferuje FE v obecných ukazatelích.",
-      "Guide uvádí rychlosti za tick. <code>timeGap</code> mění pouze zobrazení mezi /t a /s, nikoli rychlost ani kapacitu strojů."
+      "Guide uvádí rychlosti za tick. <code>timeGap</code> mění pouze zobrazení mezi /t a /s, nikoli rychlost ani kapacitu strojů.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/box_volume": [
-      "Volume Box je pohyblivá značka oblasti, kterou lze upravovat pomocí Marker Connectoru."
+      "Volume Box je pohyblivá značka oblasti, kterou lze upravovat pomocí Marker Connectoru.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/marker_land": [
       "Land Marky definují obdélníkové pracovní oblasti pro Quarry, Filler, Architect Table a další stroje a propojují se na společných osách pomocí Marker Connectoru.",
-      "Dosah na ose řídí <code>markerMaxDistance</code>: výchozí je 64 bloků, nastavit lze 16 až 256. Stroj použije propojený box jako svou pracovní oblast."
+      "Dosah na ose řídí <code>markerMaxDistance</code>: výchozí je 64 bloků, nastavit lze 16 až 256. Stroj použije propojený box jako svou pracovní oblast.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/item/guide": [
-      "Tato kniha obsahuje herní dokumentaci BuildCraft Community Edition a nainstalovaných addonů, které zveřejňují stránky přes Guide API."
+      "Tato kniha obsahuje herní dokumentaci BuildCraft Community Edition a nainstalovaných addonů, které zveřejňují stránky přes Guide API.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_filter": [
-      "Filter je zásuvný modul potrubí, který vybírá a propouští pouze transportované předměty odpovídající jeho barvě."
+      "Filter je zásuvný modul potrubí, který vybírá a propouští pouze transportované předměty odpovídající jeho barvě.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/map_location": [
-      "Map Location ukládá bod, oblast, trasu nebo robotickou zónu pro pozdější použití v Gate a řízení robotů."
+      "Map Location ukládá bod, oblast, trasu nebo robotickou zónu pro pozdější použití v Gate a řízení robotů.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/fragile_fluid_shard": [
-      "Fragile Fluid Shard je dočasná jednosměrná nádoba pro nejvýše 500 mB kapaliny."
+      "Fragile Fluid Shard je dočasná jednosměrná nádoba pro nejvýše 500 mB kapaliny.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/block/engine_creative": [
-      "Creative Engine je testovací motor pro kreativní režim, který bez paliva vyrábí nastavitelné MJ. Klíčem lze cyklovat výkon od 1 do 256 MJ/t."
+      "Creative Engine je testovací motor pro kreativní režim, který bez paliva vyrábí nastavitelné MJ. Klíčem lze cyklovat výkon od 1 do 256 MJ/t.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/blueprint": [
-      "Blueprint ukládá přesné bloky, BlockState a podporovaná data BlockEntity z nasnímané oblasti."
+      "Blueprint ukládá přesné bloky, BlockState a podporovaná data BlockEntity z nasnímané oblasti.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/template": [
-      "Template ukládá pouze obsazený tvar oblasti, takže Builder může stejný tvar postavit z dodaných materiálů."
+      "Template ukládá pouze obsazený tvar oblasti, takže Builder může stejný tvar postavit z dodaných materiálů.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/schematic_single": [
-      "Single Block Schematic ukládá jeden BlockState pro použití v Replaceru."
+      "Single Block Schematic ukládá jeden BlockState pro použití v Replaceru.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/item/filler_planner": [
-      "Filler Planner ukládá vzor a parametry Filleru jako doplněk Volume Boxu."
+      "Filler Planner ukládá vzor a parametry Filleru jako doplněk Volume Boxu.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/architect": [
-      "Architect Table skenuje označenou oblast a uloží ji jako Blueprint nebo Template."
+      "Architect Table skenuje označenou oblast a uloží ji jako Blueprint nebo Template.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/builder": [
       "Builder používá použitý Blueprint nebo Template, materiály, kapaliny a MJ k postavení konstrukce. S propojenou trasou Path Mark může návrh opakovat podél cesty.",
-      "Pokládání a případné kopání se kontroluje identitou vlastníka stroje. Stav práce i rezervované zdroje se ukládají; po načtení se nedokončené úlohy znovu ověří a rezervované zdroje se bezpečně vrátí před pokračováním."
+      "Pokládání a případné kopání se kontroluje identitou vlastníka stroje. Stav práce i rezervované zdroje se ukládají; po načtení se nedokončené úlohy znovu ověří a rezervované zdroje se bezpečně vrátí před pokračováním.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/filler": [
       "Filler aplikuje v oblasti z Land Marků nebo Volume Boxu vzory Clear, Fill, Box, Frame, Horizon, Flatten, Cylinder, Pyramid, Stairs a další 2D/3D tvary.",
-      "Pokládání pracuje i s běžně nahraditelnými bloky a výkopové vzory mohou bloky odstraňovat. Změny světa se kontrolují identitou vlastníka stroje, takže ochrany mohou práci odmítnout."
+      "Pokládání pracuje i s běžně nahraditelnými bloky a výkopové vzory mohou bloky odstraňovat. Změny světa se kontrolují identitou vlastníka stroje, takže ochrany mohou práci odmítnout.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/library": [
-      "Electronic Library přenáší data Blueprintů a Template mezi předměty se snapshoty a uloženou databází snapshotů."
+      "Electronic Library přenáší data Blueprintů a Template mezi předměty se snapshoty a uloženou databází snapshotů.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/replacer": [
-      "Replacer změní v použitém Blueprintu všechny výskyty jednoho zaznamenaného BlockState na jiný."
+      "Replacer změní v použitém Blueprintu všechny výskyty jednoho zaznamenaného BlockState na jiný.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/marker_construction": [
       "Construction Marker vytváří z použitého Blueprintu stavební úlohy pro Builder Roboty. Sám nespotřebovává MJ ani nepokládá bloky.",
-      "Používá nastavení rotace, výkopu a vlastnictví ze snapshotu; blízké Builder Roboty si úlohy rezervují, přinesou materiál a provedou stavbu."
+      "Používá nastavení rotace, výkopu a vlastnictví ze snapshotu; blízké Builder Roboty si úlohy rezervují, přinesou materiál a provedou stavbu.",
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/frame": [
-      "Frame je lehký konstrukční blok používaný Quarry a stavebními systémy jako dočasná struktura."
+      "Frame je lehký konstrukční blok používaný Quarry a stavebními systémy jako dočasná struktura.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/quarry": [
       "Quarry postaví rám v oblasti určené Land Marky a automaticky těží všechny povolené bloky. Bez platné označené oblasti použije menší výchozí oblast před sebou.",
       "Chunk tickety pro pracovní oblast žádá pouze tehdy, když je BuildCraft chunk loading povolen a nastavená úroveň dovoluje Quarry. Server může tickety vypnout nebo omezit, takže vzdálený Quarry nemusí zůstat načtený.",
-      "Vytěžené předměty nabízí sousedním inventářům a transportnímu potrubí. Chráněné bloky se kontrolují identitou vlastníka Quarry a běžná ochrana hráče se neobchází."
+      "Vytěžené předměty nabízí sousedním inventářům a transportnímu potrubí. Chráněné bloky se kontrolují identitou vlastníka Quarry a běžná ochrana hráče se neobchází.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/robot": [
       "Robot je mobilní pracovník, jehož profesi určuje naprogramovaný Redstone Board. Board se programuje v Programming Table a instaluje do robota v Integration Table.",
-      "Vlastníkem se stane hráč, který robota nasadí na Docking Station. Robot se podle potřeby vrací nabít, naložit či vyložit a ničení, pokládání, používání bloků i útoky se provádějí identitou vlastníka."
+      "Vlastníkem se stane hráč, který robota nasadí na Docking Station. Robot se podle potřeby vrací nabít, naložit či vyložit a ničení, pokládání, používání bloků i útoky se provádějí identitou vlastníka.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/redstone_board": [
-      "Redstone Board ukládá profesní program robota. Programuje se v Programming Table a do robota se instaluje v Integration Table."
+      "Redstone Board ukládá profesní program robota. Programuje se v Programming Table a do robota se instaluje v Integration Table.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/robot_station": [
-      "Docking Station je modul na straně potrubí pro propojení, nabíjení, nakládku, vykládku a řízení robotů pomocí Gate."
+      "Docking Station je modul na straně potrubí pro propojení, nabíjení, nakládku, vykládku a řízení robotů pomocí Gate.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/block/zone_planner": [
       "Zone Planner kreslí robotické pracovní zóny do Map Location: podporuje 16 nezávislých vrstev nad souřadnicovou mřížkou 2048 × 2048.",
-      "Mapová data čte pouze z již načtených nebo vygenerovaných chunků. Kreslení či import přes nedostupný terén se ořízne na data, která server může poskytnout, a nevygeneruje nové chunky. Po 120 ticích se ve výstupu objeví Map Location s aktuálním Zone Planem."
+      "Mapová data čte pouze z již načtených nebo vygenerovaných chunků. Kreslení či import přes nedostupný terén se ořízne na data, která server může poskytnout, a nevygeneruje nové chunky. Po 120 ticích se ve výstupu objeví Map Location s aktuálním Zone Planem.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/block/requester": [
-      "Requester udržuje nastavené množství předmětů a chybějící kusy zveřejňuje jako požadavky pro Delivery Roboty."
+      "Requester udržuje nastavené množství předmětů a chybějící kusy zveřejňuje jako požadavky pro Delivery Roboty.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/picker": [
-      "Picker Robot sbírá předměty ležící v pracovní zóně, respektuje filtr stanice a vrací se je vyložit."
+      "Picker Robot sbírá předměty ležící v pracovní zóně, respektuje filtr stanice a vrací se je vyložit.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/carrier": [
-      "Carrier Robot nakládá odpovídající předměty z poskytující stanice a převáží je do jiné stanice, která je může přijmout."
+      "Carrier Robot nakládá odpovídající předměty z poskytující stanice a převáží je do jiné stanice, která je může přijmout.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/fluid_carrier": [
-      "Tank Robot převáží kapaliny mezi stanicemi a nádržemi a používá kapalinové filtry stanic pro nakládku a vykládku."
+      "Tank Robot převáží kapaliny mezi stanicemi a nádržemi a používá kapalinové filtry stanic pro nakládku a vykládku.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/lumberjack": [
-      "Lumberjack Robot si obstará sekeru a kácí propojené kmeny stromů ve své pracovní zóně."
+      "Lumberjack Robot si obstará sekeru a kácí propojené kmeny stromů ve své pracovní zóně.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/harvester": [
-      "Harvester Robot sklízí zralé plodiny v pracovní zóně a vrací úrodu do stanice."
+      "Harvester Robot sklízí zralé plodiny v pracovní zóně a vrací úrodu do stanice.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/miner": [
-      "Miner Robot si obstará krumpáč a těží dosažitelné rudné bloky ve své pracovní zóně."
+      "Miner Robot si obstará krumpáč a těží dosažitelné rudné bloky ve své pracovní zóně.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/planter": [
-      "Planter Robot nakládá odpovídající semena a sází je na vhodnou půdu ve své pracovní zóně."
+      "Planter Robot nakládá odpovídající semena a sází je na vhodnou půdu ve své pracovní zóně.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/farmer": [
-      "Farmer Robot si obstará motyku a připravuje vhodné bloky hlíny či trávy pro sázení."
+      "Farmer Robot si obstará motyku a připravuje vhodné bloky hlíny či trávy pro sázení.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/leave_cutter": [
-      "Leaf Cutter Robot si obstará vhodný řezný nástroj a odstraňuje listí ve své pracovní zóně."
+      "Leaf Cutter Robot si obstará vhodný řezný nástroj a odstraňuje listí ve své pracovní zóně.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/butcher": [
-      "Butcher Robot si obstará meč a loví vhodná pasivní zvířata, ale vyhýbá se kočkám, psům a chráněným ochočeným zvířatům."
+      "Butcher Robot si obstará meč a loví vhodná pasivní zvířata, ale vyhýbá se kočkám, psům a chráněným ochočeným zvířatům.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/shovelman": [
-      "Shovelman Robot si obstará lopatu a kope bloky těžitelné lopatou ve své pracovní zóně."
+      "Shovelman Robot si obstará lopatu a kope bloky těžitelné lopatou ve své pracovní zóně.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/pump": [
-      "Pump Robot odčerpává odpovídající bloky kapaliny ze světa do vnitřní nádrže a vrací se je vyložit do stanice."
+      "Pump Robot odčerpává odpovídající bloky kapaliny ze světa do vnitřní nádrže a vrací se je vyložit do stanice.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/delivery": [
-      "Delivery Robot plní požadavky na předměty zveřejněné Requestery a akcí Request Items na stanicích."
+      "Delivery Robot plní požadavky na předměty zveřejněné Requestery a akcí Request Items na stanicích.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/knight": [
-      "Knight Robot si obstará zbraň a útočí na nepřátelské moby ve své pracovní zóně."
+      "Knight Robot si obstará zbraň a útočí na nepřátelské moby ve své pracovní zóně.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/bomber": [
       "Bomber Robot se programuje za 64 000 MJ, nakládá TNT, létá nad vhodným povrchem pracovní zóny a shazuje zapálené výbušniny.",
-      "<bold>Pozor:</bold> používejte jej pouze v dobře izolované zóně a předem ověřte oprávnění vlastníka i ochranu proti výbuchům."
+      "<bold>Pozor:</bold> používejte jej pouze v dobře izolované zóně a předem ověřte oprávnění vlastníka i ochranu proti výbuchům.",
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/stripes": [
-      "Stripes Robot nakládá použitelné předměty a aplikuje stejné handlery použití předmětu jako Stripes Transport Pipe na volné cílové bloky."
+      "Stripes Robot nakládá použitelné předměty a aplikuje stejné handlery použití předmětu jako Stripes Transport Pipe na volné cílové bloky.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/builder": [
-      "Builder Robot vyhledá blízký Builder nebo Construction Marker, rezervuje stavební úlohu, obstará materiály a provede práci."
+      "Builder Robot vyhledá blízký Builder nebo Construction Marker, rezervuje stavební úlohu, obstará materiály a provede práci.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/in_station": [
-      "Je aktivní, když je robot právě připojen k této Docking Station."
+      "Je aktivní, když je robot právě připojen k této Docking Station.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/sleep": [
-      "Je aktivní, když propojený robot spí a čeká na práci."
+      "Je aktivní, když propojený robot spí a čeká na práci.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/linked": [
-      "Je aktivní, když má stanice propojeného robota bez ohledu na to, zda je právě dokovaný."
+      "Je aktivní, když má stanice propojeného robota bez ohledu na to, zda je právě dokovaný.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/trigger/reserved": [
-      "Je aktivní, když je stanice nebo robot rezervován pro nějakou operaci."
+      "Je aktivní, když je stanice nebo robot rezervován pro nějakou operaci.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/work_filter": [
-      "Nastaví filtr předmětů nebo kapalin pro práci robotů a nakládku či vykládku stanice; parametrem může být předmět, kapalina nebo List."
+      "Nastaví filtr předmětů nebo kapalin pro práci robotů a nakládku či vykládku stanice; parametrem může být předmět, kapalina nebo List.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/work_filter_tool": [
-      "Omezuje nástroje, které smí robot v profesi používající nástroje vyhledat."
+      "Omezuje nástroje, které smí robot v profesi používající nástroje vyhledat.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/goto_station": [
-      "Při splnění podmínky Gate nařídí propojenému robotovi vrátit se k této Docking Station."
+      "Při splnění podmínky Gate nařídí propojenému robotovi vrátit se k této Docking Station.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/wakeup": [
-      "Probudí spícího propojeného robota, aby znovu hledal práci."
+      "Probudí spícího propojeného robota, aby znovu hledal práci.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/work_in_area": [
-      "Přiřadí zónu z Map Location jako pracovní oblast robota."
+      "Přiřadí zónu z Map Location jako pracovní oblast robota.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/load_unload_area": [
-      "Omezuje oblast, ve které může robot hledat stanice pro nakládku a vykládku."
+      "Omezuje oblast, ve které může robot hledat stanice pro nakládku a vykládku.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/accept_fluids": [
-      "Dovolí robotům vykládat odpovídající kapaliny do této stanice nebo připojených fluidních handlerů."
+      "Dovolí robotům vykládat odpovídající kapaliny do této stanice nebo připojených fluidních handlerů.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/accept_items": [
-      "Dovolí robotům vykládat odpovídající předměty do této stanice nebo připojeného inventáře."
+      "Dovolí robotům vykládat odpovídající předměty do této stanice nebo připojeného inventáře.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/forbid_robot": [
-      "Po dobu aktivace brání robotům ve výběru této stanice."
+      "Po dobu aktivace brání robotům ve výběru této stanice.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/force_robot": [
-      "Po dobu aktivace přiměje propojeného robota preferovat tuto stanici nebo se k ní vrátit."
+      "Po dobu aktivace přiměje propojeného robota preferovat tuto stanici nebo se k ní vrátit.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/provide_fluids": [
-      "Inzeruje odpovídající kapaliny na této stanici robotům, kteří je potřebují naložit."
+      "Inzeruje odpovídající kapaliny na této stanici robotům, kteří je potřebují naložit.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/provide_items": [
-      "Inzeruje odpovídající předměty na této stanici robotům, kteří je potřebují naložit."
+      "Inzeruje odpovídající předměty na této stanici robotům, kteří je potřebují naložit.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/request_items": [
-      "Vytváří požadavky na předměty, které mohou splnit Delivery Roboty."
+      "Vytváří požadavky na předměty, které mohou splnit Delivery Roboty.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/action/provide_machine_request": [
-      "Zpřístupní Delivery Robotům požadavky na předměty vytvořené sousedním kompatibilním strojem."
+      "Zpřístupní Delivery Robotům požadavky na předměty vytvořené sousedním kompatibilním strojem.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/item/water_gel": [
-      "Water Gelifier mění připojenou zdrojovou vodu a vodní rostliny na dočasný Water Gel."
+      "Water Gelifier mění připojenou zdrojovou vodu a vodní rostliny na dočasný Water Gel.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/item/gel": [
-      "Gelled Water je pevný materiál získaný z Water Gel."
+      "Gelled Water je pevný materiál získaný z Water Gel.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/laser": [
-      "Laser převádí MJ na laserovou energii pro blízké kompatibilní stoly BuildCraftu."
+      "Laser převádí MJ na laserovou energii pro blízké kompatibilní stoly BuildCraftu.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/assembly_table": [
-      "Assembly Table používá laserovou energii k výrobě součástí BuildCraftu a zásuvných modulů potrubí."
+      "Assembly Table používá laserovou energii k výrobě součástí BuildCraftu a zásuvných modulů potrubí.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/charging_table": [
-      "Charging Table používá laserovou energii k nabíjení předmětů Forge Energy."
+      "Charging Table používá laserovou energii k nabíjení předmětů Forge Energy.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/integration_table": [
-      "Integration Table používá laserovou energii k instalaci kompatibilních vylepšení nebo komponent do cílového předmětu."
+      "Integration Table používá laserovou energii k instalaci kompatibilních vylepšení nebo komponent do cílového předmětu.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/advanced_crafting_table": [
-      "Advanced Crafting Table automaticky opakuje nastavený recept pomocí dodaných materiálů a MJ."
+      "Advanced Crafting Table automaticky opakuje nastavený recept pomocí dodaných materiálů a MJ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/block/programming_table": [
-      "Programming Table používá laserovou energii k zapsání vybrané robotické profese na prázdný Redstone Board."
+      "Programming Table používá laserovou energii k zapsání vybrané robotické profese na prázdný Redstone Board.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/redstone_crystal": [
-      "Redstone Crystal je součást pro pokročilé recepty BuildCraftu vyráběné v Assembly Table."
+      "Redstone Crystal je součást pro pokročilé recepty BuildCraftu vyráběné v Assembly Table.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/gate_copier": [
-      "Gate Copier uloží jednu konfiguraci Gate a aplikuje ji na kompatibilní Gate."
+      "Gate Copier uloží jednu konfiguraci Gate a aplikuje ji na kompatibilní Gate.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/plug_timer": [
-      "Timer je zásuvný modul potrubí, který přidává periodické Gate spouštěče po 5, 10 a 15 sekundách."
+      "Timer je zásuvný modul potrubí, který přidává periodické Gate spouštěče po 5, 10 a 15 sekundách.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_red": [
-      "Red Chipset je základní redstonová logická součást pro Gate a další Silicon recepty."
+      "Red Chipset je základní redstonová logická součást pro Gate a další Silicon recepty.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_iron": [
-      "Iron Chipset je železná úroveň logické součásti pro silnější Gate a stroje."
+      "Iron Chipset je železná úroveň logické součásti pro silnější Gate a stroje.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_gold": [
-      "Gold Chipset je zlatá úroveň logické součásti pro vysokokapacitní Gate a strojní recepty."
+      "Gold Chipset je zlatá úroveň logické součásti pro vysokokapacitní Gate a strojní recepty.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_quartz": [
-      "Quartz Chipset je křemenná logická součást používaná v parametrických a časovacích receptech."
+      "Quartz Chipset je křemenná logická součást používaná v parametrických a časovacích receptech.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/item/chipset_diamond": [
-      "Diamond Chipset je nejvyšší běžný chipset pro pokročilá rozšíření Gate a přesné stroje."
+      "Diamond Chipset je nejvyšší běžný chipset pro pokročilá rozšíření Gate a přesné stroje.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/timer_short": [
-      "Při připojeném Timeru pulzuje jednou za 5 sekund."
+      "Při připojeném Timeru pulzuje jednou za 5 sekund.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/timer_medium": [
-      "Při připojeném Timeru pulzuje jednou za 10 sekund."
+      "Při připojeném Timeru pulzuje jednou za 10 sekund.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftsilicon/trigger/timer_long": [
-      "Při připojeném Timeru pulzuje jednou za 15 sekund."
+      "Při připojeném Timeru pulzuje jednou za 15 sekund.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_power": [
-      "Dřevěné Power Pipe odebírá MJ z kompatibilního sousedního zdroje a vkládá je do sítě Power Pipe."
+      "Dřevěné Power Pipe odebírá MJ z kompatibilního sousedního zdroje a vkládá je do sítě Power Pipe.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobblestone_power": [
-      "Dlážděné Power Pipe je základní nízkokapacitní potrubí pro přenos MJ."
+      "Dlážděné Power Pipe je základní nízkokapacitní potrubí pro přenos MJ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_power": [
-      "Kamenné Power Pipe je univerzální nízkokapacitní potrubí pro přenos MJ."
+      "Kamenné Power Pipe je univerzální nízkokapacitní potrubí pro přenos MJ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_power": [
-      "Pískovcové Power Pipe přenáší MJ mezi potrubími, ale nepřipojuje se přímo k sousedním strojům."
+      "Pískovcové Power Pipe přenáší MJ mezi potrubími, ale nepřipojuje se přímo k sousedním strojům.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_power": [
-      "Křemenné Power Pipe je středně kapacitní transportní potrubí oddělené od kamenné a dlážděné rodiny."
+      "Křemenné Power Pipe je středně kapacitní transportní potrubí oddělené od kamenné a dlážděné rodiny.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_power": [
-      "Zlaté Power Pipe je vysokokapacitní potrubí pro přenos MJ."
+      "Zlaté Power Pipe je vysokokapacitní potrubí pro přenos MJ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_power": [
-      "Železné Power Pipe je nastavitelný omezovač přenosu MJ."
+      "Železné Power Pipe je nastavitelný omezovač přenosu MJ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_power": [
-      "Diamantové Power Pipe je velmi vysokokapacitní nastavitelný omezovač přenosu MJ."
+      "Diamantové Power Pipe je velmi vysokokapacitní nastavitelný omezovač přenosu MJ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_power": [
-      "Dřevěné diamantové Power Pipe je vysokokapacitní potrubí pro extrakci MJ."
+      "Dřevěné diamantové Power Pipe je vysokokapacitní potrubí pro extrakci MJ.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/item/waterproof": [
-      "Pipe Sealant je výrobní součást používaná k převodu transportních materiálů na součásti kapalinového potrubí."
+      "Pipe Sealant je výrobní součást používaná k převodu transportních materiálů na součásti kapalinového potrubí.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/block/filtered_buffer": [
-      "Filtered Buffer je inventář s devíti skutečnými sloty, jejichž přijímání řídí odpovídající phantom filtry."
+      "Filtered Buffer je inventář s devíti skutečnými sloty, jejichž přijímání řídí odpovídající phantom filtry.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil": [
-      "Oil je přirozeně generovaná výchozí surovina palivového řetězce BuildCraftu."
+      "Oil je přirozeně generovaná výchozí surovina palivového řetězce BuildCraftu.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_residue": [
-      "Residue je těžký vedlejší produkt špinavých paliv a některých vysokoteplotních destilačních cest."
+      "Residue je těžký vedlejší produkt špinavých paliv a některých vysokoteplotních destilačních cest.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_heavy": [
-      "Heavy Oil je špinavé mezilehlé palivo vyráběné destilací Cool Oil."
+      "Heavy Oil je špinavé mezilehlé palivo vyráběné destilací Cool Oil.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_dense": [
-      "Dense Oil je špinavé mezilehlé palivo získané z Hot Oil nebo Hot Distilled Oil."
+      "Dense Oil je špinavé mezilehlé palivo získané z Hot Oil nebo Hot Distilled Oil.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/oil_distilled": [
-      "Distilled Oil je čistě spalovaný meziprodukt obsahující plynnou, lehkou a hustou palivovou frakci."
+      "Distilled Oil je čistě spalovaný meziprodukt obsahující plynnou, lehkou a hustou palivovou frakci.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_gaseous": [
-      "Gaseous Fuel je nejvýkonnější rafinované palivo pro Spalovací motor a vyrábí 8 MJ/t bez Residue."
+      "Gaseous Fuel je nejvýkonnější rafinované palivo pro Spalovací motor a vyrábí 8 MJ/t bez Residue.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_light": [
-      "Light Fuel je čisté rafinované palivo pro Spalovací motor s výkonem 6 MJ/t bez Residue."
+      "Light Fuel je čisté rafinované palivo pro Spalovací motor s výkonem 6 MJ/t bez Residue.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_dense": [
-      "Dense Fuel je čisté rafinované palivo s dlouhou dobou hoření a výkonem 4 MJ/t ve Spalovacím motoru."
+      "Dense Fuel je čisté rafinované palivo s dlouhou dobou hoření a výkonem 4 MJ/t ve Spalovacím motoru.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_mixed_light": [
-      "Mixed Light Fuel je čistý meziprodukt použitelný také přímo ve Spalovacím motoru s výkonem 3 MJ/t."
+      "Mixed Light Fuel je čistý meziprodukt použitelný také přímo ve Spalovacím motoru s výkonem 3 MJ/t.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/item/fuel_mixed_heavy": [
-      "Mixed Heavy Fuel je čistý meziprodukt použitelný také přímo ve Spalovacím motoru s výkonem 5 MJ/t."
+      "Mixed Heavy Fuel je čistý meziprodukt použitelný také přímo ve Spalovacím motoru s výkonem 5 MJ/t.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcompat/pipe/propolis_item": [
-      "Apiarist's Pipe je předmětové potrubí pro kompatibilitu s Forestry, které směruje genetické předměty pomocí samostatného filtru pro každou stranu."
+      "Apiarist's Pipe je předmětové potrubí pro kompatibilitu s Forestry, které směruje genetické předměty pomocí samostatného filtru pro každou stranu.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_fe": [
       "FE Engine přijímá Forge Energy a převádí ji na BuildCraft MJ jako směrový motor. Funguje i v režimu Core <code>MJ_ONLY</code>.",
       "Má vstupní buffer 10 000 FE a výstupní buffer 1 000 MJ. Základní výkon je 4 MJ/t, tedy při výchozím poměru 1 MJ = 10 FE nejvýše 40 FE/t. Potřebuje redstonový signál a pokud MJ buffer nemůže přijmout další dávku, FE se zbytečně nespotřebuje.",
-      "GUI má čtyři sloty pro upgrady, po jednom podporovaném ozubeném kole v každém. Každé železné kolo přidá +2 MJ/t a každé zlaté +3 MJ/t. Spotřeba FE se řídí <code>power.mjPerFe</code>. Výstupní stranu MJ otočíte klíčem."
+      "GUI má čtyři sloty pro upgrady, po jednom podporovaném ozubeném kole v každém. Každé železné kolo přidá +2 MJ/t a každé zlaté +3 MJ/t. Spotřeba FE se řídí <code>power.mjPerFe</code>. Výstupní stranu MJ otočíte klíčem.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/mj_dynamo": [
       "MJ Dynamo převádí BuildCraft MJ na Forge Energy a FE vydává přes svou směrovou výstupní stranu. Funguje i v režimu Core <code>MJ_ONLY</code>.",
       "Uchová až 1 000 MJ a 10 000 FE. Základní převod je energie odpovídající 4 MJ/t, tedy 40 FE/t při výchozím poměru. MJ vstupuje z ostatních stran a FE odchází čelní stranou. Převod se neprovede, pokud by přeplnil FE buffer.",
-      "Čtyři upgrade sloty používají stejná pravidla jako FE Engine: železné kolo +2 MJ/t, zlaté +3 MJ/t. Redstonový signál převod zapíná; při vypnutí se uložené FE samovolně vybíjí rychlostí 1 FE/t. Výstup otočíte klíčem."
+      "Čtyři upgrade sloty používají stejná pravidla jako FE Engine: železné kolo +2 MJ/t, zlaté +3 MJ/t. Redstonový signál převod zapíná; při vypnutí se uložené FE samovolně vybíjí rychlostí 1 FE/t. Výstup otočíte klíčem.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_fe": [
       "Dřevěné FE potrubí má výchozí limit <bold>160 FE/t</bold> a odebírá FE ze sousedního zdroje a vkládá je do sítě; přímo se nespojí s jiným dřevěným extrakčním FE potrubím.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobblestone_fe": [
       "Dlažební FE potrubí má výchozí limit <bold>40 FE/t</bold> a je základní nízkokapacitní vedení; dlažební a kamenná rodina se přímo nespojují.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_fe": [
       "Kamenné FE potrubí má výchozí limit <bold>80 FE/t</bold> a je univerzální nízkokapacitní vedení; kamenná a dlažební rodina se přímo nespojují.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_fe": [
       "Pískovcové FE potrubí má výchozí limit <bold>160 FE/t</bold> a spojuje potrubí s potrubím, ale nepřipojuje se přímo k sousedním strojům.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_fe": [
       "Křemenné FE potrubí má výchozí limit <bold>320 FE/t</bold> a slouží k běžnému přenosu FE.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_fe": [
       "Zlaté FE potrubí má výchozí limit <bold>1280 FE/t</bold> a slouží k běžnému přenosu FE.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_fe": [
       "Železné FE potrubí má výchozí limit <bold>320 FE/t</bold> a je nastavitelný omezovač; klíč nebo odpovídající akce Gate opakovaně půlí limit až na 1/64, poté jej vypne a další krok vrátí plný limit.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_fe": [
       "Diamantové FE potrubí má výchozí limit <bold>2560 FE/t</bold> a je velmi vysokokapacitní nastavitelný omezovač; klíčem nebo akcí Gate lze limit snížit či vypnout.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_fe": [
       "Dřevěné diamantové FE potrubí má výchozí limit <bold>2560 FE/t</bold> a odebírá FE ze sousedního zdroje vysokou kapacitou; přímo se nespojí s jiným dřevěným extrakčním FE potrubím.",
-      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou.",
+      null,
+      null,
+      null
     ]
   }
 }

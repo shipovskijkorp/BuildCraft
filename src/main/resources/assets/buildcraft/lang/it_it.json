@@ -2005,5 +2005,6 @@
   "tip.PipeRedstoneFluxDiamond": "Tubo con limite selezionabile",
   "tip.PipeRedstoneFluxIron": "Tubo con limite selezionabile",
   "tip.PipeRedstoneFluxSandstone": "Si connette solo ad altri tubi",
-  "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux Ingresso Tubo"
+  "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux Ingresso Tubo",
+  "item.buildcrafttransport.filtered_buffer": "Buffer filtrante"
 }

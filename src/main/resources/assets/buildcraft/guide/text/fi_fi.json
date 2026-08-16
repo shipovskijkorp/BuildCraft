@@ -1,5 +1,6 @@
 {
-  "language": "Suomi",
+  "format": 1,
+  "language": "fi_fi",
   "pages": {
     "buildcraftcore/item/gear_wood": [
       "Pyrkiessäsi luomaan yksinkertaista automaatiota olet löytänyt hyödyllisen osan: pyörivän hammasrattaan!\nSe on valmistettu vain puusta, joten sitä on parannettava vaativampia tehtäviä varten...",
@@ -28,7 +29,8 @@
     ],
     "buildcraftcore/item/wrench": [
       "BuildCraftin jakoavain kiertää ja määrittää uudelleen tuettuja koneita, suunnattavia putkia ja muita BuildCraft-lohkoja.",
-      "<bold>Yhteensopivuus:</bold> oletuksena myös yhteisen <code>c:tools/wrench</code>-tagin työkalut voivat tehdä samat toiminnot. Palvelinpaketti voi poistaa tagiyhteensopivuuden asetuksella <code>useWrenchTag</code>; BuildCraftin omat jakoavaimet toimivat silti."
+      "<bold>Yhteensopivuus:</bold> oletuksena myös yhteisen <code>c:tools/wrench</code>-tagin työkalut voivat tehdä samat toiminnot. Palvelinpaketti voi poistaa tagiyhteensopivuuden asetuksella <code>useWrenchTag</code>; BuildCraftin omat jakoavaimet toimivat silti.",
+      null
     ],
     "buildcraftcore/item/paintbrush": [
       "Maailman värikkyys on jo itsessään vaikuttavaa, mutta kuvittele voivasi vaihtaa tiettyjen lohkojen väriä yhdellä siveltimenvedolla.\nLohkojen maalaaminen on mukavaa koristelua, mutta sillä voi olla myös käytännöllinen tarkoitus, kuten putkien erottaminen toisistaan.",
@@ -37,7 +39,10 @@
     ],
     "buildcraftcore/item/marker_connector": [
       "Marker Connector yhdistää yhteensopivia merkkejä ja muokkaa suoraan Volume Box- ja Path Mark -geometriaa.",
-      "Yhteyden pituutta rajoittaa <code>markerMaxDistance</code>. Käytä työkalua näkyvään laserlaatikkoon aloittaaksesi siirron ja uudelleen vahvistaaksesi sen; hiipiessä käytettynä laatikko poistuu."
+      "Yhteyden pituutta rajoittaa <code>markerMaxDistance</code>. Käytä työkalua näkyvään laserlaatikkoon aloittaaksesi siirron ja uudelleen vahvistaaksesi sen; hiipiessä käytettynä laatikko poistuu.",
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/marker_path": [
       "Suorat linjat ovat hyödyllisiä, mutta suuret hankkeet tarvitsevat usein reitin, joka kiertää maaston ja koneet.",
@@ -60,7 +65,11 @@
     "buildcraftcore/block/engine_wood": [
       "Redstone-moottori on BuildCraftin pienin MJ-moottori: se tarvitsee vain redstone-signaalin ja tuottaa 0,05 MJ/t.",
       "Se sopii kevyille suorille MJ-kuluttajille ja pienelle poistolle, eikä syötä tavallista Kinesis/Power Pipe -verkkoa. Se ei räjähdä ylikuumenemisesta ja sen suunta vaihdetaan jakoavaimella.",
-      "Näyttö voi käyttää /t- tai /s-yksikköä Core-asetuksen mukaan; todellinen nopeus ei muutu."
+      "Näyttö voi käyttää /t- tai /s-yksikköä Core-asetuksen mukaan; todellinen nopeus ei muutu.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/trigger/always_on": [
       "Tapahtuipa mitä tahansa, tämä laukaisin on aina päällä.",
@@ -330,11 +339,23 @@
     ],
     "buildcraftenergy/block/engine_stone": [
       "Stirling-moottori polttaa tavallisia uunipolttoaineita ja tuottaa noin 0,33–1 MJ/t sen mukaan, kuinka täynnä sen 1 000 MJ sisäinen puskuri on.",
-      "Se tarvitsee redstone-signaalin ja suunnataan jakoavaimella. Jos ulostulo tukkeutuu, puskuri täyttyy, moottori ylikuumenee ja lopettaa tuotannon, kunnes se voi purkaa energiaa ja jäähtyä. Tiloissa <code>MJ_AUTOCONVERT_FE</code> ja <code>DISPLAY_FE</code> ulostulo voidaan myös muuntaa FE-kuluttajille asetetulla suhteella."
+      "Se tarvitsee redstone-signaalin ja suunnataan jakoavaimella. Jos ulostulo tukkeutuu, puskuri täyttyy, moottori ylikuumenee ja lopettaa tuotannon, kunnes se voi purkaa energiaa ja jäähtyä. Tiloissa <code>MJ_AUTOCONVERT_FE</code> ja <code>DISPLAY_FE</code> ulostulo voidaan myös muuntaa FE-kuluttajille asetetulla suhteella.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/engine_iron": [
       "Polttomoottori polttaa BuildCraftin nestemäisiä polttoaineita, käyttää jäähdytysnestettä lämpötilan hallintaan ja varastoi likaisten polttoaineiden tuottaman Residuen.",
-      "Polttoaineelle, jäähdytysnesteelle ja residuelle on erilliset säiliöt. Crude Oil, Heavy Oil ja Dense Oil tuottavat Residuea, jalostetut polttoaineet eivät. Vesi on tavallinen nestemäinen jäähdytin ja jää voidaan muuntaa vedeksi voimakkaammalla jäähdytysvaikutuksella. Kuumat biomit heikentävät ja kylmät biomit parantavat jäähdytystä. Jos vastaanotin ei hyväksy MJ:tä, energia jää moottoriin."
+      "Polttoaineelle, jäähdytysnesteelle ja residuelle on erilliset säiliöt. Crude Oil, Heavy Oil ja Dense Oil tuottavat Residuea, jalostetut polttoaineet eivät. Vesi on tavallinen nestemäinen jäähdytin ja jää voidaan muuntaa vedeksi voimakkaammalla jäähdytysvaikutuksella. Kuumat biomit heikentävät ja kylmät biomit parantavat jäähdytystä. Jos vastaanotin ei hyväksy MJ:tä, energia jää moottoriin.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/distiller": [
       "Raakaöljy on monimutkainen kokoelma hyödyllisiä nesteitä, jotka odottavat erottamista.",
@@ -364,7 +385,11 @@
     ],
     "buildcraftfactory/block/pump": [
       "Pumppu etsii vaiheittain alapuoleltaan yhtenäisen nestealueen, tyhjentää sitä ja syöttää nesteen viereisiin nestehandlereihin.",
-      "Vaakasuora kantama määräytyy <code>pumpMaxDistance</code>-asetuksesta: oletus 64 lohkoa, säädettävä alue 16–128. Oletuksella <code>pumpsConsumeWater=false</code> vanillan ääretön vesilähde säilyy paikallaan. Redstone-signaali pysäyttää pumpun."
+      "Vaakasuora kantama määräytyy <code>pumpMaxDistance</code>-asetuksesta: oletus 64 lohkoa, säädettävä alue 16–128. Oletuksella <code>pumpsConsumeWater=false</code> vanillan ääretön vesilähde säilyy paikallaan. Redstone-signaali pysäyttää pumpun.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/flood_gate": [
       "Monissa suurissa rakennusprojekteissa laajojen alueiden täyttäminen nesteellä on työläs tehtävä, jonka mielellään automatisoi.",
@@ -376,7 +401,12 @@
     ],
     "buildcraftfactory/block/mining_well": [
       "Mining Well louhii yhden pystysuoran sarakkeen alapuoleltaan, jatkaa putkeaan kuiluun ja syöttää louhitut esineet ulos.",
-      "Lohkojen rikkominen tarkistetaan koneen omistajan identiteetillä. Enimmäissyvyyden määräävät <code>miningMaxDepth</code> ja maailman todelliset korkeusrajat, ei yksinkertainen ”bedrockiin asti”. Redstone-signaali pysäyttää koneen."
+      "Lohkojen rikkominen tarkistetaan koneen omistajan identiteetillä. Enimmäissyvyyden määräävät <code>miningMaxDepth</code> ja maailman todelliset korkeusrajat, ei yksinkertainen ”bedrockiin asti”. Redstone-signaali pysäyttää koneen.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftfactory/block/chute": [
       "Tavallinen suppilo on mukava, mutta se ei ole kovin toiminnallinen tai omaperäinen.",
@@ -388,7 +418,11 @@
     ],
     "buildcraftfactory/block/auto_workbench": [
       "Auto Workbench tallentaa reseptin, vastaanottaa ainekset automaatiolta ja valmistaa reseptiä toistuvasti.",
-      "Yksi valmistus vaatii 40 MJ edistystä. Ilman ulkoista energiaa kone tuottaa itse 0,2 MJ/t, joten keskeytymätön valmistus kestää noin kymmenen sekuntia; ulkoinen MJ nopeuttaa sitä. Jos resepti muuttuu kelvottomaksi, kertynyt edistys vähenee. Automaattisissa FE-yhteensopivuustiloissa tavallinen MJ-vastaanotin voi saada energiaa myös FE-muunnoksella."
+      "Yksi valmistus vaatii 40 MJ edistystä. Ilman ulkoista energiaa kone tuottaa itse 0,2 MJ/t, joten keskeytymätön valmistus kestää noin kymmenen sekuntia; ulkoinen MJ nopeuttaa sitä. Jos resepti muuttuu kelvottomaksi, kertynyt edistys vähenee. Automaattisissa FE-yhteensopivuustiloissa tavallinen MJ-vastaanotin voi saada energiaa myös FE-muunnoksella.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/config/registry_overview": [
       "Opasrekisteri on kirjan sisällysluettelon taustalla oleva taulukko: se päättää, mitä on olemassa, missä se näkyy ja mikä kuvake sitä edustaa.",
@@ -898,7 +932,13 @@
     "buildcraftcore/block/engine_basics": [
       "BuildCraft käyttää MJ:tä natiivina energiana. Oletusmuunnos on <bold>1 MJ = 10 FE</bold>, ja sitä voi muuttaa asetuksella <code>power.mjPerFe</code>.",
       "<code>MJ_ONLY</code>-tilassa tavalliset BuildCraft-koneet pysyvät MJ-koneina, mutta FE-moottori, MJ-dynamo ja FE-putket toimivat. <code>MJ_AUTOCONVERT_FE</code> sallii automaattisen muunnoksen myös tavallisille koneille ja <code>DISPLAY_FE</code> suosii lisäksi FE:tä yleisissä näytöissä.",
-      "Opas ilmoittaa nopeudet pelitikitystä kohti. <code>timeGap</code> vaihtaa vain näytön /t- ja /s-yksiköiden välillä eikä muuta koneen nopeutta tai kapasiteettia."
+      "Opas ilmoittaa nopeudet pelitikitystä kohti. <code>timeGap</code> vaihtaa vain näytön /t- ja /s-yksiköiden välillä eikä muuta koneen nopeutta tai kapasiteettia.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftcore/item/box_volume": [
       "Neljän Land Markin siirtäminen aina projektin koon muuttuessa muuttuu nopeasti omaksi projektikseen.",
@@ -911,7 +951,12 @@
     ],
     "buildcraftcore/item/marker_land": [
       "Land Markit määrittävät suorakulmaisia työalueita Quarrylle, Fillerille, Architect Tablelle ja muille koneille. Samalla akselilla olevat merkit yhdistetään Marker Connectorilla.",
-      "Akselikohtainen kantama määräytyy <code>markerMaxDistance</code>-asetuksesta: oletus 64 lohkoa ja säädettävä alue 16–256. Kone käyttää yhdistettyä laatikkoa työalueenaan."
+      "Akselikohtainen kantama määräytyy <code>markerMaxDistance</code>-asetuksesta: oletus 64 lohkoa ja säädettävä alue 16–256. Kone käyttää yhdistettyä laatikkoa työalueenaan.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftlib/item/guide": [
       "Suuri verstas on helpompi rakentaa, kun jokaisen koneen mukana tulee ohjeita arvailun sijaan.",
@@ -996,11 +1041,21 @@
     ],
     "buildcraftbuilders/block/builder": [
       "Builder kuluttaa MJ:tä ja resursseja rakentaakseen käytetyn Blueprintin tai Templaten. Path Mark -reitin kanssa se voi toistaa rakennelman reitin eri pisteissä.",
-      "Maailmaan kohdistuvat toiminnot tehdään koneen omistajan identiteetillä, joten suojaukset voivat estää sijoituksen tai kaivamisen. Työtila ja varatut resurssit tallennetaan ja tarkistetaan turvallisesti uudelleen latauksen jälkeen."
+      "Maailmaan kohdistuvat toiminnot tehdään koneen omistajan identiteetillä, joten suojaukset voivat estää sijoituksen tai kaivamisen. Työtila ja varatut resurssit tallennetaan ja tarkistetaan turvallisesti uudelleen latauksen jälkeen.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/filler": [
       "Filler käyttää merkityllä alueella säädettäviä kuvioita, kuten Clear, Fill, Box, Frame, Horizon, Flatten, Cylinder, Pyramid, Stairs sekä muita 2D- ja 3D-muotoja.",
-      "Se voi sijoittaa tavallisesti korvattavien lohkojen päälle ja kaivuukuviot voivat poistaa lohkoja. Maailman muutokset tarkistetaan koneen omistajan identiteetillä ja noudattavat suojausjärjestelmiä."
+      "Se voi sijoittaa tavallisesti korvattavien lohkojen päälle ja kaivuukuviot voivat poistaa lohkoja. Maailman muutokset tarkistetaan koneen omistajan identiteetillä ja noudattavat suojausjärjestelmiä.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/library": [
       "Hyvän suunnitelman pitäisi kestää pidempään kuin paperi, jolle se ensin tallennettiin.",
@@ -1020,7 +1075,10 @@
     ],
     "buildcraftbuilders/block/marker_construction": [
       "Construction Marker julkaisee käytetyn Blueprintin rakennustehtävät Builder Roboteille. Se ei itse kuluta MJ:tä eikä aseta lohkoja.",
-      "Se käyttää snapshotin kierto-, kaivu- ja omistajuusasetuksia; lähellä olevat Builder Robotit varaavat tehtävät, hakevat materiaalit ja rakentavat."
+      "Se käyttää snapshotin kierto-, kaivu- ja omistajuusasetuksia; lähellä olevat Builder Robotit varaavat tehtävät, hakevat materiaalit ja rakentavat.",
+      null,
+      null,
+      null
     ],
     "buildcraftbuilders/block/frame": [
       "Suuri liikkuva pora on paljon vähemmän huolestuttava, kun sen työalueella on näkyvä teline.",
@@ -1032,11 +1090,20 @@
     "buildcraftbuilders/block/quarry": [
       "Quarry rakentaa kehyksen ja louhii automaattisesti kaikki sallitut lohkot valitulta alueelta. Ilman kelvollisia Land Markeja se luo pienemmän oletusalueen eteensä.",
       "Se pyytää työalueelleen chunk tickettejä vain, jos BuildCraftin chunk loading on käytössä ja asetettu taso sallii Quarryn. Palvelin voi poistaa tai rajoittaa tickettejä, joten etäinen Quarry ei välttämättä pysy ladattuna.",
-      "Suojatut lohkot tarkistetaan Quarryn omistajan identiteetillä eikä normaalia pelaajasuojausta ohiteta."
+      "Suojatut lohkot tarkistetaan Quarryn omistajan identiteetillä eikä normaalia pelaajasuojausta ohiteta.",
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/robot": [
       "Robot on liikkuva työntekijä, jonka ammatin määrää asennettu Redstone Board. Board ohjelmoidaan Programming Tablessa ja asennetaan robottiin Integration Tablessa.",
-      "Robotin Docking Stationille asettava pelaaja tulee sen omistajaksi. Robotit palaavat lataamaan energiaa, hakemaan tai purkamaan resursseja tarpeen mukaan, ja rikkominen, sijoittaminen, käyttäminen sekä hyökkäykset tehdään omistajan identiteetillä."
+      "Robotin Docking Stationille asettava pelaaja tulee sen omistajaksi. Robotit palaavat lataamaan energiaa, hakemaan tai purkamaan resursseja tarpeen mukaan, ja rikkominen, sijoittaminen, käyttäminen sekä hyökkäykset tehdään omistajan identiteetillä.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/item/redstone_board": [
       "Kone voi liikkua, mutta ilman levyä se ei tiedä, pitäisikö sen kantaa, istuttaa, louhia vai paeta lähintä lehmää.",
@@ -1058,7 +1125,12 @@
     ],
     "buildcraftrobotics/block/zone_planner": [
       "Zone Planner piirtää robotin työalueita Map Locationiin: käytettävissä on 16 erikseen muokattavaa kerrosta 2048 × 2048 -koordinaattiruudukossa.",
-      "Kartta lukee vain jo ladatut tai generoidut chunkit. Piirtäminen tai tuonti alueelle, jota palvelin ei voi tarjota, rajataan saatavilla oleviin chunkeihin eikä uusia chunkeja generoida. 120 pelitikityksen jälkeen ulostuloon tulee nykyisen Zone Planin sisältävä Map Location."
+      "Kartta lukee vain jo ladatut tai generoidut chunkit. Piirtäminen tai tuonti alueelle, jota palvelin ei voi tarjota, rajataan saatavilla oleviin chunkeihin eikä uusia chunkeja generoida. 120 pelitikityksen jälkeen ulostuloon tulee nykyisen Zone Planin sisältävä Map Location.",
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/block/requester": [
       "Varasto on hyödyllisempi, kun se voi pyytää puuttuvaa tavaraa ennen tyhjän hyllyn huomaamista.",
@@ -1169,7 +1241,10 @@
     ],
     "buildcraftrobotics/robot/bomber": [
       "Bomber Robot ohjelmoidaan 64 000 MJ:llä, lataa TNT:tä, lentää työalueen kelvollisen maan yllä ja pudottaa sytytettyjä räjähteitä.",
-      "<bold>Varoitus:</bold> käytä sitä vain hyvin eristetyllä alueella ja tarkista omistajan oikeudet sekä räjähdyssuojaukset ennen TNT:n syöttämistä."
+      "<bold>Varoitus:</bold> käytä sitä vain hyvin eristetyllä alueella ja tarkista omistajan oikeudet sekä räjähdyssuojaukset ennen TNT:n syöttämistä.",
+      null,
+      null,
+      null
     ],
     "buildcraftrobotics/robot/stripes": [
       "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
@@ -1623,48 +1698,87 @@
     "buildcraftenergy/block/engine_fe": [
       "FE-moottori vastaanottaa Forge Energyä ja muuntaa sen BuildCraftin MJ-energiaksi suunnattuna moottorina. Se toimii myös Coren <code>MJ_ONLY</code>-tilassa.",
       "Sisäinen syöttöpuskuri on 10 000 FE ja MJ-puskuri 1 000 MJ. Perusteho on 4 MJ/t, joten oletussuhteella 1 MJ = 10 FE kulutus on enintään 40 FE/t. Moottori tarvitsee redstone-signaalin eikä kuluta FE:tä, jos MJ-puskuri ei pysty vastaanottamaan seuraavaa muunnospulssia.",
-      "GUI:ssa on neljä päivityspaikkaa, yksi tuettu hammasratas kuhunkin. Jokainen rautaratas lisää +2 MJ/t ja kultaratas +3 MJ/t. FE-kulutus seuraa asetusta <code>power.mjPerFe</code>. Käännä MJ-ulostulo jakoavaimella."
+      "GUI:ssa on neljä päivityspaikkaa, yksi tuettu hammasratas kuhunkin. Jokainen rautaratas lisää +2 MJ/t ja kultaratas +3 MJ/t. FE-kulutus seuraa asetusta <code>power.mjPerFe</code>. Käännä MJ-ulostulo jakoavaimella.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcraftenergy/block/mj_dynamo": [
       "MJ-dynamo muuntaa BuildCraftin MJ-energian Forge Energyksi ja syöttää FE:n suunnatulta ulostulopinnalta. Se toimii myös Coren <code>MJ_ONLY</code>-tilassa.",
       "Se varastoi enintään 1 000 MJ ja 10 000 FE. Perusmuunnos vastaa 4 MJ/t:tä eli oletussuhteella 40 FE/t. MJ tulee muilta kuin ulostulopinnoilta ja FE lähtee etupinnalta. MJ:tä ei kuluteta, jos seuraava pulssi täyttäisi tai ylittäisi FE-puskurin.",
-      "Neljä päivityspaikkaa käyttävät FE-moottorin sääntöjä: rautaratas +2 MJ/t ja kultaratas +3 MJ/t. Redstone-signaali käynnistää muunnoksen; pois päältä varastoitu FE purkautuu itsestään 1 FE/t. Käännä ulostulo jakoavaimella."
+      "Neljä päivityspaikkaa käyttävät FE-moottorin sääntöjä: rautaratas +2 MJ/t ja kultaratas +3 MJ/t. Redstone-signaali käynnistää muunnoksen; pois päältä varastoitu FE purkautuu itsestään 1 FE/t. Käännä ulostulo jakoavaimella.",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/wood_fe": [
       "Puinen FE-putki siirtää oletuksena enintään <bold>160 FE/t</bold> ja ottaa FE:tä viereisestä energialähteestä ja syöttää sen verkkoon; se ei yhdisty suoraan toiseen puiseen FE-poistoputkeen.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/cobblestone_fe": [
       "Mukulakivinen FE-putki siirtää oletuksena enintään <bold>40 FE/t</bold> ja on perustason pienikapasiteettinen siirtoputki; mukulakivi- ja kiviperheet eivät yhdisty suoraan toisiinsa.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/stone_fe": [
       "Kivinen FE-putki siirtää oletuksena enintään <bold>80 FE/t</bold> ja on yleinen pienikapasiteettinen siirtoputki; kivi- ja mukulakiviperheet eivät yhdisty suoraan toisiinsa.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/sandstone_fe": [
       "Hiekkakivinen FE-putki siirtää oletuksena enintään <bold>160 FE/t</bold> ja yhdistyy putkiin mutta ei suoraan viereisiin koneisiin.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/quartz_fe": [
       "Kvartsinen FE-putki siirtää oletuksena enintään <bold>320 FE/t</bold> ja siirtää FE:tä normaalisti.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/gold_fe": [
       "Kultainen FE-putki siirtää oletuksena enintään <bold>1280 FE/t</bold> ja siirtää FE:tä normaalisti.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/iron_fe": [
       "Rautainen FE-putki siirtää oletuksena enintään <bold>320 FE/t</bold> ja on säädettävä rajoitin; jakoavain tai vastaava Gate-toiminto puolittaa rajan toistuvasti arvoon 1/64, poistaa siirron käytöstä ja seuraavaksi palauttaa täyden rajan.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_fe": [
       "Timanttinen FE-putki siirtää oletuksena enintään <bold>2560 FE/t</bold> ja on erittäin suuren kapasiteetin säädettävä rajoitin; jakoavaimella tai Gate-toiminnolla rajaa voidaan pienentää tai siirto poistaa käytöstä.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ],
     "buildcrafttransport/pipe/diamond_wood_fe": [
       "Puinen timantti-FE-putki siirtää oletuksena enintään <bold>2560 FE/t</bold> ja ottaa FE:tä viereisestä energialähteestä suurella kapasiteetilla; se ei yhdisty suoraan toiseen puiseen FE-poistoputkeen.",
-      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää.",
+      null,
+      null,
+      null
     ]
   }
 }

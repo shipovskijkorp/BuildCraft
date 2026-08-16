@@ -2005,5 +2005,6 @@
   "buildcraft.help.mj_dynamo.fe_battery.desc": "Muuntaa BuildCraft MJ:n ja Forge Energyn välillä.",
   "buildcraft.help.fe_engine.fe_battery.title": "FE-akku",
   "buildcraft.help.fe_engine.fe_battery.desc": "Muuntaa Forge Energyn ja BuildCraft MJ:n välillä.",
-  "config.display.timeGap": "Virtausnopeuden yksiköt (/t tai /s)"
+  "config.display.timeGap": "Virtausnopeuden yksiköt (/t tai /s)",
+  "item.buildcrafttransport.filtered_buffer": "Filtered Puskuri"
 }

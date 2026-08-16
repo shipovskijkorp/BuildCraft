@@ -2005,5 +2005,6 @@
   "buildcraft.help.mj_dynamo.fe_battery.desc": "Převádí mezi BuildCraft MJ a Forge Energy.",
   "buildcraft.help.fe_engine.fe_battery.title": "FE baterie",
   "buildcraft.help.fe_engine.fe_battery.desc": "Převádí mezi Forge Energy a BuildCraft MJ.",
-  "config.display.timeGap": "Jednotky průtoku (/t nebo /s)"
+  "config.display.timeGap": "Jednotky průtoku (/t nebo /s)",
+  "item.buildcrafttransport.filtered_buffer": "Filtrovaný zásobník"
 }

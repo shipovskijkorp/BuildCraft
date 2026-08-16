@@ -2005,5 +2005,6 @@
   "tip.pipe.buildcrafttransport.quartz_fe": "Transfere Forge Energy",
   "tip.pipe.buildcrafttransport.sandstone_fe": "Conecta apenas a outros tubos",
   "tip.pipe.buildcrafttransport.stone_fe": "Transfere Forge Energy",
-  "tip.pipe.buildcrafttransport.wood_fe": "Extrai Forge Energy"
+  "tip.pipe.buildcrafttransport.wood_fe": "Extrai Forge Energy",
+  "item.buildcrafttransport.filtered_buffer": "Buffer filtrado"
 }

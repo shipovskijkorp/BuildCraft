@@ -2005,5 +2005,6 @@
   "tip.PipeRedstoneFluxDiamond": "Választhatóan limitáló cső",
   "tip.PipeRedstoneFluxIron": "Választhatóan limitáló cső",
   "tip.PipeRedstoneFluxSandstone": "Csak másik csőhöz csatlakozik",
-  "tip.PipeRedstoneFluxWoodenDiamond": "Vöröskő Fluxus Bemenet Cső"
+  "tip.PipeRedstoneFluxWoodenDiamond": "Vöröskő Fluxus Bemenet Cső",
+  "item.buildcrafttransport.filtered_buffer": "Szűrt buffer"
 }
