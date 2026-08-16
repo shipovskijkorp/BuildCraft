@@ -1,0 +1,56 @@
+{
+  "format": 1,
+  "default": "en_us",
+  "languages": {
+    "en_us": {
+      "name": "English (US)",
+      "fallback": []
+    },
+    "ru_ru": {
+      "name": "Русский",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "zh_cn": {
+      "name": "简体中文",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "zh_tw": {
+      "name": "繁體中文",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "et_ee": {
+      "name": "Eesti",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "pt_br": {
+      "name": "Português (Brasil)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "es_mx": {
+      "name": "Español (México)",
+      "fallback": [
+        "en_us"
+      ]
+    },
+    "es_es": {
+      "name": "Español (España)",
+      "fallback": [
+        "en_us"
+      ]
+    }
+  },
+  "aliases": {
+    "en_gb": "en_us",
+    "ru_ua": "ru_ru"
+  }
+}

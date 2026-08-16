@@ -2,13 +2,12 @@
 
 A client-side localization addon for BuildCraft Community Edition.
 
-The addon contains every bundled BuildCraft translation except `en_us`, including the Russian Guide Book text pack. English remains in the main BuildCraft JAR and is used as the fallback language.
+The addon contains every bundled BCCE and ITCE translation except `en_us`. English remains in the main JAR and is used as the fallback language.
 
 ## Supported targets
 
 - Minecraft 1.19.2 — Forge
 - Minecraft 1.20.1 — Forge
-- Minecraft 1.21.1 — Forge
 - Minecraft 1.21.1 — NeoForge
 
 All targets live in this single branch and are managed by Stonecutter.

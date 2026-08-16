@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "da_dk",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 27 spande (27.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/iron_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 32 spande (32.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/silver_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 43 spande (43.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/gold_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 48 spande (48.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 64 spande (64.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 64 spande (64.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 96 spande (96.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 96 spande (96.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 128 spande (128.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 256 spande (256.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 512 spande (512.000 mB).",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Placér kompatible tanke direkte over eller under hinanden for at danne en lodret væskekolonne. BuildCraft-rør og -maskiner bruger tankens indbyggede væskekapabilitet."
+    ],
+    "irontanks/block/void_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En kompakt bortskaffelsestank, der kontinuerligt destruerer op til 80 mB lagret væske pr. tick.",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Den kan forbindes lodret med kompatible tanke. Væske, der når denne tank, slettes; brug den ikke til værdifulde væsker."
+    ],
+    "irontanks/block/creative_tank": [
+      "Mere plads til væskerne, der holder industrien i gang.",
+      "En kilde-tank kun til Creative. Når den er fyldt med en væske, kan den tappes uendeligt uden at den lagrede mængde falder.",
+      "Brug tankopgraderinger til at bevare den lagrede væske, når du skifter niveau.",
+      "Drift",
+      "Den kreative tank afviser bevidst lodrette tankforbindelser for at undgå tvetydige uendelige balanceringskæder."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer BuildCraft-glastank til Kobbertank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer BuildCraft-glastank til Jerntank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Kobbertank til Jerntank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Kobbertank til Sølvtank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Jerntank til Guldtank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Sølvtank til Guldtank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Guldtank til Diamanttank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Diamanttank til Obsidiantank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Diamanttank til Smaragdtank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Diamanttank til Aluminiumtank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Smaragdtank til Tank af rustfrit stål på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Aluminiumtank til Tank af rustfrit stål på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Tank af rustfrit stål til Titaniumtank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Opgrader beholderen, ikke oprydningsarbejdet.",
+      "Konverterer Titaniumtank til Wolframståltank på stedet.",
+      "Brug opgraderingen på den matchende tankblok.",
+      "Bevaring af væske",
+      "Blokken udskiftes på serveren, og hele væskestakken kopieres til den nye BuildCraft-tank, før opgraderingsgenstanden forbruges."
+    ]
+  }
+}

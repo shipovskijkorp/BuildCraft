@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "hr_hr",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 27 kanti (27 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/iron_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 32 kanti (32 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/silver_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 43 kanti (43 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/gold_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 48 kanti (48 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 64 kanti (64 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 64 kanti (64 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 96 kanti (96 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 96 kanti (96 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 128 kanti (128 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 256 kanti (256 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Spremnik kompatibilan s BuildCraftom kapaciteta 512 kanti (512 000 mB).",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kompatibilni spremnici mogu se slagati okomito u stupac tekućine. BuildCraft cijevi i strojevi pristupaju mu putem izvornog fluidnog capabilityja."
+    ],
+    "irontanks/block/void_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Kompaktni spremnik za zbrinjavanje koji neprekidno uništava do 80 mB pohranjene tekućine po ticku.",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Može se okomito povezati s kompatibilnim spremnicima. Tekućina koja uđe u ovaj spremnik trajno se uklanja."
+    ],
+    "irontanks/block/creative_tank": [
+      "Više prostora za tekućine koje pokreću industriju.",
+      "Izvorni spremnik za Kreativni način. Nakon što primi jednu vrstu tekućine, može je davati bez smanjivanja pohranjene količine.",
+      "Nadogradnje mijenjaju razinu spremnika uz očuvanje pohranjene tekućine.",
+      "Način rada",
+      "Kreativni spremnik namjerno se ne povezuje okomito s drugim spremnicima kako bi se izbjegli lanci za uravnoteživanje beskonačne tekućine."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala staklo u spremnik od materijala bakar izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala staklo u spremnik od materijala željezo izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala bakar u spremnik od materijala željezo izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala bakar u spremnik od materijala srebro izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala željezo u spremnik od materijala zlato izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala srebro u spremnik od materijala zlato izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala zlato u spremnik od materijala dijamant izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala dijamant u spremnik od materijala opsidijan izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala dijamant u spremnik od materijala smaragd izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala dijamant u spremnik od materijala aluminij izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala smaragd u spremnik od materijala nehrđajući čelik izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala aluminij u spremnik od materijala nehrđajući čelik izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala nehrđajući čelik u spremnik od materijala titanij izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Povećajte kapacitet, a ne količinu ručnog rada.",
+      "Pretvara spremnik od materijala titanij u spremnik od materijala volframov čelik izravno u svijetu.",
+      "Upotrijebite predmet za nadogradnju na odgovarajućem spremniku.",
+      "Očuvanje tekućine",
+      "Poslužitelj prvo zamijeni blok, zatim kopira cijelu zalihu tekućine u novi spremnik i tek nakon toga potroši predmet za nadogradnju."
+    ]
+  }
+}

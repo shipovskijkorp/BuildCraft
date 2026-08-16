@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "lt_lt",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas varinis bakas, kurio talpa – 27 kibirai (27,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/iron_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas geležinis bakas, kurio talpa – 32 kibirai (32,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/silver_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas sidabrinis bakas, kurio talpa – 43 kibirai (43,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/gold_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas auksinis bakas, kurio talpa – 48 kibirai (48,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas deimantinis bakas, kurio talpa – 64 kibirai (64,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas obsidianinis bakas, kurio talpa – 64 kibirai (64,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas smaragdinis bakas, kurio talpa – 96 kibirai (96,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas aliumininis bakas, kurio talpa – 96 kibirai (96,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas nerūdijančio plieno bakas, kurio talpa – 128 kibirai (128,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas titaninis bakas, kurio talpa – 256 kibirai (256,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Su BuildCraft suderinamas volframinio plieno bakas, kurio talpa – 512 kibirai (512,000 mB).",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Suderinamus bakus statykite tiesiai vieną virš kito, kad susidarytų vertikali skysčio kolona. BuildCraft vamzdžiai ir mašinos pasiekia standartinę bako skysčių sąsają."
+    ],
+    "irontanks/block/void_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Kompaktiškas šalinimo bakas, kuris nuolat sunaikina iki 80 mB jame esančio skysčio per tiką.",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Jį galima vertikaliai sujungti su suderinamais bakais. Į šį baką patekęs skystis visam laikui sunaikinamas, todėl nenaudokite jo vertingiems skysčiams."
+    ],
+    "irontanks/block/creative_tank": [
+      "Daugiau vietos pramonę varantiems skysčiams.",
+      "Tik kūrybiniam režimui skirtas skysčio šaltinio bakas. Užpildžius jį vienu skysčiu, išleidimas tiekia skystį nemažindamas atsargų.",
+      "Bakų patobulinimai leidžia pakeisti pakopą išsaugant bake esantį skystį.",
+      "Veikimas",
+      "Kūrybinis bakas tyčia nesijungia vertikaliai su kitais bakais, kad nesusidarytų dviprasmės begalinio skysčio balansavimo grandinės."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia stiklinis baką į varinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia stiklinis baką į geležinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia varinis baką į geležinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia varinis baką į sidabrinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia geležinis baką į auksinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia sidabrinis baką į auksinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia auksinis baką į deimantinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia deimantinis baką į obsidianinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia deimantinis baką į smaragdinis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia deimantinis baką į aliumininis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia smaragdinis baką į nerūdijančio plieno baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia aliumininis baką į nerūdijančio plieno baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia nerūdijančio plieno baką į titaninis baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Patobulinkite baką, o ne iš naujo perpilkite jo turinį.",
+      "Vietoje pakeičia titaninis baką į volframinio plieno baką.",
+      "Panaudokite patobulinimą ant atitinkamo bako bloko.",
+      "Skysčio išsaugojimas",
+      "Serveris pakeičia bloką ir nukopijuoja visą skysčio turinį į naują BuildCraft baką prieš sunaudodamas patobulinimo daiktą."
+    ]
+  }
+}

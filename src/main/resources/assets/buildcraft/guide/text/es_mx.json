@@ -930,7 +930,15 @@
       "Cuando se activa, la compuerta permite que la tubería Emzuli extraiga mediante el color del preajuste seleccionado. Sin un preajuste fijado por una compuerta, no puede extraer objetos."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Conceptos básicos de los motores"
+      "BuildCraft sigue funcionando con MJ, pero las fábricas modernas a menudo también necesitan cruzar la frontera hacia Forge Energy.",
+      "BuildCraft usa MJ como energía nativa para sus máquinas y Tubos de Energía. La maquinaria FE dedicada y un modo opcional de conversión automática permiten interoperar sin sustituir la red MJ.",
+      "<bold>Consejo:</bold> Mantén las redes MJ y FE visualmente separadas hasta tener claro dónde ocurre la conversión. Los convertidores dedicados hacen mucho más sencillo diagnosticar fábricas con energías mixtas.",
+      "MJ y Forge Energy",
+      "La conversión predeterminada es <bold>1 MJ = 10 FE</bold>. Puede cambiarse con la opción <code>power.mjPerFe</code> de Core. <code>MJ_ONLY</code> es el modo de energía predeterminado: las máquinas normales de BuildCraft siguen usando solo MJ, mientras que el Motor FE, el Dínamo MJ y los Tubos FE continúan disponibles. <code>MJ_AUTOCONVERT_FE</code> permite además que las máquinas MJ normales de BuildCraft acepten FE y que los motores compatibles alimenten consumidores FE. <code>DISPLAY_FE</code> habilita el mismo comportamiento de conversión y hace que las lecturas genéricas de energía prefieran FE.",
+      "Visualización de tasas",
+      "Esta guía expresa las tasas de transferencia por tick para poder comparar directamente las máquinas. La opción <code>timeGap</code> de Core puede mostrar los valores en vivo por tick o por segundo; un segundo son veinte ticks, así que 4 MJ/t se muestran como 80 MJ/s al seleccionar segundos. Cambiar la unidad de visualización no altera la velocidad ni la capacidad de las máquinas.",
+      "Conexiones de los motores",
+      "Los motores y los motores convertidores necesitan una señal de redstone para funcionar. Gira las máquinas direccionales con una Llave para que su cara de trabajo apunte al consumidor previsto. La contrapresión importa: si un búfer interno no puede vaciarse, la generación se ralentiza o se detiene y la temperatura puede subir. Usa compuertas, almacenamiento o una señal de apagado en lugar de asumir que la energía no utilizada desaparecerá."
     ],
     "buildcraftcore/item/box_volume": [
       "Mover cuatro marcadores de terreno cada vez que cambia el tamaño de un proyecto acaba convirtiéndose en otro proyecto.",
@@ -1686,6 +1694,91 @@
       "<bold>Consejo:</bold> Usa una tubería de apicultor en una intersección dedicada al procesamiento de abejas. Mantén una ruta de desbordamiento normal para que los tipos inesperados no bloqueen la red.",
       "Filtros genéticos",
       "Abre la tubería para configurar cada cara de salida. Las reglas de filtro de Forestry pueden identificar objetos genéticos por especie, familia de especie y etapa vital. Se pueden asignar hasta tres especies seleccionadas a un lado, y cada entrada puede activarse o desactivarse de forma independiente.\n\nLos objetos se enrutan por la primera salida compatible según las reglas de Forestry configuradas. Las salidas sin una regla coincidente activa no reclaman el objeto genético. La tubería puede pintarse y conectarse como las demás tuberías de objetos de BuildCraft.\n\nEsta página solo se carga cuando Forestry está instalado y el objeto de compatibilidad está registrado."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Algunas fábricas ya tienen FE circulando por las paredes; BuildCraft no tiene por qué fingir que no lo ve.",
+      "El Motor FE consume Forge Energy, la convierte en MJ y se comporta como un motor direccional de BuildCraft.",
+      "<bold>Consejo:</bold> Usa el Motor FE cuando una red FE deba alimentar una red BuildCraft exclusiva de MJ sin habilitar la conversión automática para todas las máquinas normales.",
+      "Conversión y búferes",
+      "El motor acepta FE en un búfer de entrada de 10.000 FE y produce 4 MJ/t de forma predeterminada. Con la relación predeterminada de 1 MJ = 10 FE consume hasta 40 FE/t. El MJ generado se guarda en el búfer normal de 1.000 MJ del motor y sale por la cara de salida. El convertidor dedicado funciona incluso cuando el modo de energía de Core es <code>MJ_ONLY</code>.",
+      "Mejoras",
+      "La interfaz tiene cuatro espacios de mejora y acepta una engranaje compatible por espacio. Cada Engranaje de Hierro añade 2 MJ/t y cada Engranaje de Oro añade 3 MJ/t. El consumo de FE sigue la relación MJ/FE configurada, de modo que cambiar <code>power.mjPerFe</code> cambia el coste en FE de la misma salida MJ.",
+      "Mecánica del motor",
+      "Suministra una señal de redstone y gira el motor para que su extremo móvil apunte al consumidor MJ o al Tubo de Energía. Si el búfer MJ no puede aceptar otro pulso de conversión, el motor espera en vez de consumir FE para energía que no puede almacenar. Como otros motores que no son de Redstone, genera calor y no debe dejarse bloqueado permanentemente bajo carga."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "A veces la máquina del otro extremo habla FE mientras el resto de la fábrica ya se ha comprometido con MJ.",
+      "El Dínamo MJ consume MJ de BuildCraft y produce Forge Energy por su cara de salida direccional.",
+      "<bold>Consejo:</bold> Apunta el Dínamo directamente a un consumidor FE o a una disposición de extracción/red FE y suministra MJ por una de sus otras caras. Así queda clara la frontera de conversión.",
+      "Conversión y búferes",
+      "El Dínamo almacena hasta 1.000 MJ y hasta 10.000 FE. Su tasa base de conversión equivale a 4 MJ/t, es decir, 40 FE/t con la relación predeterminada de 1 MJ = 10 FE. MJ entra por las caras que no son de salida; FE sale por la cara orientada. El convertidor dedicado funciona incluso cuando el modo de energía de Core es <code>MJ_ONLY</code>.",
+      "Mejoras",
+      "Los cuatro espacios de mejora usan las mismas reglas que el Motor FE: cada Engranaje de Hierro añade 2 MJ/t de capacidad de conversión y cada Engranaje de Oro añade 3 MJ/t. El resultado real en FE/t sigue la relación MJ/FE configurada.",
+      "Mecánica del Dínamo",
+      "Una señal de redstone habilita la conversión. El Dínamo no consume MJ para un pulso que llenaría o desbordaría su búfer FE. Cuando está desactivado, el FE almacenado se autodescarga lentamente a razón de 1 FE por tick, reproduciendo el comportamiento restaurado del convertidor de BuildCraft 8. Gíralo con una Llave para elegir la cara de salida FE."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Madera extrae FE de una fuente de energía adyacente y lo inyecta en la red de Tubos FE.",
+      "<bold>Consejo:</bold> Coloca tubos de extracción solo en proveedores FE reales y dimensiona el siguiente tramo para la misma carga. Una fuente rápida no puede atravesar un cuello de botella más lento.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>160 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Como otros tubos de extracción de energía de madera, no se conecta directamente a otro Tubo FE de Madera.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Adoquines es el tubo básico de transporte FE de baja capacidad.",
+      "<bold>Consejo:</bold> El caudal FE queda limitado por el tramo más lento de la ruta. Mejora primero la troncal cargada antes de gastar tubos de alto nivel en ramales poco utilizados.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>40 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Las familias de Adoquines y Piedra no se conectan directamente entre sí, lo que permite mantener separadas líneas FE adyacentes.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Piedra es un tubo general de transporte FE de baja capacidad.",
+      "<bold>Consejo:</bold> El caudal FE queda limitado por el tramo más lento de la ruta. Mejora primero la troncal cargada antes de gastar tubos de alto nivel en ramales poco utilizados.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>80 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Las familias de Piedra y Adoquines no se conectan directamente entre sí.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Arenisca transporta FE entre tubos sin conectarse directamente a las máquinas vecinas.",
+      "<bold>Consejo:</bold> El caudal FE queda limitado por el tramo más lento de la ruta. Mejora primero la troncal cargada antes de gastar tubos de alto nivel en ramales poco utilizados.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>160 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Úsalo para pasar una troncal FE junto a máquinas que no deban convertirse en puntos finales.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Cuarzo es un tubo de transporte FE de capacidad media.",
+      "<bold>Consejo:</bold> El caudal FE queda limitado por el tramo más lento de la ruta. Mejora primero la troncal cargada antes de gastar tubos de alto nivel en ramales poco utilizados.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>320 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Su material distintivo también resulta útil para separar o identificar visualmente las troncales FE.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Oro es un tubo de transporte FE de alta capacidad.",
+      "<bold>Consejo:</bold> El caudal FE queda limitado por el tramo más lento de la ruta. Mejora primero la troncal cargada antes de gastar tubos de alto nivel en ramales poco utilizados.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>1280 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Úsalo primero en troncales muy cargadas antes de mejorar cada ramal corto.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Hierro es un limitador configurable de transferencia FE.",
+      "<bold>Consejo:</bold> El caudal FE queda limitado por el tramo más lento de la ruta. Mejora primero la troncal cargada antes de gastar tubos de alto nivel en ramales poco utilizados.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>320 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Usa una Llave o la acción limitadora equivalente de una Compuerta para reducir repetidamente a la mitad el límite hasta una sexagésima cuarta parte, desactivar después la transferencia y volver finalmente al valor completo.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Diamante es un limitador configurable de transferencia FE de muy alta capacidad.",
+      "<bold>Consejo:</bold> El caudal FE queda limitado por el tramo más lento de la ruta. Mejora primero la troncal cargada antes de gastar tubos de alto nivel en ramales poco utilizados.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>2560 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Usa una Llave o la acción limitadora equivalente de una Compuerta para reducir o desactivar el límite de transferencia cuando sea necesario estrangular un ramal.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar enrutar.",
+      "El Tubo FE de Madera con Diamante es el tubo de extracción FE de alta capacidad.",
+      "<bold>Consejo:</bold> Coloca tubos de extracción solo en proveedores FE reales y dimensiona el siguiente tramo para la misma carga. Una fuente rápida no puede atravesar un cuello de botella más lento.",
+      "Mecánica de los Tubos FE",
+      "Su límite de transferencia predeterminado es <bold>2560 FE/t</bold>. Las tasas de los Tubos FE derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, de modo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Como el Tubo FE de Madera normal, extrae de fuentes FE adyacentes y no se conecta directamente a otro tubo de extracción FE de madera.\n\nLos Tubos FE se conectan a energy capabilities FE compatibles, solicitan únicamente la energía que la red puede utilizar y conservan la energía no aceptada en lugar de duplicarla. Son un transporte FE dedicado y siguen disponibles en el modo <code>MJ_ONLY</code>. Los soportes de tubería también pueden contener agua en las versiones actuales de Minecraft."
     ]
   }
 }

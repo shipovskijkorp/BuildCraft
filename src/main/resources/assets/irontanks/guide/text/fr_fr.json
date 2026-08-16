@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "fr_fr",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 27 seaux (27,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/iron_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 32 seaux (32,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/silver_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 43 seaux (43,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/gold_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 48 seaux (48,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 64 seaux (64,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 64 seaux (64,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 96 seaux (96,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 96 seaux (96,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 128 seaux (128,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 256 seaux (256,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compatible avec BuildCraft d’une capacité de 512 seaux (512,000 mB).",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Placez des réservoirs compatibles directement les uns au-dessus ou au-dessous des autres pour former une colonne verticale de fluide. Les tuyaux et machines de BuildCraft utilisent la capability de fluide native du réservoir."
+    ],
+    "irontanks/block/void_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir compact d’élimination qui détruit en continu jusqu’à 80 mB du fluide stocké par tick.",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Il peut se connecter verticalement aux réservoirs compatibles. Tout fluide qui atteint ce réservoir est supprimé ; ne l’utilisez pas pour des fluides précieux."
+    ],
+    "irontanks/block/creative_tank": [
+      "Davantage de place pour les fluides qui font tourner votre industrie.",
+      "Un réservoir source réservé au mode Créatif. Une fois rempli d’un fluide, les extractions fournissent ce fluide sans réduire la quantité stockée.",
+      "Utilisez les améliorations de réservoir pour changer de palier tout en conservant le fluide stocké.",
+      "Fonctionnement",
+      "Le réservoir créatif refuse volontairement les connexions verticales avec d’autres réservoirs afin d’éviter des chaînes d’équilibrage infinies ambiguës."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en verre de BuildCraft en réservoir en cuivre.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en verre de BuildCraft en réservoir en fer.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en cuivre en réservoir en fer.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en cuivre en réservoir en argent.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en fer en réservoir en or.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en argent en réservoir en or.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en or en réservoir en diamant.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en diamant en réservoir en obsidienne.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en diamant en réservoir en émeraude.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en diamant en réservoir en aluminium.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en émeraude en réservoir en acier inoxydable.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en aluminium en réservoir en acier inoxydable.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en acier inoxydable en réservoir en titane.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Améliorez le contenant, pas la corvée de vidange.",
+      "Transforme sur place un réservoir en titane en réservoir en acier au tungstène.",
+      "Utilisez l’amélioration sur le bloc de réservoir correspondant.",
+      "Conservation du fluide",
+      "Le bloc est remplacé côté serveur et l’intégralité de la pile de fluide est copiée dans le nouveau réservoir BuildCraft avant que l’objet d’amélioration ne soit consommé."
+    ]
+  }
+}

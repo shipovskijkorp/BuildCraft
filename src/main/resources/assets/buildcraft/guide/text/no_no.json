@@ -930,7 +930,15 @@
       "Når handlingen aktiveres, lar porten Emzuli Pipe trekke ut med fargen valgt i Extraction Preset.\nUten en uttrekksinnstilling fra porten kan Emzuli Pipe ikke trekke ut noen gjenstander."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Grunnleggende om motorer"
+      "BuildCraft kjører fortsatt på MJ, men moderne fabrikker må ofte også krysse grensen til Forge Energy.",
+      "BuildCraft bruker MJ som intern energi for maskiner og energirør. Dedikerte FE-maskiner og en valgfri automatisk konverteringsmodus gir samspill uten å erstatte MJ-nettet.",
+      "<bold>Hint:</bold> Hold MJ- og FE-nett visuelt adskilt til du vet nøyaktig hvor konverteringen skjer. Dedikerte omformere gjør fabrikker med blandede energityper mye enklere å feilsøke.",
+      "MJ og Forge Energy",
+      "Standardforholdet er <bold>1 MJ = 10 FE</bold>. Det kan endres med Core-innstillingen <code>power.mjPerFe</code>. <code>MJ_ONLY</code> er standard strømmodus: vanlige BuildCraft-maskiner forblir MJ-baserte, mens FE-motoren, MJ-dynamoen og FE-rørene fortsatt er tilgjengelige. <code>MJ_AUTOCONVERT_FE</code> lar i tillegg vanlige BuildCraft-MJ-maskiner ta imot FE og kompatible motorer forsyne FE-forbrukere. <code>DISPLAY_FE</code> aktiverer samme konverteringsatferd og gjør at generelle effektvisninger foretrekker FE.",
+      "Visning av hastighet",
+      "Denne guiden oppgir overføringshastigheter per tick slik at maskiner kan sammenlignes direkte. Core-innstillingen <code>timeGap</code> kan i stedet vise løpende verdier per tick eller per sekund; ett sekund er tjue ticks, så 4 MJ/t vises som 80 MJ/s når sekunder er valgt. Å bytte visningsenhet endrer ikke maskinhastighet eller kapasitet.",
+      "Motortilkoblinger",
+      "Motorer og omformermotorer trenger et redstone-signal for å virke. Drei retningsbestemte maskiner med en skiftenøkkel slik at arbeidssiden peker mot riktig mottaker. Mottrykk betyr noe: når en intern buffer ikke kan tømmes, går produksjonen saktere eller stopper, og varmen kan stige. Bruk porter, lagring eller et avslåingssignal i stedet for å anta at ubrukt energi forsvinner."
     ],
     "buildcraftcore/item/box_volume": [
       "Å flytte fire Land Marks hver gang et prosjekt endrer størrelse, blir raskt et prosjekt i seg selv.",
@@ -1686,6 +1694,91 @@
       "<bold>Tips:</bold> Bruk et Apiarist's Pipe ved et eget knutepunkt for bibehandling. Behold en vanlig overløpsrute slik at uventede bietyper ikke blokkerer nettverket.",
       "Genetiske filtre",
       "Åpne røret for å konfigurere hver utgangsside. Forestrys filterregler kan matche genetiske gjenstander etter art, artsfamilie og livsstadium. Opptil tre valgte arter kan tildeles en side, og hver oppføring kan aktiveres eller deaktiveres uavhengig.\n\nGjenstander rutes gjennom den første kompatible utgangen i henhold til de konfigurerte Forestry-reglene. Utganger uten en aktiv passende regel tar ikke den genetiske gjenstanden. Røret kan males og kobles som andre BuildCraft-gjenstandsrør.\n\nDenne siden lastes bare når Forestry er installert og kompatibilitetsgjenstanden er registrert."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Noen fabrikker har allerede FE i veggene. BuildCraft trenger ikke late som om den ikke finnes.",
+      "FE-motoren bruker Forge Energy, konverterer den til MJ og fungerer som en retningsbestemt BuildCraft-motor.",
+      "<bold>Hint:</bold> Bruk FE-motoren når et FE-nett skal drive et MJ-basert BuildCraft-nett uten å aktivere automatisk konvertering for alle vanlige maskiner.",
+      "Konvertering og buffere",
+      "Motoren tar imot FE i en inngangsbuffer på 10 000 FE og produserer som standard 4 MJ/t. Med standardforholdet 1 MJ = 10 FE bruker den opptil 40 FE/t. Produsert MJ lagres i den vanlige motorbufferen på 1 000 MJ og sendes ut gjennom motorens utgangsside. Omformeren virker selv når Core-strømmodusen er <code>MJ_ONLY</code>.",
+      "Oppgraderinger",
+      "Grensesnittet har fire oppgraderingsspor og godtar ett støttet tannhjul per spor. Hvert jerntannhjul gir 2 MJ/t, og hvert gulltannhjul gir 3 MJ/t. FE-forbruket følger det konfigurerte MJ/FE-forholdet, så endring av <code>power.mjPerFe</code> endrer FE-kostnaden for samme MJ-utgang.",
+      "Motormekanikk",
+      "Gi motoren et redstone-signal og drei den slik at den bevegelige enden peker mot MJ-forbrukeren eller energirøret. Hvis MJ-bufferen ikke har plass til neste konverteringspuls, venter motoren i stedet for å bruke FE på energi den ikke kan lagre. Som andre motorer som ikke er Redstone-motorer, utvikler den varme og bør ikke stå permanent blokkert under belastning."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "Noen ganger bruker maskinen i den andre enden FE, mens resten av fabrikken allerede er bygget rundt MJ.",
+      "MJ-dynamoen bruker BuildCraft-MJ og produserer Forge Energy gjennom den retningsbestemte utgangssiden.",
+      "<bold>Hint:</bold> Pek dynamoen rett mot en FE-forbruker eller en FE-uttrekks-/nettverksløsning, og mat MJ inn på en av de andre sidene. Da blir konverteringsgrensen lett å se.",
+      "Konvertering og buffere",
+      "Dynamoen lagrer opptil 1 000 MJ og opptil 10 000 FE. Grunnhastigheten tilsvarer 4 MJ/t, altså 40 FE/t med standardforholdet 1 MJ = 10 FE. MJ går inn på sider som ikke er utgang; FE går ut gjennom front-/utgangssiden. Den dedikerte omformeren virker selv når Core-strømmodusen er <code>MJ_ONLY</code>.",
+      "Oppgraderinger",
+      "De fire oppgraderingssporene bruker samme regler som FE-motoren: hvert jerntannhjul gir 2 MJ/t ekstra konverteringskapasitet, og hvert gulltannhjul gir 3 MJ/t. Det faktiske FE/t-resultatet følger det konfigurerte MJ/FE-forholdet.",
+      "Dynamomekanikk",
+      "Et redstone-signal aktiverer konverteringen. Dynamoen bruker ikke MJ på en puls som ville fylle eller overfylle FE-bufferen. Når den er deaktivert, utlades lagret FE sakte med 1 FE per tick, i tråd med den gjenopprettede BuildCraft 8-oppførselen. Drei den med en skiftenøkkel for å velge FE-utgangsside."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Tre-FE-røret henter FE fra en tilstøtende energikilde og fører den inn i FE-rørnettet.",
+      "<bold>Hint:</bold> Bruk uttrekksrør bare på faktiske FE-kilder, og dimensjoner neste segment for samme belastning. En rask kilde kan ikke presse energi gjennom en tregere flaskehals lenger ned.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>160 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Som andre trebaserte energiuttrekksrør kobler det ikke direkte til et annet trebasert FE-uttrekksrør.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Brosteins-FE-røret er det grunnleggende FE-transportrøret med lav kapasitet.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>40 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Brosteins- og steinfamiliene kobler ikke direkte til hverandre, slik at FE-linjer ved siden av hverandre kan holdes adskilt.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Stein-FE-røret er et generelt FE-transportrør med lav kapasitet.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>80 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Stein- og brosteinsfamiliene kobler ikke direkte til hverandre.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Sandsteins-FE-røret fører FE mellom rør uten å koble direkte til nabomaskiner.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>160 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Bruk det til å føre en FE-hovedlinje forbi maskiner som ikke skal bli endepunkter.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Kvarts-FE-røret er et FE-transportrør med middels kapasitet.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>320 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Det særpregede materialet gjør det nyttig for å skille eller visuelt merke FE-hovedlinjer.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Gull-FE-røret er et FE-transportrør med høy kapasitet.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>1280 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Bruk det på tungt belastede hovedlinjer før du oppgraderer hver korte gren.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Jern-FE-røret er en konfigurerbar begrenser for FE-overføring.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>320 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Bruk en skiftenøkkel, eller den tilsvarende begrenserhandlingen i et Gate, for å halvere overføringsgrensen gjentatte ganger ned til en sekstifjerdedel og deretter slå av overføring før den går tilbake til full hastighet.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Diamant-FE-røret er en konfigurerbar FE-overføringsbegrenser med svært høy kapasitet.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>2560 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Bruk en skiftenøkkel, eller den tilsvarende begrenserhandlingen i et Gate, for å redusere eller slå av overføringsgrensen når en gren må strupes.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "MJ er ikke det eneste energinettet et moderne verksted kan trenge å føre rundt.",
+      "Tre-diamant-FE-røret er FE-uttrekksrøret med høy kapasitet.",
+      "<bold>Hint:</bold> FE-gjennomstrømningen begrenses av det tregeste segmentet på ruten. Oppgrader den travle hovedlinjen før du bruker høytiersrør på lett belastede grener.",
+      "Mekanikk for FE-rør",
+      "Standardgrensen for overføring er <bold>2560 FE/t</bold>. FE-raten til rørene beregnes fra <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, slik at en modpakke kan skalere hele familien uten å endre forholdet mellom nivåene. Som det vanlige tre-FE-røret henter det energi fra tilstøtende FE-kilder og kobler ikke direkte til et annet trebasert FE-uttrekksrør.\n\nFE-rør kobler til kompatible FE-energiegenskaper, ber bare om energien nettet kan bruke og bevarer energi som ikke blir tatt imot i stedet for å duplisere den. De er dedikert FE-transport og er tilgjengelige også i <code>MJ_ONLY</code>-modus. Rørholdere kan dessuten være vannlogget i nåværende Minecraft-versjoner."
     ]
   }
 }

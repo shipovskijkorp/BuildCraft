@@ -930,7 +930,15 @@
       "A művelet aktiválásakor a kapu lehetővé teszi, hogy az Emzuli Pipe a kiválasztott Extraction Preset szín szerint vonjon ki.\nA kapu által beállított kivonási előbeállítás nélkül az Emzuli Pipe nem tud tárgyat kivenni."
     ],
     "buildcraftcore/block/engine_basics": [
-      "A motorok alapjai"
+      "A BuildCraft továbbra is MJ-vel működik, de a modern gyáraknak gyakran át kell lépniük a Forge Energy világába is.",
+      "A BuildCraft a gépek és energiaszállító csövek natív energiájaként MJ-t használ. A külön FE-gépek és az opcionális automatikus átalakítási mód együttműködést biztosítanak az MJ-hálózat lecserélése nélkül.",
+      "<bold>Tipp:</bold> Tartsd az MJ- és FE-hálózatokat vizuálisan elkülönítve, amíg pontosan nem tudod, hol történik az átalakítás. A külön átalakítók sokkal könnyebbé teszik a vegyes energiájú gyárak hibakeresését.",
+      "MJ és Forge Energy",
+      "Az alapértelmezett átváltás <bold>1 MJ = 10 FE</bold>. Ez a Core <code>power.mjPerFe</code> beállításával módosítható. Az alapértelmezett energiamód a <code>MJ_ONLY</code>: a normál BuildCraft-gépek csak MJ-t használnak, miközben az FE motor, az MJ dinamó és az FE csövek továbbra is elérhetők. A <code>MJ_AUTOCONVERT_FE</code> ezen felül lehetővé teszi, hogy a normál BuildCraft MJ-gépek FE-t fogadjanak, a kompatibilis motorok pedig FE-fogyasztókat tápláljanak. A <code>DISPLAY_FE</code> ugyanezt az átalakítási viselkedést engedélyezi, és az általános energia-kijelzéseknél az FE-t részesíti előnyben.",
+      "Sebesség kijelzése",
+      "Ez az útmutató tickenként adja meg az átviteli sebességet, így a különböző gépek közvetlenül összehasonlíthatók. A Core <code>timeGap</code> kijelzési beállítása az élő értékeket tickenként vagy másodpercenként is mutathatja; egy másodperc húsz tick, ezért 4 MJ/t másodperces kijelzésnél 80 MJ/s. A kijelzési egység módosítása nem változtatja meg a gép sebességét vagy kapacitását.",
+      "Motorcsatlakozások",
+      "A motoroknak és átalakító motoroknak redstone jelre van szükségük a működéshez. A Wrench segítségével fordítsd úgy az irányított gépeket, hogy a munkafelületük a kívánt fogyasztó felé nézzen. A visszanyomás számít: ha a belső puffer nem tud kiürülni, a termelés lelassul vagy leáll, és nőhet a hőmérséklet. Használj kapukat, tárolót vagy leállító jelet ahelyett, hogy feltételeznéd: a fel nem használt energia eltűnik."
     ],
     "buildcraftcore/item/box_volume": [
       "Négy Land Mark áthelyezése minden méretváltozáskor gyorsan önálló projektté válik.",
@@ -1686,6 +1694,91 @@
       "<bold>Tipp:</bold> Apiarist's Pipe-ot külön méhfeldolgozó csomóponton használj. Tarts fenn normál túlfolyási útvonalat, hogy a váratlan méhtípusok ne blokkolják a hálózatot.",
       "Genetikai szűrők",
       "Nyisd meg a csövet minden kimeneti oldal beállításához. A Forestry szűrőszabályai faj, fajcsalád és életszakasz alapján egyeztethetik a genetikai tárgyakat. Oldalanként legfeljebb három kiválasztott faj rendelhető hozzá, és minden bejegyzés külön engedélyezhető vagy letiltható.\n\nA tárgyak a beállított Forestry-szabályok szerinti első kompatibilis kimenetre irányítódnak. Aktív egyező szabály nélküli kimenetek nem veszik magukhoz a genetikai tárgyat. A cső más BuildCraft tárgycsövekhez hasonlóan festhető és csatlakoztatható.\n\nEz az oldal csak akkor töltődik be, ha a Forestry telepítve van és a kompatibilitási tárgy regisztrálva lett."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Egyes gyárak falain már eleve FE folyik. A BuildCraftnak nem kell úgy tennie, mintha ezt nem venné észre.",
+      "Az FE motor Forge Energyt fogyaszt, MJ-vé alakítja, és irányított BuildCraft motorként működik.",
+      "<bold>Tipp:</bold> Akkor használd az FE motort, ha egy FE-hálózatnak egy csak MJ-t használó BuildCraft-hálózatot kell táplálnia anélkül, hogy minden normál gépnél bekapcsolnád az automatikus átalakítást.",
+      "Átalakítás és pufferek",
+      "A motor egy 10 000 FE kapacitású bemeneti pufferbe fogad FE-t, és alapértelmezetten 4 MJ/t teljesítményt állít elő. Az alapértelmezett 1 MJ = 10 FE aránnyal ez legfeljebb 40 FE/t fogyasztást jelent. A létrehozott MJ a motor szokásos 1 000 MJ-es pufferébe kerül, majd a kimeneti oldalon távozik. Az átalakító akkor is működik, ha a Core energiamódja <code>MJ_ONLY</code>.",
+      "Fejlesztések",
+      "A kezelőfelület négy fejlesztőhelyet tartalmaz, és helyenként egy támogatott fogaskereket fogad. Minden Vas fogaskerék 2 MJ/t, minden Arany fogaskerék 3 MJ/t értékkel növeli az átalakítási sebességet. Az FE-fogyasztás a beállított MJ/FE arányt követi, ezért a <code>power.mjPerFe</code> módosítása ugyanazon MJ-kimenet FE-költségét is megváltoztatja.",
+      "Motorműködés",
+      "Adj redstone jelet, és fordítsd a motort úgy, hogy a mozgó vége az MJ-fogyasztó vagy Power Pipe felé nézzen. Ha az MJ-puffer nem tud újabb átalakítási impulzust fogadni, a motor vár, és nem fogyaszt FE-t olyan energiáért, amelyet nem tud eltárolni. A többi, nem Redstone motorhoz hasonlóan melegszik, ezért terhelés alatt ne hagyd tartósan blokkolva."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "Néha a túloldali gép FE-t beszél, miközben a gyár többi része már MJ-re épült.",
+      "Az MJ dinamó BuildCraft MJ-t fogyaszt, és az irányított kimeneti oldalán Forge Energyt állít elő.",
+      "<bold>Tipp:</bold> Irányítsd a dinamót közvetlenül egy FE-fogyasztóra vagy egy FE-kivonó/hálózati elrendezésre, és a többi oldal egyikén vezesd be az MJ-t. Így az átalakítás határa egyértelmű marad.",
+      "Átalakítás és pufferek",
+      "A dinamó legfeljebb 1 000 MJ-t és 10 000 FE-t tárol. Alap átalakítási sebessége 4 MJ/t energiának felel meg, ami az alapértelmezett 1 MJ = 10 FE aránynál 40 FE/t. Az MJ a nem kimeneti oldalakon lép be; az FE az előre néző/kimeneti oldalon távozik. A külön átalakító akkor is működik, ha a Core energiamódja <code>MJ_ONLY</code>.",
+      "Fejlesztések",
+      "A négy fejlesztőhely ugyanazokat a szabályokat használja, mint az FE motor: minden Vas fogaskerék 2 MJ/t, minden Arany fogaskerék 3 MJ/t átalakítási kapacitást ad. A tényleges FE/t érték a beállított MJ/FE arányt követi.",
+      "Dinamóműködés",
+      "A redstone jel engedélyezi az átalakítást. A dinamó nem fogyaszt MJ-t olyan impulzushoz, amely megtöltené vagy túlcsordítaná az FE-pufferét. Kikapcsolt állapotban a tárolt FE lassan, tickenként 1 FE sebességgel önkisül, a visszaállított BuildCraft 8 átalakító viselkedésének megfelelően. Wrench segítségével válaszd ki az FE kimeneti oldalt."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Fa FE cső FE-t von ki a szomszédos energiaforrásból, és betáplálja az FE-csőhálózatba.",
+      "<bold>Tipp:</bold> Kivonócsövet csak valódi FE-forrásokra tegyél, és a következő szakaszt ugyanarra a terhelésre méretezd. Egy gyors forrás nem tud áttolni egy lassabb későbbi szűk keresztmetszeten.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>160 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. A többi fa energiakivonó csőhöz hasonlóan nem csatlakozik közvetlenül egy másik fa FE-kivonócsőhöz.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Zúzottkő FE cső az alapvető, kis kapacitású FE szállítócső.",
+      "<bold>Tipp:</bold> Az FE-átvitelt az útvonal leglassabb szakasza korlátozza. Először a forgalmas gerincet fejleszd, mielőtt magas szintű csöveket használnál a kis terhelésű ágakon.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>40 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. A Zúzottkő és Kő családok nem csatlakoznak közvetlenül egymáshoz, így a szomszédos FE-vonalak külön tarthatók.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Kő FE cső általános célú, kis kapacitású FE szállítócső.",
+      "<bold>Tipp:</bold> Az FE-átvitelt az útvonal leglassabb szakasza korlátozza. Először a forgalmas gerincet fejleszd, mielőtt magas szintű csöveket használnál a kis terhelésű ágakon.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>80 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. A Kő és Zúzottkő családok nem csatlakoznak közvetlenül egymáshoz.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Homokkő FE cső FE-t szállít csövek között anélkül, hogy közvetlenül csatlakozna a szomszédos gépekhez.",
+      "<bold>Tipp:</bold> Az FE-átvitelt az útvonal leglassabb szakasza korlátozza. Először a forgalmas gerincet fejleszd, mielőtt magas szintű csöveket használnál a kis terhelésű ágakon.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>160 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. FE-gerincet vezethetsz vele olyan gépek mellett, amelyeknek nem szabad végponttá válniuk.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Kvarc FE cső közepes kapacitású FE szállítócső.",
+      "<bold>Tipp:</bold> Az FE-átvitelt az útvonal leglassabb szakasza korlátozza. Először a forgalmas gerincet fejleszd, mielőtt magas szintű csöveket használnál a kis terhelésű ágakon.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>320 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. Jellegzetes anyaga hasznos az FE-gerincek elkülönítésére vagy vizuális megjelölésére.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Arany FE cső nagy kapacitású FE szállítócső.",
+      "<bold>Tipp:</bold> Az FE-átvitelt az útvonal leglassabb szakasza korlátozza. Először a forgalmas gerincet fejleszd, mielőtt magas szintű csöveket használnál a kis terhelésű ágakon.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>1280 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. Erősen terhelt gerinceken használd, mielőtt minden rövid ágat magasabb szintre fejlesztenél.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Vas FE cső beállítható FE átviteli korlátozó.",
+      "<bold>Tipp:</bold> Az FE-átvitelt az útvonal leglassabb szakasza korlátozza. Először a forgalmas gerincet fejleszd, mielőtt magas szintű csöveket használnál a kis terhelésű ágakon.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>320 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. Wrench vagy a megfelelő Gate-korlátozó művelet segítségével ismételten felezheted az átviteli korlátot egészen az egyhatvannegyed részéig, majd kikapcsolhatod az átvitelt, mielőtt visszavált teljes értékre.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Gyémánt FE cső nagyon nagy kapacitású, beállítható FE átviteli korlátozó.",
+      "<bold>Tipp:</bold> Az FE-átvitelt az útvonal leglassabb szakasza korlátozza. Először a forgalmas gerincet fejleszd, mielőtt magas szintű csöveket használnál a kis terhelésű ágakon.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>2560 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. Wrench vagy a megfelelő Gate-korlátozó művelet segítségével csökkentheted vagy kikapcsolhatod az átviteli korlátot, ha egy ágat fojtani kell.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "Az MJ nem az egyetlen energiahálózat, amelyet egy modern műhelyben vezetni kellhet.",
+      "A Fa-gyémánt FE cső nagy kapacitású FE-kivonócső.",
+      "<bold>Tipp:</bold> Kivonócsövet csak valódi FE-forrásokra tegyél, és a következő szakaszt ugyanarra a terhelésre méretezd. Egy gyors forrás nem tud áttolni egy lassabb későbbi szűk keresztmetszeten.",
+      "FE csőműködés",
+      "Alapértelmezett átviteli korlátja <bold>2560 FE/t</bold>. Az FE csövek sebessége a <code>pipes.baseFeRate</code> értékből származik, amely alapértelmezetten 40 FE/t, így egy modcsomag az egész családot skálázhatja a szintek közötti arányok megváltoztatása nélkül. A normál Fa FE csőhöz hasonlóan szomszédos FE-forrásokból von ki energiát, és nem csatlakozik közvetlenül másik fa FE-kivonócsőhöz.\n\nAz FE csövek kompatibilis FE energiaképességekhez csatlakoznak, csak annyi energiát kérnek, amennyit a hálózat fel tud használni, és a vissza nem fogadott energiát megőrzik ahelyett, hogy megdupláznák. Kifejezetten FE szállítására szolgálnak, és <code>MJ_ONLY</code> módban is elérhetők. A csőtartók a jelenlegi Minecraft-verziókban vízzel is eláraszthatók."
     ]
   }
 }

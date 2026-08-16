@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "cs_cz",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 27 věder (27 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/iron_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 32 věder (32 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/silver_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 43 věder (43 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/gold_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 48 věder (48 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 64 věder (64 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 64 věder (64 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 96 věder (96 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 96 věder (96 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 128 věder (128 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 256 věder (256 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Nádrž kompatibilní s BuildCraftem o kapacitě 512 věder (512 000 mB).",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kompatibilní nádrže umístěné přímo nad nebo pod sebou vytvoří svislý sloupec kapaliny. Potrubí a stroje BuildCraftu používají nativní fluidní capability nádrže."
+    ],
+    "irontanks/block/void_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Kompaktní odpadní nádrž, která průběžně ničí až 80 mB uložené kapaliny za tick.",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Lze ji svisle spojovat s kompatibilními nádržemi. Kapalina, která do této nádrže dorazí, je zničena; nepoužívejte ji pro cenné kapaliny."
+    ],
+    "irontanks/block/creative_tank": [
+      "Více místa pro kapaliny, které udržují průmysl v chodu.",
+      "Zdrojová nádrž pouze pro kreativní režim. Po naplnění kapalinou poskytuje při vypouštění tuto kapalinu bez snižování uloženého množství.",
+      "Pomocí vylepšení nádrží můžete změnit úroveň nádrže a přitom zachovat uloženou kapalinu.",
+      "Provoz",
+      "Kreativní nádrž záměrně odmítá svislá spojení s jinými nádržemi, aby nevznikaly nejednoznačné nekonečné vyrovnávací řetězce."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní skleněnou nádrž BuildCraftu na měděná nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní skleněnou nádrž BuildCraftu na železná nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní měděná nádrž na železná nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní měděná nádrž na stříbrná nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní železná nádrž na zlatá nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní stříbrná nádrž na zlatá nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní zlatá nádrž na diamantová nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní diamantová nádrž na obsidiánová nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní diamantová nádrž na smaragdová nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní diamantová nádrž na hliníková nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní smaragdová nádrž na nerezová nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní hliníková nádrž na nerezová nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní nerezová nádrž na titanová nádrž.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Vylepšete nádobu, ne práci s jejím vyprazdňováním.",
+      "Na místě změní titanová nádrž na nádrž z wolframové oceli.",
+      "Použijte vylepšení na odpovídající blok nádrže.",
+      "Zachování kapaliny",
+      "Blok se na serveru nahradí a celý zásobník kapaliny se zkopíruje do nové nádrže BuildCraftu ještě před spotřebováním předmětu vylepšení."
+    ]
+  }
+}

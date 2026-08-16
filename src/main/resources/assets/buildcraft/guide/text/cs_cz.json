@@ -1,1691 +1,689 @@
 {
-  "format": 1,
-  "language": "cs_cz",
+  "language": "Čeština",
   "pages": {
     "buildcraftcore/item/gear_wood": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Dřevěné ozubené kolo.",
-      "Dřevěné ozubené kolo se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci."
+      "Dřevěné ozubené kolo je základní součást BuildCraftu a slouží jako materiál pro mnoho strojů i vyšší úrovně ozubených kol."
     ],
     "buildcraftcore/item/gear_stone": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Kamenné ozubené kolo.",
-      "Kamenné ozubené kolo se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci."
+      "Kamenné ozubené kolo je vylepšením dřevěného kola a používá se ve robustnějších strojích."
     ],
     "buildcraftcore/item/gear_iron": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Železné ozubené kolo.",
-      "Železné ozubené kolo se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci."
+      "Železné ozubené kolo je vyšší stupeň používaný v motorech a složitějších strojích."
     ],
     "buildcraftcore/item/gear_gold": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Zlaté ozubené kolo.",
-      "Zlaté ozubené kolo se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci."
+      "Zlaté ozubené kolo je vyšší stupeň používaný zejména ve výkonnějších a plošných strojích."
     ],
     "buildcraftcore/item/gear_diamond": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Diamantové ozubené kolo.",
-      "Diamantové ozubené kolo se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci."
+      "Diamantové ozubené kolo je nejvyšší běžný stupeň a používá se v nejsložitějších strojích."
     ],
     "buildcraftcore/item/wrench": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Klíč.",
-      "Klíč se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci."
+      "Klíč BuildCraftu otáčí a přenastavuje podporované stroje, směrová potrubí a další bloky BuildCraftu.",
+      "<bold>Kompatibilita:</bold> Ve výchozím stavu mohou stejné interakce provádět také nástroje ze společného tagu <code>c:tools/wrench</code>. Server může tagovou kompatibilitu vypnout pomocí <code>useWrenchTag</code>; vlastní klíče BuildCraftu zůstávají podporované."
     ],
     "buildcraftcore/item/paintbrush": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Štětec.",
-      "Štětec se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci."
+      "Štětec barví podporované bloky jednou ze 16 barev. Různě obarvená potrubí se nespojí, takže barvy slouží i k oddělení sítí."
     ],
     "buildcraftcore/item/marker_connector": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Spojovač značek.",
-      "Spojovač značek se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky."
+      "Marker Connector propojuje kompatibilní značky a přímo upravuje geometrii Volume Boxů a Path Marků.",
+      "<bold>Dosah:</bold> spojení omezuje nastavení Core <code>markerMaxDistance</code>. Použitím na viditelný laserový box zahájíte úpravu, dalším použitím ji potvrdíte; při plížení lze box odstranit."
     ],
     "buildcraftcore/item/marker_path": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Značka cesty.",
-      "Značka cesty se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Vytvoření cesty",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Použití cesty",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky."
+      "Path Marky definují uspořádanou trasu pro stroje podporující práci po cestě. Propojují se v pořadí pomocí Marker Connectoru."
     ],
     "buildcraftcore/item/list": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Seznam.",
-      "Seznam se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Úprava seznamu",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Použití seznamu",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "List ukládá znovupoužitelné filtry předmětů pro potrubí, hradla a robotické stanice."
     ],
     "buildcraftcore/block/engine_wood": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Redstonový motor zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Fungování motoru",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Redstonový motor potřebuje pouze redstonový signál a vyrábí 0,05 MJ/t. Je to nejmenší MJ motor BuildCraftu.",
+      "Je určen pro lehké přímé spotřebiče a pomocnou extrakci; běžnou síť Kinesis/Power Pipe nenapájí. Přehřátím nevybuchne. Klíčem otočte pracovní konec k cíli.",
+      "GUI může podle nastavení zobrazovat rychlosti za tick nebo za sekundu; skutečný výkon se tím nemění."
     ],
     "buildcraftcore/trigger/always_on": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je vždy splněn a trvale aktivuje připojené akce hradla."
     ],
     "buildcraftcore/trigger/redstone_active": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když blok s hradlem přijímá redstonový signál; parametr může omezit kontrolu pouze na stranu hradla."
     ],
     "buildcraftcore/trigger/redstone_inactive": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když blok s hradlem nepřijímá redstonový signál; parametr může omezit kontrolu pouze na stranu hradla."
     ],
     "buildcraftcore/trigger/inventory_empty": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední inventář prázdný."
     ],
     "buildcraftcore/trigger/inventory_contains": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když sousední inventář obsahuje předmět odpovídající zadanému filtru nebo Listu."
     ],
     "buildcraftcore/trigger/inventory_space": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když má sousední inventář místo pro zadaný předmět."
     ],
     "buildcraftcore/trigger/inventory_full": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední inventář plný a nemůže přijmout další předměty."
     ],
     "buildcraftcore/trigger/inventory_below_25": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední inventář zaplněn méně než z 25 %."
     ],
     "buildcraftcore/trigger/inventory_below_50": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední inventář zaplněn méně než z 50 %."
     ],
     "buildcraftcore/trigger/inventory_below_75": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední inventář zaplněn méně než ze 75 %."
     ],
     "buildcraftcore/trigger/fluid_empty": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když je sousední nádrž prázdná."
     ],
     "buildcraftcore/trigger/fluid_contains": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Parametry",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když sousední nádrž obsahuje zadanou kapalinu."
     ],
     "buildcraftcore/trigger/fluid_space": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Parametry",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když má sousední nádrž místo pro zadanou kapalinu."
     ],
     "buildcraftcore/trigger/fluid_full": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když je sousední nádrž plná."
     ],
     "buildcraftcore/trigger/fluid_below_25": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Parametry",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když je sousední nádrž naplněna méně než z 25 %."
     ],
     "buildcraftcore/trigger/fluid_below_50": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Parametry",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když je sousední nádrž naplněna méně než z 50 %."
     ],
     "buildcraftcore/trigger/fluid_below_75": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Parametry",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když je sousední nádrž naplněna méně než ze 75 %."
     ],
     "buildcraftcore/trigger/engine_blue": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední motor v modrém teplotním stupni."
     ],
     "buildcraftcore/trigger/engine_green": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední motor v zeleném teplotním stupni."
     ],
     "buildcraftcore/trigger/engine_yellow": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední motor ve žlutém teplotním stupni."
     ],
     "buildcraftcore/trigger/engine_red": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je sousední motor v červeném teplotním stupni."
     ],
     "buildcraftcore/trigger/engine_overheat": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Směry spouštěče",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když sousední motor dosáhne přehřátého stupně."
     ],
     "buildcraftcore/trigger/machine_active": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když má sousední stroj práci, kterou může provádět."
     ],
     "buildcraftcore/trigger/machine_inactive": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když sousední stroj dokončil práci a právě nepracuje."
     ],
     "buildcraftcore/action/redstone": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Parametry",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Při splnění podmínky hradla vysílá redstonový signál."
     ],
     "buildcraftcore/action/machine_control_on": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Směry spouštěče",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Zapne podporovaný sousední stroj pomocí hradla."
     ],
     "buildcraftcore/action/machine_control_off": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Směry spouštěče",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Vypne podporovaný sousední stroj pomocí hradla."
     ],
     "buildcraftcore/action/machine_control_loop": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Směry spouštěče",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Nastaví podporovaný sousední stroj do opakovaného pracovního režimu."
     ],
     "buildcraftenergy/block/engine_stone": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Stirlingův motor zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Fungování motoru",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Stirlingův motor spaluje běžná paliva do pece a podle stavu vnitřního MJ bufferu vyrábí přibližně 0,33 až 1 MJ/t. V automatických režimech kompatibility může napájet také FE spotřebiče."
     ],
     "buildcraftenergy/block/engine_iron": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Spalovací motor zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Fungování motoru",
-      "Umístěte stroj správným směrem a dodejte mu potřebné prostředky a energii MJ. Plný výstup nebo chybějící vstup může práci zastavit."
+      "Spalovací motor spaluje kapalná paliva BuildCraftu a teplotu řídí chladivem. Špinavá paliva vytvářejí Residue, zatímco rafinovaná paliva zbytek nevytvářejí."
     ],
     "buildcraftfactory/block/distiller": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Destilační zařízení zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Připojení",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Destilátor spotřebovává MJ a rozděluje kapalinu na jeden plynný a jeden kapalný výstup."
     ],
     "buildcraftfactory/block/heat_exchange": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Tepelný výměník zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Tepelný výměník přenáší teplo mezi dvěma proudy kapalin a mění BuildCraft kapaliny mezi stavy Cool, Hot a Searing."
     ],
     "buildcraftfactory/block/tank": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Nádrž přímo uchovává kapaliny bez nutnosti kbelíků a truhel."
     ],
     "buildcraftfactory/block/pump": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Fungování stroje",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Pumpa postupně vyhledá propojenou kapalinu pod sebou, odčerpává ji a posílá do sousedních fluidních handlerů.",
+      "Vodorovný dosah řídí <code>pumpMaxDistance</code>: výchozí hodnota je 64 bloků a rozsah nastavení 16 až 128. Ve výchozím stavu <code>pumpsConsumeWater=false</code>, takže vanilkový nekonečný zdroj vody zůstane zachován. Redstonový signál pumpu pozastaví."
     ],
     "buildcraftfactory/block/flood_gate": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Flood Gate přijímá kapalinu a bez spotřeby MJ pokládá po jednom kbelíku zdrojové bloky do dosažitelného volného prostoru. Redstonový signál pokládání zastaví."
     ],
     "buildcraftfactory/block/mining_well": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Těžební studna zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Fungování stroje",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Mining Well těží jediný sloupec přímo pod sebou, prodlužuje šachtou trubici a vydává vytěžené předměty.",
+      "Ničení bloků se kontroluje identitou vlastníka stroje. Maximální hloubku omezuje <code>miningMaxDepth</code> a skutečné limity výšky světa, nikoli prosté „až na bedrock“. Redstonový signál stroj pozastaví."
     ],
     "buildcraftfactory/block/chute": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Násypka zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Umístěte stroj správným směrem a dodejte mu potřebné prostředky a energii MJ. Plný výstup nebo chybějící vstup může práci zastavit."
+      "Chute je transportní blok podobný násypce a slouží k automatickému přesunu předmětů mezi inventáři a potrubím."
     ],
     "buildcraftfactory/block/auto_workbench": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Automatický pracovní stůl zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Před výrobou zkontrolujte požadované součásti a navazující použití. Některé recepty vyžadují energii MJ nebo speciální výrobní stroj.",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Auto Workbench opakovaně vyrábí nastavený recept. Jeden craft vyžaduje 40 MJ postupu; bez napájení si vytváří 0,2 MJ/t a externí MJ jej zrychluje."
     ],
     "buildcraftlib/config/registry_overview": [
-      "Tato stránka popisuje formát zdrojů používaný systémem průvodce BuildCraft.",
-      "Struktura stránky, lokalizovaný text a metadata se načítají odděleně a musí používat shodné identifikátory.",
-      "<bold>Tip:</bold> Po změně identifikátorů, syntaxe JSON nebo kódu jazyka znovu načtěte zdroje a zkontrolujte protokol.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Popisuje jazykově neutrální manifest Guide Booku v BuildCraft CE a způsob registrace stránek a addonů."
     ],
     "buildcraftlib/config/json_insn_format": [
-      "Tato stránka popisuje formát zdrojů používaný systémem průvodce BuildCraft.",
-      "Struktura stránky, lokalizovaný text a metadata se načítají odděleně a musí používat shodné identifikátory.",
-      "<bold>Tip:</bold> Po změně identifikátorů, syntaxe JSON nebo kódu jazyka znovu načtěte zdroje a zkontrolujte protokol.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Technická stránka popisující starší instrukční jazyk BuildCraft JSON zachovaný kvůli kompatibilitě zdrojů."
     ],
     "buildcraftlib/config/guide_page_format": [
-      "Tato stránka popisuje formát zdrojů používaný systémem průvodce BuildCraft.",
-      "Struktura stránky, lokalizovaný text a metadata se načítají odděleně a musí používat shodné identifikátory.",
-      "<bold>Tip:</bold> Po změně identifikátorů, syntaxe JSON nebo kódu jazyka znovu načtěte zdroje a zkontrolujte protokol.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Technická stránka popisující zabalený lokalizovaný formát stránek Guide Booku v BuildCraft CE."
     ],
     "buildcraftsilicon/item/plug_facade": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Fasáda.",
-      "Fasáda se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Facade je kryt připevněný na stranu potrubí, který vzhledově zapadne do okolní stavby."
     ],
     "buildcraftsilicon/item/plug_gate": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Hradlo.",
-      "Hradlo se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Parametry",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Připojení",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Gate je logický modul na straně potrubí, který kombinuje spouštěče a akce pro automatické řízení potrubí a strojů."
     ],
     "buildcraftsilicon/item/plug_pulsar": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Potrubní pulzátor.",
-      "Potrubní pulzátor se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Fungování příslušenství",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Připojení trubek",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Pipe Pulsar je zdroj pulzů MJ ovládaný hradlem a může přímo pohánět kompatibilní extrakční potrubí."
     ],
     "buildcraftsilicon/item/plug_light_sensor": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Světelný senzor.",
-      "Světelný senzor se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Fungování příslušenství",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Připojení trubek",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Light Sensor měří úroveň světla bloku před sebou a poskytuje stav sousednímu Gate na stejném potrubí."
     ],
     "buildcraftsilicon/item/plug_lens": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Čočka.",
-      "Čočka se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Lens a Filter jsou barevné zásuvné moduly potrubí uložené jako varianty stejného předmětu."
     ],
     "buildcraftsilicon/trigger/light_high": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když Light Sensor stejné barvy naměří dostatečně vysokou úroveň světla."
     ],
     "buildcraftsilicon/trigger/light_low": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když Light Sensor stejné barvy naměří nízkou úroveň světla."
     ],
     "buildcraftsilicon/action/pulsar_constant": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Směry",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Zapne nepřetržitý provoz Pipe Pulsaru na stejném potrubí."
     ],
     "buildcraftsilicon/action/pulsar_single": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Směry",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Vyšle jediný výkonový pulz z Pipe Pulsaru na stejném potrubí."
     ],
     "buildcrafttransport/pipe/structure": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Structure Pipe je konstrukční potrubí pro Gate a Pipe Wire; nepřenáší předměty, kapaliny ani energii."
     ],
     "buildcrafttransport/pipe/wood_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Napájení",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Dřevěné transportní potrubí po přijetí pulzu MJ vytahuje předměty ze sousedního inventáře."
     ],
     "buildcrafttransport/pipe/cobble_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Dlážděné transportní potrubí přenáší předměty a přímo se nespojuje s kamennou ani křemennou rodinou potrubí."
     ],
     "buildcrafttransport/pipe/stone_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Kamenné transportní potrubí přenáší předměty a přímo se nespojuje s dlážděnou rodinou potrubí."
     ],
     "buildcrafttransport/pipe/quartz_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Křemenné transportní potrubí přenáší předměty jako samostatná materiálová rodina potrubí."
     ],
     "buildcrafttransport/pipe/iron_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Železné transportní potrubí vynucuje jediný výstupní směr, který lze měnit klíčem nebo Gate."
     ],
     "buildcrafttransport/pipe/gold_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Zlaté transportní potrubí urychluje procházející předměty a zrychluje delší trasy."
     ],
     "buildcrafttransport/pipe/diamond_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Diamantové transportní potrubí směruje předměty podle barevných filtrů jednotlivých stran."
     ],
     "buildcrafttransport/pipe/obsidian_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Provoz trubky",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Směr trubky",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Napájení",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Obsidiánové transportní potrubí sbírá předměty ležící ve světě a posílá je do připojeného potrubí nebo inventáře."
     ],
     "buildcrafttransport/pipe/sandstone_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Pískovcové transportní potrubí propojuje a přenáší předměty mezi potrubími, ale nepřipojuje se přímo k sousedním inventářům."
     ],
     "buildcrafttransport/pipe/clay_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Hliněné transportní potrubí na odbočkách upřednostňuje vložení předmětu do připojeného inventáře před pokračováním potrubím."
     ],
     "buildcrafttransport/pipe/void_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Void transportní potrubí ničí předměty, které do něj vstoupí."
     ],
     "buildcrafttransport/pipe/stripes_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Provoz trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Směr trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Napájení",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Stripes transportní potrubí provádí světové akce: před sebou může bloky ničit či pokládat a používat předměty, které jím projdou."
     ],
     "buildcrafttransport/pipe/diamond_wood_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Filtrování",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Napájení",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Dřevěné diamantové transportní potrubí po přijetí MJ vytahuje ze sousedního inventáře pouze předměty odpovídající filtru."
     ],
     "buildcrafttransport/pipe/lapis_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Lazuli transportní potrubí obarvuje procházející předměty nastavenou barvou pro další barevné směrování."
     ],
     "buildcrafttransport/pipe/daizuli_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Daizuli transportní potrubí směruje předměty zvolené barvy do nastaveného výstupního směru."
     ],
     "buildcrafttransport/pipe/emzuli_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Filtrování",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Napájení",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Emzuli transportní potrubí pomocí MJ vytahuje předměty podle barevného filtru vybraného akcí Extraction Preset na Gate."
     ],
     "buildcrafttransport/pipe/wood_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Napájení",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Dřevěné kapalinové potrubí po pulzu MJ vytahuje kapalinu ze sousední nádrže. Výchozí přenos je 0,2 kbelíku za sekundu."
     ],
     "buildcrafttransport/pipe/cobble_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Dlážděné kapalinové potrubí přenáší kapaliny pomalu a přímo se nespojuje s kamenným ani křemenným potrubím. Výchozí rychlost je 0,2 kbelíku za sekundu."
     ],
     "buildcrafttransport/pipe/stone_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Kamenné kapalinové potrubí přenáší kapaliny a přímo se nespojuje s dlážděným potrubím. Výchozí rychlost je 0,4 kbelíku za sekundu."
     ],
     "buildcrafttransport/pipe/quartz_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Křemenné kapalinové potrubí je samostatná středně rychlá rodina s výchozí rychlostí 0,8 kbelíku za sekundu."
     ],
     "buildcrafttransport/pipe/iron_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Železné kapalinové potrubí vynucuje jediný výstupní směr, přenáší výchozích 0,8 kbelíku za sekundu a lze je otočit klíčem nebo Gate."
     ],
     "buildcrafttransport/pipe/gold_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Zlaté kapalinové potrubí slouží k rychlému přenosu kapalin; výchozí rychlost je 1,6 kbelíku za sekundu."
     ],
     "buildcrafttransport/pipe/diamond_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Filtrování",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Diamantové kapalinové potrubí směruje kapaliny podle filtrů stran a přenáší výchozích 1,6 kbelíku za sekundu."
     ],
     "buildcrafttransport/pipe/sandstone_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Pískovcové kapalinové potrubí přenáší kapalinu mezi potrubími, ale nepřipojuje se přímo k nádržím ani strojům. Výchozí rychlost je 0,4 kbelíku za sekundu."
     ],
     "buildcrafttransport/pipe/clay_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Hliněné kapalinové potrubí na odbočkách upřednostňuje vložení kapaliny do sousední nádrže či stroje před pokračováním potrubím."
     ],
     "buildcrafttransport/pipe/void_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Void kapalinové potrubí ničí kapalinu, která do něj vstoupí."
     ],
     "buildcrafttransport/pipe/diamond_wood_fluid": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje kapaliny mezi nádržemi, stroji a kompatibilními zařízeními.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování trubky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Filtrování",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Napájení",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Dřevěné diamantové kapalinové potrubí po přijetí MJ vytahuje ze sousední nádrže pouze kapaliny vybrané filtrem."
     ],
     "buildcrafttransport/item/wire": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku §fBílý potrubní vodič§r.",
-      "§fBílý potrubní vodič§r se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Pipe Wire přenáší barevné signály Gate podél potrubní sítě na libovolnou vzdálenost."
     ],
     "buildcrafttransport/item/plug_power_adaptor": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Energetický adaptér.",
-      "Energetický adaptér se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Fungování příslušenství",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Informace",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Power Adaptor je zásuvný modul, který umožní síti MJ Kinesis/Power Pipe napájet kompatibilní výkonové extrakční potrubí."
     ],
     "buildcrafttransport/item/plug_blocker": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Zátka potrubí.",
-      "Zátka potrubí se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Připojení trubek",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Pipe Plug na dané straně blokuje spojení s jiným potrubím i Pipe Wire."
     ],
     "buildcrafttransport/trigger/items_traversing": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Gate spouštěč je aktivní, když transportním potrubím právě procházejí předměty."
     ],
     "buildcrafttransport/trigger/fluids_traversing": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Gate spouštěč je aktivní, když kapalinovým potrubím právě proudí kapalina."
     ],
     "buildcrafttransport/trigger/pipe_empty": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Je aktivní, když cílovým transportním či kapalinovým potrubím nic neprochází."
     ],
     "buildcrafttransport/trigger/pipe_signal_active": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je signál Pipe Wire stejné barvy zapnutý."
     ],
     "buildcrafttransport/trigger/pipe_signal_inactive": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Požadavky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Parametry",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Je aktivní, když je signál Pipe Wire stejné barvy vypnutý."
     ],
     "buildcrafttransport/action/pipe_direction_north": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Nastavení směru",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Nastaví výstupní směr podporovaného směrového potrubí na sever."
     ],
     "buildcrafttransport/action/pipe_direction_east": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Nastavení směru",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Nastaví výstupní směr podporovaného směrového potrubí na východ."
     ],
     "buildcrafttransport/action/pipe_direction_south": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Nastavení směru",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Nastaví výstupní směr podporovaného směrového potrubí na jih."
     ],
     "buildcrafttransport/action/pipe_direction_west": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Nastavení směru",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Nastaví výstupní směr podporovaného směrového potrubí na západ."
     ],
     "buildcrafttransport/action/pipe_direction_above": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Nastavení směru",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Nastaví výstupní směr podporovaného směrového potrubí na nahoru."
     ],
     "buildcrafttransport/action/pipe_direction_below": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Nastavení směru",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Nastaví výstupní směr podporovaného směrového potrubí na dolů."
     ],
     "buildcrafttransport/action/pipe_signal_active": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Zapne signál Pipe Wire stejné barvy."
     ],
     "buildcrafttransport/action/pipe_colour": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Nastaví pomocí Gate barvu předmětů používanou potrubím Lazuli nebo Daizuli."
     ],
     "buildcrafttransport/action/extraction_preset": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Požadavky",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Vybere pomocí Gate barevný Extraction Preset používaný potrubím Emzuli."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft."
+      "BuildCraft používá MJ jako nativní energii. Výchozí poměr je <bold>1 MJ = 10 FE</bold> a lze jej změnit přes <code>power.mjPerFe</code>.",
+      "V režimu <code>MJ_ONLY</code> zůstávají běžné stroje BuildCraftu čistě MJ, ale FE Engine, MJ Dynamo a FE Pipe fungují. <code>MJ_AUTOCONVERT_FE</code> povoluje automatický převod i běžným strojům a <code>DISPLAY_FE</code> navíc preferuje FE v obecných ukazatelích.",
+      "Guide uvádí rychlosti za tick. <code>timeGap</code> mění pouze zobrazení mezi /t a /s, nikoli rychlost ani kapacitu strojů."
     ],
     "buildcraftcore/item/box_volume": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Ohraničující kvádr.",
-      "Ohraničující kvádr se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Informace",
-      "Chování prvku Ohraničující kvádr závisí na připojeném cíli, směru, filtrech a dostupném napájení. Po změně nastavení vždy ověřte výsledek."
+      "Volume Box je pohyblivá značka oblasti, kterou lze upravovat pomocí Marker Connectoru."
     ],
     "buildcraftcore/item/marker_land": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Územní značka.",
-      "Územní značka se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky."
+      "Land Marky definují obdélníkové pracovní oblasti pro Quarry, Filler, Architect Table a další stroje a propojují se na společných osách pomocí Marker Connectoru.",
+      "Dosah na ose řídí <code>markerMaxDistance</code>: výchozí je 64 bloků, nastavit lze 16 až 256. Stroj použije propojený box jako svou pracovní oblast."
     ],
     "buildcraftlib/item/guide": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Guide.",
-      "Guide se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Před výrobou zkontrolujte požadované součásti a navazující použití. Některé recepty vyžadují energii MJ nebo speciální výrobní stroj."
+      "Tato kniha obsahuje herní dokumentaci BuildCraft Community Edition a nainstalovaných addonů, které zveřejňují stránky přes Guide API."
     ],
     "buildcraftsilicon/item/plug_filter": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Plug filtr.",
-      "Plug filtr se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "Fungování příslušenství",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev.",
-      "Připojení trubek",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Filter je zásuvný modul potrubí, který vybírá a propouští pouze transportované předměty odpovídající jeho barvě."
     ],
     "buildcraftcore/item/map_location": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Poloha na mapě.",
-      "Poloha na mapě se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Informace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Map Location ukládá bod, oblast, trasu nebo robotickou zónu pro pozdější použití v Gate a řízení robotů."
     ],
     "buildcraftcore/item/fragile_fluid_shard": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Křehký úlomek %s.",
-      "Křehký úlomek %s se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Fragile Fluid Shard je dočasná jednosměrná nádoba pro nejvýše 500 mB kapaliny."
     ],
     "buildcraftcore/block/engine_creative": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Kreativní motor zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Creative Engine je testovací motor pro kreativní režim, který bez paliva vyrábí nastavitelné MJ. Klíčem lze cyklovat výkon od 1 do 256 MJ/t."
     ],
     "buildcraftbuilders/item/blueprint": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Plán.",
-      "Plán se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Záznam",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Stavba",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Blueprint ukládá přesné bloky, BlockState a podporovaná data BlockEntity z nasnímané oblasti."
     ],
     "buildcraftbuilders/item/template": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Šablona.",
-      "Šablona se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Záznam",
-      "Chování prvku Šablona závisí na připojeném cíli, směru, filtrech a dostupném napájení. Po změně nastavení vždy ověřte výsledek.",
-      "Stavba",
-      "Chování prvku Šablona závisí na připojeném cíli, směru, filtrech a dostupném napájení. Po změně nastavení vždy ověřte výsledek."
+      "Template ukládá pouze obsazený tvar oblasti, takže Builder může stejný tvar postavit z dodaných materiálů."
     ],
     "buildcraftbuilders/item/schematic_single": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Schéma jednoho bloku.",
-      "Schéma jednoho bloku se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Chování prvku Schéma jednoho bloku závisí na připojeném cíli, směru, filtrech a dostupném napájení. Po změně nastavení vždy ověřte výsledek.",
-      "Informace",
-      "Chování prvku Schéma jednoho bloku závisí na připojeném cíli, směru, filtrech a dostupném napájení. Po změně nastavení vždy ověřte výsledek."
+      "Single Block Schematic ukládá jeden BlockState pro použití v Replaceru."
     ],
     "buildcraftbuilders/item/filler_planner": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Plánovač výplňovače.",
-      "Plánovač výplňovače se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Filler Planner ukládá vzor a parametry Filleru jako doplněk Volume Boxu."
     ],
     "buildcraftbuilders/block/architect": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Architektonický stůl zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky."
+      "Architect Table skenuje označenou oblast a uloží ji jako Blueprint nebo Template."
     ],
     "buildcraftbuilders/block/builder": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Stavitel zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Builder používá použitý Blueprint nebo Template, materiály, kapaliny a MJ k postavení konstrukce. S propojenou trasou Path Mark může návrh opakovat podél cesty.",
+      "Pokládání a případné kopání se kontroluje identitou vlastníka stroje. Stav práce i rezervované zdroje se ukládají; po načtení se nedokončené úlohy znovu ověří a rezervované zdroje se bezpečně vrátí před pokračováním."
     ],
     "buildcraftbuilders/block/filler": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Výplňovač zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky."
+      "Filler aplikuje v oblasti z Land Marků nebo Volume Boxu vzory Clear, Fill, Box, Frame, Horizon, Flatten, Cylinder, Pyramid, Stairs a další 2D/3D tvary.",
+      "Pokládání pracuje i s běžně nahraditelnými bloky a výkopové vzory mohou bloky odstraňovat. Změny světa se kontrolují identitou vlastníka stroje, takže ochrany mohou práci odmítnout."
     ],
     "buildcraftbuilders/block/library": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Elektronická knihovna zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Umístěte stroj správným směrem a dodejte mu potřebné prostředky a energii MJ. Plný výstup nebo chybějící vstup může práci zastavit.",
-      "Informace",
-      "Umístěte stroj správným směrem a dodejte mu potřebné prostředky a energii MJ. Plný výstup nebo chybějící vstup může práci zastavit."
+      "Electronic Library přenáší data Blueprintů a Template mezi předměty se snapshoty a uloženou databází snapshotů."
     ],
     "buildcraftbuilders/block/replacer": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Nahrazovač zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Umístěte stroj správným směrem a dodejte mu potřebné prostředky a energii MJ. Plný výstup nebo chybějící vstup může práci zastavit."
+      "Replacer změní v použitém Blueprintu všechny výskyty jednoho zaznamenaného BlockState na jiný."
     ],
     "buildcraftbuilders/block/marker_construction": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Stavební značka zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Construction Marker vytváří z použitého Blueprintu stavební úlohy pro Builder Roboty. Sám nespotřebovává MJ ani nepokládá bloky.",
+      "Používá nastavení rotace, výkopu a vlastnictví ze snapshotu; blízké Builder Roboty si úlohy rezervují, přinesou materiál a provedou stavbu."
     ],
     "buildcraftbuilders/block/frame": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Rám zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky."
+      "Frame je lehký konstrukční blok používaný Quarry a stavebními systémy jako dočasná struktura."
     ],
     "buildcraftbuilders/block/quarry": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Lom zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Těžba",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky."
+      "Quarry postaví rám v oblasti určené Land Marky a automaticky těží všechny povolené bloky. Bez platné označené oblasti použije menší výchozí oblast před sebou.",
+      "Chunk tickety pro pracovní oblast žádá pouze tehdy, když je BuildCraft chunk loading povolen a nastavená úroveň dovoluje Quarry. Server může tickety vypnout nebo omezit, takže vzdálený Quarry nemusí zůstat načtený.",
+      "Vytěžené předměty nabízí sousedním inventářům a transportnímu potrubí. Chráněné bloky se kontrolují identitou vlastníka Quarry a běžná ochrana hráče se neobchází."
     ],
     "buildcraftrobotics/item/robot": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Informace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Robot je mobilní pracovník, jehož profesi určuje naprogramovaný Redstone Board. Board se programuje v Programming Table a instaluje do robota v Integration Table.",
+      "Vlastníkem se stane hráč, který robota nasadí na Docking Station. Robot se podle potřeby vrací nabít, naložit či vyložit a ničení, pokládání, používání bloků i útoky se provádějí identitou vlastníka."
     ],
     "buildcraftrobotics/item/redstone_board": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Redstonová deska.",
-      "Redstonová deska se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Programování",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem.",
-      "Informace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Redstone Board ukládá profesní program robota. Programuje se v Programming Table a do robota se instaluje v Integration Table."
     ],
     "buildcraftrobotics/item/robot_station": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Dokovací stanice.",
-      "Dokovací stanice se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Umístění",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem.",
-      "Informace",
-      "Rozložení stránky a překladový text jsou oddělené. Jazykový JSON musí obsahovat stejné identifikátory stránek a stejný počet textových polí jako společné rozložení."
+      "Docking Station je modul na straně potrubí pro propojení, nabíjení, nakládku, vykládku a řízení robotů pomocí Gate."
     ],
     "buildcraftrobotics/block/zone_planner": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Plánovač zón zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Nejprve vyznačte pracovní oblast nebo cestu. Zkontrolujte pořadí bodů, orientaci stroje a to, zda v prostoru nejsou překážky.",
-      "Informace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Zone Planner kreslí robotické pracovní zóny do Map Location: podporuje 16 nezávislých vrstev nad souřadnicovou mřížkou 2048 × 2048.",
+      "Mapová data čte pouze z již načtených nebo vygenerovaných chunků. Kreslení či import přes nedostupný terén se ořízne na data, která server může poskytnout, a nevygeneruje nové chunky. Po 120 ticích se ve výstupu objeví Map Location s aktuálním Zone Planem."
     ],
     "buildcraftrobotics/block/requester": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Žadatel zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem.",
-      "Informace",
-      "Umístěte stroj správným směrem a dodejte mu potřebné prostředky a energii MJ. Plný výstup nebo chybějící vstup může práci zastavit."
+      "Requester udržuje nastavené množství předmětů a chybějící kusy zveřejňuje jako požadavky pro Delivery Roboty."
     ],
     "buildcraftrobotics/robot/picker": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Picker Robot sbírá předměty ležící v pracovní zóně, respektuje filtr stanice a vrací se je vyložit."
     ],
     "buildcraftrobotics/robot/carrier": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Carrier Robot nakládá odpovídající předměty z poskytující stanice a převáží je do jiné stanice, která je může přijmout."
     ],
     "buildcraftrobotics/robot/fluid_carrier": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Tank Robot převáží kapaliny mezi stanicemi a nádržemi a používá kapalinové filtry stanic pro nakládku a vykládku."
     ],
     "buildcraftrobotics/robot/lumberjack": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Lumberjack Robot si obstará sekeru a kácí propojené kmeny stromů ve své pracovní zóně."
     ],
     "buildcraftrobotics/robot/harvester": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Harvester Robot sklízí zralé plodiny v pracovní zóně a vrací úrodu do stanice."
     ],
     "buildcraftrobotics/robot/miner": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Miner Robot si obstará krumpáč a těží dosažitelné rudné bloky ve své pracovní zóně."
     ],
     "buildcraftrobotics/robot/planter": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Planter Robot nakládá odpovídající semena a sází je na vhodnou půdu ve své pracovní zóně."
     ],
     "buildcraftrobotics/robot/farmer": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Farmer Robot si obstará motyku a připravuje vhodné bloky hlíny či trávy pro sázení."
     ],
     "buildcraftrobotics/robot/leave_cutter": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Leaf Cutter Robot si obstará vhodný řezný nástroj a odstraňuje listí ve své pracovní zóně."
     ],
     "buildcraftrobotics/robot/butcher": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Butcher Robot si obstará meč a loví vhodná pasivní zvířata, ale vyhýbá se kočkám, psům a chráněným ochočeným zvířatům."
     ],
     "buildcraftrobotics/robot/shovelman": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Shovelman Robot si obstará lopatu a kope bloky těžitelné lopatou ve své pracovní zóně."
     ],
     "buildcraftrobotics/robot/pump": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Pump Robot odčerpává odpovídající bloky kapaliny ze světa do vnitřní nádrže a vrací se je vyložit do stanice."
     ],
     "buildcraftrobotics/robot/delivery": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Delivery Robot plní požadavky na předměty zveřejněné Requestery a akcí Request Items na stanicích."
     ],
     "buildcraftrobotics/robot/knight": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Knight Robot si obstará zbraň a útočí na nepřátelské moby ve své pracovní zóně."
     ],
     "buildcraftrobotics/robot/bomber": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Bomber Robot se programuje za 64 000 MJ, nakládá TNT, létá nad vhodným povrchem pracovní zóny a shazuje zapálené výbušniny.",
+      "<bold>Pozor:</bold> používejte jej pouze v dobře izolované zóně a předem ověřte oprávnění vlastníka i ochranu proti výbuchům."
     ],
     "buildcraftrobotics/robot/stripes": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Stripes Robot nakládá použitelné předměty a aplikuje stejné handlery použití předmětu jako Stripes Transport Pipe na volné cílové bloky."
     ],
     "buildcraftrobotics/robot/builder": [
-      "Tento robot přijímá pracovní úkoly z dokovací stanice a nainstalované redstonové desky.",
-      "Robot vyhledá vhodný úkol, provede jej v určené oblasti a poté se vrátí ke stanici.",
-      "<bold>Tip:</bold> Před spuštěním nastavte pracovní oblast, filtry a cíl a ponechte robotovi cestu zpět ke stanici.",
-      "Profese",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Builder Robot vyhledá blízký Builder nebo Construction Marker, rezervuje stavební úlohu, obstará materiály a provede práci."
     ],
     "buildcraftrobotics/trigger/in_station": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Chování spouštěče",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Je aktivní, když je robot právě připojen k této Docking Station."
     ],
     "buildcraftrobotics/trigger/sleep": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Chování spouštěče",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Je aktivní, když propojený robot spí a čeká na práci."
     ],
     "buildcraftrobotics/trigger/linked": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Chování spouštěče",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Je aktivní, když má stanice propojeného robota bez ohledu na to, zda je právě dokovaný."
     ],
     "buildcraftrobotics/trigger/reserved": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Chování spouštěče",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Je aktivní, když je stanice nebo robot rezervován pro nějakou operaci."
     ],
     "buildcraftrobotics/action/work_filter": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Nastaví filtr předmětů nebo kapalin pro práci robotů a nakládku či vykládku stanice; parametrem může být předmět, kapalina nebo List."
     ],
     "buildcraftrobotics/action/work_filter_tool": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Omezuje nástroje, které smí robot v profesi používající nástroje vyhledat."
     ],
     "buildcraftrobotics/action/goto_station": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Při splnění podmínky Gate nařídí propojenému robotovi vrátit se k této Docking Station."
     ],
     "buildcraftrobotics/action/wakeup": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Probudí spícího propojeného robota, aby znovu hledal práci."
     ],
     "buildcraftrobotics/action/work_in_area": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Přiřadí zónu z Map Location jako pracovní oblast robota."
     ],
     "buildcraftrobotics/action/load_unload_area": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Omezuje oblast, ve které může robot hledat stanice pro nakládku a vykládku."
     ],
     "buildcraftrobotics/action/accept_fluids": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Dovolí robotům vykládat odpovídající kapaliny do této stanice nebo připojených fluidních handlerů."
     ],
     "buildcraftrobotics/action/accept_items": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Dovolí robotům vykládat odpovídající předměty do této stanice nebo připojeného inventáře."
     ],
     "buildcraftrobotics/action/forbid_robot": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Po dobu aktivace brání robotům ve výběru této stanice."
     ],
     "buildcraftrobotics/action/force_robot": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Po dobu aktivace přiměje propojeného robota preferovat tuto stanici nebo se k ní vrátit."
     ],
     "buildcraftrobotics/action/provide_fluids": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Inzeruje odpovídající kapaliny na této stanici robotům, kteří je potřebují naložit."
     ],
     "buildcraftrobotics/action/provide_items": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Inzeruje odpovídající předměty na této stanici robotům, kteří je potřebují naložit."
     ],
     "buildcraftrobotics/action/request_items": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Vytváří požadavky na předměty, které mohou splnit Delivery Roboty."
     ],
     "buildcraftrobotics/action/provide_machine_request": [
-      "Tato akce po splnění podmínky hradla odešle připojenému cíli řídicí příkaz.",
-      "Akce použije vybraný příkaz na blok, trubku, motor nebo robota.",
-      "<bold>Tip:</bold> Přidejte podmínku vypnutí, aby se systém po ztrátě signálu vrátil do bezpečného stavu.",
-      "Chování akce",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Zpřístupní Delivery Robotům požadavky na předměty vytvořené sousedním kompatibilním strojem."
     ],
     "buildcraftfactory/item/water_gel": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Water Gelifier mění připojenou zdrojovou vodu a vodní rostliny na dočasný Water Gel."
     ],
     "buildcraftfactory/item/gel": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Gelled Water je pevný materiál získaný z Water Gel."
     ],
     "buildcraftsilicon/block/laser": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Laser zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Před výrobou zkontrolujte požadované součásti a navazující použití. Některé recepty vyžadují energii MJ nebo speciální výrobní stroj."
+      "Laser převádí MJ na laserovou energii pro blízké kompatibilní stoly BuildCraftu."
     ],
     "buildcraftsilicon/block/assembly_table": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Montážní stůl zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Sestavení",
-      "Před výrobou zkontrolujte požadované součásti a navazující použití. Některé recepty vyžadují energii MJ nebo speciální výrobní stroj."
+      "Assembly Table používá laserovou energii k výrobě součástí BuildCraftu a zásuvných modulů potrubí."
     ],
     "buildcraftsilicon/block/charging_table": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Nabíjecí stůl zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Nabíjení",
-      "Umístěte stroj správným směrem a dodejte mu potřebné prostředky a energii MJ. Plný výstup nebo chybějící vstup může práci zastavit."
+      "Charging Table používá laserovou energii k nabíjení předmětů Forge Energy."
     ],
     "buildcraftsilicon/block/integration_table": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Integrační stůl zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Integrace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Integration Table používá laserovou energii k instalaci kompatibilních vylepšení nebo komponent do cílového předmětu."
     ],
     "buildcraftsilicon/block/advanced_crafting_table": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Pokročilý pracovní stůl zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Automatická výroba",
-      "Před výrobou zkontrolujte požadované součásti a navazující použití. Některé recepty vyžadují energii MJ nebo speciální výrobní stroj."
+      "Advanced Crafting Table automaticky opakuje nastavený recept pomocí dodaných materiálů a MJ."
     ],
     "buildcraftsilicon/block/programming_table": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Programovací stůl zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Informace",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Programming Table používá laserovou energii k zapsání vybrané robotické profese na prázdný Redstone Board."
     ],
     "buildcraftsilicon/item/redstone_crystal": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Redstonový krystal.",
-      "Redstonový krystal se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Výroba",
-      "Před výrobou zkontrolujte požadované součásti a navazující použití. Některé recepty vyžadují energii MJ nebo speciální výrobní stroj."
+      "Redstone Crystal je součást pro pokročilé recepty BuildCraftu vyráběné v Assembly Table."
     ],
     "buildcraftsilicon/item/gate_copier": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Kopírka hradel.",
-      "Kopírka hradel se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Gate Copier uloží jednu konfiguraci Gate a aplikuje ji na kompatibilní Gate."
     ],
     "buildcraftsilicon/item/plug_timer": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Časovač.",
-      "Časovač se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Akce se používá po dobu, kdy je podmínka hradla pravdivá. Směr, barvu a filtry lze nastavit v rozhraní hradla."
+      "Timer je zásuvný modul potrubí, který přidává periodické Gate spouštěče po 5, 10 a 15 sekundách."
     ],
     "buildcraftsilicon/item/chipset_red": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Redstonová čipová sada.",
-      "Redstonová čipová sada se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Sestavení",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Red Chipset je základní redstonová logická součást pro Gate a další Silicon recepty."
     ],
     "buildcraftsilicon/item/chipset_iron": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Železná čipová sada.",
-      "Železná čipová sada se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Sestavení",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Iron Chipset je železná úroveň logické součásti pro silnější Gate a stroje."
     ],
     "buildcraftsilicon/item/chipset_gold": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Zlatá čipová sada.",
-      "Zlatá čipová sada se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Sestavení",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Gold Chipset je zlatá úroveň logické součásti pro vysokokapacitní Gate a strojní recepty."
     ],
     "buildcraftsilicon/item/chipset_quartz": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Křemenná čipová sada.",
-      "Křemenná čipová sada se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Sestavení",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Quartz Chipset je křemenná logická součást používaná v parametrických a časovacích receptech."
     ],
     "buildcraftsilicon/item/chipset_diamond": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Diamantová čipová sada.",
-      "Diamantová čipová sada se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Sestavení",
-      "Robot vyhledá vhodnou práci, vezme potřebné nástroje nebo prostředky a přesune se do určené oblasti. Po dokončení se vrátí nebo pokračuje dalším úkolem."
+      "Diamond Chipset je nejvyšší běžný chipset pro pokročilá rozšíření Gate a přesné stroje."
     ],
     "buildcraftsilicon/trigger/timer_short": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Impuls časovače",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Při připojeném Timeru pulzuje jednou za 5 sekund."
     ],
     "buildcraftsilicon/trigger/timer_medium": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Impuls časovače",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Při připojeném Timeru pulzuje jednou za 10 sekund."
     ],
     "buildcraftsilicon/trigger/timer_long": [
-      "Tento spouštěč sleduje stav připojeného cíle a slouží jako podmínka hradla.",
-      "Podmínka aktivuje připojené akce, dokud sledovaný stav odpovídá nastavení.",
-      "<bold>Tip:</bold> Zkontrolujte barevnou stranu a sledovaný cíl; pro bezpečné řízení použijte také opačnou podmínku.",
-      "Impuls časovače",
-      "Hradlo pravidelně kontroluje cíl na zadané straně. Barva ikony, strana trubky a parametry určují skutečně sledovaný směr a podmínku."
+      "Při připojeném Timeru pulzuje jednou za 15 sekund."
     ],
     "buildcrafttransport/pipe/wood_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Dřevěné Power Pipe odebírá MJ z kompatibilního sousedního zdroje a vkládá je do sítě Power Pipe."
     ],
     "buildcrafttransport/pipe/cobblestone_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Dlážděné Power Pipe je základní nízkokapacitní potrubí pro přenos MJ."
     ],
     "buildcrafttransport/pipe/stone_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Kamenné Power Pipe je univerzální nízkokapacitní potrubí pro přenos MJ."
     ],
     "buildcrafttransport/pipe/sandstone_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Pískovcové Power Pipe přenáší MJ mezi potrubími, ale nepřipojuje se přímo k sousedním strojům."
     ],
     "buildcrafttransport/pipe/quartz_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Křemenné Power Pipe je středně kapacitní transportní potrubí oddělené od kamenné a dlážděné rodiny."
     ],
     "buildcrafttransport/pipe/gold_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Zlaté Power Pipe je vysokokapacitní potrubí pro přenos MJ."
     ],
     "buildcrafttransport/pipe/iron_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Železné Power Pipe je nastavitelný omezovač přenosu MJ."
     ],
     "buildcrafttransport/pipe/diamond_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Diamantové Power Pipe je velmi vysokokapacitní nastavitelný omezovač přenosu MJ."
     ],
     "buildcrafttransport/pipe/diamond_wood_power": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přenáší energii MJ mezi zdroji a spotřebiči.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Fungování energetického potrubí",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Dřevěné diamantové Power Pipe je vysokokapacitní potrubí pro extrakci MJ."
     ],
     "buildcrafttransport/item/waterproof": [
-      "Tato stránka vysvětluje účel, připojení a bezpečné používání prvku Těsnění potrubí.",
-      "Těsnění potrubí se používá při výrobě, řízení nebo rozšiřování systémů BuildCraft.",
-      "<bold>Tip:</bold> Před zapojením do hlavní sítě ověřte v malé testovací sestavě vstupy, výstupy a orientaci.",
-      "Informace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Pipe Sealant je výrobní součást používaná k převodu transportních materiálů na součásti kapalinového potrubí."
     ],
     "buildcrafttransport/block/filtered_buffer": [
-      "Tento stroj je funkční součástí automatizovaných pracovních postupů BuildCraft.",
-      "Filtrovaný zásobník zpracovává prostředky nebo vykonává práci v nastavené oblasti.",
-      "<bold>Tip:</bold> Oddělte vstup, výstup, napájení MJ a pracovní oblast a přidejte možnost odhalit zablokování.",
-      "Filtrování",
-      "Trubka automaticky rozpozná připojitelné sousední trubky a zařízení. V odbočce zvolí další cestu podle vlastních pravidel, filtrů a barev."
+      "Filtered Buffer je inventář s devíti skutečnými sloty, jejichž přijímání řídí odpovídající phantom filtry."
     ],
     "buildcraftenergy/item/oil": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Sběr ropy",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Použití a rafinace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Oil je přirozeně generovaná výchozí surovina palivového řetězce BuildCraftu."
     ],
     "buildcraftenergy/item/oil_residue": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Výroba",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Teplota",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Residue je těžký vedlejší produkt špinavých paliv a některých vysokoteplotních destilačních cest."
     ],
     "buildcraftenergy/item/oil_heavy": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Palivo",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Rafinace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Heavy Oil je špinavé mezilehlé palivo vyráběné destilací Cool Oil."
     ],
     "buildcraftenergy/item/oil_dense": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Palivo",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Rafinace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Dense Oil je špinavé mezilehlé palivo získané z Hot Oil nebo Hot Distilled Oil."
     ],
     "buildcraftenergy/item/oil_distilled": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Palivo",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Rafinace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Distilled Oil je čistě spalovaný meziprodukt obsahující plynnou, lehkou a hustou palivovou frakci."
     ],
     "buildcraftenergy/item/fuel_gaseous": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Výroba",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Energie",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Gaseous Fuel je nejvýkonnější rafinované palivo pro Spalovací motor a vyrábí 8 MJ/t bez Residue."
     ],
     "buildcraftenergy/item/fuel_light": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Výroba",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Energie",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Light Fuel je čisté rafinované palivo pro Spalovací motor s výkonem 6 MJ/t bez Residue."
     ],
     "buildcraftenergy/item/fuel_dense": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Výroba",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Energie",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Dense Fuel je čisté rafinované palivo s dlouhou dobou hoření a výkonem 4 MJ/t ve Spalovacím motoru."
     ],
     "buildcraftenergy/item/fuel_mixed_light": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Výroba",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Rafinace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Mixed Light Fuel je čistý meziprodukt použitelný také přímo ve Spalovacím motoru s výkonem 3 MJ/t."
     ],
     "buildcraftenergy/item/fuel_mixed_heavy": [
-      "Tato kapalina je součástí řetězce zpracování ropy a výroby energie v BuildCraft.",
-      "Kapalinu lze skladovat, přepravovat, spalovat nebo dále zpracovávat podle jejího druhu a teploty.",
-      "<bold>Tip:</bold> Nádrže a trubky pro různé kapaliny a teplotní stupně udržujte zřetelně oddělené.",
-      "Výroba",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin.",
-      "Rafinace",
-      "Destilátor a tepelný výměník mohou kapalinu rozdělit na další frakce. Sledujte teplotu, volné místo ve výstupech a oddělení jednotlivých kapalin."
+      "Mixed Heavy Fuel je čistý meziprodukt použitelný také přímo ve Spalovacím motoru s výkonem 5 MJ/t."
     ],
     "buildcraftcompat/pipe/propolis_item": [
-      "Tato trubka slouží k výběru a přepravě prostředků v síti BuildCraft.",
-      "Trubka přepravuje předměty mezi připojenými inventáři, stroji a dalšími trubkami.",
-      "<bold>Tip:</bold> Ověřte chování v každé odbočce a podle potřeby uzamkněte trasu barvami, filtry nebo hradly.",
-      "Genetické filtry",
-      "Před výrobou zkontrolujte požadované součásti a navazující použití. Některé recepty vyžadují energii MJ nebo speciální výrobní stroj."
+      "Apiarist's Pipe je předmětové potrubí pro kompatibilitu s Forestry, které směruje genetické předměty pomocí samostatného filtru pro každou stranu."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "FE Engine přijímá Forge Energy a převádí ji na BuildCraft MJ jako směrový motor. Funguje i v režimu Core <code>MJ_ONLY</code>.",
+      "Má vstupní buffer 10 000 FE a výstupní buffer 1 000 MJ. Základní výkon je 4 MJ/t, tedy při výchozím poměru 1 MJ = 10 FE nejvýše 40 FE/t. Potřebuje redstonový signál a pokud MJ buffer nemůže přijmout další dávku, FE se zbytečně nespotřebuje.",
+      "GUI má čtyři sloty pro upgrady, po jednom podporovaném ozubeném kole v každém. Každé železné kolo přidá +2 MJ/t a každé zlaté +3 MJ/t. Spotřeba FE se řídí <code>power.mjPerFe</code>. Výstupní stranu MJ otočíte klíčem."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "MJ Dynamo převádí BuildCraft MJ na Forge Energy a FE vydává přes svou směrovou výstupní stranu. Funguje i v režimu Core <code>MJ_ONLY</code>.",
+      "Uchová až 1 000 MJ a 10 000 FE. Základní převod je energie odpovídající 4 MJ/t, tedy 40 FE/t při výchozím poměru. MJ vstupuje z ostatních stran a FE odchází čelní stranou. Převod se neprovede, pokud by přeplnil FE buffer.",
+      "Čtyři upgrade sloty používají stejná pravidla jako FE Engine: železné kolo +2 MJ/t, zlaté +3 MJ/t. Redstonový signál převod zapíná; při vypnutí se uložené FE samovolně vybíjí rychlostí 1 FE/t. Výstup otočíte klíčem."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "Dřevěné FE potrubí má výchozí limit <bold>160 FE/t</bold> a odebírá FE ze sousedního zdroje a vkládá je do sítě; přímo se nespojí s jiným dřevěným extrakčním FE potrubím.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "Dlažební FE potrubí má výchozí limit <bold>40 FE/t</bold> a je základní nízkokapacitní vedení; dlažební a kamenná rodina se přímo nespojují.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "Kamenné FE potrubí má výchozí limit <bold>80 FE/t</bold> a je univerzální nízkokapacitní vedení; kamenná a dlažební rodina se přímo nespojují.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "Pískovcové FE potrubí má výchozí limit <bold>160 FE/t</bold> a spojuje potrubí s potrubím, ale nepřipojuje se přímo k sousedním strojům.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "Křemenné FE potrubí má výchozí limit <bold>320 FE/t</bold> a slouží k běžnému přenosu FE.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "Zlaté FE potrubí má výchozí limit <bold>1280 FE/t</bold> a slouží k běžnému přenosu FE.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "Železné FE potrubí má výchozí limit <bold>320 FE/t</bold> a je nastavitelný omezovač; klíč nebo odpovídající akce Gate opakovaně půlí limit až na 1/64, poté jej vypne a další krok vrátí plný limit.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "Diamantové FE potrubí má výchozí limit <bold>2560 FE/t</bold> a je velmi vysokokapacitní nastavitelný omezovač; klíčem nebo akcí Gate lze limit snížit či vypnout.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "Dřevěné diamantové FE potrubí má výchozí limit <bold>2560 FE/t</bold> a odebírá FE ze sousedního zdroje vysokou kapacitou; přímo se nespojí s jiným dřevěným extrakčním FE potrubím.",
+      "Rychlosti všech FE potrubí vycházejí z <code>pipes.baseFeRate</code>, jehož výchozí hodnota je 40 FE/t. Síť žádá pouze energii, kterou může použít, a nepřijaté FE zachovává bez duplikace. FE potrubí fungují i v <code>MJ_ONLY</code> a držáky potrubí lze v současných verzích Minecraftu zatopit vodou."
     ]
   }
 }

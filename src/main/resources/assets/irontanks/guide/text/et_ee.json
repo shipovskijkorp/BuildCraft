@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "et_ee",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 27 ämbrit (27,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/iron_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 32 ämbrit (32,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/silver_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 43 ämbrit (43,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/gold_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 48 ämbrit (48,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 64 ämbrit (64,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 64 ämbrit (64,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 96 ämbrit (96,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 96 ämbrit (96,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 128 ämbrit (128,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 256 ämbrit (256,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "BuildCraftiga ühilduv paagitase mahutavusega 512 ämbrit (512,000 mB).",
+      "Kasuta paagiuuendusi, et taseme vahetamisel säilitada paagis olev vedelik.",
+      "Tööpõhimõte",
+      "Paiguta ühilduvad paagid otse üksteise kohale või alla, et moodustada vertikaalne vedelikusammas. BuildCrafti torud ja masinad kasutavad paagi natiivset capabilityt."
+    ],
+    "irontanks/block/void_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "Kompaktne jäätmepaak, mis hävitab pidevalt kuni 80 mB talletatud vedelikku ticki kohta.",
+      "Kasuta seda ainult vedelikele, millest soovid kindlasti vabaneda; 80 mB/t hävituskiirus võib ise muutuda ülesvoolu pudelikaelaks.",
+      "Tööpõhimõte",
+      "See saab vertikaalselt ühendada ühilduvate paakidega. Paaki jõudev vedelik kustutatakse; ära kasuta seda väärtuslike vedelike jaoks."
+    ],
+    "irontanks/block/creative_tank": [
+      "Rohkem ruumi vedelikele, mis hoiavad tööstuse töös.",
+      "Ainult loovrežiimis kasutatav lähtepaak. Pärast vedelikuga täitmist annab tühjendamine sama vedelikku ilma talletatud kogust vähendamata.",
+      "Täida paak kõigepealt soovitud vedelikuga, et määrata selle tüüp; edasine väljavõtt ei kuluta paagis olevat kogust.",
+      "Tööpõhimõte",
+      "Loovrežiimi paak keeldub tahtlikult vertikaalsetest paagiühendustest, et vältida ebaselgeid lõputuid tasakaalustusahelaid."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab BuildCrafti klaaspaak kohapeal paagiks Vaskpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab BuildCrafti klaaspaak kohapeal paagiks Raudpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Vaskpaak kohapeal paagiks Raudpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Vaskpaak kohapeal paagiks Hõbepaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Raudpaak kohapeal paagiks Kuldpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Hõbepaak kohapeal paagiks Kuldpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Kuldpaak kohapeal paagiks Teemantpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Teemantpaak kohapeal paagiks Obsidiaanpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Teemantpaak kohapeal paagiks Smaragdpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Teemantpaak kohapeal paagiks Alumiiniumpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Smaragdpaak kohapeal paagiks Roostevabast terasest paak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Alumiiniumpaak kohapeal paagiks Roostevabast terasest paak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Roostevabast terasest paak kohapeal paagiks Titaanpaak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Uuenda anumat, mitte tühjendustööd.",
+      "Muudab Titaanpaak kohapeal paagiks Volframterasest paak.",
+      "Kasuta uuendust sobival paagiplokil.",
+      "Vedeliku säilitamine",
+      "Server asendab ploki ja kopeerib kogu FluidStacki uude BuildCrafti paaki enne uuenduseseme kulutamist."
+    ]
+  }
+}

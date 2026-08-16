@@ -133,7 +133,7 @@ val verifyLocalizations by tasks.registering {
             "Iron Tanks Community Edition translations were not migrated into the localization add-on"
         }
 
-        var expectedPageSegments: Map<String, Int>? = null
+        val expectedPageSegmentsByPageCount = mutableMapOf<Int, Map<String, Int>>()
         guide.forEach { file ->
             val parsed = JsonSlurper().parse(file)
             require(parsed is Map<*, *>) {
@@ -144,8 +144,8 @@ val verifyLocalizations by tasks.registering {
             }
 
             val pages = parsed["pages"]
-            require(pages is Map<*, *> && pages.size == 207) {
-                "${file.name} must contain all 207 Guide Book pages"
+            require(pages is Map<*, *> && pages.size in setOf(207, 218)) {
+                "${file.name} must contain either the legacy 207-page or current 218-page Guide Book layout"
             }
 
             val pageSegments = linkedMapOf<String, Int>()
@@ -159,12 +159,13 @@ val verifyLocalizations by tasks.registering {
                 pageSegments[page] = segments.size
             }
 
-            val expected = expectedPageSegments
+            val pageCount = pages.size
+            val expected = expectedPageSegmentsByPageCount[pageCount]
             if (expected == null) {
-                expectedPageSegments = pageSegments
+                expectedPageSegmentsByPageCount[pageCount] = pageSegments
             } else {
                 require(pageSegments == expected) {
-                    "${file.name} does not match the Guide Book page/segment layout used by the other locales"
+                    "${file.name} does not match the $pageCount-page Guide Book layout used by the other locales"
                 }
             }
         }

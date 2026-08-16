@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "sv_se",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 27 hinkar (27 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/iron_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 32 hinkar (32 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/silver_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 43 hinkar (43 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/gold_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 48 hinkar (48 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 64 hinkar (64 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 64 hinkar (64 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 96 hinkar (96 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 96 hinkar (96 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 128 hinkar (128 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 256 hinkar (256 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En BuildCraft-kompatibel tank med en kapacitet på 512 hinkar (512 000 mB).",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Placera kompatibla tankar direkt ovanför eller under varandra för att bilda en lodrät vätskekolumn. BuildCraft-rör och -maskiner använder tankens inbyggda vätskekapabilitet."
+    ],
+    "irontanks/block/void_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En kompakt avfallstank som kontinuerligt förstör upp till 80 mB lagrad vätska per tick.",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Den kan ansluta vertikalt till kompatibla tankar. Vätska som når tanken raderas; använd den inte för värdefulla vätskor."
+    ],
+    "irontanks/block/creative_tank": [
+      "Mer utrymme för vätskorna som håller industrin igång.",
+      "En källtank endast för Creative. När den väl fyllts med en vätska kan den tappas obegränsat utan att den lagrade mängden minskar.",
+      "Använd tankuppgraderingar för att bevara den lagrade vätskan när du byter nivå.",
+      "Drift",
+      "Den kreativa tanken vägrar avsiktligt vertikala tankanslutningar för att undvika tvetydiga oändliga balanseringskedjor."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar BuildCraft-glastank till Koppartank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar BuildCraft-glastank till Järntank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Koppartank till Järntank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Koppartank till Silvertank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Järntank till Guldtank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Silvertank till Guldtank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Guldtank till Diamanttank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Diamanttank till Obsidiantank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Diamanttank till Smaragdtank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Diamanttank till Aluminiumtank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Smaragdtank till Tank av rostfritt stål på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Aluminiumtank till Tank av rostfritt stål på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Tank av rostfritt stål till Titantank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Uppgradera behållaren, inte städjobbet.",
+      "Konverterar Titantank till Volframståltank på plats.",
+      "Använd uppgraderingen på rätt tankblock.",
+      "Bevarande av vätska",
+      "Blocket ersätts på servern och hela vätskestacken kopieras till den nya BuildCraft-tanken innan uppgraderingsföremålet förbrukas."
+    ]
+  }
+}

@@ -30,7 +30,7 @@
     "buildcraftcore/item/wrench": [
       "Crear y utilizar máquinas es muy útil, pero a veces es necesario cambiar su funcionamiento o girarlas para que apunten en otra dirección.\nLa llave inglesa ofrece la solución: puede modificar el estado de una máquina o de muchos bloques con un golpe.",
       "La llave inglesa es la herramienta básica utilizada para girar y manipular bloques, máquinas y algunas entidades con un clic.",
-      "<bold>Consejo:</bold> Lleva la llave inglesa mientras montas una sala de máquinas. Muchos bloques y tuberías direccionales de BuildCraft pueden girarse o reconfigurarse sin romperlos."
+      "<bold>Consejo:</bold> De forma predeterminada, los objetos de la etiqueta común <code>c:tools/wrench</code> pueden realizar las mismas interacciones de llave inglesa de BuildCraft. Los packs de servidor pueden desactivar la compatibilidad basada en etiquetas con <code>useWrenchTag</code>; las implementaciones de llave inglesa de BuildCraft siguen siendo compatibles."
     ],
     "buildcraftcore/item/paintbrush": [
       "Aunque la variedad de colores que hay por el mundo es impresionante, imagina poder cambiar el color de ciertos bloques con una simple pincelada.\nPintar bloques como decoración está bien, pero también puede tener usos prácticos, como separar tuberías.",
@@ -40,7 +40,7 @@
     "buildcraftcore/item/marker_connector": [
       "En cualquier gran proyecto de ingeniería es esencial controlar con precisión las áreas en las que trabajan tus máquinas, y necesitas una herramienta para hacerlo.",
       "El conector de marcadores se utiliza para modificar el tamaño de una caja de volumen o la dirección de un marcador de ruta conectado.",
-      "<bold>Consejo:</bold> Conecta los marcadores únicamente cuando todos los extremos estén en su posición definitiva. Volver a conectar una forma terminada es más rápido que corregir después un área torcida o incompleta.",
+      "<bold>Consejo:</bold> Las conexiones siguen limitadas por el ajuste de Core <code>markerMaxDistance</code>, así que un marcador que parece alineado puede estar simplemente demasiado lejos para enlazarse.",
       "Información",
       "Para usar el conector de marcadores, sostenlo en la mano y haz clic en cualquier caja láser que quieras ajustar; mueve el cursor para modificarla. Haz clic de nuevo para dejar de ajustarla.\nPuedes hacer Mayús-clic sobre las cajas láser con el conector en la mano para eliminarlas."
     ],
@@ -64,12 +64,12 @@
     ],
     "buildcraftcore/block/engine_wood": [
       "En tu búsqueda de una fuente de energía has descubierto una forma de producir una pequeña cantidad usando únicamente una señal de redstone.",
-      "El motor de redstone es un motor básico que solo necesita una señal de redstone para funcionar. Produce una cantidad mínima de energía.",
+      "El motor de redstone es el motor MJ más pequeño de BuildCraft. Solo necesita una señal de redstone y produce 0,05 MJ por tick.",
       "<bold>Consejo:</bold> El motor de redstone funciona mejor para extracciones de baja demanda y compuertas. No puede sustituir a un motor más potente cuando una máquina necesita una cantidad considerable de MJ por tick.",
       "Información",
-      "Debido a la pequeña cantidad de MJ que producen, solo son adecuados para dispositivos sencillos, como tuberías de extracción o bombas.",
+      "Su producción es de 0,05 MJ/t. Es suficiente para consumidores directos de baja demanda y auxiliares de extracción, pero deliberadamente no puede alimentar una red de tuberías Kinesis/Power como generador normal.",
       "Mecánica de los motores",
-      "Los motores de BuildCraft tienen 5 etapas de temperatura que determinan su velocidad: azul, verde, amarilla, roja y negra.\nA diferencia de los motores más potentes, los motores de redstone <bold>no pueden sobrecalentarse</bold>; cuando la energía no tiene adónde ir se vuelven negros y continúan funcionando.\nLos motores siempre se conectan al consumidor de MJ compatible más cercano, pero los motores de redstone no se conectan a tuberías cinéticas y solo pueden conectarse a ciertas máquinas.\nPuedes usar una llave inglesa para girar el motor y cambiar el bloque al que suministra energía.\n\nComo todos los motores, <bold>necesita una señal de redstone para funcionar.</bold>\nLas compuertas pueden detectar las etapas de temperatura del motor para ayudarte a controlarlo."
+      "Los motores de BuildCraft tienen cinco etapas de temperatura: azul, verde, amarilla, roja y negra. El motor de redstone no puede explotar por sobrecalentamiento; cuando la energía no tiene un destino útil puede alcanzar su etapa visual más caliente y seguir funcionando.\nSolo se conecta a consumidores MJ directos compatibles y no se conecta a tuberías Kinesis/Power. Usa una llave inglesa para girar el motor de modo que su extremo móvil apunte al dispositivo que debe alimentar.\n\nComo todos los motores, <bold>necesita una señal de redstone para funcionar.</bold> Las compuertas pueden detectar las etapas de temperatura del motor y son útiles para el control automático. Las lecturas de tasa pueden mostrarse por tick o por segundo según el ajuste de visualización de Core."
     ],
     "buildcraftcore/trigger/always_on": [
       "Pase lo que pase, este activador siempre estará encendido.",
@@ -339,12 +339,12 @@
     ],
     "buildcraftenergy/block/engine_stone": [
       "Un horno que mueve un pistón en vez de cocinar la cena sigue siendo un horno perfectamente respetable.",
-      "El motor Stirling quema combustibles normales de horno y produce entre un tercio y un MJ por tick.",
+      "El motor Stirling quema combustibles normales de horno y produce aproximadamente entre 0,33 y 1 MJ por tick. En los modos de compatibilidad FE automática, esa salida también puede alimentar consumidores FE compatibles.",
       "<bold>Consejo:</bold> Deja una forma de desactivar el motor Stirling cuando su consumidor se detenga. Una compuerta que vigile la actividad de la máquina o la demanda de energía hace que los sistemas desatendidos sean mucho más seguros.",
       "Combustible y producción",
       "Coloca cualquier combustible válido para horno en la única ranura de combustible y suministra una señal de redstone. El motor ajusta su producción entre aproximadamente 0,33 MJ/t y 1 MJ/t según la cantidad de MJ almacenada en su búfer interno de 1000 MJ.\n\nEl motor consume los mismos combustibles de horno reconocidos por Minecraft. Los recipientes devueltos por un combustible, como un cubo vacío, permanecen disponibles en el inventario del motor.",
       "Mecánica de los motores",
-      "Coloca el motor contra un receptor de MJ. Al instalarse selecciona una cara de salida compatible; usa una llave inglesa para girarlo si debes alimentar otra cara.\n\nLas etapas azul, verde, amarilla, roja y negra representan el calor interno actual del motor, que sigue el nivel de llenado de su búfer de energía. Si la salida está bloqueada, el búfer se llena, el motor alcanza la etapa de sobrecalentamiento y deja de generar. Retira la señal de redstone o proporciona un destino para los MJ almacenados para que vuelva a enfriarse."
+      "Coloca el motor contra un receptor de MJ. Al instalarse selecciona una cara de salida compatible; usa una llave inglesa para girarlo si debe alimentar otra cara.\n\nLas etapas azul, verde, amarilla, roja y negra representan el calor interno actual del motor, que sigue el nivel de llenado de su búfer de energía. Si la salida está bloqueada, el búfer se llena, el motor alcanza la etapa de sobrecalentamiento y deja de generar. Retira la señal de redstone o proporciona un destino para los MJ almacenados para que pueda enfriarse.\n\nCuando el modo de energía de Core es <code>MJ_AUTOCONVERT_FE</code> o <code>DISPLAY_FE</code>, la compatibilidad normal del motor puede exponer esta salida MJ a consumidores FE usando la relación MJ/FE configurada. La conversión FE dedicada está disponible por separado mediante el Motor FE y el Dínamo MJ."
     ],
     "buildcraftenergy/block/engine_iron": [
       "Refinar petróleo es útil. Convertirlo en energía suficiente para provocar un accidente industrial es bastante más útil.",
@@ -386,10 +386,10 @@
     "buildcraftfactory/block/pump": [
       "Recoger fluidos a mano puede ser tedioso y peligroso, lo que crea la necesidad de una forma automática de reunirlos.",
       "La bomba recoge automáticamente cualquier bloque fuente de fluido situado directamente debajo y las fuentes conectadas a él.",
-      "<bold>Consejo:</bold> Coloca la bomba sobre una zona de fuentes estable y prepara una salida con capacidad suficiente antes de alimentarla. Una línea de fluido saturada desperdicia tiempo y puede detener el trabajo útil.",
-      "Para recoger fluidos del mundo, coloca una bomba sobre un bloque fuente del fluido que quieras extraer y suminístrale energía.\nLas fuentes situadas debajo serán absorbidas desde la superior hacia abajo y se enviarán automáticamente a tuberías o tanques adyacentes.\nBombeará fluidos en un radio de 64 bloques de arriba abajo y desde los bordes exteriores de los fluidos conectados hacia el centro.",
+      "<bold>Consejo:</bold> Para océanos y otras fuentes de agua renovables, comprueba el ajuste <code>pumpsConsumeWater</code> antes de asumir que la Bomba modificará el terreno.",
+      "Coloca una Bomba sobre el fluido objetivo y suministra MJ. Su tubo busca hacia abajo hasta alcanzar un fluido y después escanea el cuerpo de fluido conectado sin intentar procesar un océano entero en un solo tick del servidor. El alcance horizontal lo controla <code>pumpMaxDistance</code>: el valor predeterminado es 64 bloques y el rango configurable va de 16 a 128. El fluido recogido se ofrece automáticamente a manejadores de fluido adyacentes.",
       "Mecánica de la máquina",
-      "Como la mayoría de las máquinas, necesita energía. Cuanta más le suministres, más rápido bombeará.\nAplicar una señal de redstone a la bomba detiene el bombeo, así que ten cuidado al colocar palancas."
+      "De forma predeterminada <code>pumpsConsumeWater</code> es false. Cuando la Bomba reconoce una fuente infinita de agua al estilo vanilla, conserva la fuente renovable y aun así produce agua. Activa esa opción para usar comportamiento de agua finita y la Bomba drenará el agua normalmente. Los demás fluidos se drenan del mundo como siempre.\n\nMás MJ disponible aumenta la velocidad de trabajo hasta el límite de la máquina. Una señal de redstone pausa la Bomba."
     ],
     "buildcraftfactory/block/flood_gate": [
       "En grandes proyectos de construcción, inundar áreas extensas con fluidos es una tarea tediosa que conviene automatizar.",
@@ -406,7 +406,7 @@
       "Información",
       "Excava directamente debajo de su posición y envía automáticamente los bloques rotos a cualquier inventario o tubería adyacente. Si no encuentra ninguno, arroja los objetos al mundo.\nCuanto más duro sea el bloque, más tardará en extraerlo.",
       "Mecánica de la máquina",
-      "Como la mayoría de las máquinas, necesita energía. Cuanta más le suministres, más rápido excavará.\nSi recibe una señal de redstone, el pozo minero se detiene."
+      "Suministra MJ para excavar. Los bloques más duros requieren más energía para romperse. La búsqueda vertical máxima la controla el ajuste de Core <code>miningMaxDepth</code> junto con los límites reales de altura de construcción del mundo, por lo que en mundos modernos no se describe simplemente como «excavar hasta la bedrock». Una señal de redstone pausa la máquina."
     ],
     "buildcraftfactory/block/chute": [
       "Una tolva básica está bien, pero no es demasiado funcional ni original.",
@@ -422,7 +422,7 @@
       "<bold>Consejo:</bold> Mantén reservas tanto de ingredientes como de salidas alrededor de la mesa automática. La ausencia de un ingrediente puede detener una automatización aparentemente válida sin producir nada.",
       "Información",
       "La mesa de trabajo automática fabrica objetos sin intervención manual. Configura la receta deseada y conduce los ingredientes hasta ella mediante tuberías.",
-      "Envía por tubería los recursos que solicita la receta y la mesa fabricará lentamente el objeto o bloque sin consumir energía."
+      "Una fabricación requiere 40 MJ de progreso. Sin energía externa, la mesa genera internamente 0,2 MJ/t, por lo que una fabricación ininterrumpida tarda unos diez segundos. También acepta MJ directamente y por tanto puede completar ese progreso más rápido. Si la receta deja de ser válida, el progreso almacenado decae en lugar de conservarse para siempre. En los modos de compatibilidad FE automática, el receptor MJ normal también puede alimentarse mediante conversión desde FE."
     ],
     "buildcraftlib/config/registry_overview": [
       "El registro de la guía es el índice que hay detrás del libro: decide qué existe, dónde aparece y qué icono lo representa.",
@@ -930,7 +930,15 @@
       "Cuando se activa, la compuerta permite que la tubería Emzuli extraiga mediante el color del preajuste seleccionado. Sin un preajuste fijado por una compuerta, no puede extraer objetos."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Conceptos básicos de los motores"
+      "BuildCraft sigue funcionando con MJ, pero las fábricas modernas a menudo también necesitan cruzar la frontera hacia Forge Energy.",
+      "BuildCraft usa MJ como energía nativa de sus máquinas y tuberías de potencia. La maquinaria FE dedicada y un modo opcional de conversión automática permiten interoperar sin reemplazar la red MJ.",
+      "<bold>Consejo:</bold> Mantén las redes MJ y FE visualmente separadas hasta que sepas exactamente dónde ocurre la conversión. Los convertidores dedicados hacen que las fábricas con energías mixtas sean mucho más fáciles de diagnosticar.",
+      "MJ y Forge Energy",
+      "La conversión predeterminada es <bold>1 MJ = 10 FE</bold>. Puede cambiarse con el ajuste de Core <code>power.mjPerFe</code>. <code>MJ_ONLY</code> es el modo de energía predeterminado: las máquinas normales de BuildCraft siguen usando solo MJ, mientras que el Motor FE, el Dínamo MJ y las tuberías FE siguen disponibles. <code>MJ_AUTOCONVERT_FE</code> además permite que las máquinas MJ normales de BuildCraft acepten FE y que los motores compatibles alimenten consumidores FE. <code>DISPLAY_FE</code> activa el mismo comportamiento de conversión y hace que las lecturas genéricas de energía prefieran FE.",
+      "Visualización de tasas",
+      "Esta guía muestra las tasas de transferencia por tick para poder comparar directamente distintas máquinas. El ajuste de visualización <code>timeGap</code> de Core puede mostrar los valores en vivo por tick o por segundo; un segundo son veinte ticks, así que 4 MJ/t se muestran como 80 MJ/s cuando se seleccionan segundos. Cambiar la unidad de visualización no cambia la velocidad ni la capacidad de las máquinas.",
+      "Conexiones de motores",
+      "Los motores y motores convertidores necesitan una señal de redstone para funcionar. Gira las máquinas direccionales con una llave inglesa para que su cara de trabajo apunte al consumidor previsto. La contrapresión importa: cuando un búfer interno no puede vaciarse, la generación se ralentiza o se detiene y la temperatura puede subir. Usa compuertas, almacenamiento o una señal de apagado en vez de asumir que la energía no utilizada desaparecerá."
     ],
     "buildcraftcore/item/box_volume": [
       "Mover cuatro marcadores de terreno cada vez que cambia el tamaño de un proyecto acaba convirtiéndose en otro proyecto.",
@@ -946,7 +954,7 @@
       "Los marcadores de terreno definen áreas rectangulares de trabajo para máquinas como la cantera, el rellenador y la mesa del arquitecto.",
       "<bold>Consejo:</bold> Comprueba las líneas de colores desde más de un lado antes de iniciar una cantera, un constructor o un rellenador. Un marcador mal colocado puede seleccionar un área mucho mayor de lo esperado.",
       "Definir un área",
-      "Coloca marcadores de terreno sobre ejes X, Y o Z coincidentes y conéctalos con el conector. Los marcadores enlazados forman los bordes de una caja rectangular. La mayoría de máquinas solo necesita las esquinas horizontales, aunque también puede definirse una caja tridimensional completa.\n\nAlimentar un marcador con redstone muestra láseres guía sobre los ejes y facilita la alineación.",
+      "Coloca Land Marks sobre ejes X, Y o Z coincidentes y conéctalos con el Marker Connector. Los marcadores conectados forman los bordes de una caja rectangular. La mayoría de máquinas solo necesita las esquinas horizontales, aunque también puede definirse una caja tridimensional completa.\n\nLas conexiones solo buscan hasta la distancia configurada por <code>markerMaxDistance</code> en cada eje. El valor predeterminado es 64 bloques y los packs pueden configurarlo entre 16 y 256. Alimentar un Land Mark con redstone muestra láseres guía a lo largo de los ejes y facilita la alineación.",
       "Usar el área",
       "Coloca la máquina junto a uno de los marcadores conectados. La máquina reclamará la caja y la utilizará como área de trabajo. Si no encuentra marcadores válidos, algunas máquinas usan su área predeterminada."
     ],
@@ -1029,7 +1037,7 @@
       "Preparación del área",
       "Coloca la mesa junto a un área conectada de marcadores de terreno o una caja de volumen. La caja seleccionada se obtiene del proveedor situado detrás o al lado.",
       "Escaneo",
-      "Introduce un plano vacío para registrar bloques, estados y datos compatibles, o una plantilla vacía para registrar solo la forma. Elige si el resultado puede girarse, excavar bloques existentes o usar colocación exclusiva del modo creativo, y comienza el escaneo.\n\nEl proceso es incremental para que las áreas grandes no congelen el servidor. Mantén el área cargada hasta que aparezca el resultado usado."
+      "Introduce un Blueprint vacío para registrar bloques exactos, estados y datos compatibles, o un Template vacío para registrar solo la forma. Elige si el resultado puede girarse, excavar bloques existentes o usar colocación exclusiva de creativo, y después inicia el escaneo.\n\nEl escaneo es incremental, así que las áreas grandes tardan tiempo en vez de congelar el servidor. Mantén el área cargada hasta que la captura usada aparezca en la salida. La interfaz actual de la Guía/tooltip no ofrece una vista previa esquemática 3D completa; verifica capturas complejas probando la propia instantánea guardada."
     ],
     "buildcraftbuilders/block/builder": [
       "Un plan es solo una colección de ideas hasta que algo comienza a colocar bloques.",
@@ -1686,6 +1694,91 @@
       "<bold>Consejo:</bold> Usa una tubería de apicultor en una intersección dedicada al procesamiento de abejas. Mantén una ruta de desbordamiento normal para que los tipos inesperados no bloqueen la red.",
       "Filtros genéticos",
       "Abre la tubería para configurar cada cara de salida. Las reglas de filtro de Forestry pueden identificar objetos genéticos por especie, familia de especie y etapa vital. Se pueden asignar hasta tres especies seleccionadas a un lado, y cada entrada puede activarse o desactivarse de forma independiente.\n\nLos objetos se enrutan por la primera salida compatible según las reglas de Forestry configuradas. Las salidas sin una regla coincidente activa no reclaman el objeto genético. La tubería puede pintarse y conectarse como las demás tuberías de objetos de BuildCraft.\n\nEsta página solo se carga cuando Forestry está instalado y el objeto de compatibilidad está registrado."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Algunas fábricas ya tienen FE circulando por las paredes. BuildCraft no tiene por qué fingir que no lo ve.",
+      "El Motor FE consume Forge Energy, la convierte en MJ y funciona como un motor direccional de BuildCraft.",
+      "<bold>Consejo:</bold> Usa el Motor FE cuando una red FE deba alimentar una red BuildCraft que solo use MJ sin activar la conversión automática para todas las máquinas normales.",
+      "Conversión y búferes",
+      "El motor acepta FE en un búfer de entrada de 10.000 FE y produce 4 MJ/t de forma predeterminada. Con la relación predeterminada de 1 MJ = 10 FE consume hasta 40 FE/t. Los MJ generados se guardan en el búfer normal de motor de 1.000 MJ y salen por la cara de salida del motor. El convertidor funciona incluso cuando el modo de energía de Core es <code>MJ_ONLY</code>.",
+      "Mejoras",
+      "La interfaz tiene cuatro ranuras de mejora y admite un engranaje compatible por ranura. Cada Engranaje de hierro añade 2 MJ/t; cada Engranaje de oro añade 3 MJ/t. El consumo de FE sigue la relación MJ/FE configurada, por lo que cambiar <code>power.mjPerFe</code> cambia el coste en FE de la misma producción de MJ.",
+      "Mecánica del motor",
+      "Suministra una señal de redstone y gira el motor para que su extremo móvil apunte al consumidor MJ o a la tubería de potencia. Si el búfer de MJ no puede aceptar otro pulso de conversión, el motor espera en vez de consumir FE para energía que no puede almacenar. Como los demás motores que no son de redstone, genera calor y no debe dejarse bloqueado permanentemente bajo carga."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "A veces la máquina del otro extremo habla FE, mientras que el resto de la fábrica ya se ha comprometido con MJ.",
+      "El Dínamo MJ consume MJ de BuildCraft y produce Forge Energy por su cara de salida direccional.",
+      "<bold>Consejo:</bold> Apunta el Dínamo directamente a un consumidor FE o a una disposición de extracción/red FE y suminístrale MJ por una de sus otras caras. Así el límite de conversión queda evidente.",
+      "Conversión y búferes",
+      "El Dínamo almacena hasta 1.000 MJ y hasta 10.000 FE. Su tasa base de conversión equivale a 4 MJ/t, es decir, 40 FE/t con la relación predeterminada de 1 MJ = 10 FE. Los MJ entran por las caras que no son de salida; los FE salen por el lado orientado/de salida. El convertidor dedicado funciona incluso cuando el modo de energía de Core es <code>MJ_ONLY</code>.",
+      "Mejoras",
+      "Las cuatro ranuras de mejora usan las mismas reglas que el Motor FE: cada Engranaje de hierro añade 2 MJ/t de capacidad de conversión y cada Engranaje de oro añade 3 MJ/t. El resultado real en FE/t sigue la relación MJ/FE configurada.",
+      "Mecánica del dínamo",
+      "Una señal de redstone activa la conversión. El Dínamo no consume MJ para un pulso que llenaría o desbordaría su búfer de FE. Cuando está desactivado, los FE almacenados se autodescargan lentamente a razón de 1 FE por tick, reproduciendo el comportamiento restaurado del convertidor de BuildCraft 8. Gíralo con una llave inglesa para elegir la cara de salida FE."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de madera extrae FE de una fuente de energía adyacente y la inyecta en la red de tuberías FE.",
+      "<bold>Consejo:</bold> Coloca tuberías de extracción solo sobre proveedores FE reales y dimensiona el siguiente tramo para la misma carga. Una fuente rápida no puede atravesar un cuello de botella más lento aguas abajo.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>160 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Como las demás tuberías de extracción de energía de madera, no se conecta directamente a otra tubería FE de extracción de madera.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de roca es la tubería básica de transporte FE de baja capacidad.",
+      "<bold>Consejo:</bold> El caudal FE está limitado por el tramo más lento de la ruta. Mejora primero el tronco más cargado antes de gastar tuberías de nivel alto en ramales con poca carga.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>40 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Las familias de roca y piedra no se conectan directamente entre sí, lo que permite mantener separadas líneas FE adyacentes.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de piedra es una tubería general de transporte FE de baja capacidad.",
+      "<bold>Consejo:</bold> El caudal FE está limitado por el tramo más lento de la ruta. Mejora primero el tronco más cargado antes de gastar tuberías de nivel alto en ramales con poca carga.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>80 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Las familias de piedra y roca no se conectan directamente entre sí.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de arenisca transporta FE entre tuberías sin conectarse directamente a máquinas vecinas.",
+      "<bold>Consejo:</bold> El caudal FE está limitado por el tramo más lento de la ruta. Mejora primero el tronco más cargado antes de gastar tuberías de nivel alto en ramales con poca carga.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>160 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Úsala para llevar una línea troncal FE junto a máquinas que no deben convertirse en puntos finales.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de cuarzo es una tubería de transporte FE de capacidad media.",
+      "<bold>Consejo:</bold> El caudal FE está limitado por el tramo más lento de la ruta. Mejora primero el tronco más cargado antes de gastar tuberías de nivel alto en ramales con poca carga.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>320 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Su material distintivo resulta útil para separar o identificar visualmente líneas troncales FE.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de oro es una tubería de transporte FE de alta capacidad.",
+      "<bold>Consejo:</bold> El caudal FE está limitado por el tramo más lento de la ruta. Mejora primero el tronco más cargado antes de gastar tuberías de nivel alto en ramales con poca carga.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>1280 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Úsala en troncales muy cargados antes de mejorar cada ramal corto.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de hierro es un limitador configurable de transferencia FE.",
+      "<bold>Consejo:</bold> El caudal FE está limitado por el tramo más lento de la ruta. Mejora primero el tronco más cargado antes de gastar tuberías de nivel alto en ramales con poca carga.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>320 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Usa una llave inglesa, o la acción de limitador de compuerta correspondiente, para reducir repetidamente el límite a la mitad hasta 1/64 y después desactivar la transferencia antes de volver al máximo.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de diamante es un limitador configurable de transferencia FE de muy alta capacidad.",
+      "<bold>Consejo:</bold> El caudal FE está limitado por el tramo más lento de la ruta. Mejora primero el tronco más cargado antes de gastar tuberías de nivel alto en ramales con poca carga.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>2560 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Usa una llave inglesa, o la acción de limitador de compuerta correspondiente, para reducir o desactivar el límite cuando sea necesario estrangular un ramal.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "MJ no es la única red de energía que un taller moderno puede necesitar distribuir.",
+      "La Tubería FE de madera y diamante es la tubería de extracción FE de alta capacidad.",
+      "<bold>Consejo:</bold> Coloca tuberías de extracción solo sobre proveedores FE reales y dimensiona el siguiente tramo para la misma carga. Una fuente rápida no puede atravesar un cuello de botella más lento aguas abajo.",
+      "Mecánica de tuberías FE",
+      "Su límite de transferencia predeterminado es <bold>2560 FE/t</bold>. Las tasas de las tuberías FE se derivan de <code>pipes.baseFeRate</code>, cuyo valor predeterminado es 40 FE/t, por lo que un modpack puede escalar toda la familia sin cambiar las relaciones entre niveles. Igual que la Tubería FE de madera normal, extrae energía de fuentes FE adyacentes y no se conecta directamente a otra tubería FE de extracción de madera.\n\nLas tuberías FE se conectan a capacidades de energía FE compatibles, solicitan solo la energía que la red puede utilizar y conservan la energía no aceptada en vez de duplicarla. Son transporte FE dedicado y siguen disponibles en modo <code>MJ_ONLY</code>. Los soportes de tuberías también pueden contener agua en las versiones actuales de Minecraft."
     ]
   }
 }

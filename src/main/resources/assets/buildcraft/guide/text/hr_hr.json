@@ -930,7 +930,15 @@
       "Kada se radnja aktivira, vrata omogućuju Emzuli Pipeu izvlačenje prema boji odabranog Extraction Preseta.\nBez postavke izvlačenja koju daju vrata, Emzuli Pipe ne može izvući nijedan predmet."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Osnove motora"
+      "BuildCraft i dalje radi na MJ-u, ali moderne tvornice često moraju prijeći i granicu prema Forge Energyju.",
+      "BuildCraft koristi MJ kao izvornu energiju za strojeve i energetske cijevi. Namjenski FE strojevi i opcionalni način automatske pretvorbe omogućuju interoperabilnost bez zamjene MJ mreže.",
+      "<bold>Savjet:</bold> Držite MJ i FE mreže vizualno odvojenima dok točno ne znate gdje se odvija pretvorba. Namjenski pretvarači znatno olakšavaju dijagnostiku tvornica s mješovitom energijom.",
+      "MJ i Forge Energy",
+      "Zadani omjer pretvorbe je <bold>1 MJ = 10 FE</bold>. Može se promijeniti postavkom Core <code>power.mjPerFe</code>. <code>MJ_ONLY</code> zadani je način energije: obični BuildCraft strojevi ostaju samo na MJ-u, dok su FE motor, MJ dinamo i FE cijevi i dalje dostupni. <code>MJ_AUTOCONVERT_FE</code> dodatno omogućuje običnim BuildCraft MJ strojevima da prihvaćaju FE, a kompatibilnim motorima da napajaju FE potrošače. <code>DISPLAY_FE</code> omogućuje isto ponašanje pretvorbe i daje prednost FE-u u općim prikazima energije.",
+      "Prikaz brzine",
+      "Ovaj vodič prikazuje brzine prijenosa po ticku kako bi se različiti strojevi mogli izravno usporediti. Core postavka prikaza <code>timeGap</code> može prikazivati trenutne vrijednosti po ticku ili po sekundi; jedna sekunda ima dvadeset tickova, pa se 4 MJ/t prikazuje kao 80 MJ/s kada su odabrane sekunde. Promjena jedinice prikaza ne mijenja brzinu ni kapacitet stroja.",
+      "Spajanje motora",
+      "Motori i pretvarački motori trebaju redstone signal za rad. Usmjerene strojeve zakrenite Ključem tako da njihova radna strana gleda prema željenom potrošaču. Povratni tlak je važan: kada se unutarnji međuspremnik ne može prazniti, proizvodnja usporava ili staje, a toplina može rasti. Koristite gateove, spremnik energije ili signal za gašenje umjesto pretpostavke da će neiskorištena energija nestati."
     ],
     "buildcraftcore/item/box_volume": [
       "Premještanje četiriju Land Markova svaki put kada projekt promijeni veličinu brzo postaje projekt za sebe.",
@@ -1686,6 +1694,91 @@
       "<bold>Savjet:</bold> Upotrijebite Apiarist's Pipe na namjenskom spoju za obradu pčela. Zadržite normalan preljevni put kako neočekivane vrste pčela ne bi blokirale mrežu.",
       "Genetski filtri",
       "Otvorite cijev kako biste podesili svaku izlaznu stranu. Pravila Forestry filtra mogu uskladiti genetske predmete prema vrsti, obitelji vrste i životnoj fazi. Do tri odabrane vrste mogu se dodijeliti jednoj strani, a svaki unos može se zasebno uključiti ili isključiti.\n\nPredmeti se usmjeravaju kroz prvi kompatibilni izlaz prema podešenim Forestry pravilima. Izlazi bez aktivnog odgovarajućeg pravila ne preuzimaju genetski predmet. Cijev se može bojiti i spajati kao druge BuildCraft cijevi za predmete.\n\nOva se stranica učitava samo kada je Forestry instaliran i kompatibilni predmet registriran."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Neke tvornice već imaju FE koji teče kroz zidove. BuildCraft se ne mora praviti da ga ne primjećuje.",
+      "FE motor troši Forge Energy, pretvara ga u MJ i ponaša se kao usmjereni BuildCraft motor.",
+      "<bold>Savjet:</bold> Koristite FE motor kada FE mreža treba napajati BuildCraft mrežu koja koristi samo MJ, bez uključivanja automatske pretvorbe za svaki obični stroj.",
+      "Pretvorba i međuspremnici",
+      "Motor prima FE u ulazni međuspremnik od 10 000 FE i zadano proizvodi 4 MJ/t. Pri zadanom omjeru 1 MJ = 10 FE to troši do 40 FE/t. Proizvedeni MJ čuva se u uobičajenom međuspremniku motora od 1 000 MJ i šalje kroz izlaznu stranu. Pretvarač radi čak i kada je Core način energije <code>MJ_ONLY</code>.",
+      "Nadogradnje",
+      "Sučelje ima četiri utora za nadogradnje i prihvaća jedan podržani zupčanik po utoru. Svaki Željezni zupčanik dodaje 2 MJ/t, a svaki Zlatni zupčanik 3 MJ/t. Potrošnja FE-a prati konfigurirani omjer MJ/FE, pa promjena <code>power.mjPerFe</code> mijenja FE trošak istog MJ izlaza.",
+      "Rad motora",
+      "Dovedite redstone signal i zakrenite motor tako da njegov pomični kraj gleda prema MJ potrošaču ili Energetskoj cijevi. Ako MJ međuspremnik ne može primiti još jedan impuls pretvorbe, motor čeka umjesto da troši FE za energiju koju ne može pohraniti. Kao i drugi motori osim Redstone motora, zagrijava se i ne smije ostati trajno blokiran pod opterećenjem."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "Ponekad stroj na drugom kraju govori FE, dok se ostatak tvornice već oslanja na MJ.",
+      "MJ dinamo troši BuildCraft MJ i proizvodi Forge Energy kroz svoju usmjerenu izlaznu stranu.",
+      "<bold>Savjet:</bold> Usmjerite Dinamo izravno prema FE potrošaču ili FE mreži/izvlačenju, a MJ dovodite kroz jednu od ostalih strana. Tako je granica pretvorbe očita.",
+      "Pretvorba i međuspremnici",
+      "Dinamo pohranjuje do 1 000 MJ i do 10 000 FE. Njegova osnovna brzina pretvorbe odgovara energiji od 4 MJ/t, odnosno 40 FE/t pri zadanom omjeru 1 MJ = 10 FE. MJ ulazi kroz neizlazne strane; FE izlazi kroz prednju/izlaznu stranu. Namjenski pretvarač radi čak i kada je Core način energije <code>MJ_ONLY</code>.",
+      "Nadogradnje",
+      "Četiri utora za nadogradnje koriste ista pravila kao FE motor: svaki Željezni zupčanik dodaje 2 MJ/t kapaciteta pretvorbe, a svaki Zlatni zupčanik 3 MJ/t. Stvarni FE/t rezultat prati konfigurirani omjer MJ/FE.",
+      "Rad dinama",
+      "Redstone signal omogućuje pretvorbu. Dinamo ne troši MJ za impuls koji bi napunio ili prepunio njegov FE međuspremnik. Kada je onemogućen, pohranjeni FE polako se sam prazni brzinom od 1 FE po ticku, kao u obnovljenom ponašanju pretvarača iz BuildCrafta 8. Zakrenite ga Ključem kako biste odabrali FE izlaznu stranu."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "Drvena FE cijev izvlači FE iz susjednog izvora energije i ubacuje ga u mrežu FE cijevi.",
+      "<bold>Savjet:</bold> Cijevi za izvlačenje postavljajte samo na stvarne FE izvore i dimenzionirajte sljedeći segment za isto opterećenje. Brz izvor ne može progurati energiju kroz sporije usko grlo nizvodno.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>160 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Kao i druge drvene cijevi za izvlačenje energije, ne spaja se izravno na drugu drvenu FE cijev za izvlačenje.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "FE cijev od kaldrme osnovna je FE transportna cijev malog kapaciteta.",
+      "<bold>Savjet:</bold> FE propusnost ograničena je najsporijim segmentom rute. Najprije nadogradite opterećenu glavnu liniju prije nego što trošite cijevi visokog stupnja na slabo opterećene grane.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>40 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Obitelji Kaldrma i Kamen ne spajaju se izravno jedna na drugu, što omogućuje da susjedne FE linije ostanu odvojene.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "Kamena FE cijev opća je FE transportna cijev malog kapaciteta.",
+      "<bold>Savjet:</bold> FE propusnost ograničena je najsporijim segmentom rute. Najprije nadogradite opterećenu glavnu liniju prije nego što trošite cijevi visokog stupnja na slabo opterećene grane.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>80 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Obitelji Kamen i Kaldrma ne spajaju se izravno jedna na drugu.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "FE cijev od pješčenjaka prenosi FE između cijevi bez izravnog spajanja na susjedne strojeve.",
+      "<bold>Savjet:</bold> FE propusnost ograničena je najsporijim segmentom rute. Najprije nadogradite opterećenu glavnu liniju prije nego što trošite cijevi visokog stupnja na slabo opterećene grane.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>160 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Koristite je za provođenje FE okosnice pokraj strojeva koji ne bi trebali postati završne točke.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "Kvarcna FE cijev FE transportna je cijev srednjeg kapaciteta.",
+      "<bold>Savjet:</bold> FE propusnost ograničena je najsporijim segmentom rute. Najprije nadogradite opterećenu glavnu liniju prije nego što trošite cijevi visokog stupnja na slabo opterećene grane.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>320 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Prepoznatljiv materijal čini je korisnom za odvajanje ili vizualno označavanje FE okosnica.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "Zlatna FE cijev FE transportna je cijev velikog kapaciteta.",
+      "<bold>Savjet:</bold> FE propusnost ograničena je najsporijim segmentom rute. Najprije nadogradite opterećenu glavnu liniju prije nego što trošite cijevi visokog stupnja na slabo opterećene grane.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>1280 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Koristite je za jako opterećene glavne vodove prije nego što nadogradite svaku kratku granu.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "Željezna FE cijev podesivi je ograničivač FE prijenosa.",
+      "<bold>Savjet:</bold> FE propusnost ograničena je najsporijim segmentom rute. Najprije nadogradite opterećenu glavnu liniju prije nego što trošite cijevi visokog stupnja na slabo opterećene grane.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>320 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Ključem ili odgovarajućom Gate radnjom ograničivača više puta prepolovite ograničenje prijenosa sve do jedne šezdesetčetvrtine, zatim onemogućite prijenos prije povratka na puni kapacitet.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "Dijamantna FE cijev podesivi je ograničivač FE prijenosa vrlo velikog kapaciteta.",
+      "<bold>Savjet:</bold> FE propusnost ograničena je najsporijim segmentom rute. Najprije nadogradite opterećenu glavnu liniju prije nego što trošite cijevi visokog stupnja na slabo opterećene grane.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>2560 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Ključem ili odgovarajućom Gate radnjom ograničivača smanjite ili onemogućite ograničenje prijenosa kada neku granu treba prigušiti.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "MJ nije jedina energetska mreža koju moderna radionica može trebati provesti.",
+      "Drveno-dijamantna FE cijev FE cijev je za izvlačenje velikog kapaciteta.",
+      "<bold>Savjet:</bold> Cijevi za izvlačenje postavljajte samo na stvarne FE izvore i dimenzionirajte sljedeći segment za isto opterećenje. Brz izvor ne može progurati energiju kroz sporije usko grlo nizvodno.",
+      "Rad FE cijevi",
+      "Zadano ograničenje prijenosa iznosi <bold>2560 FE/t</bold>. Brzine FE cijevi izvedene su iz <code>pipes.baseFeRate</code>, čija je zadana vrijednost 40 FE/t, pa modpack može skalirati cijelu obitelj bez promjene odnosa među stupnjevima. Kao i obična Drvena FE cijev, izvlači energiju iz susjednih FE izvora i ne spaja se izravno na drugu drvenu FE cijev za izvlačenje.\n\nFE cijevi spajaju se na kompatibilne FE energetske capabilityje, traže samo energiju koju mreža može upotrijebiti i čuvaju neprihvaćenu energiju umjesto da je dupliciraju. Namijenjene su isključivo FE transportu i ostaju dostupne u načinu <code>MJ_ONLY</code>. Nosači cijevi također se mogu napuniti vodom u aktualnim verzijama Minecrafta."
     ]
   }
 }

@@ -342,9 +342,9 @@
       "Stirling-motoren brænder almindeligt ovnbrændsel og producerer mellem en tredjedel og én MJ pr. tick.",
       "<bold>Tip:</bold> Sørg for en måde at deaktivere en Stirling-motor på, når forbrugeren stopper. En port, der overvåger maskinaktivitet eller strømbehov, gør ubemandede systemer langt sikrere.",
       "Brændsel og output",
-      "Læg et gyldigt ovnbrændsel i motorens eneste brændselsplads, og tilfør et redstone-signal. Motoren justerer sit output mellem omtrent 0,33 MJ/t og 1 MJ/t efter den mængde MJ, der allerede er lagret i dens interne buffer på 1.000 MJ.\n\nMotoren bruger de samme ovnbrændsler, som Minecraft genkender. Beholdere, som et brændsel efterlader, såsom en tom spand, forbliver tilgængelige i motorens inventar.",
+      "Placér et gyldigt furnace-brændstof i motorens ene brændstofplads og giv et redstone-signal. Motoren justerer output mellem cirka 0,33 MJ/t og 1 MJ/t efter hvor meget MJ der allerede ligger i dens interne buffer på 1.000 MJ.\n\nMotoren bruger de samme furnace-brændstoffer som Minecraft. Beholdere der returneres af brændstoffet, f.eks. en tom spand, bliver i motorens inventory. Guiden bruger værdier pr. tick; GUI’en kan vise pr. sekund, når det displayvalg er slået til.",
       "Motormekanik",
-      "Placer motoren mod en MJ-modtager. Den vælger en kompatibel outputside ved placering; brug en skruenøgle til at dreje den, hvis en anden side skal forsynes.\n\nDe blå, grønne, gule, røde og sorte trin viser motorens aktuelle interne varme, som følger fyldningsgraden i dens energibuffer. Hvis outputtet blokeres, fyldes bufferen, motoren når overophedningstrinnet og stopper med at generere. Fjern redstone-signalet, eller giv den lagrede MJ et sted at gå hen, så motoren kan køle af igen."
+      "Placér motoren mod en MJ-modtager. Den vælger en kompatibel udgangsside ved placering; brug en skruenøgle for at dreje den.\n\nDe blå, grønne, gule, røde og sorte trin viser motorens interne varme, som følger fyldningen af energibufferen. Hvis output blokeres, fyldes bufferen, motoren overopheder og stopper produktionen. Fjern redstone-signalet eller giv lagret MJ et sted at gå hen, så den kan køle.\n\nI <code>MJ_AUTOCONVERT_FE</code> eller <code>DISPLAY_FE</code> kan almindelig motorkompatibilitet eksponere MJ-output til FE-forbrugere med det konfigurerede MJ/FE-forhold. Dedikeret FE-konvertering findes separat i FE-motoren og MJ-dynamoen."
     ],
     "buildcraftenergy/block/engine_iron": [
       "Det er nyttigt at raffinere olie. At omdanne den til nok energi til en industriulykke er betydeligt mere nyttigt.",
@@ -404,9 +404,9 @@
       "Mineskakten er en maskine, der automatisk graver lige ned hele vejen til grundfjeldet.",
       "<bold>Tip:</bold> Brug en mineskakt til smalle skakter og hurtige prøveboringer. For store områder bør dens gentagne opsætningsomkostning sammenlignes med et stenbrud, før du bruger ressourcerne.",
       "Oplysninger",
-      "Den graver direkte ned under sin placering og sender automatisk de brudte blokke til inventarer eller rør ved siden af den. Hvis den ikke finder rør eller inventarer, kaster den i stedet genstandene ud i verden.\nJo hårdere blokken er, desto længere tid tager det at bryde den.",
+      "Mining Well søger lodret ned fra sin blok og miner blokke, der kan brydes, med maskinejerens identitet. Drops tilbydes til tilstødende inventories og item transport; hvis intet tager imod dem, kan de blive smidt ud i verden. Vand i skakten kan springes over, mens en ubrydelig blok eller en uegnet blokerende væske stopper videre arbejde.",
       "Maskinmekanik",
-      "Som de fleste maskiner kræver den strøm. Jo mere strøm du tilfører, desto hurtigere graver den.\nHvis den modtager et redstone-signal, stopper mineskakten."
+      "Tilfør MJ for at mine. Hårdere blokke kræver mere energi. Den maksimale lodrette søgning styres af Core-indstillingen <code>miningMaxDepth</code> og verdens faktiske byggehøjde, så moderne verdener beskrives ikke blot som “grav til bedrock”. Et redstone-signal pauser maskinen."
     ],
     "buildcraftfactory/block/chute": [
       "En almindelig tragt er udmærket, men den er ikke særlig funktionel eller original.",
@@ -812,9 +812,9 @@
       "Pipe Adapter er et rørtilbehør, der lader energimodtagende rør få energi gennem et Kinesis Pipe.",
       "<bold>Tip:</bold> Kontrollér både Opskrifter og Anvendelser, før du fremstiller store mængder; denne genstand kan være en mellemkomponent til flere senere maskiner.",
       "Propmekanik",
-      "Det kan kun placeres på et rør, der modtager energi, og alle Kinesis Pipes ved siden af vil forbinde til det.\n\nEnergi gennem det tilsluttede Kinesis Pipe kan drive det forbundne energimodtagende transport- eller væskerør.",
+      "Placér den på et kompatibelt item- eller fluid-rør, der kan modtage energi. Et tilstødende MJ Kinesis/Power Pipe kan derefter forbinde gennem adapteren og forsyne røret.\n\nDette er en MJ-hjælper, ikke en FE-konverter. FE-rør udtrækker og transporterer Forge Energy gennem deres egen FE-strøm; brug FE-motoren eller MJ-dynamoen, når du har brug for en tydelig MJ/FE-konverteringsgrænse.",
       "Rørforbindelser",
-      "Tilbehør kan kun placeres på rør og på enhver side af et rør.\nNår det placeres mellem to rør, stopper det alle andre rør- og Pipe Wire-forbindelser mellem dem, bortset fra Kinesis Pipes og selve adapteren."
+      "Pluggables kan kun placeres på rør og på enhver side af et rør.\nMellem to rør stopper den alle andre rør- og pipe-wire-forbindelser bortset fra Kinesis Pipes og adapterens egen forbindelse."
     ],
     "buildcrafttransport/item/plug_blocker": [
       "Hvorfor bliver mine rør ved med at forbinde? Hvordan stopper jeg det? Placer blot en Pipe Plug mellem dem.",
@@ -930,7 +930,15 @@
       "Når handlingen aktiveres, lader porten Emzuli Pipe trække genstande ud ved hjælp af den valgte Extraction Preset-farve.\nUden en udtræksindstilling fra porten kan Emzuli Pipe ikke trække nogen genstande ud."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Grundlæggende om motorer"
+      "BuildCraft kører stadig på MJ, men moderne fabrikker skal ofte også krydse grænsen til Forge Energy.",
+      "BuildCraft bruger MJ som sin egen energi til maskiner og energirør. Dedikerede FE-maskiner og en valgfri automatisk konvertering giver kompatibilitet uden at erstatte MJ-nettet.",
+      "<bold>Tip:</bold> Hold MJ- og FE-net visuelt adskilt, indtil du ved præcis, hvor konverteringen sker. Dedikerede konvertere gør blandede energisystemer meget lettere at fejlfinde.",
+      "MJ og Forge Energy",
+      "Standardforholdet er <bold>1 MJ = 10 FE</bold>. Det kan ændres med Core-indstillingen <code>power.mjPerFe</code>. <code>MJ_ONLY</code> er standardtilstanden: almindelige BuildCraft-maskiner bruger kun MJ, mens FE-motoren, MJ-dynamoen og FE-rør stadig er tilgængelige. <code>MJ_AUTOCONVERT_FE</code> lader desuden almindelige MJ-maskiner modtage FE og kompatible motorer levere til FE-forbrugere. <code>DISPLAY_FE</code> aktiverer samme konvertering og foretrækker FE i generelle energivisninger.",
+      "Visning af hastighed",
+      "Denne guide angiver overførsel pr. tick, så maskiner kan sammenlignes direkte. Core-indstillingen <code>timeGap</code> kan vise levende værdier pr. tick eller pr. sekund; ét sekund er tyve ticks, så 4 MJ/t vises som 80 MJ/s ved sekundvisning. Enheden ændrer ikke maskinens hastighed eller kapacitet.",
+      "Motorforbindelser",
+      "Motorer og konvertermotorer kræver et redstone-signal. Drej retningsbestemte maskiner med en skruenøgle, så arbejdsfladen peger mod den ønskede modtager. Modtryk betyder noget: når en intern buffer ikke kan tømmes, sænkes eller stoppes produktionen, og varmen kan stige. Brug gates, lager eller et sluksignal i stedet for at antage, at ubrugt energi forsvinder."
     ],
     "buildcraftcore/item/box_volume": [
       "At flytte fire Land Marks, hver gang et projekt ændrer størrelse, bliver hurtigt et projekt i sig selv.",
@@ -1036,18 +1044,18 @@
       "Builder bruger MJ og ressourcer til at bygge en brugt Blueprint eller Template.",
       "<bold>Tip:</bold> Sørg for ledig udgangsplads, mens en Builder arbejder. Hvis en opgave annulleres, kan reserverede genstande vende tilbage til inventaret eller falde i nærheden, når der ikke er plads.",
       "Forsyning af Builder",
-      "Indsæt en brugt Blueprint eller Template i øjebliksbilledfeltet. Kravvisningen viser de nødvendige materialer. Tilfør genstande via ressourceinventaret eller tilsluttede genstandsrør, væsker via de interne tanke og MJ via en kompatibel energiforbindelse.\n\nBlueprints kræver de registrerede blokke. Templates bruger egnede leverede blokke til at genskabe den gemte form.",
+      "Sæt et brugt Blueprint eller Template i snapshot-pladsen. Kravvisningen viser de nødvendige materialer. Lever genstande via ressourceinventaret eller tilsluttede genstandsrør, væsker via de interne tanke og MJ via en kompatibel energiforbindelse.\n\nBlueprints kræver de registrerede blokke. Templates bruger egnede leverede blokke til at genskabe den gemte form.",
       "Placering og indstillinger",
-      "Strukturen placeres i forhold til Builderens retning. Rotation og udgravning er kun tilgængelige, når øjebliksbilledets header tillader det. Hvis en tilsluttet Path Mark-rute findes, kan Builder gentage designet langs ruten.\n\nArbejdstilstand og reserverede ressourcer gemmes. Efter genindlæsning kontrolleres ufærdige opgaver igen, og deres reserverede genstande, væsker og energi returneres sikkert, før arbejdet fortsætter."
+      "Strukturen placeres i forhold til Builderens retning. Rotation og udgravning er kun tilgængelige, når snapshot-headeren tillader det. Med en tilsluttet Path Mark-rute kan Builderen gentage designet langs ruten.\n\nVerdenshandlinger bruger maskinejerens identitet, så beskyttede blokke og placeringsregler kontrolleres i stedet for at blive omgået. Arbejdstilstand og reserverede ressourcer gemmes. Efter genindlæsning kontrolleres ufærdigt arbejde igen, og reserverede genstande, væsker og energi returneres sikkert, før arbejdet fortsætter."
     ],
     "buildcraftbuilders/block/filler": [
       "Ikke alle byggeopgaver kræver en detaljeret Blueprint. Mange opgaver er blot kasser, vægge, gulve eller en stor mængde tom plads.",
       "Filler anvender et konfigurerbart geometrisk mønster i et markeret område.",
       "<bold>Tip:</bold> Begynd med et lille markeret område og et billigt materiale. Når mønster og retning er korrekte, flyttes samme opsætning til den endelige placering.",
       "Område og ressourcer",
-      "Placer Filler ved siden af Land Marks eller en Volume Box, og åbn derefter brugerfladen for at opdatere arbejdsområdet. Tilfør byggesten til ressourcefelterne og MJ til det interne batteri. Udgravningsmønstre kan også fjerne eksisterende blokke, når udgravning er aktiveret.",
+      "Placér Filleren ved Land Marks eller en Volume Box, og åbn grænsefladen for at opdatere arbejdsområdet. Lever byggeblokke til ressourcepladserne og MJ til det interne batteri. Placering accepterer normale udskiftelige blokke i stedet for kun bogstavelig luft, mens udgravningsmønstre kan fjerne eksisterende blokke, når udgravning er slået til. Verdensændringer bruger maskinejerens identitet, så beskyttelsesregler kan afvise forbudt arbejde.",
       "Mønstre",
-      "Tilgængelige mønstre omfatter ryd, udfyld, boks, ramme, horisont, udjævn, cylinder, pyramide og trapper. Todimensionelle former omfatter trekanter, regulære polygoner, buer og cirkler. Tredimensionelle former omfatter kugler og delvise kugler.\n\nMønsterparametre styrer retning, rotation, orientering, akse, centrum og hule varianter. Invertering bytter om på indersiden og ydersiden af det genererede mønster."
+      "Tilgængelige mønstre omfatter clear, fill, box, frame, horizon, flatten, cylinder, pyramid og stairs. Todimensionelle former omfatter trekanter, regelmæssige polygoner, buer og cirkler. Tredimensionelle former omfatter kugler og delvise kugler.\n\nMønsterparametre styrer retning, rotation, facing, akse, centrum og hule varianter. Invertering bytter indersiden og ydersiden af det genererede mønster."
     ],
     "buildcraftbuilders/block/library": [
       "Et godt design bør overleve længere end det ene stykke papir, det først blev registreret på.",
@@ -1084,9 +1092,9 @@
       "Quarry bygger en ramme og udvinder automatisk alle tilladte blokke i det valgte område.",
       "<bold>Tip:</bold> Før Quarry-udgangen til en buffer før det endelige sorteringssystem. Bufferen forhindrer korte lagerstop i at afbryde minedriften og gør overløb synligt.",
       "Valg af område",
-      "Placer Quarry ved siden af forbundne Land Marks for at definere det vandrette arbejdsområde. Uden et gyldigt markeret område opretter den en mindre standard-Quarry foran sig. Quarry holder de chunks indlæst, der er nødvendige for arbejdsområdet, mens den arbejder.",
+      "Placér Quarry ved tilsluttede Land Marks for at definere arbejdsområdet vandret. Uden et gyldigt markeret område opretter den et mindre standardområde foran sig.\n\nQuarry kan anmode om chunk-tickets til arbejdsområdet, når BuildCraft chunk loading er slået til, og det konfigurerede niveau tillader maskinen. Serveradministratorer kan deaktivere eller begrænse disse tickets, så en fjern Quarry er ikke garanteret at forblive indlæst.",
       "Minedrift",
-      "Tilfør MJ. Quarry scanner og bygger først sin ramme, flytter derefter boret over området og udvinder ned til den konfigurerede dybde eller verdens bund. Mere tilgængelig energi giver mere arbejde pr. tick op til maskinens grænse.\n\nUdvundne genstande tilbydes tilstødende beholdninger og genstandsrør. Sørg for nok udgangsplads: en blokeret udgang kan standse nyttige fremskridt. Beskyttede blokke kontrolleres med Quarry-ejerens falske spiller og omgås ikke lydløst."
+      "Tilfør MJ. Quarry scanner først området og bygger rammen, hvorefter boret bevæger sig gennem området og miner ned til den konfigurerede dybde eller verdens bund. Mere tilgængelig energi giver mere arbejde pr. tick op til maskinens grænse. Væsker og andre ikke-minerbare celler håndteres uden at ødelægge ramme eller boresti.\n\nDrops tilbydes til tilstødende inventories og item pipes. Sørg for nok outputplads: blokeret output kan standse nyttigt arbejde. Beskyttede blokke kontrolleres med Quarry-ejerens identitet i stedet for at omgå normal spillerbeskyttelse."
     ],
     "buildcraftrobotics/item/robot": [
       "Rør flytter ressourcer. Robotter flytter sig selv, ressourcerne og nogle gange alt, der står i vejen.",
@@ -1095,7 +1103,7 @@
       "Oprettelse af en robot",
       "Programmer et tomt Redstone Board i et Programming Table, og installer derefter det programmerede kort i en tom Robot med et Integration Table. Forskellige kort skaber forskellige robotkarrierer.",
       "Udsendelse og opladning",
-      "Fastgør en Docking Station til et rør, og brug derefter den programmerede Robot på stationen. Spilleren, der placerer den, bliver ejer. En station tilsluttet MJ kan oplade sin dockede robot.\n\nRobotter bevarer en sikkerhedsreserve af energi og vender tilbage til en passende station for at oplade, laste eller aflæsse. Porthandlinger på Docking Stations styrer filtre, ruter, arbejdszoner og tilgængelige ressourcer."
+      "Fastgør en Docking Station til et rør, og brug den programmerede Robot på stationen. Spilleren, der placerer robotten, bliver dens ejer. En station med MJ kan oplade en dokket robot.\n\nRobotter holder en sikkerhedsreserve af energi og vender tilbage til en egnet station for at oplade, hente eller aflevere. Jobs der bryder, placerer, bruger eller angriber udfører disse handlinger med robot-ejerens identitet, så beskyttelsessystemer kan træffe samme adgangsbeslutning som for spilleren. Gate-handlinger på Docking Stations styrer filtre, ruter, arbejdszoner og tilgængelige ressourcer."
     ],
     "buildcraftrobotics/item/redstone_board": [
       "En maskine kan bevæge sig, men uden et kort ved den ikke, om den skal bære, plante, udvinde eller flygte fra den nærmeste ko.",
@@ -1413,7 +1421,7 @@
       "Charging Table bruger laserenergi til at oplade Forge Energy-genstande.",
       "<bold>Tip:</bold> Brug filtrerede ind- og udgangsbeholdninger omkring Charging Table, så opladede og uopladede genstande ikke cirkulerer i samme løkke for evigt.",
       "Opladning",
-      "Placér en opladelig genstand i det enkelte felt. Nærliggende Lasers leverer energi til bordet, som overfører hele energienheder til genstande med Forge Energy-funktionen.\n\nBordet anmoder kun om den mængde, genstanden stadig kan modtage, og stopper, når den er fuld. Genstande, der ikke kan modtage energi, afvises."
+      "Placér en opladelig genstand i den ene plads. Lasere i nærheden leverer energi til bordet, som overfører hele energienheder til genstande med Forge Energy-kapabilitet.\n\nBordet anmoder kun om den mængde, genstanden stadig kan modtage, og stopper, når den er fuld. Genstande, der ikke kan modtage energi, afvises."
     ],
     "buildcraftsilicon/block/integration_table": [
       "Nogle maskiner bygges i ét stykke. Andre bliver først nyttige, når den vigtige del er installeret.",
@@ -1686,6 +1694,91 @@
       "<bold>Tip:</bold> Brug et Apiarist's Pipe ved et dedikeret knudepunkt til behandling af bier. Behold en normal overløbsrute, så uventede bityper ikke blokerer netværket.",
       "Genetiske filtre",
       "Åbn røret for at konfigurere hver udgangsside. Forestrys filterregler kan matche genetiske genstande efter art, artsfamilie og livsstadie. Op til tre valgte arter kan tildeles en side, og hver post kan aktiveres eller deaktiveres uafhængigt.\n\nGenstande sendes gennem den første kompatible udgang efter de konfigurerede Forestry-regler. Udgange uden en aktiv matchende regel gør ikke krav på den genetiske genstand. Røret kan males og forbindes som andre BuildCraft-genstandsrør.\n\nDenne side indlæses kun, når Forestry er installeret, og kompatibilitetsgenstanden er registreret."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Nogle fabrikker har allerede FE i væggene. BuildCraft behøver ikke lade som om det ikke findes.",
+      "FE-motoren forbruger Forge Energy, omdanner den til MJ og fungerer som en retningsbestemt BuildCraft-motor.",
+      "<bold>Tip:</bold> Brug FE-motoren, når et FE-net skal drive et MJ-baseret BuildCraft-net uden at slå automatisk konvertering til for alle almindelige maskiner.",
+      "Konvertering og buffere",
+      "Motoren tager imod FE i en inputbuffer på 10.000 FE og producerer som standard 4 MJ/t. Ved standardforholdet 1 MJ = 10 FE bruger det op til 40 FE/t. Den producerede MJ lagres i motorens normale buffer på 1.000 MJ og sendes gennem udgangsfladen. Konverteren virker også i <code>MJ_ONLY</code>.",
+      "Opgraderinger",
+      "GUI’en har fire opgraderingspladser og tager én understøttet gear pr. plads. Hvert jerntandhjul tilføjer 2 MJ/t; hvert guldtandhjul tilføjer 3 MJ/t. FE-forbruget følger det konfigurerede MJ/FE-forhold, så <code>power.mjPerFe</code> ændrer FE-prisen for samme MJ-output.",
+      "Motormekanik",
+      "Giv et redstone-signal og drej motoren, så den bevægelige ende peger mod MJ-forbrugeren eller energirøret. Hvis MJ-bufferen ikke kan modtage endnu en konverteringspuls, venter motoren i stedet for at bruge FE, den ikke kan lagre. Som andre ikke-redstone-motorer har den varme og bør ikke stå permanent blokeret under belastning."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "Nogle gange taler maskinen i den anden ende FE, mens resten af fabrikken allerede er bygget omkring MJ.",
+      "MJ-dynamoen forbruger BuildCraft MJ og producerer Forge Energy gennem sin retningsbestemte udgangsflade.",
+      "<bold>Tip:</bold> Peg dynamoen direkte mod en FE-forbruger eller et FE-udtræks-/netværksarrangement, og før MJ ind på en af de andre sider. Så er konverteringsgrænsen tydelig.",
+      "Konvertering og buffere",
+      "Dynamoen lagrer op til 1.000 MJ og 10.000 FE. Basishastigheden svarer til 4 MJ/t, altså 40 FE/t ved standardforholdet 1 MJ = 10 FE. MJ går ind på sider, der ikke er udgangen; FE forlader den vendte udgangsside. Konverteren virker også i <code>MJ_ONLY</code>.",
+      "Opgraderinger",
+      "De fire opgraderingspladser følger samme regler som FE-motoren: hvert jerntandhjul tilføjer 2 MJ/t konverteringskapacitet og hvert guldtandhjul 3 MJ/t. Det faktiske FE/t-resultat følger det konfigurerede MJ/FE-forhold.",
+      "Dynamomekanik",
+      "Et redstone-signal aktiverer konverteringen. Dynamoen bruger ikke MJ på en puls, der ville fylde eller overfylde FE-bufferen. Når den er deaktiveret, selvaflades lagret FE langsomt med 1 FE pr. tick, som i den gendannede BuildCraft 8-adfærd. Drej den med en skruenøgle for at vælge FE-udgangsfladen."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Træ-FE-røret udtrækker FE fra en tilstødende energikilde og sender den ind i FE-rørnettet.",
+      "<bold>Tip:</bold> Sæt kun udtræksrør på rigtige FE-kilder, og dimensionér det næste rør til samme belastning. En hurtig kilde kan ikke presse energi gennem en langsommere flaskehals.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>160 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Som andre træbaserede energiudtræksrør forbinder det ikke direkte til et andet træ-FE-udtræksrør.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Brostens-FE-røret er det grundlæggende FE-transportrør med lav kapacitet.",
+      "<bold>Tip:</bold> FE-gennemløbet begrænses af det langsomste rør på ruten. Opgrader den belastede hovedlinje, før du bruger dyre rør på lette sidegrene.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>40 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Brostens- og stenfamilier forbinder ikke direkte til hinanden, så tilstødende FE-linjer kan holdes adskilt.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Sten-FE-røret er et almindeligt FE-transportrør med lav kapacitet.",
+      "<bold>Tip:</bold> FE-gennemløbet begrænses af det langsomste rør på ruten. Opgrader den belastede hovedlinje, før du bruger dyre rør på lette sidegrene.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>80 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Sten- og brostensfamilier forbinder ikke direkte til hinanden.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Sandstens-FE-røret fører FE mellem rør uden at forbinde direkte til nabomaskiner.",
+      "<bold>Tip:</bold> FE-gennemløbet begrænses af det langsomste rør på ruten. Opgrader den belastede hovedlinje, før du bruger dyre rør på lette sidegrene.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>160 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Brug det til at føre en FE-hovedlinje forbi maskiner, der ikke skal være endepunkter.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Kvarts-FE-røret er et FE-transportrør med mellemstor kapacitet.",
+      "<bold>Tip:</bold> FE-gennemløbet begrænses af det langsomste rør på ruten. Opgrader den belastede hovedlinje, før du bruger dyre rør på lette sidegrene.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>320 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Det tydelige materiale gør det nyttigt til at adskille eller markere FE-hovedlinjer.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Guld-FE-røret er et FE-transportrør med høj kapacitet.",
+      "<bold>Tip:</bold> FE-gennemløbet begrænses af det langsomste rør på ruten. Opgrader den belastede hovedlinje, før du bruger dyre rør på lette sidegrene.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>1280 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Brug det til stærkt belastede hovedlinjer, før du opgraderer hver kort sidegren.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Jern-FE-røret er en konfigurerbar FE-overførselsbegrænser.",
+      "<bold>Tip:</bold> FE-gennemløbet begrænses af det langsomste rør på ruten. Opgrader den belastede hovedlinje, før du bruger dyre rør på lette sidegrene.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>320 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Brug en skruenøgle eller den tilsvarende Gate-handling til gentagne gange at halvere grænsen ned til 1/64, derefter slå overførsel fra og til sidst gå tilbage til fuld hastighed.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Diamant-FE-røret er en konfigurerbar FE-overførselsbegrænser med meget høj kapacitet.",
+      "<bold>Tip:</bold> FE-gennemløbet begrænses af det langsomste rør på ruten. Opgrader den belastede hovedlinje, før du bruger dyre rør på lette sidegrene.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>2560 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Brug en skruenøgle eller den tilsvarende Gate-begrænserhandling til at reducere eller deaktivere grænsen, når en gren skal drosles.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "MJ er ikke det eneste energinet, som et moderne værksted kan få brug for.",
+      "Træ-diamant-FE-røret er et FE-udtræksrør med høj kapacitet.",
+      "<bold>Tip:</bold> Sæt kun udtræksrør på rigtige FE-kilder, og dimensionér det næste rør til samme belastning. En hurtig kilde kan ikke presse energi gennem en langsommere flaskehals.",
+      "FE-rørmekanik",
+      "Dets standardgrænse er <bold>2560 FE/t</bold>. FE-rørenes hastigheder afledes af <code>pipes.baseFeRate</code>, som som standard er 40 FE/t, så en modpakke kan skalere hele familien uden at ændre forholdet mellem niveauerne. Ligesom det normale træ-FE-rør udtrækker det fra tilstødende FE-kilder og forbinder ikke direkte til et andet træbaseret FE-udtræksrør.\n\nFE-rør forbinder til kompatible FE-energikapabiliteter, anmoder kun om energi, som nettet kan bruge, og bevarer ikke-accepteret energi i stedet for at duplikere den. De er dedikeret FE-transport og er tilgængelige i <code>MJ_ONLY</code>. Rørholdere kan også være vandfyldte i aktuelle Minecraft-versioner."
     ]
   }
 }

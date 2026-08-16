@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "nl_nl",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 27 emmers (27.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/iron_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 32 emmers (32.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/silver_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 43 emmers (43.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/gold_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 48 emmers (48.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 64 emmers (64.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 64 emmers (64.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 96 emmers (96.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 96 emmers (96.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 128 emmers (128.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 256 emmers (256.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een met BuildCraft compatibele tank met een inhoud van 512 emmers (512.000 mB).",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Compatibele tanks kunnen verticaal op elkaar worden geplaatst om een vloeistofkolom te vormen. BuildCraft-buizen en -machines gebruiken daarvoor de ingebouwde vloeistof-capability."
+    ],
+    "irontanks/block/void_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een compacte vernietigingstank die voortdurend maximaal 80 mB opgeslagen vloeistof per tick vernietigt.",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "Hij kan verticaal met compatibele tanks worden verbonden. Vloeistof die deze tank binnenkomt, wordt permanent verwijderd."
+    ],
+    "irontanks/block/creative_tank": [
+      "Meer ruimte voor de vloeistoffen die de industrie draaiende houden.",
+      "Een vloeistofbrontank voor de Creatieve modus. Zodra er één vloeistoftype in zit, kan hij dit blijven uitvoeren zonder dat de opgeslagen hoeveelheid afneemt.",
+      "Tankupgrades veranderen het niveau van de tank zonder de opgeslagen vloeistof te verliezen.",
+      "Werking",
+      "De Creatieve tank verbindt bewust niet verticaal met andere tanks om ketens voor het balanceren van oneindige vloeistof te voorkomen."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van glas direct in de wereld in een tank van koper.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van glas direct in de wereld in een tank van ijzer.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van koper direct in de wereld in een tank van ijzer.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van koper direct in de wereld in een tank van zilver.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van ijzer direct in de wereld in een tank van goud.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van zilver direct in de wereld in een tank van goud.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van goud direct in de wereld in een tank van diamant.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van diamant direct in de wereld in een tank van obsidiaan.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van diamant direct in de wereld in een tank van smaragd.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van diamant direct in de wereld in een tank van aluminium.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van smaragd direct in de wereld in een tank van roestvast staal.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van aluminium direct in de wereld in een tank van roestvast staal.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van roestvast staal direct in de wereld in een tank van titanium.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Vergroot de capaciteit, niet het handwerk.",
+      "Verandert een tank van titanium direct in de wereld in een tank van wolfraamstaal.",
+      "Gebruik het upgrade-item op de bijpassende tank.",
+      "Vloeistof behouden",
+      "De server vervangt eerst het blok, kopieert daarna de volledige vloeistofvoorraad naar de nieuwe tank en verbruikt pas daarna het upgrade-item."
+    ]
+  }
+}

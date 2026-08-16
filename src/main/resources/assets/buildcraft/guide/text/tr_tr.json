@@ -930,7 +930,15 @@
       "Eylem, kapı koşulu doğru olduğu sürece uygulanır. Yön, renk ve filtreler kapı arayüzünden ayarlanır."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Bu makine, BuildCraft otomasyon iş akışlarının işlevsel bir parçasıdır."
+      "BuildCraft hâlâ MJ ile çalışır, ancak modern fabrikaların çoğu zaman Forge Energy sınırını da aşması gerekir.",
+      "BuildCraft, makineleri ve enerji boruları için yerel enerji olarak MJ kullanır. Özel FE makineleri ve isteğe bağlı otomatik dönüşüm modu, MJ ağını değiştirmeden iki sistemin birlikte çalışmasını sağlar.",
+      "<bold>İpucu:</bold> Dönüşümün tam olarak nerede gerçekleştiğini anlayana kadar MJ ve FE ağlarını görsel olarak ayrı tutun. Özel dönüştürücüler, karma enerjili fabrikalarda arıza bulmayı çok daha kolaylaştırır.",
+      "MJ ve Forge Energy",
+      "Varsayılan dönüşüm oranı <bold>1 MJ = 10 FE</bold> şeklindedir. Bu oran Core içindeki <code>power.mjPerFe</code> ayarıyla değiştirilebilir. <code>MJ_ONLY</code> varsayılan güç modudur: normal BuildCraft makineleri yalnızca MJ kullanmaya devam ederken FE Motoru, MJ Dinamosu ve FE Boruları kullanılabilir kalır. <code>MJ_AUTOCONVERT_FE</code> ayrıca normal BuildCraft MJ makinelerinin FE kabul etmesini ve uyumlu motorların FE tüketicilerini beslemesini sağlar. <code>DISPLAY_FE</code> aynı dönüşüm davranışını etkinleştirir ve genel güç göstergelerinde FE birimini tercih eder.",
+      "Hız Gösterimi",
+      "Bu rehber, farklı makinelerin doğrudan karşılaştırılabilmesi için aktarım hızlarını tick başına yazar. Core içindeki <code>timeGap</code> gösterim ayarı canlı değerleri tick başına veya saniye başına gösterebilir; bir saniye yirmi tick olduğundan saniye seçildiğinde 4 MJ/t değeri 80 MJ/s olarak gösterilir. Gösterim birimini değiştirmek makine hızını veya kapasitesini değiştirmez.",
+      "Motor Bağlantıları",
+      "Motorların ve dönüştürücü motorların çalışması için redstone sinyali gerekir. Yönlü makineleri İngiliz Anahtarı ile döndürerek çalışma yüzünün hedef tüketiciye bakmasını sağlayın. Geri basınç önemlidir: iç tampon boşalamazsa üretim yavaşlar veya durur ve ısı artabilir. Kullanılmayan enerjinin kaybolacağını varsaymak yerine kapılar, depolama veya kapatma sinyali kullanın."
     ],
     "buildcraftcore/item/box_volume": [
       "Bu sayfa Volüm Kutu öğesinin amacını, bağlantısını ve güvenli kullanımını açıklar.",
@@ -1686,6 +1694,91 @@
       "<bold>İpucu:</bold> Her kavşaktaki sonucu kontrol edin ve gerektiğinde rotayı renkler, filtreler veya kapılarla sabitleyin.",
       "Genetik Filtreler",
       "Üretimden önce gerekli bileşenleri ve sonraki kullanımları kontrol edin. Bazı tarifler MJ veya özel bir üretim makinesi gerektirir."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Bazı fabrikalarda FE zaten duvarların içinden akıyordur. BuildCraft bunun yokmuş gibi davranmak zorunda değildir.",
+      "FE Motoru Forge Energy tüketir, bunu MJ birimine dönüştürür ve yönlü bir BuildCraft motoru gibi davranır.",
+      "<bold>İpucu:</bold> Her normal makine için otomatik dönüşümü açmadan bir FE ağının yalnızca MJ kullanan BuildCraft ağını beslemesi gerektiğinde FE Motorunu kullanın.",
+      "Dönüşüm ve Tamponlar",
+      "Motor, 10.000 FE kapasiteli giriş tamponuna FE kabul eder ve varsayılan olarak 4 MJ/t üretir. Varsayılan 1 MJ = 10 FE oranında bu, en fazla 40 FE/t tüketim demektir. Üretilen MJ normal 1.000 MJ motor tamponunda tutulur ve motorun çıkış yüzünden gönderilir. Dönüştürücü, Core güç modu <code>MJ_ONLY</code> olduğunda bile çalışır.",
+      "Yükseltmeler",
+      "Arayüzde dört yükseltme yuvası bulunur ve her yuva desteklenen tek bir dişli kabul eder. Her Demir Dişli 2 MJ/t, her Altın Dişli 3 MJ/t ekler. FE tüketim hızı yapılandırılmış MJ/FE oranını izler; bu nedenle <code>power.mjPerFe</code> değerini değiştirmek aynı MJ çıkışının FE maliyetini değiştirir.",
+      "Motor Mekaniği",
+      "Bir redstone sinyali verin ve motoru, hareketli ucu MJ tüketicisine veya Enerji Borusuna bakacak şekilde döndürün. MJ tamponu bir sonraki dönüşüm darbesini kabul edemiyorsa motor, depolayamayacağı enerji için FE tüketmek yerine bekler. Redstone Motoru dışındaki motorlar gibi ısınır ve yük altındayken kalıcı olarak tıkanmış bırakılmamalıdır."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "Bazen hattın diğer ucundaki makine FE kullanırken fabrikanın geri kalanı çoktan MJ sistemine bağlanmıştır.",
+      "MJ Dinamosu BuildCraft MJ tüketir ve yönlü çıkış yüzünden Forge Energy üretir.",
+      "<bold>İpucu:</bold> Dinamoyu doğrudan bir FE tüketicisine veya FE çekme/ağ düzenine yöneltin ve MJ enerjisini diğer yüzlerden birine verin. Böylece dönüşüm sınırı açıkça görülür.",
+      "Dönüşüm ve Tamponlar",
+      "Dinamo en fazla 1.000 MJ ve 10.000 FE depolar. Temel dönüşüm hızı 4 MJ/t değerinde enerjidir; varsayılan 1 MJ = 10 FE oranında bu 40 FE/t eder. MJ çıkış olmayan yüzlerden girer; FE ön/çıkış yüzünden çıkar. Özel dönüştürücü Core güç modu <code>MJ_ONLY</code> olduğunda bile çalışır.",
+      "Yükseltmeler",
+      "Dört yükseltme yuvası FE Motoruyla aynı kuralları kullanır: her Demir Dişli 2 MJ/t, her Altın Dişli 3 MJ/t dönüşüm kapasitesi ekler. Gerçek FE/t sonucu yapılandırılmış MJ/FE oranını izler.",
+      "Dinamo Mekaniği",
+      "Bir redstone sinyali dönüşümü etkinleştirir. Dinamo, FE tamponunu dolduracak veya taşıracak bir darbe için MJ tüketmez. Devre dışıyken depolanan FE, BuildCraft 8 dönüştürücüsünün geri getirilen davranışına uygun olarak tick başına 1 FE hızında yavaşça kendiliğinden boşalır. FE çıkış yüzünü seçmek için İngiliz Anahtarı ile döndürün."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Ahşap FE Borusu bitişik bir enerji kaynağından FE çeker ve FE boru ağına verir.",
+      "<bold>İpucu:</bold> Çekme borularını yalnızca gerçek FE sağlayıcılarına takın ve sonraki bölümü aynı yükü kaldıracak şekilde seçin. Hızlı bir kaynak, enerjiyi daha yavaş bir sonraki darboğazdan geçiremez.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>160 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Diğer ahşap enerji çekme boruları gibi doğrudan başka bir ahşap FE çekme borusuna bağlanmaz.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Kırık Taş FE Borusu temel, düşük kapasiteli FE taşıma borusudur.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>40 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Kırık Taş ve Taş boru aileleri birbirine doğrudan bağlanmaz; böylece yan yana FE hatları ayrı tutulabilir.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Taş FE Borusu genel amaçlı, düşük kapasiteli FE taşıma borusudur.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>80 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Taş ve Kırık Taş boru aileleri birbirine doğrudan bağlanmaz.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Kumtaşı FE Borusu, komşu makinelere doğrudan bağlanmadan borular arasında FE taşır.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>160 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. FE ana hattını uç nokta olmaması gereken makinelerin yanından geçirmek için kullanın.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Kuvars FE Borusu orta kapasiteli bir FE taşıma borusudur.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>320 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Belirgin malzemesi FE ana hatlarını ayırmak veya görsel olarak tanımlamak için kullanışlıdır.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Altın FE Borusu yüksek kapasiteli bir FE taşıma borusudur.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>1280 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Her kısa kolu yükseltmeden önce yoğun yüklü ana hatlarda kullanın.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Demir FE Borusu yapılandırılabilir bir FE aktarım sınırlayıcısıdır.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>320 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Aktarım sınırını art arda yarıya indirip altmış dörtte bire kadar düşürmek, ardından aktarımı kapatmak ve sonraki adımda tam sınıra dönmek için İngiliz Anahtarı veya eşleşen Gate sınırlayıcı eylemini kullanın.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Elmas FE Borusu çok yüksek kapasiteli, yapılandırılabilir bir FE aktarım sınırlayıcısıdır.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>2560 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Bir kolu kısmak gerektiğinde aktarım sınırını azaltmak veya kapatmak için İngiliz Anahtarı ya da eşleşen Gate sınırlayıcı eylemini kullanın.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "MJ, modern bir atölyenin yönlendirmesi gereken tek enerji ağı değildir.",
+      "Ahşap Elmas FE Borusu yüksek kapasiteli FE çekme borusudur.",
+      "<bold>İpucu:</bold> FE aktarım kapasitesi güzergâhtaki en yavaş bölümle sınırlıdır. Yüksek seviye boruları az yüklü kollara harcamadan önce yoğun ana hattı yükseltin.",
+      "FE Borusu Mekaniği",
+      "Varsayılan aktarım sınırı <bold>2560 FE/t</bold> değeridir. FE borusu hızları, varsayılan değeri 40 FE/t olan <code>pipes.baseFeRate</code> ayarından türetilir; böylece bir mod paketi seviye oranlarını değiştirmeden tüm boru ailesini ölçekleyebilir. Normal Ahşap FE Borusu gibi bitişik FE kaynaklarından enerji çeker ve doğrudan başka bir ahşap FE çekme borusuna bağlanmaz.\n\nFE Boruları uyumlu FE enerji yeteneklerine bağlanır, yalnızca ağın kullanabileceği kadar enerji ister ve kabul edilmeyen enerjiyi çoğaltmak yerine korur. Bunlar yalnızca FE taşımak için kullanılır ve <code>MJ_ONLY</code> modunda da kullanılabilir. Güncel Minecraft sürümlerinde boru tutucular ayrıca suyla kaplanabilir."
     ]
   }
 }

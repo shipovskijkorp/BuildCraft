@@ -342,9 +342,9 @@
       "Le moteur Stirling brûle les combustibles ordinaires de four et produit entre un tiers et un MJ par tick.",
       "<bold>Astuce :</bold> Prévoyez un moyen de désactiver le moteur Stirling lorsque son consommateur s'arrête. Une porte logique surveillant l'activité de la machine ou la demande d'énergie rend les systèmes autonomes beaucoup plus sûrs.",
       "Combustible et production",
-      "Placez un combustible de four valide dans l'unique emplacement prévu et appliquez un signal de redstone. Le moteur ajuste sa production entre environ 0,33 MJ/t et 1 MJ/t selon la quantité de MJ déjà présente dans son tampon interne de 1 000 MJ.\n\nLe moteur consomme les mêmes combustibles de four que Minecraft. Les contenants rendus par un combustible, comme un seau vide, restent disponibles dans l'inventaire du moteur.",
+      "Placez n’importe quel combustible de four valide dans l’unique emplacement de combustible et fournissez un signal de redstone. Le moteur adapte sa sortie entre environ 0,33 MJ/t et 1 MJ/t selon la quantité de MJ déjà contenue dans son tampon interne de 1 000 MJ.\n\nIl consomme les mêmes combustibles de four que Minecraft. Les contenants rendus par un combustible, comme un seau vide, restent disponibles dans l’inventaire. Le guide utilise des débits par tick; l’interface peut afficher des valeurs par seconde si ce mode est activé.",
       "Mécanique des moteurs",
-      "Placez le moteur contre un récepteur de MJ. Il choisit une face de sortie compatible lors de son installation ; utilisez une clé pour le faire pivoter si une autre face doit être alimentée.\n\nLes niveaux bleu, vert, jaune, rouge et noir représentent la chaleur interne actuelle du moteur, laquelle suit le remplissage de son tampon d'énergie. Si la sortie est bloquée, le tampon se remplit, le moteur atteint la surchauffe et cesse de produire. Retirez le signal de redstone ou donnez aux MJ stockés une destination afin qu'il refroidisse de nouveau."
+      "Placez le moteur contre un récepteur MJ. Il choisit une face de sortie compatible lors du placement; utilisez une clé pour le faire pivoter.\n\nLes états bleu, vert, jaune, rouge et noir représentent sa chaleur interne, liée au remplissage du tampon d’énergie. Si la sortie est bloquée, le tampon se remplit, le moteur surchauffe puis cesse de produire. Retirez le signal de redstone ou fournissez une destination aux MJ stockés pour qu’il puisse refroidir.\n\nEn mode <code>MJ_AUTOCONVERT_FE</code> ou <code>DISPLAY_FE</code>, la compatibilité normale des moteurs peut exposer cette sortie MJ aux consommateurs FE selon le rapport configuré. La conversion FE dédiée est fournie séparément par le moteur FE et la dynamo MJ."
     ],
     "buildcraftenergy/block/engine_iron": [
       "Raffiner le pétrole est utile. Le transformer en assez d'énergie pour provoquer un accident industriel l'est considérablement plus.",
@@ -404,9 +404,9 @@
       "Le puits de minage est une machine qui creuse automatiquement tout droit vers le bas jusqu'à la roche-mère.",
       "<bold>Astuce :</bold> Utilisez un puits de minage pour les galeries étroites et les sondages rapides. Pour de grandes zones, comparez son coût d'installation répété à celui d'une carrière avant d'engager vos ressources.",
       "Informations",
-      "Il mine directement sous son emplacement et envoie automatiquement les blocs cassés dans les inventaires ou tuyaux voisins. S'il n'en trouve aucun, il jette les objets dans le monde.\nPlus le bloc est dur, plus son extraction prend du temps.",
+      "Le Mining Well cherche verticalement sous lui et mine les blocs cassables avec l’identité du propriétaire de la machine. Les drops sont proposés aux inventaires adjacents et au transport d’objets; si rien ne les accepte, ils peuvent être éjectés dans le monde. L’eau peut être ignorée, tandis qu’un bloc incassable ou un fluide obstruant inadéquat arrête la progression.",
       "Mécanique de la machine",
-      "Comme la plupart des machines, il nécessite de l'énergie. Plus vous lui en fournissez, plus il creuse rapidement.\nUn signal de redstone arrête le puits de minage."
+      "Fournissez des MJ pour miner. Les blocs plus durs demandent plus d’énergie. La recherche verticale maximale dépend du réglage Core <code>miningMaxDepth</code> et des limites réelles de hauteur du monde; dans les mondes modernes, ce n’est donc pas simplement « creuser jusqu’à la bedrock ». Un signal de redstone met la machine en pause."
     ],
     "buildcraftfactory/block/chute": [
       "Un entonnoir de base est pratique, mais manque de fonctionnalités et d'originalité.",
@@ -812,9 +812,9 @@
       "L'adaptateur de tuyau est un composant qui permet d'alimenter un tuyau récepteur depuis un tuyau cinétique.",
       "<bold>Astuce :</bold> Consultez ensemble les sections Recettes et Utilisations avant de fabriquer en masse ; cet objet peut servir d'intermédiaire pour plusieurs machines ultérieures.",
       "Mécanique des composants",
-      "Il ne peut être placé que sur un tuyau acceptant l'énergie ; tout tuyau cinétique voisin s'y connectera. L'énergie fournie par ce tuyau alimente le tuyau de transport ou de fluide raccordé.",
+      "Placez-le sur un tuyau d’objets ou de fluides compatible qui accepte de la puissance. Un tuyau MJ Kinesis/Power Pipe adjacent peut alors se connecter à travers l’adaptateur et alimenter ce tuyau.\n\nC’est un auxiliaire MJ, pas un convertisseur FE. Les tuyaux FE extraient et transportent l’énergie Forge via leur propre flux FE; utilisez le moteur FE ou la dynamo MJ lorsqu’une frontière de conversion MJ/FE explicite est nécessaire.",
       "Connexions de tuyaux",
-      "Les composants se placent sur n'importe quelle face d'un tuyau. Installés entre deux tuyaux, ils bloquent les autres connexions de tuyau et de fil, sauf celles avec les tuyaux cinétiques et l'adaptateur lui-même."
+      "Les pluggables ne peuvent être placés que sur des tuyaux, sur n’importe quelle face.\nEntre deux tuyaux, il bloque les autres connexions de tuyaux et de pipe wire, à l’exception des Kinesis Pipes et de sa propre connexion."
     ],
     "buildcrafttransport/item/plug_blocker": [
       "Pourquoi mes tuyaux continuent-ils de se connecter ? Placez simplement un bouchon entre eux.",
@@ -930,7 +930,15 @@
       "Lorsque l'action est activée, la porte logique autorise le tuyau Emzuli à extraire au moyen de la couleur du préréglage choisi. Sans préréglage défini, il ne peut extraire aucun objet."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Principes des moteurs"
+      "BuildCraft fonctionne toujours en MJ, mais les usines modernes doivent souvent franchir aussi la frontière vers l’énergie Forge.",
+      "BuildCraft utilise les MJ comme énergie native de ses machines et de ses tuyaux de puissance. Des machines FE dédiées et un mode optionnel de conversion automatique assurent l’interopérabilité sans remplacer le réseau MJ.",
+      "<bold>Astuce :</bold> Gardez les réseaux MJ et FE visuellement distincts jusqu’à ce que vous sachiez exactement où la conversion a lieu. Les convertisseurs dédiés simplifient fortement le diagnostic des usines à énergies mixtes.",
+      "MJ et énergie Forge",
+      "La conversion par défaut est de <bold>1 MJ = 10 FE</bold>. Elle peut être modifiée avec le réglage Core <code>power.mjPerFe</code>. <code>MJ_ONLY</code> est le mode par défaut : les machines BuildCraft ordinaires restent en MJ, tandis que le moteur FE, la dynamo MJ et les tuyaux FE restent disponibles. <code>MJ_AUTOCONVERT_FE</code> permet aussi aux machines MJ ordinaires d’accepter des FE et aux moteurs compatibles d’alimenter des consommateurs FE. <code>DISPLAY_FE</code> active la même conversion et privilégie les FE dans les affichages génériques.",
+      "Affichage du débit",
+      "Ce guide indique les débits par tick afin de comparer directement les machines. Le réglage Core <code>timeGap</code> peut afficher les valeurs en direct par tick ou par seconde; une seconde correspond à vingt ticks, donc 4 MJ/t devient 80 MJ/s lorsque les secondes sont choisies. Changer l’unité ne change ni la vitesse ni la capacité.",
+      "Connexions des moteurs",
+      "Les moteurs et moteurs convertisseurs exigent un signal de redstone. Faites pivoter les machines directionnelles avec une clé pour orienter leur face active vers le consommateur. La contre-pression est importante : si un tampon interne ne peut plus se vider, la production ralentit ou s’arrête et la chaleur peut augmenter. Utilisez des portes logiques, du stockage ou un signal d’arrêt plutôt que de supposer que l’énergie inutilisée disparaît."
     ],
     "buildcraftcore/item/box_volume": [
       "Déplacer quatre repères terrestres à chaque changement de taille d'un projet devient vite un projet à part entière.",
@@ -1036,18 +1044,18 @@
       "Le constructeur consomme des MJ et des ressources pour construire un plan ou un gabarit utilisé.",
       "<bold>Astuce :</bold> Gardez de l'espace de sortie libre pendant le travail. Si une tâche est annulée, les objets réservés peuvent revenir dans l'inventaire ou tomber à proximité faute de place.",
       "Approvisionner le constructeur",
-      "Insérez un plan ou gabarit utilisé dans l'emplacement prévu. L'affichage des exigences indique les matériaux nécessaires. Fournissez les objets par l'inventaire de ressources ou des tuyaux, les fluides par les réservoirs internes et les MJ par une connexion compatible.\n\nLes plans réclament les blocs enregistrés. Les gabarits utilisent des blocs appropriés pour reproduire la forme.",
+      "Insérez un Blueprint ou un Template utilisé dans l’emplacement de capture. L’affichage des exigences indique les matériaux nécessaires. Fournissez les objets par l’inventaire de ressources ou des tuyaux d’objets connectés, les fluides par les réservoirs internes et les MJ par une connexion d’énergie compatible.\n\nLes Blueprints demandent les blocs enregistrés. Les Templates utilisent des blocs appropriés fournis pour reproduire la forme sauvegardée.",
       "Placement et options",
-      "La structure est placée selon l'orientation du constructeur. La rotation et l'excavation ne sont disponibles que si l'en-tête du modèle les autorise. Avec un chemin de marqueurs connecté, le constructeur peut répéter le modèle le long de la route.\n\nL'état du travail et les ressources réservées sont sauvegardés. Après un rechargement, les tâches inachevées sont vérifiées et leurs ressources sont rendues en sécurité avant la reprise."
+      "La structure est placée relativement à l’orientation du Builder. La rotation et l’excavation ne sont disponibles que si l’en-tête de la capture les autorise. Avec un trajet de Path Marks connecté, le Builder peut répéter le plan le long du chemin.\n\nLes actions dans le monde utilisent l’identité du propriétaire de la machine; les blocs protégés et restrictions de placement sont donc vérifiés au lieu d’être contournés. L’état du travail et les ressources réservées sont sauvegardés. Après un rechargement, les tâches inachevées sont revérifiées et les objets, fluides et l’énergie réservés sont rendus en sécurité avant la reprise."
     ],
     "buildcraftbuilders/block/filler": [
       "Tous les travaux ne nécessitent pas un plan détaillé. Beaucoup se résument à des boîtes, des murs, des sols ou beaucoup d'espace vide.",
       "Le remplisseur applique un motif géométrique configurable dans une zone marquée.",
       "<bold>Astuce :</bold> Commencez avec une petite zone et un matériau bon marché. Lorsque le motif et l'orientation sont corrects, déplacez la même configuration vers le site final.",
       "Zone et ressources",
-      "Placez le remplisseur près de repères terrestres ou d'une boîte de volume, puis ouvrez son interface pour actualiser la zone. Fournissez les blocs aux emplacements de ressources et les MJ à la batterie interne. Les motifs d'excavation peuvent aussi retirer des blocs si cette option est activée.",
+      "Placez le Filler près de Land Marks ou d’une Volume Box, puis ouvrez son interface pour actualiser la zone de travail. Fournissez les blocs de construction dans les emplacements de ressources et les MJ à la batterie interne. Le placement accepte les blocs normalement remplaçables plutôt que d’exiger de l’air littéral, tandis que les motifs d’excavation peuvent retirer les blocs existants si l’excavation est activée. Les changements du monde utilisent l’identité du propriétaire de la machine, de sorte que les protections peuvent refuser un travail interdit.",
       "Motifs",
-      "Les motifs comprennent vider, remplir, boîte, cadre, horizon, aplanir, cylindre, pyramide et escaliers. Les formes 2D comprennent triangles, polygones réguliers, arcs et cercles ; les formes 3D comprennent sphères et portions de sphère.\n\nLes paramètres contrôlent direction, rotation, orientation, axe, centre et versions creuses. L'inversion échange l'intérieur et l'extérieur."
+      "Les motifs disponibles comprennent clear, fill, box, frame, horizon, flatten, cylinder, pyramid et stairs. Les formes 2D comprennent triangles, polygones réguliers, arcs et cercles; les formes 3D comprennent sphères et sphères partielles.\n\nLes paramètres contrôlent direction, rotation, orientation, axe, centre et variantes creuses. Inverser la sélection échange l’intérieur et l’extérieur du motif généré."
     ],
     "buildcraftbuilders/block/library": [
       "Un bon modèle devrait survivre plus longtemps que la feuille sur laquelle il a été enregistré.",
@@ -1084,9 +1092,9 @@
       "La carrière construit un cadre et mine automatiquement tous les blocs autorisés dans la zone sélectionnée.",
       "<bold>Astuce :</bold> Dirigez la sortie de la carrière vers un tampon avant le système de tri final. Le tampon empêche de courts blocages d'inventaire d'interrompre le minage et rend le débordement visible.",
       "Choisir la zone",
-      "Placez la carrière près de repères terrestres connectés pour définir sa zone horizontale. Sans zone valide, elle crée une petite carrière par défaut devant elle. Elle maintient chargés les chunks nécessaires à son travail.",
+      "Placez la Quarry près de Land Marks connectés pour définir sa zone horizontale. Sans zone marquée valide, elle crée une petite carrière par défaut devant elle.\n\nLa Quarry peut demander des tickets de chunks lorsque le chargement de chunks BuildCraft est activé et que le niveau configuré autorise cette machine. Les administrateurs peuvent désactiver ou limiter ces tickets; ne supposez donc pas qu’une Quarry distante restera toujours chargée.",
       "Minage",
-      "Fournissez des MJ. La carrière analyse et construit d'abord son cadre, puis déplace la foreuse et mine jusqu'à la profondeur configurée ou au fond du monde. Davantage d'énergie augmente le travail par tick jusqu'à la limite.\n\nLes objets minés sont proposés aux inventaires et tuyaux voisins. Gardez de la place en sortie : un blocage peut interrompre le progrès. Les blocs protégés sont vérifiés avec le faux joueur du propriétaire."
+      "Fournissez des MJ. La Quarry analyse d’abord la zone et construit son cadre, puis le foret parcourt la zone et mine jusqu’à la profondeur configurée ou au bas du monde. Plus de puissance disponible permet plus de travail par tick, jusqu’à la limite de la machine. Les fluides et autres cellules non minables sont gérés sans corrompre le cadre ni le trajet du foret.\n\nLes drops sont proposés aux inventaires adjacents et aux tuyaux d’objets. Gardez assez de place en sortie : une sortie bloquée peut interrompre la progression utile. Les blocs protégés sont vérifiés avec l’identité du propriétaire de la Quarry au lieu de contourner les protections normales."
     ],
     "buildcraftrobotics/item/robot": [
       "Les tuyaux déplacent les ressources. Les robots se déplacent eux-mêmes, déplacent les ressources et parfois tout ce qui leur barre le chemin.",
@@ -1095,7 +1103,7 @@
       "Création d'un robot",
       "Programmez une carte de redstone vierge dans une table de programmation, puis installez la carte programmée dans un robot vide à l'aide d'une table d'intégration. Chaque carte crée une profession de robot différente.",
       "Déploiement et recharge",
-      "Fixez une station d'accueil à un tuyau, puis utilisez le robot programmé sur cette station. Le joueur qui le place en devient le propriétaire. Une station reliée à des MJ peut recharger le robot qui y est amarré.\n\nLes robots conservent une réserve d'énergie de sécurité et reviennent à une station appropriée lorsqu'ils doivent se recharger, charger ou décharger. Les actions de porte appliquées aux stations d'accueil contrôlent les filtres, les itinéraires, les zones de travail et les ressources disponibles."
+      "Fixez une Docking Station à un tuyau, puis utilisez le Robot programmé sur cette station. Le joueur qui le place devient son propriétaire. Une station alimentée en MJ peut recharger le robot amarré.\n\nLes Robots conservent une réserve d’énergie de sécurité et retournent à une station adaptée pour se recharger, charger ou décharger. Les métiers qui cassent, placent, utilisent ou attaquent effectuent ces actions avec l’identité du propriétaire, afin que les systèmes de protection prennent la même décision d’accès que pour ce joueur. Les actions de Gate sur les Docking Stations contrôlent filtres, trajets, zones de travail et ressources disponibles."
     ],
     "buildcraftrobotics/item/redstone_board": [
       "Une machine peut se déplacer, mais sans carte elle ne sait pas si elle doit transporter, planter, miner ou fuir la vache la plus proche.",
@@ -1413,7 +1421,7 @@
       "La table de recharge utilise l'énergie laser pour recharger les objets Forge Energy.",
       "<bold>Astuce :</bold> Utilisez des inventaires d'entrée et de sortie filtrés autour de la table de recharge afin que les objets chargés et déchargés ne circulent pas indéfiniment dans la même boucle.",
       "Recharge",
-      "Placez un objet rechargeable dans l'unique emplacement. Les lasers proches alimentent la table, qui transfère des unités entières d'énergie aux objets exposant la capacité Forge Energy.\n\nLa table ne demande que la quantité que l'objet peut encore accepter et s'arrête lorsqu'il est plein. Les objets qui ne peuvent pas recevoir d'énergie sont refusés."
+      "Placez un objet rechargeable dans l’unique emplacement. Les Lasers à proximité alimentent la table, qui transfère des unités entières d’énergie aux objets exposant la capacité Forge Energy.\n\nLa table ne demande que la quantité que l’objet peut encore accepter et s’arrête lorsqu’il est plein. Les objets incapables de recevoir de l’énergie sont refusés."
     ],
     "buildcraftsilicon/block/integration_table": [
       "Certaines machines sont construites d'un seul bloc. D'autres ne deviennent utiles qu'après l'installation de la pièce importante.",
@@ -1686,6 +1694,91 @@
       "<bold>Astuce :</bold> Utilisez un tuyau d'apiculteur à une jonction dédiée au traitement des abeilles. Conservez une voie de débordement normale afin que les types d'abeilles inattendus ne bloquent pas le réseau.",
       "Filtres génétiques",
       "Ouvrez le tuyau pour configurer chaque face de sortie. Les règles de filtre de Forestry peuvent reconnaître les objets génétiques par espèce, famille d'espèces et stade de vie. Jusqu'à trois espèces sélectionnées peuvent être affectées à une face, et chaque entrée peut être activée ou désactivée indépendamment.\n\nLes objets sont acheminés vers la première sortie compatible selon les règles Forestry configurées. Les sorties sans règle correspondante active ne récupèrent pas l'objet génétique. Le tuyau peut être peint et connecté comme les autres tuyaux d'objets BuildCraft.\n\nCette page n'est chargée que lorsque Forestry est installé et que l'objet de compatibilité est enregistré."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Certaines usines ont déjà des FE qui circulent dans les murs. BuildCraft n’a aucune raison de faire semblant de ne pas les voir.",
+      "Le moteur FE consomme de l’énergie Forge, la convertit en MJ et se comporte comme un moteur BuildCraft directionnel.",
+      "<bold>Astuce :</bold> Utilisez le moteur FE lorsqu’un réseau FE doit alimenter un réseau BuildCraft en MJ sans activer la conversion automatique pour toutes les machines ordinaires.",
+      "Conversion et tampons",
+      "Le moteur accepte des FE dans un tampon d’entrée de 10 000 FE et produit 4 MJ/t par défaut. Avec le rapport par défaut de 1 MJ = 10 FE, il consomme jusqu’à 40 FE/t. Les MJ produits sont conservés dans le tampon normal de 1 000 MJ puis envoyés par la face de sortie. Le convertisseur fonctionne même en mode <code>MJ_ONLY</code>.",
+      "Améliorations",
+      "L’interface comporte quatre emplacements et accepte un engrenage compatible par emplacement. Chaque engrenage en fer ajoute 2 MJ/t; chaque engrenage en or ajoute 3 MJ/t. La consommation de FE suit le rapport MJ/FE configuré, donc <code>power.mjPerFe</code> modifie le coût en FE d’un même débit de MJ.",
+      "Mécanique du moteur",
+      "Fournissez un signal de redstone et orientez le moteur afin que son extrémité mobile vise le consommateur MJ ou le tuyau de puissance. Si le tampon MJ ne peut pas accepter une nouvelle impulsion, le moteur attend au lieu de consommer des FE impossibles à stocker. Comme les autres moteurs non-redstone, il chauffe et ne doit pas rester bloqué en permanence sous charge."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "Il arrive que la machine à l’autre bout parle FE alors que le reste de l’usine est déjà construit autour des MJ.",
+      "La dynamo MJ consomme les MJ de BuildCraft et produit de l’énergie Forge par sa face de sortie directionnelle.",
+      "<bold>Astuce :</bold> Orientez la dynamo directement vers un consommateur FE ou un dispositif d’extraction/réseau FE, puis alimentez-la en MJ par une autre face. La frontière de conversion reste ainsi évidente.",
+      "Conversion et tampons",
+      "La dynamo stocke jusqu’à 1 000 MJ et 10 000 FE. Son débit de base correspond à 4 MJ/t, soit 40 FE/t avec le rapport par défaut de 1 MJ = 10 FE. Les MJ entrent par les faces autres que la sortie; les FE sortent par la face orientée. Le convertisseur fonctionne même en mode <code>MJ_ONLY</code>.",
+      "Améliorations",
+      "Les quatre emplacements suivent les mêmes règles que le moteur FE : chaque engrenage en fer ajoute 2 MJ/t de capacité de conversion et chaque engrenage en or 3 MJ/t. Le résultat réel en FE/t suit le rapport MJ/FE configuré.",
+      "Mécanique de la dynamo",
+      "Un signal de redstone active la conversion. La dynamo ne consomme pas de MJ pour une impulsion qui remplirait ou dépasserait son tampon FE. Lorsqu’elle est désactivée, les FE stockés se déchargent lentement à raison de 1 FE par tick, conformément au comportement restauré de BuildCraft 8. Faites-la pivoter avec une clé pour choisir la face de sortie FE."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en bois extrait les FE d’une source d’énergie adjacente et les injecte dans le réseau de tuyaux FE.",
+      "<bold>Astuce :</bold> Placez les tuyaux d’extraction uniquement sur de vraies sources FE et dimensionnez le segment suivant pour la même charge. Une source rapide ne peut pas traverser un goulot d’étranglement plus lent.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>160 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Comme les autres tuyaux d’extraction d’énergie en bois, il ne se connecte pas directement à un autre tuyau d’extraction FE en bois.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en pierre taillée est le tuyau de transport FE de base à faible capacité.",
+      "<bold>Astuce :</bold> Le débit FE est limité par le segment le plus lent du trajet. Améliorez d’abord la ligne principale chargée avant d’utiliser des tuyaux haut de gamme sur des branches peu sollicitées.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>40 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Les familles pierre taillée et pierre ne se connectent pas directement entre elles, ce qui permet de garder des lignes FE adjacentes séparées.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en pierre est un tuyau général de transport FE à faible capacité.",
+      "<bold>Astuce :</bold> Le débit FE est limité par le segment le plus lent du trajet. Améliorez d’abord la ligne principale chargée avant d’utiliser des tuyaux haut de gamme sur des branches peu sollicitées.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>80 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Les familles pierre et pierre taillée ne se connectent pas directement entre elles.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en grès transporte les FE entre tuyaux sans se connecter directement aux machines voisines.",
+      "<bold>Astuce :</bold> Le débit FE est limité par le segment le plus lent du trajet. Améliorez d’abord la ligne principale chargée avant d’utiliser des tuyaux haut de gamme sur des branches peu sollicitées.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>160 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Utilisez-le pour faire passer une ligne principale FE près de machines qui ne doivent pas devenir des extrémités.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en quartz est un tuyau de transport FE de capacité moyenne.",
+      "<bold>Astuce :</bold> Le débit FE est limité par le segment le plus lent du trajet. Améliorez d’abord la ligne principale chargée avant d’utiliser des tuyaux haut de gamme sur des branches peu sollicitées.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>320 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Son matériau distinct permet de séparer ou d’identifier visuellement les lignes principales FE.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en or est un tuyau de transport FE à haute capacité.",
+      "<bold>Astuce :</bold> Le débit FE est limité par le segment le plus lent du trajet. Améliorez d’abord la ligne principale chargée avant d’utiliser des tuyaux haut de gamme sur des branches peu sollicitées.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>1280 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Utilisez-le sur les lignes principales fortement chargées avant d’améliorer chaque courte branche.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en fer est un limiteur configurable de transfert FE.",
+      "<bold>Astuce :</bold> Le débit FE est limité par le segment le plus lent du trajet. Améliorez d’abord la ligne principale chargée avant d’utiliser des tuyaux haut de gamme sur des branches peu sollicitées.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>320 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Utilisez une clé ou l’action de limite correspondante d’une porte logique pour diviser plusieurs fois la limite par deux jusqu’à 1/64, puis désactiver le transfert avant de revenir au maximum.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en diamant est un limiteur configurable de transfert FE à très haute capacité.",
+      "<bold>Astuce :</bold> Le débit FE est limité par le segment le plus lent du trajet. Améliorez d’abord la ligne principale chargée avant d’utiliser des tuyaux haut de gamme sur des branches peu sollicitées.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>2560 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Utilisez une clé ou l’action de limite correspondante d’une porte logique pour réduire ou désactiver la limite lorsqu’une branche doit être bridée.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "Les MJ ne sont pas le seul réseau d’énergie qu’un atelier moderne peut avoir besoin d’acheminer.",
+      "Le tuyau FE en bois et diamant est un tuyau d’extraction FE à haute capacité.",
+      "<bold>Astuce :</bold> Placez les tuyaux d’extraction uniquement sur de vraies sources FE et dimensionnez le segment suivant pour la même charge. Une source rapide ne peut pas traverser un goulot d’étranglement plus lent.",
+      "Mécanique des tuyaux FE",
+      "Sa limite de transfert par défaut est de <bold>2560 FE/t</bold>. Les débits des tuyaux FE dérivent de <code>pipes.baseFeRate</code>, réglé par défaut à 40 FE/t, ce qui permet à un modpack de redimensionner toute la famille sans changer les rapports entre niveaux. Comme le tuyau FE en bois normal, il extrait les FE des sources adjacentes et ne se connecte pas directement à un autre tuyau d’extraction FE en bois.\n\nLes tuyaux FE se connectent aux capacités d’énergie FE compatibles, ne demandent que l’énergie utilisable par le réseau et conservent l’énergie refusée au lieu de la dupliquer. Ils assurent un transport FE dédié et restent disponibles en mode <code>MJ_ONLY</code>. Les supports de tuyau peuvent aussi être gorgés d’eau dans les versions actuelles de Minecraft."
     ]
   }
 }

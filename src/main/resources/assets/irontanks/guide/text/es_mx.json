@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "es_mx",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 27 cubetas (27,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/iron_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 32 cubetas (32,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/silver_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 43 cubetas (43,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/gold_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 48 cubetas (48,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 64 cubetas (64,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 64 cubetas (64,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 96 cubetas (96,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 96 cubetas (96,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 128 cubetas (128,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 256 cubetas (256,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un nivel de tanque compatible con BuildCraft con capacidad de 512 cubetas (512,000 mB).",
+      "Usa mejoras de tanque para conservar el fluido almacenado al cambiar de nivel.",
+      "Funcionamiento",
+      "Coloca tanques compatibles directamente uno encima o debajo de otro para formar una columna vertical de fluido. Las tuberías y máquinas de BuildCraft acceden a la capability nativa del tanque."
+    ],
+    "irontanks/block/void_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un tanque compacto de desecho que destruye continuamente hasta 80 mB del fluido almacenado por tick.",
+      "Úsalo solo con fluidos que realmente quieras desechar; la tasa de 80 mB/t también puede convertirse en un cuello de botella para la entrada.",
+      "Funcionamiento",
+      "Puede unirse verticalmente a tanques compatibles. El fluido que llega a este tanque se elimina; no lo uses con fluidos valiosos."
+    ],
+    "irontanks/block/creative_tank": [
+      "Más espacio para los fluidos que mantienen la industria en marcha.",
+      "Un tanque fuente exclusivo del modo Creativo. Una vez lleno con un fluido, el drenaje proporciona ese fluido sin reducir la cantidad almacenada.",
+      "Llénalo primero con el fluido deseado para definir su tipo; después, extraer fluido no consume la cantidad almacenada.",
+      "Funcionamiento",
+      "El Tanque Creativo rechaza intencionalmente las conexiones verticales con otros tanques para evitar cadenas infinitas de balanceo con comportamiento ambiguo."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Vidrio de BuildCraft en Tanque de Cobre en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Vidrio de BuildCraft en Tanque de Hierro en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Cobre en Tanque de Hierro en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Cobre en Tanque de Plata en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Hierro en Tanque de Oro en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Plata en Tanque de Oro en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Oro en Tanque de Diamante en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Diamante en Tanque de Obsidiana en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Diamante en Tanque de Esmeralda en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Diamante en Tanque de Aluminio en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Esmeralda en Tanque de Acero Inoxidable en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Aluminio en Tanque de Acero Inoxidable en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Acero Inoxidable en Tanque de Titanio en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Mejora el recipiente, no el trabajo de vaciarlo.",
+      "Convierte Tanque de Titanio en Tanque de Acero de Tungsteno en el mismo lugar.",
+      "Usa la mejora sobre el bloque de tanque correspondiente.",
+      "Conservación del fluido",
+      "El bloque se sustituye en el servidor y el FluidStack completo se copia al nuevo tanque de BuildCraft antes de consumir el objeto de mejora."
+    ]
+  }
+}

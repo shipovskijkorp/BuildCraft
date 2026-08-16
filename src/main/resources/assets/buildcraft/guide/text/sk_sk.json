@@ -930,7 +930,15 @@
       "Akcia sa používa počas platnosti podmienky brány. Smer, farbu a filtre možno nastaviť v rozhraní brány."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Tento stroj je funkčnou súčasťou automatizovaných pracovných postupov BuildCraft."
+      "BuildCraft stále funguje na MJ, no moderné továrne často potrebujú prekročiť hranicu aj do Forge Energy.",
+      "BuildCraft používa MJ ako natívnu energiu strojov a energetických rúr. Vyhradené FE stroje a voliteľný režim automatickej konverzie umožňujú spoluprácu bez nahradenia siete MJ.",
+      "<bold>Tip:</bold> Držte siete MJ a FE vizuálne oddelené, kým presne neviete, kde sa energia konvertuje. Vyhradené konvertory výrazne uľahčujú diagnostiku tovární s viacerými druhmi energie.",
+      "MJ a Forge Energy",
+      "Predvolený pomer je <bold>1 MJ = 10 FE</bold>. Dá sa zmeniť nastavením Core <code>power.mjPerFe</code>. <code>MJ_ONLY</code> je predvolený režim napájania: bežné stroje BuildCraftu zostávajú iba na MJ, zatiaľ čo FE motor, MJ dynamo a FE rúry zostávajú dostupné. <code>MJ_AUTOCONVERT_FE</code> navyše umožní bežným MJ strojom BuildCraftu prijímať FE a kompatibilným motorom napájať spotrebiče FE. <code>DISPLAY_FE</code> zapne rovnaké správanie konverzie a všeobecné ukazovatele výkonu budú uprednostňovať FE.",
+      "Zobrazenie rýchlosti",
+      "Táto príručka uvádza prenosové rýchlosti za tick, aby sa dali stroje priamo porovnať. Nastavenie Core <code>timeGap</code> môže živé hodnoty zobrazovať za tick alebo za sekundu; jedna sekunda má dvadsať tickov, takže 4 MJ/t sa pri zobrazení za sekundu ukáže ako 80 MJ/s. Zmena zobrazovanej jednotky nemení rýchlosť ani kapacitu strojov.",
+      "Pripojenia motorov",
+      "Motory a konvertorové motory potrebujú na činnosť redstone signál. Smerové stroje otočte kľúčom tak, aby ich pracovná strana smerovala k zamýšľanému spotrebiču. Protitlak je dôležitý: keď sa vnútorný zásobník nedokáže vyprázdniť, výroba sa spomalí alebo zastaví a teplota môže stúpať. Použite hradlá, úložisko alebo vypínací signál namiesto predpokladu, že nevyužitá energia zmizne."
     ],
     "buildcraftcore/item/box_volume": [
       "Táto stránka vysvetľuje účel, pripojenie a bezpečné používanie prvku Ohraničujúci kváder.",
@@ -1686,6 +1694,91 @@
       "<bold>Tip:</bold> Overte správanie na každej odbočke a podľa potreby uzamknite trasu farbami, filtrami alebo bránami.",
       "Genetické filtre",
       "Pred výrobou skontrolujte požadované súčasti a následné použitie. Niektoré recepty vyžadujú energiu MJ alebo špeciálny výrobný stroj."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "Niektoré továrne už majú FE rozvedenú v stenách. BuildCraft ju nemusí ignorovať.",
+      "FE motor spotrebúva Forge Energy, konvertuje ju na MJ a správa sa ako smerový motor BuildCraftu.",
+      "<bold>Tip:</bold> FE motor použite vtedy, keď má sieť FE napájať MJ sieť BuildCraftu bez zapnutia automatickej konverzie pre každý bežný stroj.",
+      "Konverzia a zásobníky",
+      "Motor prijíma FE do vstupného zásobníka s kapacitou 10 000 FE a predvolene vyrába 4 MJ/t. Pri predvolenom pomere 1 MJ = 10 FE spotrebuje najviac 40 FE/t. Vyrobené MJ sa ukladá do bežného motorového zásobníka s kapacitou 1 000 MJ a odosiela sa cez výstupnú stranu motora. Konvertor funguje aj vtedy, keď je režim napájania Core nastavený na <code>MJ_ONLY</code>.",
+      "Vylepšenia",
+      "Rozhranie má štyri sloty na vylepšenia a do každého prijme jedno podporované ozubené koleso. Každé železné koleso pridá 2 MJ/t a každé zlaté koleso 3 MJ/t. Spotreba FE sa riadi nastaveným pomerom MJ/FE, takže zmena <code>power.mjPerFe</code> zmení cenu vo FE pri rovnakom výstupe MJ.",
+      "Mechanika motora",
+      "Priveďte redstone signál a otočte motor tak, aby jeho pohyblivý koniec smeroval k spotrebiču MJ alebo energetickej rúre. Ak zásobník MJ nedokáže prijať ďalší konverzný impulz, motor počká a nespotrebuje FE na energiu, ktorú nemôže uložiť. Rovnako ako ostatné motory okrem Redstone motora sa zahrieva a pri záťaži by nemal zostať trvalo zablokovaný."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "Niekedy stroj na druhom konci používa FE, zatiaľ čo zvyšok továrne už funguje na MJ.",
+      "MJ dynamo spotrebúva BuildCraft MJ a cez smerovú výstupnú stranu vyrába Forge Energy.",
+      "<bold>Tip:</bold> Nasmerujte dynamo priamo na spotrebič FE alebo na usporiadanie pre odber/sieť FE a MJ privádzajte cez jednu z ostatných strán. Hranica konverzie tak zostane zreteľná.",
+      "Konverzia a zásobníky",
+      "Dynamo uloží najviac 1 000 MJ a 10 000 FE. Jeho základná rýchlosť konverzie zodpovedá 4 MJ/t, čo je pri predvolenom pomere 1 MJ = 10 FE hodnota 40 FE/t. MJ vstupuje cez strany, ktoré nie sú výstupom; FE odchádza cez čelnú/výstupnú stranu. Vyhradený konvertor funguje aj v režime Core <code>MJ_ONLY</code>.",
+      "Vylepšenia",
+      "Štyri sloty na vylepšenia používajú rovnaké pravidlá ako FE motor: každé železné koleso pridá 2 MJ/t konverznej kapacity a každé zlaté koleso 3 MJ/t. Skutočný výsledok vo FE/t sa riadi nastaveným pomerom MJ/FE.",
+      "Mechanika dynama",
+      "Redstone signál zapne konverziu. Dynamo nespotrebuje MJ na impulz, ktorý by naplnil alebo preplnil zásobník FE. Keď je vypnuté, uložená FE sa pomaly samovoľne vybíja rýchlosťou 1 FE za tick, čo zodpovedá obnovenému správaniu konvertora z BuildCraft 8. Výstupnú stranu FE vyberte otočením pomocou kľúča."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Drevená FE rúra odoberá FE zo susedného zdroja energie a vkladá ju do siete FE rúr.",
+      "<bold>Tip:</bold> Odberné rúry pripájajte iba k skutočným zdrojom FE a nasledujúci úsek dimenzujte na rovnaké zaťaženie. Rýchly zdroj nedokáže pretlačiť energiu cez pomalšie zúženie siete.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>160 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Rovnako ako ostatné drevené rúry na odber energie sa nepripája priamo k ďalšej drevenej FE rúre na odber.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Dláždená FE rúra je základná nízkokapacitná rúra na prenos FE.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>40 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Rodiny dláždených a kamenných rúr sa k sebe priamo nepripájajú, takže susedné FE vedenia môžu zostať oddelené.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Kamenná FE rúra je univerzálna nízkokapacitná rúra na prenos FE.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>80 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Rodiny kamenných a dláždených rúr sa k sebe priamo nepripájajú.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Pieskovcová FE rúra prenáša FE medzi rúrami bez priameho pripájania k susedným strojom.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>160 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Použite ju na vedenie hlavnej FE trasy popri strojoch, ktoré sa nemajú stať koncovými bodmi.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Kremenná FE rúra je stredne kapacitná rúra na prenos FE.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>320 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Odlišný materiál je užitočný na oddelenie alebo vizuálne označenie hlavných FE trás.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Zlatá FE rúra je vysokokapacitná rúra na prenos FE.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>1280 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Použite ju na silno zaťažených hlavných trasách skôr, než vylepšíte každú krátku odbočku.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Železná FE rúra je nastaviteľný obmedzovač prenosu FE.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>320 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Pomocou kľúča alebo zodpovedajúcej obmedzovacej akcie hradla môžete opakovane deliť limit prenosu na polovicu až na jednu šesťdesiatštvrtinu, potom prenos vypnúť a ďalším krokom sa vrátiť na plný limit.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Diamantová FE rúra je nastaviteľný obmedzovač prenosu FE s veľmi vysokou kapacitou.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>2560 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Pomocou kľúča alebo zodpovedajúcej obmedzovacej akcie hradla znížte alebo vypnite limit prenosu, keď treba odbočku priškrtiť.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "MJ nie je jediná energetická sieť, ktorú môže moderná dielňa potrebovať viesť.",
+      "Drevená diamantová FE rúra je vysokokapacitná rúra na odber FE.",
+      "<bold>Tip:</bold> Prenos FE obmedzuje najpomalší úsek trasy. Najskôr vylepšite vyťaženú hlavnú vetvu a až potom míňajte rúry vyšších úrovní na slabo zaťažené odbočky.",
+      "Mechanika FE rúr",
+      "Predvolený limit prenosu je <bold>2560 FE/t</bold>. Rýchlosti FE rúr sa odvodzujú od <code>pipes.baseFeRate</code>, ktorého predvolená hodnota je 40 FE/t, takže modpack môže škálovať celú rodinu bez zmeny pomerov medzi úrovňami. Rovnako ako bežná drevená FE rúra odoberá energiu zo susedných FE zdrojov a nepripája sa priamo k ďalšej drevenej FE rúre na odber.\n\nFE rúry sa pripájajú ku kompatibilným FE energetickým schopnostiam, vyžiadajú si iba energiu, ktorú sieť dokáže použiť, a neprijatú energiu zachovajú namiesto jej duplikovania. Sú určené výhradne na prenos FE a zostávajú dostupné v režime <code>MJ_ONLY</code>. Držiaky rúr možno v súčasných verziách Minecraftu tiež zaplaviť vodou."
     ]
   }
 }

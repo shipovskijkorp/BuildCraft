@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "fi_fi",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 27 ämpäriä (27,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/iron_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 32 ämpäriä (32,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/silver_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 43 ämpäriä (43,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/gold_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 48 ämpäriä (48,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/diamond_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 64 ämpäriä (64,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/obsidian_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 64 ämpäriä (64,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/emerald_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 96 ämpäriä (96,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/aluminium_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 96 ämpäriä (96,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 128 ämpäriä (128,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/titanium_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 256 ämpäriä (256,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "BuildCraft-yhteensopiva säiliö, jonka tilavuus on 512 ämpäriä (512,000 mB).",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Aseta yhteensopivia säiliöitä suoraan päällekkäin muodostamaan pystysuora nestepylväs. BuildCraftin putket ja koneet käyttävät säiliön natiivia nestecapabilitya."
+    ],
+    "irontanks/block/void_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "Kompakti hävityssäiliö, joka tuhoaa jatkuvasti enintään 80 mB varastoitua nestettä pelitikitystä kohti.",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Se voi liittyä pystysuunnassa yhteensopiviin säiliöihin. Tähän säiliöön saapuva neste poistetaan; älä käytä sitä arvokkaille nesteille."
+    ],
+    "irontanks/block/creative_tank": [
+      "Lisää tilaa teollisuutta pyörittäville nesteille.",
+      "Vain luovaan tilaan tarkoitettu lähdesäiliö. Kun siihen on asetettu nestettä, siitä voidaan tyhjentää samaa nestettä vähentämättä varastoitua määrää.",
+      "Säiliöparannuksilla voit vaihtaa säiliön tasoa menettämättä siinä olevaa nestettä.",
+      "Toiminta",
+      "Luova säiliö kieltäytyy tarkoituksella pystysuorista säiliöliitännöistä, jotta rajattomia ja epäselviä tasapainotusketjuja ei synny."
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa BuildCraftin lasisäiliön paikallaan kuparisäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa BuildCraftin lasisäiliön paikallaan rautasäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa kuparisäiliön paikallaan rautasäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa kuparisäiliön paikallaan hopeasäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa rautasäiliön paikallaan kultasäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa hopeasäiliön paikallaan kultasäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa kultasäiliön paikallaan timanttisäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa timanttisäiliön paikallaan obsidiaanisäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa timanttisäiliön paikallaan smaragdisäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa timanttisäiliön paikallaan alumiinisäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa smaragdisäiliön paikallaan ruostumattomasta teräksestä tehty säiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa alumiinisäiliön paikallaan ruostumattomasta teräksestä tehty säiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa ruostumattomasta teräksestä tehty säiliön paikallaan titaanisäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "Paranna säiliö, älä tee tyhjennystyötä uudelleen.",
+      "Muuntaa titaanisäiliön paikallaan volframiterässäiliöksi.",
+      "Käytä parannusta vastaavaan säiliölohkoon.",
+      "Nesteen säilyttäminen",
+      "Lohko korvataan palvelimella ja koko nestepino kopioidaan uuteen BuildCraft-säiliöön ennen parannusesineen kuluttamista."
+    ]
+  }
+}

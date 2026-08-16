@@ -1,6 +1,5 @@
 {
-  "format": 1,
-  "language": "fi_fi",
+  "language": "Suomi",
   "pages": {
     "buildcraftcore/item/gear_wood": [
       "Pyrkiessäsi luomaan yksinkertaista automaatiota olet löytänyt hyödyllisen osan: pyörivän hammasrattaan!\nSe on valmistettu vain puusta, joten sitä on parannettava vaativampia tehtäviä varten...",
@@ -28,9 +27,8 @@
       "<bold>Vinkki:</bold> Valmista timanttisia hammasrattaita suunnitelluissa erissä. Korkeamman tason rattaat kuluttavat edellisen tason rattaita, joten säilytä muutama alemman tason vararatas koneita ja työkaluja varten."
     ],
     "buildcraftcore/item/wrench": [
-      "Koneiden rakentaminen ja käyttäminen on erittäin hyödyllistä, mutta joskus niiden toimintaa täytyy muuttaa tai ne on käännettävä toiseen suuntaan.\nJakoavain ratkaisee ongelman: sillä voi iskulla muuttaa koneen tai monien muiden lohkojen tilaa.",
-      "Jakoavain on perustyökalu, jolla lohkoja, koneita ja joitakin olentoja voidaan napsauttamalla kiertää ja käsitellä.",
-      "<bold>Vinkki:</bold> Pidä jakoavain mukana kootessasi konehuonetta. Monet BuildCraft-lohkot ja suunnatut putket voidaan kiertää tai määrittää uudelleen rikkomatta niitä."
+      "BuildCraftin jakoavain kiertää ja määrittää uudelleen tuettuja koneita, suunnattavia putkia ja muita BuildCraft-lohkoja.",
+      "<bold>Yhteensopivuus:</bold> oletuksena myös yhteisen <code>c:tools/wrench</code>-tagin työkalut voivat tehdä samat toiminnot. Palvelinpaketti voi poistaa tagiyhteensopivuuden asetuksella <code>useWrenchTag</code>; BuildCraftin omat jakoavaimet toimivat silti."
     ],
     "buildcraftcore/item/paintbrush": [
       "Maailman värikkyys on jo itsessään vaikuttavaa, mutta kuvittele voivasi vaihtaa tiettyjen lohkojen väriä yhdellä siveltimenvedolla.\nLohkojen maalaaminen on mukavaa koristelua, mutta sillä voi olla myös käytännöllinen tarkoitus, kuten putkien erottaminen toisistaan.",
@@ -38,11 +36,8 @@
       "<bold>Vinkki:</bold> Pidä pysyville putkiverkostoille erilliset siveltimet. Yleensä on helpompi ylläpitää järjestelmää, jossa väritetään vain ne haarat, jotka eivät saa yhdistyä, kuin maalata jokainen putki."
     ],
     "buildcraftcore/item/marker_connector": [
-      "Koneiden työskentelyalueiden tarkka hallinta on välttämätöntä kaikissa suurissa rakennushankkeissa, joten tarvitset siihen sopivan työkalun.",
-      "Merkkiyhdistimellä muutetaan tilavuuslaatikon kokoa tai yhdistetyn reittimerkin suuntaa.",
-      "<bold>Vinkki:</bold> Yhdistä merkit vasta, kun jokainen päätepiste on lopullisessa paikassaan. Valmiin muodon yhdistäminen uudelleen on nopeampaa kuin kiertyneen tai keskeneräisen alueen korjaaminen myöhemmin.",
-      "Tiedot",
-      "Käytä merkkiyhdistintä pitämällä sitä kädessäsi ja napsauttamalla säädettävää laserlaatikkoa. Liikuta sitten osoitinta säätääksesi sitä ja lopeta säätäminen napsauttamalla uudelleen.\nVoit poistaa laserlaatikon Shift-napsauttamalla sitä merkkiyhdistin kädessäsi."
+      "Marker Connector yhdistää yhteensopivia merkkejä ja muokkaa suoraan Volume Box- ja Path Mark -geometriaa.",
+      "Yhteyden pituutta rajoittaa <code>markerMaxDistance</code>. Käytä työkalua näkyvään laserlaatikkoon aloittaaksesi siirron ja uudelleen vahvistaaksesi sen; hiipiessä käytettynä laatikko poistuu."
     ],
     "buildcraftcore/item/marker_path": [
       "Suorat linjat ovat hyödyllisiä, mutta suuret hankkeet tarvitsevat usein reitin, joka kiertää maaston ja koneet.",
@@ -63,13 +58,9 @@
       "Aseta määritetty luettelo sen hyväksyvään parametri- tai suodatinpaikkaan. Vastaanottava putki, portti tai robotin toiminto käsittelee merkintöjä yhtenä uudelleenkäytettävänä suodattimena. Luetteloa ei kuluteta suodattimena käytettäessä."
     ],
     "buildcraftcore/block/engine_wood": [
-      "Etsiessäsi keinoa tuottaa energiaa olet löytänyt tavan tuottaa pienen määrän energiaa pelkällä redstone-signaalilla.",
-      "Redstone-moottori on yksinkertainen moottori, joka tarvitsee toimiakseen vain redstone-signaalin. Se tuottaa vain hyvin pienen määrän energiaa.",
-      "<bold>Vinkki:</bold> Redstone-moottori sopii parhaiten vähän tehoa vaativaan poistoon ja portteihin. Se ei voi korvata vahvempaa moottoria, jos koneella on merkittävä MJ-per-tick-tarve.",
-      "Tiedot",
-      "Niiden tuottaman vähäisen MJ-määrän vuoksi ne soveltuvat vain yksinkertaisten laitteiden, kuten poistoputkien tai pumppujen, käyttämiseen.",
-      "Moottorien toiminta",
-      "BuildCraft-moottoreilla on viisi lämpötilavaihetta, jotka määräävät moottorin nopeuden: sininen, vihreä, keltainen, punainen ja musta.\nTehokkaammista moottoreista poiketen redstone-moottorit <bold>eivät voi ylikuumentua</bold>. Kun energia ei pääse minnekään, ne muuttuvat mustiksi ja jatkavat toimintaansa.\nMoottorit yhdistyvät aina lähimpään yhteensopivaan MJ-kuluttajaan, mutta redstone-moottorit eivät yhdisty kinesis-putkiin ja yhdistyvät vain tiettyihin koneisiin.\nVoit kiertää moottoria jakoavaimella ja vaihtaa lohkoa, jota se käyttää.\n\nKuten kaikki moottorit, se <bold>tarvitsee toimiakseen redstone-signaalin.</bold>\nPortit voivat havaita moottorin lämpötilavaiheet ja auttaa sen ohjaamisessa."
+      "Redstone-moottori on BuildCraftin pienin MJ-moottori: se tarvitsee vain redstone-signaalin ja tuottaa 0,05 MJ/t.",
+      "Se sopii kevyille suorille MJ-kuluttajille ja pienelle poistolle, eikä syötä tavallista Kinesis/Power Pipe -verkkoa. Se ei räjähdä ylikuumenemisesta ja sen suunta vaihdetaan jakoavaimella.",
+      "Näyttö voi käyttää /t- tai /s-yksikköä Core-asetuksen mukaan; todellinen nopeus ei muutu."
     ],
     "buildcraftcore/trigger/always_on": [
       "Tapahtuipa mitä tahansa, tämä laukaisin on aina päällä.",
@@ -338,24 +329,12 @@
       "Porteissa Silmukka-toiminto voi näkyä useita kertoja eri väreillä, jotka vastaavat eri liitettyjä koneita.\nToiminnon väri ilmaisee koneen suunnan putkeen nähden, jotta koneet voidaan erottaa toisistaan."
     ],
     "buildcraftenergy/block/engine_stone": [
-      "Uuni, joka liikuttaa mäntää illallisen kypsentämisen sijaan, on silti täysin kunniallinen uuni.",
-      "Stirling-moottori polttaa tavallisia uunipolttoaineita ja tuottaa kolmasosasta yhteen MJ:hin tickiä kohti.",
-      "<bold>Vinkki:</bold> Jätä tapa poistaa Stirling-moottori käytöstä, kun sen kuluttaja pysähtyy. Koneen toimintaa tai tehontarvetta valvova portti tekee valvomattomista järjestelmistä paljon turvallisempia.",
-      "Polttoaine ja tuotto",
-      "Aseta mikä tahansa kelvollinen uunipolttoaine moottorin ainoaan polttoainepaikkaan ja anna redstone-signaali. Moottori säätää tuottonsa noin 0,33–1 MJ/t välille sen mukaan, kuinka paljon MJ:tä sen 1 000 MJ:n sisäisessä puskurissa jo on.\n\nMoottori käyttää samoja uunipolttoaineita, jotka Minecraft tunnistaa. Polttoaineen palauttamat säiliöt, kuten tyhjä ämpäri, jäävät saataville moottorin varastoon.",
-      "Moottorien toiminta",
-      "Aseta moottori MJ-vastaanottajaa vasten. Se valitsee yhteensopivan ulostulopinnan asetettaessa; käännä sitä jakoavaimella, jos virta täytyy syöttää toiselle pinnalle.\n\nSininen, vihreä, keltainen, punainen ja musta vaihe kuvaavat moottorin sisäistä lämpötilaa, joka seuraa tehopuskurin täyttöastetta. Jos ulostulo estyy, puskuri täyttyy, moottori saavuttaa ylikuumenemisvaiheen ja lopettaa tuottamisen. Poista redstone-signaali tai järjestä varastoidulle MJ:lle vastaanottaja, jotta moottori voi jäähtyä."
+      "Stirling-moottori polttaa tavallisia uunipolttoaineita ja tuottaa noin 0,33–1 MJ/t sen mukaan, kuinka täynnä sen 1 000 MJ sisäinen puskuri on.",
+      "Se tarvitsee redstone-signaalin ja suunnataan jakoavaimella. Jos ulostulo tukkeutuu, puskuri täyttyy, moottori ylikuumenee ja lopettaa tuotannon, kunnes se voi purkaa energiaa ja jäähtyä. Tiloissa <code>MJ_AUTOCONVERT_FE</code> ja <code>DISPLAY_FE</code> ulostulo voidaan myös muuntaa FE-kuluttajille asetetulla suhteella."
     ],
     "buildcraftenergy/block/engine_iron": [
-      "Öljyn jalostaminen on hyödyllistä. Sen muuttaminen tehomääräksi, jolla voi aiheuttaa teollisuusonnettomuuden, on huomattavasti hyödyllisempää.",
-      "Polttomoottori polttaa BuildCraftin nestemäisiä polttoaineita, hallitsee lämpöä jäähdytysnesteellä ja varastoi likaisten polttoaineiden tuottamaa jäännöstä.",
-      "<bold>Vinkki:</bold> Järjestä luotettava jäähdytys ja automaattinen sammutusehto ennen kuin jätät polttomoottorin valvomatta. Testaa koko polttoaine- ja jäähdytysnestejärjestelmä täydellä kuormalla.",
-      "Säiliöt ja polttoaineet",
-      "Moottorissa on erilliset säiliöt polttoaineelle, jäähdytysnesteelle ja jäännökselle. Nesteputket tai säiliöt voivat täyttää ja tyhjentää ne suoraan. Anna redstone-signaali polttaaksesi lisätyn polttoaineen; tuotto riippuu valitusta polttoaineesta ja vaihtelee vähätehoisista öljytuotteista 8 MJ/t tuottavaan kaasumaiseen polttoaineeseen.\n\nRaakaöljy, raskas öljy ja tiheä öljy ovat likaisia polttoaineita. Niiden polttaminen tuottaa vähitellen jäännöstä, ja täysi jäännössäiliö estää sivutuotteen vastaanottamisen. Jalostetut polttoaineet palavat ilman jäännöstä.",
-      "Jäähdytys",
-      "Vesi on tavallinen nestemäinen jäähdytysaine. Jäätä ja pakattua jäätä voidaan myös lisätä kiinteinä jäähdytysaineina, jolloin ne muuttuvat vedeksi ja jäähdyttävät tehokkaammin. Kuumat biomit saavat moottorin lämpenemään nopeammin ja jäähtymään tehottomammin, kun taas kylmissä biomeissa vaikutus on päinvastainen.\n\nKun redstone-signaali poistetaan, moottori pysähtyy, saa lyhyen uudelleenkäynnistyksen jäähdytysrangaistuksen ja alkaa luovuttaa ylimääräistä lämpöä. Pidä jäähdytysnestettä saatavilla ennen suuritehoisten polttoaineiden pitkäaikaista käyttöä.",
-      "Moottorien toiminta",
-      "Aseta moottori MJ-vastaanottajaa vasten ja käännä sitä tarvittaessa jakoavaimella. Värilliset vaiheet näyttävät sen lämpötason. Varastoitu MJ siirtyy vain, jos viereinen vastaanottaja hyväksyy sen; vastaanottamatta jäävä teho pysyy moottorissa eikä sitä poisteta kahdesti."
+      "Polttomoottori polttaa BuildCraftin nestemäisiä polttoaineita, käyttää jäähdytysnestettä lämpötilan hallintaan ja varastoi likaisten polttoaineiden tuottaman Residuen.",
+      "Polttoaineelle, jäähdytysnesteelle ja residuelle on erilliset säiliöt. Crude Oil, Heavy Oil ja Dense Oil tuottavat Residuea, jalostetut polttoaineet eivät. Vesi on tavallinen nestemäinen jäähdytin ja jää voidaan muuntaa vedeksi voimakkaammalla jäähdytysvaikutuksella. Kuumat biomit heikentävät ja kylmät biomit parantavat jäähdytystä. Jos vastaanotin ei hyväksy MJ:tä, energia jää moottoriin."
     ],
     "buildcraftfactory/block/distiller": [
       "Raakaöljy on monimutkainen kokoelma hyödyllisiä nesteitä, jotka odottavat erottamista.",
@@ -384,12 +363,8 @@
       "Arkkujen tapaan säiliöt eivät säilytä sisältöään rikottaessa, mutta ne eivät myöskään pudota nesteitä.\n\nÄlä riko niitä, kun niissä on nestettä, sillä et saa nestettä takaisin."
     ],
     "buildcraftfactory/block/pump": [
-      "Nesteiden kerääminen käsin voi olla hyvin työlästä ja joskus vaarallista, joten tarvitaan automaattinen keräystapa.",
-      "Pumppu kerää automaattisesti kaikki suoraan alapuolellaan olevat nestelähteet sekä niihin yhteydessä olevat lähteet.",
-      "<bold>Vinkki:</bold> Aseta pumppu vakaan lähdealueen yläpuolelle ja järjestä riittävän tilava ulostulo ennen virran kytkemistä. Tukkeutunut nestelinja tuhlaa aikaa ja voi pysäyttää hyödyllisen työn.",
-      "Kerätäksesi nestettä maailmasta aseta pumppu pumpattavan nesteen lähdelohkon yläpuolelle ja anna sille tehoa.\nAlapuolella olevat nestelähteet 'imetään' ylimmästä lähteestä alaspäin ja syötetään automaattisesti viereisiin putkiin tai säiliöihin.\nPumppu kerää nesteitä 64 lohkon säteeltä ylhäältä alas ja yhdistyneiden nestealueiden reunoilta kohti keskustaa.",
-      "Koneen toimintaperiaate",
-      "Useimpien koneiden tavoin se tarvitsee tehoa. Mitä enemmän tehoa syötetään, sitä nopeammin se pumppaa.\nRedstone-signaali pysäyttää pumpun, joten ole varovainen vipujen sijoittelussa."
+      "Pumppu etsii vaiheittain alapuoleltaan yhtenäisen nestealueen, tyhjentää sitä ja syöttää nesteen viereisiin nestehandlereihin.",
+      "Vaakasuora kantama määräytyy <code>pumpMaxDistance</code>-asetuksesta: oletus 64 lohkoa, säädettävä alue 16–128. Oletuksella <code>pumpsConsumeWater=false</code> vanillan ääretön vesilähde säilyy paikallaan. Redstone-signaali pysäyttää pumpun."
     ],
     "buildcraftfactory/block/flood_gate": [
       "Monissa suurissa rakennusprojekteissa laajojen alueiden täyttäminen nesteellä on työläs tehtävä, jonka mielellään automatisoi.",
@@ -400,13 +375,8 @@
       "Tulvaportti sijoittaa nesteitä 64 lohkon säteellä alhaalta ylös ja keskustasta ulospäin."
     ],
     "buildcraftfactory/block/mining_well": [
-      "Pyrkiessäsi kaivamaan syvemmälle alat tutkia uusia koneita ja koota laitetta, joka voi kaivaa automaattisesti puolestasi.\nSiinä on yksi rajoitus: se kaivaa vain suoraan alaspäin eikä riko peruskalliota.",
-      "Kaivoskaivo on kone, joka louhii automaattisesti suoraan alaspäin aina peruskallioon asti.",
-      "<bold>Vinkki:</bold> Käytä kaivoskaivoa kapeisiin kuiluihin ja nopeisiin koekaivauksiin. Vertaa suurilla alueilla sen toistuvaa pystytyskustannusta louhokseen ennen resurssien sitomista.",
-      "Tiedot",
-      "Se louhii suoraan alaspäin sijoituskohtansa alta ja syöttää rikkomansa lohkot automaattisesti viereisiin varastoihin tai putkiin. Jos putkia tai varastoja ei löydy, se heittää esineet maailmaan.\nMitä kovempi rikottava lohko on, sitä kauemmin louhiminen kestää.",
-      "Koneen toimintaperiaate",
-      "Useimpien koneiden tavoin se tarvitsee tehoa. Mitä enemmän tehoa syötetään, sitä nopeammin se kaivaa.\nRedstone-signaali pysäyttää kaivoskaivon."
+      "Mining Well louhii yhden pystysuoran sarakkeen alapuoleltaan, jatkaa putkeaan kuiluun ja syöttää louhitut esineet ulos.",
+      "Lohkojen rikkominen tarkistetaan koneen omistajan identiteetillä. Enimmäissyvyyden määräävät <code>miningMaxDepth</code> ja maailman todelliset korkeusrajat, ei yksinkertainen ”bedrockiin asti”. Redstone-signaali pysäyttää koneen."
     ],
     "buildcraftfactory/block/chute": [
       "Tavallinen suppilo on mukava, mutta se ei ole kovin toiminnallinen tai omaperäinen.",
@@ -417,12 +387,8 @@
       "Suppilon tavoin kouru voi hitaasti poimia maassa olevia esineitä, jos ne ovat sen ylä- tai alapuolella ja kouru osoittaa niitä kohti. Toimintaa voidaan nopeuttaa redstone-moottorilla."
     ],
     "buildcraftfactory/block/auto_workbench": [
-      "Kuten jokaisen insinöörin velvollisuuksiin kuuluu, huomaat tarpeen automatisoida kaiken. Käsin valmistaminen voi olla työlästä, joten miksi et automatisoisi sitä?",
-      "Automaattinen työpöytä valmistaa esineitä automaattisesti ilman käsin tekemistä.",
-      "<bold>Vinkki:</bold> Puskuroi sekä ainesosat että tuotteet automaattisen työpöydän ympärillä. Puuttuva ainesosapaikka voi pysäyttää näennäisesti toimivan automaation tuottamatta mitään.",
-      "Tiedot",
-      "Automaattinen työpöytä valmistaa esineitä ilman, että sinun tarvitsee tehdä niitä itse. Aseta haluamasi esineen resepti ja syötä ainesosat putkilla.",
-      "Syötä vain reseptin vaatimat resurssit automaattiseen työpöytään, niin se valmistaa esineen tai lohkon hitaasti ilman tehoa."
+      "Auto Workbench tallentaa reseptin, vastaanottaa ainekset automaatiolta ja valmistaa reseptiä toistuvasti.",
+      "Yksi valmistus vaatii 40 MJ edistystä. Ilman ulkoista energiaa kone tuottaa itse 0,2 MJ/t, joten keskeytymätön valmistus kestää noin kymmenen sekuntia; ulkoinen MJ nopeuttaa sitä. Jos resepti muuttuu kelvottomaksi, kertynyt edistys vähenee. Automaattisissa FE-yhteensopivuustiloissa tavallinen MJ-vastaanotin voi saada energiaa myös FE-muunnoksella."
     ],
     "buildcraftlib/config/registry_overview": [
       "Opasrekisteri on kirjan sisällysluettelon taustalla oleva taulukko: se päättää, mitä on olemassa, missä se näkyy ja mikä kuvake sitä edustaa.",
@@ -930,7 +896,9 @@
       "Kun toiminto aktivoituu, portti sallii Emzuli Pipen käyttää valitunväristä Extraction Preset -suodatinta.\nIlman portin asettamaa irrotusasetusta Emzuli Pipe ei voi ottaa esineitä."
     ],
     "buildcraftcore/block/engine_basics": [
-      "Moottorien perusteet"
+      "BuildCraft käyttää MJ:tä natiivina energiana. Oletusmuunnos on <bold>1 MJ = 10 FE</bold>, ja sitä voi muuttaa asetuksella <code>power.mjPerFe</code>.",
+      "<code>MJ_ONLY</code>-tilassa tavalliset BuildCraft-koneet pysyvät MJ-koneina, mutta FE-moottori, MJ-dynamo ja FE-putket toimivat. <code>MJ_AUTOCONVERT_FE</code> sallii automaattisen muunnoksen myös tavallisille koneille ja <code>DISPLAY_FE</code> suosii lisäksi FE:tä yleisissä näytöissä.",
+      "Opas ilmoittaa nopeudet pelitikitystä kohti. <code>timeGap</code> vaihtaa vain näytön /t- ja /s-yksiköiden välillä eikä muuta koneen nopeutta tai kapasiteettia."
     ],
     "buildcraftcore/item/box_volume": [
       "Neljän Land Markin siirtäminen aina projektin koon muuttuessa muuttuu nopeasti omaksi projektikseen.",
@@ -942,13 +910,8 @@
       "Volume Box voi sisältää yhteensopivia suunnittelulisäosia. Filler Planner tallentaa Filler-kuvion ja käänteisen tilan laatikkoon, jolloin lähellä oleva Filler voi ottaa ne automaattisesti käyttöön."
     ],
     "buildcraftcore/item/marker_land": [
-      "Suuret koneet tarvitsevat tarkan rajan, muuten niiden palikannälkää voi olla vaikea hallita.",
-      "Land Markit määrittävät suorakulmaisia työalueita esimerkiksi Quarrylle, Fillerille ja Architect Tablelle.",
-      "<bold>Vinkki:</bold> Tarkista värilliset rajaviivat useammalta sivulta ennen Quarryn, Builderin tai Fillerin käynnistämistä. Yksi väärässä paikassa oleva merkki voi valita paljon odotettua suuremman alueen.",
-      "Alueen määrittäminen",
-      "Sijoita Land Markit samoille X-, Y- tai Z-akseleille ja yhdistä ne Marker Connectorilla. Yhdistetyt merkit muodostavat suorakulmaisen laatikon reunat. Useimmat koneet tarvitsevat vain vaakasuorat kulmat, mutta myös täydellinen kolmiulotteinen laatikko voidaan määrittää.\n\nRedstone-energian antaminen Land Markille näyttää ohjauslaserit akseleilla ja helpottaa kohdistamista.",
-      "Alueen käyttäminen",
-      "Sijoita kone yhden yhdistetyn merkin viereen. Kone ottaa merkityn laatikon työalueekseen. Jos kelvollisia merkkejä ei löydy, jotkin koneet käyttävät omaa oletusaluettaan."
+      "Land Markit määrittävät suorakulmaisia työalueita Quarrylle, Fillerille, Architect Tablelle ja muille koneille. Samalla akselilla olevat merkit yhdistetään Marker Connectorilla.",
+      "Akselikohtainen kantama määräytyy <code>markerMaxDistance</code>-asetuksesta: oletus 64 lohkoa ja säädettävä alue 16–256. Kone käyttää yhdistettyä laatikkoa työalueenaan."
     ],
     "buildcraftlib/item/guide": [
       "Suuri verstas on helpompi rakentaa, kun jokaisen koneen mukana tulee ohjeita arvailun sijaan.",
@@ -1032,22 +995,12 @@
       "Aseta tyhjä Blueprint tarkkojen palikoiden, tilojen ja tuettujen tietojen tallentamiseen tai tyhjä Template pelkän muodon tallentamiseen. Valitse, saako tulosta kiertää, kaivaa olemassa olevia palikoita tai käyttää vain luovan tilan sijoitusta, ja käynnistä skannaus.\n\nSkannaus etenee vaiheittain, joten suuret alueet vievät aikaa palvelimen jäädyttämisen sijaan. Pidä alue ladattuna, kunnes käytetty tilannekuva näkyy ulostulossa."
     ],
     "buildcraftbuilders/block/builder": [
-      "Suunnitelma on vain kokoelma ajatuksia, kunnes jokin alkaa asettaa palikoita.",
-      "Builder käyttää MJ:tä ja resursseja käytetyn Blueprintin tai Templaten rakentamiseen.",
-      "<bold>Vinkki:</bold> Jätä ulostuloon vapaata tilaa Builderin työskennellessä. Jos tehtävä peruutetaan, varatut esineet voivat palata varastoon tai pudota lähelle, jos paikkaa ei ole.",
-      "Builderin toimittaminen",
-      "Aseta käytetty Blueprint tai Template tilannekuvapaikkaan. Vaatimusnäkymä näyttää tarvittavat materiaalit. Toimita esineet resurssivarastoon tai liitetyillä esineputkilla, nesteet sisäisiin säiliöihin ja MJ yhteensopivan energiayhteyden kautta.\n\nBlueprintit vaativat tallennetut palikat. Templatet käyttävät sopivia toimitettuja palikoita muodon rakentamiseen.",
-      "Sijoittaminen ja asetukset",
-      "Rakennelma sijoitetaan Builderin suunnan mukaan. Kierto ja kaivaminen ovat käytettävissä vain, jos tilannekuvan otsake sallii ne. Kun liitetty Path Mark -reitti on olemassa, Builder voi toistaa mallin reitin kohdissa.\n\nTyötila ja varatut resurssit tallennetaan. Uudelleenlatauksen jälkeen keskeneräiset tehtävät tarkistetaan ja niiden varatut esineet, nesteet ja energia palautetaan turvallisesti ennen työn jatkumista."
+      "Builder kuluttaa MJ:tä ja resursseja rakentaakseen käytetyn Blueprintin tai Templaten. Path Mark -reitin kanssa se voi toistaa rakennelman reitin eri pisteissä.",
+      "Maailmaan kohdistuvat toiminnot tehdään koneen omistajan identiteetillä, joten suojaukset voivat estää sijoituksen tai kaivamisen. Työtila ja varatut resurssit tallennetaan ja tarkistetaan turvallisesti uudelleen latauksen jälkeen."
     ],
     "buildcraftbuilders/block/filler": [
-      "Kaikki rakennustyöt eivät tarvitse yksityiskohtaista Blueprintiä. Monet ovat vain laatikoita, seiniä, lattioita tai paljon tyhjää tilaa.",
-      "Filler käyttää määritettävää geometrista kuviota merkityllä alueella.",
-      "<bold>Vinkki:</bold> Aloita pienellä merkityllä alueella ja halvalla materiaalilla. Kun kuvio ja suunta ovat oikein, siirrä sama kokoonpano lopulliselle paikalle.",
-      "Alue ja resurssit",
-      "Aseta Filler Land Markien tai Volume Boxin viereen ja päivitä työalue avaamalla käyttöliittymä. Toimita rakennuspalikat resurssipaikkoihin ja MJ sisäiseen akkuun. Kaivavat kuviot voivat poistaa olemassa olevia palikoita, kun kaivaminen on käytössä.",
-      "Kuviot",
-      "Kuvioita ovat tyhjennys, täyttö, laatikko, kehys, horisontti, tasoitus, sylinteri, pyramidi ja portaat. Kaksiulotteisiin muotoihin kuuluvat kolmiot, säännölliset monikulmiot, kaaret ja ympyrät. Kolmiulotteisiin kuuluvat pallot ja osapallot.\n\nParametrit hallitsevat suuntaa, kiertoa, katsesuuntaa, akselia, keskustaa ja onttoja muotoja. Valinnan kääntäminen vaihtaa luodun kuvion sisä- ja ulkopuolen."
+      "Filler käyttää merkityllä alueella säädettäviä kuvioita, kuten Clear, Fill, Box, Frame, Horizon, Flatten, Cylinder, Pyramid, Stairs sekä muita 2D- ja 3D-muotoja.",
+      "Se voi sijoittaa tavallisesti korvattavien lohkojen päälle ja kaivuukuviot voivat poistaa lohkoja. Maailman muutokset tarkistetaan koneen omistajan identiteetillä ja noudattavat suojausjärjestelmiä."
     ],
     "buildcraftbuilders/block/library": [
       "Hyvän suunnitelman pitäisi kestää pidempään kuin paperi, jolle se ensin tallennettiin.",
@@ -1066,11 +1019,8 @@
       "Aseta käytetty Blueprint Blueprint-paikkaan. Tallenna etsittävä palikka yhteen Single Block Schematic -kaavioon ja korvaava palikka toiseen. Replacer muokkaa Blueprint-tietoja ja palauttaa muutetun mallin.\n\nKone muuttaa suunnitelmaa, ei maailmaan jo asetettuja palikoita. Molemmat kaaviot kulutetaan valmiissa vaihtotoiminnossa."
     ],
     "buildcraftbuilders/block/marker_construction": [
-      "Builder-robotti tarvitsee suunnitelman ja paikan, josta hakea työtä, vaikka paikallaan oleva Builder ei tekisi rakentamista.",
-      "Construction Marker tarjoaa Blueprint-rakennustehtäviä Builder Roboteille.",
-      "<bold>Vinkki:</bold> Construction Marker sopii suunnitelman tarkasteluun ennen resurssien toimittamista. Korjaa ankkuri ja suunta, kun muutokset ovat vielä ilmaisia.",
-      "Robottirakentaminen",
-      "Aseta Construction Marker ja käytetty Blueprint. Merkki luo rakennustehtäviä, mutta ei itse kuluta MJ:tä tai aseta palikoita. Lähellä olevat Builder Robotit voivat varata tehtäviä, hakea materiaalit ja rakentaa.\n\nMerkki käyttää tilannekuvan kierto-, kaivamis- ja omistajuusasetuksia. Rajoita Builder Robotit työalueella, kun useita projekteja on lähekkäin."
+      "Construction Marker julkaisee käytetyn Blueprintin rakennustehtävät Builder Roboteille. Se ei itse kuluta MJ:tä eikä aseta lohkoja.",
+      "Se käyttää snapshotin kierto-, kaivu- ja omistajuusasetuksia; lähellä olevat Builder Robotit varaavat tehtävät, hakevat materiaalit ja rakentavat."
     ],
     "buildcraftbuilders/block/frame": [
       "Suuri liikkuva pora on paljon vähemmän huolestuttava, kun sen työalueella on näkyvä teline.",
@@ -1080,22 +1030,13 @@
       "Quarry asettaa automaattisesti Framet valitun alueen ympärille ennen louhintaa. Kehys näyttää työrajan ja tukee liikkuvaa porakokoonpanoa.\n\nFrameja voi käyttää myös halpoina avoimina telineinä, mutta Quarry hallitsee ja poistaa omat Frame-palikkansa työkiertonsa aikana."
     ],
     "buildcraftbuilders/block/quarry": [
-      "Käsin louhiminen on palkitsevaa, kunnes haluttu malmi on usean miljoonan ei-halutun palikan alla.",
-      "Quarry rakentaa kehyksen ja louhii automaattisesti kaikki sallitut palikat valitulta alueelta.",
-      "<bold>Vinkki:</bold> Ohjaa Quarryn ulostulo puskuriin ennen lopullista lajittelua. Puskuri estää lyhyitä varastokatkoja keskeyttämästä louhintaa ja tekee ylivuodon näkyväksi.",
-      "Alueen valinta",
-      "Määritä vaakasuora työalue asettamalla Quarry yhdistettyjen Land Markien viereen. Ilman kelvollista aluetta se luo pienemmän oletuslouhoksen eteensä. Toimiessaan Quarry pitää työalueensa tarvitsemat chunkit ladattuina.",
-      "Louhinta",
-      "Toimita MJ:tä. Quarry skannaa ja rakentaa ensin kehyksensä, siirtää sitten poraa alueella ja louhii alaspäin asetettuun syvyyteen tai maailman pohjalle. Suurempi energiamäärä lisää tickissä tehtävää työtä koneen rajaan asti.\n\nLouhintatulokset tarjotaan viereisiin varastoihin ja esineputkiin. Jätä riittävästi ulostulotilaa: tukos voi pysäyttää hyödyllisen etenemisen. Suojatut palikat tarkistetaan Quarryn omistajan vale-pelaajalla eikä suojausta ohiteta huomaamatta."
+      "Quarry rakentaa kehyksen ja louhii automaattisesti kaikki sallitut lohkot valitulta alueelta. Ilman kelvollisia Land Markeja se luo pienemmän oletusalueen eteensä.",
+      "Se pyytää työalueelleen chunk tickettejä vain, jos BuildCraftin chunk loading on käytössä ja asetettu taso sallii Quarryn. Palvelin voi poistaa tai rajoittaa tickettejä, joten etäinen Quarry ei välttämättä pysy ladattuna.",
+      "Suojatut lohkot tarkistetaan Quarryn omistajan identiteetillä eikä normaalia pelaajasuojausta ohiteta."
     ],
     "buildcraftrobotics/item/robot": [
-      "Putket siirtävät resursseja. Robotit siirtävät itsensä, resurssit ja joskus kaiken tielle osuvan.",
-      "Robot on liikkuva työntekijä, jonka toiminnan määrää asennettu Redstone Board.",
-      "<bold>Vinkki:</bold> Aloita yhdellä robotilla, kahdella saavutettavalla Docking Stationilla ja pienellä työalueella. Laajenna vasta, kun lataus, työkalujen nouto ja purkaminen toimivat luotettavasti.",
-      "Robotin luominen",
-      "Ohjelmoi tyhjä Redstone Board Programming Tablessa ja asenna ohjelmoitu levy tyhjään Robotiin Integration Tablella. Eri levyt luovat eri robottiammatit.",
-      "Käyttöönotto ja lataus",
-      "Kiinnitä Docking Station putkeen ja käytä ohjelmoitua Robotia asemalla. Sijoittajasta tulee omistaja. MJ:hin yhdistetty asema voi ladata telakoitua robottia.\n\nRobotit säilyttävät turvallisen energiavarannon ja palaavat sopivalle asemalle latautumaan, lastaamaan tai purkamaan. Docking Stationien porttitoiminnot hallitsevat suodattimia, reittejä, työalueita ja saatavia resursseja."
+      "Robot on liikkuva työntekijä, jonka ammatin määrää asennettu Redstone Board. Board ohjelmoidaan Programming Tablessa ja asennetaan robottiin Integration Tablessa.",
+      "Robotin Docking Stationille asettava pelaaja tulee sen omistajaksi. Robotit palaavat lataamaan energiaa, hakemaan tai purkamaan resursseja tarpeen mukaan, ja rikkominen, sijoittaminen, käyttäminen sekä hyökkäykset tehdään omistajan identiteetillä."
     ],
     "buildcraftrobotics/item/redstone_board": [
       "Kone voi liikkua, mutta ilman levyä se ei tiedä, pitäisikö sen kantaa, istuttaa, louhia vai paeta lähintä lehmää.",
@@ -1116,13 +1057,8 @@
       "Kiinnitä portti putkeen ja käytä Robotics-asematoimintoja esineiden ja nesteiden vastaanottamiseen tai tarjoamiseen, resurssien pyytämiseen, robottien kieltämiseen tai pakottamiseen ja konepyyntöjen näyttämiseen. Map Locationit voivat rajata työ- tai lastausalueita."
     ],
     "buildcraftrobotics/block/zone_planner": [
-      "Kaikkialle työskentelemään käsketty robotti löytää lopulta paikan, jossa et halunnut sen työskentelevän.",
-      "Zone Planner maalaa yksityiskohtaisia monikerroksisia robottien työalueita Map Locationeihin.",
-      "<bold>Vinkki:</bold> Käytä pieniä alueita, joissa ovat vain tarkoitetut kohteet. Suuret päällekkäiset alueet vaikeuttavat tehtävän varaavan robotin ennustamista.",
-      "Alueen piirtäminen",
-      "Aseta tyhjä Map Location ja muokkaa aluetta suunnittelijassa. Kartta tukee kuuttatoista erikseen muokattavaa kerrosta 2048 x 2048 koordinaattiruudukossa. Kerroksia voi valita, yhdistää ja nimetä.\n\n120 tickin jälkeen ulostulo saa nykyisen Zone Planin sisältävän Map Locationin. Aiemmin tallennetun alueen voi tuoda jatkomuokkaukseen.",
-      "Alueen käyttäminen",
-      "Aseta valmis Map Location yhteensopivaan porttiparametriin tai Docking Station -toimintoon. Liitetyt robotit rajoittavat hakunsa ja työnsä maalattuun alueeseen."
+      "Zone Planner piirtää robotin työalueita Map Locationiin: käytettävissä on 16 erikseen muokattavaa kerrosta 2048 × 2048 -koordinaattiruudukossa.",
+      "Kartta lukee vain jo ladatut tai generoidut chunkit. Piirtäminen tai tuonti alueelle, jota palvelin ei voi tarjota, rajataan saatavilla oleviin chunkeihin eikä uusia chunkeja generoida. 120 pelitikityksen jälkeen ulostuloon tulee nykyisen Zone Planin sisältävä Map Location."
     ],
     "buildcraftrobotics/block/requester": [
       "Varasto on hyödyllisempi, kun se voi pyytää puuttuvaa tavaraa ennen tyhjän hyllyn huomaamista.",
@@ -1232,11 +1168,8 @@
       "Tämä ammatti ohjelmoidaan Redstone Boardiin 64 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti hakee aseen ja hyökkää vihamielisten mobien kimppuun työalueellaan. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan.\n\nRobotti hakee työkalun asemalta. Hallitse työkaluja ja palautusta suodattimilla."
     ],
     "buildcraftrobotics/robot/bomber": [
-      "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
-      "Bomber Robot lastaa TNT:tä, lentää kelvollisen maan yli ja pudottaa sytytettyjä räjähteitä.",
-      "<bold>Vinkki:</bold> Käytä Bomberia vain tarkasti eristetyllä alueella. Tarkista räjähdyssuojaus ja omistajan oikeudet ennen räjähteiden antamista.",
-      "Ammatti",
-      "Tämä ammatti ohjelmoidaan Redstone Boardiin 64 000 MJ:llä ja asennetaan tyhjään Robotiin Integration Tablella.\n\nAktiivisena robotti lastaa TNT:tä, lentää kelvollisen maan yli ja pudottaa sytytettyjä räjähteitä. Se palaa yhteensopiville Docking Stationeille latautumaan, lastaamaan tai purkamaan tarpeen mukaan."
+      "Bomber Robot ohjelmoidaan 64 000 MJ:llä, lataa TNT:tä, lentää työalueen kelvollisen maan yllä ja pudottaa sytytettyjä räjähteitä.",
+      "<bold>Varoitus:</bold> käytä sitä vain hyvin eristetyllä alueella ja tarkista omistajan oikeudet sekä räjähdyssuojaukset ennen TNT:n syöttämistä."
     ],
     "buildcraftrobotics/robot/stripes": [
       "Erikoistunut työntekijä on yleensä luotettavampi kuin robotti, joka yrittää päättää, onko päivän tärkein kohde puu, arkku vai creeper.",
@@ -1686,6 +1619,52 @@
       "<bold>Vinkki:</bold> Käytä Apiarist's Pipea erillisessä mehiläisten käsittelyliitoksessa. Säilytä tavallinen ylivuotoreitti, jotta odottamattomat mehiläistyypit eivät tuki verkkoa.",
       "Geneettiset suodattimet",
       "Avaa putki ja määritä jokainen lähtösivu. Forestryn suodatinsäännöt voivat täsmätä geneettisiä esineitä lajin, lajiperheen ja elinvaiheen mukaan. Yhdelle sivulle voidaan määrittää enintään kolme valittua lajia, ja jokainen merkintä voidaan ottaa erikseen käyttöön tai pois käytöstä.\n\nEsineet reititetään ensimmäiseen yhteensopivaan lähtöön määritettyjen Forestry-sääntöjen mukaan. Lähdöt, joilla ei ole aktiivista täsmäävää sääntöä, eivät ota geneettistä esinettä. Putki voidaan maalata ja yhdistää kuten muut BuildCraft-esineputket.\n\nTämä sivu ladataan vain, kun Forestry on asennettu ja yhteensopivuusesine rekisteröity."
+    ],
+    "buildcraftenergy/block/engine_fe": [
+      "FE-moottori vastaanottaa Forge Energyä ja muuntaa sen BuildCraftin MJ-energiaksi suunnattuna moottorina. Se toimii myös Coren <code>MJ_ONLY</code>-tilassa.",
+      "Sisäinen syöttöpuskuri on 10 000 FE ja MJ-puskuri 1 000 MJ. Perusteho on 4 MJ/t, joten oletussuhteella 1 MJ = 10 FE kulutus on enintään 40 FE/t. Moottori tarvitsee redstone-signaalin eikä kuluta FE:tä, jos MJ-puskuri ei pysty vastaanottamaan seuraavaa muunnospulssia.",
+      "GUI:ssa on neljä päivityspaikkaa, yksi tuettu hammasratas kuhunkin. Jokainen rautaratas lisää +2 MJ/t ja kultaratas +3 MJ/t. FE-kulutus seuraa asetusta <code>power.mjPerFe</code>. Käännä MJ-ulostulo jakoavaimella."
+    ],
+    "buildcraftenergy/block/mj_dynamo": [
+      "MJ-dynamo muuntaa BuildCraftin MJ-energian Forge Energyksi ja syöttää FE:n suunnatulta ulostulopinnalta. Se toimii myös Coren <code>MJ_ONLY</code>-tilassa.",
+      "Se varastoi enintään 1 000 MJ ja 10 000 FE. Perusmuunnos vastaa 4 MJ/t:tä eli oletussuhteella 40 FE/t. MJ tulee muilta kuin ulostulopinnoilta ja FE lähtee etupinnalta. MJ:tä ei kuluteta, jos seuraava pulssi täyttäisi tai ylittäisi FE-puskurin.",
+      "Neljä päivityspaikkaa käyttävät FE-moottorin sääntöjä: rautaratas +2 MJ/t ja kultaratas +3 MJ/t. Redstone-signaali käynnistää muunnoksen; pois päältä varastoitu FE purkautuu itsestään 1 FE/t. Käännä ulostulo jakoavaimella."
+    ],
+    "buildcrafttransport/pipe/wood_fe": [
+      "Puinen FE-putki siirtää oletuksena enintään <bold>160 FE/t</bold> ja ottaa FE:tä viereisestä energialähteestä ja syöttää sen verkkoon; se ei yhdisty suoraan toiseen puiseen FE-poistoputkeen.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/cobblestone_fe": [
+      "Mukulakivinen FE-putki siirtää oletuksena enintään <bold>40 FE/t</bold> ja on perustason pienikapasiteettinen siirtoputki; mukulakivi- ja kiviperheet eivät yhdisty suoraan toisiinsa.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/stone_fe": [
+      "Kivinen FE-putki siirtää oletuksena enintään <bold>80 FE/t</bold> ja on yleinen pienikapasiteettinen siirtoputki; kivi- ja mukulakiviperheet eivät yhdisty suoraan toisiinsa.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/sandstone_fe": [
+      "Hiekkakivinen FE-putki siirtää oletuksena enintään <bold>160 FE/t</bold> ja yhdistyy putkiin mutta ei suoraan viereisiin koneisiin.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/quartz_fe": [
+      "Kvartsinen FE-putki siirtää oletuksena enintään <bold>320 FE/t</bold> ja siirtää FE:tä normaalisti.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/gold_fe": [
+      "Kultainen FE-putki siirtää oletuksena enintään <bold>1280 FE/t</bold> ja siirtää FE:tä normaalisti.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/iron_fe": [
+      "Rautainen FE-putki siirtää oletuksena enintään <bold>320 FE/t</bold> ja on säädettävä rajoitin; jakoavain tai vastaava Gate-toiminto puolittaa rajan toistuvasti arvoon 1/64, poistaa siirron käytöstä ja seuraavaksi palauttaa täyden rajan.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/diamond_fe": [
+      "Timanttinen FE-putki siirtää oletuksena enintään <bold>2560 FE/t</bold> ja on erittäin suuren kapasiteetin säädettävä rajoitin; jakoavaimella tai Gate-toiminnolla rajaa voidaan pienentää tai siirto poistaa käytöstä.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
+    ],
+    "buildcrafttransport/pipe/diamond_wood_fe": [
+      "Puinen timantti-FE-putki siirtää oletuksena enintään <bold>2560 FE/t</bold> ja ottaa FE:tä viereisestä energialähteestä suurella kapasiteetilla; se ei yhdisty suoraan toiseen puiseen FE-poistoputkeen.",
+      "Koko FE-putkiperheen nopeudet johdetaan asetuksesta <code>pipes.baseFeRate</code>, jonka oletus on 40 FE/t. Verkko pyytää vain energian, jonka se pystyy käyttämään, ja säilyttää vastaanottamatta jääneen FE:n ilman duplikaatiota. FE-putket toimivat <code>MJ_ONLY</code>-tilassa ja Pipe Holderit voidaan nykyversioissa vesittää."
     ]
   }
 }
