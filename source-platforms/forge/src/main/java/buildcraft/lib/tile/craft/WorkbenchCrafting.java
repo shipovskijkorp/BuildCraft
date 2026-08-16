@@ -36,7 +36,6 @@ import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -76,7 +75,7 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
     private boolean isBlueprintDirty = true;
     private boolean areMaterialsDirty = true;
     private boolean cachedHasRequirements = false;
-    private final List<CraftingRecipe> matchingRecipes = new ArrayList<>();
+    private final List<Recipe<CraftingContainer>> matchingRecipes = new ArrayList<>();
     private final List<ResourceLocation> matchingRecipeIds = new ArrayList<>();
     @Nullable
     private ResourceLocation selectedRecipeId;
@@ -90,7 +89,7 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
     private final int height;
 
     @Nullable
-    private CraftingRecipe currentRecipe;
+    private Recipe<CraftingContainer> currentRecipe;
     private ItemStack assumedResult = ItemStack.EMPTY;
 //    protected final RecipeBookMenu<WorkbenchCrafting> menu = new InnerRecipeBookMenu();
 
@@ -237,7 +236,7 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
     private void rebuildMatchingRecipes(Level world) {
         matchingRecipes.clear();
         matchingRecipeIds.clear();
-        for (CraftingRecipe recipe : world.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING)) {
+        for (Recipe<CraftingContainer> recipe : world.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING)) {
             if (recipe.matches(this, world)) {
                 matchingRecipes.add(recipe);
                 matchingRecipeIds.add(recipe.getId());

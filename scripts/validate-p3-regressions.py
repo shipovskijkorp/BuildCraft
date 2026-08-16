@@ -32,6 +32,12 @@ for platform in ("forge", "neoforge"):
         "readSelection(CompoundTag nbt)",
         "selectedCraftingRecipe",
     )
+    if platform == "forge":
+        require(
+            f"{base}/buildcraft/lib/tile/craft/WorkbenchCrafting.java",
+            "List<Recipe<CraftingContainer>> matchingRecipes",
+            "for (Recipe<CraftingContainer> recipe : world.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING))",
+        )
     require(
         f"{base}/buildcraft/factory/tile/TileAutoWorkbenchBase.java",
         "crafting.writeSelection(nbt)",
@@ -126,6 +132,6 @@ if errors:
 
 print("P3 regression guards OK")
 print(" - Workbench rollback cannot overwrite transient crafting items")
-print(" - conflicting crafting outputs have a persistent GUI selector")
+print(" - conflicting crafting outputs have a persistent GUI selector without unsafe Forge recipe casts")
 print(" - Construction Marker and Flood Gate interaction parity is guarded")
 print(" - dead custom oil biomes and their legacy Forge tag hooks are removed")
