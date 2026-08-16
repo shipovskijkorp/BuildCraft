@@ -33,6 +33,10 @@ public final class AutomationPermissionUtil {
     public static final ResourceLocation SOURCE_BUILDER = id("builder");
     public static final ResourceLocation SOURCE_QUARRY = id("quarry");
     public static final ResourceLocation SOURCE_ROBOT = id("robot");
+    public static final ResourceLocation SOURCE_PUMP = id("pump");
+    public static final ResourceLocation SOURCE_FLOOD_GATE = id("flood_gate");
+    public static final ResourceLocation SOURCE_MINING_WELL = id("mining_well");
+    public static final ResourceLocation SOURCE_STRIPES_PIPE = id("stripes_pipe");
 
     private AutomationPermissionUtil() {}
 

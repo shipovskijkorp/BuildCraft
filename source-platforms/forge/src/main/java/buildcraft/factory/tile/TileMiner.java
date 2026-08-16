@@ -20,6 +20,7 @@ import buildcraft.lib.internal.tiles.TilesAPI;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.lib.migrate.BCVersion;
+import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.tile.TileBC_Neptune;
@@ -50,6 +51,7 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
     protected double currentLength = 0;
     protected double lastLength = 0;
     protected int offset;
+    protected boolean shaftBlocked = false;
 
     protected boolean isComplete = false;
     protected final MjBattery battery = new MjBattery(getBatteryCapacity());
@@ -113,7 +115,7 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
     protected void updateLength() {
         int newY = getTargetPos() != null ? getTargetPos().getY() : worldPosition.getY();
         int newLength = worldPosition.getY() - newY;
-        if (newLength != wantedLength) {
+        if (newLength != wantedLength || shaftBlocked) {
             for (int y = worldPosition.getY() - 1; y > worldPosition.getY() - BCCoreConfig.miningMaxDepth; y--) {
                 BlockPos blockPos = new BlockPos(worldPosition.getX(), y, worldPosition.getZ());
                 if (level.getBlockState(blockPos).getBlock() == BCFactoryBlocks.TUBE_BLOCK.get()) {
@@ -122,11 +124,23 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
                     break;
                 }
             }
+            shaftBlocked = false;
+            int effectiveLength = newLength;
             for (int y = worldPosition.getY() - 1; y > newY; y--) {
                 BlockPos blockPos = new BlockPos(worldPosition.getX(), y, worldPosition.getZ());
-                level.setBlockAndUpdate(blockPos, BCFactoryBlocks.TUBE_BLOCK.get().defaultBlockState());
+                BlockState existing = level.getBlockState(blockPos);
+                if (existing.getBlock() == BCFactoryBlocks.TUBE_BLOCK.get()) {
+                    continue;
+                }
+                if (existing.isAir() || BlockUtil.isReplaceable(level, blockPos)) {
+                    level.setBlockAndUpdate(blockPos, BCFactoryBlocks.TUBE_BLOCK.get().defaultBlockState());
+                    continue;
+                }
+                shaftBlocked = true;
+                effectiveLength = Math.max(0, worldPosition.getY() - (y + 1));
+                break;
             }
-            currentLength = wantedLength = newLength;
+            currentLength = wantedLength = effectiveLength;
             sendNetworkUpdate(NET_WANTED_Y);
         }
     }

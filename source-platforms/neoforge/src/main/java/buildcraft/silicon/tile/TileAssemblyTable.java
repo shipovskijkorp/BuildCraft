@@ -167,39 +167,27 @@ public class TileAssemblyTable extends TileLaserTableBase implements MenuProvide
     }
 
     private void activateNextRecipe() {
-        AssemblyInstruction activeRecipe = getActiveRecipe();
-        if (activeRecipe != null) {
-            int index = 0;
-            int activeIndex = 0;
-            boolean isActiveLast = false;
-            long enoughCount = recipesStates.values().stream().filter(state -> state == EnumAssemblyRecipeState.SAVED_ENOUGH || state == EnumAssemblyRecipeState.SAVED_ENOUGH_ACTIVE).count();
-            if (enoughCount <= 1) {
-                return;
+        List<Map.Entry<AssemblyInstruction, EnumAssemblyRecipeState>> available = new ArrayList<>();
+        for (Map.Entry<AssemblyInstruction, EnumAssemblyRecipeState> entry : recipesStates.entrySet()) {
+            if (entry.getValue() == EnumAssemblyRecipeState.SAVED_ENOUGH
+                || entry.getValue() == EnumAssemblyRecipeState.SAVED_ENOUGH_ACTIVE) {
+                available.add(entry);
             }
-            for (Map.Entry<AssemblyInstruction, EnumAssemblyRecipeState> entry : recipesStates.entrySet()) {
-                EnumAssemblyRecipeState state = entry.getValue();
-                if (state == EnumAssemblyRecipeState.SAVED_ENOUGH) {
-                    isActiveLast = false;
-                }
-                if (state == EnumAssemblyRecipeState.SAVED_ENOUGH_ACTIVE) {
-                    state = EnumAssemblyRecipeState.SAVED_ENOUGH;
-                    entry.setValue(state);
-                    activeIndex = index;
-                    isActiveLast = true;
-                }
-                index++;
+        }
+        if (available.size() <= 1) {
+            return;
+        }
+        int activeIndex = -1;
+        for (int i = 0; i < available.size(); i++) {
+            Map.Entry<AssemblyInstruction, EnumAssemblyRecipeState> entry = available.get(i);
+            if (entry.getValue() == EnumAssemblyRecipeState.SAVED_ENOUGH_ACTIVE) {
+                activeIndex = i;
+                entry.setValue(EnumAssemblyRecipeState.SAVED_ENOUGH);
+                break;
             }
-            index = 0;
-            for (Map.Entry<AssemblyInstruction, EnumAssemblyRecipeState> entry : recipesStates.entrySet()) {
-                AssemblyRecipeBasic recipe = entry.getKey().recipe;
-                EnumAssemblyRecipeState state = entry.getValue();
-                if (state == EnumAssemblyRecipeState.SAVED_ENOUGH && recipe != activeRecipe.recipe && (index > activeIndex || isActiveLast)) {
-                    state = EnumAssemblyRecipeState.SAVED_ENOUGH_ACTIVE;
-                    entry.setValue(state);
-                    break;
-                }
-                index++;
-            }
+        }
+        if (activeIndex >= 0) {
+            available.get((activeIndex + 1) % available.size()).setValue(EnumAssemblyRecipeState.SAVED_ENOUGH_ACTIVE);
         }
     }
 
@@ -221,16 +209,18 @@ public class TileAssemblyTable extends TileLaserTableBase implements MenuProvide
         updateRecipes();
 
 
-        if (getTarget() > 0) {
+        long target = getTarget();
+        if (target > 0) {
             AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT);
-            if (power >= getTarget()) {
+            if (power >= target) {
                 AssemblyInstruction instruction = getActiveRecipe();
-                extract(inv, instruction.recipe.getInputsFor(instruction.output), false, false);
-
-                InventoryUtil.addToBestAcceptor(getLevel(), getBlockPos(), null, instruction.output.copy());
-
-                power -= getTarget();
-                activateNextRecipe();
+                if (instruction != null && extract(inv, instruction.recipe.getInputsFor(instruction.output), false, false)) {
+                    InventoryUtil.addToBestAcceptor(getLevel(), getBlockPos(), null, instruction.output.copy());
+                    power -= target;
+                    activateNextRecipe();
+                } else {
+                    isDirty = true;
+                }
             }
             sendNetworkGuiUpdate(NET_GUI_DATA);
         }

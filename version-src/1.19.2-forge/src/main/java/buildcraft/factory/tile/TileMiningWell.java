@@ -6,7 +6,9 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.permission.WorldOperationKind;
 
 import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.core.SafeTimeTracker;
@@ -18,6 +20,7 @@ import buildcraft.lib.inventory.AutomaticProvidingTransactor;
 import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
 import buildcraft.lib.internal.api.v2.MachineRuntimeView;
 import buildcraft.lib.misc.BlockUtil;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.internal.mj.MjBatteryReceiver;
@@ -86,6 +89,14 @@ public class TileMiningWell extends TileMiner implements MachineRuntimeView {
             long target = Math.max(0L, Math.round(BlockUtil.computeBlockBreakPower(level, currentPos) * MachineDefinitionLookup.energyCostMultiplier(BuildCraftContentIds.Machines.MINING_WELL)));
             progress += battery.extractPower(0, target - progress);
             if (progress >= target) {
+                if (!AutomationPermissionUtil.mayBlock(
+                    level, worldPosition, currentPos, getOwner(), AutomationPermissionUtil.SOURCE_MINING_WELL,
+                    WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
+                )) {
+                    progress = 0;
+                    level.destroyBlockProgress(currentPos.hashCode(), currentPos, -1);
+                    return;
+                }
                 progress = 0;
                 level.destroyBlockProgress(currentPos.hashCode(), currentPos, -1);
                 BlockUtil.breakBlockAndGetDrops(
@@ -114,6 +125,13 @@ public class TileMiningWell extends TileMiner implements MachineRuntimeView {
         BlockState state = level.getBlockState(currentPos);
         if (state.isAir() || isStandaloneWaterBlock(state)
             || BlockUtil.isUnbreakableBlock(level, currentPos, getOwner())) {
+            return false;
+        }
+
+        if (!AutomationPermissionUtil.mayBlock(
+            level, worldPosition, currentPos, getOwner(), AutomationPermissionUtil.SOURCE_MINING_WELL,
+            WorldOperationKind.BLOCK_BREAK, OperationMode.SIMULATE
+        )) {
             return false;
         }
 

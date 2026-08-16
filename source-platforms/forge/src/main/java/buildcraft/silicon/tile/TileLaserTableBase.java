@@ -14,9 +14,9 @@ import buildcraft.api.v2.energy.MjTransferResult;
 import buildcraft.api.v2.machine.LaserTarget;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import buildcraft.lib.internal.core.EnumPipePart;
 import buildcraft.lib.internal.enums.EnumLaserTableType;
@@ -175,27 +175,43 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements Laser
 
     protected boolean extract(ItemHandlerSimple inv, Collection<IngredientStack> items, boolean simulate,
         boolean precise) {
-        AtomicLong remainingStacks = new AtomicLong(inv.stacks.stream().filter(stack -> !stack.isEmpty()).count());
-        boolean allItemsConsumed = items.stream().allMatch((definition) -> {
+        List<ItemStack> working = new ArrayList<>(inv.getSlots());
+        long remainingStacks = 0;
+        for (int i = 0; i < inv.getSlots(); i++) {
+            ItemStack copy = inv.getStackInSlot(i).copy();
+            working.add(copy);
+            if (!copy.isEmpty()) {
+                remainingStacks++;
+            }
+        }
+
+        for (IngredientStack definition : items) {
             int remaining = definition.count;
             for (int i = 0; i < inv.getSlots() && remaining > 0; i++) {
-                ItemStack slotStack = inv.getStackInSlot(i);
+                ItemStack slotStack = working.get(i);
                 if (slotStack.isEmpty()) continue;
                 if (definition.ingredient.test(slotStack)) {
                     int spend = Math.min(remaining, slotStack.getCount());
                     remaining -= spend;
-                    if (!simulate) {
-                        slotStack.setCount(slotStack.getCount() - spend);
-                        inv.setStackInSlot(i, slotStack);
+                    slotStack.shrink(spend);
+                    if (slotStack.isEmpty()) {
+                        working.set(i, ItemStack.EMPTY);
                     }
                 }
             }
-            if (remaining == 0) {
-                remainingStacks.decrementAndGet();
-                return true;
+            if (remaining != 0) {
+                return false;
             }
+            remainingStacks--;
+        }
+        if (precise && remainingStacks != 0) {
             return false;
-        });
-        return allItemsConsumed && (!precise || remainingStacks.get() == 0);
+        }
+        if (!simulate) {
+            for (int i = 0; i < working.size(); i++) {
+                inv.setStackInSlot(i, working.get(i));
+            }
+        }
+        return true;
     }
 }

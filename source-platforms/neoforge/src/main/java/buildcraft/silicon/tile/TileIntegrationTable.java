@@ -130,19 +130,21 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
 
         updateRecipe();
 
-        if (getTarget() > 0 && power >= getTarget()) {
+        long target = getTarget();
+        if (target > 0 && power >= target) {
             ItemStack output = getOutput();
             IntegrationRecipeDefinition definition = recipe.recipe();
-            extract(definition.centerIngredient(), definition.requirements(output), false);
-            ItemStack result = invResult.getStackInSlot(0);
-            if (!result.isEmpty()) {
-                result = result.copy();
-                result.setCount(result.getCount() + output.getCount());
-            } else {
-                result = output.copy();
+            if (extract(definition.centerIngredient(), definition.requirements(output), false)) {
+                ItemStack result = invResult.getStackInSlot(0);
+                if (!result.isEmpty()) {
+                    result = result.copy();
+                    result.setCount(result.getCount() + output.getCount());
+                } else {
+                    result = output.copy();
+                }
+                invResult.setStackInSlot(0, result);
+                power -= target;
             }
-            invResult.setStackInSlot(0, result);
-            power -= getTarget();
         }
 
         sendNetworkGuiUpdate(NET_GUI_DATA);

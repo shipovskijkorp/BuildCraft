@@ -6,6 +6,8 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.BitSet;
@@ -25,9 +27,11 @@ import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.block.BlockFloodGate;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.misc.AdvancementUtil;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.FluidUtilBC;
+import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
@@ -40,9 +44,11 @@ import net.minecraft.nbt.NumericTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
@@ -194,15 +200,15 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
             return true;
         }
         Fluid fluid = BlockUtil.getFluidWithFlowing(level, offsetPos);
-        return fluid != null && FluidUtilBC.areFluidsEqual(fluid, tank.getFluidType())
-            && BlockUtil.getFluidWithoutFlowing(getLocalState(offsetPos)) == null;
+        return fluid != Fluids.EMPTY && FluidUtilBC.areFluidsEqual(fluid, tank.getFluidType())
+            && BlockUtil.getFluidWithoutFlowing(getLocalState(offsetPos)) == Fluids.EMPTY;
     }
 
     private boolean canSearch(BlockPos offsetPos) {
         if (canFill(offsetPos)) {
             return true;
         }
-        Fluid fluid = BlockUtil.getFluid(level, offsetPos);
+        Fluid fluid = BlockUtil.getFluidWithFlowing(level, offsetPos);
         return FluidUtilBC.areFluidsEqual(fluid, tank.getFluidType());
     }
 
@@ -234,7 +240,14 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
                 if (fluid != null && fluid.getAmount() >= FluidType.BUCKET_VOLUME) {
                     BlockPos currentPos = queue.removeLast();
                     if (hasOpenPathTo(currentPos) && canFill(currentPos)) {
-                        if (FluidUtil.tryPlaceFluid(null, level, null, currentPos, tank, fluid)) {
+                        if (!AutomationPermissionUtil.mayBlock(
+                            level, worldPosition, currentPos, getOwner(), AutomationPermissionUtil.SOURCE_FLOOD_GATE,
+                            WorldOperationKind.FLUID_PLACE, OperationMode.EXECUTE
+                        )) {
+                            return;
+                        }
+                        var actor = FakePlayerProvider.INSTANCE.getFakePlayer((ServerLevel) level, getOwner(), currentPos);
+                        if (FluidUtil.tryPlaceFluid(actor, level, null, currentPos, tank, fluid)) {
                             AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_FLOOD_SINGLE);
                             for (Direction side : Direction.values()) {
                                 level.neighborChanged(getBlockState(), currentPos.offset(side.getNormal()), BCFactoryBlocks.FLOOD_GATE_BLOCK.get(),

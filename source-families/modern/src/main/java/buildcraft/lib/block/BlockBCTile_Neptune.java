@@ -107,7 +107,13 @@ public abstract class BlockBCTile_Neptune extends BlockBCBase_Neptune implements
 		if(blockEntity instanceof TileBC_Neptune tile) {
 			tile.addDrops(drops, UPDATE_ALL);
 		}
-        ItemStack blockStack = new ItemStack(state.getBlock().asItem());
+        ItemStack blockStack = ItemStack.EMPTY;
+        if (blockEntity != null && blockEntity.getLevel() != null) {
+            blockStack = state.getBlock().getCloneItemStack(blockEntity.getLevel(), blockEntity.getBlockPos(), state);
+        }
+        if (blockStack.isEmpty()) {
+            blockStack = new ItemStack(state.getBlock().asItem());
+        }
         if (!blockStack.isEmpty()) {
             drops.add(blockStack);
         }

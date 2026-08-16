@@ -6,7 +6,9 @@
 
 package buildcraft.factory.tile;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.permission.WorldOperationKind;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -38,6 +40,7 @@ import buildcraft.lib.internal.api.v2.MachineDefinitionLookup;
 import buildcraft.lib.internal.api.v2.MachineRuntimeView;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.misc.AdvancementUtil;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.FluidUtilBC;
@@ -265,6 +268,12 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
         Fluid fluid = BlockUtil.getFluid(level, blockPos);
         //USE TO DEBUG
         boolean flag = tank.isEmpty() ? fluid != Fluids.EMPTY : fluid.isSource(fluid.defaultFluidState())&&FluidUtilBC.areFluidsEqual(fluid, tank.getFluidType());
+        if (flag) {
+            flag = AutomationPermissionUtil.mayBlock(
+                level, worldPosition, blockPos, getOwner(), AutomationPermissionUtil.SOURCE_PUMP,
+                WorldOperationKind.FLUID_DRAIN, OperationMode.SIMULATE
+            );
+        }
         BCLog.d(flag, blockPos + " cannot drain, "+ fluid);
         return flag;    }
 
@@ -305,6 +314,12 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
 
     @Override
     public void mine() {
+        if (shaftBlocked) {
+            updateLength();
+            if (shaftBlocked) {
+                return;
+            }
+        }
         if (tank.getFluidAmount() > tank.getCapacity() / 2) {
             return;
         }
@@ -357,6 +372,13 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
                 boolean keepSource = isInfiniteWaterSource
                     && !BCCoreConfig.pumpsConsumeWater
                     && FluidUtilBC.areFluidsEqual(drain.getFluid(), Fluids.WATER);
+
+                if (!AutomationPermissionUtil.mayBlock(
+                    level, worldPosition, currentPos, getOwner(), AutomationPermissionUtil.SOURCE_PUMP,
+                    WorldOperationKind.FLUID_DRAIN, OperationMode.EXECUTE
+                )) {
+                    break drain_attempt;
+                }
 
                 FluidStack actualDrain = drain;
                 if (!keepSource) {

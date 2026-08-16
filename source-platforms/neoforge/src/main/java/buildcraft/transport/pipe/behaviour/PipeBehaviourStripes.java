@@ -6,7 +6,9 @@
 
 package buildcraft.transport.pipe.behaviour;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.api.v2.permission.WorldOperationKind;
 import buildcraft.lib.internal.mj.MjCapabilities;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ import buildcraft.transport.internal.pipe.PipeEventStatement;
 import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.lib.misc.BlockUtil;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.misc.NBTUtilBC;
@@ -174,6 +177,16 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
         battery.tick(world, pipe.getHolder().getPipePos());
         if (direction != null) {
             BlockPos offset = pos.offset(direction.getNormal());
+            if (!AutomationPermissionUtil.mayBlock(
+                world, pos, offset, pipe.getHolder().getOwner(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
+                WorldOperationKind.BLOCK_BREAK, OperationMode.SIMULATE
+            )) {
+                if (progress > 0) {
+                    world.destroyBlockProgress(offset.hashCode(), offset, -1);
+                }
+                progress = 0;
+                return;
+            }
             long target = BlockUtil.computeBlockBreakPower(world, offset);
             if (target > 0) {
                 int offsetHash = offset.hashCode();
@@ -184,7 +197,14 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
                         
                     }
                 } else {
-                	
+                    if (!AutomationPermissionUtil.mayBlock(
+                        world, pos, offset, pipe.getHolder().getOwner(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
+                        WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
+                    )) {
+                        progress = 0;
+                        world.destroyBlockProgress(offsetHash, offset, -1);
+                        return;
+                    }
                     BlockUtil.breakBlockAndGetDrops(
                         (ServerLevel) world,
                         offset,
