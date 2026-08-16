@@ -66,6 +66,8 @@ public class BlockConstructionMarker extends BlockMarkerBase {
             return InteractionResult.SUCCESS;
         }
 
-        return InteractionResult.SUCCESS;
+        // Match the modern interaction contract: ordinary held items are
+        // allowed to continue to their own Item#useOn implementation.
+        return InteractionResult.PASS;
     }
 }

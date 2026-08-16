@@ -18,6 +18,7 @@ import buildcraft.lib.gui.ledger.LedgerHelp;
 import buildcraft.lib.gui.pos.GuiRectangle;
 import buildcraft.lib.gui.recipe.GuiRecipeBookPhantom;
 import buildcraft.lib.gui.slot.SlotBase;
+import buildcraft.lib.gui.slot.SlotDisplay;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.tile.craft.WorkbenchCrafting;
 import net.minecraft.client.gui.components.Button;
@@ -71,6 +72,7 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
         GuiHelpUtil.addSlots(mainGui, 30, 17, 3, 3, "buildcraft.help.autoworkbench.recipe.title", 0xFF_66_AA_FF, "buildcraft.help.autoworkbench.recipe.desc");
         GuiHelpUtil.addSlots(mainGui, 8, 84, 9, 1, "buildcraft.help.autoworkbench.materials.title", 0xFF_88_CC_88, "buildcraft.help.autoworkbench.materials.desc");
         GuiHelpUtil.addSlot(mainGui, 124, 35, "buildcraft.help.autoworkbench.result.title", 0xFF_DD_CC_55, "buildcraft.help.autoworkbench.result.desc");
+        GuiHelpUtil.addSlot(mainGui, 93, 27, "buildcraft.help.autoworkbench.preview.title", 0xFF_CC_AA_FF, "buildcraft.help.autoworkbench.preview.desc");
         GuiHelpUtil.addRoot(mainGui, 90, 47, 23, 10, "buildcraft.help.autoworkbench.progress.title", 0xFF_CC_AA_FF, "buildcraft.help.autoworkbench.progress.desc");
     }
 
@@ -261,6 +263,14 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
 
 	@Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
+        if (slot instanceof SlotDisplay && container.tile != null && container.tile.getRecipeSelectionCount() > 1
+                && (mouseButton == 0 || mouseButton == 1)) {
+            int button = mouseButton == 1
+                ? ContainerAutoCraftItems.BUTTON_PREVIOUS_RECIPE
+                : ContainerAutoCraftItems.BUTTON_NEXT_RECIPE;
+            minecraft.gameMode.handleInventoryButtonClick(container.containerId, button);
+            return;
+        }
         super.slotClicked(slot, slotId, mouseButton, type);
         if (recipeBook != null) {
             recipeBook.slotClicked(slot);

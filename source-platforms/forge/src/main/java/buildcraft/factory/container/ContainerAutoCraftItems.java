@@ -15,10 +15,13 @@ import buildcraft.lib.tile.item.IItemHandlerAdv;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraftforge.items.IItemHandler;
 
 public class ContainerAutoCraftItems extends ContainerBCTile<TileAutoWorkbenchItems> {
+    public static final int BUTTON_PREVIOUS_RECIPE = 0;
+    public static final int BUTTON_NEXT_RECIPE = 1;
 
     public final SlotBase[] materialSlots;
     public final SlotBase[] filtterSlots;;
@@ -57,5 +60,19 @@ public class ContainerAutoCraftItems extends ContainerBCTile<TileAutoWorkbenchIt
         addSlot(new SlotDisplay(resultClient, 0, 93, 27));
 
         addFullPlayerInventory(115);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (player.isSpectator() || tile == null) {
+            return false;
+        }
+        if (id == BUTTON_PREVIOUS_RECIPE) {
+            return tile.cycleRecipe(-1);
+        }
+        if (id == BUTTON_NEXT_RECIPE) {
+            return tile.cycleRecipe(1);
+        }
+        return super.clickMenuButton(player, id);
     }
 }

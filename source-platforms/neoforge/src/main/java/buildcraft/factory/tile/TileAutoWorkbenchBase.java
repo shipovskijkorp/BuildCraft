@@ -72,6 +72,8 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
     private long lastPowerSaveTick = Long.MIN_VALUE;
 
     public ItemStack resultClient = ItemStack.EMPTY;
+    private int recipeSelectionIndexClient = -1;
+    private int recipeSelectionCountClient;
 
     public TileAutoWorkbenchBase(BlockEntityType<?> type, BlockPos pos, BlockState state, int width, int height) {
     	super(type, pos, state);
@@ -92,6 +94,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
     protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
         super.saveAdditional(nbt, registries);
         nbt.putLong("powerStored", powerStored);
+        crafting.writeSelection(nbt);
     }
 
     @Override
@@ -100,6 +103,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
         powerStored = Math.max(0, Math.min(POWER_REQUIRED, nbt.getLong("powerStored")));
         powerStoredLast = powerStored;
         persistedPowerStored = powerStored;
+        crafting.readSelection(nbt);
     }
 
     @Override
@@ -166,6 +170,8 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
                 buffer.writeLong(powerStored);
             } else if (id == NET_GUI_DATA) {
                 resultClient = crafting.getAssumedResult().copy();
+                buffer.writeInt(crafting.getSelectedRecipeIndex());
+                buffer.writeInt(crafting.getMatchingRecipeCount());
             }
         }
     }
@@ -181,9 +187,10 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
                     // properly handle crafting finishes
                     powerStoredLast = powerStored;
                 }
-            }/* else if (id == NET_GUI_DATA) {
-                //resultClient = buffer.readItem();
-            }*/
+            } else if (id == NET_GUI_DATA) {
+                recipeSelectionIndexClient = buffer.readInt();
+                recipeSelectionCountClient = buffer.readInt();
+            }
         }
     }
 
@@ -198,6 +205,25 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
 
     public WorkbenchCrafting getWorkbenchCrafting() {
         return crafting;
+    }
+
+    public int getRecipeSelectionIndex() {
+        return level != null && level.isClientSide ? recipeSelectionIndexClient : crafting.getSelectedRecipeIndex();
+    }
+
+    public int getRecipeSelectionCount() {
+        return level != null && level.isClientSide ? recipeSelectionCountClient : crafting.getMatchingRecipeCount();
+    }
+
+    public boolean cycleRecipe(int delta) {
+        if (level == null || level.isClientSide || !crafting.selectRecipe(delta)) {
+            return false;
+        }
+        resultClient = crafting.getAssumedResult().copy();
+        createFilters();
+        setChanged();
+        sendNetworkGuiUpdate(NET_GUI_DATA);
+        return true;
     }
 
     private void createFilters() {

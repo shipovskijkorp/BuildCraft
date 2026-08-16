@@ -17,10 +17,13 @@ import buildcraft.silicon.BCSiliconGuis;
 import buildcraft.silicon.tile.TileAdvancedCraftingTable;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.neoforged.neoforge.items.IItemHandler;
 
 public class ContainerAdvancedCraftingTable extends ContainerBCTile<TileAdvancedCraftingTable> {
+    public static final int BUTTON_PREVIOUS_RECIPE = 0;
+    public static final int BUTTON_NEXT_RECIPE = 1;
 
     /** The exact handlers backing this menu's synced slots (client and server instances differ). */
     public final IItemHandlerAdv blueprintInv;
@@ -56,5 +59,19 @@ public class ContainerAdvancedCraftingTable extends ContainerBCTile<TileAdvanced
             }
         }
         addFullPlayerInventory(153);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (player.isSpectator() || tile == null) {
+            return false;
+        }
+        if (id == BUTTON_PREVIOUS_RECIPE) {
+            return tile.cycleRecipe(-1);
+        }
+        if (id == BUTTON_NEXT_RECIPE) {
+            return tile.cycleRecipe(1);
+        }
+        return super.clickMenuButton(player, id);
     }
 }

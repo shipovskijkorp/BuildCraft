@@ -23,6 +23,7 @@ import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.silicon.BCSiliconBlocks;
 import buildcraft.silicon.container.ContainerAdvancedCraftingTable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,6 +52,8 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
     private final WorkbenchCrafting crafting;
 
     public final ItemHandlerSimple resultClient = new ItemHandlerSimple(1);
+    private int recipeSelectionIndexClient = -1;
+    private int recipeSelectionCountClient;
 
     public TileAdvancedCraftingTable(BlockPos pos, BlockState state) {
     	super(BCSiliconBlocks.ADVANCED_CRAFTING_TABLE_TILE.get(), pos, state);
@@ -59,6 +62,18 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
         invResults = itemManager.addInvHandler("result", 3 * 3, EnumAccess.EXTRACT, EnumPipePart.VALUES);
         crafting = new WorkbenchCrafting(3, 3, this, invBlueprint, invMaterials, invResults);
         caps.addProvider(new MjCapabilityHelper(this));
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        crafting.writeSelection(nbt);
+    }
+
+    @Override
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        crafting.readSelection(nbt);
     }
 
     @Override
@@ -108,7 +123,8 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
         super.readPayload(id, buffer, side, ctx);
         if (side == LogicalSide.CLIENT) {
             if (id == NET_GUI_DATA) {
-                //resultClient = buffer.readItem();
+                recipeSelectionIndexClient = buffer.readInt();
+                recipeSelectionCountClient = buffer.readInt();
             }
         }
     }
@@ -119,6 +135,8 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
         if (side == LogicalSide.SERVER) {
             if (id == NET_GUI_DATA) {
                 resultClient.setStackInSlot(0, crafting.getAssumedResult());
+                buffer.writeInt(crafting.getSelectedRecipeIndex());
+                buffer.writeInt(crafting.getMatchingRecipeCount());
             }
         }
     }
@@ -143,6 +161,24 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
 
     public WorkbenchCrafting getWorkbenchCrafting() {
         return crafting;
+    }
+
+    public int getRecipeSelectionIndex() {
+        return level != null && level.isClientSide ? recipeSelectionIndexClient : crafting.getSelectedRecipeIndex();
+    }
+
+    public int getRecipeSelectionCount() {
+        return level != null && level.isClientSide ? recipeSelectionCountClient : crafting.getMatchingRecipeCount();
+    }
+
+    public boolean cycleRecipe(int delta) {
+        if (level == null || level.isClientSide || !crafting.selectRecipe(delta)) {
+            return false;
+        }
+        resultClient.setStackInSlot(0, crafting.getAssumedResult());
+        setChanged();
+        sendNetworkGuiUpdate(NET_GUI_DATA);
+        return true;
     }
 
 

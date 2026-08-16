@@ -6,6 +6,9 @@
 
 package buildcraft.lib.tile.craft;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import buildcraft.lib.inventory.filter.ArrayStackFilter;
@@ -17,6 +20,8 @@ import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -63,6 +68,11 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
     private boolean isBlueprintDirty = true;
     private boolean areMaterialsDirty = true;
     private boolean cachedHasRequirements = false;
+    private final List<CraftingRecipe> matchingRecipes = new ArrayList<>();
+    private final List<ResourceLocation> matchingRecipeIds = new ArrayList<>();
+    @Nullable
+    private ResourceLocation selectedRecipeId;
+    private int selectedRecipeIndex = -1;
     
     private final int BPsize;
     private final int MTsize;
@@ -179,6 +189,86 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
         return assumedResult;
     }
 
+    public int getMatchingRecipeCount() {
+        return matchingRecipes.size();
+    }
+
+    public int getSelectedRecipeIndex() {
+        return selectedRecipeIndex;
+    }
+
+    public boolean selectRecipe(int delta) {
+        if (matchingRecipes.size() <= 1 || delta == 0) {
+            return false;
+        }
+        int base = selectedRecipeIndex < 0 ? 0 : selectedRecipeIndex;
+        int next = Math.floorMod(base + delta, matchingRecipes.size());
+        if (next == base) {
+            return false;
+        }
+        applySelectedRecipe(next, tile.getLevel());
+        return true;
+    }
+
+    public void writeSelection(CompoundTag nbt) {
+        if (selectedRecipeId != null) {
+            nbt.putString("selectedCraftingRecipe", selectedRecipeId.toString());
+        } else {
+            nbt.remove("selectedCraftingRecipe");
+        }
+    }
+
+    public void readSelection(CompoundTag nbt) {
+        selectedRecipeId = nbt.contains("selectedCraftingRecipe")
+            ? ResourceLocation.tryParse(nbt.getString("selectedCraftingRecipe"))
+            : null;
+        selectedRecipeIndex = -1;
+        isBlueprintDirty = true;
+    }
+
+    private void rebuildMatchingRecipes(Level world) {
+        matchingRecipes.clear();
+        matchingRecipeIds.clear();
+        CraftingInput input = asCraftInput();
+        for (RecipeHolder<CraftingRecipe> holder : world.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING)) {
+            CraftingRecipe recipe = holder.value();
+            if (recipe.matches(input, world)) {
+                matchingRecipes.add(recipe);
+                matchingRecipeIds.add(holder.id());
+            }
+        }
+
+        if (matchingRecipes.isEmpty()) {
+            currentRecipe = null;
+            assumedResult = ItemStack.EMPTY;
+            recipeType = null;
+            selectedRecipeIndex = -1;
+            invAssumedResult.setStackInSlot(0, ItemStack.EMPTY);
+            cachedHasRequirements = false;
+            return;
+        }
+
+        int selected = 0;
+        if (selectedRecipeId != null) {
+            int persisted = matchingRecipeIds.indexOf(selectedRecipeId);
+            if (persisted >= 0) {
+                selected = persisted;
+            }
+        }
+        applySelectedRecipe(selected, world);
+    }
+
+    private void applySelectedRecipe(int index, Level world) {
+        selectedRecipeIndex = index;
+        currentRecipe = matchingRecipes.get(index);
+        selectedRecipeId = matchingRecipeIds.get(index);
+        assumedResult = currentRecipe.getResultItem(world.registryAccess());
+        NonNullList<Ingredient> ingredients = currentRecipe.getIngredients();
+        recipeType = ingredients.isEmpty() ? EnumRecipeType.EXACT_STACKS : EnumRecipeType.INGREDIENTS;
+        invAssumedResult.setStackInSlot(0, assumedResult);
+        areMaterialsDirty = true;
+    }
+
     public void onInventoryChange(IItemHandler inv) {
         if (inv == invBlueprint) {
             isBlueprintDirty = true;
@@ -194,22 +284,7 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
             throw new IllegalStateException("Never call this on the client side!");
         }
         if (isBlueprintDirty) {
-            currentRecipe = world.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, asCraftInput(), world)
-                .map(RecipeHolder::value)
-                .orElse(null);
-            if (currentRecipe == null) {
-                assumedResult = ItemStack.EMPTY;
-                recipeType = null;
-            } else {
-                assumedResult = currentRecipe.getResultItem(world.registryAccess());
-                NonNullList<Ingredient> ingredients = currentRecipe.getIngredients();
-                if (ingredients.isEmpty()) {
-                    recipeType = EnumRecipeType.EXACT_STACKS;
-                } else {
-                    recipeType = EnumRecipeType.INGREDIENTS;
-                }
-            }
-            invAssumedResult.setStackInSlot(0, assumedResult);
+            rebuildMatchingRecipes(world);
             isBlueprintDirty = false;
             return true;
         }
@@ -297,8 +372,11 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
         // - Move everything from the inventory back to materials
     	Level world = tile.getLevel();
     	BlockPos pos = tile.getBlockPos();
-        // Step 1
-        clearInventory();
+        // Step 1. Never overwrite a transient slot unless every previous
+        // crafting-grid item was returned to material storage successfully.
+        if (!clearInventory()) {
+            return false;
+        }
 
         // Step 2
         for (int s = 0; s < craftTableSize; s++) {

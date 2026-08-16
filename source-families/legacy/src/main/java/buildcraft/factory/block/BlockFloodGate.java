@@ -57,7 +57,10 @@ public class BlockFloodGate extends BlockBCTile_Neptune{
                     }
                 }
             }
-            return InteractionResult.PASS;
+            // A wrench interaction belongs to the Flood Gate even when the
+            // clicked face cannot be toggled. This matches the modern backend
+            // and prevents the wrench from receiving a second useOn call.
+            return InteractionResult.SUCCESS;
         }
         return super.use(state, world, pos, player, hand, hit);
 	}

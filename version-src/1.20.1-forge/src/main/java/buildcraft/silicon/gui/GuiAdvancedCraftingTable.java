@@ -17,6 +17,7 @@ import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.ledger.LedgerHelp;
 import buildcraft.lib.gui.pos.GuiRectangle;
 import buildcraft.lib.gui.recipe.GuiRecipeBookPhantom;
+import buildcraft.lib.gui.slot.SlotDisplay;
 import buildcraft.silicon.container.ContainerAdvancedCraftingTable;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
@@ -216,8 +217,16 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
         return super.charTyped(codePoint, modifiers);
     }
 
-	@Override
+    @Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
+        if (slot instanceof SlotDisplay && container.tile != null && container.tile.getRecipeSelectionCount() > 1
+                && (mouseButton == 0 || mouseButton == 1)) {
+            int button = mouseButton == 1
+                ? ContainerAdvancedCraftingTable.BUTTON_PREVIOUS_RECIPE
+                : ContainerAdvancedCraftingTable.BUTTON_NEXT_RECIPE;
+            minecraft.gameMode.handleInventoryButtonClick(container.containerId, button);
+            return;
+        }
         super.slotClicked(slot, slotId, mouseButton, type);
         if (recipeBook != null) {
             recipeBook.slotClicked(slot);

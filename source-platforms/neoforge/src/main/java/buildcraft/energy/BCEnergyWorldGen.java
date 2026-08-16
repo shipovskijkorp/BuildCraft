@@ -3,7 +3,6 @@ package buildcraft.energy;
 import buildcraft.energy.generation.features.OilFeatureConfiguration;
 import buildcraft.energy.generation.features.OilGenFeature;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
@@ -19,14 +18,6 @@ public final class BCEnergyWorldGen {
 
     public static final TagKey<Biome> IS_OIL_BIOME = TagKey.create(
         Registries.BIOME, ResourceLocation.fromNamespaceAndPath(BCEnergy.MODID, "is_oil_biome")
-    );
-
-    /** Retained as stable API keys; custom biomes are no longer registered imperatively. */
-    public static final ResourceKey<Biome> OIL_DESERT_KEY = ResourceKey.create(
-        Registries.BIOME, ResourceLocation.fromNamespaceAndPath(BCEnergy.MODID, "oil_desert")
-    );
-    public static final ResourceKey<Biome> OIL_DEEP_OCEAN_KEY = ResourceKey.create(
-        Registries.BIOME, ResourceLocation.fromNamespaceAndPath(BCEnergy.MODID, "oil_deep_ocean")
     );
 
     public static final DeferredHolder<Feature<?>, OilGenFeature> OIL_FEATURE = FEATURE_REGISTER.register(
