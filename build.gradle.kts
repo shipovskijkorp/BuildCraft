@@ -117,7 +117,21 @@ val verifyLocalizations by tasks.registering {
             }
         }
 
-        ordinary.forEach(::validateStringObject)
+        val allOrdinaryLang = commonResources.resolve("assets").walkTopDown()
+            .filter { it.isFile && it.extension == "json" && it.parentFile.name == "lang" }
+            .sortedBy { it.relativeTo(commonResources).path }
+            .toList()
+        require(allOrdinaryLang.none { it.name == "en_us.json" }) {
+            "The localization add-on must not package en_us in any asset namespace"
+        }
+        allOrdinaryLang.forEach(::validateStringObject)
+
+        val ironTanksLocales = commonResources.resolve("assets/irontanks/lang")
+            .listFiles { file -> file.isFile && file.extension == "json" }
+            ?.mapTo(sortedSetOf<String>()) { it.nameWithoutExtension } ?: sortedSetOf<String>()
+        require(ironTanksLocales.containsAll(setOf("ru_ru", "zh_cn"))) {
+            "Iron Tanks Community Edition translations were not migrated into the localization add-on"
+        }
 
         var expectedPageSegments: Map<String, Int>? = null
         guide.forEach { file ->

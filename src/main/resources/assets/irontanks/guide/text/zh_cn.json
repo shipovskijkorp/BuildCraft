@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "language": "zh_cn",
+  "pages": {
+    "irontanks/block/copper_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 27 桶（27,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/iron_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 32 桶（32,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/silver_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 43 桶（43,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/gold_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 48 桶（48,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/diamond_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 64 桶（64,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/obsidian_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 64 桶（64,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/emerald_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 96 桶（96,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/aluminium_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 96 桶（96,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/stainlesssteel_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 128 桶（128,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/titanium_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 256 桶（256,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/tungstensteel_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "兼容 BuildCraft 的储罐，可容纳 512 桶（512,000 mB）流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "将兼容储罐上下相邻放置可形成纵向流体列。BuildCraft 管道和机器通过原生流体能力访问它。"
+    ],
+    "irontanks/block/void_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "紧凑型流体销毁储罐，每刻持续销毁最多 80 mB 已储存流体。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "它可与兼容储罐纵向连接。进入该储罐的流体会被永久删除。"
+    ],
+    "irontanks/block/creative_tank": [
+      "为工业运转所需的流体提供更多空间。",
+      "创造模式流体源储罐。填入一种流体后，输出不会减少其储量。",
+      "使用储罐升级可在保留流体的同时更换等级。",
+      "工作方式",
+      "创造储罐不会纵向连接其他储罐，以避免无限流体平衡链。"
+    ],
+    "irontanks/item/glass_copper_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 BuildCraft glass 储罐转换为 copper 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/glass_iron_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 BuildCraft glass 储罐转换为 iron 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/copper_iron_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 copper 储罐转换为 iron 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/copper_silver_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 copper 储罐转换为 silver 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/iron_gold_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 iron 储罐转换为 gold 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/silver_gold_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 silver 储罐转换为 gold 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/gold_diamond_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 gold 储罐转换为 diamond 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/diamond_obsidian_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 diamond 储罐转换为 obsidian 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/diamond_emerald_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 diamond 储罐转换为 emerald 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/diamond_aluminium_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 diamond 储罐转换为 aluminium 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/emerald_stainlesssteel_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 emerald 储罐转换为 stainless steel 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/aluminium_stainlesssteel_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 aluminium 储罐转换为 stainless steel 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/stainlesssteel_titanium_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 stainless steel 储罐转换为 titanium 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ],
+    "irontanks/item/titanium_tungstensteel_upgrade": [
+      "升级容器，而不是增加搬运工作。",
+      "原地将 titanium 储罐转换为 tungsten steel 储罐。",
+      "对匹配的储罐方块使用升级物品。",
+      "保留流体",
+      "服务器先替换方块，再把完整流体堆复制到新的 BuildCraft 储罐中，最后才消耗升级物品。"
+    ]
+  }
+}

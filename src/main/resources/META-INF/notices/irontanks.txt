@@ -1,0 +1,7 @@
+Iron Tanks Community Edition localization files
+
+The assets under assets/irontanks/lang originate from Iron Tanks Community Edition,
+an MIT-licensed community port of Iron Tanks by indemnity83.
+The applicable MIT license is bundled at META-INF/licenses/irontanks/LICENSE.txt.
+
+BuildCraft Community Edition: Localizations remains licensed separately under MPL-2.0.
