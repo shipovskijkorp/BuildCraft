@@ -32,6 +32,9 @@ public final class BCMenuUtil {
     }
 
     public static boolean handleFakeSlotClick(AbstractContainerMenu menu, int slotId, int dragType, ClickType clickType, Player player) {
+        if (player != null && player.isSpectator()) {
+            return true;
+        }
         if (slotId < 0 || slotId >= menu.slots.size()) {
             return false;
         }
@@ -107,6 +110,9 @@ public final class BCMenuUtil {
     }
 
     public static ItemStack quickMoveStack(AbstractContainerMenu menu, Player player, int index) {
+        if (player != null && player.isSpectator()) {
+            return ItemStack.EMPTY;
+        }
         if (index < 0 || index >= menu.slots.size()) {
             return ItemStack.EMPTY;
         }

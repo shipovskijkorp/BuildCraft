@@ -29,6 +29,7 @@ import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.builders.item.ItemSnapshot;
 import buildcraft.builders.snapshot.Blueprint;
 import buildcraft.builders.snapshot.BlueprintBuilder;
+import buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildResult;
 import buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildTask;
 import buildcraft.builders.snapshot.GlobalSavedDataSnapshots;
 import buildcraft.builders.snapshot.ITileForBlueprintBuilder;
@@ -405,6 +406,15 @@ public class TileConstructionMarker extends TileBC_Neptune implements IDebuggabl
             return false;
         }
         return blueprintBuilder.buildRobotTask(robot, task);
+    }
+
+    @Override
+    public RobotBuildResult buildRobotTaskResult(EntityRobotBase robot, RobotBuildTask task) {
+        if (!canRobotsBuild()) {
+            releaseRobotBuildTask(robot, task);
+            return RobotBuildResult.FAILED;
+        }
+        return blueprintBuilder.buildRobotTaskResult(robot, task);
     }
 
     public void releaseRobotBuildTask(EntityRobotBase robot, RobotBuildTask task) {

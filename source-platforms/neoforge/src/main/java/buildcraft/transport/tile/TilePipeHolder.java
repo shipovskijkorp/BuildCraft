@@ -119,6 +119,8 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     private boolean wasFlowPersistentlyActive;
     private final Set<PipeMessageReceiver> networkUpdates = EnumSet.noneOf(PipeMessageReceiver.class);
     private final Set<PipeMessageReceiver> networkGuiUpdates = EnumSet.noneOf(PipeMessageReceiver.class);
+    /** Payload source while a synchronous NET_UPDATE_MULTI packet is being encoded. */
+    private Set<PipeMessageReceiver> activeNetworkBatch = Collections.emptySet();
     
     protected ModelData modeldata;
     private CompoundTag unknownData;
@@ -323,24 +325,16 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
             pluggables.get(face).onTick();
         }
 
-        // Send network updates
-        if (networkUpdates.size() > 0) {
-            // TODO: Multi-update messages! (multiple updates sent in a single message)
-            Set<PipeMessageReceiver> parts = EnumSet.copyOf(networkUpdates);
-            for (PipeMessageReceiver part : parts) {
-                sendNetworkUpdate(getReceiverId(part));
-            }
+        // Coalesce all pipe-part changes scheduled in the same tick into one packet.
+        if (!networkUpdates.isEmpty()) {
+            sendNetworkBatch(EnumSet.copyOf(networkUpdates), false);
         }
-        // No need to send gui updates to specific players if we just sent off messages to all players.
+        // No need to send GUI updates to specific players if the same parts were just broadcast to watchers.
         networkGuiUpdates.removeAll(networkUpdates);
         networkUpdates.clear();
 
-        if (networkGuiUpdates.size() > 0) {
-            // TODO: Multi-update messages! (multiple updates sent in a single message)
-            Set<PipeMessageReceiver> parts = EnumSet.copyOf(networkGuiUpdates);
-            for (PipeMessageReceiver part : parts) {
-                sendNetworkGuiUpdate(getReceiverId(part));
-            }
+        if (!networkGuiUpdates.isEmpty()) {
+            sendNetworkBatch(EnumSet.copyOf(networkGuiUpdates), true);
         }
         networkGuiUpdates.clear();
 
@@ -379,11 +373,41 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         }
     }
 
+    private void sendNetworkBatch(Set<PipeMessageReceiver> parts, boolean guiOnly) {
+        if (parts.isEmpty()) return;
+        if (parts.size() == 1) {
+            int id = getReceiverId(parts.iterator().next());
+            if (guiOnly) sendNetworkGuiUpdate(id);
+            else sendNetworkUpdate(id);
+            return;
+        }
+        activeNetworkBatch = EnumSet.copyOf(parts);
+        try {
+            if (guiOnly) sendNetworkGuiUpdate(NET_UPDATE_MULTI);
+            else sendNetworkUpdate(NET_UPDATE_MULTI);
+        } finally {
+            activeNetworkBatch = Collections.emptySet();
+        }
+    }
+
     // Network
 
     @Override
     public void writePayload(int id, FriendlyByteBuf buffer, LogicalSide side) {
         super.writePayload(id, buffer, side);
+        if (id == NET_UPDATE_MULTI) {
+            int mask = 0;
+            for (PipeMessageReceiver type : activeNetworkBatch) {
+                mask |= 1 << type.ordinal();
+            }
+            buffer.writeShort(mask);
+            for (PipeMessageReceiver type : PipeMessageReceiver.values()) {
+                if ((mask & (1 << type.ordinal())) != 0) {
+                    writePayload(getReceiverId(type), buffer, side);
+                }
+            }
+            return;
+        }
         if (side == LogicalSide.SERVER) {
             if (id == NET_RENDER_DATA) {
                 if (pipe == Pipe.EMPTY) {
@@ -444,7 +468,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
                 }
                 wireManager.readPayload(buffer, side, ctx);
             } else if (id == NET_UPDATE_MULTI) {
-                int total = buffer.readUnsignedByte();
+                int total = buffer.readUnsignedShort();
                 for (PipeMessageReceiver type : PipeMessageReceiver.values()) {
                     if (((total >> type.ordinal()) & 1) == 1) {
                         readPayload(getReceiverId(type), buffer, side, ctx);

@@ -86,21 +86,22 @@ public class TileMiningWell extends TileMiner implements MachineRuntimeView {
                     level, worldPosition, currentPos, getOwner(), AutomationPermissionUtil.SOURCE_MINING_WELL,
                     WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
                 )) {
-                    progress = 0;
+                    // Keep the completed work. A protected target must not consume the full cost again every tick.
                     level.destroyBlockProgress(currentPos.hashCode(), currentPos, -1);
                     return;
                 }
-                progress = 0;
                 level.destroyBlockProgress(currentPos.hashCode(), currentPos, -1);
-                BlockUtil.breakBlockAndGetDrops(
+                var drops = BlockUtil.breakBlockAndGetDrops(
                     (ServerLevel) level,
                     currentPos,
                     new ItemStack(Items.DIAMOND_PICKAXE),
                     getOwner()
-                ).ifPresent(stacks ->
-                    stacks.forEach(stack -> InventoryUtil.addToBestAcceptor(level, worldPosition, null, stack))
                 );
-                nextPos();
+                if (drops.isPresent()) {
+                    drops.get().forEach(stack -> InventoryUtil.addToBestAcceptor(level, worldPosition, null, stack));
+                    progress = 0;
+                    nextPos();
+                }
             } else {
                 if (!level.getBlockState(currentPos).isAir()) {
                     level.destroyBlockProgress(currentPos.hashCode(), currentPos, (int) ((progress * 9) / target));

@@ -99,6 +99,9 @@ public abstract class MenuBC_Neptune extends AbstractContainerMenu {
     @Nullable
     @Override
     public void clicked(int slotId, int dragType, ClickType clickType, Player player) {
+        if (player != null && player.isSpectator()) {
+            return;
+        }
         if (BCMenuUtil.handleFakeSlotClick(this, slotId, dragType, clickType, player)) {
             return;
         }

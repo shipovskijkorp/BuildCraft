@@ -40,6 +40,9 @@ public class MenuArchitectTable extends AbstractContainerMenu {
 
 	@Override
 	public void clicked(int slotId, int dragType, net.minecraft.world.inventory.ClickType clickType, Player player) {
+		if (player != null && player.isSpectator()) {
+			return;
+		}
 		if (buildcraft.lib.gui.BCMenuUtil.handleFakeSlotClick(this, slotId, dragType, clickType, player)) {
 			return;
 		}

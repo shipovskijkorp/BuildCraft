@@ -57,6 +57,9 @@ jobs:
       - name: Validate FE compatibility
         run: python scripts/validate-fe-compat.py
 
+      - name: Validate P2 regression and performance guards
+        run: python scripts/validate-p2-regressions.py
+
       - name: Validate resources, metadata and build hygiene
         run: python scripts/validate-cross-target-integrity.py
 

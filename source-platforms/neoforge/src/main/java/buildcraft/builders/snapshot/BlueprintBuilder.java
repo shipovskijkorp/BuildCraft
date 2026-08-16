@@ -394,9 +394,13 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     }
 
     public boolean buildRobotTask(EntityRobotBase robot, RobotBuildTask task) {
+        return buildRobotTaskResult(robot, task) != RobotBuildResult.FAILED;
+    }
+
+    public RobotBuildResult buildRobotTaskResult(EntityRobotBase robot, RobotBuildTask task) {
         if (robot == null || task == null || getBuildingInfo() == null) {
             releaseRobotTask(robot, task);
-            return false;
+            return RobotBuildResult.FAILED;
         }
 
         BlockPos blockPos = task.pos();
@@ -404,7 +408,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
             if (task.breakTask()) {
                 check(blockPos);
                 if (checkResults[posToIndex(blockPos)] == CHECK_RESULT_CORRECT || tile.getWorldBC().isEmptyBlock(blockPos)) {
-                    return true;
+                    return RobotBuildResult.NOOP;
                 }
                 GameProfile owner = getAutomationOwner(robot);
                 if (!tile.canExcavate()
@@ -414,7 +418,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                         tile.getWorldBC(), tile.getBuilderPos(), blockPos, owner, AutomationPermissionUtil.SOURCE_ROBOT,
                         WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
                     )) {
-                    return false;
+                    return RobotBuildResult.FAILED;
                 }
                 Optional<List<ItemStack>> drops = tile.getWorldBC() instanceof ServerLevel serverLevel
                     ? BlockUtil.breakBlockAndGetDrops(
@@ -431,24 +435,24 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 if (broken && check(blockPos)) {
                     afterChecks();
                 }
-                return broken;
+                return broken ? RobotBuildResult.COMMITTED : RobotBuildResult.FAILED;
             }
 
             if (isBlockCorrect(blockPos)) {
                 check(blockPos);
-                return true;
+                return RobotBuildResult.NOOP;
             }
             check(blockPos);
             int index = posToIndex(blockPos);
             if (checkResults[index] != CHECK_RESULT_TO_PLACE || !canPlace(blockPos) || !isReadyToPlace(blockPos)) {
-                return false;
+                return RobotBuildResult.FAILED;
             }
             if (!hasRobotRequirements(robot, task.requirements())) {
-                return false;
+                return RobotBuildResult.FAILED;
             }
             ISchematicBlock schematicBlock = getSchematicBlock(blockPos);
             if (schematicBlock == null || schematicBlock.isAir()) {
-                return false;
+                return RobotBuildResult.FAILED;
             }
 
             GameProfile owner = getAutomationOwner(robot);
@@ -456,7 +460,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                 tile.getWorldBC(), tile.getBuilderPos(), blockPos, owner, AutomationPermissionUtil.SOURCE_ROBOT,
                 WorldOperationKind.BLOCK_PLACE, OperationMode.EXECUTE
             )) {
-                return false;
+                return RobotBuildResult.FAILED;
             }
             Player actor = getAutomationPlayer(robot, blockPos);
             schematicBlock.build(tile.getWorldBC(), blockPos, actor);
@@ -470,7 +474,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
                     afterChecks();
                 }
             }
-            return committed;
+            return committed ? RobotBuildResult.COMMITTED : RobotBuildResult.FAILED;
         } finally {
             releaseRobotTask(robot, task);
         }
@@ -544,6 +548,12 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
     private int computeRobotBreakEnergyCost(BlockPos blockPos) {
         long breakMj = Math.max(1L, BlockUtil.computeBlockBreakPower(tile.getWorldBC(), blockPos) / MjAmount.MICRO_MJ_PER_MJ);
         return Math.max(16, computeRobotEnergyCost(blockPos) + (int) Math.min(10_000L, breakMj));
+    }
+
+    public enum RobotBuildResult {
+        COMMITTED,
+        NOOP,
+        FAILED
     }
 
     public static class RobotBuildTask {

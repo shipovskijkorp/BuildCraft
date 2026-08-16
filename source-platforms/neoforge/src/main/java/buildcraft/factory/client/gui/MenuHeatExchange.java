@@ -102,6 +102,7 @@ public class MenuHeatExchange extends MenuBC_Neptune implements IMenuBCTile {
 
     @Override
     public boolean clickMenuButton(Player player, int index) {
+        if (player != null && player.isSpectator()) return false;
         return access.evaluate((level, pos) -> {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof TileHeatExchange heatExchange) {

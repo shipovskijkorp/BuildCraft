@@ -9,6 +9,8 @@ package buildcraft.transport.block;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
@@ -107,6 +109,8 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 	public static final VoxelShape[] BOX_FACES = { BOX_DOWN, BOX_UP, BOX_NORTH, BOX_SOUTH, BOX_WEST, BOX_EAST };
 	
     private static final VoxelShape[] PIPE_SHAPE_CACHE = new VoxelShape[64];
+    private static final int MAX_CONNECTION_SHAPE_CACHE = 512;
+    private static final Map<PipeShapeKey, PipeShapeData> CONNECTION_SHAPE_CACHE = new ConcurrentHashMap<>();
 //    private static final VoxelShape EXPENDED_CENTER = Shapes.box(0.125D, 0.125D, 0.125D, 0.875D, 0.875D, 0.875D);
 
 	
@@ -485,13 +489,12 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		Vec3 vec31 = entity.getLookAngle();
 		Vec3 vec32 = carmpos.add(vec31.x * reachDistance, vec31.y * reachDistance, vec31.z * reachDistance);
 		
-		VoxelShape[] allShape = getAllShape(world, pos);//TODO
-		VoxelShape centerShape = allShape[0];
+		VoxelShape[] allShape = getAllShape(world, pos);
+		VoxelShape centerShape = tile.getPipe() == Pipe.EMPTY
+			? allShape[0]
+			: getCachedConnectionShapes(tile.getPipe()).combined();
 		if(allShape.length == 1)
 			return Shapes.empty();
-		for(int i =1 ;i<7;i++) {
-				centerShape = allShape[i] != null ? Shapes.or(centerShape, allShape[i]) : centerShape;
-		}
 		BCBlockHitResult trace = rayTrace(world, pos, carmpos, vec32, centerShape);
 		VoxelShape hitShape = trace != null ? allShape[trace.subHit] : null;
 		return hitShape == null ? Shapes.empty() : hitShape;//Shapes.create(hitShape.bounds().inflate(1 / 32.0));
@@ -576,43 +579,16 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 		VoxelShape[] result = new VoxelShape[1+6+6+8+36];
 		boolean added = false;
 		Pipe pipe = tile.getPipe();
-		VoxelShape shape = BOX_CENTER;
 		if (pipe != Pipe.EMPTY) {
-			
 			added = true;
-//			boolean canUseCache = true;
-			Direction[] direTogen = new Direction[6];
-			float[] conSizes = new float[6];
-			int len = 0;
-			
-			for(int i=0;i<6;i++) {
-				Direction d = Direction.values()[i];
-				conSizes[len] = pipe.getConnectedDist(Direction.values()[i]);
-				if(conSizes[len]>0) {
-//					canUseCache &= conSizes[len] == 0.25f;
-					direTogen[len++] = d;
+			PipeShapeData cached = getCachedConnectionShapes(pipe);
+			result[0] = BOX_CENTER;
+			for (Direction face : Direction.values()) {
+				VoxelShape connection = cached.faces()[face.get3DDataValue()];
+				if (connection != null) {
+					result[face.get3DDataValue() + 1] = connection;
 				}
 			}
-//			if(canUseCache)
-//				shape = getCachedPipeShape(direTogen, len);
-//			else
-			result[0] = (shape);//Base Pipe ,subHit [0,6]
-			for (int i = 0; i < len; i++) {
-				Direction face = direTogen[i];
-				if (conSizes[i] > 0) {
-					VoxelShape aabb = BOX_FACES[face.get3DDataValue()];
-					if (conSizes[i] != 0.25f) {
-						Vec3 center = VecUtil.offset(new Vec3(0.5, 0.5, 0.5), face, 0.25 + (conSizes[i] / 2));
-						Vec3 radius = new Vec3(0.25, 0.25, 0.25);
-						radius = VecUtil.replaceValue(radius, face.getAxis(), conSizes[i] / 2);
-						Vec3 min = center.subtract(radius);
-						Vec3 max = center.add(radius);
-						aabb = Shapes.create(BoundingBoxUtil.makeFrom(min, max));// TODO cache this
-					}
-					result[face.get3DDataValue()+1] = aabb;
-				}
-			}
-			
 		}
 		for (Direction face : Direction.values()) {
 			PipePluggable pluggable = tile.getPluggable(face);
@@ -1111,6 +1087,50 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
 
 	}
 	
+    private static PipeShapeData getCachedConnectionShapes(Pipe pipe) {
+        PipeShapeKey key = new PipeShapeKey(
+            Float.floatToIntBits(pipe.getConnectedDist(Direction.DOWN)),
+            Float.floatToIntBits(pipe.getConnectedDist(Direction.UP)),
+            Float.floatToIntBits(pipe.getConnectedDist(Direction.NORTH)),
+            Float.floatToIntBits(pipe.getConnectedDist(Direction.SOUTH)),
+            Float.floatToIntBits(pipe.getConnectedDist(Direction.WEST)),
+            Float.floatToIntBits(pipe.getConnectedDist(Direction.EAST))
+        );
+        PipeShapeData cached = CONNECTION_SHAPE_CACHE.get(key);
+        if (cached != null) return cached;
+
+        PipeShapeData created = createConnectionShapes(key);
+        if (CONNECTION_SHAPE_CACHE.size() >= MAX_CONNECTION_SHAPE_CACHE) {
+            return created;
+        }
+        PipeShapeData raced = CONNECTION_SHAPE_CACHE.putIfAbsent(key, created);
+        return raced == null ? created : raced;
+    }
+
+    private static PipeShapeData createConnectionShapes(PipeShapeKey key) {
+        int[] bits = { key.down(), key.up(), key.north(), key.south(), key.west(), key.east() };
+        VoxelShape[] faces = new VoxelShape[6];
+        VoxelShape combined = BOX_CENTER;
+        for (Direction face : Direction.values()) {
+            float distance = Float.intBitsToFloat(bits[face.get3DDataValue()]);
+            if (distance <= 0) continue;
+
+            VoxelShape connection = BOX_FACES[face.get3DDataValue()];
+            if (distance != 0.25F) {
+                Vec3 center = VecUtil.offset(new Vec3(0.5, 0.5, 0.5), face, 0.25 + (distance / 2));
+                Vec3 radius = VecUtil.replaceValue(new Vec3(0.25, 0.25, 0.25), face.getAxis(), distance / 2);
+                connection = Shapes.create(BoundingBoxUtil.makeFrom(center.subtract(radius), center.add(radius)));
+            }
+            faces[face.get3DDataValue()] = connection;
+            combined = Shapes.or(combined, connection);
+        }
+        return new PipeShapeData(combined, faces);
+    }
+
+    private record PipeShapeKey(int down, int up, int north, int south, int west, int east) {}
+
+    private record PipeShapeData(VoxelShape combined, VoxelShape[] faces) {}
+
     public static final VoxelShape getCachedPipeShape(Direction[] ds, int len) {
     	int index = 0;
     	for(int i = 0;i<len;i++) {

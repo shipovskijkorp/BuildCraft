@@ -33,6 +33,7 @@ import buildcraft.transport.internal.pipe.PipeEventStatement;
 import buildcraft.transport.internal.pipe.PipeFlow;
 import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.lib.misc.BlockUtil;
+import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.InventoryUtil;
 import buildcraft.lib.misc.MessageUtil;
@@ -177,42 +178,64 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
         battery.tick(world, pipe.getHolder().getPipePos());
         if (direction != null) {
             BlockPos offset = pos.offset(direction.getNormal());
+            int offsetHash = offset.hashCode();
+            if (world.getBlockState(offset).isAir()) {
+                if (progress > 0) world.destroyBlockProgress(offsetHash, offset, -1);
+                progress = 0;
+                return;
+            }
             if (!AutomationPermissionUtil.mayBlock(
                 world, pos, offset, pipe.getHolder().getOwner(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
                 WorldOperationKind.BLOCK_BREAK, OperationMode.SIMULATE
             )) {
-                if (progress > 0) {
-                    world.destroyBlockProgress(offset.hashCode(), offset, -1);
-                }
+                if (progress > 0) world.destroyBlockProgress(offsetHash, offset, -1);
                 progress = 0;
                 return;
             }
+
+            // Do the loader/protection preflight before spending the first micro-MJ on this target.
+            // The final break still performs its own event check, so protection changes during charging remain safe.
+            if (progress <= 0) {
+                var actor = FakePlayerProvider.INSTANCE.getFakePlayer(
+                    (ServerLevel) world, pipe.getHolder().getOwner(), pos
+                );
+                if (!BlockUtil.canBreakBlock((ServerLevel) world, offset, actor)) {
+                    world.destroyBlockProgress(offsetHash, offset, -1);
+                    return;
+                }
+            }
+
             long target = BlockUtil.computeBlockBreakPower(world, offset);
-            if (target > 0) {
-                int offsetHash = offset.hashCode();
-                if (progress < target) {
-                    progress += battery.extractPower(0, Math.min(target - progress, MjAmount.MICRO_MJ_PER_MJ * 10));
-                    if (progress > 0) {
-                        world.destroyBlockProgress(offsetHash, offset, (int) (progress * 9 / target));
-                        
-                    }
-                } else {
-                    if (!AutomationPermissionUtil.mayBlock(
-                        world, pos, offset, pipe.getHolder().getOwner(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
-                        WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
-                    )) {
-                        progress = 0;
-                        world.destroyBlockProgress(offsetHash, offset, -1);
-                        return;
-                    }
-                    BlockUtil.breakBlockAndGetDrops(
-                        (ServerLevel) world,
-                        offset,
-                        new ItemStack(Items.DIAMOND_PICKAXE),
-                        pipe.getHolder().getOwner()
-                    ).ifPresent(stacks -> stacks.forEach(stack -> sendItem(stack, direction)));
+            if (target <= 0) {
+                progress = 0;
+                world.destroyBlockProgress(offsetHash, offset, -1);
+                return;
+            }
+            if (progress < target) {
+                progress += battery.extractPower(0, Math.min(target - progress, MjAmount.MICRO_MJ_PER_MJ * 10));
+                if (progress > 0) {
+                    world.destroyBlockProgress(offsetHash, offset, (int) (progress * 9 / target));
+                }
+            } else {
+                if (!AutomationPermissionUtil.mayBlock(
+                    world, pos, offset, pipe.getHolder().getOwner(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
+                    WorldOperationKind.BLOCK_BREAK, OperationMode.EXECUTE
+                )) {
+                    // Keep the completed work instead of charging the same protected target again next tick.
+                    world.destroyBlockProgress(offsetHash, offset, -1);
+                    return;
+                }
+                var drops = BlockUtil.breakBlockAndGetDrops(
+                    (ServerLevel) world,
+                    offset,
+                    new ItemStack(Items.DIAMOND_PICKAXE),
+                    pipe.getHolder().getOwner()
+                );
+                if (drops.isPresent()) {
+                    drops.get().forEach(stack -> sendItem(stack, direction));
                     progress = 0;
                 }
+                world.destroyBlockProgress(offsetHash, offset, -1);
             }
         } else {
             progress = 0;

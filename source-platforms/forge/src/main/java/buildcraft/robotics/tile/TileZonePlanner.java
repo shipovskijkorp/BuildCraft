@@ -127,21 +127,34 @@ public class TileZonePlanner extends TileBC_Neptune implements IDebuggable, Menu
             return;
         }
 
+        ZonePlan selected = selectArea(currentSelectedArea);
+        MapLocationView view = new MapLocationView(
+            MapLocationKind.ZONE, mapName, Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.of(new ZonePlan(selected)), Optional.empty()
+        );
+        var mapLocations = BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS);
+        ItemStack simulated = input.copy();
+        simulated.setCount(1);
+        if (!mapLocations.write(simulated, view, OperationMode.SIMULATE)) {
+            progress = 0;
+            deltaProgress.setValue(0);
+            return;
+        }
+
+        ItemStack inputBefore = input.copy();
         ItemStack crafted = inv.extractItem(SLOT_INPUT_MAP, 1, false);
         if (crafted.isEmpty()) {
             progress = 0;
             deltaProgress.setValue(0);
             return;
         }
-
-        ZonePlan selected = selectArea(currentSelectedArea);
-        MapLocationView view = new MapLocationView(
-            MapLocationKind.ZONE, mapName, Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.of(new ZonePlan(selected)), Optional.empty()
-        );
-        if (!BuildCraftApi.service(BuildCraftServices.MAP_LOCATIONS).write(crafted, view, OperationMode.EXECUTE)) {
+        if (!mapLocations.write(crafted, view, OperationMode.EXECUTE)) {
+            // A third-party adapter is allowed to reject EXECUTE even after a successful simulation.
+            // Restore the exact pre-transaction input so a failed adapter can never consume the map.
+            inv.setStackInSlot(SLOT_INPUT_MAP, inputBefore);
             progress = 0;
             deltaProgress.setValue(0);
+            setChanged();
             return;
         }
 

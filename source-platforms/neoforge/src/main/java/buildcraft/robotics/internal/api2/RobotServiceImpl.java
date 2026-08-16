@@ -41,6 +41,8 @@ import buildcraft.robotics.internal.legacy.robots.IRobotRegistry;
 import buildcraft.robotics.internal.legacy.robots.ResourceId;
 import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;
 import buildcraft.robotics.internal.legacy.robots.RobotManager;
+import buildcraft.robotics.statements.ActionRobotFilter;
+import buildcraft.robotics.statements.ActionStationProvideItems;
 import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.misc.FakePlayerProvider;
 import buildcraft.transport.internal.IInjectable;
@@ -55,6 +57,7 @@ import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -294,13 +297,18 @@ public final class RobotServiceImpl implements RobotService {
             if (matcher == null || maxCount <= 0) return ItemTransferResult.nothing(Math.max(0, maxCount));
             Container input = station.getItemInput();
             if (input == null) return ItemTransferResult.nothing(maxCount);
-            for (int slot = 0; slot < input.getContainerSize(); slot++) {
+            Direction side = station.getItemInputSide();
+            for (int slot : accessibleSlots(input, side)) {
+                if (slot < 0 || slot >= input.getContainerSize()) continue;
                 ItemStack stack = input.getItem(slot);
                 if (stack == null || stack.isEmpty() || !matcher.matches(stack)) continue;
+                if (!canTake(input, slot, stack, side) || !stationAllowsExtraction(stack, matcher)) continue;
+
                 int amount = Math.min(maxCount, stack.getCount());
                 ItemStack moved;
                 if (mode == OperationMode.EXECUTE) {
                     moved = input.removeItem(slot, amount);
+                    if (moved.isEmpty()) continue;
                     input.setChanged();
                 } else {
                     moved = stack.copy();
@@ -309,6 +317,25 @@ public final class RobotServiceImpl implements RobotService {
                 return ItemTransferResult.ofExtraction(maxCount, moved);
             }
             return ItemTransferResult.nothing(maxCount);
+        }
+
+        private int[] accessibleSlots(Container input, Direction side) {
+            if (input instanceof WorldlyContainer sided && side != null) {
+                return sided.getSlotsForFace(side);
+            }
+            int[] slots = new int[input.getContainerSize()];
+            for (int i = 0; i < slots.length; i++) slots[i] = i;
+            return slots;
+        }
+
+        private boolean canTake(Container input, int slot, ItemStack stack, Direction side) {
+            return !(input instanceof WorldlyContainer sided) || side == null
+                || sided.canTakeItemThroughFace(slot, stack, side);
+        }
+
+        private boolean stationAllowsExtraction(ItemStack stack, ItemMatcher matcher) {
+            return ActionStationProvideItems.canExtractItem(station, stack)
+                && ActionRobotFilter.canInteractWithItem(station, matcher::matches, ActionStationProvideItems.class);
         }
     }
 

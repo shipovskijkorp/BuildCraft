@@ -262,16 +262,16 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         ItemStack stack = trans.extract(filter, count, count, simulate == FluidAction.SIMULATE);
 
         if (stack.isEmpty()) {
-            throw new IllegalStateException(
-                "The transactor " + trans + " returned an empty itemstack from a known good request!"
-            );
+            // Inventories may change between simulation and execution (or expose intentionally dynamic handlers).
+            // Treat that as an ordinary race instead of taking down the server tick.
+            return 0;
         }
 
         if (simulate == FluidAction.EXECUTE) {
             insertItemEvents(stack, colour, EXTRACT_SPEED, from);
         }
 
-        return count;
+        return stack.getCount();
     }
 
     @Override
@@ -518,7 +518,9 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                         IItemTransactor transactor = ItemTransactorHelper.getTransactor(tile, oppositeSide);
                         excess = transactor.insert(excess, false, false);
                     }
-                    excess = fireEventEjectIntoTile(tile, item.side, before, excess);
+                    ItemStack inserted = before.copy();
+                    inserted.shrink(excess.getCount());
+                    excess = fireEventEjectIntoTile(tile, item.side, inserted, excess);
                     break;
                 }
             }

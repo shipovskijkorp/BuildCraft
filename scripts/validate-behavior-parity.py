@@ -881,7 +881,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 63
+    expected_tests = 76
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -910,6 +910,39 @@ def validate_gametest_runtime_guards() -> None:
         ):
             if method not in regression_suite:
                 fail(f"{target}: missing gameplay regression GameTest {method}")
+
+
+
+        fe_adversarial_suite = text(target, "src/gametest/java/buildcraft/gametest/FeMjAdversarialGameTests.java")
+        for method in (
+            "automaticFeCompatibilityConfigActuallyGatesAdapters",
+            "supportedMjPerFeRatiosRemainConservative",
+            "chainedAutomaticConvertersPreserveWholeFeAndMjRemainder",
+        ):
+            if method not in fe_adversarial_suite:
+                fail(f"{target}: missing adversarial FE/MJ GameTest {method}")
+
+        fe_pipe_suite = text(target, "src/gametest/java/buildcraft/transport/pipe/flow/PipeForgeEnergyGameTests.java")
+        for method in (
+            "feReceiverRejectsUndemandedEnergyAndPersistsBoundedBuffer",
+            "bufferlessConsumersCreateDemandOnMultipleSides",
+            "woodenFeExtractionUsesSimulationAndNeverOverfills",
+            "feLimiterModesClampPersistAndDisableTransfer",
+            "feOverflowRequestsAreSaturatedInsteadOfWrapping",
+        ):
+            if method not in fe_pipe_suite:
+                fail(f"{target}: missing FE-pipe adversarial GameTest {method}")
+
+        performance_suite = text(target, "src/gametest/java/buildcraft/gametest/PerformanceSmokeGameTests.java")
+        for method in (
+            "thousandPipeStateRoundTripsStayIdleAndBounded",
+            "largeGateNetworkStateRoundTripsStayLinear",
+            "idleBuilderAndQuarryMachineTicksRemainPowerNeutral",
+            "manyIdleRobotsKeepChargingStateStable",
+            "largeZoneAndChunkStyleRoundTripStaysBounded",
+        ):
+            if method not in performance_suite:
+                fail(f"{target}: missing deterministic performance smoke GameTest {method}")
 
         permission_suite = text(target, "src/gametest/java/buildcraft/gametest/PermissionOwnerGameTests.java")
         for method in (

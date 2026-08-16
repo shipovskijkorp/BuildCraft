@@ -160,6 +160,7 @@ public class ContainerTank extends ContainerBCTile<TileTank> {
 
     @Override
     public boolean clickMenuButton(Player player, int index) {
+        if (player != null && player.isSpectator()) return false;
         return access.evaluate((level, pos) -> {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof TileTank tankTile) {

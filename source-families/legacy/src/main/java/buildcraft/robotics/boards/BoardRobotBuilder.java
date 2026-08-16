@@ -11,6 +11,7 @@ import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.internal.legacy.robots.ResourceIdBlock;
+import buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildResult;
 import buildcraft.builders.snapshot.BlueprintBuilder.RobotBuildTask;
 import buildcraft.builders.tile.IRobotBuilderTarget;
 import buildcraft.builders.tile.TileBuilder;
@@ -28,7 +29,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 
 /**
  * BuildCraft 7 style Builder robot.
@@ -127,10 +127,12 @@ public class BoardRobotBuilder extends RedstoneBoardRobot {
                 return;
             }
 
-            robot.getBattery().extractPower(task.energyCost(), task.energyCost());
-            boolean built = builder.buildRobotTask(robot, task);
+            RobotBuildResult result = builder.buildRobotTaskResult(robot, task);
             currentTasks.remove(0);
-            if (built) {
+            if (result != RobotBuildResult.FAILED) {
+                if (result == RobotBuildResult.COMMITTED) {
+                    robot.getBattery().extractPower(task.energyCost(), task.energyCost());
+                }
                 launchingDelay = currentTasks.isEmpty() ? Math.max(8, task.requirements().size() * 10) : 0;
                 requirementsToLookFor = null;
             } else {
@@ -171,9 +173,7 @@ public class BoardRobotBuilder extends RedstoneBoardRobot {
         builders.sort(Comparator.comparingDouble(builder -> robot.blockPosition().distSqr(builder.getBlockPos())));
 
         for (IRobotBuilderTarget builder : builders) {
-            if (robot.getZoneToWork() != null && !robot.getZoneToWork().contains(Vec3.atCenterOf(builder.getBlockPos()))) {
-                continue;
-            }
+            // The work zone constrains task positions inside BlueprintBuilder, not the Builder/station itself.
             List<RobotBuildTask> tasks = builder.reserveRobotBuildTasks(robot, MAX_CARRIED_ITEMS);
             if (!tasks.isEmpty()) {
                 builderPos = builder.getBlockPos();

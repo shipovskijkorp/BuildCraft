@@ -21,6 +21,8 @@ import buildcraft.lib.misc.data.IdAllocator;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
+import buildcraft.lib.tile.item.StackInsertionFunction;
+import buildcraft.lib.tile.item.StackInsertionFunction.InsertionResult;
 import buildcraft.robotics.BCRoboticsBlocks;
 import buildcraft.robotics.container.ContainerRequester;
 import net.minecraft.core.BlockPos;
@@ -56,6 +58,7 @@ public class TileRequester extends TileBC_Neptune implements RequestProvider, ID
             "inv",
             NB_ITEMS,
             (slot, stack) -> stack.isEmpty() || canSetRealSlot(slot, stack),
+            this::insertOnlyRequestedAmount,
             EnumAccess.BOTH,
             EnumPipePart.VALUES
     );
@@ -75,6 +78,25 @@ public class TileRequester extends TileBC_Neptune implements RequestProvider, ID
         }
         ItemStack template = getRequestTemplate(slot);
         return !template.isEmpty() && StackUtil.isMatchingItemOrList(template, stack);
+    }
+
+    private InsertionResult insertOnlyRequestedAmount(int slot, ItemStack existing, ItemStack offered) {
+        if (offered.isEmpty()) {
+            return new InsertionResult(existing, ItemStack.EMPTY);
+        }
+        ItemStack template = getRequestTemplate(slot);
+        if (template.isEmpty() || !StackUtil.isMatchingItemOrList(template, offered)) {
+            return new InsertionResult(existing, offered);
+        }
+
+        int requested = Math.min(template.getCount(), offered.getMaxStackSize());
+        if (!existing.isEmpty()) {
+            if (!StackUtil.isMatchingItemOrList(existing, offered) || existing.getCount() >= requested) {
+                return new InsertionResult(existing, offered);
+            }
+        }
+        return StackInsertionFunction.getInsertionFunction(requested)
+                .modifyForInsertion(slot, existing, offered);
     }
 
     public void setRequest(int index, ItemStack stack) {

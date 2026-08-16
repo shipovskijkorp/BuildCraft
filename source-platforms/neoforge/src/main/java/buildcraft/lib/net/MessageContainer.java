@@ -92,6 +92,9 @@ public class MessageContainer {
                     : LogicalSide.SERVER;
                 if (side == LogicalSide.SERVER && player != null && player.containerMenu.containerId == id
                     && player.containerMenu instanceof MenuBC_Neptune container) {
+                    if (player.isSpectator()) {
+                        return;
+                    }
                     if (!container.stillValid(player) || !container.getIdAllocator().isAllocated(message.msgId)) {
                         return;
                     }
