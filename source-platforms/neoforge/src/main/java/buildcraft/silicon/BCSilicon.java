@@ -43,6 +43,7 @@ import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -73,6 +74,8 @@ public class BCSilicon {
         modEventBus.addListener(BCSilicon::postInit);
         modEventBus.addListener(BCSilicon::gatherData);
         modEventBus.addListener(BCSilicon::registerCapabilities);
+        modEventBus.addListener(BCSiliconConfig::onLoadConfig);
+        modEventBus.addListener(BCSiliconConfig::onReloadConfig);
 
 
         BuildCraftApi.registry(BuildCraftRegistries.FACADE_MATERIAL_ADAPTERS).register(
@@ -80,6 +83,8 @@ public class BCSilicon {
             FacadeStateManager.INSTANCE
         );
 
+        BCSiliconConfig.preInit();
+        modContainer.registerConfig(Type.COMMON, BCSiliconConfig.config);
         BCSiliconStatements.preInit();
         BCSiliconPlugs.preInit();
         BCSiliconBlocks.registry(modEventBus);
@@ -137,13 +142,14 @@ public class BCSilicon {
 
     public static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            BCSiliconConfig.reloadConfig(MODID);
             FacadeStateManager.init();
         });
     }
 
     public static void postInit(FMLLoadCompleteEvent event) {
         event.enqueueWork(() -> {
-            if (BCSiliconItems.PLUG_FACADE_ITEM.isBound()) {
+            if (BCSiliconConfig.enableFacades && BCSiliconItems.PLUG_FACADE_ITEM.isBound()) {
                 FacadeBlockStateInfo state = FacadeStateManager.previewState;
                 if (state != null) {
                     FacadeInstance instance = FacadeInstance.createSingle(state, false);

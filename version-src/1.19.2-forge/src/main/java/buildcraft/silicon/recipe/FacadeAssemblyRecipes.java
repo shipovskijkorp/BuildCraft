@@ -24,6 +24,7 @@ import buildcraft.lib.recipe.AssemblyRecipeBasic;
 import buildcraft.lib.recipe.ChangingItemStack;
 import buildcraft.lib.recipe.ChangingObject;
 import buildcraft.lib.recipe.IRecipeViewable;
+import buildcraft.silicon.BCSiliconConfig;
 import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.BCSiliconRecipes;
 import buildcraft.silicon.item.ItemPluggableFacade;
@@ -66,8 +67,11 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
     @Override
     public ChangingItemStack[] getRecipeInputs() {
+        if (!BCSiliconConfig.enableFacades) {
+            return new ChangingItemStack[0];
+        }
         ChangingItemStack[] inputs = new ChangingItemStack[2];
-        inputs[0] = new ChangingItemStack(baseRequirementStack());
+        inputs[0] = new ChangingItemStack(baseRequirementStack());//TODO
         NonNullList<ItemStack> list = NonNullList.create();
         for (FacadeBlockStateInfo info : FacadeStateManager.validFacadeStates.values()) {
             if (info.isVisible) {
@@ -82,6 +86,9 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
     @Override
     public ChangingItemStack getRecipeOutputs() {
+        if (!BCSiliconConfig.enableFacades) {
+            return new ChangingItemStack(NonNullList.<ItemStack>create());
+        }
         NonNullList<ItemStack> list = NonNullList.create();
         for (FacadeBlockStateInfo info : FacadeStateManager.validFacadeStates.values()) {
             if (info.isVisible) {
@@ -101,6 +108,9 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
     @Override
     public Set<ItemStack> getOutputs(IItemHandlerModifiable inputs) {
+        if (!BCSiliconConfig.enableFacades) {
+            return Collections.emptySet();
+        }
         if (!StackUtil.contains(baseRequirementStack(), inputs)) {
             return Collections.emptySet();
         }
@@ -136,6 +146,9 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
     @Override
     public Set<IngredientStack> getInputsFor(@Nonnull ItemStack output) {
+        if (!BCSiliconConfig.enableFacades) {
+            return Collections.emptySet();
+        }
         FacadePhasedState state = ItemPluggableFacade.getStates(output).getCurrentStateForStack();
         ItemStack stateRequirement = state.stateInfo.requiredStack;
         IngredientStack ingredientType = new IngredientStack(Ingredient.of(stateRequirement));
@@ -156,6 +169,9 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
     @Override
     public ItemStack getResultItem() {
+        if (!BCSiliconConfig.enableFacades) {
+            return ItemStack.EMPTY;
+        }
         return FacadeStateManager.validFacadeStates.values().stream()
                 .filter(info -> info.isVisible && !info.requiredStack.isEmpty())
                 .findFirst()

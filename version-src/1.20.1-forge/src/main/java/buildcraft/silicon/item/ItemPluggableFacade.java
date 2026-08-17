@@ -19,6 +19,7 @@ import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.SoundUtil;
 import buildcraft.lib.misc.StackUtil;
+import buildcraft.silicon.BCSiliconConfig;
 import buildcraft.silicon.BCSiliconPlugs;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeInstance;
@@ -85,6 +86,9 @@ public class ItemPluggableFacade extends Item implements IItemPluggable, ICreati
     @Override
     public PipePluggable onPlace(@Nonnull ItemStack stack, IPipeHolder holder, Direction side, Player player,
         InteractionHand hand) {
+        if (!BCSiliconConfig.enableFacades) {
+            return PipePluggable.EMPTY;
+        }
         FacadeInstance fullState = getStates(stack);
         SoundUtil.playBlockPlace(holder.getPipeWorld(), holder.getPipePos(), fullState.phasedStates[0].stateInfo.state);
         return new PluggableFacade(BCSiliconPlugs.facade, holder, side, fullState);
@@ -94,6 +98,9 @@ public class ItemPluggableFacade extends Item implements IItemPluggable, ICreati
 
     @Override
     public void addCreativeTabItems(Consumer<ItemStack> output) {
+        if (!BCSiliconConfig.enableFacades) {
+            return;
+        }
 		// Add a single phased facade as a default
         // check if the data is present as we only process in post-init
         FacadeBlockStateInfo stone = FacadeStateManager.getInfoForBlock(Blocks.STONE);

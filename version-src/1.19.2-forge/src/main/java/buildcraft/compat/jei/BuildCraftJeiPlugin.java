@@ -45,6 +45,7 @@ import buildcraft.robotics.item.ItemRedstoneBoard;
 import buildcraft.robotics.item.ItemRobot;
 import buildcraft.silicon.BCSiliconGuis;
 import buildcraft.silicon.BCSiliconItems;
+import buildcraft.silicon.BCSiliconConfig;
 import buildcraft.silicon.BCSiliconRecipes;
 import buildcraft.silicon.container.ContainerAssemblyTable;
 import buildcraft.silicon.gate.EnumGateMaterial;
@@ -188,7 +189,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         if (level != null) {
             List<AssemblyRecipeBasic> assemblyRecipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(BCSiliconRecipes.ASSEMBLY_TYPE.get()));
             boolean hadFacadeRecipe = assemblyRecipes.removeIf(FacadeAssemblyRecipes.class::isInstance);
-            if (hadFacadeRecipe) {
+            if (hadFacadeRecipe && BCSiliconConfig.enableFacades) {
                 assemblyRecipes.add(FacadeAssemblyJeiRecipe.create());
             }
             assemblyRecipes = groupAssemblyRecipes(assemblyRecipes);

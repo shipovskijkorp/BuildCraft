@@ -26,6 +26,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -43,12 +45,16 @@ public class BCSilicon {
     	modEventBus.addListener(BCSilicon::commonSetup);
     	modEventBus.addListener(BCSilicon::postInit);
     	modEventBus.addListener(BCSilicon::gatherData);
+	modEventBus.addListener(BCSiliconConfig::onLoadConfig);
+	modEventBus.addListener(BCSiliconConfig::onReloadConfig);
 
         BuildCraftApi.registry(BuildCraftRegistries.FACADE_MATERIAL_ADAPTERS).register(
             java.util.Objects.requireNonNull(net.minecraft.resources.ResourceLocation.tryParse("buildcraft:facade_materials/builtin")),
             FacadeStateManager.INSTANCE
         );
 
+        BCSiliconConfig.preInit();
+        ModLoadingContext.get().registerConfig(Type.COMMON, BCSiliconConfig.config);
         BCSiliconStatements.preInit();
         BCSiliconPlugs.preInit();
         BCSiliconBlocks.registry(modEventBus);
@@ -63,11 +69,12 @@ public class BCSilicon {
     }
 
     public static void commonSetup(FMLCommonSetupEvent evt) {
+            BCSiliconConfig.reloadConfig(MODID);
             FacadeStateManager.init();
     }
 
     public static void postInit(FMLLoadCompleteEvent evt) {
-        if (BCSiliconItems.PLUG_FACADE_ITEM.isPresent()) {
+        if (BCSiliconConfig.enableFacades && BCSiliconItems.PLUG_FACADE_ITEM.isPresent()) {
             FacadeBlockStateInfo state = FacadeStateManager.previewState;
             if (state != null) {
                 FacadeInstance inst = FacadeInstance.createSingle(state, false);

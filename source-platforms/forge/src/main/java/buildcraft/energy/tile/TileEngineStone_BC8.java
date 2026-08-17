@@ -16,6 +16,7 @@ import buildcraft.lib.internal.enums.EnumPowerStage;
 import buildcraft.lib.internal.mj.IMjConnector;
 import buildcraft.lib.internal.properties.BuildCraftProperties;
 import buildcraft.energy.BCEnergyBlocks;
+import buildcraft.energy.BCEnergyConfig;
 import buildcraft.energy.menu.ContainerEngineStone_BC8;
 import buildcraft.lib.delta.DeltaInt;
 import buildcraft.lib.delta.DeltaManager.EnumNetworkVisibility;
@@ -197,6 +198,11 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements MenuProvi
     @Override
     public long getMaxPower() {
         return 1000 * MjAmount.MICRO_MJ_PER_MJ;
+    }
+
+    @Override
+    protected boolean shouldExplodeOnOverheat() {
+        return BCEnergyConfig.enableStirlingEngineExplosion;
     }
 
     @Override

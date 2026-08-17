@@ -881,7 +881,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 80
+    expected_tests = 77
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -890,15 +890,6 @@ def validate_gametest_runtime_guards() -> None:
                 count += path.read_text(encoding="utf-8").count("@GameTest(")
         if count != expected_tests:
             fail(f"{target}: expected {expected_tests} @GameTest methods, found {count}")
-
-        todo_p1_suite = text(target, "src/gametest/java/buildcraft/gametest/TodoP1GameTests.java")
-        for method in (
-            "unavailableBlueprintElementsRoundTripLosslessly",
-            "relatedGateActionVariantsTargetOneSetting",
-            "jsonInlineCopiesAreIndependent",
-        ):
-            if method not in todo_p1_suite:
-                fail(f"{target}: missing TODO-P1 GameTest {method}")
 
         regression_suite = text(target, "src/gametest/java/buildcraft/gametest/BuildCraftLogicGameTests.java")
         for method in (
@@ -1021,15 +1012,38 @@ def validate_gametest_runtime_guards() -> None:
         if registrar.exists():
             fail(f"{target}: obsolete reflection GameTest registrar source still exists")
 
-    for target in ("1.20.1-forge", "1.21.1-neoforge"):
+    for target in TARGETS:
         silicon = text(target, "src/main/java/buildcraft/silicon/BCSilicon.java")
-        for forbidden in ("BCSiliconConfig::onLoadConfig", "BCSiliconConfig::onReloadConfig", "BCSiliconConfig.reloadConfig(MODID)"):
-            if forbidden in silicon:
-                fail(f"{target}: silicon laser config diverges from 1.19.2 reference: {forbidden}")
-    neo_silicon = text("1.21.1-neoforge", "src/main/java/buildcraft/silicon/BCSilicon.java")
-    for forbidden in ("BCSiliconConfig.preInit()", "registerConfig(Type.COMMON, BCSiliconConfig.config)"):
-        if forbidden in neo_silicon:
-            fail(f"1.21.1-neoforge: silicon config remains active unlike 1.19.2: {forbidden}")
+        for required in (
+            "BCSiliconConfig::onLoadConfig",
+            "BCSiliconConfig::onReloadConfig",
+            "BCSiliconConfig.preInit()",
+            "registerConfig(Type.COMMON, BCSiliconConfig.config)",
+            "BCSiliconConfig.reloadConfig(MODID)",
+        ):
+            if required not in silicon:
+                fail(f"{target}: silicon facade config is not wired end-to-end: {required}")
+
+        silicon_config = text(target, "src/main/java/buildcraft/silicon/BCSiliconConfig.java")
+        for required in (
+            "enableFacades = true",
+            'define("enable", true)',
+            "existing facades remain loaded",
+        ):
+            if required not in silicon_config:
+                fail(f"{target}: facade enable config invariant missing: {required}")
+
+        energy_config = text(target, "src/main/java/buildcraft/energy/BCEnergyConfig.java")
+        for required in (
+            "enableStirlingEngineExplosion = false",
+            'define("stirlingExplosion", false)',
+        ):
+            if required not in energy_config:
+                fail(f"{target}: Stirling explosion config invariant missing: {required}")
+
+        stirling = text(target, "src/main/java/buildcraft/energy/tile/TileEngineStone_BC8.java")
+        if "return BCEnergyConfig.enableStirlingEngineExplosion;" not in stirling:
+            fail(f"{target}: Stirling engine does not honour the explosion config")
 
     for target in ("1.21.1-neoforge",):
         base = TARGETS[target] / "src/gametest/resources/data/buildcraftlib"

@@ -23,6 +23,7 @@ public class BCEnergyConfig {
     public static boolean enableOilSpouts = true;
     public static boolean enableOilBurn = true;
     public static boolean oilIsSticky;
+    public static boolean enableStirlingEngineExplosion = false;
 
     public static int smallSpoutMinHeight = 6;
     public static int smallSpoutMaxHeight = 12;
@@ -46,6 +47,7 @@ public class BCEnergyConfig {
     private static BooleanValue propEnableOilSpouts;
     private static BooleanValue propEnableOilBurn;
     private static BooleanValue propOilIsSticky;
+    private static BooleanValue propEnableStirlingEngineExplosion;
 
     private static IntValue propSmallSpoutMinHeight;
     private static IntValue propSmallSpoutMaxHeight;
@@ -59,6 +61,14 @@ public class BCEnergyConfig {
 
     public static void preInit() {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+
+        builder.push("engines");
+
+        propEnableStirlingEngineExplosion = builder.comment(
+            "Whether Stirling Engines explode when they overheat."
+        ).define("stirlingExplosion", false);
+
+        builder.pop();
 
         builder.push("worldgen.oil");
 
@@ -132,6 +142,7 @@ public class BCEnergyConfig {
         enableOilSpouts = propEnableOilSpouts.get();
         enableOilBurn = propEnableOilBurn.get();
         oilIsSticky = propOilIsSticky.get();
+        enableStirlingEngineExplosion = propEnableStirlingEngineExplosion.get();
 
         int configuredSmallMin = propSmallSpoutMinHeight.get();
         int configuredSmallMax = propSmallSpoutMaxHeight.get();

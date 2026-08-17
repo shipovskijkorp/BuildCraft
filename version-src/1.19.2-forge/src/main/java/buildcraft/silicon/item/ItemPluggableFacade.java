@@ -18,6 +18,7 @@ import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.SoundUtil;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.silicon.BCSilicon;
+import buildcraft.silicon.BCSiliconConfig;
 import buildcraft.silicon.BCSiliconPlugs;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeInstance;
@@ -86,6 +87,9 @@ public class ItemPluggableFacade extends Item implements IItemPluggable {
     @Override
     public PipePluggable onPlace(@Nonnull ItemStack stack, IPipeHolder holder, Direction side, Player player,
         InteractionHand hand) {
+        if (!BCSiliconConfig.enableFacades) {
+            return PipePluggable.EMPTY;
+        }
         FacadeInstance fullState = getStates(stack);
         SoundUtil.playBlockPlace(holder.getPipeWorld(), holder.getPipePos(), fullState.phasedStates[0].stateInfo.state);
         return new PluggableFacade(BCSiliconPlugs.facade, holder, side, fullState);
@@ -95,6 +99,9 @@ public class ItemPluggableFacade extends Item implements IItemPluggable {
 
     @Override
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> subItems) {
+		if (!BCSiliconConfig.enableFacades) {
+			return;
+		}
     	if(!this.allowedIn(tab))
     		return;
 		// Add a single phased facade as a default

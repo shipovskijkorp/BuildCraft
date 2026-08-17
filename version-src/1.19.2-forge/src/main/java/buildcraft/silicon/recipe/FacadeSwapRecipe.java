@@ -10,6 +10,7 @@ import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.recipe.ChangingItemStack;
 import buildcraft.lib.recipe.IRecipeViewable;
 import buildcraft.silicon.BCSilicon;
+import buildcraft.silicon.BCSiliconConfig;
 import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.item.ItemPluggableFacade;
 import buildcraft.silicon.plug.FacadeBlockStateInfo;
@@ -61,11 +62,17 @@ public enum FacadeSwapRecipe implements Recipe<CraftingContainer>, IRecipeViewab
 
     @Override
     public boolean matches(CraftingContainer inv, Level world) {
+        if (!BCSiliconConfig.enableFacades) {
+            return false;
+        }
         return !assemble(inv).isEmpty();
     }
 
     @Override
     public ItemStack assemble(CraftingContainer inv) {
+        if (!BCSiliconConfig.enableFacades) {
+            return StackUtil.EMPTY;
+        }
         ItemStack stackIn = StackUtil.EMPTY;
         for (int s = 0; s < inv.getContainerSize(); s++) {
             ItemStack stack = inv.getItem(s);
@@ -92,6 +99,9 @@ public enum FacadeSwapRecipe implements Recipe<CraftingContainer>, IRecipeViewab
 
     @Override
     public ChangingItemStack[] getRecipeInputs() {
+        if (!BCSiliconConfig.enableFacades) {
+            return new ChangingItemStack[0];
+        }
         if (INPUTS[0] == null) {
             genRecipes();
         }
@@ -100,6 +110,9 @@ public enum FacadeSwapRecipe implements Recipe<CraftingContainer>, IRecipeViewab
 
     @Override
     public ChangingItemStack getRecipeOutputs() {
+        if (!BCSiliconConfig.enableFacades) {
+            return new ChangingItemStack(net.minecraft.core.NonNullList.<ItemStack>create());
+        }
         if (OUTPUTS == null) {
             genRecipes();
         }

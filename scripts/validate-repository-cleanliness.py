@@ -72,8 +72,6 @@ for source_root in SOURCE_ROOTS:
             errors.append(f"temporary '$' Java source remains: {path.relative_to(ROOT)}")
         if path.name == "BCMenuBase_Neptune.java":
             errors.append(f"superseded menu base remains: {path.relative_to(ROOT)}")
-        if path.name == "BCSiliconConfig.java":
-            errors.append(f"unregistered silicon config stub remains: {path.relative_to(ROOT)}")
         if path.name == "ItemGoggles.java":
             errors.append(f"unregistered robot-goggles implementation remains: {path.relative_to(ROOT)}")
 

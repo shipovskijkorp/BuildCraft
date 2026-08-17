@@ -98,6 +98,9 @@ public class BCSiliconItems {
     }
 
     public static List<ItemStack> getFacadeTabItems() {
+        if (!BCSiliconConfig.enableFacades) {
+            return List.of();
+        }
         List<ItemStack> items = new ArrayList<>();
         CreativeTabManager.addItemVariants(PLUG_FACADE_ITEM.get(), items::add);
         return items;
