@@ -40,45 +40,41 @@ public class TileAutoWorkbenchItems extends TileAutoWorkbenchBase implements Men
 
 	@Override
 	public int getContainerSize() {
-		return 10;
+		// This Container view exists for vanilla/robotics extraction compatibility. Phantom
+		// blueprint/material-filter slots are internal configuration and must never be exposed
+		// as real inventory contents. The sided item capability likewise exposes only result
+		// extraction and material insertion.
+		return 1;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return invMaterialFilter.isEmpty() && invResult.getStackInSlot(0).isEmpty();
+		return invResult.getStackInSlot(0).isEmpty();
 	}
 
 	@Override
 	public ItemStack getItem(int index) {
-		if(index == 0)
-			return invResult.getStackInSlot(0);
-		return invMaterialFilter.getStackInSlot(index-1);
+		return index == 0 ? invResult.getStackInSlot(0) : ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack removeItem(int index, int num) {
-		if(index == 0)
-			return invResult.extractItem(0, num, false);
-		return invMaterialFilter.extractItem(index-1, num, false);
+		return index == 0 ? invResult.extractItem(0, num, false) : ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack removeItemNoUpdate(int index) {
-		if(index == 0)
-			return invResult.extractItem(0, 64, false);
-		return invMaterialFilter.extractItem(index-1, 64, false);
+		return index == 0 ? invResult.extractItem(0, 64, false) : ItemStack.EMPTY;
 	}
 
 	@Override
 	public void setItem(int index, ItemStack item) {
-		if(index == 0)
-			return;
-		invMaterialFilter.setStackInSlot(index-1, item);
+		// Output-only Container facade: insertion is intentionally rejected.
 	}
 
 	@Override
 	public boolean canPlaceItem(int index, ItemStack item) {
-		return index == 0 ? false : true;
+		return false;
 	}
 
 	@Override

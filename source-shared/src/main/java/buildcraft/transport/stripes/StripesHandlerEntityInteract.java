@@ -14,7 +14,6 @@ import buildcraft.api.v2.automation.StripesOutput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +35,7 @@ public enum StripesHandlerEntityInteract {
         );
         Collections.shuffle(entities);
         for (LivingEntity entity : entities) {
-            if (player.interactOn(entity, InteractionHand.MAIN_HAND) == InteractionResult.SUCCESS) {
+            if (player.interactOn(entity, InteractionHand.MAIN_HAND).consumesAction()) {
                 return true;
             }
         }
