@@ -1,5 +1,8 @@
 package buildcraft.robotics.ai;
 
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
+import buildcraft.robotics.internal.api2.RobotAutomationSupport;
 import buildcraft.robotics.internal.legacy.robots.AIRobot;
 import buildcraft.robotics.internal.legacy.robots.EntityRobotBase;
 import buildcraft.robotics.entity.EntityRobot;
@@ -48,6 +51,13 @@ public class AIRobotAttack extends AIRobot {
 
         if (delay > ATTACK_DELAY_TICKS) {
             delay = 0;
+            if (!RobotAutomationSupport.permitsEntity(
+                robot, robot.getCommandSenderWorld(), target, WorldOperationKind.ENTITY_ATTACK, OperationMode.EXECUTE
+            )) {
+                setSuccess(false);
+                terminate();
+                return;
+            }
             if (robot instanceof EntityRobot entityRobot) {
                 entityRobot.attackTargetEntityWithCurrentItem(target);
             }

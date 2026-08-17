@@ -38,6 +38,7 @@ public class GlobalSavedDataSnapshots {
     private static final String SNAPSHOT_FILE_EXTENSION = ".bcnbt";
     private static final Map<LogicalSide, GlobalSavedDataSnapshots> INSTANCES = new EnumMap<>(LogicalSide.class);
     private final LoadingCache<Snapshot.Key, Optional<Snapshot>> snapshotsCache = CacheBuilder.newBuilder()
+        .maximumSize(512)
         .expireAfterAccess(10, TimeUnit.MINUTES)
         .build(CacheLoader.from(key -> Optional.ofNullable(readSnapshot(key)).map(Pair::getLeft)));
     private final SingleCache<List<Snapshot.Key>> listCache = new SingleCache<>(
@@ -77,23 +78,19 @@ public class GlobalSavedDataSnapshots {
     }
 
     private Pair<Snapshot, File> readSnapshot(Snapshot.Key key) {
-        File[] files = snapshotsFile.listFiles();
-        if (files != null) {
-            for (File snapshotFile : files) {
-                if (snapshotFile.getName().startsWith(key.toString()) &&
-                    snapshotFile.getName().endsWith(SNAPSHOT_FILE_EXTENSION)) {
-                    try (FileInputStream fileInputStream = new FileInputStream(snapshotFile)) {
-                        Snapshot snapshot = Snapshot.readFromNBT(NbtSquisher.expand(fileInputStream));
-                        if (Objects.equals(snapshot.key, key)) {
-                            return Pair.of(snapshot, snapshotFile);
-                        }
-                    } catch (IOException e) {
-                        buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, e);
-                    }
-                }
-            }
+        // Snapshot filenames are already keyed by the digest. Do not scan the complete directory for
+        // every cache miss: a malicious client can choose arbitrary valid hashes.
+        File snapshotFile = new File(snapshotsFile, key.toString() + SNAPSHOT_FILE_EXTENSION);
+        if (!snapshotFile.isFile()) {
+            return null;
         }
-        return null;
+        try (FileInputStream fileInputStream = new FileInputStream(snapshotFile)) {
+            Snapshot snapshot = Snapshot.readFromNBT(NbtSquisher.expand(fileInputStream));
+            return Objects.equals(snapshot.key, key) ? Pair.of(snapshot, snapshotFile) : null;
+        } catch (IOException e) {
+            buildcraft.lib.internal.debug.BCLog.logger.warn("Failed to read the snapshot " + snapshotFile, e);
+            return null;
+        }
     }
 
     private List<Snapshot.Key> readList() {

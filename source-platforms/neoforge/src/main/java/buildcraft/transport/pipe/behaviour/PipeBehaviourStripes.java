@@ -224,7 +224,12 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
         }
         battery.tick(world, pipe.getHolder().getPipePos());
         if (direction != null) {
-            BlockPos offset = pos.offset(direction.getNormal());
+            var blockPlayer = FakePlayerProvider.INSTANCE.getFakePlayer((ServerLevel) world, pipe.getHolder().getOwner(), pos);
+            if (StripesRegistry.INSTANCE.handleBlock(world, pos, direction, blockPlayer, this)) {
+                resetProgress();
+                return;
+            }
+            BlockPos offset = pos.relative(direction);
             int offsetHash = offset.hashCode();
             BlockState targetState = world.getBlockState(offset);
             if (progress > 0 && !matchesProgressTarget(offset, targetState)) {

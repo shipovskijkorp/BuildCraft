@@ -9,7 +9,10 @@ package buildcraft.transport.stripes;
 import java.util.Collections;
 import java.util.List;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.automation.StripesOutput;
+import buildcraft.api.v2.permission.WorldOperationKind;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 import buildcraft.lib.misc.StackUtil;
 
 import net.minecraft.core.BlockPos;
@@ -25,12 +28,19 @@ public enum StripesHandlerMinecartDestroy {
     INSTANCE;
 
     public boolean handle(Level world, BlockPos pos, Direction direction, Player player, StripesOutput activator) {
-        AABB box = new AABB(pos);
+        BlockPos target = pos.relative(direction);
+        AABB box = new AABB(target);
         List<AbstractMinecart> minecarts = world.getEntitiesOfClass(AbstractMinecart.class, box);
 
         if (minecarts.size() > 0) {
             Collections.shuffle(minecarts);
             AbstractMinecart cart = minecarts.get(0);
+            if (!AutomationPermissionUtil.mayEntity(
+                world, pos, cart, player.getGameProfile(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
+                WorldOperationKind.ENTITY_ATTACK, OperationMode.EXECUTE
+            )) {
+                return false;
+            }
             if (cart instanceof AbstractMinecartContainer) {
                 // good job, Mojang. :<
             	AbstractMinecartContainer container = (AbstractMinecartContainer) cart;

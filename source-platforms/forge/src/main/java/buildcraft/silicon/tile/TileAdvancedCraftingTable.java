@@ -84,7 +84,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
         if (!ItemStack.isSame(before, after)) {
         //?} else {
         /*?
-        if (!ItemStack.isSameItem(before, after)) {
+        if (!ItemStack.isSameItemSameTags(before, after)) {
         ?*/
         //?}
             crafting.onInventoryChange(handler);

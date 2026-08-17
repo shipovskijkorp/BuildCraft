@@ -9,7 +9,10 @@ package buildcraft.transport.stripes;
 import java.util.Collections;
 import java.util.List;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.automation.StripesOutput;
+import buildcraft.api.v2.permission.WorldOperationKind;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,6 +38,12 @@ public enum StripesHandlerEntityInteract {
         );
         Collections.shuffle(entities);
         for (LivingEntity entity : entities) {
+            if (!AutomationPermissionUtil.mayEntity(
+                world, pos, entity, player.getGameProfile(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
+                WorldOperationKind.ENTITY_INTERACT, OperationMode.EXECUTE
+            )) {
+                continue;
+            }
             if (player.interactOn(entity, InteractionHand.MAIN_HAND).consumesAction()) {
                 return true;
             }

@@ -67,6 +67,13 @@ public class AIRobotBreak extends AIRobot {
             return;
         }
 
+        if (!RobotAutomationSupport.permits(new BreakBlockRequest(
+                serverLevel, robot.blockPosition(), pos, RobotAutomationSupport.actor(robot), OperationMode.SIMULATE))) {
+            setSuccess(false);
+            terminate();
+            return;
+        }
+
         if (hardness != 0.0F) {
             blockDamage += speed / hardness / 30.0F;
         } else {
@@ -77,7 +84,7 @@ public class AIRobotBreak extends AIRobot {
             serverLevel.destroyBlockProgress(robot.getId(), pos, -1);
             blockDamage = 0.0F;
             if (!RobotAutomationSupport.permits(new BreakBlockRequest(
-                    serverLevel, robot.blockPosition(), pos, RobotAutomationSupport.actor(robot), OperationMode.SIMULATE))) {
+                    serverLevel, robot.blockPosition(), pos, RobotAutomationSupport.actor(robot), OperationMode.EXECUTE))) {
                 setSuccess(false);
                 terminate();
                 return;

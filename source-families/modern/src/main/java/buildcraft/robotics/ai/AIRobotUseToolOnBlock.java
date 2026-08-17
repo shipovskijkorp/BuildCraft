@@ -72,6 +72,13 @@ public class AIRobotUseToolOnBlock extends AIRobot {
             terminate();
             return;
         }
+        if (!RobotAutomationSupport.permits(new UseItemRequest(
+                serverLevel, robot.blockPosition(), pos, Direction.UP, held,
+                RobotAutomationSupport.actor(robot), OperationMode.EXECUTE))) {
+            setSuccess(false);
+            terminate();
+            return;
+        }
         GameProfile owner = robot instanceof EntityRobot entityRobot
                 ? entityRobot.getOwnerProfile()
                 : FakePlayerProvider.NULL_PROFILE;

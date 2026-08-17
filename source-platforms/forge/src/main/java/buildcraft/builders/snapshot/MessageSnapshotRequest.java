@@ -34,7 +34,7 @@ public class MessageSnapshotRequest{
         NetworkEvent.Context context = ctx.get();
         context.enqueueWork(() -> {
             try {
-                if (context.getSender() == null) {
+                if (context.getSender() == null || !SnapshotRequestLimiter.allow(context.getSender())) {
                     return;
                 }
                 Snapshot snapshot = GlobalSavedDataSnapshots.get(LogicalSide.SERVER).getSnapshot(message.key);

@@ -635,6 +635,18 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     private void updateCollisionBlocksIfNeeded() {
+        // The quarry itself performs one O(N) reconciliation per tick. Collision BlockEntities must
+        // never rebuild this map themselves, otherwise N children each doing O(N) work becomes O(N^2).
+        updateQuarryCollisionBlocks();
+        lastCollisionBlocksDrillPos = drillPos;
+    }
+
+    /**
+     * Rebuilds the collision mask only when the drill position changes. Collision block entities call
+     * shouldKeepCollisionBlock every tick, so rebuilding the complete X/Z/drill map from each child
+     * turns a large quarry into O(N^2) work.
+     */
+    private void ensureCollisionBlocksCurrent() {
         if (!Objects.equals(lastCollisionBlocksDrillPos, drillPos)) {
             updateQuarryCollisionBlocks();
             lastCollisionBlocksDrillPos = drillPos;
@@ -990,7 +1002,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     public boolean shouldKeepCollisionBlock(BlockPos pos) {
-        return buildCollisionBlockMasks().containsKey(pos);
+        ensureCollisionBlocksCurrent();
+        return collisionBlockPoses.contains(pos);
     }
 
     private void updateQuarryCollisionBlocks() {
@@ -1083,6 +1096,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             removeCollisionBlock(pos);
         }
         collisionBlockPoses.clear();
+        lastCollisionBlocksDrillPos = null;
     }
 
     private void removeCollisionBlock(BlockPos pos) {

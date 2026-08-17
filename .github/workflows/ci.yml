@@ -72,6 +72,9 @@ jobs:
       - name: Validate current bug-backlog P0 regressions
         run: python scripts/validate-bugbacklog-p0-regressions.py
 
+      - name: Validate scary P1 regressions
+        run: python scripts/validate-scary-p1-regressions.py
+
       - name: Validate current bug-backlog P1 regressions
         run: python scripts/validate-bugbacklog-p1-regressions.py
 

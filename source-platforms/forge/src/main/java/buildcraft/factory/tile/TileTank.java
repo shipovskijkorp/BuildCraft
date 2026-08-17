@@ -284,7 +284,45 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
      * @param direction The direction that the other tank is, from this tank.
      * @return True if this can connect, false otherwise. */
     public boolean canConnectTo(TileTank other, Direction direction) {
-        return true;
+        if (other == null || direction == null) {
+            return false;
+        }
+        if (direction.getAxis() != Direction.Axis.Y) {
+            return fluidsCanShareColumn(tank.getFluid(), other.tank.getFluid());
+        }
+
+        // An empty bridge tank must not join two already-filled, incompatible column segments.
+        // Inspect each side away from the prospective boundary instead of looking only at the
+        // two immediately adjacent tank blocks.
+        FluidStack thisSide = findColumnFluid(this, direction.getOpposite());
+        FluidStack otherSide = findColumnFluid(other, direction);
+        return thisSide != null && otherSide != null && fluidsCanShareColumn(thisSide, otherSide);
+    }
+
+    private static boolean fluidsCanShareColumn(FluidStack first, FluidStack second) {
+        return first.isEmpty() || second.isEmpty() || FluidCompatRegistry.areEquivalent(first, second);
+    }
+
+    /**
+     * Finds the one fluid represented by a pre-existing half-column. A null return means the
+     * half-column was already internally inconsistent (for example from an older save).
+     */
+    private static FluidStack findColumnFluid(TileTank start, Direction awayFromBoundary) {
+        FluidStack found = FluidStack.EMPTY;
+        TileTank current = start;
+        while (current != null) {
+            FluidStack held = current.tank.getFluid();
+            if (!held.isEmpty()) {
+                if (found.isEmpty()) {
+                    found = held;
+                } else if (!FluidCompatRegistry.areEquivalent(found, held)) {
+                    return null;
+                }
+            }
+            BlockEntity next = current.getNeighbourTile(awayFromBoundary);
+            current = next instanceof TileTank tank ? tank : null;
+        }
+        return found;
     }
 
     /** Helper for {@link #canConnectTo(TileTank, Direction)} that only returns true if both tanks can connect to each

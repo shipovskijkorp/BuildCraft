@@ -111,7 +111,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune
         if (!ItemStack.isSame(before, after)) {
         //?} else {
         /*?
-        if (!ItemStack.isSameItem(before, after)) {
+        if (!ItemStack.isSameItemSameTags(before, after)) {
         ?*/
         //?}
             crafting.onInventoryChange(handler);

@@ -4,7 +4,10 @@
  * should be located as "LICENSE.API" in the BuildCraft source code distribution. */
 package buildcraft.transport.stripes;
 
+import buildcraft.api.v2.OperationMode;
 import buildcraft.api.v2.automation.StripesOutput;
+import buildcraft.api.v2.permission.WorldOperationKind;
+import buildcraft.lib.misc.AutomationPermissionUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,11 +32,19 @@ public enum StripesHandlerPlaceBlock {
         if (!(stack.getItem() instanceof BlockItem)) {
             return false;
         }
-        if (!world.isEmptyBlock(pos.offset(direction.getNormal()))) {
+        BlockPos target = pos.relative(direction);
+        if (!world.isEmptyBlock(target)) {
             return false;
         }
-        stack.getItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND, new BlockHitResult(new Vec3(0.5d,0.5d,0.5d), direction, pos.offset(direction.getNormal()), false))
-        );
-        return true;
+        if (!AutomationPermissionUtil.mayBlock(
+            world, pos, target, player.getGameProfile(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
+            WorldOperationKind.BLOCK_PLACE, OperationMode.EXECUTE
+        )) {
+            return false;
+        }
+        return stack.getItem().useOn(new UseOnContext(
+            player, InteractionHand.MAIN_HAND,
+            new BlockHitResult(Vec3.atCenterOf(target), direction, target, false)
+        )).consumesAction();
     }
 }

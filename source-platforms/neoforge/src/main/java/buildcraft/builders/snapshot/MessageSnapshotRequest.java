@@ -35,7 +35,7 @@ public class MessageSnapshotRequest{
         IPayloadContext context = ctx.get();
         context.enqueueWork(() -> {
             try {
-                if (!(context.player() instanceof ServerPlayer player)) {
+                if (!(context.player() instanceof ServerPlayer player) || !SnapshotRequestLimiter.allow(player)) {
                     return;
                 }
                 Snapshot snapshot = GlobalSavedDataSnapshots.get(LogicalSide.SERVER).getSnapshot(message.key);

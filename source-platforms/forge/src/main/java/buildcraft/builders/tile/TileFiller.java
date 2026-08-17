@@ -122,6 +122,12 @@ public class TileFiller extends TileBC_Neptune
     private BuildingInfo buildingInfo;
     public TemplateBuilder builder = new FillerTemplateBuilder(this);
 
+    // BlockEntity NBT is read before the level/volume-box registry is guaranteed to be available.
+    // Defer state that depends on a valid BuildingInfo until onLoad().
+    private CompoundTag pendingBuilderNbt;
+    private UUID pendingAddonVolumeBoxId;
+    private EnumAddonSlot pendingAddonSlot;
+
     public TileFiller(BlockPos pos, BlockState state) {
     	super(BCBuildersBlocks.FILLER_TILE_BC8.get(), pos, state);
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(battery)));
@@ -437,10 +443,17 @@ public class TileFiller extends TileBC_Neptune
         if (addon != null) {
             nbt.putUUID("addonVolumeBoxId", addon.volumeBox.id);
             nbt.put("addonSlot", NBTUtilBC.writeEnum(addon.getSlot()));
+        } else if (pendingAddonVolumeBoxId != null && pendingAddonSlot != null) {
+            nbt.putUUID("addonVolumeBoxId", pendingAddonVolumeBoxId);
+            nbt.put("addonSlot", NBTUtilBC.writeEnum(pendingAddonSlot));
         }
         nbt.putBoolean("markerBox", markerBox);
         nbt.put("patternStatement", patternStatement.writeToNbt());
-        Optional.ofNullable(getBuilder()).ifPresent(builder -> nbt.put("builder", builder.serializeNBT()));
+        if (pendingBuilderNbt != null) {
+            nbt.put("builder", pendingBuilderNbt.copy());
+        } else {
+            Optional.ofNullable(getBuilder()).ifPresent(builder -> nbt.put("builder", builder.serializeNBT()));
+        }
 	}
 
 	@Override
@@ -453,23 +466,39 @@ public class TileFiller extends TileBC_Neptune
         lockedTicks = nbt.getByte("lockedTicks");
         mode = Optional.ofNullable(NBTUtilBC.readEnum(nbt.get("mode"), Mode.class)).orElse(Mode.ON);
         box.initialize(nbt.getCompound("box"));
-        if (nbt.contains("addonSlot") && nbt.contains("addonVolumeBoxId") && level != null) {
-            VolumeBox volumeBox = WorldSavedDataVolumeBoxes.get(level).getVolumeBoxFromId(nbt.getUUID("addonVolumeBoxId"));
-            addon = getFillerAddon(volumeBox, NBTUtilBC.readEnum(nbt.get("addonSlot"), EnumAddonSlot.class));
+        if (nbt.contains("addonSlot") && nbt.contains("addonVolumeBoxId")) {
+            pendingAddonVolumeBoxId = nbt.getUUID("addonVolumeBoxId");
+            pendingAddonSlot = NBTUtilBC.readEnum(nbt.get("addonSlot"), EnumAddonSlot.class);
         } else {
-            addon = null;
+            pendingAddonVolumeBoxId = null;
+            pendingAddonSlot = null;
         }
+        addon = null;
         markerBox = nbt.getBoolean("markerBox");
         patternStatement.readFromNbt(nbt.getCompound("patternStatement"));
-        if (nbt.contains("builder")) {
-            Optional.ofNullable(getBuilder()).ifPresent(builder -> builder.deserializeNBT(nbt.getCompound("builder")));
-        }
+        pendingBuilderNbt = nbt.contains("builder") ? nbt.getCompound("builder").copy() : null;
 	}
 	
     @Override
     public void onLoad() {
         super.onLoad();
+        if (level != null && pendingAddonVolumeBoxId != null && pendingAddonSlot != null) {
+            VolumeBox volumeBox = WorldSavedDataVolumeBoxes.get(level).getVolumeBoxFromId(pendingAddonVolumeBoxId);
+            addon = getFillerAddon(volumeBox, pendingAddonSlot);
+        }
+        pendingAddonVolumeBoxId = null;
+        pendingAddonSlot = null;
+
+        // BuildingInfo must exist before SnapshotBuilder can restore/cancel saved tasks and refund
+        // their reserved items/MJ. Doing this in load() silently skipped the whole rollback path.
         updateBuildingInfo();
+        if (pendingBuilderNbt != null) {
+            TemplateBuilder activeBuilder = getBuilder();
+            if (activeBuilder != null) {
+                activeBuilder.deserializeNBT(pendingBuilderNbt);
+            }
+            pendingBuilderNbt = null;
+        }
     }
 
     // Rendering

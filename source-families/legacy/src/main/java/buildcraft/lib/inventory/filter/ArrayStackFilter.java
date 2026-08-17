@@ -38,7 +38,7 @@ public class ArrayStackFilter implements IStackFilter {
             if (ItemStack.isSame(s, stack)) {
             //?} else {
             /*?
-            if (ItemStack.isSameItem(s, stack)) {
+            if (ItemStack.isSameItemSameTags(s, stack)) {
             ?*/
             //?}
                 return true;

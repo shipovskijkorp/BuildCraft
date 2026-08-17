@@ -113,7 +113,9 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     private int penaltyCooling = 0;
     private boolean lastPowered = false;
     private double burnTime;
+    /** Fractional residue below one mB, plus any legacy hidden backlog loaded from older saves. */
     private double residueAmount = 0;
+    private boolean residueBlocked;
     private FuelProfile currentFuel;
     
     public TileEngineIron_BC8(BlockPos pos, BlockState state) {
@@ -229,7 +231,55 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
     @Override
     public boolean isBurning() {
         FluidStack fuel = tankFuel.getFluid();
-        return fuel != null && fuel.getAmount() > 0 && penaltyCooling == 0 && isRedstonePowered;
+        return fuel != null && fuel.getAmount() > 0 && penaltyCooling == 0 && isRedstonePowered && !residueBlocked;
+    }
+
+    /** Flushes any whole-mB residue debt into the visible tank. */
+    private boolean flushPendingResidue() {
+        if (currentFuel == null || !currentFuel.hasResidue() || residueAmount < 1.0D) {
+            return residueAmount < 1.0D;
+        }
+        FluidStack residueFluid = FuelApiBridge.stackOf(currentFuel.residuePerBucket());
+        if (residueFluid.isEmpty()) {
+            residueAmount = 0;
+            return true;
+        }
+        int freeCapacity = Math.max(0, tankResidue.getCapacity() - tankResidue.getFluidAmount());
+        if (freeCapacity <= 0) {
+            return false;
+        }
+        int whole = (int) Math.min((double) freeCapacity, Math.floor(residueAmount));
+        if (whole <= 0) {
+            return true;
+        }
+        residueFluid.setAmount(whole);
+        int inserted = tankResidue.fill(residueFluid, FluidAction.EXECUTE);
+        residueAmount = Math.max(0.0D, residueAmount - inserted);
+        return residueAmount < 1.0D;
+    }
+
+    /**
+     * Backpressure is checked before another mB of fuel is consumed. New runtime state therefore keeps
+     * residueAmount fractional; older saves with a large hidden debt are blocked until that debt is drained
+     * into the visible residue tank.
+     */
+    private boolean canConsumeFuelWithResidue() {
+        if (currentFuel == null || !currentFuel.hasResidue()) {
+            return true;
+        }
+        if (!flushPendingResidue()) {
+            return false;
+        }
+        double produced = currentFuel.residuePerBucket().amount().milliBuckets() / 1000.0D;
+        if (!(produced > 0.0D) || !Double.isFinite(produced)) {
+            return true;
+        }
+        double pendingAfterNextFuel = residueAmount + produced;
+        int wholeResidueNeeded = (int) Math.min(
+            Integer.MAX_VALUE, Math.floor(pendingAfterNextFuel + 1.0E-9D)
+        );
+        int freeCapacity = Math.max(0, tankResidue.getCapacity() - tankResidue.getFluidAmount());
+        return wholeResidueNeeded <= freeCapacity;
     }
 
     @Override
@@ -243,8 +293,10 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
         currentFuel = energyFluids().findFuel(fuelVariant, FuelApiBridge.MATCH_CONTEXT)
             .map(match -> match.profile()).orElse(null);
         if (currentFuel == null) {
+            residueBlocked = false;
             return;
         }
+        residueBlocked = false;
 
         if (penaltyCooling <= 0) {
             if (isRedstonePowered) {
@@ -256,20 +308,16 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements MenuProvid
                     }
                     if (burnTime <= 0) {
                         if (fuel.getAmount() > 0) {
+                            if (!canConsumeFuelWithResidue()) {
+                                residueBlocked = true;
+                                currentOutput = 0;
+                                return;
+                            }
                             fuel.setAmount(fuel.getAmount() - 1);
                             burnTime += currentFuel.burnTicksPerBucket() / 1000.0;
-
-                            // If this fuel produces residue, emit its per-bucket fraction for this consumed mB.
                             if (currentFuel.hasResidue()) {
-                                FluidStack residueFluid = FuelApiBridge.stackOf(currentFuel.residuePerBucket());
-                                residueAmount += currentFuel.residuePerBucket().amount().milliBuckets() / 1000.0;
-                                if (residueAmount >= 1 && !residueFluid.isEmpty()) {
-                                    residueFluid.setAmount(Mth.floor(residueAmount));
-                                    residueAmount -= tankResidue.fill(residueFluid, FluidAction.EXECUTE);
-                                } else if (!residueFluid.isEmpty() && tankResidue.getFluid() == FluidStack.EMPTY) {
-                                    residueFluid.setAmount(0);
-                                    tankResidue.setFluid(residueFluid);
-                                }
+                                residueAmount += currentFuel.residuePerBucket().amount().milliBuckets() / 1000.0D;
+                                flushPendingResidue();
                             }
                         } else {
                             tankFuel.setFluid(null);

@@ -111,7 +111,7 @@ public class AIRobotStripesHandler extends AIRobot implements StripesOutput {
     }
 
     private static boolean workingIsBlockPlacement(ItemStack stack) {
-        return stack.getItem() instanceof IItemPipe && stack.getItem() instanceof BlockItem;
+        return stack.getItem() instanceof BlockItem;
     }
 
     private boolean handleHeldItem(ServerLevel serverLevel, BlockPos target, Direction direction, ItemStack working,
