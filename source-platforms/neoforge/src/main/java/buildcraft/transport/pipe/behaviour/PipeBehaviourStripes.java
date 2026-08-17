@@ -63,7 +63,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
 
     @Nullable
     public Direction direction = null;
-    private int progress;
+    private long progress;
 
     public PipeBehaviourStripes(IPipe pipe) {
         super(pipe);

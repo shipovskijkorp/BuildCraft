@@ -62,7 +62,6 @@ public class ItemWaterGel extends Item {
 
         if (!world.isClientSide) {
             world.setBlockAndUpdate(ray.getBlockPos(), BCFactoryBlocks.WATER_GEL.get().defaultBlockState().setValue(BlockWaterGel.PROP_STAGE, GelStage.SPREAD_0));
-            world.scheduleTick(ray.getBlockPos(), BCFactoryBlocks.WATER_GEL.get(), 200);
 
 
             // EntitySnowball entitysnowball = new EntitySnowball(world, player);

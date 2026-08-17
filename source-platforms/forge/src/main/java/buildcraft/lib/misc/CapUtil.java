@@ -7,7 +7,6 @@
 package buildcraft.lib.misc;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -56,12 +55,11 @@ public class CapUtil {
         return cap;
     }
 
-    /** Attempts to fetch the given capability from the given provider, or returns null if either of those two are
-     * null. */
-    @Nullable
+    /** Attempts to fetch the given capability from the given provider. Missing providers/capabilities are represented
+     * by an empty optional; callers must never have to null-check the LazyOptional itself. */
     public static <T> @NotNull LazyOptional<T> getCapability(ICapabilityProvider provider, Capability<T> capability, Direction facing) {
         if (provider == null || capability == null) {
-            return null;
+            return LazyOptional.empty();
         }
         return provider.getCapability(capability, facing);
     }

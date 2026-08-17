@@ -247,11 +247,9 @@ public class TileRequester extends TileBC_Neptune implements RequestProvider, ID
             ItemStack existing = inv.getStackInSlot(slot);
             if (!existing.isEmpty() && StackUtil.isMatchingItemOrList(template, existing)) {
                 nonEmptySlots++;
-                int max = Math.min(inv.getSlotLimit(slot), existing.getMaxStackSize());
-                if (max <= 0) {
-                    max = 64;
-                }
-                power += (float) existing.getCount() / (float) max;
+                int requested = Math.max(1, template.getCount());
+                int satisfied = Math.min(existing.getCount(), requested);
+                power += (float) satisfied / (float) requested;
             }
         }
 

@@ -67,6 +67,7 @@ import buildcraft.builders.internal.filler.legacy.FillerManager;
 import buildcraft.builders.internal.filler.legacy.IFilledTemplate;
 import buildcraft.builders.internal.filler.legacy.IFillerPatternShape;
 import buildcraft.lib.internal.inventory.IItemTransactor;
+import buildcraft.lib.inventory.ItemTransactorHelper;
 import buildcraft.api.v2.item.ItemTransferResult;
 import buildcraft.api.v2.reload.DefinitionProvenance;
 import buildcraft.api.v2.list.ListMatchType;
@@ -716,6 +717,20 @@ public final class BuildCraftLogicGameTests {
 
 
     @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void itemTransferUsesExecutedSourceAmountWithoutDuplication(GameTestHelper helper) {
+        UnstableMoveSource source = new UnstableMoveSource(8, 3);
+        CountingMoveDestination destination = new CountingMoveDestination();
+
+        int moved = ItemTransactorHelper.moveSingle(source, destination, null, 8, false, false);
+
+        require(helper, moved == 3, "item transfer reported the simulated amount instead of the executed source amount");
+        require(helper, source.apples == 5, "unstable source lost the wrong number of items");
+        require(helper, destination.apples == 3, "destination received items that the source did not execute-extract");
+        require(helper, source.apples + destination.apples == 8, "item transfer duplicated or deleted items across a simulation race");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void builderResourceReservationRollsBackAfterMidTransactionFailure(GameTestHelper helper) {
         FailingSecondExtractionTransactor resources = new FailingSecondExtractionTransactor();
         ProbeBlueprintTile tile = new ProbeBlueprintTile(
@@ -928,6 +943,53 @@ public final class BuildCraftLogicGameTests {
             }
         }
         return null;
+    }
+
+    private static final class UnstableMoveSource implements IItemTransactor {
+        private int apples;
+        private final int executeLimit;
+
+        private UnstableMoveSource(int apples, int executeLimit) {
+            this.apples = apples;
+            this.executeLimit = executeLimit;
+        }
+
+        @Override
+        public ItemStack insert(ItemStack stack, boolean allOrNone, boolean simulate) {
+            if (stack.isEmpty() || stack.getItem() != Items.APPLE) return stack;
+            if (!simulate) apples += stack.getCount();
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack extract(buildcraft.lib.internal.core.IStackFilter filter, int min, int max, boolean simulate) {
+            if (apples <= 0) return ItemStack.EMPTY;
+            int count = Math.min(max, apples);
+            ItemStack candidate = new ItemStack(Items.APPLE, count);
+            if (filter != null && !filter.matches(candidate)) return ItemStack.EMPTY;
+            if (simulate) return candidate;
+
+            // Deliberately model a third-party inventory whose contents changed after simulation.
+            int executed = Math.min(count, executeLimit);
+            apples -= executed;
+            return new ItemStack(Items.APPLE, executed);
+        }
+    }
+
+    private static final class CountingMoveDestination implements IItemTransactor {
+        private int apples;
+
+        @Override
+        public ItemStack insert(ItemStack stack, boolean allOrNone, boolean simulate) {
+            if (stack.isEmpty() || stack.getItem() != Items.APPLE) return stack;
+            if (!simulate) apples += stack.getCount();
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack extract(buildcraft.lib.internal.core.IStackFilter filter, int min, int max, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
     }
 
     private static final class FailingSecondExtractionTransactor implements IItemTransactor {

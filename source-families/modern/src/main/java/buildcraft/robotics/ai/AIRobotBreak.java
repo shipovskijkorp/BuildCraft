@@ -15,7 +15,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -86,15 +85,11 @@ public class AIRobotBreak extends AIRobot {
             GameProfile owner = robot instanceof EntityRobot entityRobot
                     ? entityRobot.getOwnerProfile()
                     : FakePlayerProvider.NULL_PROFILE;
-            Player fakePlayer = BlockUtil.getFakePlayerWithTool(serverLevel, held, owner, pos);
             boolean harvested = BlockUtil.harvestBlock(serverLevel, pos, held, owner);
             if (harvested) {
                 serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
-                if (!held.isEmpty()) {
-                    held.mineBlock(serverLevel, state, pos, fakePlayer);
-                    if (held.isEmpty()) {
-                        robot.setItemInUse(ItemStack.EMPTY);
-                    }
+                if (held.isEmpty()) {
+                    robot.setItemInUse(ItemStack.EMPTY);
                 }
             } else {
                 setSuccess(false);

@@ -69,7 +69,16 @@ public class AIRobotSearchAndGotoBlock extends AIRobot {
 
     @Override
     public boolean canLoadFromNBT() {
+        // A saved instance is self-contained: write-side filtering below guarantees that blockFound has already been
+        // resolved and any delegate is a serializable GotoBlock. This must remain true before loadSelfFromNBT runs.
         return true;
+    }
+
+    @Override
+    public boolean shouldSaveToNBT() {
+        // Before a target is reserved the search predicate only exists as a runtime closure, so the owning board must
+        // recreate this AI after reload. Once blockFound is set, the reservation and GotoBlock can safely be persisted.
+        return blockFound != null;
     }
 
     @Override

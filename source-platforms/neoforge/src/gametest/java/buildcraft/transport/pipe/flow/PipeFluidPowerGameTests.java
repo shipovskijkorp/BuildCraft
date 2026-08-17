@@ -507,6 +507,33 @@ public final class PipeFluidPowerGameTests {
     }
 
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void powerPipeBuffersSurviveNbtRoundTrip(GameTestHelper helper) {
+        TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.cobblePower);
+        PipeFlowPower flow = new PipeFlowPower(pipe);
+        pipe.setFlow(flow);
+        flow.reconfigure();
+
+        long maxPower = PipeApi.getPowerTransferInfo(BCTransportPipes.cobblePower).transferPerTick;
+        long stored = Math.max(1L, maxPower / 3L);
+        long queued = Math.max(1L, maxPower / 4L);
+        flow.getSection(Direction.WEST).internalPower = stored;
+        flow.getSection(Direction.WEST).internalNextPower = queued;
+
+        CompoundTag saved = flow.writeToNbt();
+        PipeFlowPower restored = new PipeFlowPower(pipe, saved);
+        pipe.setFlow(restored);
+        restored.reconfigure();
+
+        require(helper, restored.getSection(Direction.WEST).internalPower == stored,
+            "power pipe lost its current MJ buffer across NBT round-trip");
+        require(helper, restored.getSection(Direction.WEST).internalNextPower == queued,
+            "power pipe lost its queued MJ buffer across NBT round-trip");
+        require(helper, restored.requiresPeriodicSave(),
+            "buffered power pipe did not request periodic persistence");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void powerLimiterModesClampPersistAndDisableTransfer(GameTestHelper helper) {
         long base = PipeApi.getPowerTransferInfo(BCTransportPipes.ironPower).transferPerTick;
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.ironPower);

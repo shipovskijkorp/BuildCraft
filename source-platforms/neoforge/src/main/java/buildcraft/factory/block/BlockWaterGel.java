@@ -172,18 +172,14 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
                         world.destroyBlock(p, true);
                     }
                     world.setBlockAndUpdate(p, nextState);
-                    world.scheduleTick(p, this, rand.nextInt(150) + time);
                 }
                 world.setBlockAndUpdate(pos, nextState);
                 SoundUtil.playBlockPlace(world, pos);
             }
-            world.scheduleTick(pos, this, rand.nextInt(150) + time);
         } else if (stage != next) {
             if (notTouchingWater(world, pos)) {
                 world.setBlockAndUpdate(pos, nextState);
-                world.scheduleTick(pos, this, rand.nextInt(150) + 400);
             } else {
-                world.scheduleTick(pos, this, rand.nextInt(150) + 600);
             }
         }
 	}

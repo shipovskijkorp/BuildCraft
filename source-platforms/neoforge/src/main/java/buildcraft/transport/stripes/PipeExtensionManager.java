@@ -89,6 +89,10 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
             return;
         }
         for (PipeExtensionRequest r : rList) {
+            if (!isCurrentSource(event.getLevel(), r)) {
+                refundStaleRequest(event.getLevel(), r);
+                continue;
+            }
             if (retractionPipeDefs.contains(r.pipeDef)) {
                 retract(event.getLevel(), r);
             } else {
@@ -96,6 +100,17 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
             }
         }
         rList.clear();
+    }
+
+    private boolean isCurrentSource(Level world, PipeExtensionRequest request) {
+        if (!world.hasChunkAt(request.pos)) return false;
+        IPipeHolder holder = CapUtil.getCapability(world, request.pos, PipeApi.CAP_PIPE_HOLDER, null);
+        return holder != null && holder.getPipe() != null && holder.getPipe().getBehaviour() == request.stripes;
+    }
+
+    private void refundStaleRequest(Level world, PipeExtensionRequest request) {
+        BCLog.logger.warn("Discarding stale Stripes pipe-extension request at " + request.pos + " and returning its pipe item");
+        InventoryUtil.drop(world, request.pos, request.stack.copy());
     }
 
     private void retract(Level w, PipeExtensionRequest r) {
@@ -132,9 +147,10 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
         // Fetch owner
         {
             IPipeHolder holder = CapUtil.getCapability(w, r.pos, PipeApi.CAP_PIPE_HOLDER, null);
-            if (stripesTileOld == null || holder == null) {
+            if (stripesTileOld == null || holder == null || holder.getPipe() == null || holder.getPipe().getBehaviour() != r.stripes) {
                 BCLog.logger
-                    .warn("Found an invalid request at " + r.pos + " as " + stripesTileOld + " was not a pipe tile!");
+                    .warn("Found a stale request at " + r.pos + " because its original Stripes pipe no longer exists");
+                refundStaleRequest(w, r);
                 return;
             }
             owner = holder.getOwner();
@@ -225,8 +241,9 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
         // Fetch owner
         {
             IPipeHolder holder = CapUtil.getCapability(w, r.pos, PipeApi.CAP_PIPE_HOLDER, null);
-            if (stripesTileOld == null || holder == null) {
-                BCLog.logger.warn("Found an invalid request at " + r.pos + " as " + stripesTileOld + " was not a pipe tile!");
+            if (stripesTileOld == null || holder == null || holder.getPipe() == null || holder.getPipe().getBehaviour() != r.stripes) {
+                BCLog.logger.warn("Found a stale request at " + r.pos + " because its original Stripes pipe no longer exists");
+                refundStaleRequest(w, r);
                 return;
             }
             owner = holder.getOwner();

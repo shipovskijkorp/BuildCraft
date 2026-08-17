@@ -45,7 +45,7 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
     public static final int NET_LED_STATUS = IDS.allocId("LED_STATUS");
     public static final int NET_WANTED_Y = IDS.allocId("WANTED_Y");
 
-    protected int progress = 0;
+    protected long progress = 0;
     protected BlockPos currentPos = null;
 
     protected int wantedLength = 0;
@@ -182,7 +182,7 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
             nbt.putLong("currentPos", currentPos.asLong());
         }
         nbt.putInt("wantedLength", wantedLength);
-        nbt.putInt("progress", progress);
+        nbt.putLong("progress", progress);
         nbt.put("battery", battery.serializeNBT(registries));
     }
 
@@ -193,7 +193,7 @@ public abstract class TileMiner extends TileBC_Neptune implements IDebuggable {
             currentPos = BlockPos.of(nbt.getLong("currentPos"));
         }
         wantedLength = nbt.getInt("wantedLength");
-        progress = nbt.getInt("progress");
+        progress = Math.max(0L, nbt.getLong("progress"));
         // Legacy save compatibility: older ports stored the MJ battery under "mj_battery".
         if (nbt.contains("mj_battery")) {
             nbt.put("battery", nbt.get("mj_battery"));

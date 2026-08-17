@@ -67,7 +67,7 @@ public class TileIntegrationTable extends TileLaserTableBase implements MenuProv
     public final ItemHandlerSimple invResult = itemManager.addInvHandler(
         "result",
         1,
-        ItemHandlerManager.EnumAccess.INSERT,
+        ItemHandlerManager.EnumAccess.EXTRACT,
         EnumPipePart.VALUES
     );
     public final ItemProvider invOutput = new ItemProvider((i) -> getOutput(), 1);

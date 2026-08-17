@@ -95,13 +95,34 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         for (Direction face : Direction.values()) {
             sections.put(face, new Section(face));
         }
+        CompoundTag energyBuffers = nbt.getCompound("energyBuffers");
+        for (Direction face : Direction.values()) {
+            CompoundTag sectionNbt = energyBuffers.getCompound(Integer.toString(face.ordinal()));
+            Section section = sections.get(face);
+            section.internalPower = Math.max(0L, sectionNbt.getLong("power"));
+            section.internalNextPower = Math.max(0L, sectionNbt.getLong("nextPower"));
+        }
     }
 
     @Override
     public CompoundTag writeToNbt() {
         CompoundTag nbt = super.writeToNbt();
         nbt.putBoolean("isReceiver", isReceiver);
+        CompoundTag energyBuffers = new CompoundTag();
+        for (Direction face : Direction.values()) {
+            Section section = sections.get(face);
+            CompoundTag sectionNbt = new CompoundTag();
+            sectionNbt.putLong("power", Math.max(0L, section.internalPower));
+            sectionNbt.putLong("nextPower", Math.max(0L, section.internalNextPower));
+            energyBuffers.put(Integer.toString(face.ordinal()), sectionNbt);
+        }
+        nbt.put("energyBuffers", energyBuffers);
         return nbt;
+    }
+
+    @Override
+    public boolean requiresPeriodicSave() {
+        return sections.values().stream().anyMatch(section -> section.internalPower > 0 || section.internalNextPower > 0);
     }
 
     @Override

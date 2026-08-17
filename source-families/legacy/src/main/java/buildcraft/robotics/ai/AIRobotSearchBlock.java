@@ -362,7 +362,10 @@ public class AIRobotSearchBlock extends AIRobot {
 
     @Override
     public boolean canLoadFromNBT() {
-        return true;
+        // IBlockFilter is commonly a board method reference/lambda and has no stable serialized form. Persisting this
+        // AI recreates it through the empty constructor with filter == null, which turns a chunk reload into a failed
+        // search. Let the owning board restart the search with its live predicate instead.
+        return false;
     }
 
     @Override

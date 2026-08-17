@@ -178,21 +178,71 @@ public class ItemTransactorHelper {
     }
 
     private static int moveSingle0(IItemTransactor src, IItemTransactor dst, IStackFilter filter, int maxItems, boolean simulateSrc, boolean simulateDst) {
+        if (maxItems <= 0) return 0;
+
         ItemStack potential = src.extract(filter, 1, maxItems, true);
         if (potential.isEmpty()) return 0;
-        ItemStack leftOver = dst.insert(potential, false, simulateDst);
-        int toTake = potential.getCount() - leftOver.getCount();
-        IStackFilter exactFilter = (stack) -> StackUtil.canMerge(stack, potential);
-        ItemStack taken = src.extract(exactFilter, toTake, toTake, simulateSrc);
-        if (taken.getCount() != toTake) {
-            String msg = "One of the two transactors (either src = ";
-            msg += src.getClass() + " or dst = " + dst.getClass() + ")";
-            msg += " didn't respect the movement flags! ( potential = " + potential;
-            msg += ", leftOver = " + leftOver + ", taken = " + taken;
-            msg += ", count = " + toTake + " )";
-            throw new IllegalStateException(msg);
+
+        ItemStack simulatedLeftOver = dst.insert(potential.copy(), false, true);
+        int toTake = potential.getCount() - simulatedLeftOver.getCount();
+        if (toTake <= 0) return 0;
+
+        IStackFilter exactFilter = stack -> StackUtil.canMerge(stack, potential);
+        ItemStack stillAvailable = src.extract(exactFilter, toTake, toTake, true);
+        if (stillAvailable.getCount() != toTake || !StackUtil.canMerge(stillAvailable, potential)) {
+            return 0;
         }
-        return toTake;
+
+        // A transfer is one transaction. Mixed simulation modes cannot be committed safely: executing only the
+        // destination duplicates items, while executing only the source deletes them. Treat either flag as a full
+        // dry-run and report how many items the transaction could move.
+        if (simulateSrc || simulateDst) {
+            return toTake;
+        }
+
+        // Execute source-first. If a mutable/modded destination accepts less than it promised during simulation,
+        // return the remainder to the source instead of leaving a duplicated destination stack behind.
+        ItemStack taken = src.extract(exactFilter, toTake, toTake, false);
+        if (taken.isEmpty() || !StackUtil.canMerge(taken, potential)) {
+            if (!taken.isEmpty()) {
+                rollbackToSource(src, taken, "source returned a different item during extraction");
+            }
+            return 0;
+        }
+
+        ItemStack leftOver;
+        try {
+            leftOver = dst.insert(taken.copy(), false, false);
+        } catch (RuntimeException exception) {
+            rollbackToSource(src, taken, "destination threw while accepting items");
+            buildcraft.lib.internal.debug.BCLog.logger.warn("A destination item transactor threw while BuildCraft was moving items", exception);
+            return 0;
+        }
+
+        int accepted = Math.max(0, taken.getCount() - leftOver.getCount());
+        if (accepted < taken.getCount()) {
+            ItemStack remainder = taken.copy();
+            remainder.setCount(taken.getCount() - accepted);
+            rollbackToSource(src, remainder, "destination accepted less than it simulated");
+        }
+        return accepted;
+    }
+
+    private static void rollbackToSource(IItemTransactor src, ItemStack stack, String reason) {
+        if (stack.isEmpty()) return;
+        ItemStack leftOver;
+        try {
+            leftOver = src.insert(stack.copy(), false, false);
+        } catch (RuntimeException exception) {
+            buildcraft.lib.internal.debug.BCLog.logger.error("Item transfer rollback failed because the source threw (" + reason + ")", exception);
+            return;
+        }
+        if (!leftOver.isEmpty()) {
+            buildcraft.lib.internal.debug.BCLog.logger.error(
+                "Item transfer rollback was only partially accepted by " + src.getClass().getName()
+                    + " (" + reason + "): " + leftOver
+            );
+        }
     }
 
     public static IItemInsertable createDroppingTransactor(Level world, Vec3 vec) {
