@@ -21,7 +21,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import buildcraft.lib.internal.core.EnumPipePart;
-import buildcraft.lib.fluid.FluidDropRuntime;
 import buildcraft.lib.internal.tiles.IDebuggable;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.block.BlockFloodGate;
@@ -341,7 +340,6 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     
 	@Override
 	public void addDrops(NonNullList<ItemStack> toDrop, int fortune) {
-		FluidDropRuntime.addFluidDrops(toDrop, tank);
 		super.addDrops(toDrop, fortune);
 	}
 

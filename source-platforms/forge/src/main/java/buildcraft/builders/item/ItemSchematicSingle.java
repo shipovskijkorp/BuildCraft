@@ -54,7 +54,7 @@ public class ItemSchematicSingle extends Item {
 
     @Override
     public int getMaxStackSize(ItemStack stack) {
-        return isUsed(stack) ? super.getMaxStackSize(stack) : 16;
+        return isUsed(stack) ? 1 : 16;
     }
 
     @Override

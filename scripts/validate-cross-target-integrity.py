@@ -209,17 +209,62 @@ def validate_stack_parity(props: dict[str, str]) -> None:
         builders = effective_java(target, builders_rel, props)
         core = effective_java(target, core_rel, props)
         lines = {line.strip() for line in builders.splitlines()}
-        blueprint = next((line for line in lines if 'register("blueprint"' in line), "")
-        template = next((line for line in lines if 'register("template"' in line), "")
-        schematic = next((line for line in lines if 'register("schematic_single"' in line), "")
-        map_location = next((line.strip() for line in core.splitlines() if 'register("map_location"' in line), "")
-        for name, line in (("blueprint", blueprint), ("template", template), ("map_location", map_location)):
+        registrations = {
+            "blueprint": next((line for line in lines if 'register("blueprint"' in line), ""),
+            "template": next((line for line in lines if 'register("template"' in line), ""),
+            "schematic_single": next((line for line in lines if 'register("schematic_single"' in line), ""),
+            "map_location": next((line.strip() for line in core.splitlines() if 'register("map_location"' in line), ""),
+        }
+        for name, line in registrations.items():
             if not line:
                 fail(f"{target}: cannot find {name} registration")
-            if ".stacksTo(" in line:
-                fail(f"{target}: {name} must keep vanilla stack size 64, got explicit stacksTo: {line}")
-        if not schematic or ".stacksTo(1)" not in schematic:
-            fail(f"{target}: schematic_single must stack to exactly 1: {schematic or '<missing>'}")
+            if ".stacksTo(16)" not in line:
+                fail(
+                    f"{target}: blank/clean {name} must have registration-level stack size 16: "
+                    f"{line}"
+                )
+
+        minecraft = props[f"target.{target}.deps.minecraft"]
+        if minecraft.startswith("1.21"):
+            map_type = effective_java(target, "buildcraft/core/item/MapLocationType.java", props)
+            snapshot = effective_java(target, "buildcraft/builders/item/ItemSnapshot.java", props)
+            schematic_item = effective_java(target, "buildcraft/builders/item/ItemSchematicSingle.java", props)
+            if "DataComponents.MAX_STACK_SIZE, this == CLEAN ? 16 : 1" not in map_type:
+                fail(f"{target}: map_location state transitions must enforce clean=16 and recorded=1")
+            if "stack.set(DataComponents.MAX_STACK_SIZE, 1);" not in snapshot:
+                fail(f"{target}: used blueprint/template snapshots must enforce stack size 1")
+            if schematic_item.count("stack.set(DataComponents.MAX_STACK_SIZE, 1);") < 1:
+                fail(f"{target}: used schematic_single must enforce stack size 1")
+            if "stack.set(DataComponents.MAX_STACK_SIZE, 16);" not in schematic_item:
+                fail(f"{target}: cleared schematic_single must restore stack size 16")
+        else:
+            map_item = effective_java(target, "buildcraft/core/item/ItemMapLocation.java", props)
+            snapshot = effective_java(target, "buildcraft/builders/item/ItemSnapshot.java", props)
+            schematic_item = effective_java(target, "buildcraft/builders/item/ItemSchematicSingle.java", props)
+            if "MapLocationType.getFromStack(stack) == MapLocationType.CLEAN ? 16 : 1" not in map_item:
+                fail(f"{target}: map_location dynamic stack size must be clean=16 and recorded=1")
+            if "EnumItemSnapshotType.getFromStack(stack).used ? 1 : 16" not in snapshot:
+                fail(f"{target}: blueprint/template dynamic stack size must be clean=16 and used=1")
+            if "isUsed(stack) ? 1 : 16" not in schematic_item:
+                fail(f"{target}: schematic_single dynamic stack size must be blank=16 and used=1")
+
+
+def validate_machine_fluid_drop_ownership(props: dict[str, str]) -> None:
+    for target in target_ids(props):
+        for rel, name in (
+            ("buildcraft/factory/tile/TilePump.java", "Pump"),
+            ("buildcraft/factory/tile/TileFloodGate.java", "Flood Gate"),
+        ):
+            java = effective_java(target, rel, props)
+            if "tankManager.addLast(tank);" not in java:
+                fail(f"{target}: {name} tank is no longer owned by tankManager")
+            if "FluidDropRuntime.addFluidDrops(toDrop, tank);" in java:
+                fail(
+                    f"{target}: {name} manually drops its managed tank before super.addDrops, "
+                    "which duplicates fluid drops"
+                )
+            if "super.addDrops(toDrop, fortune);" not in java:
+                fail(f"{target}: {name} must delegate managed tank drops to TileBC_Neptune")
 
 
 def validate_metadata(props: dict[str, str]) -> None:
@@ -715,6 +760,7 @@ def main() -> None:
     props = load_properties()
     validate_atlases_and_case(props)
     validate_stack_parity(props)
+    validate_machine_fluid_drop_ownership(props)
     validate_metadata(props)
     validate_datagen_isolation()
     validate_language_policy(props)
@@ -733,7 +779,7 @@ def main() -> None:
     validate_ci_wiring()
     print("Cross-target integrity OK:")
     print(" - exact-case atlas/model resources verified")
-    print(" - item stack and Minecraft metadata parity verified")
+    print(" - clean/used item stack-size parity and single-owner machine fluid drops verified")
     print(" - datagen isolated from production resources")
     print(" - main resources are en_us-only; localization addon ownership guarded")
     print(" - custom pipe recipe schema and configured transfer wiring verified")

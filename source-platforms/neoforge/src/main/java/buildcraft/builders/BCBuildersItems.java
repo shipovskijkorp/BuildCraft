@@ -23,9 +23,9 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 public class BCBuildersItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, BCBuilders.MODID);
 	
-    public static final DeferredHolder<Item, ItemSnapshot> BLUEPRINT = ITEMS.register("blueprint", () -> new ItemSnapshot(new Item.Properties(), EnumSnapshotType.BLUEPRINT));
-    public static final DeferredHolder<Item, ItemSnapshot> TEMPLATE = ITEMS.register("template", () -> new ItemSnapshot(new Item.Properties(), EnumSnapshotType.TEMPLATE));
-    public static final DeferredHolder<Item, ItemSchematicSingle> SCHEMATIC_SINGLE = ITEMS.register("schematic_single", () -> new ItemSchematicSingle(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, ItemSnapshot> BLUEPRINT = ITEMS.register("blueprint", () -> new ItemSnapshot(new Item.Properties().stacksTo(16), EnumSnapshotType.BLUEPRINT));
+    public static final DeferredHolder<Item, ItemSnapshot> TEMPLATE = ITEMS.register("template", () -> new ItemSnapshot(new Item.Properties().stacksTo(16), EnumSnapshotType.TEMPLATE));
+    public static final DeferredHolder<Item, ItemSchematicSingle> SCHEMATIC_SINGLE = ITEMS.register("schematic_single", () -> new ItemSchematicSingle(new Item.Properties().stacksTo(16)));
     public static final DeferredHolder<Item, ItemFillerPlanner> FILLER_PLANNER = ITEMS.register("filler_planner", () -> new ItemFillerPlanner(new Item.Properties()));
 
 

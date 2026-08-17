@@ -40,7 +40,7 @@ public class BCCoreItems {
     public static final DeferredHolder<Item, ItemPaintbrush_BC8> PAINT_BRUSH = ITEMS.register("paintbrush/clean", () -> new ItemPaintbrush_BC8(new Item.Properties(), null));
     public static final DeferredHolder<Item, ItemMarkerConnector> MARKER_CONNECTOR = ITEMS.register("marker_connector", () -> new ItemMarkerConnector(new Item.Properties().stacksTo(1)));
     public static final DeferredHolder<Item, ItemVolumeBox> VOLUME_BOX = ITEMS.register("volume_box", () -> new ItemVolumeBox(new Item.Properties()));
-    public static final DeferredHolder<Item, ItemMapLocation> MAP_LOCATION = ITEMS.register("map_location", () -> new ItemMapLocation(new Item.Properties()));
+    public static final DeferredHolder<Item, ItemMapLocation> MAP_LOCATION = ITEMS.register("map_location", () -> new ItemMapLocation(new Item.Properties().stacksTo(16)));
     public static final DeferredHolder<Item, ItemList_BC8> LIST = ITEMS.register("list", () -> new ItemList_BC8(new Item.Properties().stacksTo(1)));
 
     

@@ -23,9 +23,9 @@ import net.minecraftforge.registries.RegistryObject;
 public class BCBuildersItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BCBuilders.MODID);
 	
-    public static final RegistryObject<ItemSnapshot> BLUEPRINT = ITEMS.register("blueprint", () -> new ItemSnapshot(new Item.Properties(), EnumSnapshotType.BLUEPRINT));
-    public static final RegistryObject<ItemSnapshot> TEMPLATE = ITEMS.register("template", () -> new ItemSnapshot(new Item.Properties(), EnumSnapshotType.TEMPLATE));
-    public static final RegistryObject<ItemSchematicSingle> SCHEMATIC_SINGLE = ITEMS.register("schematic_single", () -> new ItemSchematicSingle(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<ItemSnapshot> BLUEPRINT = ITEMS.register("blueprint", () -> new ItemSnapshot(new Item.Properties().stacksTo(16), EnumSnapshotType.BLUEPRINT));
+    public static final RegistryObject<ItemSnapshot> TEMPLATE = ITEMS.register("template", () -> new ItemSnapshot(new Item.Properties().stacksTo(16), EnumSnapshotType.TEMPLATE));
+    public static final RegistryObject<ItemSchematicSingle> SCHEMATIC_SINGLE = ITEMS.register("schematic_single", () -> new ItemSchematicSingle(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<ItemFillerPlanner> FILLER_PLANNER = ITEMS.register("filler_planner", () -> new ItemFillerPlanner(new Item.Properties()));
 
 
