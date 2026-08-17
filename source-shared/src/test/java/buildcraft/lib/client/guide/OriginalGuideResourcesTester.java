@@ -257,6 +257,73 @@ class OriginalGuideResourcesTester {
     }
 
     @Test
+    void gameplayGuideClaimsMatchCurrentRuntimeContracts() throws Exception {
+        String tank = rendered("buildcraftfactory/block/tank", ENGLISH);
+        Assertions.assertTrue(tank.contains("Fragile Fluid Shards"));
+        Assertions.assertFalse(tank.contains("wont get the fluids back"));
+
+        String ironItem = rendered("buildcrafttransport/pipe/iron_item", ENGLISH);
+        String ironFluid = rendered("buildcrafttransport/pipe/iron_fluid", ENGLISH);
+        Assertions.assertTrue(ironItem.contains("does <bold>not</bold> rotate"));
+        Assertions.assertTrue(ironFluid.contains("does <bold>not</bold> rotate"));
+        Assertions.assertFalse(ironItem.contains("giving it a redstone signal"));
+        Assertions.assertFalse(ironFluid.contains("giving it a redstone signal"));
+
+        String diamondFluid = rendered("buildcrafttransport/pipe/diamond_fluid", ENGLISH);
+        Assertions.assertTrue(diamondFluid.contains("does <bold>not</bold> add routing weight"));
+        Assertions.assertFalse(diamondFluid.contains("add 'weight'"));
+
+        String obsidian = rendered("buildcrafttransport/pipe/obsidian_item", ENGLISH);
+        Assertions.assertTrue(obsidian.contains("up to four blocks"));
+        Assertions.assertTrue(obsidian.contains("opposite, open side"));
+        Assertions.assertFalse(obsidian.contains("3x4x3"));
+
+        String chute = rendered("buildcraftfactory/block/chute", ENGLISH);
+        Assertions.assertTrue(chute.contains("facing side"));
+        Assertions.assertTrue(chute.contains("other five sides"));
+        Assertions.assertTrue(chute.contains("gravity-assisted"));
+
+        String quarry = rendered("buildcraftbuilders/block/quarry", ENGLISH);
+        Assertions.assertTrue(quarry.contains("does not halt the Quarry"));
+        Assertions.assertTrue(quarry.contains("future frame line"));
+        Assertions.assertFalse(quarry.contains("blocked output can stall"));
+
+        String redstoneEngine = rendered("buildcraftcore/block/engine_wood", ENGLISH);
+        Assertions.assertTrue(redstoneEngine.contains("Overheat"));
+        Assertions.assertTrue(redstoneEngine.contains("Creative Engine"));
+
+        String stirling = rendered("buildcraftenergy/block/engine_stone", ENGLISH);
+        Assertions.assertTrue(stirling.contains("engines.stirlingExplosion"));
+        Assertions.assertTrue(stirling.contains("defaults to <code>false</code>"));
+
+        String facades = rendered("buildcraftsilicon/item/plug_facade", ENGLISH);
+        Assertions.assertTrue(facades.contains("facades.enable"));
+        Assertions.assertTrue(facades.contains("already installed facades continue to load and render"));
+
+        String pump = rendered("buildcraftfactory/block/pump", ENGLISH);
+        Assertions.assertTrue(pump.contains("in any direction"));
+        Assertions.assertTrue(pump.contains("Unloaded chunks are not pulled in"));
+        Assertions.assertFalse(pump.contains("horizontal reach"));
+
+        String ironPower = rendered("buildcrafttransport/pipe/iron_power", ENGLISH);
+        Assertions.assertTrue(ironPower.contains("not a directional-output pipe"));
+
+        String stoneFluid = rendered("buildcrafttransport/pipe/stone_fluid", ENGLISH);
+        Assertions.assertTrue(stoneFluid.contains("Stone Fluid Pipe transports"));
+        Assertions.assertFalse(stoneFluid.contains("Cobblestone Fluid pipe transports"));
+
+        String waterGel = rendered("buildcraftfactory/item/water_gel", ENGLISH);
+        Assertions.assertTrue(waterGel.contains("randomTickSpeed"));
+        Assertions.assertTrue(waterGel.contains("Only fully solidified Water Gel drops"));
+        Assertions.assertFalse(waterGel.contains("slows the final solidification"));
+
+        Assertions.assertTrue(rendered("buildcraftcore/item/map_location", ENGLISH).contains("stack to <bold>16</bold>"));
+        Assertions.assertTrue(rendered("buildcraftbuilders/item/schematic_single", ENGLISH).contains("stack to <bold>16</bold>"));
+        Assertions.assertTrue(rendered("buildcraftbuilders/item/blueprint", ENGLISH).contains("stack to <bold>16</bold>"));
+        Assertions.assertTrue(rendered("buildcraftbuilders/item/template", ENGLISH).contains("stack to <bold>16</bold>"));
+    }
+
+    @Test
     void everyListedPageHasOptionalHints() throws Exception {
         JsonObject manifest = json(MANIFEST);
         JsonObject layouts = json(LAYOUTS).getAsJsonObject("pages");
