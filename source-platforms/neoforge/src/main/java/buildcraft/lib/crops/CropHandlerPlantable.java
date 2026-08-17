@@ -95,15 +95,13 @@ public enum CropHandlerPlantable implements CropAdapter {
         if (state.isAir()) {
             return false;
         }
-        if (actor == null) {
-            if (BlockUtil.breakBlock(serverLevel, pos, drops, pos, FakePlayerProvider.NULL_PROFILE)) {
-                serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
-                return true;
-            }
+
+        var owner = actor == null ? FakePlayerProvider.NULL_PROFILE : actor.getGameProfile();
+        var harvested = BlockUtil.breakBlockAndGetDrops(serverLevel, pos, ItemStack.EMPTY, owner);
+        if (harvested.isEmpty()) {
             return false;
         }
-        drops.addAll(Block.getDrops(state, serverLevel, pos, serverLevel.getBlockEntity(pos), actor, ItemStack.EMPTY));
-        serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        drops.addAll(harvested.get());
         serverLevel.levelEvent(null, 2001, pos, Block.getId(state));
         return true;
     }

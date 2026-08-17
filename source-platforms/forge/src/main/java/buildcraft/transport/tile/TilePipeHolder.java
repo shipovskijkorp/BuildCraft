@@ -326,7 +326,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         }
 
         if (!level.isClientSide && pipe != Pipe.EMPTY) {
-            boolean flowActive = pipe.flow.requiresPeriodicSave();
+            boolean flowActive = pipe.flow.requiresPeriodicSave() || pipe.behaviour.requiresPeriodicSave();
             long now = level.getGameTime();
             if (flowActive && (lastPeriodicSaveTick == Long.MIN_VALUE || now - lastPeriodicSaveTick >= 20)) {
                 markChunkDirty();

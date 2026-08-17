@@ -83,6 +83,11 @@ public abstract class PipeBehaviour implements ICapabilityProvider {
 
     public void onTick() {}
 
+    /** Returns true while behaviour-local runtime state needs periodic chunk persistence. */
+    public boolean requiresPeriodicSave() {
+        return false;
+    }
+
 
 
     @Override

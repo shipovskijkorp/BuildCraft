@@ -72,6 +72,9 @@ jobs:
       - name: Validate current bug-backlog P1 regressions
         run: python scripts/validate-bugbacklog-p1-regressions.py
 
+      - name: Validate current bug-backlog P2 regressions
+        run: python scripts/validate-bugbacklog-p2-regressions.py
+
       - name: Validate resources, metadata and build hygiene
         run: python scripts/validate-cross-target-integrity.py
 

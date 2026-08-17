@@ -376,8 +376,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         int amount = MathUtil.clamp(s.amount, min, max);
         FluidStack fluid = currentFluid.copyWithAmount(amount);
         if (simulate.execute()) {
-            s.amount -= amount;
-            s.drainInternal(amount, false);
+            s.forceDrain(amount);
             if (s.amount == 0) {
                 boolean isEmpty = true;
                 for (Section s2 : sections.values()) {
@@ -481,6 +480,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         }
         for (Section section : sections.values()) {
             section.incoming = new int[currentDelay];
+            section.incomingTotalCache = 0;
             section.currentTime = 0;
             section.ticksInDirection = 0;
         }
@@ -863,6 +863,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             for (int i = 0; i < incoming.length; ++i) {
                 incomingTotalCache += incoming[i] = Math.max(0, nbt.getInt("in[" + i + "]"));
             }
+            trimDelayedFluidToAmount();
         }
 
         /** @return The maximum amount of fluid that can be inserted into this pipe on this tick. */
@@ -874,7 +875,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
 
         /** @return The maximum amount of fluid that can be extracted out of this pipe this tick. */
         int getMaxDrained() {
-            return Math.min(amount - incomingTotalCache, transferPerTick);
+            return Math.min(Math.max(0, amount - incomingTotalCache), transferPerTick);
         }
 
         /** @return The fluid filled */
@@ -916,6 +917,36 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                     amount -= maxDrain;
                 }
                 return maxDrain;
+            }
+        }
+
+        void forceDrain(int maxDrain) {
+            int drained = Math.min(Math.max(0, maxDrain), amount);
+            if (drained <= 0) {
+                return;
+            }
+            int matured = Math.max(0, amount - incomingTotalCache);
+            int delayedToRemove = Math.max(0, drained - matured);
+            amount -= drained;
+            removeDelayedFluid(delayedToRemove);
+            trimDelayedFluidToAmount();
+        }
+
+        private void trimDelayedFluidToAmount() {
+            if (incomingTotalCache > amount) {
+                removeDelayedFluid(incomingTotalCache - amount);
+            }
+        }
+
+        private void removeDelayedFluid(int toRemove) {
+            int remaining = Math.min(Math.max(0, toRemove), incomingTotalCache);
+            // Drain the newest delayed buckets first so already-aged fluid keeps its original latency.
+            for (int age = 0; age < incoming.length && remaining > 0; age++) {
+                int index = Math.floorMod(currentTime - age, incoming.length);
+                int removed = Math.min(incoming[index], remaining);
+                incoming[index] -= removed;
+                incomingTotalCache -= removed;
+                remaining -= removed;
             }
         }
 

@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class AIRobotBreak extends AIRobot {
     private BlockIndex blockToBreak;
     private float blockDamage;
+    private String progressStateKey;
     private BlockState state;
     private float hardness;
     private float speed;
@@ -102,7 +103,13 @@ public class AIRobotBreak extends AIRobot {
 
     private void refreshBlockData() {
         BlockPos pos = blockToBreak.toBlockPos();
-        state = robot.level().getBlockState(pos);
+        BlockState newState = robot.level().getBlockState(pos);
+        String newStateKey = newState.toString();
+        if (blockDamage > 0.0F && progressStateKey != null && !progressStateKey.equals(newStateKey)) {
+            blockDamage = 0.0F;
+        }
+        state = newState;
+        progressStateKey = newStateKey;
         if (state == null || state.isAir()) {
             hardness = -1.0F;
             speed = 0.0F;
@@ -151,12 +158,23 @@ public class AIRobotBreak extends AIRobot {
             blockToBreak.writeTo(tag);
             nbt.put("blockToBreak", tag);
         }
+        if (blockDamage > 0.0F && progressStateKey != null) {
+            nbt.putFloat("blockDamage", blockDamage);
+            nbt.putString("progressState", progressStateKey);
+        }
     }
 
     @Override
     public void loadSelfFromNBT(CompoundTag nbt) {
         if (nbt.contains("blockToBreak")) {
             blockToBreak = new BlockIndex(nbt.getCompound("blockToBreak"));
+        }
+        if (nbt.contains("blockDamage") && nbt.contains("progressState")) {
+            blockDamage = Math.max(0.0F, nbt.getFloat("blockDamage"));
+            progressStateKey = nbt.getString("progressState");
+        } else {
+            blockDamage = 0.0F;
+            progressStateKey = null;
         }
     }
 }

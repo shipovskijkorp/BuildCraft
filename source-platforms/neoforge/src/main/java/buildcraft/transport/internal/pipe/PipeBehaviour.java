@@ -80,6 +80,12 @@ public abstract class PipeBehaviour implements IBCCapabilityProvider {
 //    public void onEntityCollide(Entity entity) {}
 
     public void onTick() {}
+
+    /** Returns true while behaviour-local runtime state needs periodic chunk persistence. */
+    public boolean requiresPeriodicSave() {
+        return false;
+    }
+
     @Override
     @Nullable
     public <T> T getCapability(BlockCapability<T, Direction> capability, @Nullable Direction facing) {

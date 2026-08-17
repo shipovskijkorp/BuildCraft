@@ -42,11 +42,15 @@ public enum CropHandlerReeds implements CropAdapter {
 
     @Override
     public boolean isMature(BlockGetter access, BlockState state, BlockPos pos) {
-        return false;
+        return state.getBlock() == Blocks.SUGAR_CANE
+            && access.getBlockState(pos.below()).getBlock() == Blocks.SUGAR_CANE;
     }
 
     @Override
     public boolean harvest(Level world, BlockPos pos, NonNullList<ItemStack> drops, Player actor) {
-        return false;
+        if (!isMature(world, world.getBlockState(pos), pos)) {
+            return false;
+        }
+        return CropHandlerPlantable.INSTANCE.harvest(world, pos, drops, actor);
     }
 }

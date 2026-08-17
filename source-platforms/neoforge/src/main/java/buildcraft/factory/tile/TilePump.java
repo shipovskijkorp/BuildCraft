@@ -185,7 +185,8 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
             }
             for (Direction side : scanDirections) {
                 BlockPos offsetPos = posToCheck.relative(side);
-                if (offsetPos.distSqr(targetPos) > scanMaxLengthSquared || !scanChecked.add(offsetPos)) {
+                if (offsetPos.distSqr(targetPos) > scanMaxLengthSquared || !level.hasChunkAt(offsetPos)
+                    || !scanChecked.add(offsetPos)) {
                     continue;
                 }
                 FluidState fluidState = level.getFluidState(offsetPos);
@@ -207,7 +208,11 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
     private boolean isInfiniteWaterSourceAt(BlockPos pos) {
         int adjacentSources = 0;
         for (Direction side : INFINITE_WATER_NEIGHBORS) {
-            FluidState neighbour = level.getFluidState(pos.relative(side));
+            BlockPos neighbourPos = pos.relative(side);
+            if (!level.hasChunkAt(neighbourPos)) {
+                return false;
+            }
+            FluidState neighbour = level.getFluidState(neighbourPos);
             if (neighbour.isSource() && FluidUtilBC.areFluidsEqual(neighbour.getType(), Fluids.WATER)) {
                 adjacentSources++;
                 if (adjacentSources >= 2) {
@@ -218,7 +223,11 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
         if (adjacentSources < 2) {
             return false;
         }
-        BlockState below = level.getBlockState(pos.below());
+        BlockPos belowPos = pos.below();
+        if (!level.hasChunkAt(belowPos)) {
+            return false;
+        }
+        BlockState below = level.getBlockState(belowPos);
         Fluid fluidBelow = BlockUtil.getFluidWithoutFlowing(below);
         return FluidUtilBC.areFluidsEqual(fluidBelow, Fluids.WATER) || below.isSolid();
     }
@@ -231,6 +240,9 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
             BlockPos center = new BlockPos(getBlockPos().getX(), minY, getBlockPos().getZ());
             for (BlockPos spring : BlockPos.betweenClosed(center.offset(-10, 0, -10),
                     center.offset(10, maxSpringY - minY, 10))) {
+                if (!level.hasChunkAt(spring)) {
+                    continue;
+                }
                 if (level.getBlockState(spring).getBlock() == BCCoreBlocks.SPRING.get()
                         && level.getBlockEntity(spring) instanceof ITileOilSpring) {
                     springPositions.add(spring.immutable());
@@ -259,6 +271,9 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
     }
 
     private boolean canDrain(BlockPos blockPos) {
+        if (!level.hasChunkAt(blockPos)) {
+            return false;
+        }
         Fluid fluid = BlockUtil.getFluid(level, blockPos);
         //USE TO DEBUG
         boolean flag = tank.isEmpty() ? fluid != Fluids.EMPTY : fluid.isSource(fluid.defaultFluidState())&&FluidUtilBC.areFluidsEqual(fluid, tank.getFluidType());
@@ -321,6 +336,9 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
 
         long target = Math.max(0L, Math.round(10 * MjAmount.MICRO_MJ_PER_MJ * MachineDefinitionLookup.energyCostMultiplier(BuildCraftContentIds.Machines.PUMP)));
         if (currentPos != null && paths.containsKey(currentPos)) {
+            if (!level.hasChunkAt(currentPos)) {
+                return;
+            }
             progress += battery.extractPower(0, target - progress);
             if (progress < target) {
                 return;
@@ -458,6 +476,9 @@ public class TilePump extends TileMiner implements MachineRuntimeView {
             return from;
         }
         do {
+            if (!level.hasChunkAt(path.thisPos)) {
+                return path.thisPos;
+            }
             if (BlockUtil.getFluidWithFlowing(level, path.thisPos) == Fluids.EMPTY) {
                 return path.thisPos;
             }

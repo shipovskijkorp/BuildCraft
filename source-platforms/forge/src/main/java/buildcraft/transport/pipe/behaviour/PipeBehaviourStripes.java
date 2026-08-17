@@ -52,6 +52,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.FakePlayer;
@@ -67,6 +68,10 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
     @Nullable
     public Direction direction = null;
     private long progress;
+    @Nullable
+    private BlockPos progressTarget;
+    @Nullable
+    private String progressStateKey;
 
     public PipeBehaviourStripes(IPipe pipe) {
         super(pipe);
@@ -76,6 +81,15 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
         super(pipe, nbt);
         battery.deserializeNBT(nbt.getCompound("battery"));
         setDirection(NBTUtilBC.readEnum(nbt.get("direction"), Direction.class));
+        progress = Math.max(0L, nbt.getLong("progress"));
+        if (progress > 0 && nbt.contains("progressTarget") && nbt.contains("progressState")) {
+            progressTarget = BlockPos.of(nbt.getLong("progressTarget"));
+            progressStateKey = nbt.getString("progressState");
+        } else {
+            progress = 0;
+            progressTarget = null;
+            progressStateKey = null;
+        }
     }
 
     @Override
@@ -83,6 +97,11 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
         CompoundTag nbt = super.writeToNbt();
         nbt.put("battery", battery.serializeNBT());
         nbt.put("direction", NBTUtilBC.writeEnum(direction));
+        if (progress > 0 && progressTarget != null && progressStateKey != null) {
+            nbt.putLong("progress", progress);
+            nbt.putLong("progressTarget", progressTarget.asLong());
+            nbt.putString("progressState", progressStateKey);
+        }
         return nbt;
     }
 
@@ -102,11 +121,34 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
 
     private void setDirection(@Nullable Direction newValue) {
         if (direction != newValue) {
+            resetProgress();
             direction = newValue;
             if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER) {
                 pipe.getHolder().scheduleNetworkUpdate(PipeMessageReceiver.BEHAVIOUR);
             }
         }
+    }
+
+    private void resetProgress() {
+        if (progressTarget != null) {
+            Level world = pipe.getHolder().getPipeWorld();
+            if (!world.isClientSide()) {
+                world.destroyBlockProgress(progressTarget.hashCode(), progressTarget, -1);
+            }
+        }
+        progress = 0;
+        progressTarget = null;
+        progressStateKey = null;
+    }
+
+    private void bindProgressTarget(BlockPos target, BlockState state) {
+        progressTarget = target.immutable();
+        progressStateKey = state.toString();
+    }
+
+    private boolean matchesProgressTarget(BlockPos target, BlockState state) {
+        return progressTarget != null && progressTarget.equals(target)
+            && progressStateKey != null && progressStateKey.equals(state.toString());
     }
 
     // Actions
@@ -152,6 +194,11 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
     // Stripes
 
     @Override
+    public boolean requiresPeriodicSave() {
+        return progress > 0;
+    }
+
+    @Override
     public boolean canConnect(Direction face, PipeBehaviour other) {
         return !(other instanceof PipeBehaviourStripes);
     }
@@ -182,17 +229,22 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
         if (direction != null) {
             BlockPos offset = pos.offset(direction.getNormal());
             int offsetHash = offset.hashCode();
-            if (world.getBlockState(offset).isAir()) {
-                if (progress > 0) world.destroyBlockProgress(offsetHash, offset, -1);
-                progress = 0;
+            BlockState targetState = world.getBlockState(offset);
+            if (progress > 0 && !matchesProgressTarget(offset, targetState)) {
+                resetProgress();
+            }
+            if (targetState.isAir()) {
+                resetProgress();
                 return;
+            }
+            if (progress <= 0) {
+                bindProgressTarget(offset, targetState);
             }
             if (!AutomationPermissionUtil.mayBlock(
                 world, pos, offset, pipe.getHolder().getOwner(), AutomationPermissionUtil.SOURCE_STRIPES_PIPE,
                 WorldOperationKind.BLOCK_BREAK, OperationMode.SIMULATE
             )) {
-                if (progress > 0) world.destroyBlockProgress(offsetHash, offset, -1);
-                progress = 0;
+                resetProgress();
                 return;
             }
 
@@ -210,8 +262,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
 
             long target = BlockUtil.computeBlockBreakPower(world, offset);
             if (target <= 0) {
-                progress = 0;
-                world.destroyBlockProgress(offsetHash, offset, -1);
+                resetProgress();
                 return;
             }
             if (progress < target) {
@@ -236,7 +287,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements StripesOutput
                 );
                 if (drops.isPresent()) {
                     drops.get().forEach(stack -> sendItem(stack, direction));
-                    progress = 0;
+                    resetProgress();
                 }
                 world.destroyBlockProgress(offsetHash, offset, -1);
             }

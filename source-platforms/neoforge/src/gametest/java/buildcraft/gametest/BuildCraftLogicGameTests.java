@@ -15,6 +15,7 @@ import com.mojang.authlib.GameProfile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -57,6 +58,7 @@ import buildcraft.energy.tile.TileEngineFE;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.tile.TilePump;
 import buildcraft.lib.BCLibConfig;
+import buildcraft.lib.crops.CropHandlerReeds;
 import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.lib.internal.mj.MjBattery;
@@ -1105,6 +1107,47 @@ public final class BuildCraftLogicGameTests {
 
     private static ResourceLocation id(String path) {
         return Objects.requireNonNull(ResourceLocation.tryParse("test:" + path));
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void bulkItemTransactorInsertionCarriesRemainderAcrossSlots(GameTestHelper helper) {
+        ItemHandlerSimple inventory = new ItemHandlerSimple(2);
+        inventory.setStackInSlot(0, new ItemStack(Items.COBBLESTONE, 63));
+        inventory.setStackInSlot(1, new ItemStack(Items.COBBLESTONE, 63));
+
+        NonNullList<ItemStack> batch = NonNullList.create();
+        batch.add(new ItemStack(Items.COBBLESTONE, 64));
+        NonNullList<ItemStack> remainder = inventory.insert(batch, false);
+
+        require(helper, inventory.getStackInSlot(0).getCount() == 64, "bulk insert did not fill the first partial slot");
+        require(helper, inventory.getStackInSlot(1).getCount() == 64, "bulk insert did not fill the second partial slot");
+        require(helper, remainder.size() == 1 && remainder.get(0).getCount() == 62,
+            "bulk insert reused the original stack instead of carrying the remainder");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 40)
+    public static void sugarCaneAdapterHarvestsOnlyGrowthAboveTheBase(GameTestHelper helper) {
+        BlockPos lower = helper.absolutePos(new BlockPos(2, 1, 2));
+        BlockPos upper = lower.above();
+        helper.getLevel().setBlock(lower, Blocks.SUGAR_CANE.defaultBlockState(), 3);
+        helper.getLevel().setBlock(upper, Blocks.SUGAR_CANE.defaultBlockState(), 3);
+
+        require(helper, CropHandlerReeds.INSTANCE.isMature(helper.getLevel(), helper.getLevel().getBlockState(upper), upper),
+            "two-high sugar cane was not recognized as harvestable growth");
+        require(helper, !CropHandlerReeds.INSTANCE.isMature(helper.getLevel(), helper.getLevel().getBlockState(lower), lower),
+            "sugar cane base was incorrectly marked for harvesting");
+
+        NonNullList<ItemStack> drops = NonNullList.create();
+        require(helper, CropHandlerReeds.INSTANCE.harvest(helper.getLevel(), upper, drops, null),
+            "sugar cane adapter failed to harvest mature growth");
+        require(helper, helper.getLevel().getBlockState(lower).is(Blocks.SUGAR_CANE),
+            "sugar cane harvest removed the regrowing base");
+        require(helper, helper.getLevel().getBlockState(upper).isAir(),
+            "sugar cane harvest left the harvested growth in the world");
+        require(helper, drops.stream().anyMatch(stack -> stack.is(Items.SUGAR_CANE) && stack.getCount() > 0),
+            "sugar cane harvest did not collect its normal block drops");
+        helper.succeed();
     }
 
     private static void require(GameTestHelper helper, boolean condition, String message) {

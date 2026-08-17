@@ -39,6 +39,7 @@ import buildcraft.gametest.PipeGameTestSupport;
 import buildcraft.gametest.PipeGameTestSupport.TestPipe;
 import buildcraft.lib.BCLib;
 import buildcraft.lib.fluid.FluidCompatRegistry;
+import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.FluidStackUtil;
 import buildcraft.transport.BCTransportConfig;
@@ -149,6 +150,38 @@ public final class PipeFluidPowerGameTests {
         require(helper, FluidCompatRegistry.areEquivalent(simulated, executed),
             "simulation and execution selected different fluids");
         require(helper, totalFluid(flow) == rate - requested, "executed extraction drained the wrong amount");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void fullForceExtractionThenRefillDoesNotGhostJamPipe(GameTestHelper helper) {
+        int rate = PipeApi.getFluidTransferInfo(BCTransportPipes.stoneFluid).transferPerTick;
+        Tank sink = new Tank("sink", rate * 4, null);
+        TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.stoneFluid)
+            .connect(Direction.EAST, ConnectedType.TILE)
+            .exposeCapability(Direction.EAST, CapUtil.CAP_FLUIDS, sink);
+        PipeFlowFluids flow = new PipeFlowFluids(pipe);
+        pipe.setFlow(flow);
+
+        require(helper, flow.insertFluidsForce(
+            new FluidStack(net.minecraft.world.level.material.Fluids.WATER, rate), null, FluidAction.EXECUTE
+        ) == rate, "test setup failed to seed fluid pipe");
+        require(helper, flow.extractFluidsForce(0, rate, null, FluidAction.EXECUTE).getAmount() == rate,
+            "force extraction did not fully empty the pipe");
+        require(helper, totalFluid(flow) == 0, "force extraction left fluid behind");
+        require(helper, flow.insertFluidsForce(
+            new FluidStack(net.minecraft.world.level.material.Fluids.WATER, rate), null, FluidAction.EXECUTE
+        ) == rate, "pipe could not be refilled after force extraction");
+
+        int delay = Math.max(1, (int) Math.ceil(
+            PipeApi.getFluidTransferInfo(BCTransportPipes.stoneFluid).transferDelayMultiplier
+        ));
+        for (int i = 0; i < delay * 2 + 6; i++) {
+            flow.onTick();
+        }
+
+        require(helper, sink.getFluidAmount() > 0,
+            "refilled pipe remained ghost-jammed after its delayed fluid should have matured");
         helper.succeed();
     }
 

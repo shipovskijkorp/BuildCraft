@@ -66,6 +66,13 @@ public class AIRobot {
         return false;
     }
 
+    /** Whether the current runtime state should be written as a reloadable AI delegate.
+     * By default this matches {@link #canLoadFromNBT()}, but AIs containing transient runtime closures may opt out
+     * until they reach a self-contained state that can actually be reconstructed after reload. */
+    public boolean shouldSaveToNBT() {
+        return canLoadFromNBT();
+    }
+
     /** Tries to receive items and returns the items left after the operation. */
     public ItemStack receiveItem(ItemStack stack) {
         return stack;
@@ -148,7 +155,7 @@ public class AIRobot {
         writeSelfToNBT(data);
         nbt.put("data", data);
 
-        if (delegateAI != null && delegateAI.canLoadFromNBT()) {
+        if (delegateAI != null && delegateAI.shouldSaveToNBT()) {
             CompoundTag sub = new CompoundTag();
             delegateAI.writeToNBT(sub);
             nbt.put("delegateAI", sub);
@@ -169,11 +176,11 @@ public class AIRobot {
                     aiRobotClass = RobotManager.getAIRobotByName(sub.getString("aiName"));
                 }
                 if (aiRobotClass != null) {
-                    delegateAI = (AIRobot) aiRobotClass.getConstructor(EntityRobotBase.class).newInstance(robot);
-                    delegateAI.parentAI = this;
-
-                    if (delegateAI.canLoadFromNBT()) {
-                        delegateAI.loadFromNBT(sub);
+                    AIRobot loadedDelegate = (AIRobot) aiRobotClass.getConstructor(EntityRobotBase.class).newInstance(robot);
+                    if (loadedDelegate.canLoadFromNBT()) {
+                        loadedDelegate.parentAI = this;
+                        loadedDelegate.loadFromNBT(sub);
+                        delegateAI = loadedDelegate;
                     }
                 }
             } catch (Throwable throwable) {
@@ -193,9 +200,10 @@ public class AIRobot {
                 aiRobotClass = RobotManager.getAIRobotByName(nbt.getString("aiName"));
             }
             if (aiRobotClass != null) {
-                ai = (AIRobot) aiRobotClass.getConstructor(EntityRobotBase.class).newInstance(robot);
-                if (ai.canLoadFromNBT()) {
-                    ai.loadFromNBT(nbt);
+                AIRobot loaded = (AIRobot) aiRobotClass.getConstructor(EntityRobotBase.class).newInstance(robot);
+                if (loaded.canLoadFromNBT()) {
+                    loaded.loadFromNBT(nbt);
+                    ai = loaded;
                 }
             }
         } catch (Throwable throwable) {

@@ -881,7 +881,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 82
+    expected_tests = 85
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -916,6 +916,8 @@ def validate_gametest_runtime_guards() -> None:
             "builderResourceReservationRollsBackAfterMidTransactionFailure",
             "creativeBuilderCancellationDoesNotMintDisplayRequirements",
             "quarryCancelledTaskRefundsExactWithdrawnPower",
+            "bulkItemTransactorInsertionCarriesRemainderAcrossSlots",
+            "sugarCaneAdapterHarvestsOnlyGrowthAboveTheBase",
         ):
             if method not in regression_suite:
                 fail(f"{target}: missing gameplay regression GameTest {method}")
@@ -941,6 +943,13 @@ def validate_gametest_runtime_guards() -> None:
         ):
             if method not in fe_pipe_suite:
                 fail(f"{target}: missing FE-pipe adversarial GameTest {method}")
+
+        fluid_pipe_suite = text(target, "src/gametest/java/buildcraft/transport/pipe/flow/PipeFluidPowerGameTests.java")
+        for method in (
+            "fullForceExtractionThenRefillDoesNotGhostJamPipe",
+        ):
+            if method not in fluid_pipe_suite:
+                fail(f"{target}: missing fluid-pipe adversarial GameTest {method}")
 
         performance_suite = text(target, "src/gametest/java/buildcraft/gametest/PerformanceSmokeGameTests.java")
         for method in (

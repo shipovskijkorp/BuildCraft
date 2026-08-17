@@ -125,7 +125,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
         checked.add(worldPosition);
         for (Direction face : openSides) {
             BlockPos offset = worldPosition.relative(face);
-            if (checked.add(offset)) {
+            if (level.hasChunkAt(offset) && checked.add(offset)) {
                 parents.put(offset, worldPosition);
                 searchFrontier.addLast(offset);
             }
@@ -149,7 +149,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
             && searchedPositions < MAX_SEARCHED_POSITIONS && queue.size() < MAX_FILL_TARGETS) {
             BlockPos toCheck = searchFrontier.removeFirst();
             searchedPositions++;
-            if (toCheck.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !canSearch(toCheck)) {
+            if (!level.hasChunkAt(toCheck) || toCheck.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !canSearch(toCheck)) {
                 continue;
             }
 
@@ -160,7 +160,7 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
 
             for (Vec3i side : searchDirections) {
                 BlockPos next = toCheck.offset(side);
-                if (next.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !checked.add(next)) {
+                if (!level.hasChunkAt(next) || next.distSqr(worldPosition) > MAX_SEARCH_DISTANCE_SQR || !checked.add(next)) {
                     continue;
                 }
                 parents.put(next, toCheck);
@@ -194,6 +194,9 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     }
 
     private boolean canFill(BlockPos offsetPos) {
+        if (!level.hasChunkAt(offsetPos)) {
+            return false;
+        }
         if (level.getBlockState(offsetPos).isAir()) {
             return true;
         }
@@ -203,6 +206,9 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     }
 
     private boolean canSearch(BlockPos offsetPos) {
+        if (!level.hasChunkAt(offsetPos)) {
+            return false;
+        }
         if (canFill(offsetPos)) {
             return true;
         }
@@ -211,6 +217,9 @@ public class TileFloodGate extends TileBC_Neptune implements IDebuggable {
     }
 
     private boolean canFillThrough(BlockPos pos) {
+        if (!level.hasChunkAt(pos)) {
+            return false;
+        }
         if (level.getBlockState(pos).isAir()) {
             return false;
         }

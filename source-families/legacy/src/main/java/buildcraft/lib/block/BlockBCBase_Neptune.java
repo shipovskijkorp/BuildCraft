@@ -91,10 +91,13 @@ public class BlockBCBase_Neptune extends Block {
         if (this instanceof IBlockWithFacing) {
             Direction orientation = bpc.getHorizontalDirection();
             IBlockWithFacing b = (IBlockWithFacing) this;
-            if (b.canFaceVertically()) {
-                if (Mth.abs((float) placer.xo - pos.getX()) < 2.0F
-                    && Mth.abs((float) placer.zo - pos.getZ()) < 2.0F) {
-                    double y = placer.yo + placer.getEyeHeight();
+            if (b.canFaceVertically() && placer != null) {
+                // BlockPlaceContext#getPlayer() is nullable for automated placers. Use the
+                // current entity position when there is a real placer and otherwise keep
+                // the context's horizontal direction as a safe deterministic fallback.
+                if (Mth.abs((float) placer.getX() - pos.getX()) < 2.0F
+                    && Mth.abs((float) placer.getZ() - pos.getZ()) < 2.0F) {
+                    double y = placer.getY() + placer.getEyeHeight();
 
                     if (y - pos.getY() > 2.0D) {
                         orientation = Direction.DOWN;
