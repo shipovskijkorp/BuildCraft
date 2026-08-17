@@ -24,6 +24,12 @@ def forbid(rel, *tokens):
             errors.append(f"{rel}: forbidden P2 regression token {token!r}")
 
 for family in ("legacy", "modern"):
+    stale_bulk = ROOT / f"source-families/{family}/src/main/java/buildcraft/lib/inventory/AbstractInvItemTransactor.java"
+    if stale_bulk.exists():
+        errors.append(
+            f"{stale_bulk.relative_to(ROOT)}: stale family override shadows the shared bulk-insert fix; "
+            "remove it so source-shared is authoritative"
+        )
     require(
         f"source-families/{family}/src/main/java/buildcraft/lib/block/BlockBCBase_Neptune.java",
         "b.canFaceVertically() && placer != null",
