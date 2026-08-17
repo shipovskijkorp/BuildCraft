@@ -175,6 +175,12 @@ for platform in ("forge", "neoforge"):
     )
 
 require(
+    "source-platforms/forge/src/gametest/java/buildcraft/transport/pipe/flow/PipeFluidPowerGameTests.java",
+    "passiveProviderExtractionUsesDryRunAndNeverOverfillsSection",
+    ".exposeCapability(Direction.WEST, MjCapabilities.CAP_PASSIVE_PROVIDER, provider)",
+)
+
+require(
     "source-platforms/forge/src/main/java/buildcraft/lib/misc/JsonUtil.java",
     "JsonUtils.readNBT",
     "stack.setTag(data)",

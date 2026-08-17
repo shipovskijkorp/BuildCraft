@@ -482,7 +482,8 @@ public final class PipeFluidPowerGameTests {
 
         TestPipe pipe = new TestPipe(helper.getLevel(), BCTransportPipes.woodPower)
             .connectTile(Direction.WEST, providerTile)
-            .connect(Direction.EAST, ConnectedType.TILE);
+            .connect(Direction.EAST, ConnectedType.TILE)
+            .exposeCapability(Direction.WEST, MjCapabilities.CAP_PASSIVE_PROVIDER, provider);
         PipeFlowPower flow = new PipeFlowPower(pipe);
         pipe.setFlow(flow);
         flow.reconfigure();
