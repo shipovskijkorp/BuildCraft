@@ -192,25 +192,16 @@ public final class WireSystem {
     
 
     public boolean isPlayerWatching(Player player) {
-        //? if <1.20 {
-        if (player.level instanceof ServerLevel) {
-            ServerLevel world = (ServerLevel) player.level;
-        //?} else {
-        /*?
-        if (player.level() instanceof ServerLevel world) {
-        ?*/
-        //?}
-            DistanceManager manager = world.getChunkSource().chunkMap.getDistanceManager();
-            return elements.stream()
-            		//? if <1.20 {
-            		.anyMatch(e -> manager.inBlockTickingRange(ChunkPos.asLong(e.blockPos)));
-            		//?} else {
-            		/*?
-                .anyMatch(element -> manager.inBlockTickingRange(ChunkPos.asLong(element.blockPos)));
-            		?*/
-            		//?}
+        if (!(player instanceof net.minecraft.server.level.ServerPlayer serverPlayer)) {
+            return false;
         }
-        return false;
+        if (!(player.level instanceof ServerLevel world)) {
+            return false;
+        }
+        return elements.stream()
+            .map(element -> new ChunkPos(element.blockPos))
+            .distinct()
+            .anyMatch(chunkPos -> world.getChunkSource().chunkMap.getPlayers(chunkPos, false).contains(serverPlayer));
     }
 
     public int getWiresHashCode() {

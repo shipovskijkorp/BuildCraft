@@ -12,6 +12,11 @@ import buildcraft.robotics.ai.AIRobotGotoSleep;
 import buildcraft.robotics.ai.AIRobotGotoStationAndLoad;
 import buildcraft.robotics.ai.AIRobotLoad;
 import buildcraft.robotics.ai.AIRobotSearchRandomGroundBlock;
+import buildcraft.robotics.internal.api2.RobotAutomationSupport;
+import buildcraft.lib.internal.area.IZone;
+import buildcraft.api.v2.OperationMode;
+import buildcraft.api.v2.permission.WorldOperationKind;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.PrimedTnt;
@@ -25,6 +30,9 @@ public class BoardRobotBomber extends RedstoneBoardRobot {
     private static final int SEARCH_RANGE = 100;
     private static final int FLYING_HEIGHT = 20;
     private static final int TNT_FUSE = 37;
+    private static final int BLAST_SAFETY_RADIUS = 6;
+
+    private BlockPos bombTarget;
 
     public BoardRobotBomber(EntityRobotBase robot) {
         super(robot);
@@ -53,17 +61,23 @@ public class BoardRobotBomber extends RedstoneBoardRobot {
             }
         } else if (ai instanceof AIRobotSearchRandomGroundBlock search) {
             if (search.success()) {
-                startDelegateAI(new AIRobotGotoBlock(robot, search.blockFound.x, search.blockFound.y + FLYING_HEIGHT,
-                        search.blockFound.z));
+                BlockPos target = search.blockFound.toBlockPos();
+                if (canBombTarget(target, OperationMode.SIMULATE)) {
+                    bombTarget = target;
+                    startDelegateAI(new AIRobotGotoBlock(robot, target.getX(), target.getY() + FLYING_HEIGHT, target.getZ()));
+                } else {
+                    bombTarget = null;
+                    startDelegateAI(new AIRobotGotoSleep(robot));
+                }
             } else {
                 startDelegateAI(new AIRobotGotoSleep(robot));
             }
         } else if (ai instanceof AIRobotGotoBlock) {
-            if (ai.success()) {
-                dropTnt();
-            } else {
-                startDelegateAI(new AIRobotGotoSleep(robot));
+            if (ai.success() && bombTarget != null && canBombTarget(bombTarget, OperationMode.EXECUTE)) {
+                dropTnt(bombTarget);
             }
+            bombTarget = null;
+            startDelegateAI(new AIRobotGotoSleep(robot));
         } else if (ai instanceof AIRobotGotoSleep) {
             terminate();
         }
@@ -100,7 +114,38 @@ public class BoardRobotBomber extends RedstoneBoardRobot {
         return false;
     }
 
-    private void dropTnt() {
+    private boolean canBombTarget(BlockPos target, OperationMode mode) {
+        IZone zone = robot.getZoneToWork();
+        // Vanilla TNT has blast strength 4; use a conservative six-block sphere so a board never deliberately
+        // primes TNT close enough to mutate blocks outside its configured work zone.
+        int radiusSq = BLAST_SAFETY_RADIUS * BLAST_SAFETY_RADIUS;
+        for (int dx = -BLAST_SAFETY_RADIUS; dx <= BLAST_SAFETY_RADIUS; dx++) {
+            for (int dy = -BLAST_SAFETY_RADIUS; dy <= BLAST_SAFETY_RADIUS; dy++) {
+                for (int dz = -BLAST_SAFETY_RADIUS; dz <= BLAST_SAFETY_RADIUS; dz++) {
+                    if (dx * dx + dy * dy + dz * dz > radiusSq) {
+                        continue;
+                    }
+                    BlockPos affected = target.offset(dx, dy, dz);
+                    if (zone != null && !zone.contains(affected)) {
+                        return false;
+                    }
+                    if (!robot.getCommandSenderWorld().isLoaded(affected)) {
+                        return false;
+                    }
+                    if (!robot.getCommandSenderWorld().getBlockState(affected).isAir()
+                            && !RobotAutomationSupport.permitsBlock(
+                                robot, robot.getCommandSenderWorld(), affected,
+                                WorldOperationKind.BLOCK_BREAK, mode
+                            )) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void dropTnt(BlockPos target) {
         //? if <1.20 {
         if (robot.level.isClientSide || !removeOneTnt()) {
         //?} else {
@@ -112,13 +157,13 @@ public class BoardRobotBomber extends RedstoneBoardRobot {
         }
 
         //? if <1.20 {
-        PrimedTnt tnt = new PrimedTnt(robot.level, robot.getX() + 0.25D, robot.getY() - 1.0D,
+        PrimedTnt tnt = new PrimedTnt(robot.level, target.getX() + 0.5D, robot.getY() - 1.0D,
         //?} else {
         /*?
-        PrimedTnt tnt = new PrimedTnt(robot.level(), robot.getX() + 0.25D, robot.getY() - 1.0D,
+        PrimedTnt tnt = new PrimedTnt(robot.level(), target.getX() + 0.5D, robot.getY() - 1.0D,
         ?*/
         //?}
-                robot.getZ() + 0.25D, robot);
+                target.getZ() + 0.5D, robot);
         tnt.setFuse(TNT_FUSE);
         //? if <1.20 {
         robot.level.addFreshEntity(tnt);

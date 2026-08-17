@@ -36,6 +36,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -52,6 +53,14 @@ public final class PermissionOwnerGameTests {
     private static boolean protectionHooksInstalled;
 
     private PermissionOwnerGameTests() {}
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void buildCraftAutomationPlayerUsesPlatformFakePlayer(GameTestHelper helper) {
+        Player player = FakePlayerProvider.INSTANCE.getBuildCraftPlayer(helper.getLevel());
+        require(helper, player instanceof FakePlayer,
+            "BuildCraft automation actor is not the loader's canonical FakePlayer");
+        helper.succeed();
+    }
 
     @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void machineOwnerIdentitySurvivesPersistenceRoundTrip(GameTestHelper helper) {

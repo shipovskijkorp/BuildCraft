@@ -116,7 +116,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         return level.registryAccess();
     }
 
-    public static final RecipeType<AssemblyRecipeBasic> ASSEMBLY = RecipeType.create("buildcraftsilicon", "assembly", AssemblyRecipeBasic.class);
+    public static final RecipeType<AssemblyJeiRecipe> ASSEMBLY = RecipeType.create("buildcraftsilicon", "assembly", AssemblyJeiRecipe.class);
     public static final RecipeType<ProgrammingRecipeView> PROGRAMMING = RecipeType.create("buildcraftsilicon", "programming", ProgrammingRecipeView.class);
     public static final RecipeType<IntegrationRecipeView> INTEGRATION = RecipeType.create("buildcraftsilicon", "integration", IntegrationRecipeView.class);
     public static final RecipeType<DistillationRecipeDefinition> DISTILLATION = RecipeType.create("buildcraftfactory", "distillation", DistillationRecipeDefinition.class);
@@ -194,14 +194,17 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         Level level = Minecraft.getInstance().level;
         if (level != null) {
-            List<AssemblyRecipeBasic> assemblyRecipes = level.getRecipeManager()
+            List<AssemblyJeiRecipe> assemblyRecipes = level.getRecipeManager()
                 .getAllRecipesFor(BCSiliconRecipes.ASSEMBLY_TYPE.get())
                 .stream()
-                .map(RecipeHolder::value)
+                .map(holder -> new AssemblyJeiRecipe(holder.id(), holder.value()))
                 .collect(Collectors.toCollection(ArrayList::new));
-            boolean hadFacadeRecipe = assemblyRecipes.removeIf(FacadeAssemblyRecipes.class::isInstance);
+            boolean hadFacadeRecipe = assemblyRecipes.removeIf(view -> view.recipe() instanceof FacadeAssemblyRecipes);
             if (hadFacadeRecipe && BCSiliconConfig.enableFacades) {
-                assemblyRecipes.add(FacadeAssemblyJeiRecipe.create());
+                assemblyRecipes.add(new AssemblyJeiRecipe(
+                    ResourceLocation.fromNamespaceAndPath("buildcraftsilicon", "jei/facades"),
+                    FacadeAssemblyJeiRecipe.create()
+                ));
             }
             assemblyRecipes = groupAssemblyRecipes(assemblyRecipes);
             registration.addRecipes(ASSEMBLY, assemblyRecipes);
@@ -267,12 +270,12 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         );
     }
 
-    private static List<AssemblyRecipeBasic> groupAssemblyRecipes(List<AssemblyRecipeBasic> recipes) {
+    private static List<AssemblyJeiRecipe> groupAssemblyRecipes(List<AssemblyJeiRecipe> recipes) {
         GROUPED_ASSEMBLY_RECIPES.clear();
-        Map<GroupedAssemblyKey, List<AssemblyRecipeBasic>> grouped = new LinkedHashMap<>();
-        List<AssemblyRecipeBasic> result = new ArrayList<>();
+        Map<GroupedAssemblyKey, List<AssemblyJeiRecipe>> grouped = new LinkedHashMap<>();
+        List<AssemblyJeiRecipe> result = new ArrayList<>();
 
-        for (AssemblyRecipeBasic recipe : recipes) {
+        for (AssemblyJeiRecipe recipe : recipes) {
             GroupedAssemblyKey key = getGroupedAssemblyKey(recipe);
             if (key == null) {
                 result.add(recipe);
@@ -281,13 +284,14 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             }
         }
 
-        for (Map.Entry<GroupedAssemblyKey, List<AssemblyRecipeBasic>> entry : grouped.entrySet()) {
+        for (Map.Entry<GroupedAssemblyKey, List<AssemblyJeiRecipe>> entry : grouped.entrySet()) {
             addGroupedAssemblyRecipe(result, entry.getKey(), entry.getValue());
         }
         return result;
     }
 
-    private static GroupedAssemblyKey getGroupedAssemblyKey(AssemblyRecipeBasic recipe) {
+    private static GroupedAssemblyKey getGroupedAssemblyKey(AssemblyJeiRecipe view) {
+        AssemblyRecipeBasic recipe = view.recipe();
         ItemStack output = recipe.getResultItem(registryAccess());
         if (output.getItem() == BCSiliconItems.PLUG_LENS_ITEM.get()) {
             boolean filter = recipe.getInputsFor(output).stream()
@@ -314,28 +318,32 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         return null;
     }
 
-    private static void addGroupedAssemblyRecipe(List<AssemblyRecipeBasic> target, GroupedAssemblyKey key,
-            List<AssemblyRecipeBasic> variants) {
+    private static void addGroupedAssemblyRecipe(List<AssemblyJeiRecipe> target, GroupedAssemblyKey key,
+            List<AssemblyJeiRecipe> variants) {
         if (variants.isEmpty()) {
             return;
         }
         variants.sort(groupedAssemblyComparator(key));
-        AssemblyRecipeBasic representative = variants.get(0);
+        AssemblyJeiRecipe representative = variants.get(0);
         GROUPED_ASSEMBLY_RECIPES.put(
-                representative.getId(),
+                representative.id(),
                 new GroupedAssemblyRecipe(key, List.copyOf(variants))
         );
         target.add(representative);
     }
 
-    private static Comparator<AssemblyRecipeBasic> groupedAssemblyComparator(GroupedAssemblyKey key) {
+    private static Comparator<AssemblyJeiRecipe> groupedAssemblyComparator(GroupedAssemblyKey key) {
         return switch (key.kind()) {
-            case LENS, LENS_FILTER -> Comparator.comparingInt(recipe -> recipe.getResultItem(registryAccess()).getDamageValue());
-            case WIRE -> Comparator.comparing(recipe -> String.valueOf(BuiltInRegistries.ITEM.getKey(recipe.getResultItem(registryAccess()).getItem())));
+            case LENS, LENS_FILTER -> Comparator.comparingInt(view -> view.recipe().getResultItem(registryAccess()).getDamageValue());
+            case WIRE -> Comparator.comparing(view -> String.valueOf(BuiltInRegistries.ITEM.getKey(view.recipe().getResultItem(registryAccess()).getItem())));
             case GATE_BASE, GATE_MODIFIER -> Comparator
-                    .comparingInt((AssemblyRecipeBasic recipe) -> ItemPluggableGate.getVariant(recipe.getResultItem(registryAccess())).logic.ordinal())
-                    .thenComparingInt(recipe -> ItemPluggableGate.getVariant(recipe.getResultItem(registryAccess())).modifier.ordinal());
+                    .comparingInt((AssemblyJeiRecipe view) -> ItemPluggableGate.getVariant(view.recipe().getResultItem(registryAccess())).logic.ordinal())
+                    .thenComparingInt(view -> ItemPluggableGate.getVariant(view.recipe().getResultItem(registryAccess())).modifier.ordinal());
         };
+    }
+
+    /** JEI-side holder-aware identity for 1.21 recipes. */
+    private record AssemblyJeiRecipe(ResourceLocation id, AssemblyRecipeBasic recipe) {
     }
 
     private enum GroupedAssemblyKind {
@@ -349,10 +357,10 @@ public class BuildCraftJeiPlugin implements IModPlugin {
     private record GroupedAssemblyKey(GroupedAssemblyKind kind, EnumGateMaterial gateMaterial) {
     }
 
-    private record GroupedAssemblyRecipe(GroupedAssemblyKey key, List<AssemblyRecipeBasic> variants) {
+    private record GroupedAssemblyRecipe(GroupedAssemblyKey key, List<AssemblyJeiRecipe> variants) {
     }
 
-    private static List<AssemblyRecipeBasic> getFocusedAssemblyVariants(List<AssemblyRecipeBasic> variants, IFocusGroup focuses) {
+    private static List<AssemblyJeiRecipe> getFocusedAssemblyVariants(List<AssemblyJeiRecipe> variants, IFocusGroup focuses) {
         List<ItemStack> focused = new ArrayList<>();
         focuses.getFocuses(RecipeIngredientRole.INPUT)
                 .map(BuildCraftJeiPlugin::getFocusedItemStack)
@@ -365,7 +373,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         if (focused.isEmpty()) {
             return variants;
         }
-        List<AssemblyRecipeBasic> matches = variants.stream().filter(recipe -> {
+        List<AssemblyJeiRecipe> matches = variants.stream().filter(view -> {
+            AssemblyRecipeBasic recipe = view.recipe();
             ItemStack output = recipe.getResultItem(registryAccess());
             for (ItemStack stack : focused) {
                 if (ItemStack.isSameItemSameComponents(output, stack)) {
@@ -695,7 +704,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
     }
 
-    private static class AssemblyCategory implements IRecipeCategory<AssemblyRecipeBasic> {
+    private static class AssemblyCategory implements IRecipeCategory<AssemblyJeiRecipe> {
         private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
                 "buildcraftsilicon", "textures/gui/assembly_table.png");
         private static final ResourceLocation JEI_BACKGROUND = ResourceLocation.fromNamespaceAndPath(
@@ -716,7 +725,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         @Override
-        public RecipeType<AssemblyRecipeBasic> getRecipeType() {
+        public RecipeType<AssemblyJeiRecipe> getRecipeType() {
             return ASSEMBLY;
         }
 
@@ -736,8 +745,9 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         @Override
-        public void setRecipe(IRecipeLayoutBuilder builder, AssemblyRecipeBasic recipe, IFocusGroup focuses) {
-            GroupedAssemblyRecipe grouped = GROUPED_ASSEMBLY_RECIPES.get(recipe.getId());
+        public void setRecipe(IRecipeLayoutBuilder builder, AssemblyJeiRecipe view, IFocusGroup focuses) {
+            AssemblyRecipeBasic recipe = view.recipe();
+            GroupedAssemblyRecipe grouped = GROUPED_ASSEMBLY_RECIPES.get(view.id());
             if (grouped != null) {
                 setGroupedAssemblyRecipe(builder, grouped, focuses);
                 return;
@@ -772,7 +782,7 @@ public class BuildCraftJeiPlugin implements IModPlugin {
 
         private void setGroupedAssemblyRecipe(IRecipeLayoutBuilder builder, GroupedAssemblyRecipe grouped,
                 IFocusGroup focuses) {
-            List<AssemblyRecipeBasic> variants = getFocusedAssemblyVariants(grouped.variants(), focuses);
+            List<AssemblyJeiRecipe> variants = getFocusedAssemblyVariants(grouped.variants(), focuses);
             switch (grouped.key().kind()) {
                 case LENS, LENS_FILTER -> setGroupedLensRecipe(builder, variants, grouped.key().kind() == GroupedAssemblyKind.LENS_FILTER);
                 case WIRE -> setGroupedWireRecipe(builder, variants);
@@ -781,10 +791,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             }
         }
 
-        private void setGroupedLensRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants, boolean filter) {
+        private void setGroupedLensRecipe(IRecipeLayoutBuilder builder, List<AssemblyJeiRecipe> variants, boolean filter) {
             List<ItemStack> glassInputs = new ArrayList<>();
             List<ItemStack> outputs = new ArrayList<>();
-            for (AssemblyRecipeBasic variant : variants) {
+            for (AssemblyJeiRecipe view : variants) {
+                AssemblyRecipeBasic variant = view.recipe();
                 ItemStack output = variant.getResultItem(registryAccess());
                 outputs.add(output);
                 for (IngredientStack input : variant.getInputsFor(output)) {
@@ -809,10 +820,11 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             builder.createFocusLink(glassSlot, outputSlot);
         }
 
-        private void setGroupedWireRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {
+        private void setGroupedWireRecipe(IRecipeLayoutBuilder builder, List<AssemblyJeiRecipe> variants) {
             List<ItemStack> dyes = new ArrayList<>();
             List<ItemStack> outputs = new ArrayList<>();
-            for (AssemblyRecipeBasic variant : variants) {
+            for (AssemblyJeiRecipe view : variants) {
+                AssemblyRecipeBasic variant = view.recipe();
                 ItemStack output = variant.getResultItem(registryAccess());
                 outputs.add(output);
                 for (IngredientStack input : variant.getInputsFor(output)) {
@@ -836,11 +848,12 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             builder.createFocusLink(dyeSlot, outputSlot);
         }
 
-        private void setGroupedGateBaseRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {
+        private void setGroupedGateBaseRecipe(IRecipeLayoutBuilder builder, List<AssemblyJeiRecipe> variants) {
             List<List<ItemStack>> inputsBySlot = new ArrayList<>();
             List<ItemStack> outputs = new ArrayList<>();
 
-            for (AssemblyRecipeBasic variant : variants) {
+            for (AssemblyJeiRecipe view : variants) {
+                AssemblyRecipeBasic variant = view.recipe();
                 ItemStack output = variant.getResultItem(registryAccess());
                 outputs.add(output);
 
@@ -889,11 +902,12 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             return id + "#" + input.count;
         }
 
-        private void setGroupedGateModifierRecipe(IRecipeLayoutBuilder builder, List<AssemblyRecipeBasic> variants) {
+        private void setGroupedGateModifierRecipe(IRecipeLayoutBuilder builder, List<AssemblyJeiRecipe> variants) {
             List<ItemStack> gates = new ArrayList<>();
             List<ItemStack> modifiers = new ArrayList<>();
             List<ItemStack> outputs = new ArrayList<>();
-            for (AssemblyRecipeBasic variant : variants) {
+            for (AssemblyJeiRecipe view : variants) {
+                AssemblyRecipeBasic variant = view.recipe();
                 ItemStack output = variant.getResultItem(registryAccess());
                 outputs.add(output);
                 for (IngredientStack input : variant.getInputsFor(output)) {
@@ -940,8 +954,9 @@ public class BuildCraftJeiPlugin implements IModPlugin {
         }
 
         @Override
-        public void draw(AssemblyRecipeBasic recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-            GroupedAssemblyRecipe grouped = GROUPED_ASSEMBLY_RECIPES.get(recipe.getId());
+        public void draw(AssemblyJeiRecipe view, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+            AssemblyRecipeBasic recipe = view.recipe();
+            GroupedAssemblyRecipe grouped = GROUPED_ASSEMBLY_RECIPES.get(view.id());
             String energyText;
             long animationEnergy;
             if (grouped == null) {
@@ -951,7 +966,8 @@ public class BuildCraftJeiPlugin implements IModPlugin {
             } else {
                 long min = Long.MAX_VALUE;
                 long max = Long.MIN_VALUE;
-                for (AssemblyRecipeBasic variant : grouped.variants()) {
+                for (AssemblyJeiRecipe variantView : grouped.variants()) {
+                    AssemblyRecipeBasic variant = variantView.recipe();
                     ItemStack output = variant.getResultItem(registryAccess());
                     long value = variant.getRequiredMicroJoulesFor(output);
                     min = Math.min(min, value);

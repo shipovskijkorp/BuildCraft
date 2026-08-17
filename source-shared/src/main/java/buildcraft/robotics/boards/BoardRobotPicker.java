@@ -2,6 +2,7 @@ package buildcraft.robotics.boards;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobot;
 import buildcraft.robotics.internal.legacy.boards.RedstoneBoardRobotNBT;
@@ -13,10 +14,20 @@ import buildcraft.robotics.ai.AIRobotFetchItem;
 import buildcraft.robotics.ai.AIRobotGotoSleep;
 import buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
 import buildcraft.robotics.statements.ActionRobotFilter;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.Level;
 
 /** 1.7.10 BuildCraft picker board port. Picks dropped item entities, unloads them, then sleeps. */
 public class BoardRobotPicker extends RedstoneBoardRobot {
-    public static final Set<Integer> targettedItems = new HashSet<>();
+    public static final Set<TargetKey> targettedItems = new HashSet<>();
+
+    /** Dropped-item reservations must be unique across dimensions and entity-id reuse. */
+    public record TargetKey(ResourceKey<Level> dimension, UUID itemUuid) {
+        public static TargetKey of(ItemEntity item) {
+            return new TargetKey(item.getCommandSenderWorld().dimension(), item.getUUID());
+        }
+    }
 
     public BoardRobotPicker(EntityRobotBase robot) {
         super(robot);

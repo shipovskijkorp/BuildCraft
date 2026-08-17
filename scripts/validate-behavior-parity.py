@@ -183,8 +183,8 @@ def validate_java_invariants() -> None:
         for token in ("RenderSystem.", "FakeWorld", "renderBlocks(", "renderBlockEntities(", "renderEntities("):
             if token in snapshot_text:
                 fail(f"{target}: disabled snapshot preview still contains live renderer token {token!r}")
-        require(target, wire, "manager.inBlockTickingRange(ChunkPos.asLong(element.blockPos))")
-        forbid(target, wire, "isPlayerWatchingChunk")
+        require(target, wire, "chunkMap.getPlayers(chunkPos, false).contains(serverPlayer)")
+        forbid(target, wire, "inBlockTickingRange", "isPlayerWatchingChunk")
         forbid(target, oil_generator, "genOilInEveryVanillaBiomes", "genOilInEveryModBiomes")
         require(target, oil_structure, "state.blocksMotion()")
         forbid(target, oil_structure, "OilGenerator.createTube(start, Math.max(0")
@@ -881,7 +881,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 89
+    expected_tests = 90
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0
@@ -964,6 +964,7 @@ def validate_gametest_runtime_guards() -> None:
 
         permission_suite = text(target, "src/gametest/java/buildcraft/gametest/PermissionOwnerGameTests.java")
         for method in (
+            "buildCraftAutomationPlayerUsesPlatformFakePlayer",
             "machineOwnerIdentitySurvivesPersistenceRoundTrip",
             "robotOwnerIdentitySurvivesPersistenceAndFeedsApi2Actor",
             "api2PermissionProviderSeesOwnerAcrossWorldOperationKinds",

@@ -28,6 +28,7 @@ public class AIRobotFetchItem extends AIRobot {
 
     private ItemEntity target;
     private int targetId = -1;
+    private BoardRobotPicker.TargetKey targetReservation;
     private float maxRange = 250;
     private IStackFilter stackFilter;
     private int pickTime = -1;
@@ -176,7 +177,8 @@ public class AIRobotFetchItem extends AIRobot {
         ?*/
         //?}
             if (!isValidTarget(item)) continue;
-            if (BoardRobotPicker.targettedItems.contains(item.getId())) continue;
+            BoardRobotPicker.TargetKey reservation = BoardRobotPicker.TargetKey.of(item);
+            if (BoardRobotPicker.targettedItems.contains(reservation)) continue;
             if (robot.isKnownUnreachable(item)) continue;
             if (stackFilter != null && !stackFilter.matches(item.getItem())) continue;
             if (!isInsideZone(item.position())) continue;
@@ -191,7 +193,8 @@ public class AIRobotFetchItem extends AIRobot {
         if (best != null) {
             target = best;
             targetId = best.getId();
-            BoardRobotPicker.targettedItems.add(targetId);
+            targetReservation = BoardRobotPicker.TargetKey.of(best);
+            BoardRobotPicker.targettedItems.add(targetReservation);
             if (!canPickTargetNow()) {
                 BlockPos pickupPos = findPickupTargetPos(target);
                 if (pickupPos == null) {
@@ -291,9 +294,10 @@ public class AIRobotFetchItem extends AIRobot {
     }
 
     private void releaseTargetReservation() {
-        if (targetId != -1) {
-            BoardRobotPicker.targettedItems.remove(targetId);
+        if (targetReservation != null) {
+            BoardRobotPicker.targettedItems.remove(targetReservation);
         }
+        targetReservation = null;
         targetId = -1;
         target = null;
     }
@@ -330,6 +334,7 @@ public class AIRobotFetchItem extends AIRobot {
         // Always reacquire a target after loading. A saved numeric entity ID may now refer to an unrelated entity.
         target = null;
         targetId = -1;
+        targetReservation = null;
         pickTime = -1;
         stackFilter = null;
         refreshContextAfterLoad = true;
