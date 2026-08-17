@@ -2,6 +2,10 @@
   "sources": [
     {
       "type": "minecraft:single",
+      "resource": "buildcraftlib:model/led_fallback"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "buildcraftbuilders:addons/filler_planner"
     },
     {

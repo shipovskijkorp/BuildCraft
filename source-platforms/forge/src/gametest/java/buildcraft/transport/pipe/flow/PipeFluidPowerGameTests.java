@@ -82,7 +82,20 @@ public final class PipeFluidPowerGameTests {
         require(helper, mixed == 0, "pipe accepted lava while it already contained water");
         require(helper, totalFluid(flow) == rate, "rejected mixed fluid changed the stored amount");
 
+        int delay = Math.max(1, (int) Math.ceil(
+            PipeApi.getFluidTransferInfo(BCTransportPipes.cobbleFluid).transferDelayMultiplier
+        ));
+        int phaseTicks = delay > 1 ? Math.min(3, delay - 1) : 0;
+        for (int i = 0; i < phaseTicks; i++) {
+            flow.onTick();
+        }
+
         CompoundTag nbt = flow.writeToNbt();
+        String centreKey = "tank[" + EnumPipePart.CENTER.getIndex() + "]";
+        CompoundTag centreNbt = nbt.getCompound(centreKey);
+        require(helper, centreNbt.contains("currentTime"), "fluid delay phase was not written to NBT");
+        int savedPhase = centreNbt.getInt("currentTime");
+        require(helper, savedPhase == phaseTicks % delay, "fluid delay phase advanced unexpectedly before save");
         TestPipe restoredPipe = new TestPipe(helper.getLevel(), BCTransportPipes.cobbleFluid);
         PipeFlowFluids restored = new PipeFlowFluids(restoredPipe, nbt);
         restoredPipe.setFlow(restored);
@@ -90,6 +103,9 @@ public final class PipeFluidPowerGameTests {
         require(helper, totalFluid(restored) == rate, "fluid amount changed after NBT round-trip");
         require(helper, containsFluid(restored, net.minecraft.world.level.material.Fluids.WATER),
             "fluid identity changed after NBT round-trip");
+        CompoundTag restoredNbt = restored.writeToNbt();
+        require(helper, restoredNbt.getCompound(centreKey).getInt("currentTime") == savedPhase,
+            "fluid delay phase changed after NBT round-trip");
         helper.succeed();
     }
 

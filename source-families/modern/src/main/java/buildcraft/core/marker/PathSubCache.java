@@ -7,6 +7,7 @@ package buildcraft.core.marker;
 import java.util.List;
 
 import buildcraft.core.BCCoreConfig;
+import buildcraft.core.client.BuildCraftLaserManager;
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.marker.MarkerSubCache;
@@ -95,7 +96,7 @@ public class PathSubCache extends MarkerSubCache<PathConnection> {
 
     @Override
     public LaserType getPossibleLaserType() {
-        return null;//BuildCraftLaserManager.MARKER_PATH_POSSIBLE;
+        return BuildCraftLaserManager.MARKER_PATH_POSSIBLE;
     }
 
     @Override

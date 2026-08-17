@@ -848,6 +848,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             nbt.putInt("capacity", amount);
             nbt.putInt("lastSentAmount", lastSentAmount);
             nbt.putInt("ticksInDirection", ticksInDirection);
+            nbt.putInt("currentTime", currentTime);
             
             for (int i = 0; i < incoming.length; ++i) {
                 nbt.putInt("in[" + i + "]", incoming[i]);
@@ -858,6 +859,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             this.amount = Math.max(0, nbt.getInt("capacity"));
             this.lastSentAmount = Math.max(0, nbt.getInt("lastSentAmount"));
             this.ticksInDirection = nbt.getInt("ticksInDirection");
+            this.currentTime = incoming.length == 0 ? 0 : Math.floorMod(nbt.getInt("currentTime"), incoming.length);
 
             incomingTotalCache = 0;
             for (int i = 0; i < incoming.length; ++i) {

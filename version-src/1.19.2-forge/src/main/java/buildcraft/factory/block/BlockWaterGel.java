@@ -46,7 +46,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.common.util.ForgeSoundType;
 
 public class BlockWaterGel extends BlockBCBase_Neptune {
@@ -241,8 +240,10 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
-		return ImmutableList.of(new ItemStack(BCFactoryItems.GEL.get(), 
-				state.getValue(PROP_STAGE).spreading ? builder.create(LootContextParamSets.BLOCK).getRandom().nextInt(2) + 1 : 1));
+        if (state.getValue(PROP_STAGE) != GelStage.GEL) {
+            return ImmutableList.of();
+        }
+        return ImmutableList.of(new ItemStack(BCFactoryItems.GEL.get()));
 	}
 
 }

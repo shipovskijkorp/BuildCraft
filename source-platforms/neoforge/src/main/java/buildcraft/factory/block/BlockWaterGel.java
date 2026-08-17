@@ -240,8 +240,10 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-		return ImmutableList.of(new ItemStack(BCFactoryItems.GEL.get(), 
-				state.getValue(PROP_STAGE).spreading ? builder.getLevel().getRandom().nextInt(2) + 1 : 1));
+        if (state.getValue(PROP_STAGE) != GelStage.GEL) {
+            return ImmutableList.of();
+        }
+        return ImmutableList.of(new ItemStack(BCFactoryItems.GEL.get()));
 	}
 
 }

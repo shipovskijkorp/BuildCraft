@@ -172,6 +172,9 @@ public class FacadeAssemblyRecipes extends AssemblyRecipeBasic implements IRecip
 
 	@Override
 	public ItemStack getResultItem(RegistryAccess registryAccess) {
+        if (!BCSiliconConfig.enableFacades) {
+            return ItemStack.EMPTY;
+        }
         return FacadeStateManager.validFacadeStates.values().stream()
             .filter(info -> info.isVisible && !info.requiredStack.isEmpty())
             .findFirst()

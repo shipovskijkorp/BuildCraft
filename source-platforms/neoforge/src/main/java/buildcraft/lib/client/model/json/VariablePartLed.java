@@ -11,12 +11,12 @@ import com.google.gson.JsonObject;
 import buildcraft.lib.client.model.json.JsonVariableModel.ITextureGetter;
 import buildcraft.lib.expression.FunctionContext;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 public class VariablePartLed extends VariablePartCuboidBase {
+    public static final ResourceLocation FALLBACK_SPRITE = ResourceLocation.fromNamespaceAndPath("buildcraftlib", "model/led_fallback");
     private static final VariableFaceData FACE_DATA = new VariableFaceData();
 
     static {
@@ -42,8 +42,7 @@ public class VariablePartLed extends VariablePartCuboidBase {
     
     public static void onTextureStitchPost(TextureAtlasStitchedEvent event) {
     	if(InventoryMenu.BLOCK_ATLAS.equals(event.getAtlas().location())) {
-            FACE_DATA.sprite = event.getAtlas()
-                .getSprite(BuiltInRegistries.BLOCK.getKey(Blocks.QUARTZ_BLOCK)); // TODO: Replace the quartz placeholder with a dedicated LED fallback sprite.
+            FACE_DATA.sprite = event.getAtlas().getSprite(FALLBACK_SPRITE);
     	}
 
     }

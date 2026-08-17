@@ -37,6 +37,7 @@ import buildcraft.lib.net.cache.MessageObjectCacheResponse;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -96,6 +97,7 @@ public class BCLibEventDist {
                 // Some mods start an additional/earlier resource reload. Make sure the library sprites exist
                 // before the final holder-registration pass, instead of relying on FMLClientSetup ordering.
                 BCLibSprites.fmlPreInitClient();
+                event.addSprite(new ResourceLocation("buildcraftlib", "model/led_fallback"));
 	    		ReloadManager.INSTANCE.preReloadResources();
                 // Variable models are reparsed in this pass, so old expression-node arrays are no longer valid.
                 ModelVariableData.onModelBake();
