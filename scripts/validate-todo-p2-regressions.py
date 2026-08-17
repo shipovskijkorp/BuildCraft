@@ -21,6 +21,13 @@ def require(rel, *tokens):
             errors.append(f"{rel}: missing TODO-P2 guard {token!r}")
 
 
+def forbid(rel, *tokens):
+    source = text(rel)
+    for token in tokens:
+        if token in source:
+            errors.append(f"{rel}: forbidden TODO-P2 regression token {token!r}")
+
+
 # Legacy GUI scale.
 require(
     "version-src/1.19.2-forge/src/main/java/buildcraft/lib/gui/elem/GuiElementText.java",
@@ -41,6 +48,40 @@ for platform in ("forge", "neoforge"):
         "cachedBiome",
         "getNeighbourTile(side)",
     )
+
+# Compile-level compatibility guards for the P2 rendering/cache work. Syntax-only materialization does not catch
+# these API differences, so keep the known cross-version contracts explicit here.
+for platform in ("forge", "neoforge"):
+    require(
+        f"source-platforms/{platform}/src/main/java/buildcraft/lib/engine/TileEngineBase_BC8.java",
+        "import net.minecraft.world.level.Level;",
+        "private Level cachedBiomeLevel;",
+    )
+    require(
+        f"source-platforms/{platform}/src/main/java/buildcraft/lib/client/model/MutableVertex.java",
+        "1.0D / Math.sqrt(lenSq)",
+    )
+    forbid(
+        f"source-platforms/{platform}/src/main/java/buildcraft/lib/client/model/MutableVertex.java",
+        "Mth.invSqrt(lenSq)",
+    )
+    require(
+        f"source-platforms/{platform}/src/main/java/buildcraft/lib/client/render/laser/LaserBoxRenderer.java",
+        "Arrays.asList(box.laserData)",
+    )
+forbid(
+    "version-src/1.19.2-forge/src/main/java/buildcraft/lib/client/render/fluid/FluidRenderer.java",
+    "spriteW = sprite.getWidth()",
+    "spriteH = sprite.getHeight()",
+)
+require(
+    "source-platforms/neoforge/src/main/java/buildcraft/factory/tile/TileHeatExchange.java",
+    "sourceFluid.copyWithAmount(accepted)",
+)
+forbid(
+    "source-platforms/neoforge/src/main/java/buildcraft/factory/tile/TileHeatExchange.java",
+    "new FluidStack(sourceFluid, accepted)",
+)
 
 # Fluid-pipe throughput, round-robin and rendering contracts.
 for platform in ("forge", "neoforge"):
@@ -106,7 +147,7 @@ for platform in ("forge", "neoforge"):
     )
     require(
         f"source-platforms/{platform}/src/main/java/buildcraft/lib/client/model/MutableVertex.java",
-        "Mth.invSqrt",
+        "Math.sqrt",
         "normal_x / x",
         "normal_y / y",
         "normal_z / z",

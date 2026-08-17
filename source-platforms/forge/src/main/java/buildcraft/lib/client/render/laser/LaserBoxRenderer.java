@@ -7,6 +7,7 @@
 package buildcraft.lib.client.render.laser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import buildcraft.lib.internal.debug.BCLog;
@@ -56,7 +57,7 @@ public class LaserBoxRenderer {
 
         makeLaserBox(box, type, center);
 
-        LaserRenderer_BC8.renderLaserBoxDynamic(pose, normal, box.laserData, bb);
+        LaserRenderer_BC8.renderLaserBoxDynamic(pose, normal, Arrays.asList(box.laserData), bb);
     }
 
     private static void makeLaserBox(Box box, LaserType type, boolean center) {

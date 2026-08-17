@@ -474,7 +474,7 @@ public class MutableVertex {
         float nz = z == 0 ? 0 : normal_z / z;
         float lenSq = nx * nx + ny * ny + nz * nz;
         if (lenSq > 1.0e-12F && Float.isFinite(lenSq)) {
-            float invLen = Mth.invSqrt(lenSq);
+            float invLen = (float) (1.0D / Math.sqrt(lenSq));
             normal_x = nx * invLen;
             normal_y = ny * invLen;
             normal_z = nz * invLen;

@@ -269,7 +269,7 @@ public class TileHeatExchange extends TileBC_Neptune implements IDebuggable, Men
         if (accepted <= 0) {
             return;
         }
-        FluidStack transfer = new FluidStack(sourceFluid, accepted);
+        FluidStack transfer = sourceFluid.copyWithAmount(accepted);
         int filled = target.fillInternal(transfer, FluidAction.EXECUTE);
         if (filled > 0) {
             source.drainInternal(filled, FluidAction.EXECUTE);

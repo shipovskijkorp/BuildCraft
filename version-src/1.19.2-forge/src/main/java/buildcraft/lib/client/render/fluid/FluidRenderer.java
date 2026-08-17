@@ -241,8 +241,6 @@ public class FluidRenderer {
         if (type == null) 
             type = FluidSpriteType.STILL;
         sprite = getFluidSprite(type, fluidType, texParam);
-        spriteW = sprite.getWidth();
-        spriteH = sprite.getHeight();
 
         double height = Mth.clamp(amount / cap, 0, 1);
         final Vec3 realMin, realMax;
@@ -424,8 +422,6 @@ public class FluidRenderer {
         if (sprite == null) {
             sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
         }
-        spriteW = sprite.getWidth();
-        spriteH = sprite.getHeight();
 //        Minecraft.getInstance().getBlockRenderer().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 //        RenderUtil.setGLColorFromInt(fluid.getFluid().getFluidType(fluid));
 
