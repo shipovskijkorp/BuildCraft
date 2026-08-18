@@ -290,6 +290,23 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
         return Math.max(0, maxPower);
     }
 
+    /** Rolling server-side MJ throughput through the pipe, in micro-MJ per tick. */
+    public long getAverageThroughput() {
+        ensureConfigured();
+        if (disabled || maxPower <= 0) return 0L;
+        double maxAverage = 0.0D;
+        for (Section section : sections.values()) {
+            maxAverage = Math.max(maxAverage, section.powerAverage.getAverage());
+        }
+        return Math.min(maxPower, Math.max(0L, Math.round(maxAverage)));
+    }
+
+    /** Effective MJ throughput ceiling after pipe behaviours, in micro-MJ/t. */
+    public long getTransferCapacityPerTick() {
+        ensureConfigured();
+        return disabled ? 0L : Math.max(0L, maxPower);
+    }
+
     public boolean canReceivePowerFromApi() {
         ensureConfigured();
         return isReceiver && !disabled;

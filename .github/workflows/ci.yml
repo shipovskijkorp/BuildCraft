@@ -57,6 +57,12 @@ jobs:
       - name: Validate FE compatibility
         run: python scripts/validate-fe-compat.py
 
+      - name: Validate FE Engine and MJ Dynamo parity
+        run: python scripts/validate-fe-mj-engine-parity.py
+
+      - name: Validate render and Jade follow-up regressions
+        run: python scripts/validate-render-jade-followups.py
+
       - name: Validate P2 regression and performance guards
         run: python scripts/validate-p2-regressions.py
 

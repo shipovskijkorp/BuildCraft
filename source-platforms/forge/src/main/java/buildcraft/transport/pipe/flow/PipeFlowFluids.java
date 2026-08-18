@@ -45,6 +45,7 @@ import buildcraft.lib.fluid.FuelApiBridge;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.MathUtil;
+import buildcraft.lib.misc.data.AverageInt;
 import buildcraft.lib.misc.StringUtilBC;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.lib.net.cache.BuildCraftObjectCaches;
@@ -97,6 +98,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     private FluidStack currentFluid = FluidStack.EMPTY;
     private int currentDelay;
     private final SafeTimeTracker tracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 4);
+    private final AverageInt throughputAverage = new AverageInt(10);
 
     // Client fields for interpolating amounts
     private long lastMessage, lastMessageMinus1;
@@ -488,6 +490,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             return;
         }
 
+        int movedFromCentre = 0;
+        int movedToCentre = 0;
         if (!currentFluid.isEmpty()) {
             // int timeSlot = (int) (world.getTotalWorldTime() % currentDelay);
             int totalFluid = 0;
@@ -513,8 +517,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 if (canOutput) {
                     moveFromPipe();
                 }
-                moveFromCenter();
-                moveToCenter();
+                movedFromCentre = moveFromCenter();
+                movedToCentre = moveToCenter();
             }
 
             // tick cooldowns
@@ -527,6 +531,9 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 }
             }
         }
+
+        int throughputThisTick = Math.min(transferPerTick, Math.max(movedFromCentre, movedToCentre));
+        throughputAverage.tick(Math.max(0, throughputThisTick));
 
         boolean send = false;
 
@@ -579,12 +586,13 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         }
     }
 
-    private void moveFromCenter() {
+    private int moveFromCenter() {
+        int moved = 0;
         Section center = sections.get(EnumPipePart.CENTER);
         // Split liquids moving to output equally based on flowrate, how much each side can accept and available liquid
         int totalAvailable = center.getMaxDrained();
         if (totalAvailable < 1) {
-            return;
+            return 0;
         }
 
         int flowRate = transferPerTick;
@@ -628,7 +636,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 Collections.shuffle(random);
             }
 
-            if (random.isEmpty()) return;
+            if (random.isEmpty()) return 0;
             float min = Math.min(flowRate * random.size(), totalAvailable)
             / (float) flowRate / random.size();
 
@@ -645,20 +653,23 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                     int filled = section.fill(amountToPush, FluidAction.EXECUTE);
                     if (filled > 0) {
                         center.drainInternal(filled, true);
+                        moved += filled;
                         section.ticksInDirection = COOLDOWN_OUTPUT;
                     }
                     // flow[direction.ordinal()] = 1;
                 }
             }
         }
+        return Math.min(transferPerTick, moved);
     }
 
-    private void moveToCenter() {
+    private int moveToCenter() {
+        int moved = 0;
         int transferInCount = 0;
         Section center = sections.get(EnumPipePart.CENTER);
         int spaceAvailable = capacity - center.amount;
         if (spaceAvailable <= 0 || center.getMaxFilled() <= 0) {
-            return;
+            return 0;
         }
         int flowRate = transferPerTick;
 
@@ -738,9 +749,21 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                             "Couldn't fill " + entering + " from " + part + ", only filled " + actuallyFilled
                         );
                     }
+                    moved += actuallyFilled;
                 }
             }
         }
+        return Math.min(transferPerTick, moved);
+    }
+
+    /** Rolling server-side fluid throughput through the pipe centre, in mB/t. */
+    public int getAverageThroughput() {
+        return Math.min(transferPerTick, Math.max(0, (int) Math.round(throughputAverage.getAverage())));
+    }
+
+    /** Declared fluid throughput ceiling for this pipe, in mB/t. */
+    public int getTransferCapacityPerTick() {
+        return Math.max(0, transferPerTick);
     }
 
     @Override

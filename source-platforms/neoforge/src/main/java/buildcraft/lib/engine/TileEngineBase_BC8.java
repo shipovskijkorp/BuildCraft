@@ -168,7 +168,9 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         }
         requestModelDataUpdate();
         BlockState state = getBlockState();
-        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
+        // Rotation changes both the baked static shell and the block-entity-rendered moving assembly. Force the
+        // section to rebuild immediately so a wrench turn cannot show the two halves with different facings.
+        level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS | Block.UPDATE_IMMEDIATE);
     }
 
     private void syncRenderProgressFromProgress() {

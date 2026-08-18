@@ -13,7 +13,9 @@ import buildcraft.lib.client.render.DetachedRenderer.IDetachedRenderer;
 import buildcraft.lib.marker.MarkerCache;
 import buildcraft.lib.marker.MarkerConnection;
 import buildcraft.lib.marker.MarkerSubCache;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public enum MarkerRenderer implements IDetachedRenderer {
     INSTANCE;
@@ -25,11 +27,15 @@ public enum MarkerRenderer implements IDetachedRenderer {
                 // Keep the server-authoritative connection cached across client chunk unloads, but only render it
                 // while every marker chunk is actually present on this client. This prevents unfogged marker boxes
                 // from remaining visible beyond the render distance without reintroducing destructive cache pruning.
-                if (!connection.getMarkerPositions().stream().allMatch(player.level()::hasChunkAt)) {
+                if (!connection.getMarkerPositions().stream().allMatch(pos -> isClientChunkLoaded(player.level(), pos))) {
                     continue;
                 }
                 connection.renderInWorld(pose, matrix);
             }
         }
     }
+    private static boolean isClientChunkLoaded(Level level, BlockPos pos) {
+        return level != null && level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4) != null;
+    }
+
 }

@@ -446,8 +446,12 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     public final void redrawBlock() {
         if (this.hasLevel()) {
             if (level.isClientSide()) {
+                // NET_REDRAW is also the model-data invalidation path for dynamic baked models (engines, pipes, etc.).
+                // Flags=0 does not reliably dirty the client render section, which can leave the static half of an
+                // engine in its old orientation while the block-entity renderer already uses the new facing.
+                requestModelDataUpdate();
                 BlockState state = level.getBlockState(worldPosition);
-                level.sendBlockUpdated(worldPosition, state, state, 0);
+                level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
 
                 if (DEBUG) {
                     double x = worldPosition.getX() + 0.5;

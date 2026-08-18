@@ -28,6 +28,9 @@ import buildcraft.lib.client.render.DetachedRenderer;
 import buildcraft.lib.client.render.laser.LaserBoxRenderer;
 import buildcraft.lib.client.render.laser.LaserRenderer_BC8;
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 
 public enum RenderVolumeBoxes implements DetachedRenderer.IDetachedRenderer {
@@ -40,6 +43,13 @@ public enum RenderVolumeBoxes implements DetachedRenderer.IDetachedRenderer {
     	BufferBuilder bb = Tesselator.getInstance().getBuilder();
     	bb.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
         ClientVolumeBoxes.INSTANCE.volumeBoxes.forEach(volumeBox -> {
+            // Volume boxes are synchronized independently of client chunk lifetime. Keep the cached box so it can
+            // reappear intact after a render-distance unload, but never draw it while any chunk intersecting the
+            // box is absent from the client. Otherwise unfogged laser edges remain visible in the sky long after the
+            // terrain has unloaded.
+            if (!isBoxFullyLoaded(volumeBox)) {
+                return;
+            }
             LaserType type;
             if (volumeBox.isEditingBy(player)) {
                 type = BuildCraftLaserManager.MARKER_VOLUME_SIGNAL;
@@ -62,5 +72,29 @@ public enum RenderVolumeBoxes implements DetachedRenderer.IDetachedRenderer {
         Tesselator.getInstance().end();
 		
 	}
+
+    private static boolean isBoxFullyLoaded(buildcraft.core.marker.volume.VolumeBox volumeBox) {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null || volumeBox == null || volumeBox.box == null
+            || volumeBox.box.min() == null || volumeBox.box.max() == null) {
+            return false;
+        }
+
+        BlockPos min = volumeBox.box.min();
+        BlockPos max = volumeBox.box.max();
+        int minChunkX = Math.min(min.getX(), max.getX()) >> 4;
+        int maxChunkX = Math.max(min.getX(), max.getX()) >> 4;
+        int minChunkZ = Math.min(min.getZ(), max.getZ()) >> 4;
+        int maxChunkZ = Math.max(min.getZ(), max.getZ()) >> 4;
+
+        for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++) {
+            for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ++) {
+                if (level.getChunkSource().getChunkNow(chunkX, chunkZ) == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }

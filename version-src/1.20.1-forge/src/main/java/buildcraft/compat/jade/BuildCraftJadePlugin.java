@@ -6,6 +6,7 @@ package buildcraft.compat.jade;
 
 import buildcraft.api.v2.energy.MjAmount;
 import buildcraft.lib.internal.mj.MjFormatting;
+import buildcraft.lib.internal.mj.MjReceiverEnergyStorage;
 import buildcraft.lib.internal.mj.MjCapabilities;
 
 import java.util.ArrayList;
@@ -39,6 +40,9 @@ import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.tile.TileZonePlanner;
 import buildcraft.silicon.tile.TileLaserTableBase;
 import buildcraft.transport.pipe.Pipe;
+import buildcraft.transport.pipe.flow.PipeFlowFluids;
+import buildcraft.transport.pipe.flow.PipeFlowForgeEnergy;
+import buildcraft.transport.pipe.flow.PipeFlowPower;
 import buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
@@ -61,6 +65,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -127,6 +132,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
 
         registration.registerProgress(ProgressProvider.INSTANCE, TileZonePlanner.class);
         registration.registerProgress(ProgressProvider.INSTANCE, TileLaserTableBase.class);
+        registration.registerProgress(ProgressProvider.INSTANCE, TilePipeHolder.class);
     }
 
     @Override
@@ -450,39 +456,49 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
                 group.getExtraData().putString("Unit", "MJ");
                 return List.of(group);
             }
+            if (!(target instanceof TileBC_Neptune tile)) {
+                return null;
+            }
+            // Pipe energy buffers are transport implementation details, not player-facing batteries.
+            // Pipes expose current throughput / throughput capacity through ProgressProvider instead.
+            if (tile instanceof TilePipeHolder) {
+                return null;
+            }
 
-            if (target instanceof TileLaserTableBase table) {
+            List<ViewGroup<CompoundTag>> groups = new ArrayList<>();
+            boolean hasDedicatedMjView = false;
+
+            if (tile instanceof TileLaserTableBase table) {
                 long targetPower = Math.max(0L, table.getTarget());
                 if (targetPower > 0L) {
                     CompoundTag tag = mjEnergyTag(table.power, targetPower);
                     ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
                     group.id = "mj";
                     group.getExtraData().putString("Unit", "MJ");
-                    return List.of(group);
+                    groups.add(group);
+                    hasDedicatedMjView = true;
                 }
-            }
-
-            if (target instanceof TileDynamoMJ dynamo) {
+            } else if (tile instanceof TileDynamoMJ dynamo) {
                 CompoundTag tag = mjEnergyTag(dynamo.getMjStored(), dynamo.getMjCapacity());
                 ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
                 group.id = "mj";
                 group.getExtraData().putString("Unit", "MJ");
-                return List.of(group);
-            }
-
-            if (target instanceof TileEngineBase_BC8 engine) {
+                groups.add(group);
+                hasDedicatedMjView = true;
+            } else if (tile instanceof TileEngineBase_BC8 engine) {
                 CompoundTag tag = mjEnergyTag(engine.getEnergyStored(), engine.getMaxPower());
                 ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
                 group.id = "mj";
                 group.getExtraData().putString("Unit", "MJ");
-                return List.of(group);
+                groups.add(group);
+                hasDedicatedMjView = true;
             }
 
-            if (target instanceof TileBC_Neptune tile) {
-                List<ViewGroup<CompoundTag>> groups = mjReadableGroups(tile);
-                return groups.isEmpty() ? null : groups;
+            if (!hasDedicatedMjView) {
+                groups.addAll(mjReadableGroups(tile));
             }
-            return null;
+            groups.addAll(feEnergyGroups(tile));
+            return groups.isEmpty() ? null : groups;
         }
 
         @Override
@@ -530,6 +546,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
                 }
                 return progressGroup("laser", clamp01(table.power / (float) targetPower));
             }
+            if (target instanceof TilePipeHolder holder) {
+                return pipeThroughputGroups(holder);
+            }
             return null;
         }
 
@@ -538,7 +557,13 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
             return ClientViewGroup.map(groups, ProgressView::read, (serverGroup, clientGroup) -> {
                 decorateGroupTitle(serverGroup, clientGroup);
                 for (ProgressView view : clientGroup.views) {
-                    if (serverGroup.id != null) {
+                    String flowType = serverGroup.getExtraData().getString("FlowType");
+                    if (!flowType.isBlank()) {
+                        view.text = pipeThroughputText(
+                            flowType,
+                            serverGroup.getExtraData().getLong("FlowCurrent")
+                        );
+                    } else if (serverGroup.id != null) {
                         view.text = Component.translatable("buildcraft.jade.progress." + safeTranslationPart(serverGroup.id));
                     }
                 }
@@ -581,6 +606,52 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
                 fluidTag == null ? null : fluidTag.copy()
         );
         return FluidView.writeDefault(object, Math.max(0, capacity));
+    }
+
+    private static List<ViewGroup<CompoundTag>> pipeThroughputGroups(TilePipeHolder holder) {
+        Pipe pipe = holder.getPipe();
+        if (pipe == Pipe.EMPTY || pipe.getFlow() == null) return null;
+
+        if (pipe.getFlow() instanceof PipeFlowPower power) {
+            if (BCLibConfig.hidePowerValues) return null;
+            return List.of(pipeThroughputGroup(
+                "pipe_mj_flow", "mj", power.getAverageThroughput(), power.getTransferCapacityPerTick()
+            ));
+        }
+        if (pipe.getFlow() instanceof PipeFlowForgeEnergy energy) {
+            if (BCLibConfig.hidePowerValues) return null;
+            return List.of(pipeThroughputGroup(
+                "pipe_fe_flow", "fe", energy.getAverageThroughput(), energy.getTransferCapacityPerTick()
+            ));
+        }
+        if (pipe.getFlow() instanceof PipeFlowFluids fluids) {
+            if (BCLibConfig.hideFluidValues) return null;
+            return List.of(pipeThroughputGroup(
+                "pipe_fluid_flow", "fluid", fluids.getAverageThroughput(), fluids.getTransferCapacityPerTick()
+            ));
+        }
+        return null;
+    }
+
+    private static ViewGroup<CompoundTag> pipeThroughputGroup(String id, String flowType, long current, long capacity) {
+        long safeCapacity = Math.max(0L, capacity);
+        long safeCurrent = Math.max(0L, Math.min(safeCapacity, current));
+        float ratio = safeCapacity <= 0L ? 0.0F : clamp01(safeCurrent / (float) safeCapacity);
+        ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(ProgressView.create(ratio)));
+        group.id = id;
+        group.getExtraData().putString("FlowType", flowType);
+        group.getExtraData().putLong("FlowCurrent", safeCurrent);
+        group.getExtraData().putLong("FlowCapacity", safeCapacity);
+        return group;
+    }
+
+    private static MutableComponent pipeThroughputText(String flowType, long current) {
+        return switch (flowType) {
+            case "mj" -> LocaleUtil.localizeMjFlow(current);
+            case "fe" -> LocaleUtil.localizeFeFlow(current);
+            case "fluid" -> LocaleUtil.localizeFluidFlow(current);
+            default -> Component.literal(Long.toString(current));
+        };
     }
 
     private static void appendOwner(CompoundTag root, TileBC_Neptune tile, boolean showDetails) {
@@ -763,6 +834,33 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         return null;
     }
 
+    private static List<ViewGroup<CompoundTag>> feEnergyGroups(TileBC_Neptune tile) {
+        Set<IEnergyStorage> seen = Collections.newSetFromMap(new IdentityHashMap<>());
+        long stored = 0L;
+        long capacity = 0L;
+        for (Direction side : nullableDirections()) {
+            IEnergyStorage energy = tile.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ENERGY, side).orElse(null);
+            if (energy == null || energy instanceof MjReceiverEnergyStorage || !seen.add(energy)) {
+                continue;
+            }
+            int max = Math.max(0, energy.getMaxEnergyStored());
+            if (max <= 0) {
+                continue;
+            }
+            capacity += max;
+            stored += Math.max(0, Math.min(max, energy.getEnergyStored()));
+        }
+        if (capacity <= 0L) {
+            return Collections.emptyList();
+        }
+        CompoundTag tag = energyTag(stored, capacity, 1L);
+        tag.putString("Unit", "FE");
+        ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
+        group.id = "fe";
+        group.getExtraData().putString("Unit", "FE");
+        return List.of(group);
+    }
+
     private static List<ViewGroup<CompoundTag>> mjReadableGroups(TileBC_Neptune tile) {
         List<ViewGroup<CompoundTag>> groups = new ArrayList<>();
         Set<IMjReadable> seen = Collections.newSetFromMap(new IdentityHashMap<>());
@@ -854,7 +952,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         }
         String id = safeTranslationPart(serverGroup.id);
         switch (id) {
-            case "robot", "inventory", "tank", "robot_tank", "robot_energy", "mj", "zone_planner", "laser" ->
+            case "robot", "inventory", "tank", "robot_tank", "robot_energy", "mj", "fe", "zone_planner", "laser", "pipe_mj_flow", "pipe_fe_flow", "pipe_fluid_flow" ->
                     clientGroup.title = Component.translatable("buildcraft.jade.group." + id);
             default -> clientGroup.title = Component.translatable("buildcraft.jade.group.generic", Component.literal(serverGroup.id));
         }

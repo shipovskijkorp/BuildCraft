@@ -227,6 +227,23 @@ public class PipeFlowForgeEnergy extends PipeFlow implements IFlowForgeEnergy, I
         return Math.max(0, maxPower);
     }
 
+    /** Rolling server-side FE throughput through the pipe, in FE per tick. */
+    public int getAverageThroughput() {
+        ensureConfigured();
+        if (disabled || maxPower <= 0) return 0;
+        double maxAverage = 0.0D;
+        for (Section section : sections.values()) {
+            maxAverage = Math.max(maxAverage, section.powerAverage.getAverage());
+        }
+        return Math.min(maxPower, Math.max(0, (int) Math.round(maxAverage)));
+    }
+
+    /** Effective FE throughput ceiling after pipe behaviours, in FE/t. */
+    public int getTransferCapacityPerTick() {
+        ensureConfigured();
+        return disabled ? 0 : Math.max(0, maxPower);
+    }
+
     public boolean canReceiveEnergyFromApi() {
         ensureConfigured();
         return isReceiver && !disabled;

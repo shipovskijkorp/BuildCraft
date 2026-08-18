@@ -199,19 +199,22 @@ require(
 # must not be rendered beyond the current client render distance.
 require(
     "version-src/1.19.2-forge/src/main/java/buildcraft/lib/client/render/MarkerRenderer.java",
-    "allMatch(player.level::hasChunkAt)",
+    "isClientChunkLoaded(player.level, pos)",
+    "getChunkSource().getChunkNow",
     "without reintroducing destructive cache pruning",
 )
 require(
     "source-shared/src/main/java/buildcraft/lib/client/render/MarkerRenderer.java",
-    "allMatch(player.level()::hasChunkAt)",
+    "isClientChunkLoaded(player.level(), pos)",
+    "getChunkSource().getChunkNow",
     "without reintroducing destructive cache pruning",
 )
 for platform in ("forge", "neoforge"):
     require(
         f"source-platforms/{platform}/src/main/java/buildcraft/core/client/RenderTickListener.java",
         "renderMarkerCache(poseStack, matrix, world, player",
-        "if (!world.hasChunkAt(a) || !world.hasChunkAt(b))",
+        "isClientChunkLoaded(world, a)",
+        "getChunkSource().getChunkNow",
         "visible beyond render distance",
     )
 

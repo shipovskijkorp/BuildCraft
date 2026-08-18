@@ -54,8 +54,8 @@ public class BCLibConfig {
      * calling {@link LocaleUtil#localizeFluidStaticAmount(int)} */
     public static boolean useBucketsStatic = true;
 
-    /** If true then fluidstacks will localize with something similar to "4B/s" rather than "4000mB/t" when calling
-     * {@link LocaleUtil#localizeFluidFlow(int)} */
+    /** If true then fluid flow values use buckets rather than millibuckets. The /s versus /t suffix is controlled
+     * independently by {@link #displayTimeGap}. */
     public static boolean useBucketsFlow = true;
 
     /** If true then fluidstacks and Mj will be localized with longer names (for example "1.2 Buckets per second" rather

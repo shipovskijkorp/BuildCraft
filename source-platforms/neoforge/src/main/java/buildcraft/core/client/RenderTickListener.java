@@ -314,7 +314,7 @@ public class RenderTickListener {
             double dx = x + 0.5D - player.getX();
             double dz = z + 0.5D - player.getZ();
             if (dx * dx + dz * dz > MAP_LOCATION_RENDER_DISTANCE_SQ
-                || !world.hasChunkAt(new BlockPos(x, world.getMinBuildHeight(), z))) {
+                || !isClientChunkLoaded(world, new BlockPos(x, world.getMinBuildHeight(), z))) {
                 continue;
             }
 
@@ -341,7 +341,7 @@ public class RenderTickListener {
         int x1, int z1, int x2, int z2) {
         BlockPos firstColumn = new BlockPos(x1, world.getMinBuildHeight(), z1);
         BlockPos secondColumn = new BlockPos(x2, world.getMinBuildHeight(), z2);
-        if (!world.hasChunkAt(firstColumn) || !world.hasChunkAt(secondColumn)) {
+        if (!isClientChunkLoaded(world, firstColumn) || !isClientChunkLoaded(world, secondColumn)) {
             return;
         }
         double y1 = world.getHeight(Heightmap.Types.WORLD_SURFACE, x1, z1) + 0.05D;
@@ -388,7 +388,7 @@ public class RenderTickListener {
                 // Marker positions remain cached when their chunks leave the client so the authoritative connection
                 // can reappear intact after reloading. Do not render possible-connection lasers for those cached-only
                 // positions: otherwise disabling terrain fog for marker lasers makes them visible beyond render distance.
-                if (!world.hasChunkAt(a) || !world.hasChunkAt(b)) {
+                if (!isClientChunkLoaded(world, a) || !isClientChunkLoaded(world, b)) {
                     continue;
                 }
 
@@ -419,4 +419,8 @@ public class RenderTickListener {
     private static boolean isLookingAt(BlockPos from, BlockPos to, Player player) {
         return ItemMarkerConnector.doesInteract(from, to, player);
     }
+    private static boolean isClientChunkLoaded(ClientLevel world, BlockPos pos) {
+        return world != null && world.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4) != null;
+    }
+
 }

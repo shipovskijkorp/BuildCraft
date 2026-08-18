@@ -58,7 +58,11 @@ public class LocaleUtil {
         String longName = BCLibConfig.useLongLocalizedName ? "long" : "short";
         String timeGap = BCLibConfig.displayTimeGap == TimeGap.SECONDS ? "seconds." : "";
         localeKeyFluidStatic = "buildcraft.fluid.static." + (bucketStatic ? "bucket." : "milli.") + longName;
-        localeKeyFluidFlow = "buildcraft.fluid.flow." + (bucketFlow ? "bucket." : "milli.") + longName;
+        if (BCLibConfig.displayTimeGap == TimeGap.SECONDS) {
+            localeKeyFluidFlow = "buildcraft.fluid.flow." + (bucketFlow ? "bucket." : "milli.seconds.") + longName;
+        } else {
+            localeKeyFluidFlow = "buildcraft.fluid.flow." + (bucketFlow ? "bucket.ticks." : "milli.") + longName;
+        }
         localeKeyFluidStaticCap = "buildcraft.fluid.static.cap." + (bucketStatic ? "bucket." : "milli.") + longName;
         localeKeyFluidStaticEmpty = "buildcraft.fluid.empty." + (bucketStatic ? "bucket." : "milli.") + longName;
         localeKeyFluidStaticFull = "buildcraft.fluid.full." + (bucketStatic ? "bucket." : "milli.") + longName;
@@ -172,12 +176,12 @@ public class LocaleUtil {
         if (BCLibConfig.hideFluidValues) {
             return hiddenValue();
         }
-        String amount;
-        if (BCLibConfig.useBucketsFlow) {
-            amount = FORMAT_FLUID.format(milliBucketsPerTick / 50.0);
-        } else {
-            amount = FORMAT_FLUID.format(milliBucketsPerTick);
-        }
+        double amountPerGap = BCLibConfig.displayTimeGap == TimeGap.SECONDS
+            ? milliBucketsPerTick * 20.0D
+            : milliBucketsPerTick;
+        String amount = BCLibConfig.useBucketsFlow
+            ? FORMAT_FLUID.format(amountPerGap / 1000.0D)
+            : FORMAT_FLUID.format(amountPerGap);
         return Component.translatable(localeKeyFluidFlow, amount);
     }
 
