@@ -71,6 +71,7 @@ import buildcraft.robotics.boards.BoardRobotShovelman;
 import buildcraft.robotics.boards.BoardRobotStripes;
 import buildcraft.robotics.internal.legacy.robots.RobotManager;
 import buildcraft.robotics.client.render.RenderRobot;
+import buildcraft.robotics.client.render.RenderZonePlanner;
 import buildcraft.robotics.zone.MessageZoneMapResponse;
 import buildcraft.robotics.recipes.RobotIntegrationRecipe;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -270,6 +271,7 @@ public class BCRobotics {
         @SubscribeEvent
         public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(BCRoboticsEntities.ROBOT.get(), RenderRobot::new);
+            event.registerBlockEntityRenderer(BCRoboticsBlocks.ZONE_PLANNER_TILE.get(), RenderZonePlanner::new);
         }
 
 
