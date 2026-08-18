@@ -27,11 +27,13 @@ import buildcraft.transport.internal.pluggable.PipePluggable;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.blockEntity.TileEngineCreative;
 import buildcraft.energy.BCEnergyFluids;
+import buildcraft.energy.tile.TileDynamoMJ;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.block.BlockBCTile_Neptune;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.tile.TileBC_Neptune;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.tile.TileZonePlanner;
@@ -461,6 +463,14 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
                 }
             }
 
+            if (target instanceof TileDynamoMJ dynamo) {
+                CompoundTag tag = mjEnergyTag(dynamo.getMjStored(), dynamo.getMjCapacity());
+                ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
+                group.id = "mj";
+                group.getExtraData().putString("Unit", "MJ");
+                return List.of(group);
+            }
+
             if (target instanceof TileEngineBase_BC8 engine) {
                 CompoundTag tag = mjEnergyTag(engine.getEnergyStored(), engine.getMaxPower());
                 ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(tag));
@@ -552,12 +562,13 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
             return;
         }
         CompoundTag tag = new CompoundTag();
-        tag.putString("NameKey", engineNameKey(engine.getBlockState()));
+        tag.putString("NameKey", engineNameKey(engine));
         String stage = engine instanceof TileEngineCreative ? "blue" : engine.getPowerStage().name().toLowerCase(Locale.ROOT);
         tag.putString("Stage", stage);
         tag.putDouble("Heat", engine.getHeat());
         tag.putFloat("HeatLevel", (float) clamp01(engine.getHeatLevel()));
         tag.putLong("Output", engine.currentOutput);
+        tag.putBoolean("OutputFe", engine instanceof TileDynamoMJ);
         tag.putBoolean("Redstone", engine.isRedstonePowered);
         tag.putBoolean("Burning", engine.isBurning());
         root.put("Engine", tag);
@@ -660,7 +671,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         if (output > 0L) {
             MutableComponent value = BCLibConfig.hidePowerValues
                 ? Component.translatable("buildcraft.value.hidden")
-                : Component.literal(MjFormatting.formatMicroMj(output) + " MJ/t");
+                : tag.getBoolean("OutputFe") ? LocaleUtil.localizeFeFlow(output) : LocaleUtil.localizeMjFlow(output);
             tooltip.add(line("engine.output", value.withStyle(ChatFormatting.WHITE)));
         }
         tooltip.add(line("engine.redstone", bool(tag.getBoolean("Redstone"))));
@@ -887,7 +898,10 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         if (accessor instanceof BlockAccessor blockAccessor) {
             BlockState state = blockAccessor.getBlockState();
             Block block = state.getBlock();
-            if (blockAccessor.getBlockEntity() instanceof TileEngineBase_BC8 || state.hasProperty(BuildCraftProperties.ENGINE_TYPE)) {
+            if (blockAccessor.getBlockEntity() instanceof TileEngineBase_BC8 engine) {
+                return Component.translatable(engineNameKey(engine)).withStyle(ChatFormatting.WHITE);
+            }
+            if (state.hasProperty(BuildCraftProperties.ENGINE_TYPE)) {
                 return Component.translatable(engineNameKey(state)).withStyle(ChatFormatting.WHITE);
             }
             if (block instanceof LiquidBlock && isBuildCraftBlock(block)) {
@@ -923,6 +937,13 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
         Item item = stack.getItem();
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
         return key != null && key.getNamespace().startsWith("buildcraft");
+    }
+
+    private static String engineNameKey(TileEngineBase_BC8 engine) {
+        if (engine instanceof TileDynamoMJ) {
+            return "block.buildcraftenergy.mj_dynamo";
+        }
+        return engineNameKey(engine.getBlockState());
     }
 
     private static String engineNameKey(BlockState state) {

@@ -283,6 +283,22 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
         }
     }
 
+    @Override
+    public boolean isPoweredTile(BlockEntity tile, Direction side) {
+        if (tile == null) return false;
+        if (tile.getClass() == getClass()) {
+            TileDynamoMJ other = (TileDynamoMJ) tile;
+            return other.currentDirection == currentDirection;
+        }
+        return getFeReceiver(tile, side) != null;
+    }
+
+    private IEnergyStorage getFeReceiver(BlockEntity tile, Direction side) {
+        if (tile == null) return null;
+        IEnergyStorage receiver = tile.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).orElse(null);
+        return receiver != null && receiver.canReceive() ? receiver : null;
+    }
+
     private IEnergyStorage getFeReceiver(Direction side) {
         TileDynamoMJ dynamo = this;
         BlockEntity next = null;
@@ -297,8 +313,7 @@ public class TileDynamoMJ extends TileEngineBase_BC8 implements MenuProvider {
             }
         }
         if (next == null || next instanceof TileDynamoMJ) return null;
-        IEnergyStorage receiver = next.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).orElse(null);
-        return receiver != null && receiver.canReceive() ? receiver : null;
+        return getFeReceiver(next, side);
     }
 
     @Override public net.minecraft.resources.ResourceLocation typeId() { return BuildCraftContentIds.Engines.MJ_DYNAMO; }

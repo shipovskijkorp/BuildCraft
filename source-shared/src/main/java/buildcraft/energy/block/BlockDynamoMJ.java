@@ -2,10 +2,13 @@ package buildcraft.energy.block;
 
 import buildcraft.energy.tile.TileDynamoMJ;
 import buildcraft.lib.block.BlockBCTile_Neptune;
+import buildcraft.lib.internal.block.ICustomRotationHandler;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -15,7 +18,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** MJ -> Forge Energy converter restored from BuildCraft 8. */
-public class BlockDynamoMJ extends BlockBCTile_Neptune implements EntityBlock {
+public class BlockDynamoMJ extends BlockBCTile_Neptune implements EntityBlock, ICustomRotationHandler {
     private static final VoxelShape UP = Shapes.or(
         Block.box(0, 0, 0, 16, 4, 16), Block.box(4, 4, 4, 12, 16, 12)
     );
@@ -37,6 +40,22 @@ public class BlockDynamoMJ extends BlockBCTile_Neptune implements EntityBlock {
 
     public BlockDynamoMJ(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean moving) {
+        super.neighborChanged(state, world, pos, block, fromPos, moving);
+        if (world.isClientSide) return;
+        BlockEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof TileDynamoMJ dynamo) {
+            dynamo.rotateIfInvalid();
+        }
+    }
+
+    @Override
+    public InteractionResult attemptRotation(Level world, BlockPos pos, BlockState state, Direction sideWrenched) {
+        BlockEntity tile = world.getBlockEntity(pos);
+        return tile instanceof TileDynamoMJ dynamo ? dynamo.attemptRotation() : InteractionResult.FAIL;
     }
 
     @Override

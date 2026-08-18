@@ -173,7 +173,7 @@ public class RenderEngine_BC8 implements BlockEntityRenderer<TileEngineBase_BC8>
         PoseStack.Pose pose = matrix.last();
 //        VertexConsumer builder = buffer.getBuffer(RenderType.solid());
 
-        float offset  = tile.RenderProgress * 8/16f;
+        float offset  = tile.getRenderProgress(partialTicks) * 8/16f;
 //        float f1 = neighborcombineresult.<Float2FloatFunction>apply(ChestBlock.opennessCombiner(tile)).get(light)
 //        int i = neighborcombineresult.<Int2IntFunction>apply(new BrightnessCombiner<>()).applyAsInt(light);
         TextureAtlasSprite BACK = getBackSprite(tile.getVisualType());

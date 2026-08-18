@@ -41,7 +41,7 @@ public class RenderDynamoMJ implements BlockEntityRenderer<TileDynamoMJ> {
         Matrix4f pose = matrix.last().pose();
         Matrix3f normal = matrix.last().normal();
         VertexConsumer builder = buffer.getBuffer(RenderType.solid());
-        float offset = tile.RenderProgress * 8.0F / 16.0F;
+        float offset = tile.getRenderProgress(partialTicks) * 8.0F / 16.0F;
         int texOffset = stageTextureOffset(tile);
 
         renderMovingHead(front, pose, normal, builder, light, offset, overlay);

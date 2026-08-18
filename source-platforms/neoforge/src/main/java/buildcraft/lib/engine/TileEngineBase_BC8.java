@@ -121,8 +121,9 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     private long lastPower = 0;
     /** Increments from 0 to 1. Above 0.5 all of the held power is emitted. */
     public float progress;
+    private float lastProgress;
 
-	public float RenderProgress;
+    public float RenderProgress;
     private int progressPart = 0;
 
     protected EnumPowerStage powerStage = EnumPowerStage.BLUE;
@@ -154,6 +155,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
     @Override
     public void onLoad() {
         super.onLoad();
+        lastProgress = progress;
         syncRenderProgressFromProgress();
         if (level != null && level.isClientSide) {
             refreshEngineModelData();
@@ -188,6 +190,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         heat = nbt.getDouble("heat");
         power = nbt.getLong("power");
         progress = nbt.getFloat("progress");
+        lastProgress = progress;
         progressPart = nbt.getInt("progressPart");
         syncRenderProgressFromProgress();
         capturePersistedState();
@@ -217,6 +220,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
                 boolean directionChanged = newDir != currentDirection;
                 currentDirection = newDir;
                 powerStage = buffer.readEnum(EnumPowerStage.class);
+                lastProgress = progress;
                 progress = buffer.readFloat();
                 syncRenderProgressFromProgress();
                 if (directionChanged) {
@@ -408,6 +412,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         boolean overheat = getPowerStage() == EnumPowerStage.OVERHEAT;
 
         if (level.isClientSide) {
+            lastProgress = progress;
 
             if (isPumping) {
                 progress += getPistonSpeed();
@@ -678,7 +683,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         return extracted;
     }
 
-    public final boolean isPoweredTile(BlockEntity tile, Direction side) {
+    public boolean isPoweredTile(BlockEntity tile, Direction side) {
         if (tile == null) return false;
         if (tile.getClass() == getClass()) {
             TileEngineBase_BC8 other = (TileEngineBase_BC8) tile;
@@ -753,7 +758,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
 
     @OnlyIn(Dist.CLIENT)
     public float getProgressClient(float partialTicks) {
-        float last = RenderProgress;
+        float last = lastProgress;
         float now = progress;
         if (last > 0.5 && now < 0.5) {
             // we just returned
@@ -761,6 +766,11 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements IDebu
         }
         float interp = last * (1 - partialTicks) + now * partialTicks;
         return interp % 1;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public float getRenderProgress(float partialTicks) {
+        return computeRenderProgress(getProgressClient(partialTicks));
     }
 
     public Direction getCurrentFacing() {
