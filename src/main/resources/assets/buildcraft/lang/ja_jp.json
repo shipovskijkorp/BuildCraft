@@ -2006,5 +2006,16 @@
   "buildcraft.help.mj_dynamo.fe_battery.desc": "BuildCraft MJ と Forge Energy を相互変換します。",
   "buildcraft.help.fe_engine.fe_battery.title": "FEバッテリー",
   "buildcraft.help.fe_engine.fe_battery.desc": "Forge Energy と BuildCraft MJ を相互変換します。",
-  "config.display.timeGap": "流量の単位 (/t または /s)"
+  "config.display.timeGap": "流量の単位 (/t または /s)",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s バケツ/ティック",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s ミリバケツ/秒",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "レシピ出力セレクター",
+  "buildcraft.help.autoworkbench.preview.desc": "選択中の出力を表示します。同じパターンに複数のレシピが一致する場合、左クリックで次のレシピ、右クリックで前のレシピを選択できます。選択内容は保存されます。",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE 転送量",
+  "buildcraft.jade.group.pipe_fluid_flow": "流体転送量",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ 転送量",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "%s 個の利用できない設計図要素が含まれています。これらの部分はスキップされます。"
 }

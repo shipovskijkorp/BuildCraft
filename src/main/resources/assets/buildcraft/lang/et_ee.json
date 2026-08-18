@@ -2006,5 +2006,16 @@
   "tip.pipe.buildcrafttransport.quartz_fe": "Edastab Forge Energyt",
   "tip.pipe.buildcrafttransport.sandstone_fe": "Ühendub ainult teiste torudega",
   "tip.pipe.buildcrafttransport.stone_fe": "Edastab Forge Energyt",
-  "tip.pipe.buildcrafttransport.wood_fe": "Võtab Forge Energyt välja"
+  "tip.pipe.buildcrafttransport.wood_fe": "Võtab Forge Energyt välja",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s ämbrit ticki kohta",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milliämbrit sekundis",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Retsepti väljundi valik",
+  "buildcraft.help.autoworkbench.preview.desc": "Kuvab valitud väljundi. Kui samale mustrile vastab mitu retsepti, vali vasakklõpsuga järgmine või paremklõpsuga eelmine retsept; valik salvestatakse.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE läbilaskevõime",
+  "buildcraft.jade.group.pipe_fluid_flow": "Vedeliku läbilaskevõime",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ läbilaskevõime",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Sisaldab %s kättesaamatut skeemielementi; need osad jäetakse vahele."
 }

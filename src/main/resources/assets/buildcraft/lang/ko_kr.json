@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "설정 가능한 제한 파이프",
   "tip.PipeRedstoneFluxSandstone": "다른 파이프에만 연결됩니다",
   "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux 입력 파이프",
-  "item.buildcrafttransport.filtered_buffer": "필터링된 버퍼"
+  "item.buildcrafttransport.filtered_buffer": "필터링된 버퍼",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s 양동이/틱",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s 밀리양동이/초",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "제작법 출력 선택기",
+  "buildcraft.help.autoworkbench.preview.desc": "선택한 출력을 표시합니다. 같은 패턴에 여러 제작법이 일치하면 왼쪽 클릭으로 다음 제작법을, 오른쪽 클릭으로 이전 제작법을 선택할 수 있으며 선택 내용은 저장됩니다.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE 처리량",
+  "buildcraft.jade.group.pipe_fluid_flow": "유체 처리량",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ 처리량",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "사용할 수 없는 설계도 요소가 %s개 포함되어 있으며 해당 부분은 건너뜁니다."
 }

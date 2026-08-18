@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Rura z wybieralnym limitem",
   "tip.PipeRedstoneFluxSandstone": "Łączy się tylko z innymi rurami",
   "tip.PipeRedstoneFluxWoodenDiamond": "Rura wejściowa Redstone Flux",
-  "item.buildcrafttransport.filtered_buffer": "Filtrowany bufor"
+  "item.buildcrafttransport.filtered_buffer": "Filtrowany bufor",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s wiader na tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milibucketów na sekundę",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Wybór wyniku receptury",
+  "buildcraft.help.autoworkbench.preview.desc": "Pokazuje wybrany wynik. Jeśli do tego samego wzoru pasuje kilka receptur, kliknij lewym przyciskiem, aby wybrać następną recepturę, lub prawym, aby wybrać poprzednią; wybór zostanie zapisany.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "Przepływ FE",
+  "buildcraft.jade.group.pipe_fluid_flow": "Przepływ płynu",
+  "buildcraft.jade.group.pipe_mj_flow": "Przepływ MJ",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Zawiera %s niedostępnych elementów schematu; te części zostaną pominięte."
 }

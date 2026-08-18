@@ -217,7 +217,7 @@ val verifyLocalizations by tasks.registering {
             return files.mapTo(sortedSetOf()) { it.nameWithoutExtension }
         }
 
-        val buildCraftOrdinary = validateOrdinary("buildcraft", 2008)
+        val buildCraftOrdinary = validateOrdinary("buildcraft", 2019)
         val ironTanksOrdinary = validateOrdinary("irontanks", 87)
         val buildCraftGuide = validateGuide("buildcraft", 218, 1342, true)
         val ironTanksGuide = validateGuide("irontanks", 27, 135, false)

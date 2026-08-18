@@ -2006,5 +2006,16 @@
   "tip.pipe.buildcrafttransport.quartz_fe": "傳輸 Forge Energy",
   "tip.pipe.buildcrafttransport.sandstone_fe": "只連接其他管線",
   "tip.pipe.buildcrafttransport.stone_fe": "傳輸 Forge Energy",
-  "tip.pipe.buildcrafttransport.wood_fe": "抽取 Forge Energy"
+  "tip.pipe.buildcrafttransport.wood_fe": "抽取 Forge Energy",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s 桶/遊戲刻",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s 毫桶/秒",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "配方輸出選擇器",
+  "buildcraft.help.autoworkbench.preview.desc": "顯示目前選取的輸出。如果同一圖樣符合多個配方，按滑鼠左鍵選擇下一個配方，按滑鼠右鍵選擇上一個配方；選擇會被儲存。",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE 吞吐量",
+  "buildcraft.jade.group.pipe_fluid_flow": "流體吞吐量",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ 吞吐量",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "包含 %s 個無法使用的藍圖元素；這些部分將被略過。"
 }

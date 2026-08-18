@@ -2006,5 +2006,16 @@
   "buildcraft.help.fe_engine.fe_battery.title": "Batterie FE",
   "buildcraft.help.fe_engine.fe_battery.desc": "Convertit entre la Forge Energy et les MJ de BuildCraft.",
   "config.display.timeGap": "Unités de débit (/t ou /s)",
-  "item.buildcrafttransport.filtered_buffer": "Tampon filtrant"
+  "item.buildcrafttransport.filtered_buffer": "Tampon filtrant",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s seaux par tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milliseaux par seconde",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Sélecteur de sortie de recette",
+  "buildcraft.help.autoworkbench.preview.desc": "Affiche la sortie sélectionnée. Si plusieurs recettes correspondent au même motif, faites un clic gauche pour sélectionner la recette suivante ou un clic droit pour sélectionner la précédente ; le choix est enregistré.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "Débit FE",
+  "buildcraft.jade.group.pipe_fluid_flow": "Débit de fluide",
+  "buildcraft.jade.group.pipe_mj_flow": "Débit MJ",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Contient %s éléments de schéma indisponibles ; ces parties seront ignorées."
 }

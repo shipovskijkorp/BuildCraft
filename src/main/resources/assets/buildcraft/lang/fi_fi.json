@@ -2006,5 +2006,16 @@
   "buildcraft.help.fe_engine.fe_battery.title": "FE-akku",
   "buildcraft.help.fe_engine.fe_battery.desc": "Muuntaa Forge Energyn ja BuildCraft MJ:n välillä.",
   "config.display.timeGap": "Virtausnopeuden yksiköt (/t tai /s)",
-  "item.buildcrafttransport.filtered_buffer": "Filtered Puskuri"
+  "item.buildcrafttransport.filtered_buffer": "Filtered Puskuri",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s ämpäriä per tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milliämpäriä sekunnissa",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Reseptituloksen valinta",
+  "buildcraft.help.autoworkbench.preview.desc": "Näyttää valitun tuloksen. Jos samaan kuvioon sopii useita reseptejä, valitse seuraava resepti hiiren vasemmalla painikkeella tai edellinen oikealla; valinta tallennetaan.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE-läpivirtaus",
+  "buildcraft.jade.group.pipe_fluid_flow": "Nesteen läpivirtaus",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ-läpivirtaus",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Sisältää %s käytettävissä olematonta kaavioelementtiä; nämä osat ohitetaan."
 }

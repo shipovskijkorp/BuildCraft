@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "可调限流管道",
   "tip.PipeRedstoneFluxSandstone": "仅与其他管道连接",
   "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux输入管道",
-  "item.buildcrafttransport.filtered_buffer": "过滤缓冲器"
+  "item.buildcrafttransport.filtered_buffer": "过滤缓冲器",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s 桶/游戏刻",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s 毫桶/秒",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "配方输出选择器",
+  "buildcraft.help.autoworkbench.preview.desc": "显示当前选中的输出。如果同一图案匹配多个配方，左键单击选择下一个配方，右键单击选择上一个配方；选择会被保存。",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE 吞吐量",
+  "buildcraft.jade.group.pipe_fluid_flow": "流体吞吐量",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ 吞吐量",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "包含 %s 个不可用的蓝图元素；这些部分将被跳过。"
 }

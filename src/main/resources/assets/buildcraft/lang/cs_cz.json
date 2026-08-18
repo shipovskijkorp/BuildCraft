@@ -2006,5 +2006,16 @@
   "buildcraft.help.fe_engine.fe_battery.title": "FE baterie",
   "buildcraft.help.fe_engine.fe_battery.desc": "Převádí mezi Forge Energy a BuildCraft MJ.",
   "config.display.timeGap": "Jednotky průtoku (/t nebo /s)",
-  "item.buildcrafttransport.filtered_buffer": "Filtrovaný zásobník"
+  "item.buildcrafttransport.filtered_buffer": "Filtrovaný zásobník",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s kbelíků za tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milikbelíků za sekundu",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Výběr výstupu receptu",
+  "buildcraft.help.autoworkbench.preview.desc": "Zobrazuje vybraný výstup. Pokud stejnému vzoru odpovídá více receptů, kliknutím levým tlačítkem vyberete další recept a pravým tlačítkem předchozí; volba se uloží.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "Propustnost FE",
+  "buildcraft.jade.group.pipe_fluid_flow": "Propustnost kapalin",
+  "buildcraft.jade.group.pipe_mj_flow": "Propustnost MJ",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Obsahuje %s nedostupných prvků schématu; tyto části budou přeskočeny."
 }

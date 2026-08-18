@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Wählbares Begrenzungsrohr",
   "tip.PipeRedstoneFluxSandstone": "Verbindet sich nur mit anderen Rohren",
   "tip.PipeRedstoneFluxWoodenDiamond": "Redstone-Flux-Eingangsrohr",
-  "item.buildcrafttransport.filtered_buffer": "Gefilterter Puffer"
+  "item.buildcrafttransport.filtered_buffer": "Gefilterter Puffer",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s Eimer pro Tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s Millibuckets pro Sekunde",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Rezeptausgabe auswählen",
+  "buildcraft.help.autoworkbench.preview.desc": "Zeigt die ausgewählte Ausgabe. Wenn mehrere Rezepte zum selben Muster passen, wähle mit Linksklick das nächste oder mit Rechtsklick das vorherige Rezept; die Auswahl wird gespeichert.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE-Durchsatz",
+  "buildcraft.jade.group.pipe_fluid_flow": "Flüssigkeitsdurchsatz",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ-Durchsatz",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Enthält %s nicht verfügbare Schaltplanelemente; diese Teile werden übersprungen."
 }

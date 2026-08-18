@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Труба с настраиваемым ограничителем",
   "tip.PipeRedstoneFluxSandstone": "Соединяется только с другими трубами",
   "tip.PipeRedstoneFluxWoodenDiamond": "Входная труба Redstone Flux",
-  "item.buildcrafttransport.filtered_buffer": "Фильтрующий буфер"
+  "item.buildcrafttransport.filtered_buffer": "Фильтрующий буфер",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s вёдер за тик",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s милливёдер в секунду",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Выбор результата рецепта",
+  "buildcraft.help.autoworkbench.preview.desc": "Показывает выбранный результат. Если одному шаблону соответствуют несколько рецептов, щёлкните ЛКМ, чтобы выбрать следующий рецепт, или ПКМ, чтобы выбрать предыдущий; выбор сохраняется.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "Пропускная способность FE",
+  "buildcraft.jade.group.pipe_fluid_flow": "Пропускная способность жидкости",
+  "buildcraft.jade.group.pipe_mj_flow": "Пропускная способность MJ",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Содержит %s недоступных элементов схемы; эти части будут пропущены."
 }

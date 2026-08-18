@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Seçilebilir sınırlayıcı boru",
   "tip.PipeRedstoneFluxSandstone": "Yalnızca diğer borulara bağlanır",
   "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux Giriş Borusu",
-  "item.buildcrafttransport.filtered_buffer": "Filtreli Tampon"
+  "item.buildcrafttransport.filtered_buffer": "Filtreli Tampon",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s kova/tik",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milikova/saniye",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Tarif çıktısı seçici",
+  "buildcraft.help.autoworkbench.preview.desc": "Seçili çıktıyı gösterir. Aynı desene birden fazla tarif uyuyorsa sonraki tarifi seçmek için sol tıklayın, önceki tarifi seçmek için sağ tıklayın; seçim kaydedilir.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE aktarım hızı",
+  "buildcraft.jade.group.pipe_fluid_flow": "Sıvı aktarım hızı",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ aktarım hızı",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "%s kullanılamayan şema öğesi içeriyor; bu parçalar atlanacak."
 }

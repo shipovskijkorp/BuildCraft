@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Választhatóan limitáló cső",
   "tip.PipeRedstoneFluxSandstone": "Csak másik csőhöz csatlakozik",
   "tip.PipeRedstoneFluxWoodenDiamond": "Vöröskő Fluxus Bemenet Cső",
-  "item.buildcrafttransport.filtered_buffer": "Szűrt buffer"
+  "item.buildcrafttransport.filtered_buffer": "Szűrt buffer",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s vödör tickenként",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s millivödör másodpercenként",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Receptkimenet-választó",
+  "buildcraft.help.autoworkbench.preview.desc": "A kiválasztott kimenetet mutatja. Ha több recept is megfelel ugyanannak a mintának, bal kattintással a következő, jobb kattintással az előző recept választható; a választás mentésre kerül.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE átviteli sebesség",
+  "buildcraft.jade.group.pipe_fluid_flow": "Folyadék-átviteli sebesség",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ átviteli sebesség",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "%s nem elérhető tervrajzelemet tartalmaz; ezek a részek ki lesznek hagyva."
 }

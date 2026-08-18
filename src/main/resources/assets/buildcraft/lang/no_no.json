@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Valgbart begrensningsrør",
   "tip.PipeRedstoneFluxSandstone": "Kobles bare til andre rør",
   "tip.PipeRedstoneFluxWoodenDiamond": "Inngangsrør for Redstone Flux",
-  "item.buildcrafttransport.filtered_buffer": "Filtreret buffer"
+  "item.buildcrafttransport.filtered_buffer": "Filtreret buffer",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s bøtter pr. tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s millibøtter pr. sekund",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Velg oppskriftsresultat",
+  "buildcraft.help.autoworkbench.preview.desc": "Viser det valgte resultatet. Hvis flere oppskrifter passer til samme mønster, venstreklikker du for å velge neste oppskrift eller høyreklikker for å velge den forrige; valget lagres.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE-gjennomstrømning",
+  "buildcraft.jade.group.pipe_fluid_flow": "Væskegjennomstrømning",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ-gjennomstrømning",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Inneholder %s utilgjengelige skjemaelementer; disse delene hoppes over."
 }

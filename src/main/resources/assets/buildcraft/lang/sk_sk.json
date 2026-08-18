@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Rúra s voliteľným limitom",
   "tip.PipeRedstoneFluxSandstone": "Pripája sa iba k iným rúram",
   "tip.PipeRedstoneFluxWoodenDiamond": "Vstupná rúra Redstone Flux",
-  "item.buildcrafttransport.filtered_buffer": "Filtrovaný zásobník"
+  "item.buildcrafttransport.filtered_buffer": "Filtrovaný zásobník",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s vedier za tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milivedier za sekundu",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Výber výstupu receptu",
+  "buildcraft.help.autoworkbench.preview.desc": "Zobrazuje vybraný výstup. Ak rovnakému vzoru zodpovedá viac receptov, ľavým kliknutím vyberiete ďalší recept a pravým predchádzajúci; voľba sa uloží.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "Priepustnosť FE",
+  "buildcraft.jade.group.pipe_fluid_flow": "Priepustnosť kvapalín",
+  "buildcraft.jade.group.pipe_mj_flow": "Priepustnosť MJ",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Obsahuje %s nedostupných prvkov schémy; tieto časti budú preskočené."
 }

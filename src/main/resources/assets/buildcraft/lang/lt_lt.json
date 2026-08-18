@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Reguliuojamo ribojimo vamzdis",
   "tip.PipeRedstoneFluxSandstone": "Jungiasi tik prie kitų vamzdžių",
   "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux įvesties vamzdis",
-  "item.buildcrafttransport.filtered_buffer": "Filtered Buferis"
+  "item.buildcrafttransport.filtered_buffer": "Filtered Buferis",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s kibirų per taktą",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milikibirų per sekundę",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Recepto rezultato pasirinkimas",
+  "buildcraft.help.autoworkbench.preview.desc": "Rodo pasirinktą rezultatą. Jei tam pačiam šablonui tinka keli receptai, kairiuoju pelės mygtuku pasirinkite kitą receptą, o dešiniuoju – ankstesnį; pasirinkimas išsaugomas.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE pralaidumas",
+  "buildcraft.jade.group.pipe_fluid_flow": "Skysčių pralaidumas",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ pralaidumas",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Yra %s nepasiekiamų schemos elementų; šios dalys bus praleistos."
 }

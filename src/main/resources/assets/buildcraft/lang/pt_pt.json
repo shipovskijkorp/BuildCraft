@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Tubo Limitador Selecionável",
   "tip.PipeRedstoneFluxSandstone": "Conecta-se apenas a outros tubos",
   "tip.PipeRedstoneFluxWoodenDiamond": "Redstone Flux Entrada Tubo",
-  "item.buildcrafttransport.filtered_buffer": "Buffer filtrado"
+  "item.buildcrafttransport.filtered_buffer": "Buffer filtrado",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s baldes por tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milibaldes por segundo",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Seletor de saída da receita",
+  "buildcraft.help.autoworkbench.preview.desc": "Mostra a saída selecionada. Se várias receitas corresponderem ao mesmo padrão, clique com o botão esquerdo para selecionar a próxima receita ou com o botão direito para selecionar a anterior; a escolha é salva.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "Fluxo de FE",
+  "buildcraft.jade.group.pipe_fluid_flow": "Fluxo de fluidos",
+  "buildcraft.jade.group.pipe_mj_flow": "Fluxo de MJ",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Contém %s elementos de esquema indisponíveis; essas partes serão ignoradas."
 }

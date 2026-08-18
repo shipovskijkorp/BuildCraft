@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Valbart begränsningsrör",
   "tip.PipeRedstoneFluxSandstone": "Ansluter endast till andra rör",
   "tip.PipeRedstoneFluxWoodenDiamond": "Ingångsrör för Redstone Flux",
-  "item.buildcrafttransport.filtered_buffer": "Filtrerad buffert"
+  "item.buildcrafttransport.filtered_buffer": "Filtrerad buffert",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s hinkar per tick",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s millihinkar per sekund",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Välj receptresultat",
+  "buildcraft.help.autoworkbench.preview.desc": "Visar det valda resultatet. Om flera recept matchar samma mönster väljer du nästa recept med vänsterklick eller föregående med högerklick; valet sparas.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE-genomströmning",
+  "buildcraft.jade.group.pipe_fluid_flow": "Vätskegenomströmning",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ-genomströmning",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Innehåller %s otillgängliga schemaelement; dessa delar hoppas över."
 }

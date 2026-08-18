@@ -2006,5 +2006,16 @@
   "tip.PipeRedstoneFluxIron": "Izborni Limiter Cijev",
   "tip.PipeRedstoneFluxSandstone": "Spaja se samo s drugim cijevima",
   "tip.PipeRedstoneFluxWoodenDiamond": "Crveni kamen Tok Ulaz Cijev",
-  "item.buildcrafttransport.filtered_buffer": "Filtered Međuspremnik"
+  "item.buildcrafttransport.filtered_buffer": "Filtered Međuspremnik",
+  "buildcraft.fluid.flow.bucket.ticks.long": "%s kanti po tiku",
+  "buildcraft.fluid.flow.bucket.ticks.short": "%s B/t",
+  "buildcraft.fluid.flow.milli.seconds.long": "%s milikanti po sekundi",
+  "buildcraft.fluid.flow.milli.seconds.short": "%s mB/s",
+  "buildcraft.help.autoworkbench.preview.title": "Odabir izlaza recepta",
+  "buildcraft.help.autoworkbench.preview.desc": "Prikazuje odabrani izlaz. Ako više recepata odgovara istom uzorku, lijevim klikom odaberite sljedeći recept, a desnim prethodni; odabir se sprema.",
+  "buildcraft.jade.group.fe": "Forge Energy",
+  "buildcraft.jade.group.pipe_fe_flow": "FE propusnost",
+  "buildcraft.jade.group.pipe_fluid_flow": "Protok tekućine",
+  "buildcraft.jade.group.pipe_mj_flow": "MJ propusnost",
+  "item.buildcraftbuilders.blueprint.unavailable_elements": "Sadrži %s nedostupnih elemenata sheme; ti će dijelovi biti preskočeni."
 }
