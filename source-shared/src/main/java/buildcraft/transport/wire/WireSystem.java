@@ -195,9 +195,13 @@ public final class WireSystem {
         if (!(player instanceof net.minecraft.server.level.ServerPlayer serverPlayer)) {
             return false;
         }
-        if (!(player.level instanceof ServerLevel world)) {
-            return false;
-        }
+        //? if <1.20 {
+        ServerLevel world = (ServerLevel) serverPlayer.level;
+        //?} else {
+        /*?
+        ServerLevel world = serverPlayer.serverLevel();
+        ?*/
+        //?}
         return elements.stream()
             .map(element -> new ChunkPos(element.blockPos))
             .distinct()

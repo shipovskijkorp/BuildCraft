@@ -71,10 +71,21 @@ for family in ("legacy", "modern"):
     forbid(rel, "targettedItems.contains(item.getId())", "targettedItems.add(targetId)")
 
 # Wire updates must be scoped to the actual player's tracked chunks, not global ticking-range state.
+# The implementation is shared so Forge 1.19.2/1.20.1 and NeoForge cannot drift on Entity level access again.
+rel = "source-shared/src/main/java/buildcraft/transport/wire/WireSystem.java"
+require(
+    rel,
+    "//? if <1.20 {",
+    "ServerLevel world = (ServerLevel) serverPlayer.level;",
+    "ServerLevel world = serverPlayer.serverLevel();",
+    "chunkMap.getPlayers(chunkPos, false).contains(serverPlayer)",
+    ".distinct()",
+)
+forbid(rel, "inBlockTickingRange", "player.level instanceof ServerLevel", "player.level() instanceof ServerLevel")
 for family in ("legacy", "modern"):
-    rel = f"source-families/{family}/src/main/java/buildcraft/transport/wire/WireSystem.java"
-    require(rel, "chunkMap.getPlayers(chunkPos, false).contains(serverPlayer)", ".distinct()")
-    forbid(rel, "inBlockTickingRange")
+    stale = ROOT / f"source-families/{family}/src/main/java/buildcraft/transport/wire/WireSystem.java"
+    if stale.exists():
+        errors.append(f"{stale.relative_to(ROOT)}: stale WireSystem family override shadows the shared implementation")
 
 # Bomber may not consume TNT or prime an explosion before zone/API2 checks for the affected area succeed.
 for family in ("legacy", "modern"):
