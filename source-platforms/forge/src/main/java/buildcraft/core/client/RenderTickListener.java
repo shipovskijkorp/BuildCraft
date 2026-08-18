@@ -350,13 +350,14 @@ public class RenderTickListener {
         profiler.push("marker");
         for (MarkerCache<?> cache : MarkerCache.CACHES) {
             profiler.push(cache.name);
-            renderMarkerCache(poseStack, matrix, player, cache.getSubCache(world));
+            renderMarkerCache(poseStack, matrix, world, player, cache.getSubCache(world));
             profiler.pop();
         }
         profiler.pop();
     }
 
-    private static void renderMarkerCache(PoseStack poseStack, Matrix4f matrix, Player player, MarkerSubCache<?> cache) {
+    private static void renderMarkerCache(PoseStack poseStack, Matrix4f matrix, ClientLevel world, Player player,
+        MarkerSubCache<?> cache) {
         ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
         profiler.push("compute");
         Set<LaserData_BC8> toRender = new HashSet<>();
@@ -364,6 +365,12 @@ public class RenderTickListener {
             for (final BlockPos b : cache.getValidConnections(a)) {
                 if (a.asLong() > b.asLong()) {
                     // Only render each pair once
+                    continue;
+                }
+                // Marker positions remain cached when their chunks leave the client so the authoritative connection
+                // can reappear intact after reloading. Do not render possible-connection lasers for those cached-only
+                // positions: otherwise disabling terrain fog for marker lasers makes them visible beyond render distance.
+                if (!world.hasChunkAt(a) || !world.hasChunkAt(b)) {
                     continue;
                 }
 

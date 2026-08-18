@@ -318,8 +318,14 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                 continue;
             }
             if (world.isClientSide()) {
-                // Keep the item at its locally interpolated destination until the next authoritative transport packet.
-                // Previously the timing wheel simply discarded it, causing visible blink/disappear gaps.
+                if (item.clientAtDestination) {
+                    // The previous expiry already granted this client item a short destination grace period.
+                    // No packet explicitly removes travelling items, so retaining it again would pin a ghost in
+                    // every pipe it crossed. Let the timing wheel discard it now.
+                    continue;
+                }
+                // Keep the item at its locally interpolated destination briefly so normal packet/tick jitter does not
+                // create a visible gap before the server's next authoritative transport segment arrives.
                 item.clientAtDestination = true;
                 item.tickStarted = currentTime;
                 item.tickFinished = currentTime + 1;

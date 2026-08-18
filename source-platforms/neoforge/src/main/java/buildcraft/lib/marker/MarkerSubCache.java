@@ -361,6 +361,17 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     }
 
     private void validateLoadedMarker(BlockPos pos) {
+        // The client cache is an authoritative mirror of server marker messages, not a reconstruction from loaded
+        // client chunks. During a client-only chunk reload Level#hasChunkAt can become true before the chunk's block
+        // states/block entities are fully installed. Validating at that point can see temporary air, prune one marker
+        // from a connection, and permanently leave only part of a large laser box until the server happens to resend
+        // the connection. The server may keep the chunk loaded the whole time, so that resend is not guaranteed.
+        //
+        // Only the server should infer marker removal from world state. Client removal is driven by MessageMarker,
+        // which also makes connections survive arbitrary render-distance unload/reload cycles.
+        if (!isServer) {
+            return;
+        }
         if (!tileCache.containsKey(pos) && !posToConnection.containsKey(pos)) {
             return;
         }

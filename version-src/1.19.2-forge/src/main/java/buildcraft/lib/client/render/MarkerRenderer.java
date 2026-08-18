@@ -22,6 +22,12 @@ public enum MarkerRenderer implements IDetachedRenderer {
 	public void render(PoseStack pose, Matrix4f matrix, Player player, float partialTicks) {
         for (MarkerCache<? extends MarkerSubCache<?>> cache : MarkerCache.CACHES) {
             for (MarkerConnection<?> connection : cache.getSubCache(player.level).getConnections()) {
+                // Keep the server-authoritative connection cached across client chunk unloads, but only render it
+                // while every marker chunk is actually present on this client. This prevents unfogged marker boxes
+                // from remaining visible beyond the render distance without reintroducing destructive cache pruning.
+                if (!connection.getMarkerPositions().stream().allMatch(player.level::hasChunkAt)) {
+                    continue;
+                }
                 connection.renderInWorld(pose, matrix);
             }
         }

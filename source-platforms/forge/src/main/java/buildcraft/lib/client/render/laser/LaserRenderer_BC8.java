@@ -219,9 +219,25 @@ public class LaserRenderer_BC8 {
 
     public static void renderLaserStatic(PoseStack pose, Matrix4f matrix, LaserData_BC8 data) {
         LaserCompiledList compiled = COMPILED_STATIC_LASERS.getUnchecked(data);
-        setupLaserRenderState();
-        SpriteUtil.bindBlockTextureMap();
-        compiled.render(pose, matrix);
+
+        // Static lasers are world overlays (marker connections, map-location previews, etc.). They are rendered after
+        // translucent terrain, while vanilla's distance fog uniforms still describe the current render distance.
+        // Feeding those uniforms into the block shader makes long marker edges blend into the fog/sky colour: for a
+        // 64x64 area this is especially visible from one corner, and the artifact moves when render distance changes.
+        // Temporarily move the fog interval beyond every finite vertex distance, then restore it so later vanilla/mod
+        // render stages keep their original fog state.
+        float fogStart = RenderSystem.getShaderFogStart();
+        float fogEnd = RenderSystem.getShaderFogEnd();
+        try {
+            RenderSystem.setShaderFogStart(Float.MAX_VALUE / 2.0F);
+            RenderSystem.setShaderFogEnd(Float.MAX_VALUE);
+            setupLaserRenderState();
+            SpriteUtil.bindBlockTextureMap();
+            compiled.render(pose, matrix);
+        } finally {
+            RenderSystem.setShaderFogStart(fogStart);
+            RenderSystem.setShaderFogEnd(fogEnd);
+        }
     }
 
     /** Assumes the buffer uses {@link DefaultVertexFormats#BLOCK} */

@@ -134,7 +134,9 @@ for platform in ("forge", "neoforge"):
     require(
         f"source-platforms/{platform}/src/main/java/buildcraft/transport/pipe/flow/PipeFlowItems.java",
         "getConnectedDist(side)",
+        "if (item.clientAtDestination)",
         "clientAtDestination = true",
+        "retaining it again would pin a ghost",
     )
     require(
         f"source-platforms/{platform}/src/main/java/buildcraft/transport/pipe/flow/PipeFlowPower.java",
@@ -193,12 +195,44 @@ require(
 )
 
 # Rendering/model caches.
+# Marker connections remain cached across client chunk unloads so reloads are lossless, but cached-only positions
+# must not be rendered beyond the current client render distance.
+require(
+    "version-src/1.19.2-forge/src/main/java/buildcraft/lib/client/render/MarkerRenderer.java",
+    "allMatch(player.level::hasChunkAt)",
+    "without reintroducing destructive cache pruning",
+)
+require(
+    "source-shared/src/main/java/buildcraft/lib/client/render/MarkerRenderer.java",
+    "allMatch(player.level()::hasChunkAt)",
+    "without reintroducing destructive cache pruning",
+)
 for platform in ("forge", "neoforge"):
+    require(
+        f"source-platforms/{platform}/src/main/java/buildcraft/core/client/RenderTickListener.java",
+        "renderMarkerCache(poseStack, matrix, world, player",
+        "if (!world.hasChunkAt(a) || !world.hasChunkAt(b))",
+        "visible beyond render distance",
+    )
+
+for platform in ("forge", "neoforge"):
+    require(
+        f"source-platforms/{platform}/src/main/java/buildcraft/lib/marker/MarkerSubCache.java",
+        "if (!isServer)",
+        "authoritative mirror of server marker messages",
+        "Client removal is driven by MessageMarker",
+    )
     require(
         f"source-platforms/{platform}/src/main/java/buildcraft/lib/client/render/laser/LaserRenderer_BC8.java",
         "COMPILED_DYNAMIC_BOXES",
         "makeDynamicLaserBox",
         "renderLaserBoxDynamic",
+        "getShaderFogStart",
+        "getShaderFogEnd",
+        "setShaderFogStart(Float.MAX_VALUE / 2.0F)",
+        "setShaderFogEnd(Float.MAX_VALUE)",
+        "setShaderFogStart(fogStart)",
+        "setShaderFogEnd(fogEnd)",
     )
     require(
         f"source-platforms/{platform}/src/main/java/buildcraft/transport/client/model/ModelPipe.java",
