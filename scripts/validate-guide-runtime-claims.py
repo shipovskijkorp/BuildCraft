@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +30,23 @@ def forbid(text: str, needle: str, label: str) -> None:
     if needle in text:
         fail(f"{label}: stale claim still present: {needle!r}")
 
+
+
+# Guide GUI translation keys must resolve in the built-in English locale. This catches
+# key drift between GuiGuide and en_us.json (for example loaded vs loaded_modules).
+LANG = ROOT / "source-shared/src/main/resources/assets/buildcraft/lang/en_us.json"
+lang = json.loads(LANG.read_text(encoding="utf-8"))
+guide_gui_paths = (
+    ROOT / "version-src/1.19.2-forge/src/main/java/buildcraft/lib/client/guide/GuiGuide.java",
+    ROOT / "version-src/1.20.1-forge/src/main/java/buildcraft/lib/client/guide/GuiGuide.java",
+    ROOT / "source-families/modern/src/main/java/buildcraft/lib/client/guide/GuiGuide.java",
+)
+key_pattern = re.compile(r'"(buildcraft\.guide\.contents\.[a-zA-Z0-9_.-]+)"')
+for gui_path in guide_gui_paths:
+    gui_source = gui_path.read_text(encoding="utf-8")
+    for translation_key in sorted(set(key_pattern.findall(gui_source))):
+        if translation_key not in lang:
+            fail(f"{gui_path.relative_to(ROOT)} references missing translation key {translation_key!r}")
 
 root = json.loads(GUIDE.read_text(encoding="utf-8"))
 pages = root.get("pages")

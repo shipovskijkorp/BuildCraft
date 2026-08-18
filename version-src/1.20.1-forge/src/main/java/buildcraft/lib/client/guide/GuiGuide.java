@@ -634,7 +634,7 @@ public final class GuiGuide extends Screen {
         int visible = Math.max(0, to - from);
         int blockHeight = (visible + 1) * perLineHeight;
         int y = top + PAGE_TEXT_TOP + (PAGE_TEXT_HEIGHT - blockHeight) / 2;
-        Component heading = Component.translatable("buildcraft.guide.contents.loaded").withStyle(ChatFormatting.BOLD);
+        Component heading = Component.translatable("buildcraft.guide.contents.loaded_modules").withStyle(ChatFormatting.BOLD);
         drawCentred(guiGraphics, heading, pageX, y, PAGE_TEXT_WIDTH, 0x17120E);
         y += perLineHeight;
         for (int index = from; index < to; index++) {
