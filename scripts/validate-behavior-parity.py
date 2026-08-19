@@ -395,9 +395,49 @@ def validate_persistence_and_reload_invariants() -> None:
         if schematic.count("getDeferredInventoryHandler(") < 3:
             fail(f"{target}: deferred blueprint inventory helper must be used by both missing-item and insert paths")
 
+    # BC8 gives fluid-container interaction priority over the held item's world-use path. Rejected buckets must be
+    # consumed by the machine interaction instead of falling through and placing fluid into/through the machine.
+    # Forge also performs the transfer on a one-item copy so survival bucket/shard wrappers can safely replace their
+    # container during drain(EXECUTE) before the resulting stack is written back to the player's hand.
+    fluid_rel = "src/main/java/buildcraft/lib/misc/FluidUtilBC.java"
+    for target in ("1.19.2-forge", "1.20.1-forge"):
+        fluid = require(target, fluid_rel,
+                        "ItemStack transferStack = held.copy();",
+                        "transferStack.setCount(1);",
+                        "FluidUtil.getFluidHandler(transferStack).orElse(null)",
+                        "BC8 consumed the interaction as soon as the held item was a fluid container")
+        activation = fluid[fluid.find("public static boolean onTankActivated"):]
+        if "return changed;" in activation:
+            fail(f"{target}: recognized fluid containers must claim the interaction even when no fluid moved")
+
+    # Combustion engines intentionally pass pipe items through to item-use, exactly like BC8, so a pipe can be placed
+    # against the engine instead of the GUI stealing the click.
+    engine_rel = "src/main/java/buildcraft/energy/tile/TileEngineIron_BC8.java"
+    for target in TARGETS:
+        engine = require(target, engine_rel, "instanceof IItemPipe", "InteractionResult.PASS")
+        if engine.find("FluidUtilBC.onTankActivated") > engine.find("instanceof IItemPipe"):
+            fail(f"{target}: combustion-engine fluid containers must be handled before pipe-item pass-through")
+
+    # The modern direct bucket/shard bridge must likewise claim rejected containers; PASS would invoke BucketItem's
+    # world placement and can destroy a BuildCraft machine.
+    neo_fluid = text("1.21.1-neoforge", fluid_rel)
+    filled_bucket = re.search(
+        r"if \(held\.getItem\(\) instanceof BucketItem bucketItem.*?if \(accepted != FluidType\.BUCKET_VOLUME\) \{(.*?)\}",
+        neo_fluid,
+        re.DOTALL,
+    )
+    if not filled_bucket or "return true;" not in filled_bucket.group(1):
+        fail("1.21.1-neoforge: rejected filled buckets must claim the machine interaction")
+    shard = re.search(
+        r"if \(held\.getItem\(\) instanceof ItemFragileFluidContainer\).*?if \(accepted != shardFluid\.getAmount\(\)\) \{(.*?)\}",
+        neo_fluid,
+        re.DOTALL,
+    )
+    if not shard or "return true;" not in shard.group(1):
+        fail("1.21.1-neoforge: rejected fragile fluid shards must claim the machine interaction")
+
     # The legacy path deliberately blocks tank -> container transfer in creative. The 1.21 vanilla bucket
     # special-case must do the same before it executes a real drain.
-    fluid_rel = "src/main/java/buildcraft/lib/misc/FluidUtilBC.java"
     for target in ("1.21.1-neoforge",):
         fluid = text(target, fluid_rel)
         branch = re.search(

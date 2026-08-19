@@ -239,17 +239,14 @@ public class FluidUtilBC {
         }
         boolean replace = !player.isCreative();
         boolean single = held.getCount() == 1;
-        IFluidHandlerItem flItem;
-        if (replace && single) {
-            flItem = FluidUtil.getFluidHandler(held).orElse(null);
-        } else {
-            // replace and not single - need a copy and count set to 1
-            // not replace and single - need a copy, does not need change of count but it should be ok
-            // not replace and not single - need a copy count set to 1
-            ItemStack copy = held.copy();
-            copy.setCount(1);
-            flItem = FluidUtil.getFluidHandler(copy).orElse(null);
-        }
+
+        // Always transact through an isolated one-item copy. Modern bucket/item capability wrappers are allowed to
+        // replace their container stack while drain(EXECUTE) runs; doing that directly against the player's held
+        // stack can invalidate the live wrapper before we read getContainer(), which made survival bucket/shard
+        // insertion fail even though the same transfer worked with the creative-mode copy path.
+        ItemStack transferStack = held.copy();
+        transferStack.setCount(1);
+        IFluidHandlerItem flItem = FluidUtil.getFluidHandler(transferStack).orElse(null);
         if (flItem == null) {
             return false;
         }
@@ -286,7 +283,11 @@ public class FluidUtilBC {
             }
 //            player.inventoryContainer.detectAndSendChanges();
         }
-        return changed;
+        // BC8 consumed the interaction as soon as the held item was a fluid container, even when the target tank
+        // rejected its contents. Returning PASS here lets BucketItem continue with world placement, so water/lava/oil
+        // can be placed into/through BuildCraft machine blocks after a rejected transfer. Keep the original claim
+        // semantics while only changing inventory/tank state when an actual transfer occurred.
+        return true;
     }
     
     public static ItemStack getFragileFluid(FluidStack fluid) {

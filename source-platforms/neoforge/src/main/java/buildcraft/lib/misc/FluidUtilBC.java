@@ -244,7 +244,9 @@ public class FluidUtilBC {
             FluidStack bucketFluid = new FluidStack(bucketItem.content, FluidType.BUCKET_VOLUME);
             int accepted = fluidHandler.fill(bucketFluid.copy(), FluidAction.SIMULATE);
             if (accepted != FluidType.BUCKET_VOLUME) {
-                return false;
+                // A filled bucket still owns this block interaction even when the target cannot accept its fluid.
+                // Falling through would let BucketItem place the fluid in the world and can replace/destroy machines.
+                return true;
             }
             if (!player.level().isClientSide) {
                 int filled = fluidHandler.fill(bucketFluid.copy(), FluidAction.EXECUTE);
@@ -268,7 +270,7 @@ public class FluidUtilBC {
             FluidStack simulated = fluidHandler.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
             if (simulated.isEmpty() || simulated.getAmount() != FluidType.BUCKET_VOLUME
                 || simulated.getFluid().getBucket() == Items.AIR) {
-                return false;
+                return true;
             }
             if (!player.level().isClientSide) {
                 FluidStack requested = simulated.copyWithAmount(FluidType.BUCKET_VOLUME);
@@ -288,11 +290,11 @@ public class FluidUtilBC {
         if (held.getItem() instanceof ItemFragileFluidContainer) {
             FluidStack shardFluid = ItemFragileFluidContainer.getFluid(held);
             if (shardFluid.isEmpty()) {
-                return false;
+                return true;
             }
             int accepted = fluidHandler.fill(shardFluid.copy(), FluidAction.SIMULATE);
             if (accepted != shardFluid.getAmount()) {
-                return false;
+                return true;
             }
             if (!player.level().isClientSide) {
                 int filled = fluidHandler.fill(shardFluid.copy(), FluidAction.EXECUTE);
