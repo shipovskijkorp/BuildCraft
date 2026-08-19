@@ -252,7 +252,12 @@ public final class BlockUtil {
             entities.addAll(world.getEntitiesOfClass(ItemEntity.class, aabb));
         }
         if (!harvestBlock(world, pos, tool, owner)) {
-            return Optional.empty();
+            // BC8 fell back to a normal destroy when the supplied tool could not harvest the target. Quarry uses a
+            // diamond pickaxe for drops, but frame clearing can encounter blocks that require a different tool.
+            // Without the fallback those positions are retried forever and look like a lost red-laser task.
+            if (!destroyBlock(world, pos, tool, owner)) {
+                return Optional.empty();
+            }
         }
         List<ItemStack> stacks = new ArrayList<>();
         for (ItemEntity entity : world.getEntitiesOfClass(ItemEntity.class, aabb)) {

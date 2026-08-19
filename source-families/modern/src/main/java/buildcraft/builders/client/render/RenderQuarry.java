@@ -102,15 +102,20 @@ public class RenderQuarry implements BlockEntityRenderer<TileQuarry>{
                             (taskBreakBlock.clientPower - taskBreakBlock.prevClientPower) * (double) partialTicks
                     );
                     VoxelShape aabb = tile.getLevel().getBlockState(pos).getShape(tile.getLevel(), pos);
-                    double value = (double) power / taskBreakBlock.getTarget();
-                    if (value < 0.9) {
-                        value = 1 - value / 0.9;
-                    } else {
-                        value = (value - 0.9) / 0.1;
+                    // Fluid/replaceable blocks may expose an empty collision/outline shape. Calling min/max on an
+                    // empty VoxelShape yields non-finite bounds, which turns the drill transform into NaN and makes
+                    // the drill head/cap disappear. Keep the normal idle offset for such transient/stale tasks.
+                    if (!aabb.isEmpty()) {
+                        double value = (double) power / taskBreakBlock.getTarget();
+                        if (value < 0.9) {
+                            value = 1 - value / 0.9;
+                        } else {
+                            value = (value - 0.9) / 0.1;
+                        }
+                        double scaleMin = 1 - (1 - aabb.max(Axis.Y)) - (aabb.max(Axis.Y) - aabb.min(Axis.Y)) / 2;
+                        double scaleMax = 1 + 4 / 16D;
+                        yOffset = scaleMin + value * (scaleMax - scaleMin);
                     }
-                    double scaleMin = 1 - (1 - aabb.max(Axis.Y)) - (aabb.max(Axis.Y) - aabb.min(Axis.Y)) / 2;
-                    double scaleMax = 1 + 4 / 16D;
-                    yOffset = scaleMin + value * (scaleMax - scaleMin);
                 }
             }
 

@@ -509,7 +509,7 @@ public final class BuildCraftLogicGameTests {
     }
 
     @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
-    public static void quarryFluidTraversalKeepsWaterPassableButMinesLavaAndWaterloggedBlocks(GameTestHelper helper) {
+    public static void quarryFluidTraversalMatchesBc8ViscosityRules(GameTestHelper helper) {
         TileQuarry quarry = placeQuarry(helper, new BlockPos(1, 1, 1));
         BlockPos water = new BlockPos(3, 1, 1);
         BlockPos lava = new BlockPos(4, 1, 1);
@@ -522,8 +522,11 @@ public final class BuildCraftLogicGameTests {
             "quarry drill no longer moves through standalone water");
         require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(lava)),
             "quarry drill incorrectly moves through high-viscosity lava");
-        require(helper, invokeBoolean(quarry, "canMine", helper.absolutePos(lava)),
-            "quarry silently skips lava instead of handling it as mineable work");
+        require(helper, !invokeBoolean(quarry, "canMine", helper.absolutePos(lava)),
+            "quarry mines high-viscosity lava even though BC8 treated it as a blocking fluid");
+        BlockPos belowLava = helper.absolutePos(lava.below());
+        require(helper, !invokeBoolean(quarry, "canMoveDownTo", belowLava),
+            "quarry can mine below a high-viscosity fluid barrier");
         require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(waterlogged)),
             "quarry incorrectly treats a waterlogged solid block as standalone water");
         require(helper, invokeBoolean(quarry, "canMine", helper.absolutePos(waterlogged)),

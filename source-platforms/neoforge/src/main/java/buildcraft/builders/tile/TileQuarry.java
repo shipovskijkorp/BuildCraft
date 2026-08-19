@@ -150,7 +150,10 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     private double moveDistanceSoFar;
     /** Rotating index for fast frame-edge rescans, so broken frames are repaired quickly. */
     private int frameEdgeScanIndex;
+    /** Rotating X/Z column scan used to recover blocks placed into already-excavated quarry space. */
+    private int miningColumnScanIndex;
     private long nextFrameWatchdogTick;
+    private static final int MINING_COLUMN_WATCHDOG_SCANS_PER_TICK = 256;
     private final Map<BlockPos, Long> deniedBreakUntil = new HashMap<>();
 
     private List<AABB> collisionBoxes = ImmutableList.of();
@@ -468,10 +471,12 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         if (state.getDestroySpeed(level, blockPos) < 0) {
             return false;
         }
-        // Any breakable block or fluid must remain visible to the quarry. Whether the drill may simply move through
-        // a low-viscosity fluid is handled separately by canMoveThrough(). High-viscosity fluids such as lava are
-        // therefore mined instead of being silently skipped by the iterator.
-        return true;
+        // BC8 only treated fluids up to water viscosity as traversable/minable quarry space. More viscous fluids
+        // (lava, crude oil, heavy oil, etc.) are barriers: the iterator skips the fluid itself and canMoveDownTo()
+        // prevents mining blocks underneath it. Treating those fluids as normal break tasks makes their empty block
+        // shape feed the drill animation and, more importantly, charges block-breaking work for a fluid BC8 never mined.
+        Fluid fluid = BlockUtil.getFluidWithFlowing(level, blockPos);
+        return fluid == Fluids.EMPTY || fluid.getFluidType().getViscosity() <= 1000;
     }
 
     private boolean canMoveThrough(BlockPos blockPos) {
@@ -494,6 +499,54 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
         }
         return true;
+    }
+
+    /**
+     * BC8 listened to every world block-state update, so placing a block into an already-cleared quarry column rewound
+     * the iterator and the drill came back for it. Modern GameEvent listeners are spatially dispatched around the event
+     * and cannot reproduce that global world-listener behaviour for a large quarry. Keep the cheap event fast-path, but
+     * also sweep the loaded quarry columns through the heightmap so missed placements (notably sponge in a deep hole)
+     * are discovered without rescanning the complete excavated volume.
+     */
+    private void rescanVisitedMiningColumns() {
+        if (boxIterator == null || !miningBox.isInitialized()) {
+            return;
+        }
+
+        int sizeX = miningBox.max().getX() - miningBox.min().getX() + 1;
+        int sizeZ = miningBox.max().getZ() - miningBox.min().getZ() + 1;
+        if (sizeX <= 0 || sizeZ <= 0) {
+            return;
+        }
+        int columnCount = sizeX * sizeZ;
+        int scans = Math.min(MINING_COLUMN_WATCHDOG_SCANS_PER_TICK, columnCount);
+        for (int i = 0; i < scans; i++) {
+            if (miningColumnScanIndex >= columnCount) {
+                miningColumnScanIndex = 0;
+            }
+            int index = miningColumnScanIndex++;
+            int x = miningBox.min().getX() + index % sizeX;
+            int z = miningBox.min().getZ() + index / sizeX;
+            int y = Math.min(
+                miningBox.max().getY(),
+                level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, x, z) - 1
+            );
+
+            BlockPos candidate = new BlockPos(x, y, z);
+            while (candidate.getY() >= miningBox.min().getY() && canMoveThrough(candidate)) {
+                candidate = candidate.below();
+            }
+            if (candidate.getY() < miningBox.min().getY()) {
+                continue;
+            }
+            boolean visited = boxIterator.hasFinished() || boxIterator.hasVisited(candidate);
+            if (!visited || !canMine(candidate) || !canMoveDownTo(candidate)) {
+                continue;
+            }
+
+            boxIterator.moveTo(candidate);
+            return;
+        }
     }
 
     private boolean canIgnoreInFrameBox(BlockPos blockPos) {
@@ -588,6 +641,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         frameBreakBlockPoses.clear();
         framePlaceFramePoses.clear();
         frameEdgeScanIndex = 0;
+        miningColumnScanIndex = 0;
         nextFrameWatchdogTick = 0;
         lastCollisionBlocksDrillPos = null;
         deniedBreakUntil.clear();
@@ -693,7 +747,8 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     }
 
     private void cleanStaleDeniedMiningPositions() {
-        deniedBreakUntil.keySet().removeIf(pos -> isMiningDeniedPosition(pos) && !canMine(pos));
+        deniedBreakUntil.keySet().removeIf(pos -> isMiningDeniedPosition(pos)
+            && (canMoveThrough(pos) || !canMine(pos) || !canMoveDownTo(pos)));
     }
 
     private boolean hasPendingDeniedMiningPosition() {
@@ -768,6 +823,10 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             }
         }
 
+        if (currentTask == null) {
+            rescanVisitedMiningColumns();
+        }
+
         if (!hasWork()) {
             updateCollisionBlocksIfNeeded();
             return;
@@ -829,6 +888,15 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 if (blockPos == null) {
                     break power_loop;
                 }
+                // BC8 reconciled the queued frame position before moving on to the next task. Modern permission
+                // probes reject air, so probing first can turn a block that vanished naturally (or was removed by a
+                // neighbouring quarry) into a permanent denied entry: the stale frame-break position is never
+                // checked again and the quarry appears to lose its red-laser task. Refresh the queue first.
+                check(blockPos);
+                if (!frameBreakBlockPoses.contains(blockPos)) {
+                    deniedBreakUntil.remove(blockPos);
+                    continue power_loop;
+                }
                 if (canMine(blockPos)) {
                     if (!mayStartBreakTask(blockPos)) {
                         continue power_loop;
@@ -837,7 +905,6 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                     currentTask = new TaskBreakBlock(blockPos);
                     sendUpdate = true;
                 }
-                check(blockPos);
                 continue power_loop;
             }
 
@@ -1531,6 +1598,11 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
                 level.destroyBlockProgress(breakPos.hashCode(), breakPos, (int) (power * 9 / getTarget()));
                 return false;
             } else {
+                // The target can disappear between frame scans (falling blocks, leaf/plant updates, another quarry,
+                // or a player). Reconcile it immediately instead of leaving a stale frame-break queue entry behind.
+                level.destroyBlockProgress(breakPos.hashCode(), breakPos, -1);
+                check(breakPos);
+                deniedBreakUntil.remove(breakPos);
                 return true;
             }
         }
@@ -1539,7 +1611,11 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         protected boolean finish(long added, long target) {
             blockPercentSoFar += target <= 0 ? 1.0 : added / (double) target;
             if (!canMine(breakPos)) {
-                // The target disappeared or became irrelevant while energy was reserved: cancel, don't charge.
+                // The target disappeared or became irrelevant while energy was reserved: cancel, don't charge, and
+                // reconcile frame bookkeeping so a stale task cannot keep hasWork() false forever.
+                level.destroyBlockProgress(breakPos.hashCode(), breakPos, -1);
+                check(breakPos);
+                deniedBreakUntil.remove(breakPos);
                 return false;
             }
             if (!AutomationPermissionUtil.mayBlock(

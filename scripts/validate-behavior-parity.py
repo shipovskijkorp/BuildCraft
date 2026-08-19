@@ -344,6 +344,7 @@ def validate_persistence_and_reload_invariants() -> None:
     # then commit or refund. These guards catch the historical progress-as-MJ dupe and partial-reservation losses.
     blueprint_rel = "src/main/java/buildcraft/builders/snapshot/BlueprintBuilder.java"
     quarry_rel = "src/main/java/buildcraft/builders/tile/TileQuarry.java"
+    quarry_render_rel = "src/main/java/buildcraft/builders/client/render/RenderQuarry.java"
     template_rel = "src/main/java/buildcraft/builders/snapshot/TemplateBuilder.java"
     for target in TARGETS:
         require(target, snapshot_rel,
@@ -367,12 +368,40 @@ def validate_persistence_and_reload_invariants() -> None:
                 "!tile.getInvResources().extract(PLACEABLE_BLOCK_FILTER, 1, 1, true).isEmpty()",
                 "!tile.needMeterial()",
                 "Collections.singletonList(reserved.copy())")
-        require(target, quarry_rel,
+        quarry = require(target, quarry_rel,
                 "pendingTaskPowerRefund",
                 "reservedPower",
                 "addPower(added, withdrawn)",
                 "queueTaskPowerRefund(reservedPower)",
-                "cancelCurrentTaskWithRefund()")
+                "cancelCurrentTaskWithRefund()",
+                "fluid.getFluidType().getViscosity() <= 1000",
+                "rescanVisitedMiningColumns()",
+                "MINING_COLUMN_WATCHDOG_SCANS_PER_TICK",
+                "Heightmap.Types.WORLD_SURFACE",
+                "if (!frameBreakBlockPoses.contains(blockPos))",
+                "canMoveThrough(pos) || !canMine(pos) || !canMoveDownTo(pos)",
+                "deniedBreakUntil.remove(breakPos)")
+        frame_break_start = quarry.find("if (!frameBreakBlockPoses.isEmpty())")
+        frame_place_start = quarry.find("if (!framePlaceFramePoses.isEmpty())", frame_break_start)
+        if frame_break_start < 0 or frame_place_start < 0:
+            fail(f"{target}: quarry frame-break scheduling section is missing")
+        frame_break_section = quarry[frame_break_start:frame_place_start]
+        check_pos = frame_break_section.find("check(blockPos);")
+        permission_pos = frame_break_section.find("mayStartBreakTask(blockPos)")
+        if check_pos < 0 or permission_pos < 0 or check_pos > permission_pos:
+            fail(f"{target}: quarry must reconcile a queued frame-break position before permission probing")
+
+        block_util = require(target, "src/main/java/buildcraft/lib/misc/BlockUtil.java",
+                "if (!harvestBlock(world, pos, tool, owner))",
+                "if (!destroyBlock(world, pos, tool, owner))")
+        harvest_fallback = block_util.find("if (!harvestBlock(world, pos, tool, owner))")
+        destroy_fallback = block_util.find("if (!destroyBlock(world, pos, tool, owner))", harvest_fallback)
+        if harvest_fallback < 0 or destroy_fallback < 0:
+            fail(f"{target}: block break/drop helper lost the BC8 non-harvest destroy fallback")
+
+        require(target, quarry_render_rel,
+                "if (!aabb.isEmpty())",
+                "Keep the normal idle offset for such transient/stale tasks")
 
     # Unknown/custom pipe payloads must survive missing registrations and unchecked migration/codec failures.
     holder_rel = "src/main/java/buildcraft/transport/tile/TilePipeHolder.java"
@@ -944,7 +973,7 @@ def validate_gametest_runtime_guards() -> None:
         for method in (
             "pumpPreservesDetectedInfiniteWaterSource",
             "fillerTreatsReplaceableBlocksAsPlacementTargets",
-            "quarryFluidTraversalKeepsWaterPassableButMinesLavaAndWaterloggedBlocks",
+            "quarryFluidTraversalMatchesBc8ViscosityRules",
             "quarryFramePlannerReplacesFluidsAndExcavatesSolidObstacles",
             "schematicPlacementHonoursVanillaCanSurvive",
             "schematicLeavesBecomePersistentAfterSerializationRoundTrip",
