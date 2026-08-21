@@ -539,10 +539,16 @@ public final class BuildCraftLogicGameTests {
         // This unit-style fixture only places the block entity, so provide the minimal valid column needed to test
         // whether the lava above the target blocks downward mining.
         Box miningBox = (Box) readField(quarry, "miningBox");
-        miningBox.setMin(belowLava);
-        miningBox.setMax(absoluteLava);
-        require(helper, !invokeBoolean(quarry, "canMoveDownTo", belowLava),
-            "quarry can mine below a high-viscosity fluid barrier");
+        try {
+            miningBox.setMin(belowLava);
+            miningBox.setMax(absoluteLava);
+            require(helper, !invokeBoolean(quarry, "canMoveDownTo", belowLava),
+                "quarry can mine below a high-viscosity fluid barrier");
+        } finally {
+            // Do not leave a half-configured live quarry behind for the next server tick. A real quarry initializes
+            // frameBox and miningBox together; this temporary test-only column must not leak into chunk loading.
+            miningBox.reset();
+        }
         require(helper, !invokeBoolean(quarry, "canMoveThrough", absoluteWaterlogged),
             "quarry incorrectly treats a waterlogged solid block as standalone water");
         require(helper, invokeBoolean(quarry, "canMine", absoluteWaterlogged),

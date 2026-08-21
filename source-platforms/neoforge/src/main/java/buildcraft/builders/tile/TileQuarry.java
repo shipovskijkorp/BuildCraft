@@ -630,7 +630,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
     @Nullable
     @Override
     public Set<ChunkPos> getChunksToLoad() {
-        if (!apiChunkLoading || !miningBox.isInitialized()) {
+        if (!apiChunkLoading || !frameBox.isInitialized() || !miningBox.isInitialized()) {
             return null;
         }
         Set<ChunkPos> chunkPoses = new HashSet<>();
