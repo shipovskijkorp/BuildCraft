@@ -20,13 +20,13 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 
-public enum FacadeSwapRecipe implements Recipe<CraftingContainer>, IRecipeViewable.IViewableGrid {
+public enum FacadeSwapRecipe implements CraftingRecipe, IRecipeViewable.IViewableGrid {
     INSTANCE;
 
     private static final int TIME_GAP = 500;
