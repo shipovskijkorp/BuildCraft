@@ -367,7 +367,13 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                 holder, this, reachCenter.colour, reachCenter.from, reachCenter.getStack()
             );
             holder.fireEvent(tryBounce);
-            if (tryBounce.canBounce) {
+            boolean retryConnectedPipe = reachCenter.from != null
+                && pipe.isConnected(reachCenter.from)
+                && pipe.getConnectedType(reachCenter.from) == ConnectedType.PIPE;
+            if (tryBounce.canBounce || retryConnectedPipe) {
+                // A connected item pipe can transiently reject a hand-off (connection/capability update races are
+                // especially visible at gold-pipe speed). Keep the cargo in the network and retry instead of
+                // materialising it as an ItemEntity in the middle of an otherwise continuous route.
                 order = ImmutableList.of(EnumSet.of(reachCenter.from));
             } else {
                 dropItem(item.stack, null, item.side.getOpposite(), item.speed);

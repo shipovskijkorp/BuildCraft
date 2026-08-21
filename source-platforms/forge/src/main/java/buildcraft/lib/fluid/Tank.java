@@ -35,13 +35,16 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -464,6 +467,18 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
      * @param stack The stack to map. This will ALWAYS have an {@link ItemStack#getCount()} of 1.
      * @param space The maximum amount of fluid that can be accepted by this tank. */
     protected FluidGetResult map(ItemStack stack, int space) {
+        if (stack.getItem() instanceof BucketItem) {
+            FluidStack contained = FluidUtil.getFluidContained(stack.copy()).orElse(FluidStack.EMPTY);
+            if (!contained.isEmpty()) {
+                if (space < FluidType.BUCKET_VOLUME) {
+                    return null;
+                }
+                return new FluidGetResult(
+                    new ItemStack(Items.BUCKET),
+                    new FluidStack(contained, FluidType.BUCKET_VOLUME)
+                );
+            }
+        }
         IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack.copy()).orElse(null);
         if (fluidHandler == null) return null;
         FluidStack drained = fluidHandler.drain(space, FluidAction.EXECUTE);

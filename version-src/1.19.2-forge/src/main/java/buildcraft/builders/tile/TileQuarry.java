@@ -481,7 +481,9 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         // (lava, crude oil, heavy oil, etc.) are barriers: the iterator skips the fluid itself and canMoveDownTo()
         // prevents mining blocks underneath it. Treating those fluids as normal break tasks makes their empty block
         // shape feed the drill animation and, more importantly, charges block-breaking work for a fluid BC8 never mined.
-        Fluid fluid = BlockUtil.getFluidWithFlowing(level, blockPos);
+        // Use the block-backed fluid here, matching canMoveThrough(). Waterlogged solids intentionally return EMPTY,
+        // so their solid block remains mineable instead of being classified as standalone fluid.
+        Fluid fluid = BlockUtil.getFluidWithFlowing(state.getBlock());
         return fluid == Fluids.EMPTY || fluid.getFluidType().getViscosity() <= 1000;
     }
 

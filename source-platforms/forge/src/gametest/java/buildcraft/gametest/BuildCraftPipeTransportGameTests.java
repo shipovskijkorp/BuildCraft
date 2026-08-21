@@ -168,6 +168,50 @@ public final class BuildCraftPipeTransportGameTests {
     }
 
     @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
+        timeoutTicks = 260)
+    public static void goldLineRetriesTransientPipeHandoffWithoutDropping(GameTestHelper helper) {
+        BlockPos sourcePos = new BlockPos(1, 1, 3);
+        BlockPos firstPipePos = new BlockPos(2, 1, 3);
+        BlockPos middlePipePos = new BlockPos(3, 1, 3);
+        BlockPos lastPipePos = new BlockPos(4, 1, 3);
+        BlockPos destinationPos = new BlockPos(5, 1, 3);
+
+        placeChest(helper, sourcePos);
+        ChestBlockEntity destination = placeChest(helper, destinationPos);
+        TilePipeHolder first = PipeGameTestSupport.placePipe(helper, firstPipePos, BCTransportPipes.goldItem);
+        TilePipeHolder middle = PipeGameTestSupport.placePipe(helper, middlePipePos, BCTransportPipes.goldItem);
+        TilePipeHolder last = PipeGameTestSupport.placePipe(helper, lastPipePos, BCTransportPipes.goldItem);
+        last.eventBus.registerHandler(new RejectFirstInsertHandler());
+
+        helper.runAfterDelay(5, () -> {
+            require(helper, first.getPipe().isConnected(Direction.EAST), "first gold pipe did not connect east");
+            require(helper, middle.getPipe().isConnected(Direction.WEST), "middle gold pipe did not connect west");
+            require(helper, middle.getPipe().isConnected(Direction.EAST), "middle gold pipe did not connect east");
+            require(helper, last.getPipe().isConnected(Direction.WEST), "last gold pipe did not connect west");
+
+            ItemStack input = new ItemStack(Items.GOLD_INGOT, 7);
+            markCargo(input, "gold_transient_handoff");
+            ItemStack leftover = ((IFlowItems) first.getPipe().getFlow())
+                .injectItem(input, true, Direction.WEST, null, 0.05);
+            require(helper, leftover.isEmpty(), "gold line rejected initial input");
+        });
+
+        helper.runAfterDelay(180, () -> {
+            require(helper, PipeGameTestSupport.countItem(destination, Items.GOLD_INGOT) == 7,
+                "gold line did not deliver all cargo after a transient hand-off rejection");
+            require(helper, countDroppedCargo(helper, "gold_transient_handoff") == 0,
+                "gold line dropped cargo in the middle after a transient hand-off rejection");
+            require(helper, !((PipeFlowItems) first.getPipe().getFlow()).doesContainItems(),
+                "first gold pipe retained cargo");
+            require(helper, !((PipeFlowItems) middle.getPipe().getFlow()).doesContainItems(),
+                "middle gold pipe retained cargo");
+            require(helper, !((PipeFlowItems) last.getPipe().getFlow()).doesContainItems(),
+                "last gold pipe retained cargo");
+            helper.succeed();
+        });
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = PipeGameTestSupport.LARGE_EMPTY_TEMPLATE,
         timeoutTicks = 320)
     public static void clayPipePrefersInventoryOverAnotherValidPipe(GameTestHelper helper) {
         BlockPos sourcePos = new BlockPos(2, 1, 3);
@@ -256,6 +300,18 @@ public final class BuildCraftPipeTransportGameTests {
         return (int) helper.getLevel().getEntitiesOfClass(ItemEntity.class, bounds).stream()
             .filter(entity -> hasCargoMarker(entity.getItem(), marker))
             .count();
+    }
+
+    public static final class RejectFirstInsertHandler {
+        private boolean rejected;
+
+        @PipeEventHandler
+        public void rejectFirst(PipeEventItem.TryInsert event) {
+            if (!rejected) {
+                rejected = true;
+                event.cancel();
+            }
+        }
     }
 
     public static final class ClampInsertHandler {

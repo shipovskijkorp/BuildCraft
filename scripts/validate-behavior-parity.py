@@ -950,7 +950,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 90
+    expected_tests = 91
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0

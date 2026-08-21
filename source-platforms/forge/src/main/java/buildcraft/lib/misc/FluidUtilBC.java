@@ -25,13 +25,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -237,6 +240,59 @@ public class FluidUtilBC {
         if (held.isEmpty()) {
             return false;
         }
+        //? if <1.20 {
+        Level world = player.level;
+        //?} else {
+        /*?
+        Level world = player.level();
+        ?*/
+        //?}
+
+        // BucketItem capability wrappers on Forge 43/47 do not reliably update getContainer() for modded
+        // buckets. Treat buckets as atomic 1000 mB containers so custom BuildCraft oil buckets obey the same
+        // consume/return-empty-bucket contract as water and lava buckets.
+        if (held.getItem() instanceof BucketItem) {
+            FluidStack contained = FluidUtil.getFluidContained(held.copy()).orElse(FluidStack.EMPTY);
+            if (!contained.isEmpty()) {
+                FluidStack bucketFluid = new FluidStack(contained, FluidType.BUCKET_VOLUME);
+                int accepted = fluidHandler.fill(bucketFluid.copy(), FluidAction.SIMULATE);
+                if (accepted != FluidType.BUCKET_VOLUME) {
+                    return true;
+                }
+                if (!world.isClientSide) {
+                    int filled = fluidHandler.fill(bucketFluid.copy(), FluidAction.EXECUTE);
+                    if (filled != FluidType.BUCKET_VOLUME) {
+                        throw new IllegalStateException("Simulated a full bucket fill but executed " + filled + " mB");
+                    }
+                    SoundUtil.playBucketEmpty(world, pos, bucketFluid);
+                    consumeOneAndGive(player, hand, held, new ItemStack(Items.BUCKET));
+                }
+                return true;
+            }
+        }
+
+        if (held.is(Items.BUCKET)) {
+            if (player.isCreative()) {
+                return world.isClientSide;
+            }
+            FluidStack simulated = fluidHandler.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
+            if (simulated.isEmpty() || simulated.getAmount() != FluidType.BUCKET_VOLUME
+                || simulated.getFluid().getBucket() == Items.AIR) {
+                return true;
+            }
+            if (!world.isClientSide) {
+                FluidStack requested = new FluidStack(simulated, FluidType.BUCKET_VOLUME);
+                FluidStack drained = fluidHandler.drain(requested, FluidAction.EXECUTE);
+                if (drained.isEmpty() || drained.getAmount() != FluidType.BUCKET_VOLUME
+                    || !FluidCompatRegistry.areEquivalent(simulated, drained)) {
+                    throw new IllegalStateException("Simulated a full bucket drain but execution returned " + drained);
+                }
+                SoundUtil.playBucketFill(world, pos, drained);
+                consumeOneAndGive(player, hand, held, new ItemStack(drained.getFluid().getBucket()));
+            }
+            return true;
+        }
+
         boolean replace = !player.isCreative();
         boolean single = held.getCount() == 1;
 
@@ -250,13 +306,6 @@ public class FluidUtilBC {
         if (flItem == null) {
             return false;
         }
-        //? if <1.20 {
-        Level world = player.level;
-        //?} else {
-        /*?
-        Level world = player.level();
-        ?*/
-        //?}
         if (world.isClientSide) {
             return true;
         }
@@ -288,6 +337,20 @@ public class FluidUtilBC {
         // can be placed into/through BuildCraft machine blocks after a rejected transfer. Keep the original claim
         // semantics while only changing inventory/tank state when an actual transfer occurred.
         return true;
+    }
+
+    private static void consumeOneAndGive(Player player, InteractionHand hand, ItemStack held, ItemStack result) {
+        if (player.isCreative()) {
+            return;
+        }
+        if (held.getCount() == 1) {
+            player.setItemInHand(hand, result);
+            return;
+        }
+        held.shrink(1);
+        if (!result.isEmpty()) {
+            ItemHandlerHelper.giveItemToPlayer(player, result);
+        }
     }
     
     public static ItemStack getFragileFluid(FluidStack fluid) {

@@ -4,7 +4,10 @@
  */
 package buildcraft.compat.jade;
 
+import javax.annotation.Nullable;
+
 import buildcraft.api.v2.energy.MjAmount;
+import buildcraft.lib.internal.debug.BCLog;
 import buildcraft.lib.internal.mj.MjFormatting;
 import buildcraft.lib.internal.mj.MjReceiverEnergyStorage;
 import buildcraft.lib.internal.mj.MjCapabilities;
@@ -110,6 +113,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
     private static final ResourceLocation UID_PROGRESS = id("progress");
 
     private static final int PROVIDER_PRIORITY = -500;
+    private static volatile boolean jadeFluidViewFailed;
 
     private static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, "jade_" + path);
@@ -380,9 +384,15 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
             if (BCLibConfig.hideFluidValues) {
                 return null;
             }
+            if (jadeFluidViewFailed) {
+                return Collections.emptyList();
+            }
             Object target = accessor.getTarget();
             if (target instanceof EntityRobotBase robot) {
                 List<ViewGroup<CompoundTag>> groups = fluidHandlerGroups(robot, "robot_tank");
+                if (jadeFluidViewFailed) {
+                    return Collections.emptyList();
+                }
                 if (groups == null || groups.isEmpty()) {
                     return null;
                 }
@@ -401,7 +411,11 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
                     if (fluid == null) {
                         fluid = FluidStack.EMPTY;
                     }
-                    ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(writeFluidView(fluid, capacity)));
+                    CompoundTag fluidView = writeFluidView(fluid, capacity);
+                    if (fluidView == null) {
+                        return Collections.emptyList();
+                    }
+                    ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(fluidView));
                     String tankName = tank.getTankName();
                     group.id = tankName == null || tankName.isBlank() ? "tank" : tankName;
                     groups.add(group);
@@ -415,6 +429,9 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
                     return null;
                 }
                 groups = fluidHandlerGroups(handler, "tank");
+                if (jadeFluidViewFailed) {
+                    return Collections.emptyList();
+                }
                 if (groups == null || groups.isEmpty()) {
                     return null;
                 }
@@ -426,7 +443,7 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
 
         @Override
         public List<ClientViewGroup<FluidView>> getClientGroups(Accessor<?> accessor, List<ViewGroup<CompoundTag>> groups) {
-            if (BCLibConfig.hideFluidValues) {
+            if (BCLibConfig.hideFluidValues || groups == null || groups.isEmpty()) {
                 return Collections.emptyList();
             }
             return ClientViewGroup.map(groups, FluidView::readDefault, BuildCraftJadePlugin::decorateGroupTitle);
@@ -618,20 +635,41 @@ public final class BuildCraftJadePlugin implements snownee.jade.api.IWailaPlugin
             if (capacity <= 0) {
                 continue;
             }
-            ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(writeFluidView(handler.getFluidInTank(tank), capacity)));
+            CompoundTag fluidView = writeFluidView(handler.getFluidInTank(tank), capacity);
+            if (fluidView == null) {
+                return Collections.emptyList();
+            }
+            ViewGroup<CompoundTag> group = new ViewGroup<>(List.of(fluidView));
             group.id = defaultId;
             groups.add(group);
         }
         return groups.isEmpty() ? null : groups;
     }
 
+    @Nullable
     private static CompoundTag writeFluidView(FluidStack fluid, int capacity) {
-        FluidStack safeFluid = fluid == null ? FluidStack.EMPTY : fluid;
-        JadeFluidObject object = JadeFluidObject.of(
-                safeFluid.getFluid(),
-                Math.max(0, safeFluid.getAmount())
-        );
-        return FluidView.writeDefault(object, Math.max(0, capacity));
+        if (jadeFluidViewFailed) {
+            return null;
+        }
+        try {
+            FluidStack safeFluid = fluid == null ? FluidStack.EMPTY : fluid;
+            JadeFluidObject object = JadeFluidObject.of(
+                    safeFluid.getFluid(),
+                    Math.max(0, safeFluid.getAmount())
+            );
+            return FluidView.writeDefault(object, Math.max(0, capacity));
+        } catch (Throwable error) {
+            // FluidView is an optional Jade implementation detail and third-party Jade mixins can fail while the
+            // class is being transformed. Do not let a broken overlay integration crash the server merely because
+            // a player looked at a BuildCraft fluid machine. Returning an empty non-null provider result also stops
+            // Jade from falling through to its universal fluid provider, which would load the same broken class.
+            jadeFluidViewFailed = true;
+            BCLog.logger.warn(
+                "Disabling BuildCraft Jade fluid views because Jade FluidView failed to load; fluid tooltips will be hidden",
+                error
+            );
+            return null;
+        }
     }
 
     private static List<ViewGroup<CompoundTag>> pipeThroughputGroups(TilePipeHolder holder) {
