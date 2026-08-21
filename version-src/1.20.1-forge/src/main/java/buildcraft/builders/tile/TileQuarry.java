@@ -97,6 +97,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -473,10 +474,19 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
         // (lava, crude oil, heavy oil, etc.) are barriers: the iterator skips the fluid itself and canMoveDownTo()
         // prevents mining blocks underneath it. Treating those fluids as normal break tasks makes their empty block
         // shape feed the drill animation and, more importantly, charges block-breaking work for a fluid BC8 never mined.
-        // Use the block-backed fluid here, matching canMoveThrough(). Waterlogged solids intentionally return EMPTY,
-        // so their solid block remains mineable instead of being classified as standalone fluid.
-        Fluid fluid = BlockUtil.getFluidWithFlowing(state.getBlock());
+        Fluid fluid = getStandaloneFluid(state);
         return fluid == Fluids.EMPTY || fluid.getFluidType().getViscosity() <= 1000;
+    }
+
+    private static Fluid getStandaloneFluid(BlockState state) {
+        FluidState fluidState = state.getFluidState();
+        if (fluidState.isEmpty()) {
+            return Fluids.EMPTY;
+        }
+
+        // FluidState is present for both a real fluid block and a waterlogged solid. Comparing the block with the
+        // fluid's legacy block cleanly separates those cases without depending on the concrete LiquidBlock class.
+        return fluidState.createLegacyBlock().getBlock() == state.getBlock() ? fluidState.getType() : Fluids.EMPTY;
     }
 
     private boolean canMoveThrough(BlockPos blockPos) {
@@ -488,7 +498,7 @@ public class TileQuarry extends TileBC_Neptune implements IDebuggable, IChunkLoa
             return true;
         }
         // Only standalone fluid blocks are passable. Waterlogged blocks still contain a real block that must be mined.
-        Fluid fluid = BlockUtil.getFluidWithFlowing(state.getBlock());
+        Fluid fluid = getStandaloneFluid(state);
         return fluid != Fluids.EMPTY && fluid.getFluidType().getViscosity() <= 1000;
     }
 
