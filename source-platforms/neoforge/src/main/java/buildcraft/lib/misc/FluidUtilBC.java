@@ -27,13 +27,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
@@ -238,89 +236,30 @@ public class FluidUtilBC {
             return false;
         }
 
-        // Forge 52's generic item-fluid bridge does not reliably expose vanilla buckets in every interaction path.
-        // Handle the two vanilla bucket directions directly, then leave modded containers to FluidUtil.
-        if (held.getItem() instanceof BucketItem bucketItem && bucketItem.content != Fluids.EMPTY) {
-            FluidStack bucketFluid = new FluidStack(bucketItem.content, FluidType.BUCKET_VOLUME);
-            int accepted = fluidHandler.fill(bucketFluid.copy(), FluidAction.SIMULATE);
-            if (accepted != FluidType.BUCKET_VOLUME) {
-                // A filled bucket still owns this block interaction even when the target cannot accept its fluid.
-                // Falling through would let BucketItem place the fluid in the world and can replace/destroy machines.
-                return true;
-            }
-            if (!player.level().isClientSide) {
-                int filled = fluidHandler.fill(bucketFluid.copy(), FluidAction.EXECUTE);
-                if (filled != FluidType.BUCKET_VOLUME) {
-                    throw new IllegalStateException("Simulated a full bucket fill but executed " + filled + " mB");
-                }
-                SoundUtil.playBucketEmpty(player.level(), pos, bucketFluid);
-                consumeOneAndGive(player, hand, held, new ItemStack(Items.BUCKET));
-            }
+        // NeoForge already owns item-fluid container transactions. Use that path for BuildCraft buckets and fragile
+        // shards as well instead of manually filling the machine and separately trying to rewrite the player's hand.
+        // Keep BC8's interaction-claim behaviour so rejected buckets cannot fall through to world placement.
+        boolean fluidContainer = FluidUtil.getFluidHandler(held.copy()).isPresent()
+            || held.getItem() instanceof BucketItem
+            || held.getItem() instanceof ItemFragileFluidContainer;
+        if (!fluidContainer) {
+            return false;
+        }
+        if (player.level().isClientSide) {
             return true;
         }
 
-        if (held.is(Items.BUCKET)) {
-            // Match the legacy interaction path: in creative the temporary filled-container state is discarded,
-            // so tank -> container transfer must not execute or it would silently delete fluid from the tank.
-            if (player.isCreative()) {
-                // Legacy 1.19.2/1.20.1 reports the interaction optimistically on the client, but the server
-                // performs no tank -> container transfer for creative players.
-                return player.level().isClientSide;
-            }
-            FluidStack simulated = fluidHandler.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
-            if (simulated.isEmpty() || simulated.getAmount() != FluidType.BUCKET_VOLUME
-                || simulated.getFluid().getBucket() == Items.AIR) {
-                return true;
-            }
-            if (!player.level().isClientSide) {
-                FluidStack requested = simulated.copyWithAmount(FluidType.BUCKET_VOLUME);
-                FluidStack drained = fluidHandler.drain(requested, FluidAction.EXECUTE);
-                if (drained.isEmpty() || drained.getAmount() != FluidType.BUCKET_VOLUME
-                    || !FluidCompatRegistry.areEquivalent(simulated, drained)) {
-                    throw new IllegalStateException("Simulated a full bucket drain but execution returned " + drained);
-                }
-                SoundUtil.playBucketFill(player.level(), pos, drained);
-                consumeOneAndGive(player, hand, held, new ItemStack(drained.getFluid().getBucket()));
-            }
-            return true;
+        boolean changed = FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
+        if (changed) {
+            syncPlayerInventory(player);
         }
-
-        // Fragile shards are BuildCraft's own drain-only fluid containers. Avoid the generic capability bridge here as
-        // well, because the contained fluid is already stored in the stack's custom data.
-        if (held.getItem() instanceof ItemFragileFluidContainer) {
-            FluidStack shardFluid = ItemFragileFluidContainer.getFluid(held);
-            if (shardFluid.isEmpty()) {
-                return true;
-            }
-            int accepted = fluidHandler.fill(shardFluid.copy(), FluidAction.SIMULATE);
-            if (accepted != shardFluid.getAmount()) {
-                return true;
-            }
-            if (!player.level().isClientSide) {
-                int filled = fluidHandler.fill(shardFluid.copy(), FluidAction.EXECUTE);
-                if (filled != shardFluid.getAmount()) {
-                    throw new IllegalStateException("Simulated a shard fill but executed " + filled + " mB");
-                }
-                SoundUtil.playBucketEmpty(player.level(), pos, shardFluid);
-                consumeOneAndGive(player, hand, held, ItemStack.EMPTY);
-            }
-            return true;
-        }
-
-        return FluidUtil.interactWithFluidHandler(player, hand, fluidHandler);
+        return true;
     }
 
-    private static void consumeOneAndGive(Player player, InteractionHand hand, ItemStack held, ItemStack result) {
-        if (player.isCreative()) {
-            return;
-        }
-        if (held.getCount() == 1) {
-            player.setItemInHand(hand, result);
-            return;
-        }
-        held.shrink(1);
-        if (!result.isEmpty()) {
-            InventoryUtil.addToPlayer(player, result);
+    private static void syncPlayerInventory(Player player) {
+        player.inventoryMenu.broadcastFullState();
+        if (player.containerMenu != player.inventoryMenu) {
+            player.containerMenu.broadcastFullState();
         }
     }
     

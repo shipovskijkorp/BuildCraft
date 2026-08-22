@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class ContainerEngineIron_BC8 extends ContainerBCTile<TileEngineIron_BC8> {
@@ -37,31 +38,34 @@ public class ContainerEngineIron_BC8 extends ContainerBCTile<TileEngineIron_BC8>
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        // The only slots are player slots -- try to interact with all of the tanks
-
-        if (!player.level().isClientSide) {
-            ItemStack stack = playerInventory.getItem(index);
-            ItemStack original = stack.copy();
-            stack = tile.tankFuel.transferStackToTank(player, stack);
-            if (!ItemStack.matches(stack, original)) {
-                playerInventory.setItem(index, stack);
-                broadcastChanges();
-                return ItemStack.EMPTY;
-            }
-            stack = tile.tankCoolant.transferStackToTank(player, stack);
-            if (!ItemStack.matches(stack, original)) {
-                playerInventory.setItem(index, stack);
-                broadcastChanges();
-                return ItemStack.EMPTY;
-            }
-            stack = tile.tankResidue.transferStackToTank(player, stack);
-            if (!ItemStack.matches(stack, original)) {
-                playerInventory.setItem(index, stack);
-                broadcastChanges();
-                return ItemStack.EMPTY;
-            }
+        if (index < 0 || index >= slots.size()) {
+            return ItemStack.EMPTY;
+        }
+        Slot slot = slots.get(index);
+        if (!slot.hasItem()) {
+            return ItemStack.EMPTY;
+        }
+        if (player.level().isClientSide) {
+            return ItemStack.EMPTY;
         }
 
-        return super.quickMoveStack(player, index);
+        ItemStack before = slot.getItem().copy();
+        ItemStack after = tile.tankFuel.transferStackToTank(player, slot.getItem());
+        if (ItemStack.matches(after, before)) {
+            after = tile.tankCoolant.transferStackToTank(player, slot.getItem());
+        }
+        if (ItemStack.matches(after, before)) {
+            after = tile.tankResidue.transferStackToTank(player, slot.getItem());
+        }
+
+        if (!ItemStack.matches(after, before)) {
+            // index is a menu-slot index, not a raw Player Inventory index. Writing through Slot preserves the
+            // main-inventory/hotbar mapping established by addFullPlayerInventory().
+            slot.set(after);
+            slot.setChanged();
+            broadcastFullState();
+            return before;
+        }
+        return ItemStack.EMPTY;
     }
 }

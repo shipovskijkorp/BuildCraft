@@ -27,18 +27,18 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class FluidUtilBC {
@@ -240,6 +240,31 @@ public class FluidUtilBC {
         if (held.isEmpty()) {
             return false;
         }
+
+        boolean replace = !player.isCreative();
+        boolean single = held.getCount() == 1;
+
+        // Match BC8's transaction contract: the fluid item owns the container transition. A single survival item
+        // binds to the authoritative held stack; creative and stacked items use an isolated one-item handler.
+        // BuildCraft buckets/shards get explicit handler fallbacks so loader helper quirks cannot bypass their
+        // empty-container state.
+        ItemStack transferStack = replace && single ? held : held.copy();
+        if (!(replace && single)) {
+            transferStack.setCount(1);
+        }
+        IFluidHandlerItem flItem = transferStack
+            .getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
+            .orElse(null);
+        if (flItem == null && transferStack.getItem() instanceof BucketItem) {
+            flItem = new FluidBucketWrapper(transferStack);
+        }
+        if (flItem == null && transferStack.getItem() instanceof ItemFragileFluidContainer fragile) {
+            flItem = fragile.new FragileFluidHandler(transferStack);
+        }
+        if (flItem == null) {
+            return false;
+        }
+
         //? if <1.20 {
         Level world = player.level;
         //?} else {
@@ -247,109 +272,45 @@ public class FluidUtilBC {
         Level world = player.level();
         ?*/
         //?}
-
-        // BucketItem capability wrappers on Forge 43/47 do not reliably update getContainer() for modded
-        // buckets. Treat buckets as atomic 1000 mB containers so custom BuildCraft oil buckets obey the same
-        // consume/return-empty-bucket contract as water and lava buckets.
-        if (held.getItem() instanceof BucketItem) {
-            FluidStack contained = FluidUtil.getFluidContained(held.copy()).orElse(FluidStack.EMPTY);
-            if (!contained.isEmpty()) {
-                FluidStack bucketFluid = new FluidStack(contained, FluidType.BUCKET_VOLUME);
-                int accepted = fluidHandler.fill(bucketFluid.copy(), FluidAction.SIMULATE);
-                if (accepted != FluidType.BUCKET_VOLUME) {
-                    return true;
-                }
-                if (!world.isClientSide) {
-                    int filled = fluidHandler.fill(bucketFluid.copy(), FluidAction.EXECUTE);
-                    if (filled != FluidType.BUCKET_VOLUME) {
-                        throw new IllegalStateException("Simulated a full bucket fill but executed " + filled + " mB");
-                    }
-                    SoundUtil.playBucketEmpty(world, pos, bucketFluid);
-                    consumeOneAndGive(player, hand, held, new ItemStack(Items.BUCKET));
-                }
-                return true;
-            }
-        }
-
-        if (held.is(Items.BUCKET)) {
-            if (player.isCreative()) {
-                return world.isClientSide;
-            }
-            FluidStack simulated = fluidHandler.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
-            if (simulated.isEmpty() || simulated.getAmount() != FluidType.BUCKET_VOLUME
-                || simulated.getFluid().getBucket() == Items.AIR) {
-                return true;
-            }
-            if (!world.isClientSide) {
-                FluidStack requested = new FluidStack(simulated, FluidType.BUCKET_VOLUME);
-                FluidStack drained = fluidHandler.drain(requested, FluidAction.EXECUTE);
-                if (drained.isEmpty() || drained.getAmount() != FluidType.BUCKET_VOLUME
-                    || !FluidCompatRegistry.areEquivalent(simulated, drained)) {
-                    throw new IllegalStateException("Simulated a full bucket drain but execution returned " + drained);
-                }
-                SoundUtil.playBucketFill(world, pos, drained);
-                consumeOneAndGive(player, hand, held, new ItemStack(drained.getFluid().getBucket()));
-            }
-            return true;
-        }
-
-        boolean replace = !player.isCreative();
-        boolean single = held.getCount() == 1;
-
-        // Always transact through an isolated one-item copy. Modern bucket/item capability wrappers are allowed to
-        // replace their container stack while drain(EXECUTE) runs; doing that directly against the player's held
-        // stack can invalidate the live wrapper before we read getContainer(), which made survival bucket/shard
-        // insertion fail even though the same transfer worked with the creative-mode copy path.
-        ItemStack transferStack = held.copy();
-        transferStack.setCount(1);
-        IFluidHandlerItem flItem = FluidUtil.getFluidHandler(transferStack).orElse(null);
-        if (flItem == null) {
-            return false;
-        }
         if (world.isClientSide) {
             return true;
         }
-        boolean changed = true;
-        FluidStack moved;
-        if ((moved = FluidUtilBC.move(flItem, fluidHandler)) != FluidStack.EMPTY) {
+
+        boolean changed = false;
+        FluidStack moved = FluidUtilBC.move(flItem, fluidHandler);
+        if (!moved.isEmpty()) {
             SoundUtil.playBucketEmpty(world, pos, moved);
-        } else if (replace && (moved = FluidUtilBC.move(fluidHandler, flItem)) != FluidStack.EMPTY) {
-            // In creative mode the temporary item handler is discarded, so draining the tank here would delete fluid
-            // without changing the player's held container.
-            SoundUtil.playBucketFill(world, pos, moved);
-        } else {
-            changed = false;
+            changed = true;
+        } else if (replace) {
+            moved = FluidUtilBC.move(fluidHandler, flItem);
+            if (!moved.isEmpty()) {
+                SoundUtil.playBucketFill(world, pos, moved);
+                changed = true;
+            }
         }
 
         if (changed && replace) {
+            ItemStack result = flItem.getContainer().copy();
             if (single) {
-                // if it was the single item, replace with changed one
-                player.setItemInHand(hand, flItem.getContainer());
+                player.setItemInHand(hand, result);
             } else {
-                // if it was part of stack, shrink stack and give / drop the new one
                 held.shrink(1);
-                ItemHandlerHelper.giveItemToPlayer(player, flItem.getContainer());
+                if (!result.isEmpty()) {
+                    ItemHandlerHelper.giveItemToPlayer(player, result);
+                }
             }
-//            player.inventoryContainer.detectAndSendChanges();
+            syncPlayerInventory(player);
         }
+
         // BC8 consumed the interaction as soon as the held item was a fluid container, even when the target tank
-        // rejected its contents. Returning PASS here lets BucketItem continue with world placement, so water/lava/oil
-        // can be placed into/through BuildCraft machine blocks after a rejected transfer. Keep the original claim
-        // semantics while only changing inventory/tank state when an actual transfer occurred.
+        // rejected its contents. This prevents BucketItem world placement from running through a machine block.
         return true;
     }
 
-    private static void consumeOneAndGive(Player player, InteractionHand hand, ItemStack held, ItemStack result) {
-        if (player.isCreative()) {
-            return;
-        }
-        if (held.getCount() == 1) {
-            player.setItemInHand(hand, result);
-            return;
-        }
-        held.shrink(1);
-        if (!result.isEmpty()) {
-            ItemHandlerHelper.giveItemToPlayer(player, result);
+    private static void syncPlayerInventory(Player player) {
+        player.inventoryMenu.broadcastFullState();
+        if (player.containerMenu != player.inventoryMenu) {
+            player.containerMenu.broadcastFullState();
         }
     }
     

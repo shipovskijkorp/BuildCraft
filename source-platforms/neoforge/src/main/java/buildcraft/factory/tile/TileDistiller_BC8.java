@@ -297,6 +297,11 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable, Ma
     
 
     @Override
+    public IdAllocator getIdAllocator() {
+        return IDS;
+    }
+
+    @Override
 	public InteractionResult onActivated(Player player, InteractionHand hand, BlockHitResult hit) {
 		return tankManager.onActivated(player, worldPosition, hand);
 	}

@@ -212,6 +212,11 @@ public class TileElectronicLibrary extends TileBC_Neptune implements MenuProvide
     // 3. server adds snapshot to its database
 
     @Override
+    public IdAllocator getIdAllocator() {
+        return IDS;
+    }
+
+    @Override
     public void writePayload(int id, FriendlyByteBuf buffer, LogicalSide side) {
         super.writePayload(id, buffer, side);
         if (side == LogicalSide.SERVER) {

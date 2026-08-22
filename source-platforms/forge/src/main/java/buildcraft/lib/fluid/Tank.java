@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.internal.core.IFluidFilter;
 import buildcraft.lib.internal.core.IFluidHandlerAdv;
+import buildcraft.core.item.ItemFragileFluidContainer;
 import buildcraft.lib.gui.MenuBC_Neptune;
 import buildcraft.lib.gui.elem.ToolTip;
 import buildcraft.lib.gui.help.ElementHelpInfo;
@@ -37,18 +38,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 
 /** Provides a useful implementation of a fluid tank that can save + load, and has a few helper functions. Can
  * optionally specify a filter to only allow a limited types of fluids in the tank. */
@@ -346,7 +347,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         ItemStack stack = transferStackToTank(player, held);
         //debug
         menu.setCarried(stack);
-        menu.broadcastChanges();
+        menu.broadcastFullState();
     }
     
     public void onGuiClicked(MenuBC_Neptune container) {
@@ -357,11 +358,8 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         }
         ItemStack stack = transferStackToTank(player, held);
         container.setCarried(stack);
-        //((ServerPlayer) player).updatingUsingItem();
-        player.inventoryMenu.broadcastChanges();
-        if (player.hasContainerOpen()) {
-            player.containerMenu.broadcastChanges();
-        }
+        container.broadcastFullState();
+        player.inventoryMenu.broadcastFullState();
     }
 
     /** Attempts to transfer the given stack to this tank.
@@ -414,9 +412,9 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
                 }
                 if (isSurvival) {
                     if (stack.isEmpty()) {
-                        return result.itemStack;
+                        return result.itemStack.copy();
                     } else if (!result.itemStack.isEmpty()) {
-                        InventoryUtil.addToPlayer(player, result.itemStack);
+                        InventoryUtil.addToPlayer(player, result.itemStack.copy());
                         return stack;
                     }
                 }
@@ -467,24 +465,39 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
      * @param stack The stack to map. This will ALWAYS have an {@link ItemStack#getCount()} of 1.
      * @param space The maximum amount of fluid that can be accepted by this tank. */
     protected FluidGetResult map(ItemStack stack, int space) {
-        if (stack.getItem() instanceof BucketItem) {
-            FluidStack contained = FluidUtil.getFluidContained(stack.copy()).orElse(FluidStack.EMPTY);
-            if (!contained.isEmpty()) {
-                if (space < FluidType.BUCKET_VOLUME) {
-                    return null;
-                }
-                return new FluidGetResult(
-                    new ItemStack(Items.BUCKET),
-                    new FluidStack(contained, FluidType.BUCKET_VOLUME)
-                );
-            }
+        if (space <= 0 || stack.isEmpty()) {
+            return null;
         }
-        IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack.copy()).orElse(null);
-        if (fluidHandler == null) return null;
+
+        // Let the container implementation decide its remainder. This is especially important for BuildCraft's
+        // fuel buckets and fragile shards: manually reconstructing their result stack made the direct and GUI paths
+        // disagree. The fallback wrappers keep Forge 43/47 buckets/shards deterministic if capability lookup fails.
+        ItemStack probe = stack.copy();
+        probe.setCount(1);
+        IFluidHandlerItem fluidHandler = probe
+            .getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
+            .orElse(null);
+        if (fluidHandler == null && probe.getItem() instanceof BucketItem) {
+            fluidHandler = new FluidBucketWrapper(probe);
+        }
+        if (fluidHandler == null && probe.getItem() instanceof ItemFragileFluidContainer fragile) {
+            fluidHandler = fragile.new FragileFluidHandler(probe);
+        }
+        if (fluidHandler == null) {
+            fluidHandler = FluidUtil.getFluidHandler(probe).orElse(null);
+        }
+        if (fluidHandler == null) {
+            return null;
+        }
+
         FluidStack drained = fluidHandler.drain(space, FluidAction.EXECUTE);
-        if (drained.isEmpty() || drained.getAmount() <= 0) return null;
-        ItemStack leftOverStack = fluidHandler.getContainer();
-        if (leftOverStack.isEmpty()) leftOverStack = StackUtil.EMPTY;
+        if (drained.isEmpty() || drained.getAmount() <= 0) {
+            return null;
+        }
+        ItemStack leftOverStack = fluidHandler.getContainer().copy();
+        if (leftOverStack.isEmpty()) {
+            leftOverStack = StackUtil.EMPTY;
+        }
         return new FluidGetResult(leftOverStack, drained);
     }
 

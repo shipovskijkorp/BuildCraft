@@ -424,20 +424,61 @@ def validate_persistence_and_reload_invariants() -> None:
         if schematic.count("getDeferredInventoryHandler(") < 3:
             fail(f"{target}: deferred blueprint inventory helper must be used by both missing-item and insert paths")
 
-    # BC8 gives fluid-container interaction priority over the held item's world-use path. Rejected buckets must be
-    # consumed by the machine interaction instead of falling through and placing fluid into/through the machine.
-    # Forge also performs the transfer on a one-item copy so survival bucket/shard wrappers can safely replace their
-    # container during drain(EXECUTE) before the resulting stack is written back to the player's hand.
+    # BC8 gives fluid-container interaction priority over the held item's world-use path. The item handler owns the
+    # container transition: BuildCraft fuel buckets must become empty buckets and fragile shards must disappear.
+    # Do not manually fill the machine and then synthesize inventory state as a separate transaction.
     fluid_rel = "src/main/java/buildcraft/lib/misc/FluidUtilBC.java"
     for target in ("1.19.2-forge", "1.20.1-forge"):
-        fluid = require(target, fluid_rel,
-                        "ItemStack transferStack = held.copy();",
-                        "transferStack.setCount(1);",
-                        "FluidUtil.getFluidHandler(transferStack).orElse(null)",
-                        "BC8 consumed the interaction as soon as the held item was a fluid container")
-        activation = fluid[fluid.find("public static boolean onTankActivated"):]
-        if "return changed;" in activation:
-            fail(f"{target}: recognized fluid containers must claim the interaction even when no fluid moved")
+        require(target, fluid_rel,
+                "ItemStack transferStack = replace && single ? held : held.copy();",
+                "getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)",
+                "new FluidBucketWrapper(transferStack)",
+                "fragile.new FragileFluidHandler(transferStack)",
+                "ItemStack result = flItem.getContainer().copy();",
+                "broadcastFullState()",
+                "BC8 consumed the interaction as soon as the held item was a fluid container")
+
+    require("1.21.1-neoforge", fluid_rel,
+            "FluidUtil.getFluidHandler(held.copy()).isPresent()",
+            "FluidUtil.interactWithFluidHandler(player, hand, fluidHandler)",
+            "broadcastFullState()",
+            "Keep BC8's interaction-claim behaviour")
+
+    # GUI insertion uses the same item-handler-owned remainder. The explicit bucket/shard branches are only
+    # capability-registration fallbacks on NeoForge; Forge uses deterministic wrapper fallbacks.
+    tank_rel = "src/main/java/buildcraft/lib/fluid/Tank.java"
+    for target in ("1.19.2-forge", "1.20.1-forge"):
+        require(target, tank_rel,
+                "ItemStack probe = stack.copy();",
+                "getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)",
+                "new FluidBucketWrapper(probe)",
+                "fluidHandler.getContainer().copy()",
+                "broadcastFullState()")
+    require("1.21.1-neoforge", tank_rel,
+            "ItemStack probe = stack.copy();",
+            "FluidUtil.getFluidHandler(probe).orElse(null)",
+            "fluidHandler.getContainer().copy()",
+            "Defensive fallbacks",
+            "broadcastFullState()")
+
+    # These GameTests use an actual BuildCraft light-fuel bucket/shard and the combustion-engine GUI cursor path.
+    # They guard behaviour rather than the implementation shape that previously let this regression survive.
+    engine_test_rel = "src/gametest/java/buildcraft/gametest/BuildCraftLogicGameTests.java"
+    for target in TARGETS:
+        require(target, engine_test_rel,
+                "combustionEngineConsumesBuildCraftFuelContainersOnDirectUse",
+                "BuildCraft fuel bucket survived direct combustion-engine insertion in survival",
+                "BuildCraft fuel shard survived direct combustion-engine insertion in survival",
+                "combustionEngineGuiReturnsEmptyBucketForBuildCraftFuel",
+                "GUI BuildCraft fuel insertion deleted the bucket instead of returning an empty bucket")
+
+    # Combustion-engine shift-click indices are menu-slot indices. Writing playerInventory.getItem(index) directly
+    # aliases hotbar/main-inventory slots incorrectly; all targets must resolve through slots.get(index).
+    engine_menu_rel = "src/main/java/buildcraft/energy/menu/ContainerEngineIron_BC8.java"
+    for target in TARGETS:
+        menu = require(target, engine_menu_rel, "Slot slot = slots.get(index);", "broadcastFullState()")
+        if "playerInventory.getItem(index)" in menu or "playerInventory.setItem(index" in menu:
+            fail(f"{target}: combustion-engine quick move uses raw inventory indices instead of menu slots")
 
     # Combustion engines intentionally pass pipe items through to item-use, exactly like BC8, so a pipe can be placed
     # against the engine instead of the GUI stealing the click.
@@ -446,43 +487,6 @@ def validate_persistence_and_reload_invariants() -> None:
         engine = require(target, engine_rel, "instanceof IItemPipe", "InteractionResult.PASS")
         if engine.find("FluidUtilBC.onTankActivated") > engine.find("instanceof IItemPipe"):
             fail(f"{target}: combustion-engine fluid containers must be handled before pipe-item pass-through")
-
-    # The modern direct bucket/shard bridge must likewise claim rejected containers; PASS would invoke BucketItem's
-    # world placement and can destroy a BuildCraft machine.
-    neo_fluid = text("1.21.1-neoforge", fluid_rel)
-    filled_bucket = re.search(
-        r"if \(held\.getItem\(\) instanceof BucketItem bucketItem.*?if \(accepted != FluidType\.BUCKET_VOLUME\) \{(.*?)\}",
-        neo_fluid,
-        re.DOTALL,
-    )
-    if not filled_bucket or "return true;" not in filled_bucket.group(1):
-        fail("1.21.1-neoforge: rejected filled buckets must claim the machine interaction")
-    shard = re.search(
-        r"if \(held\.getItem\(\) instanceof ItemFragileFluidContainer\).*?if \(accepted != shardFluid\.getAmount\(\)\) \{(.*?)\}",
-        neo_fluid,
-        re.DOTALL,
-    )
-    if not shard or "return true;" not in shard.group(1):
-        fail("1.21.1-neoforge: rejected fragile fluid shards must claim the machine interaction")
-
-    # The legacy path deliberately blocks tank -> container transfer in creative. The 1.21 vanilla bucket
-    # special-case must do the same before it executes a real drain.
-    for target in ("1.21.1-neoforge",):
-        fluid = text(target, fluid_rel)
-        branch = re.search(
-            r"if \(held\.is\(Items\.BUCKET\)\) \{(.*?)// Fragile shards",
-            fluid,
-            re.DOTALL,
-        )
-        if not branch:
-            fail(f"{target}: cannot locate vanilla empty-bucket tank interaction")
-            continue
-        body = branch.group(1)
-        creative = body.find("if (player.isCreative())")
-        client_only_result = body.find("return player.level().isClientSide;", creative)
-        execute_drain = body.find("FluidAction.EXECUTE")
-        if creative < 0 or client_only_result < 0 or execute_drain < 0 or client_only_result > execute_drain:
-            fail(f"{target}: creative empty buckets must be client-acknowledged but server-blocked before tank drain")
 
     # Distiller refunds and progress are persistent state, including corruption-safe non-negative clamps.
     distiller_rel = "src/main/java/buildcraft/factory/tile/TileDistiller.java"
@@ -950,7 +954,7 @@ def validate_network_hardening() -> None:
 
 
 def validate_gametest_runtime_guards() -> None:
-    expected_tests = 91
+    expected_tests = 93
     for target in TARGETS:
         test_root = TARGETS[target] / "src/gametest/java"
         count = 0

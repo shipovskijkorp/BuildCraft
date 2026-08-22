@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
+import buildcraft.core.item.ItemFragileFluidContainer;
 import buildcraft.lib.internal.core.IFluidFilter;
 import buildcraft.lib.internal.core.IFluidHandlerAdv;
 import buildcraft.lib.gui.MenuBC_Neptune;
@@ -347,7 +348,7 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         ItemStack stack = transferStackToTank(player, held);
         //debug
         menu.setCarried(stack);
-        menu.broadcastChanges();
+        menu.broadcastFullState();
     }
     
     public void onGuiClicked(MenuBC_Neptune container) {
@@ -358,23 +359,21 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         }
         ItemStack stack = transferStackToTank(player, held);
         container.setCarried(stack);
-        //((ServerPlayer) player).updatingUsingItem();
-        player.inventoryMenu.broadcastChanges();
-        if (player.hasContainerOpen()) {
-            player.containerMenu.broadcastChanges();
-        }
+        container.broadcastFullState();
+        player.inventoryMenu.broadcastFullState();
     }
 
     /** Attempts to transfer the given stack to this tank.
      *
      * @return The left over item after attempting to add the stack to this tank. */
     public ItemStack transferStackToTank(Player player, ItemStack stack) {
-        // first try to fill this tank from the item
-
         if (player.level().isClientSide) {
             return stack;
         }
 
+        // Match BC8's inventory contract: the input is the caller-owned cursor/slot stack. On a successful survival
+        // transfer it is consumed in place, and the returned stack is only the resulting container/remainder.
+        // The copy is exclusively the one-item fluid probe used by map().
         ItemStack original = stack;
         ItemStack copy = stack.copy();
         copy.setCount(1);
@@ -386,10 +385,10 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         FluidGetResult result = map(copy, space);
         if (result != null && result.fluidStack != null && result.fluidStack.getAmount() > 0) {
             if (isCreative) {
-                stack = copy;// so we don't change the stack held by the player.
+                stack = copy;
             }
             int accepted = fill(result.fluidStack, FluidAction.SIMULATE);
-            if (isCreative ? (accepted > 0) : (accepted == result.fluidStack.getAmount())) {
+            if (isCreative ? accepted > 0 : accepted == result.fluidStack.getAmount()) {
                 int reallyAccepted = fill(result.fluidStack, FluidAction.EXECUTE);
                 if (reallyAccepted != accepted) {
                     throw new IllegalStateException(
@@ -398,22 +397,21 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
                 stack.shrink(1);
                 FluidStack fl = getFluid();
                 if (!fl.isEmpty()) {
-                	//debug
                     SoundUtil.playBucketEmpty(player.level(), player.blockPosition(), fl);
                 }
                 if (isSurvival) {
                     if (stack.isEmpty()) {
-                        return result.itemStack;
+                        return result.itemStack.copy();
                     } else if (!result.itemStack.isEmpty()) {
-                        InventoryUtil.addToPlayer(player, result.itemStack);
+                        InventoryUtil.addToPlayer(player, result.itemStack.copy());
                         return stack;
                     }
                 }
                 return original;
             }
         }
-        // Now try to drain the fluid into the item. A creative player's temporary copy is discarded below, so
-        // executing this branch would delete fluid from the tank without changing the held container.
+
+        // Creative must not drain a real tank into a temporary item copy.
         if (isCreative) {
             return original;
         }
@@ -424,22 +422,20 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         int filled = fluidHandler.fill(drained, FluidAction.EXECUTE);
         if (filled > 0) {
             FluidStack reallyDrained = drain(filled, FluidAction.EXECUTE);
-            if ((reallyDrained.isEmpty() || reallyDrained.getAmount() != filled)) {
-                throw new IllegalStateException("Somehow drained differently than expected! ( drained = "//
+            if (reallyDrained.isEmpty() || reallyDrained.getAmount() != filled) {
+                throw new IllegalStateException("Somehow drained differently than expected! ( drained = "
                     + drained + ", filled = " + filled + ", reallyDrained = " + reallyDrained + " )");
             }
             SoundUtil.playBucketFill(player.level(), player.blockPosition(), reallyDrained);
-            if (isSurvival) {
-                if (original.getCount() == 1) {
-                    return fluidHandler.getContainer();
-                } else {
-                    ItemStack stackContainer = fluidHandler.getContainer();
-                    if (!stackContainer.isEmpty()) {
-                        InventoryUtil.addToPlayer(player, stackContainer);
-                    }
-                    original.shrink(1);
-                    return original;
+            if (original.getCount() == 1) {
+                return fluidHandler.getContainer();
+            } else {
+                ItemStack stackContainer = fluidHandler.getContainer();
+                if (!stackContainer.isEmpty()) {
+                    InventoryUtil.addToPlayer(player, stackContainer);
                 }
+                original.shrink(1);
+                return original;
             }
         }
         return stack;
@@ -450,6 +446,27 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
      * @param stack The stack to map. This will ALWAYS have an {@link ItemStack#getCount()} of 1.
      * @param space The maximum amount of fluid that can be accepted by this tank. */
     protected FluidGetResult map(ItemStack stack, int space) {
+        if (space <= 0 || stack.isEmpty()) {
+            return null;
+        }
+
+        // Use the registered item-fluid handler first so the container itself determines the post-transfer stack.
+        // BuildCraft's shard capability and NeoForge's bucket handler both encode the authoritative remainder.
+        ItemStack probe = stack.copy();
+        probe.setCount(1);
+        IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(probe).orElse(null);
+        if (fluidHandler != null) {
+            FluidStack drained = fluidHandler.drain(space, FluidAction.EXECUTE);
+            if (!drained.isEmpty() && drained.getAmount() > 0) {
+                ItemStack leftOverStack = fluidHandler.getContainer().copy();
+                if (leftOverStack.isEmpty()) {
+                    leftOverStack = StackUtil.EMPTY;
+                }
+                return new FluidGetResult(leftOverStack, drained);
+            }
+        }
+
+        // Defensive fallbacks for loaders/modpacks that suppress the normal item capability registration.
         if (stack.getItem() instanceof BucketItem bucketItem && bucketItem.content != Fluids.EMPTY) {
             if (space < FluidType.BUCKET_VOLUME) {
                 return null;
@@ -459,13 +476,22 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
                 new FluidStack(bucketItem.content, FluidType.BUCKET_VOLUME)
             );
         }
-        IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack.copy()).orElse(null);
-        if (fluidHandler == null) return null;
-        FluidStack drained = fluidHandler.drain(space, FluidAction.EXECUTE);
-        if (drained.isEmpty() || drained.getAmount() <= 0) return null;
-        ItemStack leftOverStack = fluidHandler.getContainer();
-        if (leftOverStack.isEmpty()) leftOverStack = StackUtil.EMPTY;
-        return new FluidGetResult(leftOverStack, drained);
+        if (stack.getItem() instanceof ItemFragileFluidContainer) {
+            FluidStack contained = ItemFragileFluidContainer.getFluid(stack);
+            if (contained.isEmpty()) {
+                return null;
+            }
+            int movedAmount = Math.min(space, contained.getAmount());
+            FluidStack moved = contained.copyWithAmount(movedAmount);
+            int remainingAmount = contained.getAmount() - movedAmount;
+            ItemStack remainder = ItemStack.EMPTY;
+            if (remainingAmount > 0) {
+                remainder = stack.copy();
+                ItemFragileFluidContainer.setFluid(remainder, contained.copyWithAmount(remainingAmount));
+            }
+            return new FluidGetResult(remainder, moved);
+        }
+        return null;
     }
 
     public static class FluidGetResult {

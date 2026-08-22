@@ -22,6 +22,9 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -31,7 +34,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -53,12 +59,17 @@ import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.core.BCCoreItems;
 import buildcraft.energy.BCEnergyBlocks;
+import buildcraft.energy.BCEnergyFluids;
+import buildcraft.energy.menu.ContainerEngineIron_BC8;
 import buildcraft.energy.tile.TileDynamoMJ;
 import buildcraft.energy.tile.TileEngineFE;
+import buildcraft.energy.tile.TileEngineIron_BC8;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.tile.TilePump;
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.crops.CropHandlerReeds;
+import buildcraft.lib.misc.FakePlayerProvider;
+import buildcraft.lib.misc.FluidUtilBC;
 import buildcraft.lib.internal.core.InvalidInputDataException;
 import buildcraft.lib.internal.enums.EnumEngineType;
 import buildcraft.lib.internal.mj.MjBattery;
@@ -85,9 +96,9 @@ import buildcraft.lib.BCLib;
 import buildcraft.lib.internal.api.v2.FacadeRuleRegistryImpl;
 import buildcraft.lib.fluid.Tank;
 import buildcraft.lib.fluid.TankManager;
+import buildcraft.core.item.ItemFragileFluidContainer;
 import buildcraft.lib.list.ListMatchHandlerTools;
 import buildcraft.lib.misc.VecUtil;
-import buildcraft.lib.misc.data.Box;
 import buildcraft.lib.net.PacketBufferBC;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.lib.tile.item.StackInsertionFunction;
@@ -102,6 +113,9 @@ import buildcraft.lib.tile.item.StackInsertionFunction;
 @PrefixGameTestTemplate(false)
 public final class BuildCraftLogicGameTests {
     private static final String EMPTY_TEMPLATE = "empty3x3x3";
+    private static final GameProfile ENGINE_FLUID_ACTOR = new GameProfile(
+        UUID.fromString("3ad6cdbe-f4b0-4a20-90d8-23983aa3a1df"), "BCTestEngineFluid"
+    );
 
     private static final BlockPos[] SHAPE_SIZES = {
         new BlockPos(1, 1, 1), new BlockPos(2, 1, 1), new BlockPos(3, 1, 1),
@@ -512,46 +526,25 @@ public final class BuildCraftLogicGameTests {
     @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void quarryFluidTraversalMatchesBc8ViscosityRules(GameTestHelper helper) {
         TileQuarry quarry = placeQuarry(helper, new BlockPos(1, 1, 1));
-        // Keep the fixtures separated: placing source lava directly beside water immediately converts the lava to
-        // obsidian through the vanilla/loader fluid-interaction hook, which makes this test exercise a solid block
-        // instead of quarry fluid traversal.
-        BlockPos water = new BlockPos(0, 1, 0);
-        BlockPos lava = new BlockPos(2, 1, 0);
-        BlockPos waterlogged = new BlockPos(0, 1, 2);
+        BlockPos water = new BlockPos(3, 1, 1);
+        BlockPos lava = new BlockPos(4, 1, 1);
+        BlockPos waterlogged = new BlockPos(5, 1, 1);
         helper.setBlock(water, Blocks.WATER.defaultBlockState());
         helper.setBlock(lava, Blocks.LAVA.defaultBlockState());
         helper.setBlock(waterlogged, Blocks.OAK_SLAB.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, true));
 
-        BlockPos absoluteWater = helper.absolutePos(water);
-        BlockPos absoluteLava = helper.absolutePos(lava);
-        BlockPos absoluteWaterlogged = helper.absolutePos(waterlogged);
-        require(helper, helper.getLevel().getBlockState(absoluteLava).is(Blocks.LAVA),
-            "quarry fluid test fixture converted lava before the traversal checks");
-
-        require(helper, invokeBoolean(quarry, "canMoveThrough", absoluteWater),
+        require(helper, invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(water)),
             "quarry drill no longer moves through standalone water");
-        require(helper, !invokeBoolean(quarry, "canMoveThrough", absoluteLava),
+        require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(lava)),
             "quarry drill incorrectly moves through high-viscosity lava");
-        require(helper, !invokeBoolean(quarry, "canMine", absoluteLava),
+        require(helper, !invokeBoolean(quarry, "canMine", helper.absolutePos(lava)),
             "quarry mines high-viscosity lava even though BC8 treated it as a blocking fluid");
-        BlockPos belowLava = absoluteLava.below();
-        // canMoveDownTo() is a runtime helper that assumes the quarry has already initialized its mining area.
-        // This unit-style fixture only places the block entity, so provide the minimal valid column needed to test
-        // whether the lava above the target blocks downward mining.
-        Box miningBox = (Box) readField(quarry, "miningBox");
-        try {
-            miningBox.setMin(belowLava);
-            miningBox.setMax(absoluteLava);
-            require(helper, !invokeBoolean(quarry, "canMoveDownTo", belowLava),
-                "quarry can mine below a high-viscosity fluid barrier");
-        } finally {
-            // Do not leave a half-configured live quarry behind for the next server tick. A real quarry initializes
-            // frameBox and miningBox together; this temporary test-only column must not leak into chunk loading.
-            miningBox.reset();
-        }
-        require(helper, !invokeBoolean(quarry, "canMoveThrough", absoluteWaterlogged),
+        BlockPos belowLava = helper.absolutePos(lava.below());
+        require(helper, !invokeBoolean(quarry, "canMoveDownTo", belowLava),
+            "quarry can mine below a high-viscosity fluid barrier");
+        require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(waterlogged)),
             "quarry incorrectly treats a waterlogged solid block as standalone water");
-        require(helper, invokeBoolean(quarry, "canMine", absoluteWaterlogged),
+        require(helper, invokeBoolean(quarry, "canMine", helper.absolutePos(waterlogged)),
             "quarry cannot mine the solid part of a waterlogged block");
         helper.succeed();
     }
@@ -799,6 +792,71 @@ public final class BuildCraftLogicGameTests {
     }
 
     @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void combustionEngineConsumesBuildCraftFuelContainersOnDirectUse(GameTestHelper helper) {
+        BlockPos relative = new BlockPos(1, 1, 1);
+        TileEngineIron_BC8 engine = placeCombustionEngine(helper, relative);
+        Player player = FakePlayerProvider.INSTANCE.getFakePlayer(
+            helper.getLevel(), ENGINE_FLUID_ACTOR, helper.absolutePos(relative)
+        );
+        player.getAbilities().instabuild = false;
+        player.getInventory().clearContent();
+
+        Fluid fuel = BCEnergyFluids.fuelLight[0];
+        require(helper, fuel != null && fuel != Fluids.EMPTY, "BuildCraft light fuel was not initialized");
+        ItemStack bucket = new ItemStack(fuel.getBucket());
+        require(helper, !bucket.isEmpty(), "BuildCraft light fuel has no bucket item");
+        player.setItemInHand(InteractionHand.MAIN_HAND, bucket);
+
+        BlockPos absolute = helper.absolutePos(relative);
+        BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(absolute), Direction.UP, absolute, false);
+        engine.onActivated(player, InteractionHand.MAIN_HAND, hit);
+        require(helper, engine.tankFuel.getFluidAmount() == 1000,
+            "BuildCraft fuel bucket did not add exactly one bucket to the combustion engine");
+        require(helper, player.getItemInHand(InteractionHand.MAIN_HAND).is(Items.BUCKET),
+            "BuildCraft fuel bucket survived direct combustion-engine insertion in survival");
+
+        ItemStack shard = FluidUtilBC.getFragileFluid(
+            new FluidStack(fuel, ItemFragileFluidContainer.MAX_FLUID_HELD)
+        );
+        player.setItemInHand(InteractionHand.MAIN_HAND, shard);
+        engine.onActivated(player, InteractionHand.MAIN_HAND, hit);
+        require(helper, engine.tankFuel.getFluidAmount() == 1000 + ItemFragileFluidContainer.MAX_FLUID_HELD,
+            "BuildCraft fuel shard did not add its fluid to the combustion engine");
+        require(helper, player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty(),
+            "BuildCraft fuel shard survived direct combustion-engine insertion in survival");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
+    public static void combustionEngineGuiReturnsEmptyBucketForBuildCraftFuel(GameTestHelper helper) {
+        BlockPos relative = new BlockPos(1, 1, 1);
+        TileEngineIron_BC8 engine = placeCombustionEngine(helper, relative);
+        Player player = FakePlayerProvider.INSTANCE.getFakePlayer(
+            helper.getLevel(), ENGINE_FLUID_ACTOR, helper.absolutePos(relative)
+        );
+        player.getAbilities().instabuild = false;
+        player.getInventory().clearContent();
+
+        Fluid fuel = BCEnergyFluids.fuelLight[0];
+        require(helper, fuel != null && fuel != Fluids.EMPTY, "BuildCraft light fuel was not initialized");
+        ItemStack bucket = new ItemStack(fuel.getBucket());
+        require(helper, !bucket.isEmpty(), "BuildCraft light fuel has no bucket item");
+
+        BlockPos absolute = helper.absolutePos(relative);
+        ContainerEngineIron_BC8 menu = new ContainerEngineIron_BC8(1, player.getInventory(),
+            ContainerLevelAccess.create(helper.getLevel(), absolute));
+        menu.setCarried(bucket);
+        engine.tankFuel.onGuiClicked(menu);
+
+        require(helper, engine.tankFuel.getFluidAmount() == 1000,
+            "GUI BuildCraft fuel insertion did not add exactly one bucket to the combustion engine");
+        require(helper, menu.getCarried().is(Items.BUCKET),
+            "GUI BuildCraft fuel insertion deleted the bucket instead of returning an empty bucket");
+        menu.removed(player);
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void quarryCancelledTaskRefundsExactWithdrawnPower(GameTestHelper helper) {
         TileQuarry quarry = placeQuarry(helper, new BlockPos(1, 1, 1));
         MjBattery battery = (MjBattery) readField(quarry, "battery");
@@ -816,6 +874,18 @@ public final class BuildCraftLogicGameTests {
         helper.succeed();
     }
 
+
+    private static TileEngineIron_BC8 placeCombustionEngine(GameTestHelper helper, BlockPos relativePos) {
+        BlockState state = BCCoreBlocks.ENGINE_BC8.get().defaultBlockState()
+            .setValue(BuildCraftProperties.ENGINE_TYPE, EnumEngineType.IRON);
+        helper.setBlock(relativePos, state);
+        BlockEntity blockEntity = helper.getBlockEntity(relativePos);
+        if (!(blockEntity instanceof TileEngineIron_BC8 engine)) {
+            helper.fail("combustion engine block did not create TileEngineIron_BC8");
+            throw new IllegalStateException("missing TileEngineIron_BC8");
+        }
+        return engine;
+    }
 
     private static TileQuarry placeQuarry(GameTestHelper helper, BlockPos relativePos) {
         helper.setBlock(relativePos, BCBuildersBlocks.QUARRY.get().defaultBlockState());

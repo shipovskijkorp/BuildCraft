@@ -96,12 +96,18 @@ public class SoundUtil {
     }
     
     public static void playBucketEmpty(Level level, BlockPos pos, FluidStack resource) {
-    	SoundEvent sound = resource.getFluid().getFluidType().getSound(resource, SoundActions.BUCKET_EMPTY);
-    	level.playSound(null, pos, sound, SoundSource.PLAYERS, 1, 1);
+        SoundEvent sound = resource.getFluid().getFluidType().getSound(resource, SoundActions.BUCKET_EMPTY);
+        if (sound == null) {
+            sound = SoundEvents.BUCKET_EMPTY;
+        }
+        level.playSound(null, pos, sound, SoundSource.PLAYERS, 1, 1);
     }
 
     public static void playBucketFill(Level world, BlockPos pos, FluidStack moved) {
         SoundEvent sound = moved.getFluid().getFluidType().getSound(moved, SoundActions.BUCKET_FILL);
+        if (sound == null) {
+            sound = SoundEvents.BUCKET_FILL;
+        }
         world.playSound(null, pos, sound, SoundSource.PLAYERS, 1, 1);
     }
 }
