@@ -373,13 +373,19 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         int afterAmount = after.isEmpty() ? 0 : after.getAmount();
         if (afterAmount > beforeAmount && !after.isEmpty()) {
             SoundUtil.playBucketEmpty(
-                player.level(), player.blockPosition(), new FluidStack(after, afterAmount - beforeAmount)
+                player.level(), player.blockPosition(), copyFluidForSound(after, afterAmount - beforeAmount)
             );
         } else if (beforeAmount > afterAmount && !before.isEmpty()) {
             SoundUtil.playBucketFill(
-                player.level(), player.blockPosition(), new FluidStack(before, beforeAmount - afterAmount)
+                player.level(), player.blockPosition(), copyFluidForSound(before, beforeAmount - afterAmount)
             );
         }
+    }
+
+    private static FluidStack copyFluidForSound(FluidStack source, int amount) {
+        FluidStack copy = source.copy();
+        copy.setAmount(amount);
+        return copy;
     }
 
     /** Attempts to transfer the given stack to this tank.

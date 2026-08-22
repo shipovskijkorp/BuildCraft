@@ -38,6 +38,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -370,15 +371,28 @@ public class Tank implements IFluidHandlerAdv, IFluidHandler, IFluidTank {
         FluidStack after = getFluid();
         int beforeAmount = before.isEmpty() ? 0 : before.getAmount();
         int afterAmount = after.isEmpty() ? 0 : after.getAmount();
+        //? if <1.20 {
+        Level world = player.level;
+        //?} else {
+        /*?
+        Level world = player.level();
+        ?*/
+        //?}
         if (afterAmount > beforeAmount && !after.isEmpty()) {
             SoundUtil.playBucketEmpty(
-                player.level, player.blockPosition(), new FluidStack(after, afterAmount - beforeAmount)
+                world, player.blockPosition(), copyFluidForSound(after, afterAmount - beforeAmount)
             );
         } else if (beforeAmount > afterAmount && !before.isEmpty()) {
             SoundUtil.playBucketFill(
-                player.level, player.blockPosition(), new FluidStack(before, beforeAmount - afterAmount)
+                world, player.blockPosition(), copyFluidForSound(before, beforeAmount - afterAmount)
             );
         }
+    }
+
+    private static FluidStack copyFluidForSound(FluidStack source, int amount) {
+        FluidStack copy = source.copy();
+        copy.setAmount(amount);
+        return copy;
     }
 
     /** Attempts to transfer the given stack to this tank.

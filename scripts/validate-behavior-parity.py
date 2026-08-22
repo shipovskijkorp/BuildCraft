@@ -995,6 +995,24 @@ def validate_gametest_runtime_guards() -> None:
             if method not in regression_suite:
                 fail(f"{target}: missing gameplay regression GameTest {method}")
 
+        # The Quarry fluid test is intentionally a unit-style fixture around private traversal helpers. Keep source
+        # water and lava separated so vanilla fluid reactions cannot invalidate the assertion, and initialize only
+        # the temporary mining column needed by canMoveDownTo(). The temporary Box must always be reset before the
+        # next server tick so the live Quarry cannot observe a half-configured frame/mining state.
+        for required in (
+            "import buildcraft.lib.misc.data.Box;",
+            "BlockPos water = new BlockPos(0, 1, 0);",
+            "BlockPos lava = new BlockPos(2, 1, 0);",
+            "BlockPos waterlogged = new BlockPos(0, 1, 2);",
+            "quarry fluid test fixture converted lava before the traversal checks",
+            'Box miningBox = (Box) readField(quarry, "miningBox");',
+            "miningBox.setMin(belowLava);",
+            "miningBox.setMax(absoluteLava);",
+            "miningBox.reset();",
+        ):
+            if required not in regression_suite:
+                fail(f"{target}: Quarry fluid GameTest lost fixture/isolation safeguard {required!r}")
+
 
 
         fe_adversarial_suite = text(target, "src/gametest/java/buildcraft/gametest/FeMjAdversarialGameTests.java")
@@ -1252,6 +1270,18 @@ def validate_transactional_side_effect_ordering() -> None:
             transfer = transfer_match.group(1)
             if "SoundUtil.playBucketEmpty" in transfer or "SoundUtil.playBucketFill" in transfer:
                 fail(f"{target}: Tank.transferStackToTank still performs cosmetic sound inside the transaction")
+
+        if "private static FluidStack copyFluidForSound" not in tank_raw:
+            fail(f"{target}: GUI fluid sound delta is not copied through the cross-loader helper")
+        if target == "1.19.2-forge" and "Level world = player.level;" not in tank_raw:
+            fail("1.19.2-forge: GUI fluid sound must use the pre-1.20 Player.level field")
+        if target == "1.20.1-forge" and "Level world = player.level();" not in tank_raw:
+            fail("1.20.1-forge: GUI fluid sound must use Player.level() on 1.20+")
+        for incompatible in ("new FluidStack(after,", "new FluidStack(before,"):
+            if incompatible in tank_raw:
+                fail(
+                    f"{target}: GUI fluid sound uses loader-specific FluidStack copy constructor: {incompatible!r}"
+                )
 
         tank = compact(tank_raw)
         for needle in (

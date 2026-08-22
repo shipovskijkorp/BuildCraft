@@ -98,6 +98,7 @@ import buildcraft.lib.fluid.TankManager;
 import buildcraft.core.item.ItemFragileFluidContainer;
 import buildcraft.lib.list.ListMatchHandlerTools;
 import buildcraft.lib.misc.VecUtil;
+import buildcraft.lib.misc.data.Box;
 import buildcraft.lib.net.PacketBufferBC;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import buildcraft.lib.tile.item.StackInsertionFunction;
@@ -525,25 +526,46 @@ public final class BuildCraftLogicGameTests {
     @GameTest(templateNamespace = BCLib.MODID, template = EMPTY_TEMPLATE, timeoutTicks = 20)
     public static void quarryFluidTraversalMatchesBc8ViscosityRules(GameTestHelper helper) {
         TileQuarry quarry = placeQuarry(helper, new BlockPos(1, 1, 1));
-        BlockPos water = new BlockPos(3, 1, 1);
-        BlockPos lava = new BlockPos(4, 1, 1);
-        BlockPos waterlogged = new BlockPos(5, 1, 1);
+        // Keep the fixtures separated: placing source lava directly beside water immediately converts the lava to
+        // obsidian through the vanilla/loader fluid-interaction hook, which makes this test exercise a solid block
+        // instead of quarry fluid traversal.
+        BlockPos water = new BlockPos(0, 1, 0);
+        BlockPos lava = new BlockPos(2, 1, 0);
+        BlockPos waterlogged = new BlockPos(0, 1, 2);
         helper.setBlock(water, Blocks.WATER.defaultBlockState());
         helper.setBlock(lava, Blocks.LAVA.defaultBlockState());
         helper.setBlock(waterlogged, Blocks.OAK_SLAB.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, true));
 
-        require(helper, invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(water)),
+        BlockPos absoluteWater = helper.absolutePos(water);
+        BlockPos absoluteLava = helper.absolutePos(lava);
+        BlockPos absoluteWaterlogged = helper.absolutePos(waterlogged);
+        require(helper, helper.getLevel().getBlockState(absoluteLava).is(Blocks.LAVA),
+            "quarry fluid test fixture converted lava before the traversal checks");
+
+        require(helper, invokeBoolean(quarry, "canMoveThrough", absoluteWater),
             "quarry drill no longer moves through standalone water");
-        require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(lava)),
+        require(helper, !invokeBoolean(quarry, "canMoveThrough", absoluteLava),
             "quarry drill incorrectly moves through high-viscosity lava");
-        require(helper, !invokeBoolean(quarry, "canMine", helper.absolutePos(lava)),
+        require(helper, !invokeBoolean(quarry, "canMine", absoluteLava),
             "quarry mines high-viscosity lava even though BC8 treated it as a blocking fluid");
-        BlockPos belowLava = helper.absolutePos(lava.below());
-        require(helper, !invokeBoolean(quarry, "canMoveDownTo", belowLava),
-            "quarry can mine below a high-viscosity fluid barrier");
-        require(helper, !invokeBoolean(quarry, "canMoveThrough", helper.absolutePos(waterlogged)),
+        BlockPos belowLava = absoluteLava.below();
+        // canMoveDownTo() is a runtime helper that assumes the quarry has already initialized its mining area.
+        // This unit-style fixture only places the block entity, so provide the minimal valid column needed to test
+        // whether the lava above the target blocks downward mining.
+        Box miningBox = (Box) readField(quarry, "miningBox");
+        try {
+            miningBox.setMin(belowLava);
+            miningBox.setMax(absoluteLava);
+            require(helper, !invokeBoolean(quarry, "canMoveDownTo", belowLava),
+                "quarry can mine below a high-viscosity fluid barrier");
+        } finally {
+            // Do not leave a half-configured live quarry behind for the next server tick. A real quarry initializes
+            // frameBox and miningBox together; this temporary test-only column must not leak into chunk loading.
+            miningBox.reset();
+        }
+        require(helper, !invokeBoolean(quarry, "canMoveThrough", absoluteWaterlogged),
             "quarry incorrectly treats a waterlogged solid block as standalone water");
-        require(helper, invokeBoolean(quarry, "canMine", helper.absolutePos(waterlogged)),
+        require(helper, invokeBoolean(quarry, "canMine", absoluteWaterlogged),
             "quarry cannot mine the solid part of a waterlogged block");
         helper.succeed();
     }
