@@ -1191,6 +1191,92 @@ def validate_gametest_runtime_guards() -> None:
             'INGREDIENT_TYPES.register("strict_nbt"',
             "NeoForgeRegistries.Keys.INGREDIENT_TYPES")
 
+
+def strip_java_comments(value: str) -> str:
+    value = re.sub(r"/\*.*?\*/", "", value, flags=re.DOTALL)
+    return re.sub(r"//[^\n]*", "", value)
+
+
+def validate_id_allocator_contracts() -> None:
+    """A class that allocates child wire IDs must expose that child allocator to packet validation."""
+    child_pattern = re.compile(
+        r"\bIdAllocator\s+(\w+)\s*=\s*[^;\n]*\.makeChild\s*\(", re.MULTILINE
+    )
+    for target, target_root in TARGETS.items():
+        java_root = target_root / "src/main/java"
+        for path in sorted(java_root.rglob("*.java")):
+            try:
+                raw = path.read_text(encoding="utf-8")
+            except OSError as exc:
+                fail(f"{target}: failed reading {path.relative_to(target_root)}: {exc}")
+                continue
+            value = strip_java_comments(raw)
+            for match in child_pattern.finditer(value):
+                allocator = match.group(1)
+                if re.search(rf"\b{re.escape(allocator)}\.allocId\s*\(", value) is None:
+                    continue
+                override = re.search(
+                    rf"\bgetIdAllocator\s*\([^)]*\)\s*\{{[^{{}}]*\breturn\s+{re.escape(allocator)}\s*;[^{{}}]*\}}",
+                    value,
+                    flags=re.DOTALL,
+                )
+                if override is None:
+                    fail(
+                        f"{target}: {path.relative_to(target_root)} allocates wire IDs from child allocator "
+                        f"{allocator} but does not return it from getIdAllocator()"
+                    )
+
+
+def validate_transactional_side_effect_ordering() -> None:
+    """Cosmetic fluid sounds must not sit between fluid mutation and authoritative inventory/menu state."""
+    for target in TARGETS:
+        sound = compact(text(target, "src/main/java/buildcraft/lib/misc/SoundUtil.java"))
+        for required in (
+            "private static void playFluidActionSound",
+            "catch (RuntimeException exception)",
+            "using vanilla fallback",
+            "Failed to play cosmetic fluid",
+        ):
+            if required not in sound:
+                fail(f"{target}: fluid sounds are not non-fatal/best-effort: missing {required!r}")
+
+        tank_raw = text(target, "src/main/java/buildcraft/lib/fluid/Tank.java")
+        transfer_match = re.search(
+            r"public ItemStack transferStackToTank\(Player player, ItemStack stack\)\s*\{(.*?)\n    \}",
+            tank_raw,
+            flags=re.DOTALL,
+        )
+        if transfer_match is None:
+            fail(f"{target}: could not locate Tank.transferStackToTank for transaction guard")
+        else:
+            transfer = transfer_match.group(1)
+            if "SoundUtil.playBucketEmpty" in transfer or "SoundUtil.playBucketFill" in transfer:
+                fail(f"{target}: Tank.transferStackToTank still performs cosmetic sound inside the transaction")
+
+        tank = compact(tank_raw)
+        for needle in (
+            "menu.setCarried(stack); menu.broadcastFullState(); player.inventoryMenu.broadcastFullState(); playCommittedGuiTransferSound(player, before);",
+            "container.setCarried(stack); container.broadcastFullState(); player.inventoryMenu.broadcastFullState(); playCommittedGuiTransferSound(player, before);",
+        ):
+            if compact(needle) not in tank:
+                fail(f"{target}: GUI fluid sound is not post-commit: missing normalized fragment {needle!r}")
+
+    forge = compact(text("1.19.2-forge", "src/main/java/buildcraft/lib/misc/FluidUtilBC.java"))
+    direct_commit = compact(
+        "if (changed && replace) { ItemStack result = flItem.getContainer().copy();"
+    )
+    direct_sound = compact("if (changed) { if (emptiedItem) { SoundUtil.playBucketEmpty")
+    commit_index = forge.find(direct_commit)
+    sound_index = forge.find(direct_sound)
+    if commit_index < 0 or sound_index < 0 or sound_index <= commit_index:
+        fail("1.19.2-forge: direct fluid interaction sound is not ordered after inventory commit")
+
+    forge_120 = compact(text("1.20.1-forge", "src/main/java/buildcraft/lib/misc/FluidUtilBC.java"))
+    commit_index = forge_120.find(direct_commit)
+    sound_index = forge_120.find(direct_sound)
+    if commit_index < 0 or sound_index < 0 or sound_index <= commit_index:
+        fail("1.20.1-forge: direct fluid interaction sound is not ordered after inventory commit")
+
 def main() -> None:
     for target, root in TARGETS.items():
         if not (root / "src/main/java").is_dir():
@@ -1213,6 +1299,8 @@ def main() -> None:
     validate_forestry_model_bake_mutation()
     validate_forge_atlas_reload_caches()
     validate_pipe_pluggable_contract()
+    validate_id_allocator_contracts()
+    validate_transactional_side_effect_ordering()
     validate_network_hardening()
     validate_gametest_runtime_guards()
 

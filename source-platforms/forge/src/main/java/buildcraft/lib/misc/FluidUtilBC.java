@@ -277,14 +277,14 @@ public class FluidUtilBC {
         }
 
         boolean changed = false;
+        boolean emptiedItem = false;
         FluidStack moved = FluidUtilBC.move(flItem, fluidHandler);
         if (!moved.isEmpty()) {
-            SoundUtil.playBucketEmpty(world, pos, moved);
             changed = true;
+            emptiedItem = true;
         } else if (replace) {
             moved = FluidUtilBC.move(fluidHandler, flItem);
             if (!moved.isEmpty()) {
-                SoundUtil.playBucketFill(world, pos, moved);
                 changed = true;
             }
         }
@@ -300,6 +300,16 @@ public class FluidUtilBC {
                 }
             }
             syncPlayerInventory(player);
+        }
+
+        // Sounds are deliberately last: inventory and fluid state must already be authoritative before any optional
+        // cosmetic callback can fail. SoundUtil itself is non-fatal as a second line of defence.
+        if (changed) {
+            if (emptiedItem) {
+                SoundUtil.playBucketEmpty(world, pos, moved);
+            } else {
+                SoundUtil.playBucketFill(world, pos, moved);
+            }
         }
 
         // BC8 consumed the interaction as soon as the held item was a fluid container, even when the target tank

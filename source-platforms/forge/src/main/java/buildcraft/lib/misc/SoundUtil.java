@@ -6,7 +6,11 @@
 
 package buildcraft.lib.misc;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nullable;
+
+import buildcraft.lib.internal.debug.BCLog;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -96,18 +100,42 @@ public class SoundUtil {
     }
     
     public static void playBucketEmpty(Level level, BlockPos pos, FluidStack resource) {
-        SoundEvent sound = resource.getFluid().getFluidType().getSound(resource, SoundActions.BUCKET_EMPTY);
-        if (sound == null) {
-            sound = SoundEvents.BUCKET_EMPTY;
-        }
-        level.playSound(null, pos, sound, SoundSource.PLAYERS, 1, 1);
+        playFluidActionSound(
+            level, pos, SoundEvents.BUCKET_EMPTY,
+            () -> resource.getFluid().getFluidType().getSound(resource, SoundActions.BUCKET_EMPTY),
+            "bucket-empty"
+        );
     }
 
     public static void playBucketFill(Level world, BlockPos pos, FluidStack moved) {
-        SoundEvent sound = moved.getFluid().getFluidType().getSound(moved, SoundActions.BUCKET_FILL);
-        if (sound == null) {
-            sound = SoundEvents.BUCKET_FILL;
+        playFluidActionSound(
+            world, pos, SoundEvents.BUCKET_FILL,
+            () -> moved.getFluid().getFluidType().getSound(moved, SoundActions.BUCKET_FILL),
+            "bucket-fill"
+        );
+    }
+
+    /**
+     * Fluid sounds are cosmetic and must never abort an already committed inventory/fluid transaction.
+     * Third-party fluid types are allowed to omit an action sound and, in practice, can also throw while resolving
+     * one. Fall back to vanilla and suppress playback failures so a sound provider cannot cause dupes or item loss.
+     */
+    private static void playFluidActionSound(Level level, BlockPos pos, SoundEvent fallback,
+        Supplier<SoundEvent> soundProvider, String action) {
+        SoundEvent sound = fallback;
+        try {
+            SoundEvent provided = soundProvider.get();
+            if (provided != null) {
+                sound = provided;
+            }
+        } catch (RuntimeException exception) {
+            BCLog.logger.warn("Fluid {} sound provider failed; using vanilla fallback", action, exception);
         }
-        world.playSound(null, pos, sound, SoundSource.PLAYERS, 1, 1);
+
+        try {
+            level.playSound(null, pos, sound, SoundSource.PLAYERS, 1, 1);
+        } catch (RuntimeException exception) {
+            BCLog.logger.warn("Failed to play cosmetic fluid {} sound", action, exception);
+        }
     }
 }
