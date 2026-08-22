@@ -79,6 +79,11 @@ public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRe
     }
 
     protected long extract(long power, FluidAction simulate) {
+        // MJ/FE capabilities can be probed from client-side placement/render code. Item/fluid extraction is server-only,
+        // so treat a client probe as accepting no power instead of entering the extraction path.
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
+            return power;
+        }
         if (power > 0) {
             if (pipe.getFlow() instanceof IFlowItems) {
                 IFlowItems flow = (IFlowItems) pipe.getFlow();

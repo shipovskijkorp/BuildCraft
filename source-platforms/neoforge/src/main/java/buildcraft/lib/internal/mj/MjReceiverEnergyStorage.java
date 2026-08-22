@@ -43,5 +43,13 @@ public final class MjReceiverEnergyStorage implements IEnergyStorage {
     @Override public boolean canExtract() { return false; }
     @Override public boolean canReceive() { return BuildCraftApi.service(BuildCraftServices.ENERGY).automaticFeConversionEnabled() && receiver.canReceive(); }
     @Override public int getEnergyStored() { return readable == null ? 0 : (int)Math.min(Integer.MAX_VALUE, BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjToWholeFe(readable.getStored())); }
-    @Override public int getMaxEnergyStored() { return readable == null ? (int)Math.min(Integer.MAX_VALUE, BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjToWholeFe(receiver.getPowerRequested())) : (int)Math.min(Integer.MAX_VALUE, BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjToWholeFe(readable.getCapacity())); }
+    @Override
+    public int getMaxEnergyStored() {
+        if (readable != null) {
+            return (int) Math.min(Integer.MAX_VALUE, BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjToWholeFe(readable.getCapacity()));
+        }
+        // A write-only MJ receiver has no storage-capacity metadata. Do not substitute current demand here:
+        // getPowerRequested() may perform server-only simulation (wooden pipes do), and FE metadata is queried client-side.
+        return Integer.MAX_VALUE;
+    }
 }

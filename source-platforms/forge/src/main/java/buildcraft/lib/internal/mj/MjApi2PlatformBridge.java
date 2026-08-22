@@ -25,6 +25,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 public final class MjApi2PlatformBridge {
     private static final ResourceLocation NETWORK_ID = new ResourceLocation("buildcraft", "mj");
     private static final MjRuntimeLookup.Backend BACKEND = new Backend();
+    private static final MjAmount UNKNOWN_RATE = MjAmount.ofMicro(Long.MAX_VALUE);
 
     private MjApi2PlatformBridge() {}
 
@@ -117,10 +118,15 @@ public final class MjApi2PlatformBridge {
             EnumSet<MjPortRole> roles = EnumSet.of(MjPortRole.CONNECTOR, MjPortRole.READABLE);
             if (fe.canReceive()) roles.add(MjPortRole.CONSUMER);
             if (fe.canExtract()) roles.add(MjPortRole.PROVIDER);
-            long ratio = BuildCraftApi.service(BuildCraftServices.ENERGY).conversion().microMjPerFe();
-            long insert = fe.canReceive() ? (long) Math.max(0, fe.receiveEnergy(Integer.MAX_VALUE, true)) * ratio : 0L;
-            long extract = fe.canExtract() ? (long) Math.max(0, fe.extractEnergy(Integer.MAX_VALUE, true)) * ratio : 0L;
-            return new MjPortDescriptor(NETWORK_ID, roles, MjAmount.ofMicro(insert), MjAmount.ofMicro(extract));
+            // A descriptor is topology metadata, not a live transfer probe. Some FE implementations only permit
+            // receive/extract calls on the logical server, so simulation here can crash client-side placement/rendering.
+            // FE has no loader-neutral max-transfer accessor; advertise an unknown/unbounded structural rate instead.
+            return new MjPortDescriptor(
+                NETWORK_ID,
+                roles,
+                fe.canReceive() ? UNKNOWN_RATE : MjAmount.ZERO,
+                fe.canExtract() ? UNKNOWN_RATE : MjAmount.ZERO
+            );
         }
     }
 
@@ -173,9 +179,14 @@ public final class MjApi2PlatformBridge {
             if (redstone != null) roles.add(MjPortRole.REDSTONE_RECEIVER);
             if (readable != null) roles.add(MjPortRole.READABLE);
             if (provider != null) roles.add(MjPortRole.PASSIVE_PROVIDER);
-            long insert = receiver == null ? 0L : Math.max(0L, receiver.getPowerRequested());
-            long extract = provider == null ? 0L : Math.max(0L, provider.extractPower(0L, Long.MAX_VALUE, false));
-            return new MjPortDescriptor(NETWORK_ID, roles, MjAmount.ofMicro(insert), MjAmount.ofMicro(extract));
+            // Legacy getPowerRequested()/extractPower() are live operations. Wooden item/fluid pipes, for example,
+            // reach server-only extraction code even for simulation, so descriptor discovery must never invoke them.
+            return new MjPortDescriptor(
+                NETWORK_ID,
+                roles,
+                receiver == null ? MjAmount.ZERO : UNKNOWN_RATE,
+                provider == null ? MjAmount.ZERO : UNKNOWN_RATE
+            );
         }
     }
 }

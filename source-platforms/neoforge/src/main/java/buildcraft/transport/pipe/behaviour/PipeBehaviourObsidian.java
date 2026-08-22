@@ -200,6 +200,10 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
 
     @Override
     public long receivePower(long microJoules, FluidAction simulate) {
+        // Demand/FE simulation may be queried on the logical client. Entity inventory extraction remains server-only.
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
+            return microJoules;
+        }
         if (toWaitTicks > 0) {
             return microJoules;
         }
